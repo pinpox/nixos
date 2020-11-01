@@ -2,7 +2,8 @@
 
 This repository includes all configurations for my NixOS machines. Feel free to
 use parts of it as you please, but keep it mind it is intended mostly for
-personal use.
+personal use. I've written posts about certain aspects of this setup on my
+[personal blog](https://pablo.tools/blog).
 
 # Intial Setup
 
