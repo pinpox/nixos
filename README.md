@@ -11,7 +11,7 @@ Individual hosts are defined in `/machines/<hostname>` and will import
 re-usable parts of the configuration as needed. 
 
 **TL;DR** To use a host configuration on a fresh install, do as root:
-```
+```bash
 # If the root user has no key yet, generate one
 ssh-keygen
 
