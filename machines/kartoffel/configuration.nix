@@ -71,6 +71,9 @@
       94.16.114.42 lislon.nix.own
       192.168.2.84 backup-server
       192.168.2.84 cloud.pablo.tools
+
+      10.10.10.212 bucket.htb
+      10.10.10.212 s3.bucket.htb
     '';
   };
 
@@ -109,6 +112,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    docker
+    docker-compose
     qemu
     python
     ctags
@@ -166,6 +171,8 @@
     enable = true;
     onBoot = "ignore";
   };
+
+  virtualisation.docker.enable = true;
 
   # Virtualbox stuff
   #virtualisation.virtualbox.guest.enable = true;
@@ -364,7 +371,7 @@
       isNormalUser = true;
       home = "/home/pinpox";
       description = "Pablo Ovelleiro Corral";
-      extraGroups = [ "wheel" "networkmanager" "audio" "libvirtd" "dialout"];
+      extraGroups = [ "docker" "wheel" "networkmanager" "audio" "libvirtd" "dialout"];
       shell = pkgs.zsh;
 
       # Public ssh-keys that are authorized for the user. Fetched from homepage
