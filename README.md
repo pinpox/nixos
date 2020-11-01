@@ -32,14 +32,14 @@ TODO
 
 # Hosts
 
-| Hostname  | Location  | Configuration                     |
-|-----------|-----------|-----------------------------------|
-| mega      | netcup.de | [mega](./machines/mega)           |
-| kfbox     | netcup.de | [kfbox](./machines/kfbox)         |
-| birne     | local     | [birne](./machines/birne)         |
-| porree    | netcup.de | [porree](./machines/porree)       |
-| ahorn     | local     | [ahorn](./machines/ahorn)         |
-| kartoffel | local     | [kartoffel](./machines/kartoffel) |
+| Configuration                     | Type    | Location                       |
+|-----------------------------------|---------|--------------------------------|
+| [mega](./machines/mega)           | Server  | [netcup.de](https://netcup.de) |
+| [kfbox](./machines/kfbox)         | Server  | [netcup.de](https://netcup.de) |
+| [birne](./machines/birne)         | Server  | local                          |
+| [porree](./machines/porree)       | Server  | [netcup.de](https://netcup.de) |
+| [ahorn](./machines/ahorn)         | Desktop | local                          |
+| [kartoffel](./machines/kartoffel) | Desktop | local                          |
 
 The services running on each host are documented in the host-specific
 `README.md` files.
