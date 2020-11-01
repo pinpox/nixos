@@ -8,11 +8,10 @@ personal use. I've written posts about certain aspects of this setup on my
 # Intial Setup
 
 The structure of this repository is meant to allow easy manual deployment.
-Individual hosts are defined in `/machines/<hostname>` and will import
-re-usable parts of the configuration as needed. 
-
-Make sure `root`'s SSH key is authorized to pull this repository. If he has no
-key yet, create one with `ssh-keygen` and authorize it as deployment key [here](
+Individual hosts are defined in `/machines/<hostname>` and will import re-usable
+parts of the configuration as needed. Make sure `root`'s SSH key is authorized
+to pull this repository. If he has no key yet, create one with `ssh-keygen` and
+authorize it as deployment key [here](
 https://github.com/pinpox/nixos/settings/keys).
 
 **TL;DR** To use a host configuration on a fresh install, do as root:
