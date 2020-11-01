@@ -5,7 +5,7 @@ use parts of it as you please, but keep it mind it is intended mostly for
 personal use. I've written posts about certain aspects of this setup on my
 [personal blog](https://pablo.tools/blog).
 
-## Intial Setup
+# Intial Setup
 
 The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
@@ -30,7 +30,7 @@ sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configu
 The proceed to set up the unmanaged resources as described below.
 
 
-## Current Hosts
+# Current Hosts
 
 | Configuration                       | Type      | Location    | VPN IP | Description                  |
 | ----------------------------------- | --------- | ----------- | ------ | ---------------------------- |
@@ -44,12 +44,12 @@ The proceed to set up the unmanaged resources as described below.
 The services running on each host are documented in the host-specific
 `README.md` files.
 
-## Unmanaged Resources
+# Unmanaged Resources
 
 The following resources are not managed or included in this repository and will
 have to be put in place manually.
 
-### `/secrets` Directory
+## `/secrets` Directory
 
 The `/secrets` directory contains all sensitive files that should not be shared
 or put into the nix-store. It has to be created/placed manuall.
@@ -79,14 +79,14 @@ Example layout of expected structure as used by this configuration:
       └──  public
 ```
 
-### Home-manager configuration
+## Home-manager configuration
 
 User-specific configuration is installed by home-manager where needed. Setup for
 the `pinpox` user is hosted in a [separate
 repository](https://github.com/pinpox/nixos-home) so it can be used
 independently.
 
-## Creating new Hosts (TODO)
+# Creating new Hosts (TODO)
 - Backup generated hardware-configuration
 - Create and register/include keys
 https://github.com/pinpox/nixos/settings/keys
