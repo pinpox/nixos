@@ -32,28 +32,17 @@ TODO
 
 # Hosts
 
-| Hostname  | Location  |
-|-----------|-----------|
-| mega      | netcup.de |
-| kfbox     | netcup.de |
-| birne     | local     |
-| porree    | netcup.de |
-| ahorn     | local     |
-| kartoffel | local     |
+| Hostname  | Location  | Configuration                     |
+|-----------|-----------|-----------------------------------|
+| mega      | netcup.de | [mega](./machines/mega)           |
+| kfbox     | netcup.de | [kfbox](./machines/kfbox)         |
+| birne     | local     | [birne](./machines/birne)         |
+| porree    | netcup.de | [porree](./machines/porree)       |
+| ahorn     | local     | [ahorn](./machines/ahorn)         |
+| kartoffel | local     | [kartoffel](./machines/kartoffel) |
 
-# Services
-
-| Service          | [kartoffel](./machines/kartoffel) | [birne](./machines/birne) | [porree](./machines/porree) | [kfbox](./machines/kfbox) | [zitrone](./machines/zitrone) |
-| --               | ---                               | ---                       | ---                         | ---                       | ---                           |
-| Backup (Client)  | X                                 | X                         | X                           |                           |                               |
-| Backup (Server)  |                                   | X                         |                             |                           |                               |
-| Bitwarden        |                                   |                           | X                           |                           |                               |
-| Gitea            |                                   |                           | X                           |                           |                               |
-| Hugo Website     |                                   |                           | X                           |                           |                               |
-| Netdata          | X                                 | X                         | X                           |                           |                               |
-| Seafile          |                                   | X                         |                             |                           |                               |
-| Wireguard Client | X                                 | X                         | X                           |                           |                               |
-| Wireguard Server |                                   |                           | X                           |                           |                               |
+The services running on each host are documented in the host-specific
+`README.md` files.
 
 # Unmanaged Resources
 
