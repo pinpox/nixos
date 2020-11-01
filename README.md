@@ -86,7 +86,7 @@ the `pinpox` user is hosted in a [separate
 repository](https://github.com/pinpox/nixos-home) so it can be used
 independently.
 
-# TODO Creating new Hosts
+# Creating new Hosts (TODO)
 - Backup generated hardware-configuration
 - Create and register/include keys
 https://github.com/pinpox/nixos/settings/keys
