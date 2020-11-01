@@ -12,10 +12,8 @@ re-usable parts of the configuration as needed.
 
 **TL;DR** To use a host configuration on a fresh install, do as root:
 ```bash
-# If the root user has no key yet, generate one
-ssh-keygen
-
-# Add key as deployment key to the GitHub repostory
+# Add the root SSH key as deployment key to the GitHub repostory
+# If root has no key yet, generate one with `ssh-keygen`
 # https://github.com/pinpox/nixos/settings/keys
 
 # Clone repository to /var/nixos-configs
