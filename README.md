@@ -1,11 +1,10 @@
-# NixOS
-![nixos](https://socialify.git.ci/pinpox/nixos/image?description=1&descriptionEditable=My%20NixOS%20Configurations&forks=1&issues=1&logo=https%3A%2F%2Fpablo.tools%2Fnixoscolorful.svg&owner=1&pulls=1&stargazers=1&theme=Light)
+![nixos](https://socialify.git.ci/pinpox/nixos/image?description=1&descriptionEditable=My%20NixOS%20Configurations&font=Source%20Code%20Pro&forks=1&issues=1&logo=https%3A%2F%2Fpablo.tools%2Fnixoscolorful.svg&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
 
 This repository includes all configurations for my NixOS machines. Feel free to
 use parts of it as you please, but keep it mind it is intended mostly for
 personal use.
 
-# Setup host after NixOS installation
+# Intial Setup
 
 The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import
@@ -25,6 +24,14 @@ git clone git@github.com:pinpox/nixos.git /var/nixos-configs
 # Link desired host configuration to /etc/nixos
 ln -s /var/nixos-configs/machines/kartoffel /etc/nixos
 ```
+
+# Create new Machine
+
+TODO
+- Create and register keys
+- Setup backup
+- Setup VPN
+
 # Machines and Services
 
 
@@ -53,18 +60,8 @@ ln -s /var/nixos-configs/machines/kartoffel /etc/nixos
 
 ## Secrets in `/secrets`
 ```
- secrets-example
-├──  kartoffel
-│  ├──  borg
-│  ├──  ssh
-│  │  ├──  key-backup-private
-│  │  ├──  key-backup-public
-│  │  ├──  key-root-private
-│  │  └──  key-root-public
-│  └──  wireguard
-│     ├──  private
-│     └──  public
-└──  porree
+ secrets
+└──  hostname
    ├──  borg
    ├──  ssh
    │  ├──  key-backup-private
