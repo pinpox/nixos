@@ -45,9 +45,6 @@ The services running on each host are documented in the host-specific
 The following resources are not managed or included in this repository and will
 have to be put in place manually.
 
-## Key generation
-TODO should be done by `Adding new Hosts`
-
 ## `/secrets` Directory
 
 The `/secrets` directory contains all sensitive files that should not be shared
@@ -78,9 +75,7 @@ Example layout of expected structure as used by this configuration:
       └──  public
 ```
 
-# Creating new Hosts
-
-TODO
-- Create and register keys
+# TODO Creating new Hosts
+- Create and register/include keys
 - Setup backup
 - Setup VPN
