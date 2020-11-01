@@ -13,15 +13,19 @@ re-usable parts of the configuration as needed.
 
 **TL;DR** To use a host configuration on a fresh install, do as root:
 ```bash
+# Backup generated configuration files
+mv /etc/nixos /etc/nixos-generated
+
 # Add the root SSH key as deployment key to the GitHub repostory
-# If root has no key yet, generate one with `ssh-keygen`
+# If root has no key yet, generate one with `ssh-keygen`. Then clone the
+# repository as root.
 # https://github.com/pinpox/nixos/settings/keys
 
 # Clone repository to /var/nixos-configs
-git clone git@github.com:pinpox/nixos.git /var/nixos-configs
+git clone git@github.com:pinpox/nixos.git /etc/nixos
 
-# Link desired host configuration to /etc/nixos
-ln -s /var/nixos-configs/machines/kartoffel /etc/nixos
+# Link the machines configuration.nix to the root, so nixos-rebuild finds it
+sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configuration.nix
 ```
 
 The proceed to set up the unmanaged resources as described below.
@@ -84,6 +88,7 @@ repository](https://github.com/pinpox/nixos-home) so it can be used
 independently.
 
 # TODO Creating new Hosts
+- Backup generated hardware-configuration
 - Create and register/include keys
 - Setup backup
 - Setup VPN
