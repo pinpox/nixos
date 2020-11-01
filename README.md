@@ -9,10 +9,7 @@ personal use. I've written posts about certain aspects of this setup on my
 
 The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
-parts of the configuration as needed. Make sure `root`'s SSH key is authorized
-to pull this repository. If he has no key yet, create one with `ssh-keygen` and
-authorize it as deployment key [here](
-https://github.com/pinpox/nixos/settings/keys).
+parts of the configuration as needed.
 
 **TL;DR** To use a host configuration on a fresh install, do as root:
 ```bash
@@ -92,5 +89,7 @@ independently.
 # TODO Creating new Hosts
 - Backup generated hardware-configuration
 - Create and register/include keys
+https://github.com/pinpox/nixos/settings/keys
 - Setup backup
 - Setup VPN
+
