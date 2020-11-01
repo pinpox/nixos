@@ -17,14 +17,14 @@ https://github.com/pinpox/nixos/settings/keys).
 **TL;DR** To use a host configuration on a fresh install, do as root:
 ```bash
 # Backup generated configuration files
-mv /etc/nixos /etc/nixos-generated
-
+mv /etc/nixos /etc/nixos-old
 
 # Clone repository to /var/nixos-configs
 git clone git@github.com:pinpox/nixos.git /etc/nixos
 
 # Overwrite hardware-configuration.nix file with the generated one
-mv /etc/nixos-generated/hardware-configuration.nix /etc/nixos/machines/$(hostname)/hardware-configuration.nix
+mv /etc/nixos-old/hardware-configuration.nix \
+   /etc/nixos/machines/$(hostname)/hardware-configuration.nix
 
 # Link the machines configuration.nix to the root, so nixos-rebuild finds it
 sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configuration.nix
