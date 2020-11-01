@@ -23,7 +23,9 @@ git clone git@github.com:pinpox/nixos.git /var/nixos-configs
 ln -s /var/nixos-configs/machines/kartoffel /etc/nixos
 ```
 
-# Adding new Hosts
+The proceed to set up the unmanaged resources as described below.
+
+# Creating new Hosts
 
 TODO
 - Create and register keys
@@ -50,7 +52,7 @@ The following resources are not managed or included in this repository and will
 have to be put in place manually.
 
 ## Key generation
-TODO
+TODO should be done by `Adding new Hosts`
 
 ## `/secrets` Directory
 
@@ -67,6 +69,7 @@ chwon root:root -R /secrets
 ```
 
 Example layout of expected structure as used by this configuration:
+
 ```
  secrets
 └──  hostname
