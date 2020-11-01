@@ -32,14 +32,14 @@ TODO
 
 # Hosts
 
-| Configuration                     | Type    | Location                       |
-|-----------------------------------|---------|--------------------------------|
-| [mega](./machines/mega)           | Server  | [netcup.de](https://netcup.de) |
-| [kfbox](./machines/kfbox)         | Server  | [netcup.de](https://netcup.de) |
-| [birne](./machines/birne)         | Server  | local                          |
-| [porree](./machines/porree)       | Server  | [netcup.de](https://netcup.de) |
-| [ahorn](./machines/ahorn)         | Desktop | local                          |
-| [kartoffel](./machines/kartoffel) | Desktop | local                          |
+| Configuration                       | Type      | Location    | VPN IP | Description                  |
+| ----------------------------------- | --------- | ----------- | ------ | ---------------------------- |
+| [ahorn](./machines/ahorn)           | Desktop   | local       | 192.168.7.X | Notebook                     |
+| [birne](./machines/birne)           | Server    | local       | 192.168.7.X | Local NAS                    |
+| [kartoffel](./machines/kartoffel)   | Desktop   | local       | 192.168.7.X | Desktop                      |
+| [kfbox](./machines/kfbox)           | Server    | netcup.de   | 192.168.7.X | Server for 0cx.de            |
+| [mega](./machines/mega)             | Server    | netcup.de   | 192.168.7.X | Server for megaclan3000.de   |
+| [porree](./machines/porree)         | Server    | netcup.de   | 192.168.7.X | Personal Server              |
 
 The services running on each host are documented in the host-specific
 `README.md` files.
