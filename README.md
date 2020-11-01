@@ -11,15 +11,15 @@ The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import
 re-usable parts of the configuration as needed. 
 
+Make sure `root`'s SSH key is authorized to pull this repository. If he has no
+key yet, create one with `ssh-keygen` and authorize it as deployment key [here](
+https://github.com/pinpox/nixos/settings/keys).
+
 **TL;DR** To use a host configuration on a fresh install, do as root:
 ```bash
 # Backup generated configuration files
 mv /etc/nixos /etc/nixos-generated
 
-# Add the root SSH key as deployment key to the GitHub repostory
-# If root has no key yet, generate one with `ssh-keygen`. Then clone the
-# repository as root.
-# https://github.com/pinpox/nixos/settings/keys
 
 # Clone repository to /var/nixos-configs
 git clone git@github.com:pinpox/nixos.git /etc/nixos
