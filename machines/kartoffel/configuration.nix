@@ -11,7 +11,7 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # ../../common/borg/home.nix
+    ../../common/borg/home.nix
   ];
 
   # Use GRUB2 as EFI boot loader.
