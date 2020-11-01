@@ -75,6 +75,13 @@ Example layout of expected structure as used by this configuration:
       └──  public
 ```
 
+## Home-manager configuration
+
+User-specific configuration is installed by home-manager where needed. Setup for
+the `pinpox` user is hosted in a [separate
+repository](https://github.com/pinpox/nixos-home) so it can be used
+independently.
+
 # TODO Creating new Hosts
 - Create and register/include keys
 - Setup backup
