@@ -24,6 +24,9 @@ mv /etc/nixos /etc/nixos-generated
 # Clone repository to /var/nixos-configs
 git clone git@github.com:pinpox/nixos.git /etc/nixos
 
+# Overwrite hardware-configuration.nix file with the generated one
+mv /etc/nixos-generated/hardware-configuration.nix /etc/nixos/machines/$(hostname)/hardware-configuration.nix
+
 # Link the machines configuration.nix to the root, so nixos-rebuild finds it
 sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configuration.nix
 ```
