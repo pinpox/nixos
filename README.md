@@ -44,7 +44,7 @@ TODO
 # Services
 
 | Service          | [kartoffel](./machines/kartoffel) | [birne](./machines/birne) | [porree](./machines/porree) | [kfbox](./machines/kfbox) | [zitrone](./machines/zitrone) |
-| --               | ---                               | ---                       | ---                         | ---                       |                               |
+| --               | ---                               | ---                       | ---                         | ---                       | ---                           |
 | Backup (Client)  | X                                 | X                         | X                           |                           |                               |
 | Backup (Server)  |                                   | X                         |                             |                           |                               |
 | Bitwarden        |                                   |                           | X                           |                           |                               |
