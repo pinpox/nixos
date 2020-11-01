@@ -30,31 +30,35 @@ TODO
 - Setup backup
 - Setup VPN
 
-# Machines and Services
+# Hosts
 
+| Hostname  | Location  |
+|-----------|-----------|
+| mega      | netcup.de |
+| kfbox     | netcup.de |
+| birne     | local     |
+| porree    | netcup.de |
+| ahorn     | local     |
+| kartoffel | local     |
 
+# Services
 
-## porree (netcup.de)
-- VPN server (wireguard)
-- hugo-website
-- lislon-website
-- bitwarden_rs
-- gitea
-- netdata
+| Service          | `kartoffel` | `birne` | `porree` | `kfbox |
+| --               | ---         | ---     | ---      | ---    |
+| Backup (Client)  | X           | X       | X        |        |
+| Backup (Server)  |             | X       |          |        |
+| Bitwarden        |             |         | X        |        |
+| Gitea            |             |         | X        |        |
+| Hugo Website     |             |         | X        |        |
+| Netdata          | X           | X       | X        |        |
+| Seafile          |             | X       |          |        |
+| Wireguard Client | X           | X       | X        |        |
+| Wireguard Server |             |         | X        |        |
 
-## birne (local)
-- backup-server
-- seafile
-- netdata
+# Unmanaged Resources
 
-## kfbox (netcup.de)
-
-## megaclan3000.de
-
-
-
-
-# External
+The following resources are not managed or included in this repository and will
+have to be put in place manually.
 
 ## Secrets in `/secrets`
 ```
