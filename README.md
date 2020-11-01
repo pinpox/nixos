@@ -25,12 +25,6 @@ ln -s /var/nixos-configs/machines/kartoffel /etc/nixos
 
 The proceed to set up the unmanaged resources as described below.
 
-# Creating new Hosts
-
-TODO
-- Create and register keys
-- Setup backup
-- Setup VPN
 
 # Current Hosts
 
@@ -83,3 +77,10 @@ Example layout of expected structure as used by this configuration:
       ├──  private
       └──  public
 ```
+
+# Creating new Hosts
+
+TODO
+- Create and register keys
+- Setup backup
+- Setup VPN
