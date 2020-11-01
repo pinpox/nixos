@@ -136,21 +136,22 @@
 
   programs.dconf.enable = true;
 
-  programs.chromium = {
-    enable = true;
-    extraOpts = {
-      # "BrowserSignin" = 0;
-      # "SyncDisabled" = true;
-      "PasswordManagerEnabled" = false;
-      "SpellcheckEnabled" = true;
-      "SpellcheckLanguage" = [ "de" "en-US" ];
-    };
-  };
+  # programs.chromium = {
+  #   enable = true;
+  #   extraOpts = {
+  #     # "BrowserSignin" = 0;
+  #     # "SyncDisabled" = true;
+  #     "PasswordManagerEnabled" = false;
+  #     "SpellcheckEnabled" = true;
+  #     "SpellcheckLanguage" = [ "de" "en-US" ];
+  #   };
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   programs.ssh.startAgent = false;
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
