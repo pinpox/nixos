@@ -52,7 +52,21 @@ have to be put in place manually.
 ## Key generation
 TODO
 
-## Secrets in `/secrets`
+## `/secrets` Directory
+
+The `/secrets` directory contains all sensitive files that should not be shared
+or put into the nix-store. It has to be created/placed manuall.
+
+**Important**: Make sure the permissions on `/secerts` directory are set to
+`600` **recursively** and it is owned `root:root`.
+
+``` bash
+# Set permissions
+chmod -R 600 /secrets
+chwon root:root -R /secrets
+```
+
+Example layout of expected structure as used by this configuration:
 ```
  secrets
 └──  hostname
