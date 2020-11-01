@@ -43,17 +43,17 @@ TODO
 
 # Services
 
-| Service          | `kartoffel` | `birne` | `porree` | `kfbox |
-| --               | ---         | ---     | ---      | ---    |
-| Backup (Client)  | X           | X       | X        |        |
-| Backup (Server)  |             | X       |          |        |
-| Bitwarden        |             |         | X        |        |
-| Gitea            |             |         | X        |        |
-| Hugo Website     |             |         | X        |        |
-| Netdata          | X           | X       | X        |        |
-| Seafile          |             | X       |          |        |
-| Wireguard Client | X           | X       | X        |        |
-| Wireguard Server |             |         | X        |        |
+| Service          | [kartoffel](./machines/kartoffel) | [birne](./machines/birne) | [porree](./machines/porree) | [kfbox](./machines/kfbox) | [zitrone](./machines/zitrone) |
+| --               | ---                               | ---                       | ---                         | ---                       |                               |
+| Backup (Client)  | X                                 | X                         | X                           |                           |                               |
+| Backup (Server)  |                                   | X                         |                             |                           |                               |
+| Bitwarden        |                                   |                           | X                           |                           |                               |
+| Gitea            |                                   |                           | X                           |                           |                               |
+| Hugo Website     |                                   |                           | X                           |                           |                               |
+| Netdata          | X                                 | X                         | X                           |                           |                               |
+| Seafile          |                                   | X                         |                             |                           |                               |
+| Wireguard Client | X                                 | X                         | X                           |                           |                               |
+| Wireguard Server |                                   |                           | X                           |                           |                               |
 
 # Unmanaged Resources
 
