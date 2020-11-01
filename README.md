@@ -23,14 +23,14 @@ git clone git@github.com:pinpox/nixos.git /var/nixos-configs
 ln -s /var/nixos-configs/machines/kartoffel /etc/nixos
 ```
 
-# Create new Machine
+# Adding new Hosts
 
 TODO
 - Create and register keys
 - Setup backup
 - Setup VPN
 
-# Hosts
+# Current Hosts
 
 | Configuration                       | Type      | Location    | VPN IP | Description                  |
 | ----------------------------------- | --------- | ----------- | ------ | ---------------------------- |
