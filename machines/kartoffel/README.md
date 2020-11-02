@@ -42,4 +42,19 @@ Sensors:   System Temperatures: cpu: 29.8 C mobo: 27.8 C gpu: nvidia temp: 39 C
            Fan Speeds (RPM): N/A gpu: nvidia fan: 0%
 Info:      Processes: 169 Uptime: 3h 40m Memory: 7.71 GiB used: 1.40 GiB (18.2%) Init: systemd Compilers:
            gcc: 9.3.0 Packages: N/A Shell: Bash v: 4.4.23 inxi: 3.1.08
+
+▸ lsblk -f
+NAME          FSTYPE      FSVER    LABEL                   UUID                                   FSAVAIL FSUSE% MOUNTPOINT
+sda
+├─sda1        vfat        FAT32                            5D7C-69F9                               404.2M    19% /boot
+└─sda2        crypto_LUKS 2                                608e0e77-eea4-4dc4-b88d-76cc63e4488b
+  └─root      LVM2_member LVM2 001                         2Fo0GS-9HwJ-NlFP-TRIr-tEtM-BCXq-jP2jXv
+    ├─vg-swap swap        1        swap                    0f369649-cdbc-4a34-82dc-9f442c445c53                  [SWAP]
+    └─vg-root ext4        1.0      root                    8dcfb3f0-4dba-4c32-af96-84024706ff76    383.7G    14% /
+sdb           udf         1.02     CCCOMA_X64FRE_EN-GB_DV9 478c00004d532055
+├─sdb1        vfat        FAT32                            B8AF-223C
+├─sdb2
+├─sdb3        ntfs                                         5A62B45C62B43F17
+└─sdb4        ntfs                                         72E2304FE23019B5
+
 ```
