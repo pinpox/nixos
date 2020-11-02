@@ -36,7 +36,7 @@ The proceed to set up the unmanaged resources as described below.
 | ----------------------------------- | --------- | ----------- | ------ | ---------------------------- |
 | [ahorn](./machines/ahorn)           | Desktop   | local       | `192.168.7.X` | Notebook                     |
 | [birne](./machines/birne)           | Server    | local       | `192.168.7.X` | Local NAS                    |
-| [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.7.X` | Desktop                      |
+| [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.7.2` | Desktop                      |
 | [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.7.X` | Server for 0cx.de            |
 | [mega](./machines/mega)             | Server    | netcup.de   | `192.168.7.X` | Server for megaclan3000.de   |
 | [porree](./machines/porree)         | Server    | netcup.de   | `192.168.7.X` | Personal Server              |
