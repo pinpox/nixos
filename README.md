@@ -68,6 +68,7 @@ Example layout of expected structure as used by this configuration:
  secrets
 └──  hostname
    ├──  borg
+   │  └──  repo-passphrase
    ├──  ssh
    │  ├──  key-backup-private
    │  ├──  key-backup-public
