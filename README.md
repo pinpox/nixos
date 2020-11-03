@@ -142,6 +142,8 @@ cat /secrets/$(hostname)/ssh/id_ed25519
 ## Copy initial configuration files
 
 ```bash
+# Use generated key from /secrets while it's not yet put in place
+export GIT_SSH_COMMAND='ssh -i /secrets/$(hostname)/ssh/id_ed25519 -o IdentitiesOnly=yes'
 # Backup generated configuration files
 mv /etc/nixos /etc/nixos-old
 
