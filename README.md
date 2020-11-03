@@ -32,14 +32,14 @@ The proceed to set up the unmanaged resources as described below.
 
 # Current Hosts
 
-| Configuration                       | Type      | Location    | VPN IP | Description                  |
-| ----------------------------------- | --------- | ----------- | ------ | ---------------------------- |
-| [ahorn](./machines/ahorn)           | Desktop   | local       | `192.168.7.X` | Notebook                     |
-| [birne](./machines/birne)           | Server    | local       | `192.168.7.X` | Local NAS                    |
-| [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.7.2` | Desktop                      |
-| [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.7.X` | Server for 0cx.de            |
-| [mega](./machines/mega)             | Server    | netcup.de   | `192.168.7.X` | Server for megaclan3000.de   |
-| [porree](./machines/porree)         | Server    | netcup.de   | `192.168.7.X` | Server for pablo.tools       |
+| Configuration                       | Type      | Location    | VPN IP         | Description                  |
+| ----------------------------------- | --------- | ----------- | -------------- | ---------------------------- |
+| [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.7.2`  | Desktop                      |
+| [ahorn](./machines/ahorn)           | Desktop   | local       | `192.168.7.99` | Notebook                     |
+| [birne](./machines/birne)           | Server    | local       | `192.168.7.6`  | Local NAS                    |
+| [porree](./machines/porree)         | Server    | netcup.de   | `192.168.7.1`  | Server for pablo.tools       |
+| [mega](./machines/mega)             | Server    | netcup.de   |                | Server for megaclan3000.de   |
+| [kfbox](./machines/kfbox)           | Server    | netcup.de   |                | Server for 0cx.de            |
 
 The services running on each host are documented in the host-specific
 `README.md` files.

@@ -3,13 +3,13 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let user-root = import ../../common/user-profiles/root.nix;
-in {
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
-    # Default user
+    # Default users
+    ../../user-profiles/root.nix
     ../../user-profiles/pinpox.nix
 
     # Include reusables
@@ -23,6 +23,8 @@ in {
     ../../common/fonts.nix
     ../../common/locale.nix
     ../../common/yubikey.nix
+    ../../common/virtualization.nix
+    ../../common/zsh.nix
   ];
 
   # Define the hostname
@@ -62,7 +64,6 @@ in {
   environment.systemPackages = with pkgs; [
     docker
     docker-compose
-    qemu
     python
     ctags
     openvpn
@@ -77,35 +78,11 @@ in {
     wget
     neovim
     git
-    zsh
     gnumake
     nixfmt
   ];
 
   programs.dconf.enable = true;
-
-  # Needed for zsh completion of system packages, e.g. systemd
-  environment.pathsToLink = [ "/share/zsh" ];
-
-  programs.zsh = {
-    enable = true;
-    shellAliases = { vim = "nvim"; };
-    enableCompletion = true;
-    autosuggestions.enable = true;
-  };
-
-  virtualisation.libvirtd = {
-    enable = true;
-    # Don't start the VMs on host boot
-    onBoot = "ignore";
-  };
-
-  virtualisation.docker.enable = true;
-
-  # Virtualbox stuff
-  #virtualisation.virtualbox.guest.enable = true;
-  # virtualisation.virtualbox.host.enable = true;
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Enable Wireguard
   networking.wireguard.interfaces = {
