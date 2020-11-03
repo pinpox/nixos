@@ -59,7 +59,7 @@ owned `root:root`.
 ``` bash
 # Set permissions owner and group
 chmod -R 600 /secrets
-chwon root:root -R /secrets
+chown root:root -R /secrets
 ```
 
 Example layout of expected structure as used by this configuration:
@@ -86,10 +86,90 @@ the `pinpox` user is hosted in a [separate
 repository](https://github.com/pinpox/nixos-home) so it can be used
 independently.
 
-# Creating new Hosts (TODO)
-- Backup generated hardware-configuration
-- Create and register/include keys
-https://github.com/pinpox/nixos/settings/keys
+# Creating new Hosts
+
+The following describes how to create new hosts to be included in this project
+structure. It assumes a working NixOS installation on a new machine. The
+following steps further assume you are logged in as root (e.g. via SSH)
+
+## Preliminary Checks
+
+- Check that hostname is set
+- Check machine is connected to the internet
+- Check timezone is correct
+- Check nix-channel is correct
+
+## Create Secrets
+
+The following will create a new set of keys to be added to the `/secrets`
+directory of this host.
+
+```bash
+
+# Create directories
+mkdir -p /secrets/$(hostname)/{borg,wireguard,ssh}
+
+# Create SSH keys
+ssh-keygen -t ed25519 -f /secrets/$(hostname)/ssh/id_ed25519
+
+# Create wireguard keys
+# Use if `wireguard` is not installed: nix-shell -p pkgs.wireguard
+wg genkey > /secrets/$(hostname)/wireguard/privatekey
+wg pubkey < /secrets/$(hostname)/wireguard/privatekey > /secrets/$(hostname)/wireguard/publickey
+
+# Create borg passphrase
+# Use if `pwgen` is not installed: nix-shell -p pkgs.pwgen
+pwgen 20 > /secrets/$(hostname)/borg/repo-passphrase
+
+# Set permissions owner and group
+chmod -R 600 /secrets
+chown root:root -R /secrets
+```
+
+Backup the generated secrets **now**!
+
+## Add GitHub deployment key
+
+The easiest way to get the repository is to add root's SSH key as deployment key
+in this repository.
+
+```bash
+cat /secrets/$(hostname)/ssh/id_ed25519
+```
+
+[Add the key here]( https://github.com/pinpox/nixos/settings/keys/new)
+
+## Copy initial configuration files
+
+```bash
+# Backup generated configuration files
+mv /etc/nixos /etc/nixos-old
+
+# Clone this repository to /etc/nixos
+GIT_SSH_COMMAND='ssh -i /secrets/$(hostname)/ssh/id_ed25519 -o IdentitiesOnly=yes' \
+   git clone git@github.com:pinpox/nixos.git /etc/nixos
+
+# Save initial configuration.nix and hardware-configuration.nix
+cp /etc/nixos-old/*.nix \
+   /etc/nixos/machines/$(hostname)/
+
+# Link the machines configuration.nix to the root, so nixos-rebuild finds it
+sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configuration.nix
+
+```
+
+Machine should run `nixos-rebuild switch` without any problems.  At this point:
+**add/commit/push** the changes!
+
+
+# TODO
 - Setup backup
 - Setup VPN
+- read wireguard public key from /secrets in configuration.nix and sperate to
+	/common
+- setup root git account in configuration.nix
+```
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+```
 
