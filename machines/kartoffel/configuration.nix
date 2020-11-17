@@ -56,8 +56,6 @@
     cleanTmpDir = true;
   };
 
-  # Users allowed to run nix
-  nix.allowedUsers = [ "root" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
