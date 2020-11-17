@@ -9,11 +9,11 @@
     ./hardware-configuration.nix
 
     # Default users
-    ../../user-profiles/root.nix
-    ../../user-profiles/pinpox.nix
+    #../../common/user-profiles/root.nix
+    ../../common/user-profiles/pinpox.nix
 
     # Include reusables
-    ../../common/borg/home.nix
+    # ../../common/borg/home.nix
     ../../common/sound.nix
     ../../common/openssh.nix
     ../../common/environment.nix
@@ -28,7 +28,7 @@
   ];
 
   # Define the hostname
-  networking.hostName = "kartoffel";
+  networking.hostName = "ahorn";
 
   boot = {
     # Use GRUB2 as EFI boot loader.
@@ -39,18 +39,17 @@
     loader.grub.useOSProber = true;
     loader.efi.canTouchEfiVariables = true;
 
-    blacklistedKernelModules = [ "nouveau" ];
-
     # Encrypted drive to be mounted by the bootloader. Path of the device will
     # have to be changed for each install.
-    initrd.luks.devices = {
-      root = {
-        # Get UUID from blkid /dev/sda2
-        device = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
-        preLVM = true;
-        allowDiscards = true;
-      };
+
+  initrd.luks.devices = {
+    root = {
+      # Get UUID from blkid /dev/sda2
+      device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+      preLVM = true;
+      allowDiscards = true;
     };
+  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;
@@ -62,10 +61,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    ddcutil
     docker
     docker-compose
-    qemu
     python
     ctags
     openvpn
@@ -87,32 +84,32 @@
   programs.dconf.enable = true;
 
   # Enable Wireguard
-  networking.wireguard.interfaces = {
+  # networking.wireguard.interfaces = {
 
-    wg0 = {
+    # wg0 = {
 
-      # Determines the IP address and subnet of the client's end of the
-      # tunnel interface.
-      ips = [ "192.168.7.2/24" ];
+    #   # Determines the IP address and subnet of the client's end of the
+    #   # tunnel interface.
+    #   ips = [ "192.168.7.2/24" ];
 
-      # Path to the private key file
-      privateKeyFile = "/secrets/wireguard/privatekey";
-      peers = [{
-        # Public key of the server (not a file path).
-        publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
+    #   # Path to the private key file
+    #   privateKeyFile = "/secrets/wireguard/privatekey";
+    #   peers = [{
+    #     # Public key of the server (not a file path).
+    #     publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
 
-        # Don't forward all the traffic via VPN, only particular subnets
-        allowedIPs = [ "192.168.7.0/24" ];
+    #     # Don't forward all the traffic via VPN, only particular subnets
+    #     allowedIPs = [ "192.168.7.0/24" ];
 
-        # Server IP and port.
-        endpoint = "vpn.pablo.tools:51820";
+    #     # Server IP and port.
+    #     endpoint = "vpn.pablo.tools:51820";
 
-        # Send keepalives every 25 seconds. Important to keep NAT tables
-        # alive.
-        persistentKeepalive = 25;
-      }];
-    };
-  };
+    #     # Send keepalives every 25 seconds. Important to keep NAT tables
+    #     # alive.
+    #     persistentKeepalive = 25;
+    #   }];
+    # };
+  # };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -135,6 +132,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "20.09"; # Did you read the comment?
 }
-

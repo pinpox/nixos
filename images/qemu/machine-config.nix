@@ -25,7 +25,7 @@ with lib; {
 
     users = {
       users.root = {
-        password = "root"; # Change me!
+        # password = "super secure pw"; # In case you want a root password set
         openssh.authorizedKeys.keyFiles =
           [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
       };
