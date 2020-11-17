@@ -116,6 +116,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    ddcutil
     docker
     docker-compose
     qemu
@@ -172,17 +173,17 @@ in
     autosuggestions.enable = true;
   };
 
-  virtualisation.libvirtd = {
-    enable = true;
-    # Don't start the VMs on host boot
-    onBoot = "ignore";
-  };
+  # virtualisation.libvirtd = {
+  #   enable = true;
+  #   # Don't start the VMs on host boot
+  #   onBoot = "ignore";
+  # };
 
   virtualisation.docker.enable = true;
 
   # Virtualbox stuff
   #virtualisation.virtualbox.guest.enable = true;
-  # virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Setup Yubikey SSH and GPG
@@ -307,9 +308,9 @@ in
   users = {
 
     # For Virtualbox
-    # extraGroups = {
-    #   vboxusers.members = ["pinpox"];
-    # };
+    extraGroups = {
+      vboxusers.members = ["pinpox"];
+    };
 
     # Shell is set to zsh for all users as default.
     defaultUserShell = pkgs.zsh;
