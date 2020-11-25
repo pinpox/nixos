@@ -94,10 +94,10 @@ with lib; {
     #   };
     # };
 
-    users = {
-      users.root = {
-        openssh.authorizedKeys.keyFiles =
-          [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
-      };
-  };
+    # users = {
+    #   users.root = {
+    #     openssh.authorizedKeys.keyFiles =
+    #       [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
+    #   };
+  # };
 }
