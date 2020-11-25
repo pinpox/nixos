@@ -57,26 +57,23 @@ in { config, pkgs, lib, ... }: {
 
     networking.hostName = "porree";
 
-    security.acme.certs =
 
+security.acme.acceptTerms = true;
+
+    security.acme.certs = 
       {
         "pablo.tools" = {
-          webroot = "/var/www/challenges/";
+          #webroot = "/var/www/challenges/";
           email = "letsencrypt@pablo.tools";
           # extraDomainNames = [ "www.example.com" "foo.example.com" ];
         };
-        # "bar.example.com" = {
-        #   webroot = "/var/www/challenges/";
-        #   email = "bar@example.com";
-        # };
       };
 
     services.nginx = {
       enable = true;
-      virtualHosts."nix.own" = {
-        # addSSL = true;
-        # enableACME = true;
-        # root = "${blog}";
+      virtualHosts."pablo.tools" = {
+         addSSL = true;
+         enableACME = true;
         root = "/var/www/pablo-tools";
       };
 
