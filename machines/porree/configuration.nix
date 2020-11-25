@@ -1,8 +1,5 @@
-let
-  # TODO use this variable for "pablo.tools"
-  domain = "nix.own";
-in {config, pkgs, lib, ... }:
-{
+let domain = "nix.own";
+in { config, pkgs, lib, ... }: {
   imports = [
 
     # Include virtual hardware configuration
@@ -11,7 +8,6 @@ in {config, pkgs, lib, ... }:
     # Default users
     #../../common/user-profiles/root.nix
     ../../common/user-profiles/pinpox.nix
-
 
     # Include reusables
     # ../../common/borg/home.nix
@@ -27,7 +23,6 @@ in {config, pkgs, lib, ... }:
     # ../../common/virtualization.nix
     ../../common/zsh.nix
   ];
-
 
   config = {
     fileSystems."/" = {
@@ -60,48 +55,61 @@ in {config, pkgs, lib, ... }:
       ctags
     ];
 
-  networking.hostName = "porree";
+    networking.hostName = "porree";
 
+    security.acme.certs =
+
+      {
+        "pablo.tools" = {
+          webroot = "/var/www/challenges/";
+          email = "letsencrypt@pablo.tools";
+          # extraDomainNames = [ "www.example.com" "foo.example.com" ];
+        };
+        # "bar.example.com" = {
+        #   webroot = "/var/www/challenges/";
+        #   email = "bar@example.com";
+        # };
+      };
 
     services.nginx = {
       enable = true;
-      virtualHosts."pablo.tools" = {
-        addSSL = true;
-        enableACME = true;
+      virtualHosts."nix.own" = {
+        # addSSL = true;
+        # enableACME = true;
         # root = "${blog}";
         root = "/var/www/pablo-tools";
       };
 
       # virtualHosts."lislon.nix.own" = {
-        # addSSL = true;
-        # enableACME = true;
-        # root = "/var/www/lislon-pablo-tools";
-      };
+      # addSSL = true;
+      # enableACME = true;
+      # root = "/var/www/lislon-pablo-tools";
     };
+  };
 
-    # virtualisation.oci-containers.containers = {
-    #   bitwardenrs = {
-    #     autoStart = true;
-    #     image = "bitwardenrs/server:latest";
-    #     environment = {
-    #       DOMAIN = "http://nix.own";
-    #       ADMIN_TOKEN = "test";
-    #       SIGNUPS_ALLOWED = "true";
-    #       INVITATIONS_ALOWED = "true";
-    #     };
-    #     ports = [
-    #       "9999:80"
-    #     ];
-    #     volumes = [
-    #       "/var/docker/bitwarden/:/data/"
-    #     ];
-    #   };
-    # };
+  # virtualisation.oci-containers.containers = {
+  #   bitwardenrs = {
+  #     autoStart = true;
+  #     image = "bitwardenrs/server:latest";
+  #     environment = {
+  #       DOMAIN = "http://nix.own";
+  #       ADMIN_TOKEN = "test";
+  #       SIGNUPS_ALLOWED = "true";
+  #       INVITATIONS_ALOWED = "true";
+  #     };
+  #     ports = [
+  #       "9999:80"
+  #     ];
+  #     volumes = [
+  #       "/var/docker/bitwarden/:/data/"
+  #     ];
+  #   };
+  # };
 
-    # users = {
-    #   users.root = {
-    #     openssh.authorizedKeys.keyFiles =
-    #       [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
-    #   };
+  # users = {
+  #   users.root = {
+  #     openssh.authorizedKeys.keyFiles =
+  #       [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
+  #   };
   # };
 }
