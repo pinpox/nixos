@@ -1,4 +1,5 @@
 let
+  # TODO use this variable for "pablo.tools"
   domain = "nix.own";
 in {config, pkgs, lib, ... }:
 {
@@ -64,9 +65,9 @@ in {config, pkgs, lib, ... }:
 
     services.nginx = {
       enable = true;
-      virtualHosts."nix.own" = {
-        # addSSL = true;
-        # enableACME = true;
+      virtualHosts."pablo.tools" = {
+        addSSL = true;
+        enableACME = true;
         # root = "${blog}";
         root = "/var/www/pablo-tools";
       };
