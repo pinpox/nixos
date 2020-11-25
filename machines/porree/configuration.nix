@@ -1,7 +1,7 @@
 let
   domain = "nix.own";
-in { pkgs, lib, ... }:
-with lib; {
+in {config, pkgs, lib, ... }:
+{
   imports = [
 
     # Include virtual hardware configuration
@@ -26,6 +26,7 @@ with lib; {
     # ../../common/virtualization.nix
     ../../common/zsh.nix
   ];
+
 
   config = {
     fileSystems."/" = {
@@ -57,6 +58,8 @@ with lib; {
       python
       ctags
     ];
+
+  networking.hostName = "porree";
 
 
     services.nginx = {
