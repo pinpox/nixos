@@ -1,8 +1,5 @@
-let
-  # TODO use this variable for "pablo.tools"
-  domain = "nix.own";
-in {config, pkgs, lib, ... }:
-{
+let domain = "nix.own";
+in { config, pkgs, lib, ... }: {
   imports = [
 
     # Include virtual hardware configuration
@@ -11,7 +8,6 @@ in {config, pkgs, lib, ... }:
     # Default users
     #../../common/user-profiles/root.nix
     ../../common/user-profiles/pinpox.nix
-
 
     # Include reusables
     # ../../common/borg/home.nix
@@ -28,7 +24,6 @@ in {config, pkgs, lib, ... }:
     ../../common/zsh.nix
   ];
 
-
   config = {
     fileSystems."/" = {
       device = "/dev/disk/by-label/nixos";
@@ -37,7 +32,11 @@ in {config, pkgs, lib, ... }:
     };
 
     # TODO enable  firewall
-    networking.firewall.enable = false;
+    networking.firewall = {
+      enable = true;
+      allowPing = true;
+      allowedTCPPorts = [ 80 443 ];
+    };
 
     boot.growPartition = true;
     boot.kernelParams = [ "console=ttyS0" ];
@@ -60,48 +59,46 @@ in {config, pkgs, lib, ... }:
       ctags
     ];
 
-  networking.hostName = "porree";
+    networking.hostName = "porree";
 
+    security.acme.acceptTerms = true;
+    security.acme.email = "letsencrypt@pablo.tools";
 
     services.nginx = {
       enable = true;
-      virtualHosts."pablo.tools" = {
-        addSSL = true;
-        enableACME = true;
-        # root = "${blog}";
-        root = "/var/www/pablo-tools";
-      };
+      recommendedOptimisation = true;
+      recommendedTlsSettings = true;
+      clientMaxBodySize = "128m";
 
-      # virtualHosts."lislon.nix.own" = {
-        # addSSL = true;
-        # enableACME = true;
-        # root = "/var/www/lislon-pablo-tools";
+      commonHttpConfig = ''
+        server_names_hash_bucket_size 128;
+      '';
+
+      virtualHosts = {
+
+        "pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/pablo-tools";
+        };
+
+        "pass.pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
+        };
       };
     };
 
-    # virtualisation.oci-containers.containers = {
-    #   bitwardenrs = {
-    #     autoStart = true;
-    #     image = "bitwardenrs/server:latest";
-    #     environment = {
-    #       DOMAIN = "http://nix.own";
-    #       ADMIN_TOKEN = "test";
-    #       SIGNUPS_ALLOWED = "true";
-    #       INVITATIONS_ALOWED = "true";
-    #     };
-    #     ports = [
-    #       "9999:80"
-    #     ];
-    #     volumes = [
-    #       "/var/docker/bitwarden/:/data/"
-    #     ];
-    #   };
-    # };
+    services.bitwarden_rs = {
+      enable = true;
+      config = {
+        domain = "https://pass.pablo.tools:443";
+        signupsAllowed = true;
+        rocketPort = 8222;
+      };
 
-    # users = {
-    #   users.root = {
-    #     openssh.authorizedKeys.keyFiles =
-    #       [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
-    #   };
-  # };
+      environmentFile = /var/lib/bitwarden_rs/envfile;
+    };
+  };
 }
