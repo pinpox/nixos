@@ -10,17 +10,17 @@ in { config, pkgs, lib, ... }: {
     ../../common/user-profiles/pinpox.nix
 
     # Include reusables
-    # ../../common/borg/home.nix
-    # ../../common/sound.nix
-    ../../common/openssh.nix
-    ../../common/environment.nix
-    # ../../common/xserver.nix
-    # ../../common/networking.nix
     # ../../common/bluetooth.nix
+    # ../../common/borg/home.nix
     # ../../common/fonts.nix
-    ../../common/locale.nix
-    # ../../common/yubikey.nix
+    # ../../common/networking.nix
+    # ../../common/sound.nix
     # ../../common/virtualization.nix
+    # ../../common/xserver.nix
+    # ../../common/yubikey.nix
+    ../../common/environment.nix
+    ../../common/locale.nix
+    ../../common/openssh.nix
     ../../common/zsh.nix
   ];
 
@@ -31,11 +31,11 @@ in { config, pkgs, lib, ... }: {
       autoResize = true;
     };
 
-    # TODO enable  firewall
+    # Block anything that is not HTTP(s) or SSH.
     networking.firewall = {
       enable = true;
       allowPing = true;
-      allowedTCPPorts = [ 80 443 ];
+      allowedTCPPorts = [ 80 443 22 ];
     };
 
     boot.growPartition = true;
@@ -70,18 +70,24 @@ in { config, pkgs, lib, ... }: {
       recommendedTlsSettings = true;
       clientMaxBodySize = "128m";
 
+      # Needed for bitwarden_rs, it seems to have trouble serving scripts for
+      # the frontend without it.
       commonHttpConfig = ''
         server_names_hash_bucket_size 128;
       '';
 
+      # No need to support plain HTTP, forcing TLS for all vhosts. Certificates
+      # provided by Let's Encrypt via ACME. Generation and renewal is automatic
+      # if DNS is set up correctly for the (sub-)domains.
       virtualHosts = {
-
+        # Personal homepage and blog
         "pablo.tools" = {
           forceSSL = true;
           enableACME = true;
           root = "/var/www/pablo-tools";
         };
 
+        # Password manager (bitwarden) instance
         "pass.pablo.tools" = {
           forceSSL = true;
           enableACME = true;
@@ -90,14 +96,18 @@ in { config, pkgs, lib, ... }: {
       };
     };
 
+    # Bitwarden_rs installed via nixpkgs.
     services.bitwarden_rs = {
       enable = true;
       config = {
         domain = "https://pass.pablo.tools:443";
         signupsAllowed = true;
+
+        # The rocketPort option should match the value of the port in the reverse-proxy
         rocketPort = 8222;
       };
 
+      # The environment file has to be provided manually as it includes private data.
       environmentFile = /var/lib/bitwarden_rs/envfile;
     };
   };
