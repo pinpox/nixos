@@ -32,7 +32,11 @@ in { config, pkgs, lib, ... }: {
     };
 
     # TODO enable  firewall
-    networking.firewall.enable = false;
+    networking.firewall = {
+      enable = true;
+      allowPing = true;
+      allowedTCPPorts = [ 80 443 ];
+    };
 
     boot.growPartition = true;
     boot.kernelParams = [ "console=ttyS0" ];
@@ -58,48 +62,43 @@ in { config, pkgs, lib, ... }: {
     networking.hostName = "porree";
 
     security.acme.acceptTerms = true;
-
-    security.acme.certs = {
-      "pablo.tools" = {
-        #webroot = "/var/www/challenges/";
-        email = "letsencrypt@pablo.tools";
-        # extraDomainNames = [ "www.example.com" "foo.example.com" ];
-      };
-    };
+    security.acme.email = "letsencrypt@pablo.tools";
 
     services.nginx = {
       enable = true;
-      virtualHosts."pablo.tools" = {
-        addSSL = true;
-        enableACME = true;
-        root = "/var/www/pablo-tools";
+      recommendedOptimisation = true;
+      recommendedTlsSettings = true;
+      clientMaxBodySize = "128m";
+
+      commonHttpConfig = ''
+        server_names_hash_bucket_size 128;
+      '';
+
+      virtualHosts = {
+
+        "pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+          root = "/var/www/pablo-tools";
+        };
+
+        "pass.pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
+        };
       };
     };
+
+    services.bitwarden_rs = {
+      enable = true;
+      config = {
+        domain = "https://pass.pablo.tools:443";
+        signupsAllowed = true;
+        rocketPort = 8222;
+      };
+
+      environmentFile = /var/lib/bitwarden_rs/envfile;
+    };
   };
-
-  # virtualisation.oci-containers.containers = {
-  #   bitwardenrs = {
-  #     autoStart = true;
-  #     image = "bitwardenrs/server:latest";
-  #     environment = {
-  #       DOMAIN = "http://nix.own";
-  #       ADMIN_TOKEN = "test";
-  #       SIGNUPS_ALLOWED = "true";
-  #       INVITATIONS_ALOWED = "true";
-  #     };
-  #     ports = [
-  #       "9999:80"
-  #     ];
-  #     volumes = [
-  #       "/var/docker/bitwarden/:/data/"
-  #     ];
-  #   };
-  # };
-
-  # users = {
-  #   users.root = {
-  #     openssh.authorizedKeys.keyFiles =
-  #       [ (builtins.fetchurl { url = "https://github.com/pinpox.keys"; }) ];
-  #   };
-  # };
 }
