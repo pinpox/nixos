@@ -16,4 +16,11 @@
     deployment.targetHost = "192.168.7.2";
     imports = [ ../machines/kartoffel/configuration.nix ];
   };
+
+  # ahorn =
+  # { config, pkgs, ... }:
+  # {
+  #   deployment.targetHost = "ahorn";
+  #   imports = [ ../machines/ahorn/configuration.nix ];
+  # };
 }
