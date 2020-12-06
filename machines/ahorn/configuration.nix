@@ -62,6 +62,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     docker
+    gparted
+    ntfs3g
     docker-compose
     python
     ctags
@@ -82,6 +84,8 @@
   ];
 
   programs.dconf.enable = true;
+
+  programs.steam.enable = true;
 
   # Enable Wireguard
   # networking.wireguard.interfaces = {
