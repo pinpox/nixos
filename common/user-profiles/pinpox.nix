@@ -4,9 +4,9 @@
   users = {
 
     # For Virtualbox
-    # extraGroups = {
-    #   vboxusers.members = ["pinpox"];
-    # };
+    extraGroups = {
+      vboxusers.members = ["pinpox"];
+    };
 
     # Shell is set to zsh for all users as default.
     defaultUserShell = pkgs.zsh;
