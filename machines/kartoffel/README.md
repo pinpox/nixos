@@ -1,6 +1,6 @@
 # Kartoffel
 
-Personal desktop computer running i3.
+Personal desktop computer running awesomeWM.
 
 ```
 ▸ nix-shell -p pkgs.inxi -p pkgs.lm_sensors --command "inxi -Fx"

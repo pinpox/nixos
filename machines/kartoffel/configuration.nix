@@ -9,8 +9,8 @@
     ./hardware-configuration.nix
 
     # Default users
-    ../../user-profiles/root.nix
-    ../../user-profiles/pinpox.nix
+    #../../common/user-profiles/root.nix
+    ../../common/user-profiles/pinpox.nix
 
     # Include reusables
     ../../common/borg/home.nix
@@ -52,8 +52,8 @@
         device = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
         preLVM = true;
         allowDiscards = true;
-      };
     };
+  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;

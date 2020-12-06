@@ -134,7 +134,7 @@ The easiest way to get the repository is to add root's SSH key as deployment key
 in this repository.
 
 ```bash
-cat /secrets/$(hostname)/ssh/id_ed25519
+cat /secrets/$(hostname)/ssh/id_ed25519.pub
 ```
 
 [Add the key here]( https://github.com/pinpox/nixos/settings/keys/new)
