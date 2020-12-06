@@ -17,10 +17,10 @@
     imports = [ ../machines/kartoffel/configuration.nix ];
   };
 
-  # ahorn =
-  # { config, pkgs, ... }:
-  # {
-  #   deployment.targetHost = "ahorn";
-  #   imports = [ ../machines/ahorn/configuration.nix ];
-  # };
+  ahorn =
+  { config, pkgs, ... }:
+  {
+    deployment.targetHost = "192.168.2.100";
+    imports = [ ../machines/ahorn/configuration.nix ];
+  };
 }
