@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   # Enable the X11 windowing system.
   services.xserver = {
-    videoDrivers = [ "nvidia" ];
+    # videoDrivers = [ "nvidia" ];
     enable = true;
     autorun = true;
     layout = "us";

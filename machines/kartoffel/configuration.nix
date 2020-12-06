@@ -30,6 +30,9 @@
   # Define the hostname
   networking.hostName = "kartoffel";
 
+  # Video driver for nvidia graphics card
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   boot = {
     # Use GRUB2 as EFI boot loader.
     loader.grub.enable = true;
