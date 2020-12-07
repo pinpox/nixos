@@ -7,7 +7,7 @@ in { config, pkgs, lib, ... }: {
 
     # Default users
     #../../common/user-profiles/root.nix
-    ../../common/user-profiles/pinpox.nix
+    <common/user-profiles/pinpox.nix>
 
     # Include reusables
     # ../../common/bluetooth.nix
@@ -18,10 +18,10 @@ in { config, pkgs, lib, ... }: {
     # ../../common/virtualization.nix
     # ../../common/xserver.nix
     # ../../common/yubikey.nix
-    ../../common/environment.nix
-    ../../common/locale.nix
-    ../../common/openssh.nix
-    ../../common/zsh.nix
+    <common/environment.nix>
+    <common/locale.nix>
+    <common/openssh.nix>
+    <common/zsh.nix>
   ];
 
 

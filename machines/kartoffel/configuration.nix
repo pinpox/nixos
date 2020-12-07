@@ -6,25 +6,25 @@
 {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    /etc/nixos/machines/kartoffel/hardware-configuration.nix
 
     # Default users
     #../../common/user-profiles/root.nix
-    ../../common/user-profiles/pinpox.nix
+    <common/user-profiles/pinpox.nix>
 
     # Include reusables
-    ../../common/borg/home.nix
-    ../../common/sound.nix
-    ../../common/openssh.nix
-    ../../common/environment.nix
-    ../../common/xserver.nix
-    ../../common/networking.nix
-    ../../common/bluetooth.nix
-    ../../common/fonts.nix
-    ../../common/locale.nix
-    ../../common/yubikey.nix
-    ../../common/virtualization.nix
-    ../../common/zsh.nix
+    # <common/borg/home.nix>
+    <common/sound.nix>
+    <common/openssh.nix>
+    <common/environment.nix>
+    <common/xserver.nix>
+    <common/networking.nix>
+    <common/bluetooth.nix>
+    <common/fonts.nix>
+    <common/locale.nix>
+    <common/yubikey.nix>
+    <common/virtualization.nix>
+    <common/zsh.nix>
   ];
 
   # Define the hostname
@@ -72,7 +72,7 @@
     openvpn
     ruby
     python
-    borgbackup
+    # borgbackup
     go
     ripgrep
     nodejs
@@ -97,7 +97,7 @@
       ips = [ "192.168.7.2/24" ];
 
       # Path to the private key file
-      privateKeyFile = "/secrets/wireguard/privatekey";
+      privateKeyFile = toString <secrets/wireguard/privatekey>;
       peers = [{
         # Public key of the server (not a file path).
         publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
