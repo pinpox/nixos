@@ -38,3 +38,6 @@ in {
   all = pkgs.writeScript "deploy-all"
     (lib.concatStringsSep "\n" [ kartoffel porree ]);
 }
+
+# Run with (e.g.):
+# nix-build ./krop.nix -A kartoffel && ./result
