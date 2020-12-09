@@ -5,30 +5,39 @@ use parts of it as you please, but keep it mind it is intended mostly for
 personal use. I've written posts about certain aspects of this setup on my
 [personal blog](https://pablo.tools/blog).
 
-# Intial Setup
+# Initial Setup
 
 The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
 parts of the configuration as needed.
 
-**TL;DR** To use a host configuration on a fresh install, do as root:
+Deployment is managed with [krops](https://tech.ingolf-wagner.de/nixos/krops/).
+Secrets are stored in [pass](https://www.passwordstore.org/).
+
+**TL;DR** To use a host configuration on a fresh install, make sure that:
+
+- The hostname is set correctly (`hostname <machine name>`)
+- You are connected to the internet and have access rights to the repository
+- Pass has the necessary secrets for the machine
+- The machine's config is up-to-date
+
+Then backup the generated `hardware-configuration.nix` file:
+
 ```bash
-# Backup generated configuration files
-mv /etc/nixos /etc/nixos-old
-
-# Clone repository to /var/nixos-configs
-git clone git@github.com:pinpox/nixos.git /etc/nixos
-
 # Overwrite hardware-configuration.nix file with the generated one
-mv /etc/nixos-old/hardware-configuration.nix \
-   /etc/nixos/machines/$(hostname)/hardware-configuration.nix
+cp /etc/nixos/hardware-configuration.nix \
+   ./machines/$(hostname)/hardware-configuration.nix
 
-# Link the machines configuration.nix to the root, so nixos-rebuild finds it
-sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configuration.nix
+# Commit and push the new file
+git commit -am"Add hardware-configuration for $(hostname)" && git push
 ```
 
-The proceed to set up the unmanaged resources as described below.
+Finally, use `krops` to deploy the machine's configuration from a host that has
+the secrets in it's store.
 
+```bash
+nix-build ./krop.nix -A <machine name> && ./result
+```
 
 # Current Hosts
 
@@ -49,36 +58,6 @@ The services running on each host are documented in the host-specific
 The following resources are not managed or included in this repository and will
 have to be put in place manually.
 
-## `/secrets` Directory
-
-The `/secrets` directory contains all sensitive files that should not be shared
-or put into the nix-store. It has to be created/placed manually. Make sure the
-permissions on `/secerts` directory are set to `600` **recursively** and it is
-owned `root:root`.
-
-``` bash
-# Set permissions owner and group
-chmod -R 600 /secrets
-chown root:root -R /secrets
-```
-
-Example layout of expected structure as used by this configuration:
-
-```
- secrets
-└──  hostname
-   ├──  borg
-   │  └──  repo-passphrase
-   ├──  ssh
-   │  ├──  key-backup-private
-   │  ├──  key-backup-public
-   │  ├──  key-root-private
-   │  └──  key-root-public
-   └──  wireguard
-      ├──  private
-      └──  public
-```
-
 ## Home-manager configuration
 
 User-specific configuration is installed by home-manager where needed. Setup for
@@ -86,7 +65,7 @@ the `pinpox` user is hosted in a [separate
 repository](https://github.com/pinpox/nixos-home) so it can be used
 independently.
 
-# Creating new Hosts
+# Creating new Hosts. [TODO, this section is outdated!]
 
 The following describes how to create new hosts to be included in this project
 structure. It assumes a working NixOS installation on a new machine. The
