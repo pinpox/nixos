@@ -32,10 +32,30 @@ let
       common.file = toString ../common;
     }];
 
-    # Define machines with connection parameters and configuration
+  # Define machines with connection parameters and configuration
+  ahorn = pkgs.krops.writeDeploy "deploy-ahorn" {
+    source = source "ahorn";
+    target = "ahorn.wireguard";
+  };
+
+  birne = pkgs.krops.writeDeploy "deploy-birne" {
+    source = source "birne";
+    target = "birne.wireguard";
+  };
+
   kartoffel = pkgs.krops.writeDeploy "deploy-kartoffel" {
     source = source "kartoffel";
-    target = "root@localhost";
+    target = "root@kartoffel";
+  };
+
+  kfbox = pkgs.krops.writeDeploy "deploy-kfbox" {
+    source = source "kfbox";
+    target = "kfbox.wireguard";
+  };
+
+  mega = pkgs.krops.writeDeploy "deploy-mega" {
+    source = source "mega";
+    target = "mega.wireguard";
   };
 
   porree = pkgs.krops.writeDeploy "deploy-porree" {
@@ -45,21 +65,22 @@ let
 
 in {
 
-  # Define deployments. This can be a single machine or a group like "servers".
-
-  # TODO
-  # ahorn
-  # birne
-  # mega
-  # kfbox
+  # Define deployments
 
   # Individual machines
+  ahorn = ahorn;
+  birne = birne;
   kartoffel = kartoffel;
+  kfbox = kfbox;
+  mega = mega;
   porre = porree;
 
   # Groups
   all = pkgs.writeScript "deploy-all"
-    (lib.concatStringsSep "\n" [ kartoffel porree ]);
+    (lib.concatStringsSep "\n" [ ahorn birne kartoffel kfbox mega porree ]);
+
+  servers = pkgs.writeScript "deploy-servers"
+    (lib.concatStringsSep "\n" [ birne kfbox mega porree ]);
 }
 
 # Run with (e.g.):
