@@ -35,12 +35,12 @@ let
   # Define machines with connection parameters and configuration
   ahorn = pkgs.krops.writeDeploy "deploy-ahorn" {
     source = source "ahorn";
-    target = "ahorn.wireguard";
+    target = "root@ahorn";
   };
 
   birne = pkgs.krops.writeDeploy "deploy-birne" {
     source = source "birne";
-    target = "birne.wireguard";
+    target = "root@birne";
   };
 
   kartoffel = pkgs.krops.writeDeploy "deploy-kartoffel" {
@@ -50,17 +50,17 @@ let
 
   kfbox = pkgs.krops.writeDeploy "deploy-kfbox" {
     source = source "kfbox";
-    target = "kfbox.wireguard";
+    target = "root@kfbox";
   };
 
   mega = pkgs.krops.writeDeploy "deploy-mega" {
     source = source "mega";
-    target = "mega.wireguard";
+    target = "root@mega";
   };
 
   porree = pkgs.krops.writeDeploy "deploy-porree" {
     source = source "porree";
-    target = "root@nix.own";
+    target = "root@porree";
   };
 
 in {

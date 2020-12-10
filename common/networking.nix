@@ -2,7 +2,7 @@
 
   networking = {
 
-    # Defile the DNS servers
+    # Define the DNS servers
     nameservers = [ "1.1.1.1" "8.8.8.8" "192.168.2.1" ];
 
     # Enables wireless support via wpa_supplicant.
@@ -23,13 +23,18 @@
 
     # Additional hosts to put in /etc/hosts
     extraHosts = ''
-      94.16.114.42 nix.own
-      94.16.114.42 lislon.nix.own
-      192.168.2.84 backup-server
-      192.168.2.84 cloud.pablo.tools
+      # Wireguard
+      192.168.7.1 porree.wireguard
+      192.168.7.2 ahorn.wireguard
+      192.168.7.3 kartoffel.wireguard
+      192.168.7.4 birne.wireguard
+      192.168.7.5 kfbox.wireguard
+      192.168.7.6 mega.wireguard
 
-      10.10.10.212 bucket.htb
-      10.10.10.212 s3.bucket.htb
+      # Public
+      94.16.114.42 porree.public
+      93.177.66.52 kfbox.public
+      5.181.48.121 mega.public
     '';
   };
 }
