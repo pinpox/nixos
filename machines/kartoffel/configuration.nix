@@ -94,7 +94,7 @@
 
       # Determines the IP address and subnet of the client's end of the
       # tunnel interface.
-      ips = [ "192.168.7.2/24" ];
+      ips = [ "192.168.7.3/24" ];
 
       # Path to the private key file
       privateKeyFile = toString <secrets/wireguard/private>;

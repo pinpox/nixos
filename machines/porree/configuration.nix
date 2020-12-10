@@ -24,18 +24,19 @@ in { config, pkgs, lib, ... }: {
     <common/zsh.nix>
   ];
 
-
   config = {
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    pinentryFlavor = "gtk2";
-  };
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "gtk2";
+    };
 
-  # Setup Yubikey SSH and GPG
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+    services.qemuGuest.enable = true;
+
+    # Setup Yubikey SSH and GPG
+    services.pcscd.enable = true;
+    services.udev.packages = [ pkgs.yubikey-personalization ];
     fileSystems."/" = {
       device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
@@ -47,6 +48,7 @@ in { config, pkgs, lib, ... }: {
       enable = true;
       allowPing = true;
       allowedTCPPorts = [ 80 443 22 ];
+      allowedUDPPorts = [ 51820 ];
     };
 
     boot.growPartition = true;
@@ -104,6 +106,28 @@ in { config, pkgs, lib, ... }: {
           enableACME = true;
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
         };
+      };
+    };
+
+    # Enable Wireguard
+    networking.wireguard.interfaces = {
+
+      wg0 = {
+
+        # Determines the IP address and subnet of the client's end of the
+        # tunnel interface.
+        ips = [ "192.168.7.1/24" ];
+        listenPort = 51820;
+
+        # Path to the private key file
+        privateKeyFile = toString <secrets/wireguard/private>;
+        peers = [
+          # kartoffel
+          {
+            publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
+            allowedIPs = [ "192.168.7.0/24" ];
+          }
+        ];
       };
     };
 
