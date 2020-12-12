@@ -2,9 +2,9 @@
   # System-wide environment variables to be set
   environment = {
     variables = {
-      EDITOR = "${pkgs.neovim}/bin/nvim";
+      EDITOR = "nvim";
       GOPATH = "~/.go";
-      VISUAL = "${pkgs.neovim}/bin/nvim";
+      VISUAL = "nvim";
       # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load
       # SVG files (important for icons)
       GDK_PIXBUF_MODULE_FILE =
