@@ -59,8 +59,16 @@
     cleanTmpDir = true;
   };
 
-  # Users allowed to run nix
-  nix.allowedUsers = [ "root" ];
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
+    # Users allowed to run nix
+    allowedUsers = [ "root" ];
+   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
