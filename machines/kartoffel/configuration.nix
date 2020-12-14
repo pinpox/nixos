@@ -89,7 +89,7 @@
       ips = [ "192.168.7.3/24" ];
 
       # Path to the private key file
-      privateKeyFile = toString ./secrets/wireguard/private;
+      privateKeyFile = toString <secrets/wireguard/private>;
       peers = [{
         # Public key of the server (not a file path).
         publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
