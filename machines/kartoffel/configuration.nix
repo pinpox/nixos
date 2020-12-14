@@ -7,18 +7,18 @@
   imports = [
     # Include the results of the hardware scan.
     # <machine-config/hardware-configuration.nix>
-        <common/user-profiles/pinpox.nix>
-        <common/sound.nix>
-        <common/openssh.nix>
-        <common/environment.nix>
-        <common/xserver.nix>
-        <common/networking.nix>
-        <common/bluetooth.nix>
-        <common/fonts.nix>
-        <common/locale.nix>
-        <common/yubikey.nix>
-        <common/virtualization.nix>
-        <common/zsh.nix>
+        ../../common/user-profiles/pinpox.nix
+        ../../common/sound.nix
+        ../../common/openssh.nix
+        ../../common/environment.nix
+        ../../common/xserver.nix
+        ../../common/networking.nix
+        ../../common/bluetooth.nix
+        ../../common/fonts.nix
+        ../../common/locale.nix
+        ../../common/yubikey.nix
+        ../../common/virtualization.nix
+        ../../common/zsh.nix
         # Include reusables
         # <common/borg/home.nix>
 

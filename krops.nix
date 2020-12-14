@@ -26,19 +26,19 @@ let
       };
 
       # Name is interpolated to get the correct configuration.nix file
-      nixos-config.file = toString ../machines + "/${name}/configuration.nix";
+      # nixos-config.file = toString ../machines + "/${name}/configuration.nix";
 
-      machine-config.file = toString ../machines + "/${name}/";
+      machine-config.file = toString ../pinpox-nixos;
 
       # Import common modules
-      common.file = toString ../common;
+      # common.file = toString ../common;
     }];
 
 
   command = targetPath: ''
     nix-shell -p git --run '
-      nixos-rebuild switch --flake ${targetPath}/machine-config || \
-        nixos-rebuild switch --flake ${targetPath}/machine-config
+      nixos-rebuild switch --flake ${targetPath}/machine-config/machines/kartoffel || \
+        nixos-rebuild switch --flake ${targetPath}/machine-config/machines/kartoffel
     '
   '';
 
