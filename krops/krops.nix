@@ -31,7 +31,7 @@ let
       machine-config.file = toString ../machines + "/${name}/";
 
       # Import common modules
-      # common.file = toString ../common;
+      common.file = toString ../common;
     }];
 
 
@@ -57,7 +57,7 @@ let
 kartoffel = pkgs.krops.writeCommand "deploy-kartoffel" {
     inherit command;
     source = source "kartoffel";
-    target = "root@kartoffel.wireguard";
+    target = "root@localhost";
   };
 
   # kartoffel = pkgs.krops.writeDeploy "deploy-kartoffel" {
