@@ -6,25 +6,25 @@
 {
   imports = [
     # Include the results of the hardware scan.
-    /etc/nixos/machines/kartoffel/hardware-configuration.nix
+    # <machine-config/hardware-configuration.nix>
 
     # Default users
     #../../common/user-profiles/root.nix
-    <common/user-profiles/pinpox.nix>
+    ./common/user-profiles/pinpox.nix
 
     # Include reusables
     # <common/borg/home.nix>
-    <common/sound.nix>
-    <common/openssh.nix>
-    <common/environment.nix>
-    <common/xserver.nix>
-    <common/networking.nix>
-    <common/bluetooth.nix>
-    <common/fonts.nix>
-    <common/locale.nix>
-    <common/yubikey.nix>
-    <common/virtualization.nix>
-    <common/zsh.nix>
+    ./common/sound.nix
+    ./common/openssh.nix
+    ./common/environment.nix
+    ./common/xserver.nix
+    ./common/networking.nix
+    ./common/bluetooth.nix
+    ./common/fonts.nix
+    ./common/locale.nix
+    ./common/yubikey.nix
+    ./common/virtualization.nix
+    ./common/zsh.nix
   ];
 
   # Define the hostname

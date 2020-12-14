@@ -28,9 +28,19 @@ let
       # Name is interpolated to get the correct configuration.nix file
       nixos-config.file = toString ../machines + "/${name}/configuration.nix";
 
+      machine-config.file = toString ../machines + "/${name}/";
+
       # Import common modules
       common.file = toString ../common;
     }];
+
+
+  command = targetPath: ''
+    nix-shell -p git --run '
+      nixos-rebuild switch --flake ${targetPath}/machine-config || \
+        nixos-rebuild switch --flake ${targetPath}/machine-config
+    '
+  '';
 
   # Define machines with connection parameters and configuration
   ahorn = pkgs.krops.writeDeploy "deploy-ahorn" {
@@ -43,10 +53,17 @@ let
     target = "root@birne.wireguard";
   };
 
-  kartoffel = pkgs.krops.writeDeploy "deploy-kartoffel" {
+
+kartoffel = pkgs.krops.writeCommand "deploy-kartoffel" {
+    inherit command;
     source = source "kartoffel";
     target = "root@kartoffel.wireguard";
   };
+
+  # kartoffel = pkgs.krops.writeDeploy "deploy-kartoffel" {
+  #   source = source "kartoffel";
+  #   target = "root@kartoffel.wireguard";
+  # };
 
   kfbox = pkgs.krops.writeDeploy "deploy-kfbox" {
     source = source "kfbox";
@@ -85,3 +102,12 @@ in {
 
 # Run with (e.g.):
 # nix-build ./krop.nix -A kartoffel && ./result
+
+
+
+  # # Define machines with connection parameters and configuration
+  # ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
+  #   inherit command;
+  #   source = source "ahorn";
+  #   target = "root@ahorn.wireguard";
+  # };
