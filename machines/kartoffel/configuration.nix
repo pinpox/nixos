@@ -8,23 +8,7 @@
     # Include the results of the hardware scan.
     # <machine-config/hardware-configuration.nix>
 
-    # Default users
-    #../../common/user-profiles/root.nix
-    ./common/user-profiles/pinpox.nix
 
-    # Include reusables
-    # <common/borg/home.nix>
-    ./common/sound.nix
-    ./common/openssh.nix
-    ./common/environment.nix
-    ./common/xserver.nix
-    ./common/networking.nix
-    ./common/bluetooth.nix
-    ./common/fonts.nix
-    ./common/locale.nix
-    ./common/yubikey.nix
-    ./common/virtualization.nix
-    ./common/zsh.nix
   ];
 
   # Define the hostname
@@ -105,7 +89,7 @@
       ips = [ "192.168.7.3/24" ];
 
       # Path to the private key file
-      privateKeyFile = toString <secrets/wireguard/private>;
+      privateKeyFile = toString ./secrets/wireguard/private;
       peers = [{
         # Public key of the server (not a file path).
         publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
