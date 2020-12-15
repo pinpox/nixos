@@ -94,32 +94,32 @@
   programs.steam.enable = true;
 
   # Enable Wireguard
-  # networking.wireguard.interfaces = {
+  networking.wireguard.interfaces = {
 
-  # wg0 = {
+  wg0 = {
 
-  #   # Determines the IP address and subnet of the client's end of the
-  #   # tunnel interface.
-  #   ips = [ "192.168.7.2/24" ];
+    # Determines the IP address and subnet of the client's end of the
+    # tunnel interface.
+    ips = [ "192.168.7.2/24" ];
 
-  #   # Path to the private key file
-  #   privateKeyFile = "/secrets/wireguard/privatekey";
-  #   peers = [{
-  #     # Public key of the server (not a file path).
-  #     publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
+    # Path to the private key file
+      privateKeyFile = "/var/src/secrets/wireguard/private";
+    peers = [{
+      # Public key of the server (not a file path).
+      publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
 
-  #     # Don't forward all the traffic via VPN, only particular subnets
-  #     allowedIPs = [ "192.168.7.0/24" ];
+      # Don't forward all the traffic via VPN, only particular subnets
+      allowedIPs = [ "192.168.7.0/24" ];
 
-  #     # Server IP and port.
-  #     endpoint = "vpn.pablo.tools:51820";
+      # Server IP and port.
+      endpoint = "vpn.pablo.tools:51820";
 
-  #     # Send keepalives every 25 seconds. Important to keep NAT tables
-  #     # alive.
-  #     persistentKeepalive = 25;
-  #   }];
-  # };
-  # };
+      # Send keepalives every 25 seconds. Important to keep NAT tables
+      # alive.
+      persistentKeepalive = 25;
+    }];
+  };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

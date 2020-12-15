@@ -114,23 +114,23 @@ in { config, pkgs, lib, modulesPath, ... }: {
     # Enable Wireguard
     networking.wireguard.interfaces = {
 
-      # wg0 = {
+      wg0 = {
 
-      #   # Determines the IP address and subnet of the client's end of the
-      #   # tunnel interface.
-      #   ips = [ "192.168.7.1/24" ];
-      #   listenPort = 51820;
+        # Determines the IP address and subnet of the client's end of the
+        # tunnel interface.
+        ips = [ "192.168.7.1/24" ];
+        listenPort = 51820;
 
-      #   # Path to the private key file
-      #   privateKeyFile = toString <secrets/wireguard/private>;
-      #   peers = [
-      #     # kartoffel
-      #     {
-      #       publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
-      #       allowedIPs = [ "192.168.7.0/24" ];
-      #     }
-      #   ];
-      # };
+        # Path to the private key file
+        privateKeyFile = "/var/src/secrets/wireguard/private";
+        peers = [
+          # kartoffel
+          {
+            publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
+            allowedIPs = [ "192.168.7.0/24" ];
+          }
+        ];
+      };
     };
 
     # Bitwarden_rs installed via nixpkgs.
