@@ -101,16 +101,15 @@ in { config, pkgs, lib, modulesPath, ... }: {
       };
     };
 
+    nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    # Users allowed to run nix
-    allowedUsers = [ "root" ];
-   };
+      # Users allowed to run nix
+      allowedUsers = [ "root" ];
+    };
 
     # Enable Wireguard
     networking.wireguard.interfaces = {

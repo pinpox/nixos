@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ...}: {
+{ config, pkgs, lib, ... }: {
   # Backup with borgbackup to remote server. The connection key and repository
   # encryption passphrase is read from /secrets. This directory has to be
   # copied ther *manually* (so this config can be shared publicly)!

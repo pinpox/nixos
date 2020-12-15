@@ -2,26 +2,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
-{
+{ config, pkgs, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     # <machine-config/hardware-configuration.nix>
-        ../../common/user-profiles/pinpox.nix
-        ../../common/sound.nix
-        ../../common/openssh.nix
-        ../../common/environment.nix
-        ../../common/xserver.nix
-        ../../common/networking.nix
-        ../../common/bluetooth.nix
-        ../../common/fonts.nix
-        ../../common/locale.nix
-        ../../common/yubikey.nix
-        ../../common/virtualization.nix
-        ../../common/zsh.nix
-        # Include reusables
-        # <common/borg/home.nix>
-
+    ../../common/user-profiles/pinpox.nix
+    ../../common/sound.nix
+    ../../common/openssh.nix
+    ../../common/environment.nix
+    ../../common/xserver.nix
+    ../../common/networking.nix
+    ../../common/bluetooth.nix
+    ../../common/fonts.nix
+    ../../common/locale.nix
+    ../../common/yubikey.nix
+    ../../common/virtualization.nix
+    ../../common/zsh.nix
+    # Include reusables
+    # <common/borg/home.nix>
 
   ];
 
@@ -50,13 +48,12 @@
         device = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
         preLVM = true;
         allowDiscards = true;
+      };
     };
-  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;
   };
-
 
   nix = {
     package = pkgs.nixFlakes;
@@ -66,7 +63,7 @@
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
-   };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

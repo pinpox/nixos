@@ -1,5 +1,4 @@
-{ pkgs, ...}:
- {
+{ pkgs, ... }: {
 
   config = {
 
@@ -12,21 +11,20 @@
       challengeResponseAuthentication = false;
     };
 
-  environment.systemPackages = with pkgs; [
-    neovim
-    git
-    zsh
-    gnumake
-    youtube-dl
-  ];
+    environment.systemPackages = with pkgs; [
+      neovim
+      git
+      zsh
+      gnumake
+      youtube-dl
+    ];
 
     users = {
       users.root = {
-        openssh.authorizedKeys.keyFiles =
-          [
-            (builtins.fetchurl { url = "https://github.com/MayNiklas.keys";})
-            (builtins.fetchurl { url = "https://github.com/pinpox.keys"; })
-          ];
+        openssh.authorizedKeys.keyFiles = [
+          (builtins.fetchurl { url = "https://github.com/MayNiklas.keys"; })
+          (builtins.fetchurl { url = "https://github.com/pinpox.keys"; })
+        ];
       };
     };
   };

@@ -2,8 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
-{
+{ config, pkgs, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -42,14 +41,14 @@
     # Encrypted drive to be mounted by the bootloader. Path of the device will
     # have to be changed for each install.
 
-  initrd.luks.devices = {
-    root = {
-      # Get UUID from blkid /dev/sda2
-      device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
-      preLVM = true;
-      allowDiscards = true;
+    initrd.luks.devices = {
+      root = {
+        # Get UUID from blkid /dev/sda2
+        device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+        preLVM = true;
+        allowDiscards = true;
+      };
     };
-  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;
@@ -63,8 +62,7 @@
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
-   };
-
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -98,29 +96,29 @@
   # Enable Wireguard
   # networking.wireguard.interfaces = {
 
-    # wg0 = {
+  # wg0 = {
 
-    #   # Determines the IP address and subnet of the client's end of the
-    #   # tunnel interface.
-    #   ips = [ "192.168.7.2/24" ];
+  #   # Determines the IP address and subnet of the client's end of the
+  #   # tunnel interface.
+  #   ips = [ "192.168.7.2/24" ];
 
-    #   # Path to the private key file
-    #   privateKeyFile = "/secrets/wireguard/privatekey";
-    #   peers = [{
-    #     # Public key of the server (not a file path).
-    #     publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
+  #   # Path to the private key file
+  #   privateKeyFile = "/secrets/wireguard/privatekey";
+  #   peers = [{
+  #     # Public key of the server (not a file path).
+  #     publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
 
-    #     # Don't forward all the traffic via VPN, only particular subnets
-    #     allowedIPs = [ "192.168.7.0/24" ];
+  #     # Don't forward all the traffic via VPN, only particular subnets
+  #     allowedIPs = [ "192.168.7.0/24" ];
 
-    #     # Server IP and port.
-    #     endpoint = "vpn.pablo.tools:51820";
+  #     # Server IP and port.
+  #     endpoint = "vpn.pablo.tools:51820";
 
-    #     # Send keepalives every 25 seconds. Important to keep NAT tables
-    #     # alive.
-    #     persistentKeepalive = 25;
-    #   }];
-    # };
+  #     # Send keepalives every 25 seconds. Important to keep NAT tables
+  #     # alive.
+  #     persistentKeepalive = 25;
+  #   }];
+  # };
   # };
 
   # Open ports in the firewall.

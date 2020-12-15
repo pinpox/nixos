@@ -50,9 +50,7 @@
 
       porree = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [
-          ./machines/porree/configuration.nix
-        ];
+        modules = [ ./machines/porree/configuration.nix ];
       };
 
     };
