@@ -14,5 +14,5 @@ jobs:
       with:
         name: mycache
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix-build
+    - run: nix-build ./krops.nix
     - run: nix-shell --run "echo OK"
