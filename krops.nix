@@ -25,17 +25,12 @@ let
         url = "https://github.com/NixOS/nixpkgs";
       };
 
-      # Name is interpolated to get the correct configuration.nix file
-      # nixos-config.file = toString ../machines + "/${name}/configuration.nix";
-
+      # Copy over the whole repo. By default nixos-rebuild will use the
+      # currents system hostname to lookup the right nixos configuration in
+      # `nixosConfigurations` from flake.nix
       machine-config.file = toString ../pinpox-nixos;
-
-      # Import common modules
-      # common.file = toString ../common;
     }];
 
-
-    # TODO take out "kartoffel" from the command and use a variable
   command = targetPath: ''
     nix-shell -p git --run '
       nixos-rebuild switch --flake ${targetPath}/machine-config || \
@@ -44,39 +39,38 @@ let
   '';
 
   # Define machines with connection parameters and configuration
-  ahorn = pkgs.krops.writeDeploy "deploy-ahorn" {
+  ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
+    inherit command;
     source = source "ahorn";
-    target = "root@ahorn.wireguard";
+    target = "root@192.168.2.100";
   };
 
-  birne = pkgs.krops.writeDeploy "deploy-birne" {
+  birne = pkgs.krops.writeCommand "deploy-birne" {
+    inherit command;
     source = source "birne";
     target = "root@birne.wireguard";
   };
 
-
-kartoffel = pkgs.krops.writeCommand "deploy-kartoffel" {
+  kartoffel = pkgs.krops.writeCommand "deploy-kartoffel" {
     inherit command;
     source = source "kartoffel";
-    target = "root@localhost";
+    target = "root@kartoffel.wireguard";
   };
 
-  # kartoffel = pkgs.krops.writeDeploy "deploy-kartoffel" {
-  #   source = source "kartoffel";
-  #   target = "root@kartoffel.wireguard";
-  # };
-
-  kfbox = pkgs.krops.writeDeploy "deploy-kfbox" {
+  kfbox = pkgs.krops.writeCommand "deploy-kfbox" {
+    inherit command;
     source = source "kfbox";
     target = "root@kfbox.public";
   };
 
-  mega = pkgs.krops.writeDeploy "deploy-mega" {
+  mega = pkgs.krops.writeCommand "deploy-mega" {
+    inherit command;
     source = source "mega";
     target = "root@mega.public";
   };
 
-  porree = pkgs.krops.writeDeploy "deploy-porree" {
+  porree = pkgs.krops.writeCommand "deploy-porree" {
+    inherit command;
     source = source "porree";
     target = "root@porree.public";
   };
@@ -104,11 +98,9 @@ in {
 # Run with (e.g.):
 # nix-build ./krop.nix -A kartoffel && ./result
 
-
-
-  # # Define machines with connection parameters and configuration
-  # ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
-  #   inherit command;
-  #   source = source "ahorn";
-  #   target = "root@ahorn.wireguard";
-  # };
+# # Define machines with connection parameters and configuration
+# ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
+#   inherit command;
+#   source = source "ahorn";
+#   target = "root@ahorn.wireguard";
+# };
