@@ -53,20 +53,44 @@ nix-build ./krop.nix -A <machine name> && ./result
 The services running on each host are documented in the host-specific
 `README.md` files.
 
-# Unmanaged Resources
+# Deployment
 
-The following resources are not managed or included in this repository and will
-have to be put in place manually.
 
-## Home-manager configuration
+## Default Deployment
 
-User-specific configuration is installed by home-manager where needed. Setup for
-the `pinpox` user is hosted in a [separate
-repository](https://github.com/pinpox/nixos-home) so it can be used
-independently.
+Deployment is handled with [krops][(https://tech.ingolf-wagner.de/nixos/krops/).
+Every machine's deployment is defined in `krops.nix`. Additionally, there are
+groups to deploy to multiple hosts at once.
+
+To deploy to a single machine (e.g. `porree`):
+
+```bash
+nix-build ./krops.nix -A porree --show-trace && ./result
+```
+
+To deploy to a group (e.g. `servers`):
+
+```bash
+nix-build ./krops.nix -A all --show-trace && ./result
+```
+
+Ensure that the targets (`user@host` in krops.nix) are correct.
+
+
+## First Deployment
+
+If the system has not been configured to use flakes (e.g. fresh install), the
+first deployment will have to be build on a machine that has. This can be done
+from any of the other hosts that have the repository. The configuration will the
+have the necessary options set, so that flakes works from now on with the normal
+krops deployment.
+
+```bash
+# bash, zsh doesn't always work correctly
+sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
+ ```
 
 # Creating new Hosts. [TODO, this section is outdated!]
-
 
 The following describes how to create new hosts to be included in this project
 structure. It assumes a working NixOS installation on a new machine. The
@@ -85,10 +109,6 @@ The following will create a new set of keys to be added to the `/secrets`
 directory of this host.
 
 ```bash
-
-# Create directories
-mkdir -p /secrets/$(hostname)/{borg,wireguard,ssh}
-
 # Create SSH keys
 ssh-keygen -t ed25519 -f /secrets/$(hostname)/ssh/id_ed25519
 
@@ -101,61 +121,23 @@ wg pubkey < /secrets/$(hostname)/wireguard/privatekey > /secrets/$(hostname)/wir
 # Use if `pwgen` is not installed: nix-shell -p pkgs.pwgen
 pwgen 20 > /secrets/$(hostname)/borg/repo-passphrase
 
-# Set permissions owner and group
-chmod -R 600 /secrets
-chown root:root -R /secrets
 ```
 
-Backup the generated secrets **now**!
+TODO add to `pass`
 
-## Add GitHub deployment key
 
-The easiest way to get the repository is to add root's SSH key as deployment key
-in this repository.
 
-```bash
-cat /secrets/$(hostname)/ssh/id_ed25519.pub
-```
+# Unmanaged Resources
 
-[Add the key here]( https://github.com/pinpox/nixos/settings/keys/new)
+The following resources are not managed or included in this repository and will
+have to be put in place manually.
 
-## Copy initial configuration files
+## Home-manager configuration
 
-```bash
-# Use generated key from /secrets while it's not yet put in place
-export GIT_SSH_COMMAND='ssh -i /secrets/$(hostname)/ssh/id_ed25519 -o IdentitiesOnly=yes'
-# Backup generated configuration files
-mv /etc/nixos /etc/nixos-old
-
-# Clone this repository to /etc/nixos
-GIT_SSH_COMMAND='ssh -i /secrets/$(hostname)/ssh/id_ed25519 -o IdentitiesOnly=yes' \
-   git clone git@github.com:pinpox/nixos.git /etc/nixos
-
-# Save initial configuration.nix and hardware-configuration.nix
-cp /etc/nixos-old/*.nix \
-   /etc/nixos/machines/$(hostname)/
-
-# Link the machines configuration.nix to the root, so nixos-rebuild finds it
-sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configuration.nix
-
-```
-
-Machine should run `nixos-rebuild switch` without any problems.  At this point:
-**add/commit/push** the changes!
-
-# Deploy for first time
-
-If the new system has not been configured to use flakes, the first deployment
-will have to be build on a machine that has. This can be done from any of the
-other hosts that have the repository. The configuration will the have the
-necessary options set, so that flakes works from now on with the normal krops
-deployment.
-
-```bash
-# bash, zsh doesn't always work correctly
-sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
- ```
-
+User-specific configuration is installed by home-manager where needed. Setup for
+the `pinpox` user is hosted in a [separate
+repository](https://github.com/pinpox/nixos-home) so it can be used
+independently.
 
 # TODO
 - Setup backup
@@ -167,5 +149,3 @@ sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-hos
   git config --global user.email "you@example.com"
   git config --global user.name "Your Name"
 ```
-
-
