@@ -1,27 +1,19 @@
 let domain = "nix.own";
-in { config, pkgs, lib, ... }: {
+in { config, pkgs, lib, modulesPath, ... }: {
   imports = [
 
     # Include virtual hardware configuration
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    "${modulesPath}/profiles/qemu-guest.nix"
 
     # Default users
     #../../common/user-profiles/root.nix
-    <common/user-profiles/pinpox.nix>
+    ../../common/user-profiles/pinpox.nix
 
     # Include reusables
-    # ../../common/bluetooth.nix
-    # ../../common/borg/home.nix
-    # ../../common/fonts.nix
-    # ../../common/networking.nix
-    # ../../common/sound.nix
-    # ../../common/virtualization.nix
-    # ../../common/xserver.nix
-    # ../../common/yubikey.nix
-    <common/environment.nix>
-    <common/locale.nix>
-    <common/openssh.nix>
-    <common/zsh.nix>
+    ../../common/environment.nix
+    ../../common/locale.nix
+    ../../common/openssh.nix
+    ../../common/zsh.nix
   ];
 
   config = {
@@ -109,26 +101,37 @@ in { config, pkgs, lib, ... }: {
       };
     };
 
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
+    # Users allowed to run nix
+    allowedUsers = [ "root" ];
+   };
+
     # Enable Wireguard
     networking.wireguard.interfaces = {
 
-      wg0 = {
+      # wg0 = {
 
-        # Determines the IP address and subnet of the client's end of the
-        # tunnel interface.
-        ips = [ "192.168.7.1/24" ];
-        listenPort = 51820;
+      #   # Determines the IP address and subnet of the client's end of the
+      #   # tunnel interface.
+      #   ips = [ "192.168.7.1/24" ];
+      #   listenPort = 51820;
 
-        # Path to the private key file
-        privateKeyFile = toString <secrets/wireguard/private>;
-        peers = [
-          # kartoffel
-          {
-            publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
-            allowedIPs = [ "192.168.7.0/24" ];
-          }
-        ];
-      };
+      #   # Path to the private key file
+      #   privateKeyFile = toString <secrets/wireguard/private>;
+      #   peers = [
+      #     # kartoffel
+      #     {
+      #       publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
+      #       allowedIPs = [ "192.168.7.0/24" ];
+      #     }
+      #   ];
+      # };
     };
 
     # Bitwarden_rs installed via nixpkgs.

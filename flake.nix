@@ -52,7 +52,6 @@
         system = "x86_64-linux";
         modules = [
           ./machines/porree/configuration.nix
-          ./machines/porree/hardware-configuration.nix
         ];
       };
 
