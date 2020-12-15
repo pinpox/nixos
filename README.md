@@ -67,6 +67,7 @@ independently.
 
 # Creating new Hosts. [TODO, this section is outdated!]
 
+
 The following describes how to create new hosts to be included in this project
 structure. It assumes a working NixOS installation on a new machine. The
 following steps further assume you are logged in as root (e.g. via SSH)
@@ -142,6 +143,19 @@ sudo ln -sr /etc/nixos/machines/$(hostname)/configuration.nix /etc/nixos/configu
 Machine should run `nixos-rebuild switch` without any problems.  At this point:
 **add/commit/push** the changes!
 
+# Deploy for first time
+
+If the new system has not been configured to use flakes, the first deployment
+will have to be build on a machine that has. This can be done from any of the
+other hosts that have the repository. The configuration will the have the
+necessary options set, so that flakes works from now on with the normal krops
+deployment.
+
+```bash
+# bash, zsh doesn't always work correctly
+sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
+ ```
+
 
 # TODO
 - Setup backup
@@ -153,4 +167,5 @@ Machine should run `nixos-rebuild switch` without any problems.  At this point:
   git config --global user.email "you@example.com"
   git config --global user.name "Your Name"
 ```
+
 
