@@ -35,10 +35,11 @@ let
     }];
 
 
+    # TODO take out "kartoffel" from the command and use a variable
   command = targetPath: ''
     nix-shell -p git --run '
-      nixos-rebuild switch --flake ${targetPath}/machine-config/machines/kartoffel || \
-        nixos-rebuild switch --flake ${targetPath}/machine-config/machines/kartoffel
+      nixos-rebuild switch --flake ${targetPath}/machine-config || \
+        nixos-rebuild switch --flake ${targetPath}/machine-config
     '
   '';
 
