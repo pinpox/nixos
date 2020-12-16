@@ -1,27 +1,27 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Configuration for kartoffel
 
-{ config, pkgs, inputs, ... }:
-{
+{ config, pkgs, inputs, ... }: {
   imports = [
-    # Include the results of the hardware scan.
-    # <machine-config/hardware-configuration.nix>
-        ../../common/user-profiles/pinpox.nix
-        ../../common/sound.nix
-        ../../common/openssh.nix
-        ../../common/environment.nix
-        ../../common/xserver.nix
-        ../../common/networking.nix
-        ../../common/bluetooth.nix
-        ../../common/fonts.nix
-        ../../common/locale.nix
-        ../../common/yubikey.nix
-        ../../common/virtualization.nix
-        ../../common/zsh.nix
-        # Include reusables
-        # <common/borg/home.nix>
 
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+
+    # User Profiles
+    ../../common/user-profiles/pinpox.nix
+
+    # Include reusables
+    ../../common/bluetooth.nix
+    ../../common/environment.nix
+    ../../common/fonts.nix
+    ../../common/locale.nix
+    ../../common/networking.nix
+    ../../common/openssh.nix
+    ../../common/sound.nix
+    ../../common/virtualization.nix
+    ../../common/xserver.nix
+    ../../common/yubikey.nix
+    ../../common/zsh.nix
+    #../../common/borg/home.nix
 
   ];
 
@@ -50,13 +50,12 @@
         device = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
         preLVM = true;
         allowDiscards = true;
+      };
     };
-  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;
   };
-
 
   nix = {
     package = pkgs.nixFlakes;
@@ -66,35 +65,34 @@
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
-   };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # borgbackup
+    arandr
+    ctags
     docker
     docker-compose
-    python
-    ctags
-    openvpn
-    ruby
-    python
-    # borgbackup
-    go
-    ripgrep
-    nodejs
-    killall
-    arandr
-    wget
-    neovim
     git
     gnumake
+    go
+    killall
+    neovim
     nixfmt
+    nodejs
+    openvpn
+    python
+    ripgrep
+    ruby
+    wget
   ];
 
   programs.dconf.enable = true;
 
   # Enable Wireguard
-  # networking.wireguard.interfaces = {
+  networking.wireguard.interfaces = {
 
     wg0 = {
 
@@ -121,12 +119,6 @@
     };
   };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   nixpkgs = { config.allowUnfree = true; };
 
   # Clean up old generations after 30 days
@@ -144,4 +136,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03"; # Did you read the comment?
 }
-
