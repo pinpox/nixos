@@ -5,7 +5,7 @@
 { config, pkgs, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
-    # <machine-config/hardware-configuration.nix>
+    ./hardware-configuration.nix
     ../../common/user-profiles/pinpox.nix
     ../../common/sound.nix
     ../../common/openssh.nix
