@@ -30,11 +30,12 @@ let
     '
   '';
 
-  createHost = name: target: pkgs.krops.writeCommand "deploy-${name}" {
-    inherit command;
-    source = source name;
-    target = target;
-  };
+  createHost = name: target:
+    pkgs.krops.writeCommand "deploy-${name}" {
+      inherit command;
+      source = source name;
+      target = target;
+    };
 
   # Define machines with connection parameters and configuration
   ahorn = pkgs.krops.writeCommand "deploy-ahorn" {

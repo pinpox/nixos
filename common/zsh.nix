@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  environment.systemPackages = with pkgs; [
-    zsh
-  ];
+  environment.systemPackages = with pkgs; [ zsh ];
 
   programs.zsh = {
     enable = true;
