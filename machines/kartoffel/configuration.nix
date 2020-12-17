@@ -1,29 +1,6 @@
 # Configuration for kartoffel
 
 { config, pkgs, inputs, ... }: {
-  imports = [
-
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-
-    # User Profiles
-    ../../common/user-profiles/pinpox.nix
-
-    # Include reusables
-    ../../common/bluetooth.nix
-    ../../common/environment.nix
-    ../../common/fonts.nix
-    ../../common/locale.nix
-    ../../common/networking.nix
-    ../../common/openssh.nix
-    ../../common/sound.nix
-    ../../common/virtualization.nix
-    ../../common/xserver.nix
-    ../../common/yubikey.nix
-    ../../common/zsh.nix
-    #../../common/borg/home.nix
-
-  ];
 
   # Define the hostname
   networking.hostName = "kartoffel";
