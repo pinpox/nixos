@@ -1,10 +1,6 @@
 # Configuration for kartoffel
 
 { config, pkgs, inputs, ... }: {
-  # imports = [
-
-
-  # ];
 
   # Define the hostname
   networking.hostName = "kartoffel";
