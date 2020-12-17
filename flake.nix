@@ -5,7 +5,6 @@
 
   outputs = { self, nixpkgs }: {
 
-
     nixosConfigurations = {
 
       ahorn = nixpkgs.lib.nixosSystem {

@@ -1,7 +1,6 @@
 # Configuration file for ahorn
 
-{ config, pkgs, inputs, ... }:
-{
+{ config, pkgs, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -40,14 +39,14 @@
     # Encrypted drive to be mounted by the bootloader. Path of the device will
     # have to be changed for each install.
 
-  initrd.luks.devices = {
-    root = {
-      # Get UUID from blkid /dev/sda2
-      device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
-      preLVM = true;
-      allowDiscards = true;
+    initrd.luks.devices = {
+      root = {
+        # Get UUID from blkid /dev/sda2
+        device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+        preLVM = true;
+        allowDiscards = true;
+      };
     };
-  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;
@@ -61,8 +60,7 @@
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
-   };
-
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
