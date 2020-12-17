@@ -1,8 +1,7 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Configuration file for ahorn
 
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -13,16 +12,16 @@
 
     # Include reusables
     # ../../common/borg/home.nix
-    ../../common/sound.nix
-    ../../common/openssh.nix
-    ../../common/environment.nix
-    ../../common/xserver.nix
-    ../../common/networking.nix
     ../../common/bluetooth.nix
+    ../../common/environment.nix
     ../../common/fonts.nix
     ../../common/locale.nix
-    ../../common/yubikey.nix
+    ../../common/networking.nix
+    ../../common/openssh.nix
+    ../../common/sound.nix
     ../../common/virtualization.nix
+    ../../common/xserver.nix
+    ../../common/yubikey.nix
     ../../common/zsh.nix
   ];
 
@@ -41,14 +40,14 @@
     # Encrypted drive to be mounted by the bootloader. Path of the device will
     # have to be changed for each install.
 
-    initrd.luks.devices = {
-      root = {
-        # Get UUID from blkid /dev/sda2
-        device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
-        preLVM = true;
-        allowDiscards = true;
-      };
+  initrd.luks.devices = {
+    root = {
+      # Get UUID from blkid /dev/sda2
+      device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+      preLVM = true;
+      allowDiscards = true;
     };
+  };
 
     # /tmp is cleaned after each reboot
     cleanTmpDir = true;
@@ -62,31 +61,31 @@
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
-  };
+   };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    docker
-    gparted
-    ntfs3g
-    docker-compose
-    python
-    ctags
-    openvpn
-    ruby
-    python
-    borgbackup
-    go
-    ripgrep
-    nodejs
-    killall
     arandr
-    wget
-    neovim
+    borgbackup
+    ctags
+    docker
+    docker-compose
     git
     gnumake
+    go
+    gparted
+    killall
+    neovim
     nixfmt
+    nodejs
+    ntfs3g
+    openvpn
+    python
+    ripgrep
+    ruby
+    wget
   ];
 
   programs.dconf.enable = true;
@@ -120,12 +119,6 @@
       }];
     };
   };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   nixpkgs = { config.allowUnfree = true; };
 

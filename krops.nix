@@ -17,14 +17,6 @@ let
         name = name;
       };
 
-      # Using latest nixpkgs. fetchAlways will ensure that everything is up to
-      # date.
-      nixpkgs.git = {
-        ref = "origin/nixos-unstable";
-        fetchAlways = true;
-        url = "https://github.com/NixOS/nixpkgs";
-      };
-
       # Copy over the whole repo. By default nixos-rebuild will use the
       # currents system hostname to lookup the right nixos configuration in
       # `nixosConfigurations` from flake.nix
@@ -37,6 +29,12 @@ let
         nixos-rebuild switch --flake ${targetPath}/machine-config
     '
   '';
+
+  createHost = name: target: pkgs.krops.writeCommand "deploy-${name}" {
+    inherit command;
+    source = source name;
+    target = target;
+  };
 
   # Define machines with connection parameters and configuration
   ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
@@ -78,6 +76,7 @@ let
 in {
 
   # Define deployments
+  ahorn2 = createHost "ahorn" "root@192.168.2.100";
 
   # Individual machines
   ahorn = ahorn;

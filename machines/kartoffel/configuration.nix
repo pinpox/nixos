@@ -3,25 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, inputs, ... }: {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ../../common/user-profiles/pinpox.nix
-    ../../common/sound.nix
-    ../../common/openssh.nix
-    ../../common/environment.nix
-    ../../common/xserver.nix
-    ../../common/networking.nix
-    ../../common/bluetooth.nix
-    ../../common/fonts.nix
-    ../../common/locale.nix
-    ../../common/yubikey.nix
-    ../../common/virtualization.nix
-    ../../common/zsh.nix
-    # Include reusables
-    # <common/borg/home.nix>
-
-  ];
 
   # Define the hostname
   networking.hostName = "kartoffel";
@@ -68,24 +49,23 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # borgbackup
+    arandr
+    ctags
     docker
     docker-compose
-    python
-    ctags
-    openvpn
-    ruby
-    python
-    # borgbackup
-    go
-    ripgrep
-    nodejs
-    killall
-    arandr
-    wget
-    neovim
     git
     gnumake
+    go
+    killall
+    neovim
     nixfmt
+    nodejs
+    openvpn
+    python
+    ripgrep
+    ruby
+    wget
   ];
 
   programs.dconf.enable = true;
@@ -100,7 +80,7 @@
       ips = [ "192.168.7.3/24" ];
 
       # Path to the private key file
-      privateKeyFile = "/var/src/secrets/wireguard/private";
+      privateKeyFile = toString /var/src/secrets/wireguard/private;
       peers = [{
         # Public key of the server (not a file path).
         publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
@@ -117,12 +97,6 @@
       }];
     };
   };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   nixpkgs = { config.allowUnfree = true; };
 
@@ -141,3 +115,4 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03"; # Did you read the comment?
 }
+

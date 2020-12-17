@@ -101,15 +101,16 @@ in { config, pkgs, lib, modulesPath, ... }: {
       };
     };
 
-    nix = {
-      package = pkgs.nixFlakes;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
 
-      # Users allowed to run nix
-      allowedUsers = [ "root" ];
-    };
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
+    # Users allowed to run nix
+    allowedUsers = [ "root" ];
+   };
 
     # Enable Wireguard
     networking.wireguard.interfaces = {
@@ -122,11 +123,16 @@ in { config, pkgs, lib, modulesPath, ... }: {
         listenPort = 51820;
 
         # Path to the private key file
-        privateKeyFile = "/var/src/secrets/wireguard/private";
+        privateKeyFile = toString /var/src/secrets/wireguard/private;
         peers = [
           # kartoffel
           {
             publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
+            allowedIPs = [ "192.168.7.0/24" ];
+          }
+          # ahorn
+          {
+            publicKey = "ny2G9iJPBRLSn48fEmcfoIdYi3uHLbJZe3pH1F0/XVg=";
             allowedIPs = [ "192.168.7.0/24" ];
           }
         ];
