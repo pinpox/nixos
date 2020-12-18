@@ -56,7 +56,18 @@
 
       porree = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./machines/porree/configuration.nix ];
+        modules = [
+          ./machines/porree/configuration.nix
+
+          # User Profiles
+          ./common/user-profiles/pinpox.nix
+
+          # Include reusables
+          ./common/environment.nix
+          ./common/locale.nix
+          ./common/openssh.nix
+          ./common/zsh.nix
+        ];
       };
 
     };

@@ -1,20 +1,7 @@
 let domain = "nix.own";
 in { config, pkgs, lib, modulesPath, ... }: {
-  imports = [
 
-    # Include virtual hardware configuration
-    "${modulesPath}/profiles/qemu-guest.nix"
-
-    # Default users
-    #../../common/user-profiles/root.nix
-    ../../common/user-profiles/pinpox.nix
-
-    # Include reusables
-    ../../common/environment.nix
-    ../../common/locale.nix
-    ../../common/openssh.nix
-    ../../common/zsh.nix
-  ];
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
   config = {
 
