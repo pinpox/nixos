@@ -49,6 +49,7 @@
   environment.systemPackages = with pkgs; [
     # borgbackup
     arandr
+    mmonit
     ctags
     docker
     docker-compose
@@ -67,6 +68,11 @@
   ];
 
   programs.dconf.enable = true;
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts  =[ 8080 ];
+  };
 
   # Enable Wireguard
   networking.wireguard.interfaces = {

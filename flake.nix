@@ -28,6 +28,8 @@
           # User Profiles
           ./modules/user-profiles/pinpox.nix
 
+          ./modules/custom-packages.nix
+
           # Include reusables
           ./modules/bluetooth.nix
           ./modules/environment.nix
