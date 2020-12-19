@@ -6,22 +6,22 @@
     ./hardware-configuration.nix
 
     # Default users
-    #../../common/user-profiles/root.nix
-    ../../common/user-profiles/pinpox.nix
+    #../../modules/user-profiles/root.nix
+    ../../modules/user-profiles/pinpox.nix
 
     # Include reusables
-    # ../../common/borg/home.nix
-    ../../common/bluetooth.nix
-    ../../common/environment.nix
-    ../../common/fonts.nix
-    ../../common/locale.nix
-    ../../common/networking.nix
-    ../../common/openssh.nix
-    ../../common/sound.nix
-    ../../common/virtualization.nix
-    ../../common/xserver.nix
-    ../../common/yubikey.nix
-    ../../common/zsh.nix
+    # ../../modules/borg/home.nix
+    ../../modules/bluetooth.nix
+    ../../modules/environment.nix
+    ../../modules/fonts.nix
+    ../../modules/locale.nix
+    ../../modules/networking.nix
+    ../../modules/openssh.nix
+    ../../modules/sound.nix
+    ../../modules/virtualization.nix
+    ../../modules/xserver.nix
+    ../../modules/yubikey.nix
+    ../../modules/zsh.nix
   ];
 
   # Define the hostname

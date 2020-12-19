@@ -143,7 +143,7 @@ independently.
 - Setup backup
 - Setup VPN
 - read wireguard public key from /secrets in configuration.nix and sperate to
-	/common
+	/modules
 - setup root git account in configuration.nix
 ```
   git config --global user.email "you@example.com"
