@@ -26,7 +26,7 @@ in { config, pkgs, lib, modulesPath, ... }: {
     networking.firewall = {
       enable = true;
       allowPing = true;
-      allowedTCPPorts = [ 80 443 22 ];
+      allowedTCPPorts = [ 80 443 22 2812 ];
       allowedUDPPorts = [ 51820 ];
     };
 
@@ -38,17 +38,18 @@ in { config, pkgs, lib, modulesPath, ... }: {
     programs.ssh.startAgent = false;
 
     environment.systemPackages = with pkgs; [
-      nix-index
-      htop
-      neovim
-      nixfmt
-      git
-      wget
-      gnumake
-      ripgrep
-      go
-      python
       ctags
+      git
+      gnumake
+      go
+      htop
+      mmonit
+      neovim
+      nix-index
+      nixfmt
+      python
+      ripgrep
+      wget
     ];
     services.netdata = {
       enable = true;
@@ -131,7 +132,7 @@ check host megaclan3000.de with address megaclan3000.de
 ## Though, if safety is a concern we recommend instead using https when
 ## communicating with M/Monit and send credentials encrypted.
 #
-set mmonit http://monit:monit@192.168.7.3:8080/collector
+set mmonit http://monit:monit@status.pablo.tools:8080/collector
 #     # and register without credentials     # Don't register credentials
 #
 #
@@ -272,6 +273,13 @@ check network public with interface ens3
           forceSSL = true;
           enableACME = true;
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
+        };
+
+        # Monitoring
+        "status.pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
         };
       };
     };

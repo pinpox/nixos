@@ -28,8 +28,6 @@
           # User Profiles
           ./modules/user-profiles/pinpox.nix
 
-          ./modules/custom-packages.nix
-
           # Include reusables
           ./modules/bluetooth.nix
           ./modules/environment.nix
@@ -59,16 +57,19 @@
       porree = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./machines/porree/configuration.nix
 
           # User Profiles
           ./modules/user-profiles/pinpox.nix
 
           # Include reusables
+          ./modules/mmonit.nix
           ./modules/environment.nix
           ./modules/locale.nix
           ./modules/openssh.nix
           ./modules/zsh.nix
+
+          # Other machine-specific configuration
+          ./machines/porree/configuration.nix
         ];
       };
 
