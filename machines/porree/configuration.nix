@@ -100,7 +100,7 @@ in { config, pkgs, lib, modulesPath, ... }: {
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
         };
 
-        # Password manager (bitwarden) instance
+        # M/monit Monitoring
         "status.pablo.tools" = {
           forceSSL = true;
           enableACME = true;
