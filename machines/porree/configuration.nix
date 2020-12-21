@@ -99,6 +99,13 @@ in { config, pkgs, lib, modulesPath, ... }: {
           enableACME = true;
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
         };
+
+        # Password manager (bitwarden) instance
+        "status.pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = { proxyPass = "http://192.168.7.1:8080"; };
+        };
       };
     };
 
