@@ -1,0 +1,19 @@
+## Start Monit
+set daemon  60             # check services at 2 minutes intervals
+    with start delay 240    # optional: delay the first check by 4-minutes
+
+## Set syslog logging
+set logfile syslog
+
+## Set global SSL options
+set ssl {
+    verify     : enable # verify SSL certificates
+}
+
+# System recources
+check system $HOST
+  if loadavg (1min) > 4 then alert
+  if loadavg (5min) > 2 then alert
+  if cpu usage > 95% for 10 cycles then alert
+  if memory usage > 75% then alert
+  if swap usage > 25% then alert
