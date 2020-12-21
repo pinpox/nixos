@@ -54,17 +54,6 @@ in { config, pkgs, lib, modulesPath, ... }: {
       wget
     ];
 
-    services.monit = {
-
-      enable = true;
-      config = ''
-        include /var/src/secrets/monit/conf
-        include /var/src/machine-config/modules/monit/configs/default
-        include /var/src/machine-config/modules/monit/configs/porree
-'';
-};
-
-
     networking.hostName = "porree";
 
     security.acme.acceptTerms = true;

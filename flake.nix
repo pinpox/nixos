@@ -34,6 +34,7 @@
           ./modules/user-profiles/pinpox.nix
 
           # Include reusables
+          ./modules/monit/default.nix
           ./modules/bluetooth.nix
           ./modules/environment.nix
           ./modules/fonts.nix
@@ -68,6 +69,7 @@
 
           # Include reusables
           ./modules/mmonit.nix
+          ./modules/monit/default.nix
           ./modules/environment.nix
           ./modules/locale.nix
           ./modules/openssh.nix
