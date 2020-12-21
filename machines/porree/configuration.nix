@@ -58,59 +58,9 @@ in { config, pkgs, lib, modulesPath, ... }: {
 
       enable = true;
       config = ''
-## Start Monit
-set daemon  60             # check services at 2 minutes intervals
-    with start delay 240    # optional: delay the first check by 4-minutes
-
-## Set syslog logging
-set logfile syslog
-
-## Set global SSL options
-set ssl {
-    verify     : enable # verify SSL certificates
-}
-
-# Send status and events to M/Monit
-set mmonit http://monit:monit@192.168.7.1:8080/collector
-
-# Monit web UI
-set httpd port 2812 and
-    use address 192.168.7.1  # only accept connection from server
-    allow 192.168.7.1        # allow server itself
-    allow 192.168.7.2        # allow ahorn to
-    allow 192.168.7.3        # allow kartoffel
-
-check process nginx with pidfile /var/run/nginx/nginx.pid
-
-check host pablo.tools with address pablo.tools
-    if failed port 443 protocol https for 2 cycles then alert
-
-check host pass.pablo.tools with address pass.pablo.tools
-    if failed port 443 protocol https for 2 cycles then alert
-
-# System recources
-check system $HOST
-  if loadavg (1min) > 4 then alert
-  if loadavg (5min) > 2 then alert
-  if cpu usage > 95% for 10 cycles then alert
-  if memory usage > 75% then alert
-  if swap usage > 25% then alert
-
-# Filesystems
-check filesystem root with path /dev/disk/by-label/nixos
-  if space usage > 80% for 5 times within 15 cycles then alert
-
-# Network connection
-check network public with interface ens3
-  if failed link then alert
-  if changed link then alert
-  if saturation > 90% then alert
-  if download > 10 MB/s then alert
-  if total upload > 1 GB in last hour then alert
-
-# Top 10 programs
-check program top10 with path "/run/current-system/sw/bin/top -n1 -b"
-   if status != 0 then alert
+        include /var/src/monit-confs/default
+        include /var/src/monit-confs/porree
+        include /var/src/secrets/monit/conf
 '';
 };
 
