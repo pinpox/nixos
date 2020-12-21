@@ -254,7 +254,7 @@ check network public with interface ens3
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts  =[ 8080 ];
+    interfaces.wg0.allowedTCPPorts = [ 2812 ];
   };
 
   # Enable Wireguard

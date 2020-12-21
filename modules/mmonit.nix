@@ -52,10 +52,24 @@ fi
 #   start     Start mmonit (default)
 #   stop      Stop mmonit
 
+# from AUR
+# [Unit]
+# Description = Easy, proactive monitoring of Unix systems, network and cloud services
+# After = network.target
+
+# [Service]
+# Type=forking
+# ExecStart = /opt/mmonit/bin/mmonit start
+# ExecStop = /opt/mmonit/bin/mmonit stop
+# PIDFile = /opt/mmonit/logs/mmonit.pid
+
+# [Install]
+# WantedBy = multi-user.target
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts  =[ 8080 ];
+
+    interfaces.wg0.allowedTCPPorts = [ 8080 ];
   };
 
 systemd.services.mmonit = {
