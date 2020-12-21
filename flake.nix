@@ -1,8 +1,13 @@
 {
   description = "My machines";
 
-  inputs = { nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; }; };
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # home-manager.url = "github:nix-community/home-manager";
+    # nixos-home.url = "github:pinpox/nixos-home";
+  };
 
+  # outputs = { self, home-manager, nixpkgs }: {
   outputs = { self, nixpkgs }: {
 
     nixosConfigurations = {
