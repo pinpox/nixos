@@ -2,9 +2,6 @@
 
 # pkgs.callPackage ./derivation.nix {}
 
-
-
-
 { stdenv, glibc, gcc-unwrapped, autoPatchelfHook }:
 let
 
@@ -20,9 +17,9 @@ in stdenv.mkDerivation {
 
   system = "x86_64-linux";
 
-  src =
-    fetchTarball { url = "https://mmonit.com/dist/mmonit-${version}-linux-x64.tar.gz";
-   sha256 = "1mlnah3677dv3ml5qahpaj7zhxlxrkgbc53bj05k4gzjwg272chh";
+  src = fetchTarball {
+    url = "https://mmonit.com/dist/mmonit-${version}-linux-x64.tar.gz";
+    sha256 = "1mlnah3677dv3ml5qahpaj7zhxlxrkgbc53bj05k4gzjwg272chh";
   };
 
   nativeBuildInputs = [
