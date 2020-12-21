@@ -58,9 +58,9 @@ in { config, pkgs, lib, modulesPath, ... }: {
 
       enable = true;
       config = ''
-        include /var/src/monit-confs/default
-        include /var/src/monit-confs/porree
         include /var/src/secrets/monit/conf
+        include /var/src/machine-config/modules/monit/configs/default
+        include /var/src/machine-config/modules/monit/configs/porree
 '';
 };
 
