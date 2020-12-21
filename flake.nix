@@ -34,7 +34,6 @@
           ./modules/user-profiles/pinpox.nix
 
           # Include reusables
-          ./modules/monit/default.nix
           ./modules/bluetooth.nix
           ./modules/environment.nix
           ./modules/fonts.nix
@@ -46,6 +45,7 @@
           ./modules/xserver.nix
           ./modules/yubikey.nix
           ./modules/zsh.nix
+          # ./modules/monit/default.nix
           #../../modules/borg/home.nix
         ];
       };
@@ -79,7 +79,6 @@
           ./machines/porree/configuration.nix
         ];
       };
-
     };
   };
 }

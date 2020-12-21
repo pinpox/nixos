@@ -1,4 +1,3 @@
-
 { config, pkgs, lib, ... }: {
 
 
@@ -12,10 +11,8 @@
     config = ''
         include /var/src/secrets/monit/conf
         include /var/src/machine-config/modules/monit/configs/default
-        include /var/src/machine-config/modules/monit/configs/${networking.hostname}"
+        include /var/src/machine-config/modules/monit/configs/${config.networking.hostName}"
     '';
 
-  }
-
-
-
+  };
+}
