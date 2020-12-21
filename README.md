@@ -57,7 +57,7 @@ The services running on each host are documented in the host-specific
 
 ## Default Deployment
 
-Deployment is handled with [krops][(https://tech.ingolf-wagner.de/nixos/krops/).
+Deployment is handled with [krops](https://tech.ingolf-wagner.de/nixos/krops/).
 Every machine's deployment is defined in `krops.nix`. Additionally, there are
 groups to deploy to multiple hosts at once.
 
