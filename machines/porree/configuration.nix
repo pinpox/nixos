@@ -162,8 +162,8 @@ in { config, pkgs, lib, modulesPath, ... }: {
         rocketPort = 8222;
       };
 
-      # The environment file has to be provided manually as it includes private data.
-      environmentFile = /var/lib/bitwarden_rs/envfile;
+      # The environment file contiains secrets and is stored in pass
+      environmentFile = /var/lib/src/secrets/bitwarden_rs/envfile;
     };
   };
 }
