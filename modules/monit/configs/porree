@@ -1,11 +1,20 @@
 check process nginx with pidfile /var/run/nginx/nginx.pid
 
 check host pablo.tools with address pablo.tools
-    if failed port 443 protocol https for 2 cycles then alert
+    if failed
+		port 443
+		protocol https
+		and certificate valid > 30 days
+		for 2 cycles
+	then alert
 
 check host pass.pablo.tools with address pass.pablo.tools
-    if failed port 443 protocol https for 2 cycles then alert
-
+    if failed
+		port 443
+		protocol https
+		and certificate valid > 30 days
+		for 2 cycles
+	then alert
 
 # Filesystems
 check filesystem root with path /dev/disk/by-label/nixos

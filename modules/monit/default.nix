@@ -10,7 +10,7 @@
     config = ''
       include /var/src/secrets/monit/conf
       include /var/src/machine-config/modules/monit/configs/default
-      include /var/src/machine-config/modules/monit/configs/${config.networking.hostName}"
+      include /var/src/machine-config/modules/monit/configs/${config.networking.hostName}
     '';
 
   };
