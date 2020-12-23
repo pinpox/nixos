@@ -163,7 +163,7 @@ in { config, pkgs, lib, modulesPath, ... }: {
       };
 
       # The environment file contiains secrets and is stored in pass
-      environmentFile = /var/lib/src/secrets/bitwarden_rs/envfile;
+      environmentFile = /var/src/secrets/bitwarden_rs/envfile;
     };
   };
 }
