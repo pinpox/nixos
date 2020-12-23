@@ -19,7 +19,22 @@
 
       birne = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./machines/birne/configuration.nix ];
+        modules = [
+
+          # Machine specific config
+          ./machines/birne/configuration.nix
+
+          # Include the results of the hardware scan.
+          ./machines/birne/hardware-configuration.nix
+
+          # User profiles
+          ./modules/user-profiles/pinpox.nix
+
+          ./modules/environment.nix
+          ./modules/locale.nix
+          ./modules/openssh.nix
+          ./modules/zsh.nix
+        ];
       };
 
       kartoffel = nixpkgs.lib.nixosSystem {

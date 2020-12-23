@@ -47,7 +47,7 @@ let
   birne = pkgs.krops.writeCommand "deploy-birne" {
     inherit command;
     source = source "birne";
-    target = "root@birne.wireguard";
+    target = "root@192.168.2.84";
   };
 
   kartoffel = pkgs.krops.writeCommand "deploy-kartoffel" {
