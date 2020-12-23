@@ -30,7 +30,6 @@
           # User profiles
           ./modules/user-profiles/pinpox.nix
 
-
           ./modules/monit/default.nix
           ./modules/environment.nix
           ./modules/locale.nix

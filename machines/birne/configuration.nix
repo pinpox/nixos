@@ -1,7 +1,6 @@
 # Configuration for birne
 
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
 
   networking.hostName = "birne"; # Define your hostname.
 
@@ -28,7 +27,6 @@
     # Users allowed to run nix
     allowedUsers = [ "root" ];
   };
-
 
   # Enable Wireguard
   networking.wireguard.interfaces = {
