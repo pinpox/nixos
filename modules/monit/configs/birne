@@ -1,0 +1,15 @@
+# Filesystems
+check filesystem root with path /dev/disk/by-label/root
+  if space usage > 80% for 5 times within 15 cycles then alert
+
+# Network connection
+check network public with interface eno1
+  if failed link then alert
+  if changed link then alert
+  if saturation > 90% then alert
+  if download > 10 MB/s then alert
+  if total upload > 1 GB in last hour then alert
+
+# Top 10 programs
+check program top10 with path "/run/current-system/sw/bin/top -n1 -b"
+   if status != 0 then alert
