@@ -30,6 +30,8 @@
           # User profiles
           ./modules/user-profiles/pinpox.nix
 
+          # Reusables
+          ./modules/lvm-grub.nix
           ./modules/monit/default.nix
           ./modules/environment.nix
           ./modules/locale.nix
