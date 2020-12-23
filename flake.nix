@@ -35,6 +35,7 @@
 
           # Reusables
           ./modules/lvm-grub.nix
+          ./modules/dyndns.nix
           ./modules/monit/default.nix
           ./modules/environment.nix
           ./modules/locale.nix

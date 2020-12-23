@@ -10,11 +10,11 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
