@@ -14,7 +14,10 @@
 
       ahorn = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./machines/ahorn/configuration.nix ];
+        modules = [
+          ./machines/ahorn/configuration.nix
+          ./modules/lvm-grub.nix
+        ];
       };
 
       birne = nixpkgs.lib.nixosSystem {

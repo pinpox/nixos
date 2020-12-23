@@ -28,14 +28,6 @@
   networking.hostName = "ahorn";
 
   boot = {
-    # Use GRUB2 as EFI boot loader.
-    loader.grub.enable = true;
-    loader.grub.version = 2;
-    loader.grub.device = "nodev";
-    loader.grub.efiSupport = true;
-    loader.grub.useOSProber = true;
-    loader.efi.canTouchEfiVariables = true;
-
     # Encrypted drive to be mounted by the bootloader. Path of the device will
     # have to be changed for each install.
 
