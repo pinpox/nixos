@@ -4,12 +4,19 @@
 
     loader = {
       grub.enable = true;
+
+      # Use Grub2
       grub.version = 2;
+
+      # Required for LVM
       grub.device = "nodev";
+
+      # Use UEFI support
       grub.efiSupport = true;
       efi.canTouchEfiVariables = true;
     };
 
+    # /tmp is cleaned after each reboot
     cleanTmpDir = true;
   };
 }

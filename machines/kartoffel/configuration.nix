@@ -10,12 +10,7 @@
 
   boot = {
     # Use GRUB2 as EFI boot loader.
-    loader.grub.enable = true;
-    loader.grub.version = 2;
-    loader.grub.device = "nodev";
-    loader.grub.efiSupport = true;
     loader.grub.useOSProber = true;
-    loader.efi.canTouchEfiVariables = true;
 
     blacklistedKernelModules = [ "nouveau" ];
 
@@ -29,9 +24,6 @@
         allowDiscards = true;
       };
     };
-
-    # /tmp is cleaned after each reboot
-    cleanTmpDir = true;
   };
 
   nix = {

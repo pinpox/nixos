@@ -52,6 +52,7 @@
           ./modules/user-profiles/pinpox.nix
 
           # Include reusables
+          ./modules/lvm-grub.nix
           ./modules/bluetooth.nix
           ./modules/environment.nix
           ./modules/fonts.nix
