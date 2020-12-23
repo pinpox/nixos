@@ -1,16 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Configuration for birne
 
 { config, pkgs, ... }:
-
 {
-  imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
 
-  # Use the grub  EFI boot loader.
+  networking.hostName = "birne"; # Define your hostname.
 
+  # Use the grub2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "nodev";
@@ -18,67 +13,59 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.cleanTmpDir = true;
 
-  networking.hostName = "birne"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
+    # Users allowed to run nix
+    allowedUsers = [ "root" ];
+  };
 
 
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
+  # Enable Wireguard
+  networking.wireguard.interfaces = {
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
+    wg0 = {
 
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+      # Determines the IP address and subnet of the client's end of the
+      # tunnel interface.
+      ips = [ "192.168.7.4/24" ];
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+      # Path to the private key file
+      privateKeyFile = toString /var/src/secrets/wireguard/private;
+      peers = [{
+        # Public key of the server (not a file path).
+        publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.jane = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  # };
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   wget vim
-  #   firefox
-  # ];
+        # Don't forward all the traffic via VPN, only particular subnets
+        allowedIPs = [ "192.168.7.0/24" ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+        # Server IP and port.
+        endpoint = "vpn.pablo.tools:51820";
 
-  # List services that you want to enable:
-
-    nix = {
-      package = pkgs.nixFlakes;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
-
-      # Users allowed to run nix
-      allowedUsers = [ "root" ];
+        # Send keepalives every 25 seconds. Important to keep NAT tables
+        # alive.
+        persistentKeepalive = 25;
+      }];
     };
+  };
 
-  # Enable the OpenSSH daemon.
+  nixpkgs = { config.allowUnfree = true; };
+
+  # Clean up old generations after 30 days
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
