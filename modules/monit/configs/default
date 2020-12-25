@@ -1,6 +1,6 @@
 ## Start Monit
 set daemon  60             # check services at 2 minutes intervals
-    with start delay 240    # optional: delay the first check by 4-minutes
+    with start delay 30    # optional: delay the first check by 30 seconds
 
 ## Set syslog logging
 set logfile syslog

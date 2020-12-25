@@ -13,3 +13,14 @@ check network public with interface eno1
 # Top 10 programs
 check program top10 with path "/run/current-system/sw/bin/top -n1 -b"
    if status != 0 then alert
+
+check process nginx with pidfile /var/run/nginx/nginx.pid
+
+check host cloud.pablo.tools with address cloud.pablo.tools
+    if failed
+		port 443
+		protocol https
+		and certificate valid > 30 days
+		for 2 cycles
+	then alert
+
