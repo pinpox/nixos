@@ -48,6 +48,35 @@
     };
   };
 
+    security.acme.acceptTerms = true;
+    security.acme.email = "letsencrypt@pablo.tools";
+
+    services.nginx = {
+      enable = true;
+      recommendedOptimisation = true;
+      recommendedTlsSettings = true;
+      clientMaxBodySize = "128m";
+
+      virtualHosts = {
+        # Password manager (bitwarden) instance
+        "cloud.pablo.tools" = {
+          forceSSL = true;
+          enableACME = true;
+
+          # TODO remove this when seafile is setup
+          root = "/var/www/statuspage";
+          # locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
+        };
+      };
+    };
+
+    services.borgbackup.repos.kartoffel = {
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHmA67Wm0zAJ+SK1/hhoTO4Zjwe2FyE/6DlyC4JD5S0X borg@kartoffel"
+    ];
+      path = /mnt/data/borg-nix/kartoffel;
+    };
+
   nixpkgs = { config.allowUnfree = true; };
 
   # Clean up old generations after 30 days
@@ -58,7 +87,7 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

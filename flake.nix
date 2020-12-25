@@ -68,8 +68,7 @@
           ./modules/xserver.nix
           ./modules/yubikey.nix
           ./modules/zsh.nix
-          # ./modules/monit/default.nix
-          #../../modules/borg/home.nix
+          ./modules/borg/home.nix
         ];
       };
 

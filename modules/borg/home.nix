@@ -10,8 +10,7 @@
 
     # Remote servers repository to use. Archives will be labeled with the
     # hostname and a timestamp
-    repo =
-      "ssh://borg@backup-server//mnt/backup/borgbackup/${config.networking.hostName}";
+    repo = "borg@192.168.2.84:.";
 
     # Don't create repo if it does not exist. Ensures the backup fails, if for
     # some reason the backup drive is not mounted or the path has changed.
@@ -20,9 +19,10 @@
     # Encryption and connection keys are read from /secrets
     encryption = {
       mode = "repokey";
-      passCommand = "cat /secrets/borg/repo-passphrase";
+      passCommand = "cat /var/src/secrets/borg/passphrase";
     };
-    environment.BORG_RSH = "ssh -i /secrets/ssh/backup-key";
+
+    environment.BORG_RSH = "ssh -i /var/src/secrets/ssh/borg/private";
 
     # Print more infomation to log and set intervals at which resumable
     # checkpoints are created
@@ -48,6 +48,8 @@
       "/*/.vim"
       "/*/Cache"
       "/*/Downloads"
+      "/*/Seafile"
+      "/*/Projects/nixpkgs"
       "/*/VirtualBox VMs"
       "discord/Cache"
     ];
