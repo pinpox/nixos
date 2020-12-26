@@ -41,6 +41,7 @@
           ./modules/locale.nix
           ./modules/openssh.nix
           ./modules/zsh.nix
+          ./modules/zabbix-agent.nix
         ];
       };
 
