@@ -99,6 +99,7 @@
           ./modules/openssh.nix
           ./modules/zsh.nix
           # ./modules/zabbix-server.nix
+          ./modules/graphana.nix
 
           # Other machine-specific configuration
           ./machines/porree/configuration.nix
