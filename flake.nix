@@ -41,7 +41,6 @@
           ./modules/locale.nix
           ./modules/openssh.nix
           ./modules/zsh.nix
-          # ./modules/zabbix-agent.nix
         ];
       };
 
@@ -70,7 +69,6 @@
           ./modules/yubikey.nix
           ./modules/zsh.nix
           ./modules/borg/home.nix
-          # ./modules/zabbix-agent.nix
         ];
       };
 
@@ -98,8 +96,6 @@
           ./modules/locale.nix
           ./modules/openssh.nix
           ./modules/zsh.nix
-          # ./modules/zabbix-server.nix
-          ./modules/graphana.nix
 
           # Other machine-specific configuration
           ./machines/porree/configuration.nix
