@@ -101,3 +101,8 @@ the `pinpox` user is hosted in a [separate
 repository](https://github.com/pinpox/nixos-home) so it can be used
 independently.
 
+# Contributing?
+
+While contributions don't make much sense for a personal configuration repository,
+I'm always happy to get hints, tips and constructive criticism. If you find something 
+that could be done in a better way, please let me know!
