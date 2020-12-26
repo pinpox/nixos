@@ -17,3 +17,11 @@ check system $HOST
   if cpu usage > 95% for 10 cycles then alert
   if memory usage > 75% then alert
   if swap usage > 25% then alert
+
+# Network connection
+check network wireguard with interface wg0
+  if failed link then alert
+  if changed link then alert
+  if saturation > 90% then alert
+  if download > 10 MB/s then alert
+  if total upload > 1 GB in last hour then alert
