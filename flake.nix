@@ -34,11 +34,12 @@
           ./modules/user-profiles/pinpox.nix
 
           # Reusables
-          ./modules/lvm-grub.nix
+          ./modules/borg-server.nix
           ./modules/dyndns.nix
-          ./modules/monit/default.nix
           ./modules/environment.nix
           ./modules/locale.nix
+          ./modules/lvm-grub.nix
+          ./modules/monit/default.nix
           ./modules/openssh.nix
           ./modules/zsh.nix
         ];
@@ -56,11 +57,12 @@
           ./modules/user-profiles/pinpox.nix
 
           # Include reusables
-          ./modules/lvm-grub.nix
           ./modules/bluetooth.nix
+          ./modules/borg/home.nix
           ./modules/environment.nix
           ./modules/fonts.nix
           ./modules/locale.nix
+          ./modules/lvm-grub.nix
           ./modules/networking.nix
           ./modules/openssh.nix
           ./modules/sound.nix
@@ -68,7 +70,6 @@
           ./modules/xserver.nix
           ./modules/yubikey.nix
           ./modules/zsh.nix
-          ./modules/borg/home.nix
         ];
       };
 
