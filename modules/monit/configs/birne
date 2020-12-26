@@ -2,6 +2,12 @@
 check filesystem root with path /dev/disk/by-label/root
   if space usage > 80% for 5 times within 15 cycles then alert
 
+check filesystem DATA with path /dev/disk/by-label/DATA
+  if space usage > 80% for 5 times within 15 cycles then alert
+
+check filesystem BACKUP with path /dev/disk/by-label/BACKUP
+  if space usage > 80% for 5 times within 15 cycles then alert
+
 # Network connection
 check network public with interface eno1
   if failed link then alert
