@@ -1,57 +1,28 @@
 # Configuration file for ahorn
-
 { config, pkgs, inputs, ... }: {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-
-    # Default users
-    #../../modules/user-profiles/root.nix
-    ../../modules/user-profiles/pinpox.nix
-
-    # Include reusables
-    # ../../modules/borg/home.nix
-    ../../modules/bluetooth.nix
-    ../../modules/environment.nix
-    ../../modules/fonts.nix
-    ../../modules/locale.nix
-    ../../modules/networking.nix
-    ../../modules/openssh.nix
-    ../../modules/sound.nix
-    ../../modules/virtualization.nix
-    ../../modules/xserver.nix
-    ../../modules/yubikey.nix
-    ../../modules/zsh.nix
-  ];
 
   # Define the hostname
   networking.hostName = "ahorn";
 
-  boot = {
-    # Encrypted drive to be mounted by the bootloader. Path of the device will
-    # have to be changed for each install.
+  # TODO Create option in wireguard module for setting this
+  # Determines the IP address and subnet of the client's end of the
+  # tunnel interface.
+  networking.wireguard.interfaces.wg0.ips = [ "192.168.7.2/24" ];
 
+  # TODO Create option in lvm-grub-luks module for setting this
+  # Encrypted drive to be mounted by the bootloader. Path of the device will
+  # have to be changed for each install.
+  # Get UUID from blkid /dev/sda2
+  boot.initrd.luks.devices.root.device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+
+  # TODO Create lvm-grub-luks module
+  boot = {
     initrd.luks.devices = {
       root = {
-        # Get UUID from blkid /dev/sda2
-        device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
         preLVM = true;
         allowDiscards = true;
       };
     };
-
-    # /tmp is cleaned after each reboot
-    cleanTmpDir = true;
-  };
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    # Users allowed to run nix
-    allowedUsers = [ "root" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -79,45 +50,6 @@
   ];
 
   programs.dconf.enable = true;
-
-  programs.steam.enable = true;
-
-  # Enable Wireguard
-  networking.wireguard.interfaces = {
-
-    wg0 = {
-
-      # Determines the IP address and subnet of the client's end of the
-      # tunnel interface.
-      ips = [ "192.168.7.2/24" ];
-
-      # Path to the private key file
-      privateKeyFile = "/var/src/secrets/wireguard/private";
-      peers = [{
-        # Public key of the server (not a file path).
-        publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
-
-        # Don't forward all the traffic via VPN, only particular subnets
-        allowedIPs = [ "192.168.7.0/24" ];
-
-        # Server IP and port.
-        endpoint = "vpn.pablo.tools:51820";
-
-        # Send keepalives every 25 seconds. Important to keep NAT tables
-        # alive.
-        persistentKeepalive = 25;
-      }];
-    };
-  };
-
-  nixpkgs = { config.allowUnfree = true; };
-
-  # Clean up old generations after 30 days
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

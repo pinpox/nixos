@@ -31,3 +31,6 @@ check network public with interface ens3
 # Top 10 programs
 check program top10 with path "/run/current-system/sw/bin/top -n1 -b"
    if status != 0 then alert
+
+check program test-script with path /var/src/machine-config/modules/monit/scripts/test.sh
+   if status !=0 then alert

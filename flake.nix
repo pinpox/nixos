@@ -16,7 +16,29 @@
         system = "x86_64-linux";
         modules = [
           ./machines/ahorn/configuration.nix
+
+          # Include the results of the hardware scan.
+          ./hardware-configuration.nix
+
+          # Default users
+          ../../modules/user-profiles/pinpox.nix
+
+          # Modules
+          # ../../modules/borg/home.nix
+          ./modules/bluetooth.nix
+          ./modules/environment.nix
+          ./modules/fonts.nix
+          ./modules/locale.nix
           ./modules/lvm-grub.nix
+          ./modules/networking.nix
+          ./modules/nix-common.nix
+          ./modules/openssh.nix
+          ./modules/sound.nix
+          ./modules/virtualization.nix
+          ./modules/wireguard-client.nix
+          ./modules/xserver.nix
+          ./modules/yubikey.nix
+          ./modules/zsh.nix
         ];
       };
 
@@ -33,7 +55,7 @@
           # User profiles
           ./modules/user-profiles/pinpox.nix
 
-          # Reusables
+          # Modules
           ./modules/borg-server.nix
           ./modules/dyndns.nix
           ./modules/environment.nix
@@ -56,7 +78,7 @@
           # User Profiles
           ./modules/user-profiles/pinpox.nix
 
-          # Include reusables
+          # Modules
           ./modules/bluetooth.nix
           ./modules/borg/home.nix
           ./modules/environment.nix
@@ -90,7 +112,7 @@
           # User Profiles
           ./modules/user-profiles/pinpox.nix
 
-          # Include reusables
+          # Modules
           ./modules/mmonit.nix
           ./modules/monit/default.nix
           ./modules/environment.nix
