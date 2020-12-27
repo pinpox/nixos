@@ -64,6 +64,7 @@
           ./modules/monit/default.nix
           ./modules/openssh.nix
           ./modules/zsh.nix
+          ./modules/borg-monitor-repo.nix
         ];
       };
 
