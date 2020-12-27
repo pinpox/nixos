@@ -30,5 +30,6 @@ check host cloud.pablo.tools with address cloud.pablo.tools
 		for 2 cycles
 	then alert
 
-check program backup-kartoffel with path "/run/current-system/sw/bin/borg-monitor-repo kartoffel" every 60 cycles
+# One cycle is a minute. Run this only once a day: 60*24 = 1440 cycles
+check program backup-kartoffel with path "/run/current-system/sw/bin/borg-monitor-repo kartoffel" every 1440 cycles
    if status != 0 then alert
