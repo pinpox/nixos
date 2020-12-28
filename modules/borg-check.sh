@@ -8,11 +8,11 @@ hostname="$1"
 
 # Run `borg info` only once since it is quite slow
 export BORG_PASSPHRASE="$(cat /var/src/secrets/borg-server/$hostname)"
-json_out="$(/run/current-system/sw/bin/borg info --last 2 --json "/mnt/backup/borg-nix/$hostname")"
+json_out="$(borg info --last 2 --json "/mnt/backup/borg-nix/$hostname")"
 
 # Helper function to extract values from borg's json
 get() {
-	echo "$(echo "$json_out" | /run/current-system/sw/bin/jq -r "$1")"
+	echo "$(echo "$json_out" | jq -r "$1")"
 }
 
 print_info() {

@@ -1,10 +1,16 @@
 { pkgs, ... }:
 
 let
-  borg-monitor-repo = pkgs.writeScriptBin "borg-monitor-repo" (''
-    #!${pkgs.stdenv.shell}
-  '' + (builtins.readFile ./borg-check.sh));
+  scriptDeps = [ pkgs.jq pkgs.borgbackup ];
+
+  borg-monitor-repo = pkgs.runCommandLocal "borg-monitor-repo" {
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+  } ''
+    mkdir -p "$out/bin"
+    makeWrapper "${./borg-check.sh}" "$out/bin/borg-monitor-repo" \
+      --prefix PATH : "${pkgs.lib.makeBinPath scriptDeps}"
+  '';
 
 in {
-  environment.systemPackages = [ pkgs.jq pkgs.borgbackup borg-monitor-repo ];
+  environment.systemPackages = [ borg-monitor-repo ];
 }
