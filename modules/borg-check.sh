@@ -58,21 +58,30 @@ check_archive_time() {
 	hours_diff="$(( ( now - end1_sec ) / 3600 ))"
 
 	# Check if last backup is more than 24 hours old
-	[[ $hours_diff -lt 24  ]] || { echo "Last backup is to old ($hours_diff > 24h)!"; exit 1; }
+	[[ $hours_diff -lt 25  ]] || { echo "Last backup is to old ($hours_diff > 25h)!"; exit 1; }
 	echo "Last backup time: $hours_diff hours ago"
 }
 
 check_diff() {
-	#TODO
+
+	nfiles1=$(get '.archives[1].stats.nfiles')
+	nfiles0=$(get '.archives[0].stats.nfiles')
+	diff_nfiles=$((nfiles1 - nfiles0))
+
+	# Check if too more than 1000 files where added
+	[[ $diff_nfiles -lt 1000 ]] || { echo "Too many files added: $diff_nfiles"; exit 1; }
+
+	# Check if too more than 1000 files where removed
+	[[ $diff_nfiles -gt -1000 ]] || { echo "Too many files lost: $diff_nfiles"; exit 1; }
+	echo "Files added: $diff_nfiles"
 }
 
+print_info
 echo "Checks"
 echo "======"
 echo ""
 check_repo_params
 check_archive_time
-
-print_info
-
+check_diff
 
 exit 0
