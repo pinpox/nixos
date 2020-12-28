@@ -11,6 +11,4 @@ let
       --prefix PATH : "${pkgs.lib.makeBinPath scriptDeps}"
   '';
 
-in {
-  environment.systemPackages = [ borg-monitor-repo ];
-}
+in { environment.systemPackages = [ borg-monitor-repo ]; }
