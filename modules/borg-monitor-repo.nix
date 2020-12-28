@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  scriptDeps = [ pkgs.jq pkgs.borgbackup ];
+  scriptDeps = [ pkgs.jq pkgs.borgbackup pkgs.bash ];
 
   borg-monitor-repo = pkgs.runCommandLocal "borg-monitor-repo" {
     nativeBuildInputs = [ pkgs.makeWrapper ];
