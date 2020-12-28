@@ -16,7 +16,7 @@
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     timerConfig = {
-      OnUnitActiveSec="30min";
+      OnUnitActiveSec = "30min";
       Unit = "cfdyndns.service";
     };
   };
@@ -26,16 +26,14 @@
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     startAt = "5 minutes";
-    serviceConfig = {
-      Type = "simple";
-    };
+    serviceConfig = { Type = "simple"; };
     environment = {
-      CLOUDFLARE_EMAIL="cloudflare@pablo.tools";
-      CLOUDFLARE_RECORDS="cloud.pablo.tools";
+      CLOUDFLARE_EMAIL = "cloudflare@pablo.tools";
+      CLOUDFLARE_RECORDS = "cloud.pablo.tools";
     };
     script = ''
       export CLOUDFLARE_APIKEY="$(cat /var/src/secrets/cloudflare/token)"
       ${pkgs.cfdyndns}/bin/cfdyndns
-      '';
+    '';
   };
 }

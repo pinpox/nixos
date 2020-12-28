@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
- # grafana configuration
+  # grafana configuration
   services.grafana = {
     enable = true;
     domain = "porree.public";
@@ -18,21 +18,21 @@
       };
     };
 
-    scrapeConfigs = [
-      {
-        job_name = "porree";
-        static_configs = [{
-          targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
-        }];
-      }
-    ];
+    scrapeConfigs = [{
+      job_name = "porree";
+      static_configs = [{
+        targets = [
+          "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
+        ];
+      }];
+    }];
   };
 
-    # Block anything that is not HTTP(s) or SSH.
-    networking.firewall = {
-      enable = true;
-      allowedTCPPorts = [ 9001 2342 ];
-    };
+  # Block anything that is not HTTP(s) or SSH.
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 9001 2342 ];
+  };
 
   # # nginx reverse proxy
   # services.nginx.virtualHosts.${config.services.grafana.domain} = {

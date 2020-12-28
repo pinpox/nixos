@@ -3,7 +3,6 @@
 
     wg0 = {
 
-
       # Path to the private key file
       privateKeyFile = "/var/src/secrets/wireguard/private";
       peers = [{

@@ -10,11 +10,11 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-    nix = {
-      package = pkgs.nixFlakes;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
 
     # Users allowed to run nix
     allowedUsers = [ "root" ];
@@ -48,27 +48,27 @@
     };
   };
 
-    security.acme.acceptTerms = true;
-    security.acme.email = "letsencrypt@pablo.tools";
+  security.acme.acceptTerms = true;
+  security.acme.email = "letsencrypt@pablo.tools";
 
-    services.nginx = {
-      enable = true;
-      recommendedOptimisation = true;
-      recommendedTlsSettings = true;
-      clientMaxBodySize = "128m";
+  services.nginx = {
+    enable = true;
+    recommendedOptimisation = true;
+    recommendedTlsSettings = true;
+    clientMaxBodySize = "128m";
 
-      virtualHosts = {
-        # Password manager (bitwarden) instance
-        "cloud.pablo.tools" = {
-          forceSSL = true;
-          enableACME = true;
+    virtualHosts = {
+      # Password manager (bitwarden) instance
+      "cloud.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
 
-          # TODO remove this when seafile is setup
-          root = "/var/www/statuspage";
-          # locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
-        };
+        # TODO remove this when seafile is setup
+        root = "/var/www/statuspage";
+        # locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
       };
     };
+  };
 
   nixpkgs = { config.allowUnfree = true; };
 
