@@ -104,48 +104,48 @@
 
     };
 
-    plugins = [
-      {
-        name = "zsh-abbrev-alias";
-        file = "abbrev-alias.plugin.zsh";
-        src = builtins.fetchGit {
-          url = "https://github.com/momo-lab/zsh-abbrev-alias";
-        };
-      }
-      {
-        name = "zsh-async";
-        file = "async.zsh";
-        src =
-          builtins.fetchGit { url = "https://github.com/mafredri/zsh-async"; };
-      }
-      {
-        name = "zsh-colored-man-pages";
-        file = "colored-man-pages.plugin.zsh";
-        src = builtins.fetchGit {
-          url = "https://github.com/ael-code/zsh-colored-man-pages";
-        };
-      }
-      {
-        name = "zsh-syntax-highlighting";
-        file = "zsh-syntax-highlighting.zsh";
-        src = builtins.fetchGit {
-          url = "https://github.com/zsh-users/zsh-syntax-highlighting/";
-        };
-      }
-      # {
-      #   name = "zsh-you-should-use";
-      #   file = "you-should-use.plugin.zsh";
-      #   src = builtins.fetchGit {
-      #     url = "https://github.com/MichaelAquilina/zsh-you-should-use";
-      #   };
-      # }
-      {
-        name = "pure";
-        # file = ".plugin.zsh";
-        src =
-          builtins.fetchGit { url = "https://github.com/sindresorhus/pure"; };
-      }
-    ];
+    #plugins = [
+    #  {
+    #    name = "zsh-abbrev-alias";
+    #    file = "abbrev-alias.plugin.zsh";
+    #    src = builtins.fetchGit {
+    #      url = "https://github.com/momo-lab/zsh-abbrev-alias";
+    #    };
+    #  }
+    #  {
+    #    name = "zsh-async";
+    #    file = "async.zsh";
+    #    src =
+    #      builtins.fetchGit { url = "https://github.com/mafredri/zsh-async"; };
+    #  }
+    #  {
+    #    name = "zsh-colored-man-pages";
+    #    file = "colored-man-pages.plugin.zsh";
+    #    src = builtins.fetchGit {
+    #      url = "https://github.com/ael-code/zsh-colored-man-pages";
+    #    };
+    #  }
+    #  {
+    #    name = "zsh-syntax-highlighting";
+    #    file = "zsh-syntax-highlighting.zsh";
+    #    src = builtins.fetchGit {
+    #      url = "https://github.com/zsh-users/zsh-syntax-highlighting/";
+    #    };
+    #  }
+    #  # {
+    #  #   name = "zsh-you-should-use";
+    #  #   file = "you-should-use.plugin.zsh";
+    #  #   src = builtins.fetchGit {
+    #  #     url = "https://github.com/MichaelAquilina/zsh-you-should-use";
+    #  #   };
+    #  # }
+    #  {
+    #    name = "pure";
+    #    # file = ".plugin.zsh";
+    #    src =
+    #      builtins.fetchGit { url = "https://github.com/sindresorhus/pure"; };
+    #  }
+    #];
   };
 
   programs.fzf = {

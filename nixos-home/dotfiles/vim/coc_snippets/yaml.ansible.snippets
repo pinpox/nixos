@@ -1,0 +1,74 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet template "Template a file" b
+- name: "Template ${1} to ${2}"
+  template:
+    src: "${1}.j2"
+    dest: "${2}"
+    # mode: '0644'
+endsnippet
+
+snippet pacman "Install arch packages from repo" b
+- name: "Install necessary packages"
+  pacman:
+    name:
+      - "${1}"
+    state: latest
+endsnippet
+
+snippet copy "Copy a file" b
+- name: "Copy ${1} to ${2}"
+  copy:
+    src: "${1}"
+    dest: "${2}"
+    # mode: '0644'
+endsnippet
+
+snippet systemd "Start and enable systemd service" b
+- name: "Enable ${1} on startup"
+  systemd:
+    name: "${1}"
+    enabled: yes
+    masked: no
+
+- name: Start "${1}"
+  systemd:
+    state: started
+    name: "${1}"
+endsnippet
+
+snippet directory "Make sure directory exists" b
+- name: "Make sure ${1} exists"
+  file:
+    path: "${1}"
+    state: directory
+    # owner: root
+    # group: root
+    # mode: '0700'
+endsnippet
+
+
