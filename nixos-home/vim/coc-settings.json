@@ -1,0 +1,68 @@
+{
+	"languageserver": {
+		"clangd": {
+			"command": "clangd",
+			"args": ["--background-index"],
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["c", "cpp", "objc", "objcpp"]
+		},
+		"golang": {
+			"command": "gopls",
+			"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["go"]
+		}
+	},
+	"suggest.snippetIndicator": " ► ",
+	"diagnostic.checkCurrentLine": true,
+	"suggest.triggerAfterInsertEnter": true,
+	"suggest.noselect": false,
+	"suggest.minTriggerInputLength": 1,
+	"snippets.userSnippetsDirectory": "~/.vim/coc_snippets",
+	"coc.preferences.useQuickfixForLocations": true,
+	"bookmark.sign": {
+		"type": "string",
+		"default": "🔖",
+		"description": "Bookmark icon for sign column"
+	},
+	"bookmark.signHl": {
+		"type": "string",
+		"default": "Tag",
+		"description": "Highlight group for sign"
+  },
+  "cSpell.enabledLanguageIds": [
+    "asciidoc",
+    "c",
+    "cpp",
+    "csharp",
+    "css",
+    "git-commit",
+    "handlebars",
+    "haskell",
+    "html",
+    "jade",
+    "java",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "latex",
+    "less",
+    "markdown",
+    "php",
+    "plaintext",
+    "pug",
+    "python",
+    "restructuredtext",
+    "rust",
+    "scala",
+    "scss",
+    "text",
+    "typescript",
+    "typescriptreact",
+    "vim",
+    "yaml",
+    "yml"
+  ],
+  "prettier.useTabs": true
+}
+

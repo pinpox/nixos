@@ -1,0 +1,6 @@
+[submodule "dotfiles/vim"]
+	path = dotfiles/vim
+	url = git@github.com:pinpox/dotfiles-vim.git
+[submodule "awesome"]
+	path = awesome
+	url = https://github.com/pinpox/dotfiles-awesome.git
