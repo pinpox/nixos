@@ -89,17 +89,15 @@ krops deployment.
 sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
  ```
 
-# Unmanaged Resources
-
-The following resources are not managed or included in this repository and will
-have to be put in place manually.
-
-## Home-manager configuration (see [#8](https://github.com/pinpox/nixos/issues/8) )
+# User-specific configuration
 
 User-specific configuration is installed by home-manager where needed. Setup for
 the `pinpox` user is hosted in a [separate
-repository](https://github.com/pinpox/nixos-home) so it can be used
+repository](https://github.com/pinpox/nixos-home) so it can also be used
 independently.
+
+Since the repository for the user configuration is also a flake, it is pulled in
+and deployed automatically with the system confgiration on NixOS systems.
 
 # Contributing?
 
