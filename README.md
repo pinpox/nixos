@@ -97,7 +97,7 @@ repository](https://github.com/pinpox/nixos-home) so it can also be used
 independently.
 
 Since the repository for the user configuration is also a flake, it is pulled in
-and deployed automatically with the system confgiration on NixOS systems.
+and deployed automatically with the system configuration on NixOS systems.
 
 # Contributing?
 
