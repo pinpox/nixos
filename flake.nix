@@ -6,10 +6,7 @@
     # home-manager.url = "github:nix-community/home-manager";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-home = {
-      url = "github:pinpox/nixos-home";
-      submodules = "true";
-    };
+    nixos-home.url = "github:pinpox/nixos-home";
   };
 
   # outputs = { self, home-manager, nixpkgs }: {
