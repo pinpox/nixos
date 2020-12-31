@@ -136,9 +136,8 @@
           imports = [ ./machines/kfbox/configuration.nix ];
         };
 
-        mega = defFlakeSystem {
-          imports = [ ./machines/mega/configuration.nix ];
-        };
+        mega =
+          defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
 
         porree = defFlakeSystem {
           imports = [
