@@ -131,13 +131,17 @@
           ];
         };
 
-        kfbox = defFlakeSystem {
-          system = "x86_64-linux";
-          imports = [ ./machines/kfbox/configuration.nix ];
-        };
+        kfbox =
+          defFlakeSystem { imports = [ ./machines/kfbox/configuration.nix ]; };
 
         mega =
           defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
+
+        # home-assistant = defFlakeSystem {
+        #   # Other system types could be sepcified here, e.g.:
+        #   # system = "x86_64-linux";
+        #   imports = [ ./machines/home-assistant/configuration.nix ];
+        # };
 
         porree = defFlakeSystem {
           imports = [
