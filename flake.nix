@@ -3,29 +3,26 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # home-manager.url = "github:nix-community/home-manager";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-home.url = "github:pinpox/nixos-home";
   };
-
-  # outputs = { self, home-manager, nixpkgs }: {
   outputs = { self, nixpkgs, home-manager, nixos-home }:
     let
-
+      # Function to create defult (common) system config options
       defFlakeSystem = baseCfg:
         nixpkgs.lib.nixosSystem {
-
           system = "x86_64-linux";
           modules = [
+            # Add home-manager option to all configs
             ({ ... }: {
               imports = [
                 baseCfg
                 home-manager.nixosModules.home-manager
-                {
-                  #home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                }
+                # DONT set useGlobalPackages! It's not necessary in newer
+                # home-manager versions and does not work with configs using
+                # `nixpkgs.config`
+                { home-manager.useUserPackages = true; }
               ];
               # Let 'nixos-version --json' know the Git revision of this flake.
               system.configurationRevision =
@@ -33,32 +30,25 @@
               nix.registry.nixpkgs.flake = nixpkgs;
             })
           ];
-
         };
-
     in {
 
       nixosConfigurations = {
 
         kartoffel = defFlakeSystem {
           imports = [
-
+            # Machine-specific
             ./machines/kartoffel/configuration.nix
-            {
-
-              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
-
-              # home-manager.users.pinpox = {
-              #   home.stateVersion = "20.09";
-              #   nixpkgs.config.allowUnfree = true;
-              # };
-            }
 
             # Include the results of the hardware scan.
             ./machines/kartoffel/hardware-configuration.nix
 
-            # User Profiles
+            # User profiles
             ./modules/user-profiles/pinpox.nix
+            # Add home-manager config
+            {
+              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
+            }
 
             # Modules
             ./modules/bluetooth.nix
@@ -77,91 +67,101 @@
           ];
         };
 
-        # ahorn = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   modules = [
-        #     ./machines/ahorn/configuration.nix
+        ahorn = defFlakeSystem {
+          imports = [
+            # Machine-specific
+            ./machines/ahorn/configuration.nix
 
-        #     # Include the results of the hardware scan.
-        #     ./hardware-configuration.nix
+            # Include the results of the hardware scan.
+            ./hardware-configuration.nix
 
-        #     # Default users
-        #     ../../modules/user-profiles/pinpox.nix
+            # User profiles
+            ./modules/user-profiles/pinpox.nix
+            # Add home-manager config
+            {
+              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
+            }
 
-        #     # Modules
-        #     # ../../modules/borg/home.nix
-        #     ./modules/bluetooth.nix
-        #     ./modules/environment.nix
-        #     ./modules/fonts.nix
-        #     ./modules/locale.nix
-        #     ./modules/lvm-grub.nix
-        #     ./modules/networking.nix
-        #     ./modules/nix-common.nix
-        #     ./modules/openssh.nix
-        #     ./modules/sound.nix
-        #     ./modules/virtualization.nix
-        #     ./modules/wireguard-client.nix
-        #     ./modules/xserver.nix
-        #     ./modules/yubikey.nix
-        #     ./modules/zsh.nix
-        #   ];
-        # };
+            # Modules
+            # ../../modules/borg/home.nix
+            ./modules/bluetooth.nix
+            ./modules/environment.nix
+            ./modules/fonts.nix
+            ./modules/locale.nix
+            ./modules/lvm-grub.nix
+            ./modules/networking.nix
+            ./modules/nix-common.nix
+            ./modules/openssh.nix
+            ./modules/sound.nix
+            ./modules/virtualization.nix
+            ./modules/wireguard-client.nix
+            ./modules/xserver.nix
+            ./modules/yubikey.nix
+            ./modules/zsh.nix
+          ];
+        };
 
-        # birne = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   modules = [
+        birne = defFlakeSystem {
+          imports = [
 
-        #     # Machine specific config
-        #     ./machines/birne/configuration.nix
+            # Machine specific config
+            ./machines/birne/configuration.nix
 
-        #     # Include the results of the hardware scan.
-        #     ./machines/birne/hardware-configuration.nix
+            # Include the results of the hardware scan.
+            ./machines/birne/hardware-configuration.nix
 
-        #     # User profiles
-        #     ./modules/user-profiles/pinpox.nix
+            # User profiles
+            ./modules/user-profiles/pinpox.nix
+            # Add home-manager config
+            {
+              home-manager.users.pinpox = nixos-home.nixosModules.server;
+            }
 
-        #     # Modules
-        #     ./modules/borg-server.nix
-        #     ./modules/dyndns.nix
-        #     ./modules/environment.nix
-        #     ./modules/locale.nix
-        #     ./modules/lvm-grub.nix
-        #     ./modules/monit/default.nix
-        #     ./modules/openssh.nix
-        #     ./modules/zsh.nix
-        #     ./modules/borg-monitor-repo.nix
-        #   ];
-        # };
+            # Modules
+            ./modules/borg-server.nix
+            ./modules/dyndns.nix
+            ./modules/environment.nix
+            ./modules/locale.nix
+            ./modules/lvm-grub.nix
+            ./modules/monit/default.nix
 
-        #         kfbox = nixpkgs.lib.nixosSystem {
-        #           system = "x86_64-linux";
-        #           modules = [ ./machines/kfbox/configuration.nix ];
-        #         };
+            ./modules/openssh.nix
+            ./modules/zsh.nix
+            ./modules/borg-monitor-repo.nix
+          ];
+        };
 
-        #         mega = nixpkgs.lib.nixosSystem {
-        #           system = "x86_64-linux";
-        #           modules = [ ./machines/mega/configuration.nix ];
-        #         };
+        kfbox = defFlakeSystem {
+          system = "x86_64-linux";
+          imports = [ ./machines/kfbox/configuration.nix ];
+        };
 
-        #         porree = nixpkgs.lib.nixosSystem {
-        #           system = "x86_64-linux";
-        #           modules = [
+        mega = defFlakeSystem {
+          imports = [ ./machines/mega/configuration.nix ];
+        };
 
-        #             # User Profiles
-        #             ./modules/user-profiles/pinpox.nix
+        porree = defFlakeSystem {
+          imports = [
 
-        #             # Modules
-        #             ./modules/mmonit.nix
-        #             ./modules/monit/default.nix
-        #             ./modules/environment.nix
-        #             ./modules/locale.nix
-        #             ./modules/openssh.nix
-        #             ./modules/zsh.nix
+            # User profiles
+            ./modules/user-profiles/pinpox.nix
+            # Add home-manager config
+            {
+              home-manager.users.pinpox = nixos-home.nixosModules.server;
+            }
 
-        #             # Other machine-specific configuration
-        #             ./machines/porree/configuration.nix
-        #           ];
-        #         };
+            # Modules
+            ./modules/mmonit.nix
+            ./modules/monit/default.nix
+            ./modules/environment.nix
+            ./modules/locale.nix
+            ./modules/openssh.nix
+            ./modules/zsh.nix
+
+            # Other machine-specific configuration
+            ./machines/porree/configuration.nix
+          ];
+        };
       };
     };
 }
