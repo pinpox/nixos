@@ -6,11 +6,14 @@
     # home-manager.url = "github:nix-community/home-manager";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # nixos-home.url = "github:pinpox/nixos-home";
+    nixos-home = {
+      url = "github:pinpox/nixos-home";
+      submodules = "true";
+    };
   };
 
   # outputs = { self, home-manager, nixpkgs }: {
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = { self, nixpkgs, home-manager, nixos-home }:
     let
 
       defFlakeSystem = baseCfg:
@@ -46,7 +49,7 @@
             ./machines/kartoffel/configuration.nix
             {
 
-              home-manager.users.pinpox = import ./nixos-home/home.nix;
+              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
 
               # home-manager.users.pinpox = {
               #   home.stateVersion = "20.09";
