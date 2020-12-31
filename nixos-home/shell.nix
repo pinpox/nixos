@@ -104,48 +104,48 @@
 
     };
 
-    #plugins = [
-    #  {
-    #    name = "zsh-abbrev-alias";
-    #    file = "abbrev-alias.plugin.zsh";
-    #    src = builtins.fetchGit {
-    #      url = "https://github.com/momo-lab/zsh-abbrev-alias";
-    #    };
-    #  }
-    #  {
-    #    name = "zsh-async";
-    #    file = "async.zsh";
-    #    src =
-    #      builtins.fetchGit { url = "https://github.com/mafredri/zsh-async"; };
-    #  }
-    #  {
-    #    name = "zsh-colored-man-pages";
-    #    file = "colored-man-pages.plugin.zsh";
-    #    src = builtins.fetchGit {
-    #      url = "https://github.com/ael-code/zsh-colored-man-pages";
-    #    };
-    #  }
-    #  {
-    #    name = "zsh-syntax-highlighting";
-    #    file = "zsh-syntax-highlighting.zsh";
-    #    src = builtins.fetchGit {
-    #      url = "https://github.com/zsh-users/zsh-syntax-highlighting/";
-    #    };
-    #  }
-    #  # {
-    #  #   name = "zsh-you-should-use";
-    #  #   file = "you-should-use.plugin.zsh";
-    #  #   src = builtins.fetchGit {
-    #  #     url = "https://github.com/MichaelAquilina/zsh-you-should-use";
-    #  #   };
-    #  # }
-    #  {
-    #    name = "pure";
-    #    # file = ".plugin.zsh";
-    #    src =
-    #      builtins.fetchGit { url = "https://github.com/sindresorhus/pure"; };
-    #  }
-    #];
+    plugins = [
+      {
+        name = "zsh-abbrev-alias";
+        file = "abbrev-alias.plugin.zsh";
+        src = builtins.fetchGit {
+          # Updated 2020-12-31
+          url = "https://github.com/momo-lab/zsh-abbrev-alias";
+          rev = "2f3d218f426aff21ac888217b0284a3a1470e274";
+        };
+      }
+      {
+        name = "zsh-async";
+        file = "async.zsh";
+        src = builtins.fetchGit {
+          url = "https://github.com/mafredri/zsh-async";
+          rev = "bbbc92bd01592513a6b7739a45b7911af18acaef";
+        };
+      }
+      {
+        name = "zsh-colored-man-pages";
+        file = "colored-man-pages.plugin.zsh";
+        src = builtins.fetchGit {
+          url = "https://github.com/ael-code/zsh-colored-man-pages";
+          rev = "57bdda68e52a09075352b18fa3ca21abd31df4cb";
+        };
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        file = "zsh-syntax-highlighting.zsh";
+        src = builtins.fetchGit {
+          url = "https://github.com/zsh-users/zsh-syntax-highlighting/";
+          rev = "932e29a0c75411cb618f02995b66c0a4a25699bc";
+        };
+      }
+      {
+        name = "pure";
+        src = builtins.fetchGit {
+          url = "https://github.com/sindresorhus/pure";
+          rev = "8ec575c886c8bb33a87f80b9710ee5e379a0b589";
+        };
+      }
+    ];
   };
 
   programs.fzf = {
