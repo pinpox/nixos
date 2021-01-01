@@ -104,3 +104,6 @@ and deployed automatically with the system configuration on NixOS systems.
 While contributions don't make much sense for a personal configuration repository,
 I'm always happy to get hints, tips and constructive criticism. If you find something 
 that could be done in a better way, please let me know!
+
+
+<a href="https://www.buymeacoffee.com/pinpox"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=😎&slug=pinpox&button_colour=82aaff&font_colour=000000&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
