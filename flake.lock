@@ -2,14 +2,15 @@
   "nodes": {
     "dotfiles-awesome": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "wallpaper-generator": "wallpaper-generator"
       },
       "locked": {
-        "lastModified": 1609537261,
-        "narHash": "sha256-f7B/hZJ8Lb5zrcL7ZBwReoR3egAA3qX8awJrg0fXrkY=",
+        "lastModified": 1609544199,
+        "narHash": "sha256-CFIh6LDLp3DgM79TIuZQpTti/t8aOVl3++PpQNNxC3I=",
         "owner": "pinpox",
         "repo": "dotfiles-awesome",
-        "rev": "48183c12c334f34d0523bfcb90a96322c9f3dbb0",
+        "rev": "6a57ebc51c0edd37560fb6303b59066805ef49ac",
         "type": "github"
       },
       "original": {
@@ -46,11 +47,11 @@
         "nur": "nur"
       },
       "locked": {
-        "lastModified": 1609539616,
-        "narHash": "sha256-bSZ0o4ZbU56Ovn/kS9l7Ls1fM97Q9z/sSCgfh8WE7CA=",
+        "lastModified": 1609544240,
+        "narHash": "sha256-DvK/WVHGSaFfJ7epFh8lCwZfHVni42WQt1+awvuSeqA=",
         "owner": "pinpox",
         "repo": "nixos-home",
-        "rev": "930c8d8a48ff36e2279dfdbb025f1cbea755866d",
+        "rev": "503cf947f5a8fcf83c19991f513f5a76897d7bb2",
         "type": "github"
       },
       "original": {
@@ -106,11 +107,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1609526390,
-        "narHash": "sha256-XUQCSI5L2j95zXcxmNQ73Kcs+J1ttZEKp+00lu8NqaM=",
+        "lastModified": 1609543342,
+        "narHash": "sha256-vlIRq2zu8wugiGbfxnLCPdJRDgIw2XsFKx9k8MJ/5bY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f4eece530ded4a64176489d481d6e92d64019361",
+        "rev": "c6a92b29d859735d50419966b4e32ce2154aae03",
         "type": "github"
       },
       "original": {
@@ -124,6 +125,22 @@
         "home-manager": "home-manager",
         "nixos-home": "nixos-home",
         "nixpkgs": "nixpkgs_3"
+      }
+    },
+    "wallpaper-generator": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1609537219,
+        "narHash": "sha256-AZRZKvx5nBfxOWvxE70WAfvf1qBq7i0M0TsMZAVNf3A=",
+        "owner": "pinpox",
+        "repo": "wallpaper-generator",
+        "rev": "0fd5b09e60d7047947da87f0f5860b311ae7bea1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "wallpaper-generator",
+        "type": "github"
       }
     }
   },
