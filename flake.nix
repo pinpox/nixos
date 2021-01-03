@@ -54,7 +54,7 @@
             ./modules/bluetooth.nix
             ./modules/borg/home.nix
             ./modules/environment.nix
-            ./modules/fonts.nix
+            # ./modules/fonts.nix
             ./modules/locale.nix
             ./modules/lvm-grub.nix
             ./modules/networking.nix

@@ -5,8 +5,18 @@
     fontDir.enable = true;
     fonts = with pkgs; [
       (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+      ubuntu_font_family
+      pkgs.dejavu_fonts
       noto-fonts-emoji
       corefonts
     ];
+
+  fontconfig = {
+    defaultFonts = {
+      serif = [ "Ubuntu" ];
+      sansSerif = [ "Ubuntu" ];
+      monospace = [ "Ubuntu" ];
+    };
+  };
   };
 }
