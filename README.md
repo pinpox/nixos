@@ -39,6 +39,14 @@ the secrets in it's store.
 nix-build ./krop.nix -A <machine name> && ./result
 ```
 
+It is also possible to build on the system itself when logged in, e.g. to get
+additional debug information.
+
+```bash
+cd /var/src/machine-config
+sudo nixos-rebuild --flake ".#kartoffel" switch
+```
+
 # Current Hosts
 
 | Configuration                       | Type      | Location    | VPN IP         | Description                  |
