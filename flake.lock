@@ -47,11 +47,11 @@
         "nur": "nur"
       },
       "locked": {
-        "lastModified": 1609939809,
-        "narHash": "sha256-OKl8IesCatK0uYz9Izb3sjtCtIwfulp1lu3Zp3t1u/o=",
+        "lastModified": 1609952045,
+        "narHash": "sha256-9MXEVXOUYHV9WarXKIK4WOeEhm8dg3dGF80vxqmFZ6A=",
         "owner": "pinpox",
         "repo": "nixos-home",
-        "rev": "26f5ac578ad4aa4033d4bfd9fe0bd6d9fe2ecc66",
+        "rev": "3b4dcc533ecf6b0b66cf1fab872e3136e063f2aa",
         "type": "github"
       },
       "original": {
