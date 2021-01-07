@@ -97,10 +97,3 @@ in {
 
 # Run with (e.g.):
 # nix-build ./krop.nix -A kartoffel && ./result
-
-# # Define machines with connection parameters and configuration
-# ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
-#   inherit command;
-#   source = source "ahorn";
-#   target = "root@ahorn.wireguard";
-# };
