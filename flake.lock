@@ -6,11 +6,11 @@
         "wallpaper-generator": "wallpaper-generator"
       },
       "locked": {
-        "lastModified": 1610097067,
-        "narHash": "sha256-wIQLzw8Lrj70ADJEfT54fTNrODOyl8a+2tvOYdNSa+4=",
+        "lastModified": 1610115086,
+        "narHash": "sha256-ZA+Qf/4hzWWgCfpb1LKfz/Cae1Fwe0zJfuufLtiFEKg=",
         "owner": "pinpox",
         "repo": "dotfiles-awesome",
-        "rev": "95e36b43d09da547975ebe7e1a81d601c53e36c2",
+        "rev": "f6457cb88053998b47233c3eb96581b2f764f750",
         "type": "github"
       },
       "original": {
@@ -47,11 +47,11 @@
         "nur": "nur"
       },
       "locked": {
-        "lastModified": 1610097153,
-        "narHash": "sha256-WJOOuQ1aRQYpzjIKWriRjQs9B4ZUkBazoAAefgsXaOo=",
+        "lastModified": 1610115149,
+        "narHash": "sha256-rd7WVrCtXBd3Q1qFD7dv0sQ/0XyiF0f9I8hChxLgxEY=",
         "owner": "pinpox",
         "repo": "nixos-home",
-        "rev": "f34df27c9246c22bca07818123fc964f122015f4",
+        "rev": "7ddba8fdda2deaf917cd6cb1a3ad834aeff23386",
         "type": "github"
       },
       "original": {
@@ -107,11 +107,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1610094726,
-        "narHash": "sha256-SNwqiqFXG7rx5e6RX84m4rVRoUfAxf7voL1Ig2i4XLY=",
+        "lastModified": 1610102181,
+        "narHash": "sha256-wONJ2eyB7dYGk19NXlGpt+YuLJ0yRP+WNaKwNhn9dBc=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "dcc7db68a3b1fa88fb40a08a4e9a5c6454fa58ec",
+        "rev": "855d7a70a76ef3e515d5ce30e61eee4198daa3bc",
         "type": "github"
       },
       "original": {
