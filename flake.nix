@@ -3,9 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-home.url = "github:pinpox/nixos-home";
+    nixos-home.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, nixpkgs, home-manager, nixos-home }:
     let
@@ -17,6 +20,9 @@
             # Add home-manager option to all configs
             ({ ... }: {
               imports = [
+                {
+                  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                }
                 baseCfg
                 home-manager.nixosModules.home-manager
                 # DONT set useGlobalPackages! It's not necessary in newer
@@ -46,9 +52,7 @@
             # User profiles
             ./modules/user-profiles/pinpox.nix
             # Add home-manager config
-            {
-              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
-            }
+            { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
 
             # Modules
             ./modules/bluetooth.nix
