@@ -20,6 +20,9 @@
             # Add home-manager option to all configs
             ({ ... }: {
               imports = [
+                {
+                  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                }
                 baseCfg
                 home-manager.nixosModules.home-manager
                 # DONT set useGlobalPackages! It's not necessary in newer
@@ -49,17 +52,7 @@
             # User profiles
             ./modules/user-profiles/pinpox.nix
             # Add home-manager config
-            {
-              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
-            }
-
-            {
- nix.nixPath = [
-    "nixpkgs=${nixpkgs}"
-    "nixos-config=/etc/nixos/configuration.nix"
-    "nixpkgs-overlays=/etc/nixos/overlays"
-  ];
-}
+            { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
 
             # Modules
             ./modules/bluetooth.nix
