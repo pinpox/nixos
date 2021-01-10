@@ -26,11 +26,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1610183383,
-        "narHash": "sha256-m0705WdBXuCO0tjCto2JsGG2hRuymthAwT+4OvNEh+c=",
+        "lastModified": 1610228103,
+        "narHash": "sha256-/AxI973as17VM6GXtFCLtH5c9FaNuKG2Kxu0IRihYBg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "cb1ed0d2f324c38290eae180be22e5cfd0c77494",
+        "rev": "e8358125d98fc0128a02b7664f532447750fb930",
         "type": "github"
       },
       "original": {
@@ -43,7 +43,9 @@
     "nixos-home": {
       "inputs": {
         "dotfiles-awesome": "dotfiles-awesome",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "nur": "nur"
       },
       "locked": {
@@ -78,24 +80,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1610041835,
-        "narHash": "sha256-WXWaMt8W746JDgLls4g3AfCuKbcQUNL/YjikJIgsCGQ=",
-        "path": "/nix/store/n7knsc9fmc36y3k3xd939dnyy3nfidw4-source",
-        "rev": "f211631c1cb3e94828c7650b5d12c1e5a89e0e16",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1610041835,
-        "narHash": "sha256-WXWaMt8W746JDgLls4g3AfCuKbcQUNL/YjikJIgsCGQ=",
+        "lastModified": 1610219734,
+        "narHash": "sha256-hCsGe2nDz+SX4uO+lj0qPVcSGZdt52R9Yk5MOYs4djw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f211631c1cb3e94828c7650b5d12c1e5a89e0e16",
+        "rev": "257cbbcd3ab7bd96f5d24d50adc807de7c82e06d",
         "type": "github"
       },
       "original": {
@@ -124,7 +113,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixos-home": "nixos-home",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "wallpaper-generator": {
