@@ -13,13 +13,19 @@
   # Encrypted drive to be mounted by the bootloader. Path of the device will
   # have to be changed for each install.
   # Get UUID from blkid /dev/sda2
-  boot.initrd.luks.devices.root.device =
-    "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
 
-  # TODO Create lvm-grub-luks module
   boot = {
+    # Use GRUB2 as EFI boot loader.
+    loader.grub.useOSProber = true;
+
+    blacklistedKernelModules = [ "nouveau" ];
+
+    # Encrypted drive to be mounted by the bootloader. Path of the device will
+    # have to be changed for each install.
     initrd.luks.devices = {
       root = {
+        # Get UUID from blkid /dev/sda2
+        device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
         preLVM = true;
         allowDiscards = true;
       };
