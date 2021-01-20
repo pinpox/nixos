@@ -43,6 +43,9 @@ in rec {
 
   # Define deployments
 
+  # Run with (e.g.):
+  # nix-build ./krop.nix -A kartoffel && ./result
+
   # Individual machines
   ahorn = createHost "ahorn" "root@192.168.2.100";
   birne = createHost "birne" "root@192.168.2.84";
@@ -58,6 +61,3 @@ in rec {
   servers = pkgs.writeScript "deploy-servers"
     (lib.concatStringsSep "\n" [ birne kfbox mega porree ]);
 }
-
-# Run with (e.g.):
-# nix-build ./krop.nix -A kartoffel && ./result
