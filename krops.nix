@@ -49,7 +49,7 @@ in {
   kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
   kfbox = createHost "kfbox" "root@kfbox.public";
   mega = createHost "mega" "root@mega.public";
-  porree = createHost "porree" "root@porree.public"
+  porree = createHost "porree" "root@porree.public";
 
   # Groups
   all = pkgs.writeScript "deploy-all"
