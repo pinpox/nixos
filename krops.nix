@@ -30,6 +30,8 @@ let
     '
   '';
 
+  # Convenience function to define machines with connection parameters and
+  # configuration source
   createHost = name: target:
     pkgs.krops.writeCommand "deploy-${name}" {
       inherit command;
@@ -37,55 +39,17 @@ let
       target = target;
     };
 
-  # Define machines with connection parameters and configuration
-  ahorn = pkgs.krops.writeCommand "deploy-ahorn" {
-    inherit command;
-    source = source "ahorn";
-    target = "root@192.168.2.100";
-  };
-
-  birne = pkgs.krops.writeCommand "deploy-birne" {
-    inherit command;
-    source = source "birne";
-    target = "root@192.168.2.84";
-  };
-
-  kartoffel = pkgs.krops.writeCommand "deploy-kartoffel" {
-    inherit command;
-    source = source "kartoffel";
-    target = "root@kartoffel.wireguard";
-  };
-
-  kfbox = pkgs.krops.writeCommand "deploy-kfbox" {
-    inherit command;
-    source = source "kfbox";
-    target = "root@kfbox.public";
-  };
-
-  mega = pkgs.krops.writeCommand "deploy-mega" {
-    inherit command;
-    source = source "mega";
-    target = "root@mega.public";
-  };
-
-  porree = pkgs.krops.writeCommand "deploy-porree" {
-    inherit command;
-    source = source "porree";
-    target = "root@porree.public";
-  };
-
 in {
 
   # Define deployments
-  ahorn2 = createHost "ahorn" "root@192.168.2.100";
 
   # Individual machines
-  ahorn = ahorn;
-  birne = birne;
-  kartoffel = kartoffel;
-  kfbox = kfbox;
-  mega = mega;
-  porree = porree;
+  ahorn = createHost "ahorn" "root@192.168.2.100";
+  birne = createHost "birne" "root@192.168.2.84";
+  kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
+  kfbox = createHost "kfbox" "root@kfbox.public";
+  mega = createHost "mega" "root@mega.public";
+  porree = createHost "porree" "root@porree.public"
 
   # Groups
   all = pkgs.writeScript "deploy-all"
