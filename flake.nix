@@ -138,6 +138,7 @@
             ./modules/locale.nix
             ./modules/lvm-grub.nix
             ./modules/monit/default.nix
+            ./modules/home-assistant/default.nix
 
             ./modules/openssh.nix
             ./modules/zsh.nix

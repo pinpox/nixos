@@ -59,13 +59,17 @@
 
     virtualHosts = {
       # Password manager (bitwarden) instance
-      "cloud.pablo.tools" = {
+      "home.pablo.tools" = {
         forceSSL = true;
         enableACME = true;
-
-        # TODO remove this when seafile is setup
-        root = "/var/www/statuspage";
-        # locations."/" = { proxyPass = "http://127.0.0.1:8080"; };
+        locations."/".proxyWebsockets = true;
+        locations."/".proxyPass = "http://127.0.0.1:8123/";
+        locations."/".extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Host $host;
+        '';
       };
     };
   };
