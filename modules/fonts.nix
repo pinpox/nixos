@@ -11,12 +11,12 @@
       corefonts
     ];
 
-  fontconfig = {
-    defaultFonts = {
-      serif = [ "Ubuntu" ];
-      sansSerif = [ "Ubuntu" ];
-      monospace = [ "Ubuntu" ];
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Ubuntu" ];
+        sansSerif = [ "Ubuntu" ];
+        monospace = [ "Ubuntu" ];
+      };
     };
-  };
   };
 }
