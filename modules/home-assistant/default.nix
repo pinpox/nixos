@@ -3,6 +3,17 @@
   # Needed for some integrations
   users.users.hass.extraGroups = [ "dialout" ];
 
+  services.mosquitto = {
+    enable = true;
+    host = "192.168.2.84";
+    port = 1883;
+    users = {
+      mosquitto = {
+          acl = [ "pattern readwrite #" ];
+        password = "mosquitto"; };
+    };
+  };
+
   # Enable home-assistant
   services.home-assistant = {
     enable = true;
@@ -39,11 +50,11 @@
       };
       mqtt = {
 
-        broker = "127.0.0.1";
+        broker = "192.168.2.84";
         # certificate = "auto";
-        # port = "8883";
-        # username = "hass@thalheim.io";
-        # password = "!secret ldap_password";
+        port = "1883";
+        username = "mosquitto";
+        password = "mosquitto";
       };
 
       # Enables a map showing the location of tracked devies
