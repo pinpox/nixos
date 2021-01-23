@@ -1,7 +1,14 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  home-assistant-package = pkgs.home-assistant.override {
+    extraComponents = [ "fritzbox_netmonitor" "flux_led" ];
+  };
+in {
 
   # Needed for some integrations
   users.users.hass.extraGroups = [ "dialout" ];
+
+  networking.firewall.allowedTCPPorts = [ 1883 ];
 
   services.mosquitto = {
     enable = true;
@@ -9,8 +16,9 @@
     port = 1883;
     users = {
       mosquitto = {
-          acl = [ "pattern readwrite #" ];
-        password = "mosquitto"; };
+        acl = [ "pattern readwrite #" ];
+        password = "mosquitto";
+      };
     };
   };
 
@@ -18,9 +26,11 @@
   services.home-assistant = {
     enable = true;
 
-  # Disable the python checks, they take for ever
-  package =
-    (pkgs.home-assistant.overrideAttrs (old: { doCheck = false; }));
+    # Disable the python checks, they take for ever
+    package = (home-assistant-package.overrideAttrs (old: {
+      doInstallCheck = false;
+      doCheck = false;
+    }));
 
     config = {
       # default_config = {};
@@ -40,6 +50,23 @@
 
       # Show some system health data
       system_health = { };
+
+      tasmota = { };
+
+      # flux_led = { };
+
+    light = [
+      {
+        platform = "flux_led";
+        automatic_add = true;
+        devices = 
+          {
+            "192.168.2.106" = { name = "flux_led"; };
+          };
+      }
+    ];
+
+    sensor = [{ platform = "fritzbox_netmonitor"; }];
 
       # Http settings
       http = {
