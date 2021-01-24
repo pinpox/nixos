@@ -10,7 +10,7 @@
   #   onBoot = "ignore";
   # };
 
-  virtualisation.docker.enable = true;
+  # virtualisation.docker.enable = true;
 
   # Virtualbox stuff
   virtualisation.virtualbox.host.enable = true;

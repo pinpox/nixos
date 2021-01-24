@@ -42,8 +42,6 @@
     # borgbackup
     arandr
     ctags
-    docker
-    docker-compose
     git
     gnumake
     go
