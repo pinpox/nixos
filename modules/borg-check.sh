@@ -68,11 +68,11 @@ check_diff() {
 	nfiles0=$(get '.archives[0].stats.nfiles')
 	diff_nfiles=$((nfiles1 - nfiles0))
 
-	# Check if too more than 1000 files where added
-	[[ $diff_nfiles -lt 1000 ]] || { echo "Too many files added: $diff_nfiles"; exit 1; }
+	# Check if too more than 2000 files where added
+	[[ $diff_nfiles -lt 2000 ]] || { echo "Too many files added: $diff_nfiles"; exit 1; }
 
-	# Check if too more than 1000 files where removed
-	[[ $diff_nfiles -gt -1000 ]] || { echo "Too many files lost: $diff_nfiles"; exit 1; }
+	# Check if too more than 2000 files where removed
+	[[ $diff_nfiles -gt -2000 ]] || { echo "Too many files lost: $diff_nfiles"; exit 1; }
 	echo "Files added: $diff_nfiles"
 }
 

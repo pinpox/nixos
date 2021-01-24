@@ -1,20 +1,42 @@
 { config, pkgs, ... }:
 let
+
+  # List extraComponents here to be installed. The names can be found here:
+  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
+  # Components listed here will be possible to add via the webUI if not
+  # automatically picked up.
+
   home-assistant-package = pkgs.home-assistant.override {
-    extraComponents = [ "fritzbox_netmonitor" "flux_led" ];
+    extraComponents = [
+      # Fritzbox network statistics
+      "fritzbox_netmonitor"
+
+      # Wifi led strip controller
+      "flux_led"
+
+      # Not sure if needed with default_config?
+      "lovelace"
+    ];
   };
 in {
 
   # Needed for some integrations
   users.users.hass.extraGroups = [ "dialout" ];
 
+  # Open port for mqtt
   networking.firewall.allowedTCPPorts = [ 1883 ];
 
+  # Enable mosquitto MQTT broker
   services.mosquitto = {
     enable = true;
+
+    # Mosquitto is only listening on the local IP, traffic from outside is not
+    # allowed.
     host = "192.168.2.84";
     port = 1883;
     users = {
+      # No real authentication needed here, since the local network is
+      # trusted.
       mosquitto = {
         acl = [ "pattern readwrite #" ];
         password = "mosquitto";
@@ -22,21 +44,27 @@ in {
     };
   };
 
-  # Enable home-assistant
+  # Enable home-assistant service
   services.home-assistant = {
     enable = true;
 
-    # Disable the python checks, they take for ever
+    # Disable the python checks, they take for ever when building the
+    # configuration
     package = (home-assistant-package.overrideAttrs (old: {
       doInstallCheck = false;
       doCheck = false;
     }));
 
+
+    # Configuration generated to /var/lib/hass/configuration.yaml
     config = {
-      # default_config = {};
-      # Basic settings
+
+      # Provides some sane defaults and minimal dependencies
+      default_config = { };
+
+      # Basic settings for home-assistant
       homeassistant = {
-        name = "Home";
+        name = "Villa Kunterbunt";
         latitude = "32.8753367";
         longitude = "-117.2474053";
         elevation = 86;
@@ -51,34 +79,31 @@ in {
       # Show some system health data
       system_health = { };
 
+      # Enable support for tamota devices
       tasmota = { };
 
-      # flux_led = { };
-
-    light = [
-      {
+      # Led strip wifi controller, component needs to be listed explicitely in
+      # extraComponents above
+      light = [{
         platform = "flux_led";
         automatic_add = true;
-        devices = 
-          {
-            "192.168.2.106" = { name = "flux_led"; };
-          };
-      }
-    ];
+        devices = { "192.168.2.106" = { name = "flux_led"; }; };
+      }];
 
-    sensor = [{ platform = "fritzbox_netmonitor"; }];
+      # Fritzbox network traffic stats
+      sensor = [{ platform = "fritzbox_netmonitor"; }];
 
-      # Http settings
+      # HTTP only listening on localhost, since it will be behind nginx
       http = {
         server_host = "127.0.0.1";
         use_x_forwarded_for = true;
         trusted_proxies = "127.0.0.1";
         server_port = 8123;
       };
-      mqtt = {
 
+      # Enable MQTT and configure it to use the mosquitto broker
+      mqtt = {
         broker = "192.168.2.84";
-        # certificate = "auto";
         port = "1883";
         username = "mosquitto";
         password = "mosquitto";
@@ -95,11 +120,7 @@ in {
 
       # Enable configuration UI
       config = { };
-      # # Make the ui configurable through ui-lovelace.yaml
-      #   lovelace.mode = "yaml";
-      #   lovelace.resources = [
-      #     { url = "/local/vacuum-card.js";  type = "module"; }
-      #   ];
+
       # Enable support for tracking state changes over time
       history = { };
 
@@ -108,7 +129,6 @@ in {
 
       # View all events in o logbook
       logbook = { };
-
     };
   };
 }
