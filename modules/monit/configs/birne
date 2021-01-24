@@ -22,7 +22,7 @@ check program top10 with path "/run/current-system/sw/bin/top -n1 -b"
 
 check process nginx with pidfile /var/run/nginx/nginx.pid
 
-check host cloud.pablo.tools with address cloud.pablo.tools
+check host home.pablo.tools with address home.pablo.tools
     if failed
 		port 443
 		protocol https
