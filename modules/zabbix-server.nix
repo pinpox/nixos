@@ -1,9 +1,16 @@
 { config, pkgs, lib, ... }: {
-  services.zabbixServer.enable = true;
+
+  services.zabbixServer = { 
+    enable = true;
+    settings = {
+     StartDiscoverers=5;
+    };
+  };
+
   services.zabbixWeb = {
     enable = true;
     virtualHost = {
-      hostName = "porree.public";
+      hostName = "status.pablo.tools";
       adminAddr = "zabbix@pablo.tools";
       listen = [{
         ip = "192.168.7.1";
