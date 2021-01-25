@@ -137,8 +137,9 @@
             ./modules/environment.nix
             ./modules/locale.nix
             ./modules/lvm-grub.nix
-            ./modules/monit/default.nix
+            # ./modules/monit/default.nix
             ./modules/home-assistant/default.nix
+            ./modules/zabbix-agent.nix
 
             ./modules/openssh.nix
             ./modules/zsh.nix
@@ -169,8 +170,10 @@
             }
 
             # Modules
-            ./modules/mmonit.nix
-            ./modules/monit/default.nix
+            # ./modules/mmonit.nix
+            # ./modules/monit/default.nix
+            # ./modules/munin-master.nix
+            ./modules/zabbix-server.nix
             ./modules/environment.nix
             ./modules/locale.nix
             ./modules/openssh.nix
