@@ -45,7 +45,7 @@ in { config, pkgs, lib, modulesPath, ... }: {
       gnumake
       go
       htop
-      mmonit
+      # mmonit
       neovim
       nix-index
       nixfmt
@@ -89,12 +89,19 @@ in { config, pkgs, lib, modulesPath, ... }: {
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
         };
 
-        # M/monit Monitoring
+        # # Zabbix monitoring
         "status.pablo.tools" = {
           forceSSL = true;
           enableACME = true;
-          locations."/" = { proxyPass = "http://192.168.7.1:8080"; };
+          locations."/" = { proxyPass = "http://192.168.7.1:8088"; };
         };
+
+        # # M/monit monitoring
+        # "status.pablo.tools" = {
+        #   forceSSL = true;
+        #   enableACME = true;
+        #   locations."/" = { proxyPass = "http://192.168.7.1:8080"; };
+        # };
       };
     };
 
