@@ -50,7 +50,7 @@ in rec {
   ahorn = createHost "ahorn" "root@192.168.2.100";
   birne = createHost "birne" "root@192.168.2.84";
   kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
-  kfbox = createHost "kfbox" "root@kfbox.public";
+  kfbox = createHost "kfbox" "root@46.38.242.17";
   mega = createHost "mega" "root@mega.public";
   porree = createHost "porree" "root@porree.public";
 

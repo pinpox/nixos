@@ -23,6 +23,19 @@ with lib; {
       challengeResponseAuthentication = false;
     };
 
+    # TODO # set hostname!!!
+
+
+
+
+
+
+
+
+
+    # Enable flakes
+    nix.package = pkgs.nixFlakes;
+
     users = {
       users.root = {
         # password = "super secure pw"; # In case you want a root password set

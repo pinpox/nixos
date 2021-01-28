@@ -89,12 +89,29 @@ in { config, pkgs, lib, modulesPath, ... }: {
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
         };
 
-        # # Zabbix monitoring
+        # # # Zabbix monitoring
+        # "status.pablo.tools" = {
+        #   forceSSL = true;
+        #   enableACME = true;
+        #   locations."/" = { proxyPass = "http://192.168.7.1:8088"; };
+        # };
+
+        # Graphana
         "status.pablo.tools" = {
           forceSSL = true;
           enableACME = true;
-          locations."/" = { proxyPass = "http://192.168.7.1:8088"; };
+          locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
         };
+
+        # Graphana
+        # "status.pablo.tools" = {
+        #   forceSSL = true;
+        #   enableAcme = true;
+        #   locations."/" = {
+        #     proxyPass = "http://127.0.0.1:9005";
+        #     proxyWebsockets = true;
+        #   };
+        # };
 
         # # M/monit monitoring
         # "status.pablo.tools" = {

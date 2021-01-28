@@ -5,9 +5,9 @@
   # Enable flakes
   nix = {
     package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    # extraOptions = ''
+    #   experimental-features = nix-command flakes
+    # '';
 
     # Clean up old generations after 30 days
     gc = {
