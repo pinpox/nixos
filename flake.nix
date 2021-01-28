@@ -139,7 +139,8 @@
             ./modules/lvm-grub.nix
             # ./modules/monit/default.nix
             ./modules/home-assistant/default.nix
-            ./modules/zabbix-agent.nix
+            # ./modules/zabbix-agent.nix
+            ./modules/monitoring/telegraf.nix
 
             ./modules/openssh.nix
             ./modules/zsh.nix
@@ -173,11 +174,14 @@
             # ./modules/mmonit.nix
             # ./modules/monit/default.nix
             # ./modules/munin-master.nix
-            ./modules/zabbix-server.nix
+            # ./modules/zabbix-server.nix
             ./modules/environment.nix
             ./modules/locale.nix
             ./modules/openssh.nix
             ./modules/zsh.nix
+            ./modules/monitoring/prometheus.nix
+            ./modules/monitoring/loki.nix
+            ./modules/monitoring/telegraf.nix
 
             # Other machine-specific configuration
             ./machines/porree/configuration.nix
