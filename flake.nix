@@ -162,6 +162,8 @@
             ./modules/locale.nix
             ./modules/nix-common.nix
             ./modules/openssh.nix
+
+            ./modules/hedgedoc.nix
             # ./modules/zsh.nix
 
           ];
