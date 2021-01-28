@@ -148,8 +148,24 @@
           ];
         };
 
-        kfbox =
-          defFlakeSystem { imports = [ ./machines/kfbox/configuration.nix ]; };
+        kfbox = defFlakeSystem {
+          imports = [
+
+            ./machines/kfbox/configuration.nix
+
+            ./modules/user-profiles/pinpox.nix
+
+            # Add home-manager config
+            # { home-manager.users.pinpox = nixos-home.nixosModules.server; }
+
+            ./modules/environment.nix
+            ./modules/locale.nix
+            ./modules/nix-common.nix
+            ./modules/openssh.nix
+            # ./modules/zsh.nix
+
+          ];
+        };
 
         mega =
           defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };

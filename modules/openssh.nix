@@ -7,6 +7,13 @@
     challengeResponseAuthentication = false;
   };
 
+  # Block anything that is not HTTP(s) or SSH.
+  networking.firewall = {
+    enable = true;
+    allowPing = true;
+    allowedTCPPorts = [ 22 ];
+  };
+
   users.users.root.openssh.authorizedKeys.keyFiles = [
     (builtins.fetchurl {
       url = "https://github.com/pinpox.keys";
