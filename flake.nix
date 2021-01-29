@@ -2,7 +2,8 @@
   description = "My machines";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # TODO workaround untill unstable fixes the qemu error in a few days
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
