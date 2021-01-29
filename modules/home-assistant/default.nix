@@ -55,7 +55,6 @@ in {
       doCheck = false;
     }));
 
-
     # Configuration generated to /var/lib/hass/configuration.yaml
     config = {
 

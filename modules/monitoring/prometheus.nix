@@ -50,7 +50,7 @@
           targets = [ "192.168.7.4:9273" ];
           labels.location = "home";
         }
-    ];
+      ];
     }];
   };
 }

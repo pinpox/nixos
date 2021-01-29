@@ -25,14 +25,6 @@ with lib; {
 
     # TODO # set hostname!!!
 
-
-
-
-
-
-
-
-
     # Enable flakes
     nix.package = pkgs.nixFlakes;
 

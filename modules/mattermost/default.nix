@@ -4,14 +4,11 @@ let
     name = "default.json";
     text = builtins.readFile ./default.json;
   };
-in
 
-  {
+in {
 
   # TODO set up IRC bridge
   # TODO setup reverse-proxy
-
-
 
   users.users."mattermost" = {
     createHome = true;
@@ -30,7 +27,7 @@ in
   # if the WorkingDirectory does not exist
 
   system.activationScripts.mattermost = ''
-        mkdir -p /var/lib/mattermost
+    mkdir -p /var/lib/mattermost
   '';
 
   systemd.services.mattermost = {
@@ -75,13 +72,11 @@ in
       # TODO Extract non-secrets from envfile and put them here instead
       Environment = [
 
-
-
         "MM_SERVICESETTINGS_ENABLEEMAILINVITATIONS=true"
-        "MM_SERVICESETTINGS_LISTENADDRESS=\"127.0.0.1:8065\""
+        ''MM_SERVICESETTINGS_LISTENADDRESS="127.0.0.1:8065"''
         "MM_SERVICESETTINGS_ENABLEOAUTHSERVICEPROVIDER=true"
         "MM_SERVICESETTINGS_SITEURL='https://mm.0cx.de'"
-    # "MM_SERVICESETTINGS_WEBSOCKETURL='https://mm.0cx.de'"
+        # "MM_SERVICESETTINGS_WEBSOCKETURL='https://mm.0cx.de'"
         # TODO Check syntax for header
         "MM_SERVICESETTINGS_TRUSTEDPROXYIPHEADER='[\"X-Forwarded-For\" \"X-Real-IP\"]'"
 
@@ -89,14 +84,12 @@ in
 
         "MM_SQLSETTINGS_DRIVERNAME=postgres"
 
-    "MM_SERVICESETTINGS_ALLOWCORSFROM='*'"
-    # "MM_SERVICESETTINGS_CorsExposedHeaders": "",
-    # "MM_SERVICESETTINGS_CorsDebug": false,
+        "MM_SERVICESETTINGS_ALLOWCORSFROM='*'"
+        # "MM_SERVICESETTINGS_CorsExposedHeaders": "",
+        # "MM_SERVICESETTINGS_CorsDebug": false,
 
         # TODO Migrate data
         # MM_SQLSETTINGS_DRIVERNAME="mysql"
-
-
 
         # Secret envfile contains:
         # MM_EMAILSETTINGS_CONNECTIONSECURITY=
@@ -116,28 +109,29 @@ in
 
         # MM_EXTRA_SQLSETTINGS_DB_PASSWORD=
 
-        ];
+      ];
 
-        ExecStart = "${pkgs.mattermost}/bin/mattermost -c /var/lib/mattermost/config/config.json";
-        WorkingDirectory = "/var/lib/mattermost";
-        Restart = "always";
-        RestartSec = "10";
-        LimitNOFILE = "49152";
-      };
-      unitConfig.JoinsNamespaceOf = "postgresql.service";
+      ExecStart =
+        "${pkgs.mattermost}/bin/mattermost -c /var/lib/mattermost/config/config.json";
+      WorkingDirectory = "/var/lib/mattermost";
+      Restart = "always";
+      RestartSec = "10";
+      LimitNOFILE = "49152";
     };
+    unitConfig.JoinsNamespaceOf = "postgresql.service";
+  };
 
-    # systemd.services.matterircd = {
-    #   description = "Mattermost IRC bridge service";
-    #   wantedBy = [ "multi-user.target" ];
-    #   serviceConfig = {
-    #     User = "nobody";
-    #     Group = "nogroup";
-    #     ExecStart = "${pkgs.matterircd}/bin/matterircd ${concatStringsSep " " cfg.matterircd.parameters}";
-    #     WorkingDirectory = "/tmp";
-    #     PrivateTmp = true;
-    #     Restart = "always";
-    #     RestartSec = "5";
-    #   };
-    # };
+  # systemd.services.matterircd = {
+  #   description = "Mattermost IRC bridge service";
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     User = "nobody";
+  #     Group = "nogroup";
+  #     ExecStart = "${pkgs.matterircd}/bin/matterircd ${concatStringsSep " " cfg.matterircd.parameters}";
+  #     WorkingDirectory = "/tmp";
+  #     PrivateTmp = true;
+  #     Restart = "always";
+  #     RestartSec = "5";
+  #   };
+  # };
 }

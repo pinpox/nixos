@@ -4,7 +4,7 @@ in {
 
   networking.firewall = {
     enable = true;
-    interfaces.wg0.allowedTCPPorts = [ port-loki];
+    interfaces.wg0.allowedTCPPorts = [ port-loki ];
   };
 
   services.loki = {
@@ -12,7 +12,7 @@ in {
     configuration = {
       auth_enabled = false;
 
-      server = { http_listen_port =port-loki; };
+      server = { http_listen_port = port-loki; };
 
       ingester = {
         lifecycler = {
@@ -113,7 +113,9 @@ in {
 
       positions = { filename = "/tmp/positions.yml"; };
 
-      clients = [{ url = "http://192.168.7.1:${toString port-loki}/loki/api/v1/push"; }];
+      clients = [{
+        url = "http://192.168.7.1:${toString port-loki}/loki/api/v1/push";
+      }];
 
       scrape_configs = [{
         job_name = "journal";

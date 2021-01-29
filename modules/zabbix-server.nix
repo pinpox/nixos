@@ -1,10 +1,8 @@
 { config, pkgs, lib, ... }: {
 
-  services.zabbixServer = { 
+  services.zabbixServer = {
     enable = true;
-    settings = {
-     StartDiscoverers=5;
-    };
+    settings = { StartDiscoverers = 5; };
   };
 
   services.zabbixWeb = {

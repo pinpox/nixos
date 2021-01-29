@@ -12,26 +12,23 @@
 
   services.munin-node.enable = true;
 
+  services.nginx = {
+    enable = true;
+    recommendedOptimisation = true;
+    recommendedTlsSettings = true;
 
-    services.nginx = {
-      enable = true;
-      recommendedOptimisation = true;
-      recommendedTlsSettings = true;
-
-
-      # No need to support plain HTTP, forcing TLS for all vhosts. Certificates
-      # provided by Let's Encrypt via ACME. Generation and renewal is automatic
-      # if DNS is set up correctly for the (sub-)domains.
-      virtualHosts = {
-        # Personal homepage and blog
-        "status.pablo.tools" = {
-          forceSSL = true;
-          enableACME = true;
-          root = "/var/www/munin";
-        };
+    # No need to support plain HTTP, forcing TLS for all vhosts. Certificates
+    # provided by Let's Encrypt via ACME. Generation and renewal is automatic
+    # if DNS is set up correctly for the (sub-)domains.
+    virtualHosts = {
+      # Personal homepage and blog
+      "status.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        root = "/var/www/munin";
       };
     };
-
+  };
 
   # services.zabbixServer.enable = true;
   # services.zabbixWeb = {
