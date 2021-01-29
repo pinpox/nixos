@@ -2,7 +2,6 @@
 
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
-
   config = {
 
     networking.hostName = "kfbox";
@@ -18,7 +17,6 @@
       fsType = "ext4";
       autoResize = true;
     };
-
 
     boot.growPartition = true;
     boot.kernelParams = [ "console=ttyS0" ];
@@ -43,7 +41,6 @@
     security.acme.acceptTerms = true;
     security.acme.email = "letsencrypt@pablo.tools";
 
-
     # Block anything that is not HTTP(s) or SSH.
     networking.firewall = {
       enable = true;
@@ -53,7 +50,7 @@
       # interfaces.wg0.allowedTCPPorts = [ 2812 ];
     };
 
-    services.nginx  = {
+    services.nginx = {
       enable = true;
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
@@ -81,15 +78,60 @@
           locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
         };
 
-
-
         # Mattermost
-        # "mm.0cx.de" = {
-        #   forceSSL = true;
-        #   enableACME = true;
-        #   locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
-        # };
+        "mm.0cx.de" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8065";
+            proxyWebsockets = true;
 
+            extraConfig = ''
+              proxy_pass_request_headers on;
+              add_header Access-Control-Allow-Origin *;
+              client_max_body_size 50M;
+              proxy_set_header Connection "";
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header X-Frame-Options SAMEORIGIN;
+              proxy_buffers 256 16k;
+              proxy_buffer_size 16k;
+              proxy_read_timeout 600s;
+              proxy_cache_revalidate on;
+              proxy_cache_min_uses 2;
+              proxy_cache_use_stale timeout;
+              proxy_cache_lock on;
+            '';
+          };
+
+          locations."~ /api/v[0-9]+/(users/)?websocket$" = {
+            extraConfig = ''
+              proxy_pass_request_headers on;
+              add_header Access-Control-Allow-Origin *;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              client_max_body_size 50M;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header X-Frame-Options SAMEORIGIN;
+              proxy_buffers 256 16k;
+              proxy_buffer_size 16k;
+              client_body_timeout 60;
+              send_timeout 300;
+              lingering_timeout 5;
+              proxy_connect_timeout 90;
+              proxy_send_timeout 300;
+              proxy_read_timeout 90s;
+                '';
+
+            proxyPass = "http://127.0.0.1:8065";
+            proxyWebsockets = true;
+          };
+        };
       };
     };
   };

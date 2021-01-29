@@ -39,13 +39,14 @@ in
     after = [ "network.target" "postgresql.service" ];
 
     preStart = ''
-      mkdir -p /var/lib/mattermost/{data,config,logs}
-      ln -sf ${pkgs.mattermost}/{bin,fonts,files,i18n,templates,client} /var/lib/mattermost
+      mkdir -p /var/lib/mattermost/{data,config,logs,client-plugins,files}
 
       # For mutable config
       if ! test -e "/var/lib/mattermost/config/.initial-created"; then
         rm -f /var/lib/mattermost/config/config.json
+        rm -rf /var/lib/mattermost/{bin,fonts,i18n,templates,client}
         cp ${default_files} /var/lib/mattermost/config/config.json
+        cp -r ${pkgs.mattermost}/{bin,fonts,i18n,templates,client} /var/lib/mattermost
         touch /var/lib/mattermost/config/.initial-created
       fi
 
@@ -75,15 +76,22 @@ in
       Environment = [
 
 
+
         "MM_SERVICESETTINGS_ENABLEEMAILINVITATIONS=true"
+        "MM_SERVICESETTINGS_LISTENADDRESS=\"127.0.0.1:8065\""
         "MM_SERVICESETTINGS_ENABLEOAUTHSERVICEPROVIDER=true"
         "MM_SERVICESETTINGS_SITEURL='https://mm.0cx.de'"
+    # "MM_SERVICESETTINGS_WEBSOCKETURL='https://mm.0cx.de'"
         # TODO Check syntax for header
         "MM_SERVICESETTINGS_TRUSTEDPROXYIPHEADER='[\"X-Forwarded-For\" \"X-Real-IP\"]'"
 
         "MM_FILESETTINGS_DIRECTORY='/var/lib/mattermost/files'"
 
         "MM_SQLSETTINGS_DRIVERNAME=postgres"
+
+    "MM_SERVICESETTINGS_ALLOWCORSFROM='*'"
+    # "MM_SERVICESETTINGS_CorsExposedHeaders": "",
+    # "MM_SERVICESETTINGS_CorsDebug": false,
 
         # TODO Migrate data
         # MM_SQLSETTINGS_DRIVERNAME="mysql"

@@ -504,7 +504,7 @@
     "AllowInsecureDownloadUrl": false,
     "EnableHealthCheck": true,
     "Directory": "./plugins",
-    "ClientDirectory": "./client/plugins",
+    "ClientDirectory": "./client-plugins",
     "Plugins": {},
     "PluginStates": {
       "com.mattermost.nps": {
