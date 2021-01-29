@@ -25,7 +25,7 @@
     serviceConfig = {
       WorkingDirectory = "/var/lib/hedgedoc";
       ExecStart = "${pkgs.hedgedoc}/bin/hedgedoc";
-      EnvironmentFile = /var/src/secrets/hedgoc/envfile;
+      EnvironmentFile = /var/src/secrets/hedgedoc/envfile;
 
       # TODO Extract non-secrets from envfile and put them here instead
       # Environment = [

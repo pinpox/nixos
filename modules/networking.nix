@@ -28,12 +28,13 @@
       192.168.7.2 ahorn.wireguard
       192.168.7.3 kartoffel.wireguard
       192.168.7.4 birne.wireguard
-      192.168.7.5 kfbox.wireguard
+      192.168.7.5 kfbox-old.wireguard
       192.168.7.6 mega.wireguard
 
       # Public
       94.16.114.42 porree.public
-      93.177.66.52 kfbox.public
+      93.177.66.52 kfbox-old.public
+      46.38.242.17 kfbox.public
       5.181.48.121 mega.public
     '';
   };

@@ -163,6 +163,8 @@
             ./modules/nix-common.nix
             ./modules/openssh.nix
 
+            ./modules/mattermost/default.nix
+            ./modules/thelounge.nix
             ./modules/hedgedoc.nix
             # ./modules/zsh.nix
 
