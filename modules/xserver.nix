@@ -11,7 +11,7 @@
 
     libinput = {
       enable = true;
-      accelProfile = "flat";
+      touchpad.accelProfile = "flat";
     };
 
     config = ''
