@@ -161,8 +161,10 @@
 
             ./modules/environment.nix
             ./modules/locale.nix
+            ./modules/monitoring/telegraf.nix
             ./modules/nix-common.nix
             ./modules/openssh.nix
+            ./modules/wireguard-client.nix
 
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
@@ -196,6 +198,7 @@
             # ./modules/monit/default.nix
             # ./modules/munin-master.nix
             # ./modules/zabbix-server.nix
+            ./modules/networking.nix
             ./modules/environment.nix
             ./modules/locale.nix
             ./modules/openssh.nix

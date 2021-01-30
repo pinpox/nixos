@@ -42,12 +42,15 @@
       metrics_path = "/metrics";
       static_configs = [
         {
-          targets = [ "192.168.7.1:9273" ];
+          targets = [
+            "porree.wireguard:9273"
+            "kfbox.wireguard:9273"
+          ];
           labels.location = "netcup";
         }
 
         {
-          targets = [ "192.168.7.4:9273" ];
+          targets = [ "birne.wireguard:9273" ];
           labels.location = "home";
         }
       ];
