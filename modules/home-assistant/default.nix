@@ -45,6 +45,22 @@ in {
     };
   };
 
+ services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts."home.pablo.tools" = {
+      addSSL = true;
+      enableACME = true;
+      extraConfig = ''
+        proxy_buffering off;
+      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8123";
+        proxyWebsockets = true;
+      };
+    };
+  };
+
   # Enable home-assistant service
   services.home-assistant = {
     enable = true;
