@@ -47,7 +47,7 @@ in {
 
   # Enable home-assistant service
   services.home-assistant = {
-    enable = false;
+    enable = true;
 
     # Disable the python checks, they take for ever when building the
     # configuration
