@@ -24,8 +24,7 @@ in {
   users.users.hass.extraGroups = [ "dialout" ];
 
   # Open port for mqtt
-  networking.firewall.allowedTCPPorts = [ 1883 8123 ];
-  networking.firewall.allowedUDPPorts = [ 1900 1901 137 136 138 ];
+  networking.firewall.allowedTCPPorts = [ 1883 ];
 
   # Enable mosquitto MQTT broker
   services.mosquitto = {
@@ -58,11 +57,29 @@ in {
 
     # Configuration generated to /var/lib/hass/configuration.yaml
     config = {
-      # Provides some sane defaults and minimal dependencies
-      default_config = { };
-
+      frontend = {};
       # HTTP only listening on localhost, since it will be behind nginx
-      http = { };
+      http = {
+        server_host = "127.0.0.1";
+        use_x_forwarded_for = true;
+        trusted_proxies = "127.0.0.1";
+        server_port = 8123;
+      };
+
+     "map" = {};
+    shopping_list = {};
+    logger.default = "info";
+    sun = {};
+    config = {};
+    mobile_app = {};
+
+    cloud = {};
+    system_health = {};
+
+
+      # Provides some sane defaults and minimal dependencies
+      # default_config = { };
+
 
       zeroconf = { default_interface = true; };
       # Basic settings for home-assistant
@@ -75,16 +92,6 @@ in {
         time_zone = "Europe/Berlin";
         external_url = "https://home.pablo.tools";
       };
-
-      frontend = { };
-      "map" = { };
-      shopping_list = { };
-      logger.default = "info";
-      sun = { };
-      config = { };
-      mobile_app = { };
-      cloud = { };
-      system_health = { };
 
       # Discover some devices automatically
       # discovery = { };
@@ -105,6 +112,7 @@ in {
 
       # Fritzbox network traffic stats
       # sensor = [{ platform = "fritzbox_netmonitor"; }];
+
 
       # Enable MQTT and configure it to use the mosquitto broker
       mqtt = {
