@@ -29,7 +29,7 @@ in {
 
   # Enable mosquitto MQTT broker
   services.mosquitto = {
-    enable =true;
+    enable = true;
 
     # Mosquitto is only listening on the local IP, traffic from outside is not
     # allowed.
