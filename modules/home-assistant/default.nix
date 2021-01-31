@@ -29,7 +29,7 @@ in {
 
   # Enable mosquitto MQTT broker
   services.mosquitto = {
-    enable = true;
+    enable =true;
 
     # Mosquitto is only listening on the local IP, traffic from outside is not
     # allowed.
@@ -47,7 +47,7 @@ in {
 
   # Enable home-assistant service
   services.home-assistant = {
-    enable = true;
+    enable = false;
 
     # Disable the python checks, they take for ever when building the
     # configuration
@@ -62,7 +62,6 @@ in {
       default_config = { };
 
       # HTTP only listening on localhost, since it will be behind nginx
-      http = { };
 
       zeroconf = { default_interface = true; };
       # Basic settings for home-assistant
