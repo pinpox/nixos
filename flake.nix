@@ -4,6 +4,9 @@
   inputs = {
     # TODO workaround untill unstable fixes the qemu error in a few days
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-pinned.url =
+      "github:nixos/nixpkgs/39b25bbbb58966643c1d2ba1d05e51cba1f58084";
+
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -11,7 +14,7 @@
     nixos-home.url = "github:pinpox/nixos-home";
     nixos-home.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, home-manager, nixos-home }:
+  outputs = { self, nixpkgs, nixpkgs-pinned, home-manager, nixos-home }:
     let
       # Function to create defult (common) system config options
       defFlakeSystem = baseCfg:
@@ -46,8 +49,9 @@
           ];
         };
     in {
-
       nixosConfigurations = {
+
+        inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
           imports = [
@@ -92,6 +96,7 @@
 
             # User profiles
             ./modules/user-profiles/pinpox.nix
+
             # Add home-manager config
             {
               home-manager.users.pinpox = nixos-home.nixosModules.desktop;
@@ -128,8 +133,14 @@
             # User profiles
             ./modules/user-profiles/pinpox.nix
             # Add home-manager config
+            { home-manager.users.pinpox = nixos-home.nixosModules.server; }
+
             {
-              home-manager.users.pinpox = nixos-home.nixosModules.server;
+              nixpkgs.overlays = [
+                (final: prev: {
+                  nixpkgs-pinned = nixpkgs-pinned.legacyPackages.${prev.system};
+                })
+              ];
             }
 
             # Modules

@@ -6,10 +6,10 @@ let
   # Components listed here will be possible to add via the webUI if not
   # automatically picked up.
 
-  home-assistant-package = pkgs.home-assistant.override {
+  home-assistant-package = pkgs.nixpkgs-pinned.home-assistant.override {
     extraComponents = [
       # Fritzbox network statistics
-      "fritzbox_netmonitor"
+      # "fritzbox_netmonitor"
 
       # Wifi led strip controller
       "flux_led"
@@ -73,7 +73,7 @@ in {
       };
 
       # Discover some devices automatically
-      discovery = { };
+      # discovery = { };
 
       # Show some system health data
       system_health = { };
@@ -90,7 +90,7 @@ in {
       }];
 
       # Fritzbox network traffic stats
-      sensor = [{ platform = "fritzbox_netmonitor"; }];
+      # sensor = [{ platform = "fritzbox_netmonitor"; }];
 
       # HTTP only listening on localhost, since it will be behind nginx
       http = {
