@@ -51,7 +51,6 @@
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
 
-
   nixpkgs = { config.allowUnfree = true; };
 
   # Clean up old generations after 30 days

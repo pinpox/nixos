@@ -1,9 +1,6 @@
 { config, pkgs, ... }: {
 
-    systemd.services.telegraf.path = with pkgs; [
-      lm_sensors
-      iputils
-    ];
+  systemd.services.telegraf.path = with pkgs; [ lm_sensors iputils ];
 
   services.telegraf = {
     enable = true;

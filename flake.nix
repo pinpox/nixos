@@ -8,7 +8,6 @@
     #   "github:nixos/nixpkgs/c4d27d698a5925b94715ae8972d215e033023cd9";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/nixos-unstable";
 
-
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 

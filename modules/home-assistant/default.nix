@@ -44,7 +44,7 @@ in {
     };
   };
 
- services.nginx = {
+  services.nginx = {
     enable = true;
     recommendedProxySettings = true;
     virtualHosts."home.pablo.tools" = {
