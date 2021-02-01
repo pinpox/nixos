@@ -6,7 +6,7 @@ let
   # Components listed here will be possible to add via the webUI if not
   # automatically picked up.
 
-  home-assistant-package = pkgs.nixpkgs-pinned.home-assistant.override {
+  home-assistant-package = pkgs.home-assistant.override {
     extraComponents = [
       # Fritzbox network statistics
       # "fritzbox_netmonitor"
@@ -44,6 +44,22 @@ in {
     };
   };
 
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts."home.pablo.tools" = {
+      addSSL = true;
+      enableACME = true;
+      extraConfig = ''
+        proxy_buffering off;
+      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8123";
+        proxyWebsockets = true;
+      };
+    };
+  };
+
   # Enable home-assistant service
   services.home-assistant = {
     enable = true;
@@ -57,10 +73,12 @@ in {
 
     # Configuration generated to /var/lib/hass/configuration.yaml
     config = {
-
       # Provides some sane defaults and minimal dependencies
       default_config = { };
 
+      # HTTP only listening on localhost, since it will be behind nginx
+
+      zeroconf = { default_interface = true; };
       # Basic settings for home-assistant
       homeassistant = {
         name = "Villa Kunterbunt";
@@ -71,6 +89,16 @@ in {
         time_zone = "Europe/Berlin";
         external_url = "https://home.pablo.tools";
       };
+
+      frontend = { };
+      "map" = { };
+      shopping_list = { };
+      logger.default = "info";
+      sun = { };
+      config = { };
+      mobile_app = { };
+      cloud = { };
+      system_health = { };
 
       # Discover some devices automatically
       # discovery = { };
@@ -92,14 +120,6 @@ in {
       # Fritzbox network traffic stats
       # sensor = [{ platform = "fritzbox_netmonitor"; }];
 
-      # HTTP only listening on localhost, since it will be behind nginx
-      http = {
-        server_host = "127.0.0.1";
-        use_x_forwarded_for = true;
-        trusted_proxies = "127.0.0.1";
-        server_port = 8123;
-      };
-
       # Enable MQTT and configure it to use the mosquitto broker
       mqtt = {
         broker = "192.168.2.84";
@@ -118,7 +138,7 @@ in {
       mobile_app = { };
 
       # Enable configuration UI
-      config = { };
+      # config = { };
 
       # Enable support for tracking state changes over time
       history = { };

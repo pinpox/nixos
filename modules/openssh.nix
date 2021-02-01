@@ -18,7 +18,7 @@
     (builtins.fetchurl {
       url = "https://github.com/pinpox.keys";
 
-      sha256 = "14f7b42fz0159mn1wg9hm0lxi75dkc7gb3bclgm9zhz52yj7fr1y";
+      sha256 = "0si2xncbqjrxn42hvwj98in83mk2cl4rlanf32rlc8lxa2d79q5v";
     })
   ];
 }

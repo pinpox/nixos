@@ -8,6 +8,11 @@
     port = 9005;
     addr = "127.0.0.1";
 
+    # TODO add plugins here, instead of using grafana-cli
+    # declarativePlugins = with pkgs.grafanaPlugins [
+    #    grafana-piechart-panel
+    # ];
+
     provision.datasources = [
       {
         name = "Prometheus localhost";
@@ -21,6 +26,39 @@
         type = "loki";
       }
     ];
+  };
+
+  # Additional telegraf inputs that only run on monitoring host
+  services.telegraf.extraConfig.inputs = {
+    github = {
+      repositories = [ "nixos/nixpkgs" "pinpox/nixos" "pinpox/nixos-home" ];
+    };
+
+    http_response = {
+      urls = [
+        "https://pablo.tools"
+        "https://pass.pablo.tools"
+        "https://status.pablo.tools/login"
+        "https://home.pablo.tools"
+
+        "https://mm.0cx.de"
+        "https://pads.0cx.de"
+        "https://irc.0cx.de"
+
+        "https://megaclan3000.de"
+      ];
+    };
+
+    ping = {
+      urls = [
+        "porree.wireguard"
+        "ahorn.wireguard"
+        "kartoffel.wireguard"
+        "birne.wireguard"
+        "kfbox.wireguard"
+        "mega.wireguard"
+      ];
+    };
   };
 
   services.prometheus = {
@@ -42,10 +80,7 @@
       metrics_path = "/metrics";
       static_configs = [
         {
-          targets = [
-            "porree.wireguard:9273"
-            "kfbox.wireguard:9273"
-          ];
+          targets = [ "porree.wireguard:9273" "kfbox.wireguard:9273" ];
           labels.location = "netcup";
         }
 

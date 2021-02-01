@@ -51,29 +51,6 @@
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
 
-  services.nginx = {
-    enable = true;
-    recommendedOptimisation = true;
-    recommendedTlsSettings = true;
-    clientMaxBodySize = "128m";
-
-    virtualHosts = {
-      # Password manager (bitwarden) instance
-      "home.pablo.tools" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/".proxyWebsockets = true;
-        locations."/".proxyPass = "http://127.0.0.1:8123/";
-        locations."/".extraConfig = ''
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Host $host;
-        '';
-      };
-    };
-  };
-
   nixpkgs = { config.allowUnfree = true; };
 
   # Clean up old generations after 30 days
