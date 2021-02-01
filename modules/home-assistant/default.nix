@@ -82,8 +82,8 @@ in {
       # Basic settings for home-assistant
       homeassistant = {
         name = "Villa Kunterbunt";
-        latitude = "32.8753367";
-        longitude = "-117.2474053";
+        latitude = "50.9571707";
+        longitude = "6.7635205";
         elevation = 86;
         unit_system = "metric";
         time_zone = "Europe/Berlin";
