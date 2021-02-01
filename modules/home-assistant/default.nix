@@ -12,7 +12,7 @@ let
       # "fritzbox_netmonitor"
 
       # Wifi led strip controller
-      # "flux_led"
+      "flux_led"
 
       # Not sure if needed with default_config?
       "lovelace"
@@ -24,8 +24,7 @@ in {
   users.users.hass.extraGroups = [ "dialout" ];
 
   # Open port for mqtt
-  networking.firewall.allowedTCPPorts = [ 1883 8123 ];
-  networking.firewall.allowedUDPPorts = [ 1900 1901 137 136 138 ];
+  networking.firewall.allowedTCPPorts = [ 1883 ];
 
   # Enable mosquitto MQTT broker
   services.mosquitto = {
@@ -112,11 +111,11 @@ in {
 
       # Led strip wifi controller, component needs to be listed explicitely in
       # extraComponents above
-      # light = [{
-      #   platform = "flux_led";
-      #   automatic_add = true;
-      #   devices = { "192.168.2.106" = { name = "flux_led"; }; };
-      # }];
+      light = [{
+        platform = "flux_led";
+        automatic_add = true;
+        devices = { "192.168.2.106" = { name = "flux_led"; }; };
+      }];
 
       # Fritzbox network traffic stats
       # sensor = [{ platform = "fritzbox_netmonitor"; }];
@@ -130,25 +129,25 @@ in {
       };
 
       # Enables a map showing the location of tracked devies
-      # map = { };
+      map = { };
 
       # Track the sun
-      # sun = { };
+      sun = { };
 
       # Enable mobile app
-      # mobile_app = { };
+      mobile_app = { };
 
       # Enable configuration UI
       # config = { };
 
       # Enable support for tracking state changes over time
-      # history = { };
+      history = { };
 
       # Purge tracked history after 10 days
-      # recorder.purge_keep_days = 10;
+      recorder.purge_keep_days = 10;
 
       # View all events in o logbook
-      # logbook = { };
+      logbook = { };
     };
   };
 }
