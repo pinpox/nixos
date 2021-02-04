@@ -16,8 +16,9 @@ jobs:
         # Configure Nix to enable flakes
         extra_nix_config: |
           experimental-features = nix-command flakes
+    - run: nix-build ./krops.nix
     # Run the general flake checks
     # - run: nix flake check
     # Verify that the main program builds
-    - run: nix shell -c echo OK
+    # - run: nix shell -c echo OK
 
