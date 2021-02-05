@@ -2,13 +2,14 @@
   description = "My machines";
 
   inputs = {
-    # TODO workaround untill unstable fixes the qemu error in a few days
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     # nixpkgs-pinned.url =
     #   "github:nixos/nixpkgs/c4d27d698a5925b94715ae8972d215e033023cd9";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/master";
+    # TODO workaround until prezto fix 
+    home-manager.url = "github:pinpox/home-manager/fix-prezto-runcom";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-home.url = "github:pinpox/nixos-home";
