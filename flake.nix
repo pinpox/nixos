@@ -9,7 +9,7 @@
     nixpkgs-pinned.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # TODO workaround until prezto fix
-    home-manager.url = "github:pinpox/home-manager/fix-prezto-runcom";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-home.url = "github:pinpox/nixos-home";
