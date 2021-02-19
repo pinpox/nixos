@@ -66,9 +66,7 @@
             ./modules/user-profiles/pinpox.nix
             # Add home-manager config
             { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
-            {
-              boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-            }
+            { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }
 
             # Modules
             ./modules/bluetooth.nix
