@@ -66,7 +66,9 @@
             ./modules/user-profiles/pinpox.nix
             # Add home-manager config
             { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
-            { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }
+            {
+              boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+            }
 
             # Modules
             ./modules/bluetooth.nix
@@ -102,7 +104,7 @@
             }
 
             # Modules
-            # ../../modules/borg/default.nix
+            ./modules/borg/default.nix
             ./modules/bluetooth.nix
             ./modules/environment.nix
             # ./modules/fonts.nix
@@ -128,6 +130,7 @@
 
             # Include the results of the hardware scan.
             ./machines/birne/hardware-configuration.nix
+            ./modules/networking.nix
 
             # User profiles
             ./modules/user-profiles/pinpox.nix
@@ -155,7 +158,7 @@
 
             ./modules/openssh.nix
             ./modules/zsh.nix
-            ./modules/borg-monitor-repo.nix
+            ./modules/borg/default.nix
           ];
         };
 
@@ -165,6 +168,7 @@
             ./machines/kfbox/configuration.nix
 
             ./modules/user-profiles/pinpox.nix
+            ./modules/networking.nix
 
             # Add home-manager config
             # { home-manager.users.pinpox = nixos-home.nixosModules.server; }
@@ -179,6 +183,7 @@
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
             ./modules/hedgedoc.nix
+            ./modules/borg/default.nix
             # ./modules/zsh.nix
 
           ];
@@ -204,10 +209,7 @@
             }
 
             # Modules
-            # ./modules/mmonit.nix
-            # ./modules/monit/default.nix
-            # ./modules/munin-master.nix
-            # ./modules/zabbix-server.nix
+            ./modules/borg/default.nix
             ./modules/networking.nix
             ./modules/environment.nix
             ./modules/locale.nix
@@ -219,6 +221,7 @@
 
             # Other machine-specific configuration
             ./machines/porree/configuration.nix
+
           ];
         };
       };

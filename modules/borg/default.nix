@@ -2,14 +2,10 @@
   # Backup with borgbackup to remote server. The connection key and repository
   # encryption passphrase is read from /secrets. This directory has to be
   # copied ther *manually* (so this config can be shared publicly)!
-  services.borgbackup.jobs.box-backup= {
+  services.borgbackup.jobs.box-backup = {
 
     # Paths to backup
-    paths = [
-      "/home"
-      "/root"
-      "/var/lib"
-    ];
+    paths = [ "/home" "/root" "/var/lib" ];
 
     # Remote servers repository to use. Archives will be labeled with the
     # hostname and a timestamp
@@ -65,5 +61,13 @@
 
     # TODO write check somewhere to be read by monitoring
     # postHook = " ";
+
+    prune.keep = {
+      within = "1d"; # Keep all archives from the last day
+      daily = 7;
+      weekly = 4;
+      monthly = 3;
+    };
   };
+
 }
