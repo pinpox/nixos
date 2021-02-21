@@ -7,6 +7,7 @@
     # Paths to backup
     paths = [
       "/home"
+      "/root"
       "/var/lib"
     ];
 
