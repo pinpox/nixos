@@ -45,7 +45,6 @@ in { config, pkgs, lib, modulesPath, ... }: {
       gnumake
       go
       htop
-      # mmonit
       neovim
       nix-index
       nixfmt
@@ -89,36 +88,12 @@ in { config, pkgs, lib, modulesPath, ... }: {
           locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
         };
 
-        # # # Zabbix monitoring
-        # "status.pablo.tools" = {
-        #   forceSSL = true;
-        #   enableACME = true;
-        #   locations."/" = { proxyPass = "http://192.168.7.1:8088"; };
-        # };
-
         # Graphana
         "status.pablo.tools" = {
           forceSSL = true;
           enableACME = true;
           locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
         };
-
-        # Graphana
-        # "status.pablo.tools" = {
-        #   forceSSL = true;
-        #   enableAcme = true;
-        #   locations."/" = {
-        #     proxyPass = "http://127.0.0.1:9005";
-        #     proxyWebsockets = true;
-        #   };
-        # };
-
-        # # M/monit monitoring
-        # "status.pablo.tools" = {
-        #   forceSSL = true;
-        #   enableACME = true;
-        #   locations."/" = { proxyPass = "http://192.168.7.1:8080"; };
-        # };
       };
     };
 
@@ -131,6 +106,9 @@ in { config, pkgs, lib, modulesPath, ... }: {
       # Users allowed to run nix
       allowedUsers = [ "root" ];
     };
+
+    # Enable ip forwarding, so wireguard peers can reach eachother
+    boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
     # Enable Wireguard
     networking.wireguard.interfaces = {
