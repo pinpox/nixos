@@ -70,7 +70,7 @@
 
             # Modules
             ./modules/bluetooth.nix
-            ./modules/borg/home.nix
+            ./modules/borg/default.nix
             ./modules/environment.nix
             # ./modules/fonts.nix
             ./modules/locale.nix
@@ -102,7 +102,7 @@
             }
 
             # Modules
-            # ../../modules/borg/home.nix
+            # ../../modules/borg/default.nix
             ./modules/bluetooth.nix
             ./modules/environment.nix
             # ./modules/fonts.nix
