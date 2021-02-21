@@ -49,6 +49,10 @@
             })
           ];
         };
+
+        base-modules-server = [];
+        base-modules-desktop = [];
+
     in {
       nixosConfigurations = {
 
@@ -147,13 +151,10 @@
 
             # Modules
             ./modules/borg-server.nix
-            ./modules/dyndns.nix
             ./modules/environment.nix
             ./modules/locale.nix
             ./modules/lvm-grub.nix
-            # ./modules/monit/default.nix
             ./modules/home-assistant/default.nix
-            # ./modules/zabbix-agent.nix
             ./modules/monitoring/telegraf.nix
 
             ./modules/openssh.nix
@@ -192,11 +193,6 @@
         mega =
           defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
 
-        # home-assistant = defFlakeSystem {
-        #   # Other system types could be sepcified here, e.g.:
-        #   # system = "x86_64-linux";
-        #   imports = [ ./machines/home-assistant/configuration.nix ];
-        # };
 
         porree = defFlakeSystem {
           imports = [

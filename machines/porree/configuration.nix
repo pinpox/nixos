@@ -63,6 +63,7 @@ in { config, pkgs, lib, modulesPath, ... }: {
       recommendedOptimisation = true;
       recommendedTlsSettings = true;
       clientMaxBodySize = "128m";
+      recommendedProxySettings = true;
 
       # Needed for bitwarden_rs, it seems to have trouble serving scripts for
       # the frontend without it.
@@ -93,6 +94,16 @@ in { config, pkgs, lib, modulesPath, ... }: {
           forceSSL = true;
           enableACME = true;
           locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
+        };
+
+        "home.pablo.tools" = {
+          addSSL = true;
+          enableACME = true;
+          extraConfig = "proxy_buffering off;";
+          locations."/" = {
+            proxyPass = "http://birne.wireguard:8123";
+            proxyWebsockets = true;
+          };
         };
       };
     };

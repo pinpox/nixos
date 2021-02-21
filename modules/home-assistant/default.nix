@@ -24,7 +24,13 @@ in {
   users.users.hass.extraGroups = [ "dialout" ];
 
   # Open port for mqtt
-  networking.firewall.allowedTCPPorts = [ 1883 ];
+  networking.firewall = {
+
+    allowedTCPPorts = [ 1883 ];
+
+    # Expose home-assitant over wireguard
+    interfaces.wg0.allowedTCPPorts = [ 8123 ];
+  };
 
   # Enable mosquitto MQTT broker
   services.mosquitto = {
@@ -44,22 +50,6 @@ in {
     };
   };
 
-  services.nginx = {
-    enable = true;
-    recommendedProxySettings = true;
-    virtualHosts."home.pablo.tools" = {
-      addSSL = true;
-      enableACME = true;
-      extraConfig = ''
-        proxy_buffering off;
-      '';
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8123";
-        proxyWebsockets = true;
-      };
-    };
-  };
-
   # Enable home-assistant service
   services.home-assistant = {
     enable = true;
@@ -75,8 +65,6 @@ in {
     config = {
       # Provides some sane defaults and minimal dependencies
       default_config = { };
-
-      # HTTP only listening on localhost, since it will be behind nginx
 
       zeroconf = { default_interface = true; };
       # Basic settings for home-assistant
