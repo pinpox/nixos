@@ -56,6 +56,11 @@
     wget
   ];
 
+
+  {
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  }
+
   programs.dconf.enable = true;
 
   # Enable Wireguard

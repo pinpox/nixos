@@ -8,7 +8,6 @@
     #   "github:nixos/nixpkgs/c4d27d698a5925b94715ae8972d215e033023cd9";
     nixpkgs-pinned.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # TODO workaround until prezto fix
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -50,8 +49,37 @@
           ];
         };
 
-        base-modules-server = [];
-        base-modules-desktop = [];
+        base-modules-server = [
+            ./modules/user-profiles/pinpox.nix
+            { home-manager.users.pinpox = nixos-home.nixosModules.server; }
+            ./modules/borg/default.nix
+            ./modules/environment.nix
+            ./modules/zsh.nix
+            ./modules/openssh.nix
+            ./modules/networking.nix
+            ./modules/locale.nix
+            ./modules/nix-common.nix
+        ];
+
+        base-modules-desktop = [
+
+            ./modules/user-profiles/pinpox.nix
+            { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
+
+            ./modules/bluetooth.nix
+            ./modules/borg/default.nix
+            ./modules/environment.nix
+            ./modules/locale.nix
+            ./modules/lvm-grub.nix
+            ./modules/networking.nix
+            ./modules/openssh.nix
+            ./modules/sound.nix
+            ./modules/virtualization.nix
+            ./modules/xserver.nix
+            ./modules/yubikey.nix
+            ./modules/zsh.nix
+            ./modules/nix-common.nix
+        ];
 
     in {
       nixosConfigurations = {
@@ -59,87 +87,28 @@
         inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
-          imports = [
-            # Machine-specific
+          imports = base-modules-desktop ++ [
             ./machines/kartoffel/configuration.nix
-
-            # Include the results of the hardware scan.
             ./machines/kartoffel/hardware-configuration.nix
-
-            # User profiles
-            ./modules/user-profiles/pinpox.nix
-            # Add home-manager config
-            { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
-            {
-              boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-            }
-
-            # Modules
-            ./modules/bluetooth.nix
-            ./modules/borg/default.nix
-            ./modules/environment.nix
-            # ./modules/fonts.nix
-            ./modules/locale.nix
-            ./modules/lvm-grub.nix
-            ./modules/networking.nix
-            ./modules/openssh.nix
-            ./modules/sound.nix
-            ./modules/virtualization.nix
-            ./modules/xserver.nix
-            ./modules/yubikey.nix
-            ./modules/zsh.nix
           ];
         };
 
         ahorn = defFlakeSystem {
-          imports = [
-            # Machine-specific
+          imports = base-modules-desktop ++ [
             ./machines/ahorn/configuration.nix
-
-            # Include the results of the hardware scan.
             ./machines/ahorn/hardware-configuration.nix
 
-            # User profiles
-            ./modules/user-profiles/pinpox.nix
-
-            # Add home-manager config
-            {
-              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
-            }
-
             # Modules
-            ./modules/borg/default.nix
-            ./modules/bluetooth.nix
-            ./modules/environment.nix
-            # ./modules/fonts.nix
-            ./modules/locale.nix
-            ./modules/lvm-grub.nix
-            ./modules/networking.nix
-            ./modules/nix-common.nix
-            ./modules/openssh.nix
-            ./modules/sound.nix
-            ./modules/virtualization.nix
             ./modules/wireguard-client.nix
-            ./modules/xserver.nix
-            ./modules/yubikey.nix
-            ./modules/zsh.nix
           ];
         };
 
         birne = defFlakeSystem {
-          imports = [
+          imports = base-modules-server  ++ [
 
             # Machine specific config
             ./machines/birne/configuration.nix
-
-            # Include the results of the hardware scan.
             ./machines/birne/hardware-configuration.nix
-            ./modules/networking.nix
-
-            # User profiles
-            ./modules/user-profiles/pinpox.nix
-            # Add home-manager config
-            { home-manager.users.pinpox = nixos-home.nixosModules.server; }
 
             {
               nixpkgs.overlays = [
@@ -151,42 +120,22 @@
 
             # Modules
             ./modules/borg-server.nix
-            ./modules/environment.nix
-            ./modules/locale.nix
             ./modules/lvm-grub.nix
             ./modules/home-assistant/default.nix
             ./modules/monitoring/telegraf.nix
 
-            ./modules/openssh.nix
-            ./modules/zsh.nix
-            ./modules/borg/default.nix
           ];
         };
 
         kfbox = defFlakeSystem {
-          imports = [
-
+          imports = base-modules-server ++ [
             ./machines/kfbox/configuration.nix
 
-            ./modules/user-profiles/pinpox.nix
-            ./modules/networking.nix
-
-            # Add home-manager config
-            # { home-manager.users.pinpox = nixos-home.nixosModules.server; }
-
-            ./modules/environment.nix
-            ./modules/locale.nix
             ./modules/monitoring/telegraf.nix
-            ./modules/nix-common.nix
-            ./modules/openssh.nix
             ./modules/wireguard-client.nix
-
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
             ./modules/hedgedoc.nix
-            ./modules/borg/default.nix
-            # ./modules/zsh.nix
-
           ];
         };
 
@@ -195,29 +144,12 @@
 
 
         porree = defFlakeSystem {
-          imports = [
+          imports = base-modules-server ++ [
+            ./machines/porree/configuration.nix
 
-            # User profiles
-            ./modules/user-profiles/pinpox.nix
-            # Add home-manager config
-            {
-              home-manager.users.pinpox = nixos-home.nixosModules.server;
-            }
-
-            # Modules
-            ./modules/borg/default.nix
-            ./modules/networking.nix
-            ./modules/environment.nix
-            ./modules/locale.nix
-            ./modules/openssh.nix
-            ./modules/zsh.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
             ./modules/monitoring/telegraf.nix
-
-            # Other machine-specific configuration
-            ./machines/porree/configuration.nix
-
           ];
         };
       };
