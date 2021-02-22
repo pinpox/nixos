@@ -59,8 +59,12 @@
     # Backup will run daily
     startAt = "daily";
 
-    # TODO write check somewhere to be read by monitoring
-    # postHook = " ";
+    # Write information for last snapshot to be retrieved by the monitoring
+    # readWritePaths = [ "/var/log" ];
+    # postHook = ''
+    #   borg info --json --last 1 borg@birne.wireguard:. > /var/log/borgbackup-last-info
+    #   echo $exitStatus > /var/log/borgbackup-last-status
+    #   '';
 
     prune.keep = {
       within = "1d"; # Keep all archives from the last day
