@@ -79,6 +79,7 @@
             ./modules/yubikey.nix
             ./modules/zsh.nix
             ./modules/nix-common.nix
+            ./modules/wireguard-client.nix
         ];
 
     in {
@@ -97,9 +98,6 @@
           imports = base-modules-desktop ++ [
             ./machines/ahorn/configuration.nix
             ./machines/ahorn/hardware-configuration.nix
-
-            # Modules
-            ./modules/wireguard-client.nix
           ];
         };
 
