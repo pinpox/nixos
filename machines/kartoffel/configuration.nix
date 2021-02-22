@@ -26,16 +26,6 @@
     };
   };
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    # Users allowed to run nix
-    allowedUsers = [ "root" ];
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -57,48 +47,15 @@
   ];
 
 
-  {
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-  }
+  # To build raspi images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   programs.dconf.enable = true;
 
   # Enable Wireguard
-  networking.wireguard.interfaces = {
+  networking.wireguard.interfaces.wg0.ips = [ "192.168.7.3/24" ];
 
-    wg0 = {
 
-      # Determines the IP address and subnet of the client's end of the
-      # tunnel interface.
-      ips = [ "192.168.7.3/24" ];
-
-      # Path to the private key file
-      privateKeyFile = toString /var/src/secrets/wireguard/private;
-      peers = [{
-        # Public key of the server (not a file path).
-        publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
-
-        # Don't forward all the traffic via VPN, only particular subnets
-        allowedIPs = [ "192.168.7.0/24" ];
-
-        # Server IP and port.
-        endpoint = "vpn.pablo.tools:51820";
-
-        # Send keepalives every 25 seconds. Important to keep NAT tables
-        # alive.
-        persistentKeepalive = 25;
-      }];
-    };
-  };
-
-  nixpkgs = { config.allowUnfree = true; };
-
-  # Clean up old generations after 30 days
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
