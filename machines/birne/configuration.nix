@@ -10,15 +10,6 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    # Users allowed to run nix
-    allowedUsers = [ "root" ];
-  };
 
   # Enable Wireguard
   networking.wireguard.interfaces = {
@@ -50,15 +41,6 @@
 
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
-
-  nixpkgs = { config.allowUnfree = true; };
-
-  # Clean up old generations after 30 days
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];

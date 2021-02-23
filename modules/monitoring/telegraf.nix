@@ -36,7 +36,7 @@
         swap = { };
         system = { };
         systemd_units = { };
-        wireguard = { };
+        # wireguard = { };
 
         # Generic socket listener capable of handling multiple socket types.
         # socket_listener = {
