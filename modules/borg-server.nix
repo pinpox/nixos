@@ -7,6 +7,15 @@
       file = {
         tag_keys = ["archives_0_hostname"];
         data_format = "json";
+        json_string_fields = [
+          "archives_0_comment"
+          "archives_0_end"
+          "archives_0_start"
+          "archives_0_hostname"
+          "archives_0_id"
+          "archives_0_name"
+          "archives_0_username"
+        ];
 
         files = [
           "/var/lib/borg-monitor/ahorn.json"
