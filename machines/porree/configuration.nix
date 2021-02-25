@@ -1,5 +1,4 @@
-let domain = "nix.own";
-in { config, pkgs, lib, modulesPath, ... }: {
+{ config, pkgs, lib, modulesPath, ... }: {
 
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
@@ -106,16 +105,6 @@ in { config, pkgs, lib, modulesPath, ... }: {
           };
         };
       };
-    };
-
-    nix = {
-      package = pkgs.nixFlakes;
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
-
-      # Users allowed to run nix
-      allowedUsers = [ "root" ];
     };
 
     # Enable ip forwarding, so wireguard peers can reach eachother

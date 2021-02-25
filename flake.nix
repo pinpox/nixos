@@ -129,6 +129,8 @@
           imports = base-modules-server ++ [
             ./machines/kfbox/configuration.nix
 
+            { nix.autoOptimiseStore = true; }
+
             ./modules/monitoring/telegraf.nix
             ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
