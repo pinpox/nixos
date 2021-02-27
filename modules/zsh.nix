@@ -2,6 +2,11 @@
 
   environment.systemPackages = with pkgs; [ zsh ];
 
+  # Needed for yubikey to work
+  environment.shellInit = ''
+    export ZDOTDIR=$HOME/.config/zsh
+  '';
+
   programs.zsh = {
     enable = true;
     shellAliases = { vim = "nvim"; };
