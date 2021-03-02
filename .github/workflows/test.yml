@@ -1,4 +1,4 @@
-name: "Test"
+name: "Build all hosts"
 on:
   pull_request:
   push:
@@ -17,7 +17,7 @@ jobs:
         # Configure Nix to enable flakes
         extra_nix_config: |
           experimental-features = nix-command flakes
-    - run: nix-build ./krops.nix
+    - run: nix-build ./krops.nix -A all
     # Run the general flake checks
     # - run: nix flake check
     # Verify that the main program builds
