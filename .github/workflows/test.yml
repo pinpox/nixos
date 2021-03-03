@@ -1,4 +1,4 @@
-name: "Test"
+name: "Build all hosts"
 on:
   pull_request:
   push:
@@ -12,12 +12,12 @@ jobs:
         fetch-depth: 0
     - uses: cachix/install-nix-action@v12
       with:
-        nix_path: nixos-unstable
+        nix_path: nixpkgs=channel:nixos-unstable
         install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20210126_f15f0b8/install
         # Configure Nix to enable flakes
         extra_nix_config: |
           experimental-features = nix-command flakes
-    - run: nix-build ./krops.nix
+    - run: nix-build ./krops.nix -A all
     # Run the general flake checks
     # - run: nix flake check
     # Verify that the main program builds
