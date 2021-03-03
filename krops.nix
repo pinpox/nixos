@@ -20,7 +20,7 @@ let
       # Copy over the whole repo. By default nixos-rebuild will use the
       # currents system hostname to lookup the right nixos configuration in
       # `nixosConfigurations` from flake.nix
-      machine-config.file = toString ../pinpox-nixos;
+      machine-config.file = toString ./. ;
     }];
 
   command = targetPath: ''
