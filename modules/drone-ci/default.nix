@@ -44,6 +44,9 @@ in
     locations."/" = { proxyPass = "http://127.0.0.1:3030"; };
   };
 
+
+    nix.allowedUsers = [ "drone-runner-exec" ];
+
   systemd.services.drone-runner-exec = {
     wantedBy = [ "multi-user.target" ];
     # might break deployment

@@ -147,7 +147,7 @@
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
 
-            ./modules/drone-ci/default.nix
+            # ./modules/drone-ci/default.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
             ./modules/monitoring/telegraf.nix
