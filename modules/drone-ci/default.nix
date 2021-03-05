@@ -12,10 +12,18 @@ in
   systemd.services.drone-server = {
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
+
+      BindReadOnlyPaths = [
+        "/etc/hosts:/etc/hosts"
+      ];
       EnvironmentFile = [
         "/var/src/secrets/drone-ci/envfile"
       ];
       Environment = [
+"PLUGIN_CUSTOM_DNS=8.8.8.8"
+        "/etc/resolv.conf:/etc/resolv.conf"
+"GODEBUG=netdns=go"
+"DRONE_LOG_FILE=/var/lib/drone/log.txt"
         "DRONE_DATABASE_DATASOURCE=postgres:///${droneserver}?host=/run/postgresql"
         "DRONE_DATABASE_DRIVER=postgres"
         "DRONE_SERVER_PORT=:3030"
@@ -55,6 +63,9 @@ in
       pkgs.bash
       pkgs.nixUnstable
       pkgs.gzip
+      pkgs.bind
+      pkgs.dnsutils
+      pkgs.openssh
     ];
     path = [
       pkgs.git
@@ -62,9 +73,15 @@ in
       pkgs.bash
       pkgs.nixUnstable
       pkgs.gzip
+      pkgs.bind
+      pkgs.dnsutils
+      pkgs.openssh
     ];
     serviceConfig = {
       Environment = [
+        "PLUGIN_CUSTOM_DNS=8.8.8.8"
+"DRONE_LOG_FILE=/var/lib/drone/log.txt"
+"GODEBUG=netdns=go"
         "DRONE_RUNNER_CAPACITY=10"
         "CLIENT_DRONE_RPC_HOST=127.0.0.1:3030"
         "NIX_REMOTE=daemon"
@@ -77,9 +94,11 @@ in
       ];
       BindReadOnlyPaths = [
         "/etc/passwd:/etc/passwd"
+        "/etc/resolv.conf:/etc/resolv.conf"
         "/etc/group:/etc/group"
         "/nix/var/nix/profiles/system/etc/nix:/etc/nix"
-        # "${config.environment.etc."ssl/certs/ca-certificates.crt".source}:/etc/ssl/certs/ca-certificates.crt"
+        "/etc/hosts:/etc/hosts"
+        "${config.environment.etc."ssl/certs/ca-certificates.crt".source}:/etc/ssl/certs/ca-certificates.crt"
         # "${config.environment.etc."ssh/ssh_known_hosts".source}:/etc/ssh/ssh_known_hosts"
         # "${builtins.toFile "ssh_config" ''
         #   Host eve.thalheim.io
