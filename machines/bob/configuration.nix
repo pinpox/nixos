@@ -29,8 +29,6 @@
 
   virtualisation.vmware.guest.enable = true;
 
-  # security.acme.acceptTerms = true;
-  # security.acme.email = "letsencrypt@pablo.tools";
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
