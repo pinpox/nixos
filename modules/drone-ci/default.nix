@@ -2,19 +2,16 @@
 
 let
   drone-admin = "pinpox";
-  drone-host = "drone.pablo.tools";
-  drone-runner-exec = pkgs.callPackage ./drone-runner-exec.nix {};
+  drone-host = "drone.lounge.rocks";
+  drone-runner-exec = pkgs.callPackage ./drone-runner-exec.nix { };
 
   # droneserver = config.users.users.droneserver.name;
   droneserver = "droneci";
-in
-{
+in {
   systemd.services.drone-server = {
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      EnvironmentFile = [
-        "/var/src/secrets/drone-ci/envfile"
-      ];
+      EnvironmentFile = [ "/var/src/secrets/drone-ci/envfile" ];
       Environment = [
         "DRONE_DATABASE_DATASOURCE=postgres:///${droneserver}?host=/run/postgresql"
         "DRONE_DATABASE_DRIVER=postgres"
@@ -32,40 +29,46 @@ in
     ensureDatabases = [ droneserver ];
     ensureUsers = [{
       name = droneserver;
-      ensurePermissions = {
-        "DATABASE ${droneserver}" = "ALL PRIVILEGES";
-      };
+      ensurePermissions = { "DATABASE ${droneserver}" = "ALL PRIVILEGES"; };
     }];
   };
 
-  services.nginx.virtualHosts."${drone-host}" = {
-    forceSSL = true;
-    enableACME = true;
-    locations."/" = { proxyPass = "http://127.0.0.1:3030"; };
+
+    security.acme.acceptTerms = true;
+    security.acme.email = "letsencrypt@pablo.tools";
+
+  services.nginx = {
+    enable = true;
+    recommendedOptimisation = true;
+    recommendedTlsSettings = true;
+    clientMaxBodySize = "128m";
+    recommendedProxySettings = true;
+    commonHttpConfig = ''
+      server_names_hash_bucket_size 128;
+    '';
+
+    # No need to support plain HTTP, forcing TLS for all vhosts. Certificates
+    # provided by Let's Encrypt via ACME. Generation and renewal is automatic
+    # if DNS is set up correctly for the (sub-)domains.
+    virtualHosts = {
+      "${drone-host}" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:3030"; };
+      };
+    };
   };
 
-
-    nix.allowedUsers = [ "drone-runner-exec" ];
+  nix.allowedUsers = [ "drone-runner-exec" ];
 
   systemd.services.drone-runner-exec = {
     wantedBy = [ "multi-user.target" ];
     # might break deployment
     restartIfChanged = false;
     confinement.enable = true;
-    confinement.packages = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixUnstable
-      pkgs.gzip
-    ];
-    path = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixUnstable
-      pkgs.gzip
-    ];
+    confinement.packages =
+      [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixUnstable pkgs.gzip ];
+    path = [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixUnstable pkgs.gzip ];
     serviceConfig = {
       Environment = [
         "DRONE_RUNNER_CAPACITY=10"
@@ -92,7 +95,7 @@ in
         # channels are dynamic paths in the nix store, therefore we need to bind mount the whole thing
         "/nix/"
       ];
-        # TODO
+      # TODO
       EnvironmentFile = [ "/var/src/secrets/drone-ci/envfile" ];
       ExecStart = "${drone-runner-exec}/bin/drone-runner-exec";
 
@@ -115,5 +118,4 @@ in
   };
   users.groups."${droneserver}" = { };
 
-  # sops.secrets.drone = { };
 }

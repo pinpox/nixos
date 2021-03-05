@@ -131,10 +131,10 @@
 
             # Machine specific config
             ./machines/bob/configuration.nix
-            # ./machines/bob/hardware-configuration.nix
-
+            ./machines/bob/hardware-configuration.nix
 
             # Modules
+            # ./modules/wireguard-client.nix
             ./modules/drone-ci/default.nix
             # ./modules/lvm-grub.nix
             # ./modules/monitoring/telegraf.nix
