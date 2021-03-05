@@ -125,6 +125,22 @@
           ];
         };
 
+
+        bob = defFlakeSystem {
+          imports = base-modules-server  ++ [
+
+            # Machine specific config
+            ./machines/bob/configuration.nix
+            ./machines/bob/hardware-configuration.nix
+
+            # Modules
+            # ./modules/wireguard-client.nix
+            ./modules/drone-ci/default.nix
+            # ./modules/lvm-grub.nix
+            # ./modules/monitoring/telegraf.nix
+          ];
+        };
+
         kfbox = defFlakeSystem {
           imports = base-modules-server ++ [
             ./machines/kfbox/configuration.nix
@@ -147,7 +163,7 @@
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
 
-            ./modules/drone-ci/default.nix
+            # ./modules/drone-ci/default.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
             ./modules/monitoring/telegraf.nix

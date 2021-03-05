@@ -2,8 +2,8 @@
 
 let
   drone-admin = "pinpox";
-  drone-host = "drone.pablo.tools";
-  drone-runner-exec = pkgs.callPackage ./drone-runner-exec.nix {};
+  drone-host = "drone.lounge.rocks";
+  drone-runner-exec = pkgs.callPackage ./drone-runner-exec.nix { };
 
   # droneserver = config.users.users.droneserver.name;
   droneserver = "droneci";
@@ -16,9 +16,7 @@ in
       BindReadOnlyPaths = [
         "/etc/hosts:/etc/hosts"
       ];
-      EnvironmentFile = [
-        "/var/src/secrets/drone-ci/envfile"
-      ];
+      EnvironmentFile = [        "/var/src/secrets/drone-ci/envfile"  ];
       Environment = [
 "PLUGIN_CUSTOM_DNS=8.8.8.8"
         "/etc/resolv.conf:/etc/resolv.conf"
@@ -40,9 +38,7 @@ in
     ensureDatabases = [ droneserver ];
     ensureUsers = [{
       name = droneserver;
-      ensurePermissions = {
-        "DATABASE ${droneserver}" = "ALL PRIVILEGES";
-      };
+      ensurePermissions = { "DATABASE ${droneserver}" = "ALL PRIVILEGES"; };
     }];
   };
 
@@ -131,5 +127,4 @@ in
   };
   users.groups."${droneserver}" = { };
 
-  # sops.secrets.drone = { };
 }
