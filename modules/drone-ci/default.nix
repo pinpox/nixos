@@ -3,7 +3,6 @@
 let
   drone-admin = "pinpox";
   drone-host = "drone.lounge.rocks";
-  drone-runner-exec = pkgs.callPackage ./drone-runner-exec.nix { };
 
   drone_user = "droneci";
 in {
@@ -21,6 +20,7 @@ in {
         "DRONE_DATABASE_DATASOURCE=postgres:///${drone_user}?host=/run/postgresql"
         "DRONE_DATABASE_DRIVER=postgres"
         "DRONE_SERVER_PORT=:3030"
+        "DRONE_USER_FILTER=lounge-rocks"
         "DRONE_USER_CREATE=username:${drone-admin},admin:true"
       ];
       ExecStart = "${pkgs.drone}/bin/drone-server";
@@ -61,74 +61,6 @@ in {
   };
 
   nix.allowedUsers = [ drone_user ];
-  systemd.services.drone-runner-exec = {
-    wantedBy = [ "multi-user.target" ];
-    # might break deployment
-    restartIfChanged = false;
-    confinement.enable = true;
-    confinement.packages = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixUnstable
-      pkgs.gzip
-      pkgs.bind
-      pkgs.dnsutils
-      pkgs.openssh
-    ];
-    path = [
-      pkgs.git
-      pkgs.gnutar
-      pkgs.bash
-      pkgs.nixUnstable
-      pkgs.gzip
-      pkgs.bind
-      pkgs.dnsutils
-      pkgs.openssh
-    ];
-    serviceConfig = {
-      Environment = [
-        "PLUGIN_CUSTOM_DNS=8.8.8.8"
-        "DRONE_LOG_FILE=/var/lib/drone/log.txt"
-        "GODEBUG=netdns=go"
-        "DRONE_RUNNER_CAPACITY=10"
-        "CLIENT_DRONE_RPC_HOST=127.0.0.1:3030"
-        "NIX_REMOTE=daemon"
-        "PAGER=cat"
-      ];
-      BindPaths = [
-        "/nix/var/nix/daemon-socket/socket"
-        "/run/nscd/socket"
-        "/var/lib/drone"
-      ];
-      BindReadOnlyPaths = [
-        "/etc/passwd:/etc/passwd"
-        "/etc/resolv.conf:/etc/resolv.conf"
-        "/etc/group:/etc/group"
-        "/nix/var/nix/profiles/system/etc/nix:/etc/nix"
-        "/etc/hosts:/etc/hosts"
-        "${
-          config.environment.etc."ssl/certs/ca-certificates.crt".source
-        }:/etc/ssl/certs/ca-certificates.crt"
-        # "${config.environment.etc."ssh/ssh_known_hosts".source}:/etc/ssh/ssh_known_hosts"
-        # "${builtins.toFile "ssh_config" ''
-        #   Host eve.thalheim.io
-        #     ForwardAgent yes
-        # ''}:/etc/ssh/ssh_config"
-        "/etc/machine-id"
-        # channels are dynamic paths in the nix store, therefore we need to bind mount the whole thing
-        "/nix/"
-      ];
-      # TODO
-      EnvironmentFile = [ "/var/src/secrets/drone-ci/envfile" ];
-      ExecStart = "${drone-runner-exec}/bin/drone-runner-exec";
-
-      # TODO ExecStartPre fails, find a way to create this directory, for now it has to be created manually
-      # ExecStartPre = "/run/current-system/sw/bin/mkdir -p /var/lib/drone";
-      User = "${drone_user}";
-      Group = "${drone_user}";
-    };
-  };
 
   users.groups."${drone_user}" = { };
 
