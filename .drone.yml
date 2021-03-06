@@ -11,5 +11,6 @@ steps:
 - name: Build all hosts
   image: nixos/nix
   commands:
+  - nix-env -i git
   - nix-build krops.nix -A all
   - ls -al
