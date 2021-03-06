@@ -8,12 +8,23 @@
         DRONE_RPC_PROTO = "https";
         DRONE_RPC_HOST = "drone.lounge.rocks";
         DRONE_RUNNER_CAPACITY = "2";
-        DRONE_RUNNER_NAME = "\${HOSTNAME}";
-        DRONE_RPC_SECRET="$(cat /var/src/secrets/drone-ci/envfile)";
+        DRONE_RUNNER_NAME = "drone-runner";
       };
+
+      extraOptions = [
+        "--network=host"
+        "--env-file=/var/src/secrets/drone-ci/envfile"
+      ];
 
       ports = [ "3000:3000" ];
       volumes = [ "/var/run/docker.sock:/var/run/docker.sock" ];
     };
+  };
+
+
+  networking = {
+    extraHosts = ''
+      127.0.0.1 drone.lounge.rocks
+    '';
   };
 }
