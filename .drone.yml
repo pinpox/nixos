@@ -9,7 +9,8 @@ platform:
 
 steps:
 - name: Build all hosts
-  image: nixos/nix
+  # image: nixos/nix
+  image: nixpkgs/nix-flakes
   commands:
   - nix-env -i git
   - nix-build krops.nix -A all
