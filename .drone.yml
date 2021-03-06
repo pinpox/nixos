@@ -12,8 +12,9 @@ steps:
   # image: nixos/nix
   image: nixpkgs/nix-flakes
   commands:
-    - nix-build krops.nix -A all
+ # - nix-build krops.nix -A all
   # - nix run ".#deploy.kartoffel"
+  - nix-build krops.nix -A all
   - ls -al
   environment:
     #NIX_PATH: nixpkgs=channel:nixos-unstable
