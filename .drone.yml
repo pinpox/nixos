@@ -1,18 +1,15 @@
----
+
 kind: pipeline
-type: exec
 name: default
+type: docker
 
 platform:
   os: linux
   arch: amd64
 
 steps:
-- name: greeting
+- name: Build al hosts
+  image: nixos/nix
   commands:
-  - pwd
-  - ls
-  - nix-build krops.nix -A all
-  - whoami
-  - nix shell 'nixpkgs#hello' -c hello
-  - echo "hello world"
+  - nix-build krops.nix -A all"
+  - ls -al
