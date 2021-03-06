@@ -86,7 +86,7 @@
 
       nixosConfigurations = {
 
-        inherit nixpkgs nixpkgs-pinned;
+        # inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
           imports = base-modules-desktop ++ [
