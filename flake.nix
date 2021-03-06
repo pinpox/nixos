@@ -83,6 +83,10 @@
         ];
 
     in {
+        apps.deploy = pkgs.callPackage ./nixos/krops.nix {
+      inherit (krops.packages.${system}) writeCommand;
+      lib = krops.lib;
+    };
       nixosConfigurations = {
 
         inherit nixpkgs nixpkgs-pinned;
