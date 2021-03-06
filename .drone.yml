@@ -8,7 +8,7 @@ platform:
   arch: amd64
 
 steps:
-- name: Build al hosts
+- name: Build all hosts
   image: nixos/nix
   commands:
   - nix-build krops.nix -A all"
