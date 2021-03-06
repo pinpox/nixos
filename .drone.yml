@@ -14,3 +14,5 @@ steps:
   commands:
   - nix-build krops.nix -A all
   - ls -al
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
