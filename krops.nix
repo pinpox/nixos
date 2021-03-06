@@ -49,15 +49,17 @@ in rec {
   # Individual machines
   ahorn = createHost "ahorn" "root@192.168.2.100";
   birne = createHost "birne" "root@192.168.2.84";
+  bob = createHost "bob" "root@bob:2222";
   kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
   kfbox = createHost "kfbox" "root@46.38.242.17";
   mega = createHost "mega" "root@mega.public";
   porree = createHost "porree" "root@porree.public";
 
+
   # Groups
   all = pkgs.writeScript "deploy-all"
-    (lib.concatStringsSep "\n" [ ahorn birne kartoffel kfbox mega porree ]);
+    (lib.concatStringsSep "\n" [ ahorn birne bob kartoffel kfbox mega porree ]);
 
   servers = pkgs.writeScript "deploy-servers"
-    (lib.concatStringsSep "\n" [ birne kfbox mega porree ]);
+    (lib.concatStringsSep "\n" [ birne bob kfbox mega porree ]);
 }
