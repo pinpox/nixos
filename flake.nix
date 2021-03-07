@@ -49,39 +49,39 @@
           ];
         };
 
-        base-modules-server = [
-            ./modules/user-profiles/pinpox.nix
-            { home-manager.users.pinpox = nixos-home.nixosModules.server; }
-            ./modules/borg/default.nix
-            ./modules/environment.nix
-            ./modules/zsh.nix
-            ./modules/openssh.nix
-            ./modules/networking.nix
-            ./modules/locale.nix
-            ./modules/nix-common.nix
-            ./modules/wireguard-client.nix
-        ];
+      base-modules-server = [
+        ./modules/user-profiles/pinpox.nix
+        { home-manager.users.pinpox = nixos-home.nixosModules.server; }
+        ./modules/borg/default.nix
+        ./modules/environment.nix
+        ./modules/zsh.nix
+        ./modules/openssh.nix
+        ./modules/networking.nix
+        ./modules/locale.nix
+        ./modules/nix-common.nix
+        ./modules/wireguard-client.nix
+      ];
 
-        base-modules-desktop = [
+      base-modules-desktop = [
 
-            ./modules/user-profiles/pinpox.nix
-            { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
+        ./modules/user-profiles/pinpox.nix
+        { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
 
-            ./modules/bluetooth.nix
-            ./modules/borg/default.nix
-            ./modules/environment.nix
-            ./modules/locale.nix
-            ./modules/lvm-grub.nix
-            ./modules/networking.nix
-            ./modules/openssh.nix
-            ./modules/sound.nix
-            ./modules/virtualization.nix
-            ./modules/xserver.nix
-            ./modules/yubikey.nix
-            ./modules/zsh.nix
-            ./modules/nix-common.nix
-            ./modules/wireguard-client.nix
-        ];
+        ./modules/bluetooth.nix
+        ./modules/borg/default.nix
+        ./modules/environment.nix
+        ./modules/locale.nix
+        ./modules/lvm-grub.nix
+        ./modules/networking.nix
+        ./modules/openssh.nix
+        ./modules/sound.nix
+        ./modules/virtualization.nix
+        ./modules/xserver.nix
+        ./modules/yubikey.nix
+        ./modules/zsh.nix
+        ./modules/nix-common.nix
+        ./modules/wireguard-client.nix
+      ];
 
     in {
 
@@ -90,9 +90,29 @@
         # inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
-          imports = base-modules-desktop ++ [
-            ./machines/kartoffel/configuration.nix
+          imports = [
+            ./modules/base/desktop.nix
+            ./modules/user-profiles/pinpox.nix
             ./machines/kartoffel/hardware-configuration.nix
+            {
+
+              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
+
+              # Video driver for nvidia graphics card
+              services.xserver.videoDrivers = [ "nvidia" ];
+
+              # To build raspi images
+              boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+              boot.blacklistedKernelModules = [ "nouveau" ];
+
+              pinpox.desktop = {
+                enable = true;
+                wireguardIp = "192.168.7.3/24";
+                hostname = "kartoffel";
+                bootDevice =
+                  "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
+              };
+            }
           ];
         };
 
@@ -104,7 +124,7 @@
         };
 
         birne = defFlakeSystem {
-          imports = base-modules-server  ++ [
+          imports = base-modules-server ++ [
 
             # Machine specific config
             ./machines/birne/configuration.nix
@@ -127,9 +147,8 @@
           ];
         };
 
-
         bob = defFlakeSystem {
-          imports = base-modules-server  ++ [
+          imports = base-modules-server ++ [
 
             # Machine specific config
             ./machines/bob/configuration.nix
@@ -161,7 +180,6 @@
 
         # mega =
         #   defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
-
 
         porree = defFlakeSystem {
           imports = base-modules-server ++ [
