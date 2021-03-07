@@ -20,7 +20,6 @@ steps:
   image: nixpkgs/nix-flakes
   commands:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
-  - nix --experimental-features "nix-command flakes" flake doctor
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
