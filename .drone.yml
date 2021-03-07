@@ -22,7 +22,7 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: default
+name: update flakes
 
 steps:
 - name: Update flake.lock
