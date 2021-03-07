@@ -8,14 +8,11 @@ platform:
 
 steps:
 - name: Show flake info
-  # image: nixos/nix
   image: nixpkgs/nix-flakes
   commands:
-  - curl -L https://github.com/numtide/nix-flakes-installer/releases/download/nix-3.0pre20200804_ed52cf6/install | sh
-  - nix-env -iA nixpkgs.nixFlakes
-  - nix --experimental-features nix-command flake show
-  - nix --experimental-features nix-command flake info
-  - nix --experimental-features nix-command flake list-inputs
+  - nix flake show
+  - nix flake info
+  - nix flake list-inputs
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
