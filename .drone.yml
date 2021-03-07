@@ -11,10 +11,9 @@ steps:
   # image: nixos/nix
   image: nixpkgs/nix-flakes
   commands:
-  - ls -al
-  - nix flake show
-  - nix flake info
-  - nix flake list-inputs
+  - nix --experimental-features nix-command flake show
+  - nix --experimental-features nix-command flake info
+  - nix --experimental-features nix-command flake list-inputs
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
