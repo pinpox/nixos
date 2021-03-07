@@ -10,9 +10,9 @@ steps:
 - name: Show flake info
   image: nixpkgs/nix-flakes
   commands:
-  - nix flake show
-  - nix flake info
-  - nix flake list-inputs
+  - nix --experimental-features "nix-command flakes" flake show
+  - nix --experimental-features "nix-command flakes" flake info
+  - nix --experimental-features "nix-command flakes" flake list-inputs
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
