@@ -10,34 +10,11 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-
-  # Enable Wireguard
-  networking.wireguard.interfaces = {
-
-    wg0 = {
-
-      # Determines the IP address and subnet of the client's end of the
-      # tunnel interface.
-      ips = [ "192.168.7.4/24" ];
-
-      # Path to the private key file
-      privateKeyFile = toString /var/src/secrets/wireguard/private;
-      peers = [{
-        # Public key of the server (not a file path).
-        publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
-
-        # Don't forward all the traffic via VPN, only particular subnets
-        allowedIPs = [ "192.168.7.0/24" ];
-
-        # Server IP and port.
-        endpoint = "vpn.pablo.tools:51820";
-
-        # Send keepalives every 25 seconds. Important to keep NAT tables
-        # alive.
-        persistentKeepalive = 25;
-      }];
-    };
+  pinpox.wg-client = {
+    enable = true;
+    clientIp = "192.168.7.4/24";
   };
+
 
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";

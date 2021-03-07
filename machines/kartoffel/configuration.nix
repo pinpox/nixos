@@ -52,8 +52,13 @@
 
   programs.dconf.enable = true;
 
+  pinpox.wg-client = {
+    enable = true;
+    clientIp = "192.168.7.3/24";
+  };
+
   # Enable Wireguard
-  networking.wireguard.interfaces.wg0.ips = [ "192.168.7.3/24" ];
+  # networking.wireguard.interfaces.wg0.ips = [ "192.168.7.3/24" ];
 
 
 

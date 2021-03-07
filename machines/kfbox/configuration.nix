@@ -5,7 +5,11 @@
   config = {
 
     networking.hostName = "kfbox";
-    networking.wireguard.interfaces.wg0.ips = [ "192.168.7.5/24" ];
+
+    pinpox.wg-client = {
+      enable = true;
+      clientIp = "192.168.7.5/24";
+    };
 
     services.qemuGuest.enable = true;
 

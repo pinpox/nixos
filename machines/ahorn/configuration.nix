@@ -4,10 +4,10 @@
   # Define the hostname
   networking.hostName = "ahorn";
 
-  # TODO Create option in wireguard module for setting this
-  # Determines the IP address and subnet of the client's end of the
-  # tunnel interface.
-  networking.wireguard.interfaces.wg0.ips = [ "192.168.7.2/24" ];
+  pinpox.wg-client = {
+    enable = true;
+    clientIp = "192.168.7.2/24";
+  };
 
   # TODO Create option in lvm-grub-luks module for setting this
   # Encrypted drive to be mounted by the bootloader. Path of the device will

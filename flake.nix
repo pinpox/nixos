@@ -59,6 +59,7 @@
             ./modules/networking.nix
             ./modules/locale.nix
             ./modules/nix-common.nix
+            ./modules/wireguard-client.nix
         ];
 
         base-modules-desktop = [
