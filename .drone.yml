@@ -10,6 +10,8 @@ steps:
 - name: Show flake info
   image: nixpkgs/nix-flakes
   commands:
+  - ls /etc
+  - echo "experimental-features = nix-command flakes" 
   - nix flake show
   - nix flake info
   - nix flake list-inputs
