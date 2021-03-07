@@ -86,7 +86,7 @@
 
       nixosConfigurations = {
 
-        inherit nixpkgs nixpkgs-pinned;
+        # inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
           imports = base-modules-desktop ++ [
@@ -158,8 +158,8 @@
           ];
         };
 
-        mega =
-          defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
+        # mega =
+        #   defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
 
 
         porree = defFlakeSystem {

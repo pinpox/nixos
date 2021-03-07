@@ -15,11 +15,11 @@ steps:
   - nix --experimental-features "nix-command flakes" flake list-inputs
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
-    
+
 - name: Run flake checks
   image: nixpkgs/nix-flakes
   commands:
-  - nix --experimental-features "nix-command flakes" flake check
+  - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
