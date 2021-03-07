@@ -138,6 +138,7 @@
             # ./modules/wireguard-client.nix
             ./modules/drone-ci/default.nix
             ./modules/drone-ci/drone-runner-docker.nix
+            # ./modules/bepasty/default.nix
             # ./modules/lvm-grub.nix
             # ./modules/monitoring/telegraf.nix
           ];
