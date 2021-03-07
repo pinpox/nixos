@@ -7,17 +7,23 @@ platform:
   arch: amd64
 
 steps:
-- name: Build all hosts
+- name: Show flake info
   # image: nixos/nix
   image: nixpkgs/nix-flakes
   commands:
- # - nix-build krops.nix -A all
-  # - nix run ".#deploy.kartoffel"
-  - nix-build krops.nix -A all
   - ls -al
+  - nix flake show
+  - nix flake info
+  - nix flake list-inputs
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
+- name: Build all hosts
+  image: nixpkgs/nix-flakes
+  commands:
+  - nix-build krops.nix -A all
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
 
 ---
 kind: pipeline
