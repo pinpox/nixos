@@ -75,8 +75,6 @@
             ./machines/kartoffel/hardware-configuration.nix
             {
 
-              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
-
               # Video driver for nvidia graphics card
               services.xserver.videoDrivers = [ "nvidia" ];
               boot.blacklistedKernelModules = [ "nouveau" ];
@@ -88,6 +86,7 @@
                 enable = true;
                 wireguardIp = "192.168.7.3/24";
                 hostname = "kartoffel";
+                homeConfig = nixos-home.nixosModules.desktop;
                 bootDevice =
                   "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
               };
@@ -101,7 +100,6 @@
             ./modules/user-profiles/pinpox.nix
             ./machines/ahorn/hardware-configuration.nix
             {
-              home-manager.users.pinpox = nixos-home.nixosModules.desktop;
 
               boot.blacklistedKernelModules = [ "nouveau" ];
 
@@ -109,6 +107,7 @@
                 enable = true;
                 wireguardIp = "192.168.7.2/24";
                 hostname = "ahorn";
+                homeConfig = nixos-home.nixosModules.desktop;
                 bootDevice =
                   "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
               };

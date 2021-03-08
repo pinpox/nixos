@@ -23,6 +23,12 @@ in {
 
   options.pinpox.desktop = {
     enable = mkEnableOption "Enable the default desktop configuration";
+
+    homeConfig = mkOption {
+      type = types.attrs;
+      default = null;
+    };
+
     wireguardIp = mkOption {
       type = types.str;
       default = null;
@@ -45,6 +51,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+
+    home-manager.users.pinpox = cfg.homeConfig;
 
     pinpox.wg-client = {
       enable = true;
