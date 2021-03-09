@@ -5,6 +5,7 @@ in {
 
   imports = [
 
+    ../user-profiles/pinpox.nix
     ../bluetooth.nix
     ../borg/default.nix
     ../environment.nix

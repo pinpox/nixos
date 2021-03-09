@@ -71,7 +71,6 @@
         kartoffel = defFlakeSystem {
           imports = [
             ./modules/base/desktop.nix
-            ./modules/user-profiles/pinpox.nix
             ./machines/kartoffel/hardware-configuration.nix
             {
 
@@ -97,7 +96,6 @@
         ahorn = defFlakeSystem {
           imports = [
             ./modules/base/desktop.nix
-            ./modules/user-profiles/pinpox.nix
             ./machines/ahorn/hardware-configuration.nix
             {
 
