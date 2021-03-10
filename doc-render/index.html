@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+	<head>
+		<title>JSON</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.11/jsrender.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+
+
+		<link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <link rel="stylesheet" href="/style.css"> -->
+		<script type="text/javascript" src='/render-template.js'></script>
+	</head>
+	<body>
+
+		<style type="text/css" media="screen">
+.typename {
+	color: grey;
+}
+		</style>
+		<div class="container">
+			<h1>Options</h1>
+			<div class="row">
+				<div class="col-sm-2">
+					<nav id="navbar-left"></nav>
+				</div>
+				<div class="col-sm-10">
+				<div class="container" id="optionlist"></div></div>
+			</div>
+		</div>
+
+
+		<script id="navItemTemplate" type="text/x-jsrender">
+			<a href="#">{{:name}}</a>
+		</script>
+
+		<script id="myTemplate" type="text/x-jsrender">
+			<div class="row">
+				<div class="card fluid col-sm">
+					<div class="section">
+						<h2>{{:id}}</h2>
+					</div>
+					<div class="section dark">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="card fluid">
+										<h3><span class="typename">[{{:data.type}}]</span></h3>
+										<p>{{:data.description}}</p>
+									</div>
+									<div class="card fluid">
+										<table class="horizontal">
+										  <thead>
+											<tr>
+											  <th>Type</th>
+											  <th>Readonly</th>
+											</tr>
+										  </thead>
+										  <tbody>
+											<tr>
+												<td data-label="Type">{{:data.type}}</td>
+												<td data-label="Readonly">{{:data.readOnly}}</td>
+											</tr>
+										  </tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="card fluid">
+										<h3>Default</h3>
+										<pre><code> {{:data.default}} </code></pre>
+										<h3>Example</h3>
+										<pre><code> {{:data.example}} </code></pre>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm">
+									<div class="card fluid">
+										<div class="section">
+											<h4>Declarations</h4>
+											<blockquote>{{:data.declarations}}</blockquote>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+	</body>
+</html>
+
