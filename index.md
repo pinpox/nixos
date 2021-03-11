@@ -1,70 +1,70 @@
-# Options provided
+## Options provided
 
-## pinpox.services.hello.enable
+### pinpox.services.hello.enable
 Whether to enable hello service.
 - **Type:** boolean
 - **Read-only:** false
 
-### Default
+#### Default
+```nix
 false
+```
 
-### Example
+#### Example
+```nix
 true
+```
 
-Declarations:
+#### Declarations:
 - /home/runner/work/nixos/nixos/modules/hello.nix
-
-Location:
- pinpox  services  hello  enable 
-
-## pinpox.services.hello.greeter123
+### pinpox.services.hello.greeter123
 test
 - **Type:** string
 - **Read-only:** false
 
-### Default
+#### Default
+```nix
 world
+```
 
-### Example
+#### Example
+```nix
 
+```
 
-Declarations:
+#### Declarations:
 - /home/runner/work/nixos/nixos/modules/hello.nix
-
-Location:
- pinpox  services  hello  greeter123 
-
-## pinpox.wg-client.clientIp
+### pinpox.wg-client.clientIp
 This option has no description.
 - **Type:** string
 - **Read-only:** false
 
-### Default
+#### Default
+```nix
 0.0.0.0
+```
 
-### Example
+#### Example
+```nix
 
+```
 
-Declarations:
+#### Declarations:
 - /home/runner/work/nixos/nixos/modules/wireguard-client.nix
-
-Location:
- pinpox  wg-client  clientIp 
-
-## pinpox.wg-client.enable
+### pinpox.wg-client.enable
 Whether to enable hello service.
 - **Type:** boolean
 - **Read-only:** false
 
-### Default
+#### Default
+```nix
 false
+```
 
-### Example
+#### Example
+```nix
 true
+```
 
-Declarations:
+#### Declarations:
 - /home/runner/work/nixos/nixos/modules/wireguard-client.nix
-
-Location:
- pinpox  wg-client  enable 
-
