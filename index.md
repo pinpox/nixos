@@ -17,7 +17,7 @@ true
 - `/home/runner/work/nixos/nixos/modules/hello.nix`
 
 ### pinpox.services.hello.greeter123
-test
+A very friendly service that greets you
 - **Type:** string
 - **Read-only:** false
 
@@ -28,7 +28,7 @@ world
 
 #### Example
 ```nix
-
+universe
 ```
 
 #### Declarations:
@@ -46,7 +46,7 @@ This option has no description.
 
 #### Example
 ```nix
-
+192.168.7.1/24
 ```
 
 #### Declarations:
