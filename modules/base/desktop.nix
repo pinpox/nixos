@@ -55,9 +55,12 @@ in {
 
     home-manager.users.pinpox = cfg.homeConfig;
 
-    pinpox.wg-client = {
-      enable = true;
-      clientIp = cfg.wireguardIp;
+    pinpox = {
+      defaults.environment.enable = true;
+      wg-client = {
+        enable = true;
+        clientIp = cfg.wireguardIp;
+      };
     };
 
     # here goes the configuration, reference values with cfg.varname
