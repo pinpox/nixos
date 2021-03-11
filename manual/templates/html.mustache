@@ -1,0 +1,19 @@
+{{#options}}
+# {{key}}
+
+{{value.description}}
+Default: {{value.default}}
+Exmaple: {{value.example}}
+Type: {{value.type}}
+Value: {{value.readOnly}}
+
+Declarations:
+{{#value.declarations}}
+{{.}}
+{{/value.declarations}}
+
+Location:
+{{#value.loc}} {{.}} {{/value.loc}}
+
+
+{{/options}}
