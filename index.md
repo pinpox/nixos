@@ -14,7 +14,7 @@ true
 ```
 
 #### Declarations:
-- /home/runner/work/nixos/nixos/modules/hello.nix
+- `/home/runner/work/nixos/nixos/modules/hello.nix`
 
 ### pinpox.services.hello.greeter123
 test
@@ -32,7 +32,7 @@ world
 ```
 
 #### Declarations:
-- /home/runner/work/nixos/nixos/modules/hello.nix
+- `/home/runner/work/nixos/nixos/modules/hello.nix`
 
 ### pinpox.wg-client.clientIp
 This option has no description.
@@ -50,7 +50,7 @@ This option has no description.
 ```
 
 #### Declarations:
-- /home/runner/work/nixos/nixos/modules/wireguard-client.nix
+- `/home/runner/work/nixos/nixos/modules/wireguard-client.nix`
 
 ### pinpox.wg-client.enable
 Whether to enable hello service.
@@ -68,5 +68,5 @@ true
 ```
 
 #### Declarations:
-- /home/runner/work/nixos/nixos/modules/wireguard-client.nix
+- `/home/runner/work/nixos/nixos/modules/wireguard-client.nix`
 
