@@ -164,7 +164,7 @@
             ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
-            # ./modules/hedgedoc.nix
+            ./modules/hedgedoc.nix
           ];
         };
 
