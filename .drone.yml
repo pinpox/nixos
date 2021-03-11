@@ -59,4 +59,3 @@ steps:
     username: pinpox
     password:
       from_secret: gh_pages_token
-    pages_directory: manual/
