@@ -3,6 +3,7 @@ let
   eval = import (pkgs.path + "/nixos/lib/eval-config.nix") {
     modules = import ../modules/module-list.nix;
   };
+
   opts = (nixosOptionsDoc { options = eval.options; }).optionsJSON;
 
   templateMarkdown = pkgs.writeTextFile {
