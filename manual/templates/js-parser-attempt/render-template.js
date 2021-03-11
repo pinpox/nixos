@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-	$.getJSON("options.json", function(data){
+	$.getJSON("result", function(data){
 
 
 		$.each(data, function(name, value) {
