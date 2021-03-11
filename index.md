@@ -1,3 +1,23 @@
+### pinpox.defaults.environment.enable
+Whether to enable Environment defaults.
+- **Type:** boolean
+- **Read-only:** false
+
+#### Default
+```
+false
+```
+
+#### Example
+```
+true
+```
+
+#### Declarations:
+- `/home/runner/work/nixos/nixos/modules/environment.nix`
+
+---
+
 ### pinpox.services.hello.enable
 Whether to enable hello service.
 - **Type:** boolean
