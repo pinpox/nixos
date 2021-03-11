@@ -1,0 +1,62 @@
+{
+  "pinpox.services.hello.enable": {
+    "declarations": [
+      "/home/pinpox/code/github.com/pinpox/nixos/docs/hello.nix"
+    ],
+    "default": false,
+    "description": "Whether to enable hello service.",
+    "example": true,
+    "loc": [
+      "pinpox",
+      "services",
+      "hello",
+      "enable"
+    ],
+    "readOnly": false,
+    "type": "boolean"
+  },
+  "pinpox.services.hello.greeter123": {
+    "declarations": [
+      "/home/pinpox/code/github.com/pinpox/nixos/docs/hello.nix"
+    ],
+    "default": "world",
+    "description": "test",
+    "loc": [
+      "pinpox",
+      "services",
+      "hello",
+      "greeter123"
+    ],
+    "readOnly": false,
+    "type": "string"
+  },
+  "pinpox.wg-client.clientIp": {
+    "declarations": [
+      "/home/pinpox/code/github.com/pinpox/nixos/modules/wireguard-client.nix"
+    ],
+    "default": "0.0.0.0",
+    "description": "This option has no description.",
+    "loc": [
+      "pinpox",
+      "wg-client",
+      "clientIp"
+    ],
+    "readOnly": false,
+    "type": "string"
+  },
+  "pinpox.wg-client.enable": {
+    "declarations": [
+      "/home/pinpox/code/github.com/pinpox/nixos/modules/wireguard-client.nix"
+    ],
+    "default": false,
+    "description": "Whether to enable hello service.",
+    "example": true,
+    "loc": [
+      "pinpox",
+      "wg-client",
+      "enable"
+    ],
+    "readOnly": false,
+    "type": "boolean"
+  }
+}
