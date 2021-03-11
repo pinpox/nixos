@@ -1,19 +1,23 @@
-{{#options}}
-# {{key}}
+# Options provided
 
+{{#options}}
+## {{key}}
 {{value.description}}
-Default: {{value.default}}
-Exmaple: {{value.example}}
-Type: {{value.type}}
-Value: {{value.readOnly}}
+- **Type:** {{value.type}}
+- **Read-only:** {{value.readOnly}}
+
+### Default
+{{value.default}}
+
+### Example
+{{value.example}}
 
 Declarations:
 {{#value.declarations}}
-{{.}}
+- {{.}}
 {{/value.declarations}}
 
 Location:
 {{#value.loc}} {{.}} {{/value.loc}}
-
 
 {{/options}}
