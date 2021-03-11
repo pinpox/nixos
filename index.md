@@ -1,5 +1,3 @@
-## Options provided
-
 ### pinpox.services.hello.enable
 Whether to enable hello service.
 - **Type:** boolean
