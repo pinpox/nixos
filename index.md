@@ -4,12 +4,12 @@ Whether to enable hello service.
 - **Read-only:** false
 
 #### Default
-```nix
+```
 false
 ```
 
 #### Example
-```nix
+```
 true
 ```
 
@@ -22,12 +22,12 @@ A very friendly service that greets you
 - **Read-only:** false
 
 #### Default
-```nix
+```
 world
 ```
 
 #### Example
-```nix
+```
 universe
 ```
 
@@ -40,12 +40,12 @@ This option has no description.
 - **Read-only:** false
 
 #### Default
-```nix
+```
 0.0.0.0
 ```
 
 #### Example
-```nix
+```
 192.168.7.1/24
 ```
 
@@ -58,12 +58,12 @@ Whether to enable hello service.
 - **Read-only:** false
 
 #### Default
-```nix
+```
 false
 ```
 
 #### Example
-```nix
+```
 true
 ```
 
