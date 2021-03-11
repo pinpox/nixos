@@ -46,3 +46,17 @@ trigger:
   - cron
   cron:
   - hourly
+
+---
+kind: pipeline
+type: docker
+name: Update gp-pages
+
+steps:
+- name: publish
+  image: plugins/gh-pages
+  settings:
+    username: pinpox
+    password:
+      from_secret: gh_pages_token
+    pages_directory: manual/
