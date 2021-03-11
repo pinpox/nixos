@@ -49,39 +49,18 @@
           ];
         };
 
-        base-modules-server = [
-            ./modules/user-profiles/pinpox.nix
-            { home-manager.users.pinpox = nixos-home.nixosModules.server; }
-            ./modules/borg/default.nix
-            ./modules/environment.nix
-            ./modules/zsh.nix
-            ./modules/openssh.nix
-            ./modules/networking.nix
-            ./modules/locale.nix
-            ./modules/nix-common.nix
-            ./modules/wireguard-client.nix
-        ];
-
-        base-modules-desktop = [
-
-            ./modules/user-profiles/pinpox.nix
-            { home-manager.users.pinpox = nixos-home.nixosModules.desktop; }
-
-            ./modules/bluetooth.nix
-            ./modules/borg/default.nix
-            ./modules/environment.nix
-            ./modules/locale.nix
-            ./modules/lvm-grub.nix
-            ./modules/networking.nix
-            ./modules/openssh.nix
-            ./modules/sound.nix
-            ./modules/virtualization.nix
-            ./modules/xserver.nix
-            ./modules/yubikey.nix
-            ./modules/zsh.nix
-            ./modules/nix-common.nix
-            ./modules/wireguard-client.nix
-        ];
+      base-modules-server = [
+        ./modules/user-profiles/pinpox.nix
+        { home-manager.users.pinpox = nixos-home.nixosModules.server; }
+        ./modules/borg/default.nix
+        ./modules/environment.nix
+        ./modules/zsh.nix
+        ./modules/openssh.nix
+        ./modules/networking.nix
+        ./modules/locale.nix
+        ./modules/nix-common.nix
+        ./modules/wireguard-client.nix
+      ];
 
     in {
 
@@ -90,21 +69,52 @@
         # inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
-          imports = base-modules-desktop ++ [
-            ./machines/kartoffel/configuration.nix
+          imports = [
+            ./modules/base/desktop.nix
             ./machines/kartoffel/hardware-configuration.nix
+            {
+
+              # Video driver for nvidia graphics card
+              services.xserver.videoDrivers = [ "nvidia" ];
+              boot.blacklistedKernelModules = [ "nouveau" ];
+
+              # To build raspi images
+              boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+              pinpox.desktop = {
+                enable = true;
+                wireguardIp = "192.168.7.3/24";
+                hostname = "kartoffel";
+                homeConfig = nixos-home.nixosModules.desktop;
+                bootDevice =
+                  "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
+              };
+            }
           ];
         };
 
         ahorn = defFlakeSystem {
-          imports = base-modules-desktop ++ [
-            ./machines/ahorn/configuration.nix
+          imports = [
+            ./modules/base/desktop.nix
             ./machines/ahorn/hardware-configuration.nix
+            {
+
+              boot.blacklistedKernelModules = [ "nouveau" ];
+
+              pinpox.desktop = {
+                enable = true;
+                wireguardIp = "192.168.7.2/24";
+                hostname = "ahorn";
+                homeConfig = nixos-home.nixosModules.desktop;
+                bootDevice =
+                  "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+              };
+            }
           ];
         };
 
         birne = defFlakeSystem {
-          imports = base-modules-server  ++ [
+          imports = base-modules-server ++ [
 
             # Machine specific config
             ./machines/birne/configuration.nix
@@ -127,9 +137,8 @@
           ];
         };
 
-
         bob = defFlakeSystem {
-          imports = base-modules-server  ++ [
+          imports = base-modules-server ++ [
 
             # Machine specific config
             ./machines/bob/configuration.nix
@@ -155,13 +164,12 @@
             ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
-            ./modules/hedgedoc.nix
+            # ./modules/hedgedoc.nix
           ];
         };
 
         # mega =
         #   defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
-
 
         porree = defFlakeSystem {
           imports = base-modules-server ++ [

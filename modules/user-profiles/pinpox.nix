@@ -17,13 +17,10 @@
         [ "docker" "wheel" "networkmanager" "audio" "libvirtd" "dialout" ];
       shell = pkgs.zsh;
 
-      # Public ssh-keys that are authorized for the user. Fetched from homepage
-      # and github profile.
+      # Public ssh-keys that are authorized for the user. Fetched from github
       openssh.authorizedKeys.keyFiles = [
         (builtins.fetchurl {
           url = "https://github.com/pinpox.keys";
-          # sha256 = "14f7b42fz0159mn1wg9hm0lxi75dkc7gb3bclgm9zhz52yj7fr1y";
-
           sha256 = "0si2xncbqjrxn42hvwj98in83mk2cl4rlanf32rlc8lxa2d79q5v";
         })
       ];
