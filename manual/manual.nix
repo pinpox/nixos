@@ -1,7 +1,7 @@
 with import <nixpkgs> { };
 let
   eval = import (pkgs.path + "/nixos/lib/eval-config.nix") {
-    modules = [ ./hello.nix ../modules/wireguard-client.nix ];
+    modules = import ../modules/module-list.nix;
   };
   opts = (nixosOptionsDoc { options = eval.options; }).optionsJSON;
 
@@ -33,7 +33,7 @@ in rec {
     > $out
     '';
 
-  html = runCommandLocal "options.md" { inherit opts; } ''
+  html = runCommandLocal "options.html" { inherit opts; } ''
     cat $opts/share/doc/nixos/options.json | \
     ${pkgs.jq}/bin/jq '.| with_entries( select(.key|contains("pinpox") ) ) | [to_entries[]] | {options: .}' | \
     ${pkgs.mustache-go}/bin/mustache ${templateHTML} \
