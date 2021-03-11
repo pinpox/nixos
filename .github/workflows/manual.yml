@@ -21,7 +21,7 @@ jobs:
         run: |
             nix-build ./manual/manual.nix -A html
             mkdir docs
-            mv result docs/index.html
+            cat result docs/index.html
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
