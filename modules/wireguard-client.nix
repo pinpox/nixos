@@ -8,6 +8,7 @@ in {
     clientIp = mkOption {
       type = types.str;
       default = "0.0.0.0";
+      example = "192.168.7.1/24";
     };
   };
 
