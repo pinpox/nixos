@@ -1,23 +1,23 @@
-# Options provided
+## Options provided
 
 {{#options}}
-## {{key}}
+### {{key}}
 {{value.description}}
 - **Type:** {{value.type}}
 - **Read-only:** {{value.readOnly}}
 
-### Default
+#### Default
+```nix
 {{value.default}}
+```
 
-### Example
+#### Example
+```nix
 {{value.example}}
+```
 
-Declarations:
+#### Declarations:
 {{#value.declarations}}
 - {{.}}
 {{/value.declarations}}
-
-Location:
-{{#value.loc}} {{.}} {{/value.loc}}
-
 {{/options}}
