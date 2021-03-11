@@ -20,6 +20,7 @@ jobs:
       - name: Build html
         run: |
             nix-build ./manual/manual.nix -A html
+            mkdir docs
             mv result docs/index.html
 
       - name: Deploy 🚀
