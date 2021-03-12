@@ -14,10 +14,9 @@
 					Module options
 				</h1>
 				<p class="subtitle">
-					Options provided by modules in
-					<strong> <a href="https://github.com/pinpox/nixos" target="_blank">github.com/pinpox/nixos</a></strong>
+				Options provided by modules in
+				<strong> <a href="https://github.com/pinpox/nixos" target="_blank">github.com/pinpox/nixos</a></strong>
 				</p>
-
 
 				<div class="block">
 					<p class="control has-icons-left">
@@ -40,24 +39,22 @@
 								</div>
 							</div>
 						</div>
+
 						<p class="subtitle"> {{value.description}} </p>
 
 						<div class="block">
-						<!-- 		<li> <b>Read-only:</b> {{value.readOnly}} </li> -->
-						<p class="block"><strong>Default:</strong> <code>{{value.default}}</code> </p>
-						<p class="block"><strong>Example:</strong> <code>{{value.example}}</code> </p>
+							<p class="block"><strong>Default:</strong> <code>{{value.default}}</code> </p>
+							<p class="block"><strong>Example:</strong> <code>{{value.example}}</code> </p>
 
-						<h4 class="title is-4">Declarations</h4>
+							<h4 class="title is-4">Declarations</h4>
 
-						<div class="block">
-							<ul>
-								{{#value.declarations}}
-				<!-- https://github.com/pinpox/nixos/blob/main/modules/bluetooth.nix -->
-								<li> <code> {{.}} </code> </li>
-								{{/value.declarations}}
-							</ul>
-						</div>
-
+							<div class="block">
+								<ul>
+									{{#value.declarations}}
+									<li> <code> {{.}} </code> </li>
+									{{/value.declarations}}
+								</ul>
+							</div>
 						</div>
 					</div>
 					{{/options}}
