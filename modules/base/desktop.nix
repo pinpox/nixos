@@ -57,6 +57,7 @@ in {
 
     pinpox = {
       defaults.environment.enable = true;
+      services.xserver.enable = true;
       wg-client = {
         enable = true;
         clientIp = cfg.wireguardIp;
