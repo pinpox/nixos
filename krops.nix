@@ -47,7 +47,7 @@ in rec {
   # nix-build ./krop.nix -A kartoffel && ./result
 
   # Individual machines
-  ahorn = createHost "ahorn" "root@192.168.2.100";
+  ahorn = createHost "ahorn" "root@192.168.7.2";
   birne = createHost "birne" "root@192.168.2.84";
   bob = createHost "bob" "root@bob:2222";
   kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
