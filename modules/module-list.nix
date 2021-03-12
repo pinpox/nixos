@@ -25,7 +25,6 @@
   ./monitoring/loki.nix
   ./monitoring/prometheus.nix
   ./monitoring/telegraf.nix
-  ./munin-master.nix
   ./networking.nix
   ./nix-common.nix
   ./openssh.nix
