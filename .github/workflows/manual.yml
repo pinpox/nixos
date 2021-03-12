@@ -20,11 +20,11 @@ jobs:
           # Configure Nix to enable flakes
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - name: Build markdown
+      - name: Build html
         run: |
-            nix-build ./manual/manual.nix -A markdown
+            nix-build ./manual/manual.nix -A html
             mkdir docs
-            cat result > docs/index.md
+            cat result > docs/index.html
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
