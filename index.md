@@ -58,6 +58,26 @@ universe
 
 ---
 
+### pinpox.services.xserver.enable
+Whether to enable X server.
+- **Type:** boolean
+- **Read-only:** false
+
+#### Default
+```
+false
+```
+
+#### Example
+```
+true
+```
+
+#### Declarations:
+- `/home/runner/work/nixos/nixos/modules/xserver.nix`
+
+---
+
 ### pinpox.wg-client.clientIp
 This option has no description.
 - **Type:** string
