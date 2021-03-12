@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
-let cfg = config.defaults.environment;
+let cfg = config.pinpox.defaults.environment;
 in {
 
   options.pinpox.defaults.environment = {
