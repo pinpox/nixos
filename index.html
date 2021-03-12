@@ -26,7 +26,7 @@
 					</p>
 				</div>
 				<div class="results block" id=list>
-					<div class="name block">
+					<div class="nixoption block">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
@@ -57,7 +57,7 @@
 
 						</div>
 					</div>
-					<div class="name block">
+					<div class="nixoption block">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
@@ -88,7 +88,7 @@
 
 						</div>
 					</div>
-					<div class="name block">
+					<div class="nixoption block">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
@@ -119,7 +119,7 @@
 
 						</div>
 					</div>
-					<div class="name block">
+					<div class="nixoption block">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
@@ -150,7 +150,7 @@
 
 						</div>
 					</div>
-					<div class="name block">
+					<div class="nixoption block">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
@@ -181,7 +181,7 @@
 
 						</div>
 					</div>
-					<div class="name block">
+					<div class="nixoption block">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
@@ -219,30 +219,29 @@
 </html>
 
 <script charset="utf-8">
-	// Declare variables //
 
 	const input = document.querySelector("#input");
 	const list = document.querySelector("#list");
-	const names = document.getElementsByClassName('name');
+	const nixOptions = document.getElementsByClassName('nixoption');
 
-	// Slice Node List to be an Array //
-	const namesList = [].slice.call(names);
+	// Slice node list to be an array
+	const nixOptionsList = [].slice.call(nixOptions);
 
-	// Add event listener for keyup in input //
+	// Add event listener for keyup in input
 	input.addEventListener('keyup', (e) => {
 
-		// Set a Regular Expression (regex) to be global and case insensitive (gi) //
+		// Set regex to be global and case insensitive (gi)
 		const match = new RegExp(`${e.target.value}`, 'gi');
 
-		// Create an array of results that gets passed any matching text //
-		let results = namesList.filter(name => match.test(name.innerText));
+		// Create an array of results that gets passed any matching text
+		let results = nixOptionsList.filter(opt => match.test(opt.innerText));
 
-		// Remove all html inside the list //
+		// Remove all html inside the list
 		list.innerHTML = '';
 
-		// Create a for loop to loop through your results //
+		// Create a for loop to loop through your results
 		for (let i = 0; i < results.length; i++) {
-			// Append each result to it's container in this case, list //
+			// Append each result to it's container
 			list.appendChild(results[i])
 		}
 	});
