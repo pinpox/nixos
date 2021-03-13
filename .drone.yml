@@ -40,7 +40,7 @@ steps:
 - name: Update flake.lock
   image: nixpkgs/nix-flakes
   commands:
-  - nix flake update --recreate-lock-file
+  - nix flake update
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
