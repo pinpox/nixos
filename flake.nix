@@ -53,11 +53,17 @@
         ./modules/user-profiles/pinpox.nix
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
         ./modules/borg/default.nix
-        ./modules/environment.nix
+        ./modules/environment
+        ./modules/locale
+        {
+          pinpox.defaults = {
+            environment.enable = true;
+            locale.enable = true;
+          };
+        }
         ./modules/zsh.nix
         ./modules/openssh.nix
         ./modules/networking.nix
-        ./modules/locale.nix
         ./modules/nix-common.nix
         ./modules/wireguard-client.nix
       ];
@@ -148,7 +154,12 @@
             # ./modules/wireguard-client.nix
             ./modules/drone-ci/default.nix
             ./modules/drone-ci/drone-runner-docker.nix
+
+            # TODO bepasty service is currently broken due to:
+            # https://github.com/NixOS/nixpkgs/issues/116326
+            # https://github.com/bepasty/bepasty-server/issues/258
             # ./modules/bepasty/default.nix
+
             # ./modules/lvm-grub.nix
             # ./modules/monitoring/telegraf.nix
           ];
