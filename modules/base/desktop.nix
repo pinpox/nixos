@@ -5,11 +5,12 @@ in {
 
   imports = [
 
-    ../user-profiles/pinpox.nix
-    ../bluetooth.nix
-    ../borg/default.nix
+    ../bluetooth
     ../environment
     ../locale
+
+    ../user-profiles/pinpox.nix
+    ../borg/default.nix
     ../lvm-grub.nix
     ../networking.nix
     ../openssh.nix
@@ -58,6 +59,7 @@ in {
     pinpox = {
       defaults = { 
         environment.enable = true;
+        blutooth.enabe = true;
         locale.enable = true;
       };
 
