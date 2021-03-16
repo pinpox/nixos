@@ -5,16 +5,17 @@ in {
 
   imports = [
 
+    ../bluetooth
+    ../environment
+    ../locale
+
     ../user-profiles/pinpox.nix
-    ../bluetooth.nix
     ../borg/default.nix
-    ../environment.nix
-    ../locale.nix
     ../lvm-grub.nix
     ../networking.nix
     ../openssh.nix
     ../sound.nix
-    ../virtualization.nix
+    ../virtualisation
     ../xserver.nix
     ../yubikey.nix
     ../zsh.nix
@@ -56,7 +57,18 @@ in {
     home-manager.users.pinpox = cfg.homeConfig;
 
     pinpox = {
-      defaults.environment.enable = true;
+      defaults = { 
+        environment.enable = true;
+        blutooth.enabe = true;
+        locale.enable = true;
+      };
+
+      virtualisation = {
+        docker.enable = true;
+        virtualbox.enable = true;
+      };
+
+      services.xserver.enable = true;
       wg-client = {
         enable = true;
         clientIp = cfg.wireguardIp;

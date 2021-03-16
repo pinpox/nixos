@@ -11,13 +11,12 @@
   ./custom-packages.nix
   ./drone-ci
   ./dyndns.nix
-  ./environment.nix
+  ./environment #
   ./fonts.nix
   ./hedgedoc.nix
-  ./hello.nix
   ./hello.nix # Example module
   ./home-assistant
-  ./locale.nix
+  ./locale
   ./lvm-grub.nix
   ./mattermost
   ./mmonit.nix
@@ -30,7 +29,7 @@
   ./openssh.nix
   ./sound.nix
   ./thelounge.nix
-  ./virtualization.nix
+  ./virtualisation
   ./wireguard-client.nix
   ./xserver.nix
   ./yubikey.nix

@@ -30,6 +30,7 @@ steps:
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
+
 ---
 kind: pipeline
 type: docker
@@ -39,23 +40,25 @@ steps:
 - name: Update flake.lock
   image: nixpkgs/nix-flakes
   commands:
-  - date
+  - nix flake update
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
 
-trigger:
-  event:
-  - cron
-  cron:
-  - hourly
-
----
-kind: pipeline
-type: docker
-name: Update gp-pages
-
-steps:
-- name: publish
-  image: plugins/gh-pages
+- name: Push updated flake.lock
+  image: appleboy/drone-git-push
   settings:
-    username: pinpox
-    password:
-      from_secret: gh_pages_token
+    branch: update-flake
+    remote: git@github.com:pinpox/nixos.git
+    force: true
+    commit: true
+    force: true
+    commit_message: "❄️ Update flake.lock"
+    ssh_key:
+      from_secret: deploy_key
+  when:
+    branch:
+    - main
+    event:
+    - push
+    - cron
+
