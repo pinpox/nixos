@@ -57,9 +57,9 @@ in {
     home-manager.users.pinpox = cfg.homeConfig;
 
     pinpox = {
-      defaults = { 
+      defaults = {
         environment.enable = true;
-        blutooth.enabe = true;
+        bluetooth.enable = true;
         locale.enable = true;
       };
 
