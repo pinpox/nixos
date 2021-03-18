@@ -12,7 +12,6 @@ let
       owner = "pinpox";
       repo = "go-karma-bot";
       rev = "v${version}";
-      rev = "main";
       sha256 = "sha256-KSaBwssam3hqhSzwCTur9pUQR7EXUrYhVM0Eve9157k=";
     };
 

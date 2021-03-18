@@ -171,7 +171,7 @@
 
             { nix.autoOptimiseStore = true; }
 
-            ../irc-bot
+            ./modules/irc-bot
             { pinpox.services.go-karma-bot.enable = true; }
 
             ./modules/monitoring/telegraf.nix
