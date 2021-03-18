@@ -30,6 +30,7 @@ steps:
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
+# http://plugins.drone.io/appleboy/drone-discord/
 - name: Notify IRC
   image: plugins/irc
   settings:
@@ -37,7 +38,7 @@ steps:
     channel: "#lounge-rocks"
     host: chat.freenode.net
     port: 6667
-    template: "[{{build.status}}] {{repo.owner}}/{{repo.name}} {{build.commit.message}} {{build.link}} {{build.branch}}#{{truncate build.commit 8}} by {{build.author}}"
+    template: "[{{uppercase build.status}}]: <{{repo.owner}}/{{repo.name}}> {{build.message}} - #{{truncate build.commit 8}}@{{build.branch}} by {{build.author}} - {{build.link}}"
   when:
     branch:
     - main
