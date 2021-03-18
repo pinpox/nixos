@@ -83,7 +83,6 @@
           locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
         };
 
-
         "pads.0cx.de" = {
           forceSSL = true;
           enableACME = true;

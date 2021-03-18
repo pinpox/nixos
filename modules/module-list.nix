@@ -11,7 +11,7 @@
   ./custom-packages.nix
   ./drone-ci
   ./dyndns.nix
-  ./environment #
+  ./environment
   ./fonts.nix
   ./hedgedoc.nix
   ./hello.nix # Example module

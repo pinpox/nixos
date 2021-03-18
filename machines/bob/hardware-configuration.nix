@@ -6,20 +6,21 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules =
+    [ "ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/92f9e2c7-9d6c-4cb1-890b-ea638de88be1";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/92f9e2c7-9d6c-4cb1-890b-ea638de88be1";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0BB9-70CF";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/0BB9-70CF";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 

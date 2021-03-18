@@ -15,7 +15,6 @@
     clientIp = "192.168.7.4/24";
   };
 
-
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
 

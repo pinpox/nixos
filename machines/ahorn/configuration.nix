@@ -1,4 +1,5 @@
 # Configuration file for ahorn
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }:
+{
 
 }

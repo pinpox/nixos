@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 
-let
-  bepasty-host = "paste.lounge.rocks";
+let bepasty-host = "paste.lounge.rocks";
 in {
   services.bepasty = {
     enable = true;
