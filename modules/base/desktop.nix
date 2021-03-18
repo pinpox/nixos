@@ -4,6 +4,7 @@ let cfg = config.pinpox.desktop;
 in {
 
   imports = [
+    ../irc-bot
 
     ../bluetooth
     ../environment

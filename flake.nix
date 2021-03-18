@@ -105,6 +105,9 @@
             ./machines/ahorn/hardware-configuration.nix
             {
 
+
+              pinpox.services.irc-bot.enable = true;
+
               boot.blacklistedKernelModules = [ "nouveau" ];
 
               pinpox.desktop = {
