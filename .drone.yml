@@ -34,7 +34,7 @@ steps:
   image: plugins/irc
   settings:
     nick: drone-bot
-    channel: #lounge-rocks
+    channel: "#lounge-rocks"
     host: chat.freenode.net
     port: 6667
 
@@ -73,6 +73,6 @@ steps:
   image: plugins/irc
   settings:
     nick: drone-bot
-    channel: #lounge-rocks
+    channel: "#lounge-rocks"
     host: chat.freenode.net
     port: 6667
