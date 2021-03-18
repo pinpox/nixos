@@ -105,9 +105,6 @@
             ./machines/ahorn/hardware-configuration.nix
             {
 
-
-              pinpox.services.irc-bot.enable = true;
-
               boot.blacklistedKernelModules = [ "nouveau" ];
 
               pinpox.desktop = {
@@ -173,6 +170,9 @@
             ./machines/kfbox/configuration.nix
 
             { nix.autoOptimiseStore = true; }
+
+            ../irc-bot
+            { pinpox.services.go-karma-bot.enable = true; }
 
             ./modules/monitoring/telegraf.nix
             ./modules/wireguard-client.nix
