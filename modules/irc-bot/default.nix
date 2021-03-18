@@ -6,15 +6,13 @@ let
   go-karma-bot = pkgs.buildGoModule rec {
 
     pname = "go-karma-bot";
-    version = "1.0";
+    version = "1.1";
 
     src = pkgs.fetchFromGitHub {
       owner = "pinpox";
       repo = "go-karma-bot";
-      # rev = "v${version}";
-      rev = "main";
-      sha256 = "sha256-qOfQjGLOP7NTwSqG+BvOJrVV6oehAN4gnfoGnypM/Ow=";
-      
+      rev = "v${version}";
+      sha256 = "sha256-L/mL37XMERbn4rhJMq0iFIGRYo2mHWIR4cSgTty0I1U=";
     };
 
     vendorSha256 = "sha256-si9G6t7SULor9GDxl548WKIeBe4Ik21f+lgNN+9bwzg=";
