@@ -11,8 +11,10 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "pinpox";
       repo = "go-karma-bot";
-      rev = "v${version}";
-      sha256 = "sha256-KSaBwssam3hqhSzwCTur9pUQR7EXUrYhVM0Eve9157k=";
+      # rev = "v${version}";
+      rev = "main";
+      sha256 = "sha256-qOfQjGLOP7NTwSqG+BvOJrVV6oehAN4gnfoGnypM/Ow=";
+      
     };
 
     vendorSha256 = "sha256-si9G6t7SULor9GDxl548WKIeBe4Ik21f+lgNN+9bwzg=";
