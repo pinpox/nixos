@@ -5,7 +5,7 @@
     extraConfig.inputs = {
 
       file = {
-        tag_keys = ["archives_0_hostname"];
+        tag_keys = [ "archives_0_hostname" ];
         data_format = "json";
         json_string_fields = [
           "archives_0_comment"

@@ -5,7 +5,7 @@
     enable = true;
     environmentFile = /var/src/secrets/hedgedoc/envfile;
     configuration = {
-      protocolUseSSL =  true;
+      protocolUseSSL = true;
 
       allowEmailRegister = false; # Disable registration
 
@@ -21,10 +21,8 @@
 
       useCDN = true;
       csp = {
-        enable =false;
-        directives = {
-          scriptSrc = "pads.0cx.de";
-        };
+        enable = false;
+        directives = { scriptSrc = "pads.0cx.de"; };
         upgradeInsecureRequest = "auto";
         addDefaults = true;
       };
@@ -43,6 +41,5 @@
 
     };
   };
-
 
 }

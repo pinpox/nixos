@@ -23,6 +23,12 @@
       autoResize = true;
     };
 
+  fileSystems."/tmp" = {
+    fsType = "tmpfs";
+    device = "tmpfs";
+    options = [ "nosuid" "nodev" "relatime" "size=14G" ];
+  };
+
     boot.growPartition = true;
     boot.kernelParams = [ "console=ttyS0" ];
     boot.loader.grub.device = "/dev/vda";
@@ -82,7 +88,6 @@
           enableACME = true;
           locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
         };
-
 
         "pads.0cx.de" = {
           forceSSL = true;

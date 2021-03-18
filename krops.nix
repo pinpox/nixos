@@ -20,7 +20,7 @@ let
       # Copy over the whole repo. By default nixos-rebuild will use the
       # currents system hostname to lookup the right nixos configuration in
       # `nixosConfigurations` from flake.nix
-      machine-config.file = toString ./. ;
+      machine-config.file = toString ./.;
     }];
 
   command = targetPath: ''
@@ -54,7 +54,6 @@ in rec {
   kfbox = createHost "kfbox" "root@46.38.242.17";
   mega = createHost "mega" "root@mega.public";
   porree = createHost "porree" "root@porree.public";
-
 
   # Groups
   all = pkgs.writeScript "deploy-all"

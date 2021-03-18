@@ -3,9 +3,7 @@ with lib;
 let cfg = config.pinpox.services.xserver;
 in {
 
-  options.pinpox.services.xserver = {
-    enable = mkEnableOption "X server";
-  };
+  options.pinpox.services.xserver = { enable = mkEnableOption "X server"; };
 
   config = mkIf cfg.enable {
 
@@ -39,8 +37,8 @@ in {
         session = [{
           name = "home-manager";
           start = ''
-            ${pkgs.runtimeShell} $HOME/.hm-xsession &
-           waitPID=$!
+             ${pkgs.runtimeShell} $HOME/.hm-xsession &
+            waitPID=$!
           '';
         }];
       };

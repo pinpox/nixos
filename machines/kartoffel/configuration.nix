@@ -1,6 +1,6 @@
 # Configuration for kartoffel
 
-{ config, pkgs, inputs, ... }: {
-
+{ config, pkgs, inputs, ... }:
+{
 
 }

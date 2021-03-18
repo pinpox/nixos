@@ -29,7 +29,7 @@
 
   virtualisation.vmware.guest.enable = true;
 
-systemd.enableUnifiedCgroupHierarchy = false;
+  systemd.enableUnifiedCgroupHierarchy = false;
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
