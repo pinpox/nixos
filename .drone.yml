@@ -37,6 +37,7 @@ steps:
     channel: "#lounge-rocks"
     host: chat.freenode.net
     port: 6667
+    template: "[{{build.status}}] {{repo.owner}}/{{repo.name}} {{build.commit.message}} {{build.link}} {{build.branch}}#{{truncate build.commit 8}} by {{build.author}}"
   when:
     branch:
     - main
