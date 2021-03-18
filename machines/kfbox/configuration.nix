@@ -23,6 +23,12 @@
       autoResize = true;
     };
 
+  fileSystems."/tmp" = {
+    fsType = "tmpfs";
+    device = "tmpfs";
+    options = [ "nosuid" "nodev" "relatime" "size=14G" ];
+  };
+
     boot.growPartition = true;
     boot.kernelParams = [ "console=ttyS0" ];
     boot.loader.grub.device = "/dev/vda";
