@@ -30,6 +30,14 @@ steps:
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
 
+- name: Notify IRC
+  image: plugins/irc
+  settings:
+    nick: drone-bot
+    channel: #lounge-rocks
+    host: chat.freenode.net
+    port: 6667
+
 
 ---
 kind: pipeline
@@ -61,4 +69,10 @@ steps:
     event:
     - push
     - cron
-
+- name: Notify IRC
+  image: plugins/irc
+  settings:
+    nick: drone-bot
+    channel: #lounge-rocks
+    host: chat.freenode.net
+    port: 6667
