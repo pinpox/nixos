@@ -84,4 +84,4 @@ trigger:
   event:
   - cron
   cron:
-  - nightly
+  - daily
