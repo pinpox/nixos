@@ -30,7 +30,7 @@ let
 in {
 
   options.pinpox.services.go-karma-bot = {
-    enable = mkEnableOption "the irc bot.";
+    enable = mkEnableOption "the irc bot";
   };
 
   config = mkIf cfg.enable {
