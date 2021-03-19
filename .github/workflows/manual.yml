@@ -24,6 +24,7 @@ jobs:
         run: |
             nix-build ./manual/manual.nix -A html
             mkdir docs
+            curl https://nixos.org/favicon.ico -o docs/favicon.ico
             cat result > docs/index.html
 
       - name: Deploy 🚀
