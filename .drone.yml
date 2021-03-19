@@ -83,4 +83,5 @@ steps:
 trigger:
   event:
   - cron
-
+  cron:
+  - nightly
