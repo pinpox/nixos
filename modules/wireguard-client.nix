@@ -9,6 +9,10 @@ in {
       type = types.str;
       default = "0.0.0.0";
       example = "192.168.7.1/24";
+      description = ''
+        IP address of the host.
+        Make sure to also set the peer entry for the server accordingly.
+      '';
     };
   };
 
