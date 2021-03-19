@@ -39,11 +39,13 @@ steps:
     host: chat.freenode.net
     port: 6667
     template: "[{{build.status}}]: {{build.message}} | #{{truncate build.commit 8}} {{build.event}} on {{repo.owner}}/{{repo.name}}/{{build.branch}} by {{build.author}} - {{build.link}}"
-  when:
-    branch:
-    - main
-    event:
-    - push
+
+trigger:
+  branch:
+  - master
+  event:
+  - pull_request
+  - push
 
 ---
 kind: pipeline
@@ -57,9 +59,6 @@ steps:
   - nix flake update
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
-  when:
-    event:
-    - cron
 
 - name: Push updated flake.lock
   image: appleboy/drone-git-push
@@ -72,9 +71,7 @@ steps:
     commit_message: "❄️ Update flake.lock"
     ssh_key:
       from_secret: deploy_key
-  when:
-    event:
-    - cron
+
 - name: Notify IRC
   image: plugins/irc
   settings:
@@ -82,6 +79,8 @@ steps:
     channel: "#lounge-rocks"
     host: chat.freenode.net
     port: 6667
-  when:
-    event:
-    - cron
+
+trigger:
+  event:
+  - cron
+
