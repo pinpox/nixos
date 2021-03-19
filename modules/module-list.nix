@@ -25,7 +25,7 @@
   ./monitoring/prometheus.nix
   ./monitoring/telegraf.nix
   ./networking.nix
-  ./nix-common.nix
+  ./nix-common
   ./openssh.nix
   ./sound.nix
   ./thelounge.nix

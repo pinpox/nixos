@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.nix;
 in {

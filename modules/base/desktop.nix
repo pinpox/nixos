@@ -8,6 +8,7 @@ in {
     ../bluetooth
     ../environment
     ../locale
+    ../nix-common
 
     ../user-profiles/pinpox.nix
     ../borg/default.nix
@@ -19,7 +20,6 @@ in {
     ../xserver.nix
     ../yubikey.nix
     ../zsh.nix
-    ../nix-common.nix
     ../wireguard-client.nix
   ];
 
@@ -61,6 +61,7 @@ in {
         environment.enable = true;
         bluetooth.enable = true;
         locale.enable = true;
+        nix.enable = true;
       };
 
       virtualisation = {
