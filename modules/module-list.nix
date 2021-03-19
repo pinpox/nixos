@@ -7,7 +7,6 @@
   ./borg
   ./borg-monitor-repo.nix
   ./borg-server.nix
-  ./chromium.nix
   ./custom-packages.nix
   ./drone-ci
   ./dyndns.nix
