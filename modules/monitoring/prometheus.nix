@@ -29,37 +29,37 @@
   };
 
   # Additional telegraf inputs that only run on monitoring host
-  services.telegraf.extraConfig.inputs = {
-    github = {
-      repositories = [ "nixos/nixpkgs" "pinpox/nixos" "pinpox/nixos-home" ];
-    };
+  # services.telegraf.extraConfig.inputs = {
+  #   github = {
+  #     repositories = [ "nixos/nixpkgs" "pinpox/nixos" "pinpox/nixos-home" ];
+  #   };
 
-    http_response = {
-      urls = [
-        "https://pablo.tools"
-        "https://pass.pablo.tools"
-        "https://status.pablo.tools/login"
-        "https://home.pablo.tools"
+  #   http_response = {
+  #     urls = [
+  #       "https://pablo.tools"
+  #       "https://pass.pablo.tools"
+  #       "https://status.pablo.tools/login"
+  #       "https://home.pablo.tools"
 
-        "https://mm.0cx.de"
-        "https://pads.0cx.de"
-        "https://irc.0cx.de"
+  #       "https://mm.0cx.de"
+  #       "https://pads.0cx.de"
+  #       "https://irc.0cx.de"
 
-        "https://megaclan3000.de"
-      ];
-    };
+  #       "https://megaclan3000.de"
+  #     ];
+  #   };
 
-    ping = {
-      urls = [
-        "porree.wireguard"
-        "ahorn.wireguard"
-        "kartoffel.wireguard"
-        "birne.wireguard"
-        "kfbox.wireguard"
-        "mega.wireguard"
-      ];
-    };
-  };
+  #   ping = {
+  #     urls = [
+  #       "porree.wireguard"
+  #       "ahorn.wireguard"
+  #       "kartoffel.wireguard"
+  #       "birne.wireguard"
+  #       "kfbox.wireguard"
+  #       "mega.wireguard"
+  #     ];
+  #   };
+  # };
 
   services.prometheus = {
     enable = true;
@@ -74,21 +74,23 @@
     #   };
     # };
 
-    scrapeConfigs = [{
-      job_name = "telegraf";
-      scrape_interval = "120s";
-      metrics_path = "/metrics";
-      static_configs = [
-        {
-          targets = [ "porree.wireguard:9273" "kfbox.wireguard:9273" ];
-          labels.location = "netcup";
-        }
+    scrapeConfigs = [
 
-        {
-          targets = [ "birne.wireguard:9273" ];
-          labels.location = "home";
-        }
-      ];
-    }];
+      # {
+      # job_name = "telegraf";
+      #   scrape_interval = "120s";
+      #   metrics_path = "/metrics";
+      #   static_configs = [
+      #     {
+      #       targets = [ "porree.wireguard:9273" "kfbox.wireguard:9273" ];
+      #       labels.location = "netcup";
+      #     }
+      #     {
+      #       targets = [ "birne.wireguard:9273" ];
+      #       labels.location = "home";
+      #     }
+      #   ];
+      # }
+    ];
   };
 }

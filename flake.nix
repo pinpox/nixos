@@ -138,7 +138,7 @@
             ./modules/borg-server.nix
             ./modules/lvm-grub.nix
             ./modules/home-assistant/default.nix
-            ./modules/monitoring/telegraf.nix
+            # ./modules/monitoring/telegraf.nix
 
           ];
         };
@@ -174,7 +174,7 @@
             ./modules/irc-bot
             { pinpox.services.go-karma-bot.enable = true; }
 
-            ./modules/monitoring/telegraf.nix
+            # ./modules/monitoring/telegraf.nix
             ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
@@ -192,7 +192,7 @@
             # ./modules/drone-ci/default.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
-            ./modules/monitoring/telegraf.nix
+            # ./modules/monitoring/telegraf.nix
           ];
         };
       };
