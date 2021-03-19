@@ -1,27 +1,36 @@
-{ config, pkgs, ... }: {
-  # Allow unfree licenced packages
-  nixpkgs = { config.allowUnfree = true; };
+{ config, pkgs, ... }:
+with lib;
+let cfg = config.pinpox.defaults.nix;
+in {
 
-  # Enable flakes
-  nix = {
+  options.pinpox.defaults.nix = { enable = mkEnableOption "Nix defaults"; };
 
-    # Save space by hardlinking store files
-    autoOptimiseStore = true;
+  config = mkIf cfg.enable {
+
+    # Allow unfree licenced packages
+    nixpkgs = { config.allowUnfree = true; };
 
     # Enable flakes
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    nix = {
 
-    # Clean up old generations after 30 days
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
+      # Save space by hardlinking store files
+      autoOptimiseStore = true;
+
+      # Enable flakes
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+
+      # Clean up old generations after 30 days
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
+
+      # Users allowed to run nix
+      allowedUsers = [ "root" ];
     };
-
-    # Users allowed to run nix
-    allowedUsers = [ "root" ];
   };
 }
