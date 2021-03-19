@@ -89,7 +89,7 @@
 
               pinpox.desktop = {
                 enable = true;
-                wireguardIp = "192.168.7.3/24";
+                wireguardIp = "192.168.7.3";
                 hostname = "kartoffel";
                 homeConfig = nixos-home.nixosModules.desktop;
                 bootDevice =
@@ -109,7 +109,7 @@
 
               pinpox.desktop = {
                 enable = true;
-                wireguardIp = "192.168.7.2/24";
+                wireguardIp = "192.168.7.2";
                 hostname = "ahorn";
                 homeConfig = nixos-home.nixosModules.desktop;
                 bootDevice =

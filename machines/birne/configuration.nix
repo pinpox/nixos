@@ -12,7 +12,7 @@
 
   pinpox.wg-client = {
     enable = true;
-    clientIp = "192.168.7.4/24";
+    clientIp = "192.168.7.4";
   };
 
   security.acme.acceptTerms = true;
