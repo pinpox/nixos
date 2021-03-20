@@ -28,8 +28,6 @@
     ];
   };
 
-  # Additional telegraf inputs that only run on monitoring host
-  # services.telegraf.extraConfig.inputs = {
   #   github = {
   #     repositories = [ "nixos/nixpkgs" "pinpox/nixos" "pinpox/nixos-home" ];
   #   };
@@ -49,48 +47,24 @@
   #     ];
   #   };
 
-  #   ping = {
-  #     urls = [
-  #       "porree.wireguard"
-  #       "ahorn.wireguard"
-  #       "kartoffel.wireguard"
-  #       "birne.wireguard"
-  #       "kfbox.wireguard"
-  #       "mega.wireguard"
-  #     ];
-  #   };
-  # };
-
   services.prometheus = {
     enable = true;
-    # Default port is 9090
-
-    # Prometheus node-exporter
-    # exporters = {
-    #   node = {
-    #     enable = true;
-    #     enabledCollectors = [ "systemd" ];
-    #     port = 9002;
-    #   };
-    # };
 
     scrapeConfigs = [
 
-      # {
-      # job_name = "telegraf";
-      #   scrape_interval = "120s";
-      #   metrics_path = "/metrics";
-      #   static_configs = [
-      #     {
-      #       targets = [ "porree.wireguard:9273" "kfbox.wireguard:9273" ];
-      #       labels.location = "netcup";
-      #     }
-      #     {
-      #       targets = [ "birne.wireguard:9273" ];
-      #       labels.location = "home";
-      #     }
-      #   ];
-      # }
+      {
+        job_name = "node-stats";
+        static_configs = [{
+          targets = [
+            "ahorn.wireguard:9100"
+            "birne.wireguard:9100"
+            "kartoffel.wireguard:9100"
+            "kfbox.wireguard:9100"
+            "mega.wireguard:9100"
+            "porree.wireguard:9100"
+          ];
+        }];
+      }
     ];
   };
 }
