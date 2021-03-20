@@ -55,17 +55,20 @@
         ./modules/borg/default.nix
         ./modules/environment
         ./modules/locale
+        ./modules/wireguard-client.nix
+        ./modules/monitoring
+        ./modules/nix-common
         {
+          # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
             environment.enable = true;
             locale.enable = true;
+            nix.enable = true;
           };
         }
         ./modules/zsh.nix
         ./modules/openssh.nix
         ./modules/networking.nix
-        ./modules/nix-common.nix
-        ./modules/wireguard-client.nix
       ];
 
     in {
@@ -89,7 +92,7 @@
 
               pinpox.desktop = {
                 enable = true;
-                wireguardIp = "192.168.7.3/24";
+                wireguardIp = "192.168.7.3";
                 hostname = "kartoffel";
                 homeConfig = nixos-home.nixosModules.desktop;
                 bootDevice =
@@ -109,7 +112,7 @@
 
               pinpox.desktop = {
                 enable = true;
-                wireguardIp = "192.168.7.2/24";
+                wireguardIp = "192.168.7.2";
                 hostname = "ahorn";
                 homeConfig = nixos-home.nixosModules.desktop;
                 bootDevice =
@@ -138,7 +141,7 @@
             ./modules/borg-server.nix
             ./modules/lvm-grub.nix
             ./modules/home-assistant/default.nix
-            ./modules/monitoring/telegraf.nix
+            # ./modules/monitoring/telegraf.nix
 
           ];
         };
@@ -172,10 +175,12 @@
             { nix.autoOptimiseStore = true; }
 
             ./modules/irc-bot
-            { pinpox.services.go-karma-bot.enable = true; }
+            {
+              pinpox.services.go-karma-bot.enable = true;
+            }
 
-            ./modules/monitoring/telegraf.nix
-            ./modules/wireguard-client.nix
+            # ./modules/monitoring/telegraf.nix
+            # ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
             ./modules/hedgedoc.nix
@@ -192,7 +197,8 @@
             # ./modules/drone-ci/default.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
-            ./modules/monitoring/telegraf.nix
+            ./modules/wireguard-client.nix
+            # ./modules/monitoring/telegraf.nix
           ];
         };
       };

@@ -9,6 +9,7 @@ in {
     ../environment
     ../locale
     ../nix-common
+    ../monitoring
 
     ../user-profiles/pinpox.nix
     ../borg/default.nix
@@ -69,7 +70,12 @@ in {
         virtualbox.enable = true;
       };
 
-      services.xserver.enable = true;
+      services = {
+        xserver.enable = true;
+      };
+
+      metrics.node.enable = true;
+
       wg-client = {
         enable = true;
         clientIp = cfg.wireguardIp;

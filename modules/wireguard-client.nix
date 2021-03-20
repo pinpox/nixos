@@ -22,7 +22,7 @@ in {
 
       wg0 = {
 
-        ips = [ cfg.clientIp ];
+        ips = [ "${cfg.clientIp}/24" ];
 
         # Path to the private key file
         privateKeyFile = "/var/src/secrets/wireguard/private";

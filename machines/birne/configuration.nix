@@ -10,10 +10,21 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-  pinpox.wg-client = {
-    enable = true;
-    clientIp = "192.168.7.4/24";
+  pinpox = {
+    wg-client = {
+      enable = true;
+      clientIp = "192.168.7.4";
+    };
+
+    defaults = {
+      environment.enable = true;
+      locale.enable = true;
+      nix.enable = true;
+    };
+
+    metrics.node.enable = true;
   };
+
 
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";

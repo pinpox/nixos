@@ -8,7 +8,7 @@
 
     pinpox.wg-client = {
       enable = true;
-      clientIp = "192.168.7.5/24";
+      clientIp = "192.168.7.5";
     };
 
     services.qemuGuest.enable = true;
