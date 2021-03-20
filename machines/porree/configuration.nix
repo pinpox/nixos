@@ -110,6 +110,16 @@
     # Enable ip forwarding, so wireguard peers can reach eachother
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
+    pinpox = {
+
+      wg-client = {
+        # enable = true;
+        clientIp = "192.168.7.1";
+      };
+
+      metrics.node.enable = true;
+    };
+
     # Enable Wireguard
     networking.wireguard.interfaces = {
 

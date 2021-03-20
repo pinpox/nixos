@@ -55,17 +55,20 @@
         ./modules/borg/default.nix
         ./modules/environment
         ./modules/locale
+        ./modules/wireguard-client.nix
+        ./modules/monitoring
+        ./modules/nix-common
         {
+          # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
             environment.enable = true;
             locale.enable = true;
+            nix.enable = true;
           };
         }
         ./modules/zsh.nix
         ./modules/openssh.nix
         ./modules/networking.nix
-        ./modules/nix-common.nix
-        ./modules/wireguard-client.nix
       ];
 
     in {
@@ -172,10 +175,12 @@
             { nix.autoOptimiseStore = true; }
 
             ./modules/irc-bot
-            { pinpox.services.go-karma-bot.enable = true; }
+            {
+              pinpox.services.go-karma-bot.enable = true;
+            }
 
             # ./modules/monitoring/telegraf.nix
-            ./modules/wireguard-client.nix
+            # ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
             ./modules/hedgedoc.nix
@@ -192,6 +197,7 @@
             # ./modules/drone-ci/default.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
+            ./modules/wireguard-client.nix
             # ./modules/monitoring/telegraf.nix
           ];
         };

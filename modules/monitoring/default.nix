@@ -10,8 +10,11 @@ in {
   config = mkIf cfg.enable {
     services.prometheus.exporters.node = {
       enable = true;
-      listenAddress = pinpox.wg-client.clientIP;
-      networking.firefall.interfaces.wg0.allowedTCPPorts = [ 9100 ];
+      listenAddress = config.pinpox.wg-client.clientIp;
+      enabledCollectors = [ "systemd" ];
     };
+
+    # Open wirewall port for the wireguard interface
+    networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9100 ];
   };
 }

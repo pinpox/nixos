@@ -9,6 +9,7 @@ in {
     ../environment
     ../locale
     ../nix-common
+    ../monitoring
 
     ../user-profiles/pinpox.nix
     ../borg/default.nix
