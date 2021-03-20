@@ -23,6 +23,7 @@
   ./monit
   ./monitoring/loki.nix
   ./monitoring/prometheus.nix
+  ./monitoring
   # ./monitoring/telegraf.nix
   ./networking.nix
   ./nix-common
