@@ -287,6 +287,93 @@
 							</div>
 						</div>
 					</div>
+					<div class="nixoption block" id="pinpox.services.monitoring-server.blackboxTargets">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#pinpox.services.monitoring-server.blackboxTargets"># </a> pinpox.services.monitoring-server.blackboxTargets  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">list of strings</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Targets to monitor with the blackbox-exporter </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>[https://pablo.tools]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>[https://github.com]</code> </p>
+
+							<h4 class="title is-4">Declarations</h4>
+
+							<div class="block">
+								<ul>
+									<li> <code> /home/runner/work/nixos/nixos/modules/monitoring/prometheus.nix </code> </li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="nixoption block" id="pinpox.services.monitoring-server.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#pinpox.services.monitoring-server.enable"># </a> pinpox.services.monitoring-server.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable monitoring-server setup. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+
+							<h4 class="title is-4">Declarations</h4>
+
+							<div class="block">
+								<ul>
+									<li> <code> /home/runner/work/nixos/nixos/modules/monitoring/prometheus.nix </code> </li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="nixoption block" id="pinpox.services.monitoring-server.nodeTargets">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#pinpox.services.monitoring-server.nodeTargets"># </a> pinpox.services.monitoring-server.nodeTargets  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">list of strings</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Targets to monitor with the node-exporter </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>[porree.wireguard:9100]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>[hostname.wireguard:9100]</code> </p>
+
+							<h4 class="title is-4">Declarations</h4>
+
+							<div class="block">
+								<ul>
+									<li> <code> /home/runner/work/nixos/nixos/modules/monitoring/prometheus.nix </code> </li>
+								</ul>
+							</div>
+						</div>
+					</div>
 					<div class="nixoption block" id="pinpox.services.xserver.enable">
 						<div class="level">
 							<div class="level-left">
