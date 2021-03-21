@@ -12,6 +12,7 @@
     # declarativePlugins = with pkgs.grafanaPlugins [
     #    grafana-piechart-panel
     # ];
+    # TODO provision the dashboards as currently configured
 
     provision.datasources = [
       {
@@ -44,6 +45,9 @@
           "https://pass.pablo.tools"
           "https://vpn.pablo.tools"
           "https://pinpox.github.io/nixos/"
+          "https://pads.0cx.de"
+          "https://mm.0cx.de"
+          "https://irc.0cx.de"
         ]; }];
 
         relabel_configs = [
