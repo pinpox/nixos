@@ -119,7 +119,29 @@
 
       metrics.node.enable = true;
       metrics.blackbox.enable = true;
-
+      services.monitoring-server = {
+        enable = true;
+        nodeTargets = [
+          "ahorn.wireguard:9100"
+          "birne.wireguard:9100"
+          "kartoffel.wireguard:9100"
+          "kfbox.wireguard:9100"
+          "mega.wireguard:9100"
+          "porree.wireguard:9100"
+        ];
+        blackboxTargets = [
+          "https://pablo.tools"
+          "https://megaclan3000.de"
+          "https://drone.lounge.rocks"
+          "https://lounge.rocks"
+          "https://pass.pablo.tools"
+          "https://vpn.pablo.tools"
+          "https://pinpox.github.io/nixos/"
+          "https://pads.0cx.de"
+          "https://mm.0cx.de"
+          "https://irc.0cx.de"
+        ];
+      };
     };
 
     # Enable Wireguard
