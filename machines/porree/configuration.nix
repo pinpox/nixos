@@ -118,6 +118,8 @@
       };
 
       metrics.node.enable = true;
+      metrics.blackbox.enable = true;
+
     };
 
     # Enable Wireguard

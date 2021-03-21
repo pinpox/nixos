@@ -28,29 +28,40 @@
     ];
   };
 
-  #   github = {
-  #     repositories = [ "nixos/nixpkgs" "pinpox/nixos" "pinpox/nixos-home" ];
-  #   };
-
-  #   http_response = {
-  #     urls = [
-  #       "https://pablo.tools"
-  #       "https://pass.pablo.tools"
-  #       "https://status.pablo.tools/login"
-  #       "https://home.pablo.tools"
-
-  #       "https://mm.0cx.de"
-  #       "https://pads.0cx.de"
-  #       "https://irc.0cx.de"
-
-  #       "https://megaclan3000.de"
-  #     ];
-  #   };
-
   services.prometheus = {
     enable = true;
 
     scrapeConfigs = [
+      {
+        job_name = "blackbox";
+        metrics_path = "/probe";
+        params = { module = [ "http_2xx" ]; };
+        static_configs = [{ targets = [
+          "https://pablo.tools"
+          "https://megaclan3000.de"
+          "https://drone.lounge.rocks"
+          "https://lounge.rocks"
+          "https://pass.pablo.tools"
+          "https://vpn.pablo.tools"
+          "https://pinpox.github.io/nixos/"
+        ]; }];
+
+        relabel_configs = [
+          {
+            source_labels = [ "__address__" ];
+            target_label = "__param_target";
+          }
+          {
+            source_labels = [ "__param_target" ];
+            target_label = "instance";
+          }
+          {
+            target_label = "__address__";
+            replacement =
+              "127.0.0.1:9115"; # The blackbox exporter's real hostname:port.
+          }
+        ];
+      }
 
       {
         job_name = "node-stats";
