@@ -197,6 +197,7 @@
             # ./modules/drone-ci/default.nix
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
+            ./modules/monitoring/grafana.nix
             ./modules/wireguard-client.nix
             # ./modules/monitoring/telegraf.nix
           ];
