@@ -36,6 +36,9 @@
       46.38.242.17 kfbox.public
       93.177.66.52 kfbox-old
       5.181.48.121 mega.public
+
+      # VPN protected services
+      192.168.7.1 vpn.alerts.pablo.tools
     '';
   };
 }

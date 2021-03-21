@@ -8,14 +8,14 @@ in {
 
     blackboxTargets = mkOption {
       type = types.listOf types.str;
-      default = [ "https://pablo.tools"];
+      default = [ "https://pablo.tools" ];
       example = [ "https://github.com" ];
       description = "Targets to monitor with the blackbox-exporter";
     };
 
     nodeTargets = mkOption {
       type = types.listOf types.str;
-      default = [ "porree.wireguard:9100"];
+      default = [ "porree.wireguard:9100" ];
       example = [ "hostname.wireguard:9100" ];
       description = "Targets to monitor with the node-exporter";
     };
@@ -26,7 +26,25 @@ in {
     services.prometheus = {
       enable = true;
 
+      alertmanagers =
+        [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
+
       scrapeConfigs = [
+        # {
+        #   job_name = "homeassistant";
+        #   scrape_interval = "120s";
+        #   metrics_path = "/api/prometheus";
+
+        #   # Legacy api password
+        #   params.api_password = [ "PASSWORD" ];
+
+        #   # Long-Lived Access Token
+        #   bearer_token = "$HASS_TOKEN";
+        #   scheme = "https";
+        #   static_configs = [{
+        #     targets = [ "hass.thalheim.io:443" ];
+        #   }];
+        # }
         {
           job_name = "blackbox";
           metrics_path = "/probe";
@@ -54,7 +72,33 @@ in {
           static_configs = [{ targets = cfg.nodeTargets; }];
         }
       ];
+      alertmanager = {
+        enable = true;
+        # port = 9093; # Default
+        webExternalUrl = "https://vpn.alerts.pablo.tools";
+        environmentFile = /var/src/secrets/alertmanager/envfile;
+        configuration = {
+          global = {
+            # The smarthost and SMTP sender used for mail notifications.
+            # smtp_smarthost = "mail.thalheim.io:587";
+            # smtp_from = "alertmanager@thalheim.io";
+            # smtp_auth_username = "alertmanager@thalheim.io";
+            # smtp_auth_password = "$SMTP_PASSWORD";
+          };
+
+          route = {
+            receiver = "default";
+            routes = [{
+              group_by = [ "host" ];
+              group_wait = "30s";
+              group_interval = "2m";
+              repeat_interval = "2h";
+              receiver = "default";
+            }];
+          };
+          receivers = [{ name = "default"; }];
+        };
+      };
     };
   };
-
 }
