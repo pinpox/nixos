@@ -198,6 +198,7 @@
             ./modules/monitoring/prometheus.nix
             ./modules/monitoring/loki.nix
             ./modules/monitoring/grafana.nix
+            ./modules/monitoring/alertmanager-irc-relay.nix
             ./modules/wireguard-client.nix
             # ./modules/monitoring/telegraf.nix
           ];

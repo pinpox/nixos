@@ -131,10 +131,13 @@
 
       metrics.node.enable = true;
       metrics.blackbox.enable = true;
+
+      services.alertmanager-irc-relay.enable = true;
       services.monitoring-server = {
 
         dashboard.enable = true;
         loki.enable = true;
+
 
         enable = true;
         nodeTargets = [

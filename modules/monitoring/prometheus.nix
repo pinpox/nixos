@@ -87,16 +87,24 @@ in {
           };
 
           route = {
-            receiver = "default";
+            receiver = "all";
             routes = [{
-              group_by = [ "host" ];
+              group_by = [ "instance" ];
               group_wait = "30s";
               group_interval = "2m";
               repeat_interval = "2h";
-              receiver = "default";
+              receiver = "all";
             }];
           };
-          receivers = [{ name = "default"; }];
+          receivers = [
+            {
+              name = "all";
+              webhook_configs = [{
+                url = "http://127.0.0.1:9999/lounge-rocks";
+                max_alerts = 5;
+              }];
+            }
+          ];
         };
       };
     };

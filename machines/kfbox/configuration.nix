@@ -11,6 +11,9 @@
       clientIp = "192.168.7.5";
     };
 
+
+      pinpox.metrics.node.enable = true;
+
     services.qemuGuest.enable = true;
 
     # Setup Yubikey SSH and GPG
