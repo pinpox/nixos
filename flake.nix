@@ -199,6 +199,7 @@
             ./modules/monitoring/loki.nix
             ./modules/monitoring/grafana.nix
             ./modules/monitoring/alertmanager-irc-relay.nix
+            ./modules/matterbridge
             ./modules/wireguard-client.nix
             # ./modules/monitoring/telegraf.nix
           ];

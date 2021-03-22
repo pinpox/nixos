@@ -19,6 +19,7 @@
   ./locale
   ./lvm-grub.nix
   ./mattermost
+  ./matterbridge
   ./mmonit.nix
   ./monit
   ./monitoring
