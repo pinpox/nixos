@@ -111,7 +111,7 @@ steps:
 #     port: 6667
 #     template: "[{{build.status}}]: {{build.message}} | #{{truncate build.commit 8}} {{build.event}} on {{repo.owner}}/{{repo.name}}/{{build.branch}} by {{build.author}} - {{build.link}}"
 
-trigger:
-  branch:
-  - main
+# trigger:
+#   branch:
+#   - main
 
