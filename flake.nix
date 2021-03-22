@@ -157,6 +157,10 @@
             # ./modules/wireguard-client.nix
             ./modules/drone-ci/default.nix
             ./modules/drone-ci/drone-runner-docker.nix
+            ./modules/binary-cache
+            {
+              pinpox.services.binary-cache.enable = true;
+            }
 
             # TODO bepasty service is currently broken due to:
             # https://github.com/NixOS/nixpkgs/issues/116326
