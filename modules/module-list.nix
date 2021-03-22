@@ -21,9 +21,10 @@
   ./mattermost
   ./mmonit.nix
   ./monit
+  ./monitoring
+  ./monitoring/grafana.nix
   ./monitoring/loki.nix
   ./monitoring/prometheus.nix
-  ./monitoring
   # ./monitoring/telegraf.nix
   ./networking.nix
   ./nix-common
