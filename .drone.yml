@@ -93,11 +93,17 @@ type: docker
 name: Push to cache
 
 steps:
-- name: Update flake.lock
+- name: Build hosts
   image: nixpkgs/nix-flakes
   commands:
   - nix flake update
   - nix build --profile result '.#nixosConfigurations.ahorn.config.system.build.toplevel'
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
+
+- name: Push config to cache
+  image: nixpkgs/nix-flakes
+  commands:
   - nix copy --to ssh://cache.lounge.rocks ./result
   environment:
     NIX_PATH: nixpkgs=channel:nixos-unstable
