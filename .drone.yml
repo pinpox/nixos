@@ -7,14 +7,14 @@ platform:
   arch: amd64
 
 steps:
-- name: Show flake info
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix --experimental-features "nix-command flakes" flake show
-  # - nix --experimental-features "nix-command flakes" flake info
-  - nix --experimental-features "nix-command flakes" flake list-inputs
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
+# - name: Show flake info
+#   image: nixpkgs/nix-flakes
+#   commands:
+#   - nix --experimental-features "nix-command flakes" flake show
+#   - nix --experimental-features "nix-command flakes" flake info
+#   - nix --experimental-features "nix-command flakes" flake list-inputs
+#   environment:
+#     NIX_PATH: nixpkgs=channel:nixos-unstable
 
 - name: Run flake checks
   image: nixpkgs/nix-flakes
