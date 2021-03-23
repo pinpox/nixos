@@ -19,8 +19,12 @@ in {
       # Enable flakes
       package = pkgs.nixFlakes;
       extraOptions = ''
-        experimental-features = nix-command flakes
+        experimental-features = nix-command flakes ca-references
       '';
+
+      binaryCachePublicKeys = ["cache.lounge.rocks:uXa8UuAEQoKFtU8Om/hq6d7U+HgcrduTVr8Cfl6JuaY="];
+      binaryCaches = lib.mkForce [ "https://cache.lounge.rocks" ];
+      trustedBinaryCaches =  ["https://cache.lounge.rocks"];
 
       # Clean up old generations after 30 days
       gc = {
