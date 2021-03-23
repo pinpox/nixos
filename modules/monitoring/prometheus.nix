@@ -25,11 +25,18 @@ in {
 
     services.prometheus = {
       enable = true;
-
+      extraFlags = ["--log.level=debug"];
+      environmentFile = /var/src/secrets/prometheus/envfile;
       alertmanagers =
         [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
 
       scrapeConfigs = [
+
+        {
+          job_name = "drone";
+          bearer_token = "$DRONE_TOKEN";
+          static_configs = [{ targets = ["drone.lounge.rocks"]; }];
+        }
         # {
         #   job_name = "homeassistant";
         #   scrape_interval = "120s";
