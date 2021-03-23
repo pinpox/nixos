@@ -20,22 +20,30 @@ in {
       secretKeyFile = "/var/lib/cache-priv-key.pem";
     };
 
-    # TODO fix this, currently broken preStart is not a valid key
+    # TODO fix this, currently broken, ispreStart is not a valid key
+    users.users.push-cache = {
+      isNormalUser = true;
+      description = "System user to push to the store";
+      extraGroups = [ ];
+
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrA5uESLJgMkrFU8MLDSjA2x792iizCet6/H7Z0j8Xn nix-serve@ssh"
+      ];
+    };
+
     systemd.services.nix-serve = {
       serviceConfig = { preStart = "+${init-script}/bin/write-key"; };
     };
 
-
-    nix.allowedUsers = [ "nix-serve" ];
+    nix.allowedUsers = [ "nix-serve" "push-cache" ];
 
     services.nginx = {
       enable = true;
       virtualHosts = {
 
         "cache.lounge.rocks" = {
-      addSSL = true;
-      enableACME = true;
-          # serverAliases = [ "cache" ];
+          addSSL = true;
+          enableACME = true;
           locations."/".extraConfig = ''
             proxy_pass http://localhost:${
               toString config.services.nix-serve.port
