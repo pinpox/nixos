@@ -31,8 +31,14 @@
 
   systemd.enableUnifiedCgroupHierarchy = false;
 
+
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+
+    networking.extraHosts = ''
+      127.0.0.1 cache.lounge.rocks
+    '';
 
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
