@@ -12,7 +12,7 @@ clone:
 steps:
 - name: Run a command on the system
   commands:
-  - mkdir /etc/machine-id
+  - cat /etc/machine-id
 
 ---
 kind: pipeline
