@@ -19,6 +19,7 @@ steps:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
 - name: Build kartoffel
   commands:
+  - ls
   - nix build '.#nixosConfigurations.ahorn.config.toplevel'
   # environment:
   #   NIX_PATH: nixpkgs=channel:nixos-unstable
