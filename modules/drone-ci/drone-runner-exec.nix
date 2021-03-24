@@ -85,7 +85,7 @@ in {
           #       ForwardAgent yes
           #   ''
           # }:/etc/ssh/ssh_config"
-          # "/etc/machine-id"
+          "/etc/machine-id"
           # channels are dynamic paths in the nix store, therefore we need to bind mount the whole thing
           "/nix/"
         ];
