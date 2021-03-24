@@ -155,11 +155,19 @@
 
             # Modules
             # ./modules/wireguard-client.nix
-            ./modules/drone-ci/default.nix
-            ./modules/drone-ci/drone-runner-docker.nix
+
+            # TODO the drone-docker-exec module has no enable options yet and
+            # will therefore always be setup when the droneci/default.nix is
+            # imported
+            ./modules/drone-ci
             ./modules/binary-cache
             {
               pinpox.services.binary-cache.enable = true;
+
+              # TODO the drone-docker-exec module has no enable options yet and
+              # will therefore always be setup when the droneci/default.nix is
+              # imported
+              pinpox.services.droneci.enable = true;
             }
 
             # TODO bepasty service is currently broken due to:
