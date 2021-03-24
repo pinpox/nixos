@@ -26,9 +26,9 @@ steps:
 - name: Build porree
   commands:
   - nix build '.#nixosConfigurations.porree.config.system.build.toplevel'
-# - name: Build kfbox
-#   commands:
-#   - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel' --out-link ./result-kfbox
+- name: Build kfbox
+  commands:
+  - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel'
 # - name: Build bob
 #   commands:
 #   - nix build '.#nixosConfigurations.bob.config.system.build.toplevel' --out-link ./result-bob
