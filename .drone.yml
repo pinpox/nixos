@@ -19,14 +19,26 @@ steps:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
 - name: Build kartoffel
   commands:
-  - ls
+  - nix build '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
+- name: Build ahorn
+  commands:
   - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel'
-  # environment:
-  #   NIX_PATH: nixpkgs=channel:nixos-unstable
+- name: Build porree
+  commands:
+  - nix build '.#nixosConfigurations.porree.config.system.build.toplevel'
+- name: Build kfbox
+  commands:
+  - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel'
+- name: Build bob
+  commands:
+  - nix build '.#nixosConfigurations.bob.config.system.build.toplevel'
+- name: Build birne
+  commands:
+  - nix build '.#nixosConfigurations.birne.config.system.build.toplevel'
 
 ---
 kind: pipeline
-name: default
+name: Notifications
 type: docker
 
 platform:
@@ -54,7 +66,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: update flakes
+name: Update Flakes
 
 steps:
 - name: Update flake.lock
