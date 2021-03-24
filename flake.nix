@@ -168,6 +168,7 @@
               # will therefore always be setup when the droneci/default.nix is
               # imported
               pinpox.services.droneci.enable = true;
+              pinpox.services.droneci.runner-exec.enable = true;
             }
 
             # TODO bepasty service is currently broken due to:
