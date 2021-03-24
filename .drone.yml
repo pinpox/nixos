@@ -1,6 +1,6 @@
 kind: pipeline
 type: exec
-name: Test the exec runner
+name: Build all hosts
 
 platform:
   os: linux
@@ -10,9 +10,19 @@ clone:
   depth: 1
 
 steps:
-- name: Run a command on the system
+- name: Show flake info
   commands:
-  - cat /etc/machine-id
+  - nix --experimental-features "nix-command flakes" flake show
+  - nix --experimental-features "nix-command flakes" flake info
+  - nix --experimental-features "nix-command flakes" flake list-inputs
+- name: Run flake checks
+  commands:
+  - nix --experimental-features "nix-command flakes" flake check --show-trace
+- name: Build kartoffel
+  commands:
+  - nix build '.#nixosConfigurations.ahorn.config.toplevel'
+  # environment:
+  #   NIX_PATH: nixpkgs=channel:nixos-unstable
 
 ---
 kind: pipeline
@@ -24,29 +34,6 @@ platform:
   arch: amd64
 
 steps:
-# - name: Show flake info
-#   image: nixpkgs/nix-flakes
-#   commands:
-#   - nix --experimental-features "nix-command flakes" flake show
-#   - nix --experimental-features "nix-command flakes" flake info
-#   - nix --experimental-features "nix-command flakes" flake list-inputs
-#   environment:
-#     NIX_PATH: nixpkgs=channel:nixos-unstable
-
-- name: Run flake checks
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix --experimental-features "nix-command flakes" flake check --show-trace
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
-
-- name: Build all hosts
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix-build krops.nix -A all
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
-
 # http://plugins.drone.io/appleboy/drone-discord/
 - name: Notify IRC
   image: plugins/irc
