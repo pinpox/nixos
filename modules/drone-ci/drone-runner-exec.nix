@@ -45,7 +45,16 @@ in {
       confinement.enable = true;
       confinement.packages =
         [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixUnstable pkgs.gzip ];
-      path = [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixUnstable pkgs.gzip ];
+      path = [
+        pkgs.bash
+        pkgs.bind
+        pkgs.dnsutils
+        pkgs.git
+        pkgs.gnutar
+        pkgs.gzip
+        pkgs.nixUnstable
+        pkgs.openssh
+      ];
       serviceConfig = {
         Environment = [
           "DRONE_RUNNER_CAPACITY=10"
@@ -60,6 +69,8 @@ in {
         ];
         BindReadOnlyPaths = [
           "/etc/passwd:/etc/passwd"
+          "/etc/resolv.conf:/etc/resolv.conf"
+          "/etc/hosts:/etc/hosts"
           "/etc/group:/etc/group"
           "/nix/var/nix/profiles/system/etc/nix:/etc/nix"
           "${
@@ -74,7 +85,7 @@ in {
           #       ForwardAgent yes
           #   ''
           # }:/etc/ssh/ssh_config"
-          "/etc/machine-id"
+          # "/etc/machine-id"
           # channels are dynamic paths in the nix store, therefore we need to bind mount the whole thing
           "/nix/"
         ];
