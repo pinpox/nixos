@@ -23,7 +23,7 @@ in {
       '';
 
       binaryCachePublicKeys = ["cache.lounge.rocks:uXa8UuAEQoKFtU8Om/hq6d7U+HgcrduTVr8Cfl6JuaY="];
-      binaryCaches = lib.mkForce [ "https://cache.lounge.rocks" ];
+      binaryCaches = [ "https://cache.lounge.rocks" ];
       trustedBinaryCaches =  ["https://cache.lounge.rocks"];
 
       # Clean up old generations after 30 days
