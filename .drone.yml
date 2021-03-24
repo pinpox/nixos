@@ -29,9 +29,9 @@ steps:
 - name: Build kfbox
   commands:
   - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel'
-# - name: Build bob
-#   commands:
-#   - nix build '.#nixosConfigurations.bob.config.system.build.toplevel' --out-link ./result-bob
+- name: Build bob
+  commands:
+  - nix build '.#nixosConfigurations.bob.config.system.build.toplevel'
 # - name: Build birne
 #   commands:
 #   - nix build '.#nixosConfigurations.birne.config.system.build.toplevel' --out-link ./result-birne
