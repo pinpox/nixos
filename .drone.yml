@@ -68,7 +68,7 @@ steps:
     force: true
     commit: true
     force: true
-    commit_message: "❄️ Update flake.lock"
+    commit_message: "❄ Update flake.lock"
     ssh_key:
       from_secret: deploy_key
 
