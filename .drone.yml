@@ -1,5 +1,44 @@
 kind: pipeline
-name: default
+type: exec
+name: Build all hosts
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  depth: 1
+
+steps:
+- name: Show flake info
+  commands:
+  - nix --experimental-features "nix-command flakes" flake show
+  - nix --experimental-features "nix-command flakes" flake metadata
+- name: Run flake checks
+  commands:
+  - nix --experimental-features "nix-command flakes" flake check --show-trace
+- name: Build kartoffel
+  commands:
+  - nix build '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
+- name: Build ahorn
+  commands:
+  - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel'
+- name: Build porree
+  commands:
+  - nix build '.#nixosConfigurations.porree.config.system.build.toplevel'
+- name: Build kfbox
+  commands:
+  - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel'
+- name: Build bob
+  commands:
+  - nix build '.#nixosConfigurations.bob.config.system.build.toplevel'
+- name: Build birne
+  commands:
+  - nix build '.#nixosConfigurations.birne.config.system.build.toplevel'
+
+---
+kind: pipeline
+name: Notifications
 type: docker
 
 platform:
@@ -7,29 +46,6 @@ platform:
   arch: amd64
 
 steps:
-# - name: Show flake info
-#   image: nixpkgs/nix-flakes
-#   commands:
-#   - nix --experimental-features "nix-command flakes" flake show
-#   - nix --experimental-features "nix-command flakes" flake info
-#   - nix --experimental-features "nix-command flakes" flake list-inputs
-#   environment:
-#     NIX_PATH: nixpkgs=channel:nixos-unstable
-
-- name: Run flake checks
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix --experimental-features "nix-command flakes" flake check --show-trace
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
-
-- name: Build all hosts
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix-build krops.nix -A all
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
-
 # http://plugins.drone.io/appleboy/drone-discord/
 - name: Notify IRC
   image: plugins/irc
@@ -50,7 +66,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: update flakes
+name: Update Flakes
 
 steps:
 - name: Update flake.lock
@@ -86,27 +102,6 @@ trigger:
   - cron
   cron:
   - daily
-
----
-kind: pipeline
-type: docker
-name: Push to cache
-
-steps:
-- name: Build hosts
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix flake update
-  - nix build --profile result '.#nixosConfigurations.ahorn.config.system.build.toplevel'
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
-
-- name: Push config to cache
-  image: nixpkgs/nix-flakes
-  commands:
-  - nix copy --to ssh://cache.lounge.rocks ./result
-  environment:
-    NIX_PATH: nixpkgs=channel:nixos-unstable
 
 # - name: Notify IRC
 #   image: plugins/irc
