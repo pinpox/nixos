@@ -19,22 +19,22 @@ steps:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
 - name: Build kartoffel
   commands:
-  - nix build '.#nixosConfigurations.kartoffel.config.system.build.toplevel' --out-link ./result-kartoffel
-- name: Build ahorn
-  commands:
-  - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel' --out-link ./result-ahorn
-- name: Build porree
-  commands:
-  - nix build '.#nixosConfigurations.porree.config.system.build.toplevel' --out-link ./result-porree
-- name: Build kfbox
-  commands:
-  - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel' --out-link ./result-kfbox
-- name: Build bob
-  commands:
-  - nix build '.#nixosConfigurations.bob.config.system.build.toplevel' --out-link ./result-bob
-- name: Build birne
-  commands:
-  - nix build '.#nixosConfigurations.birne.config.system.build.toplevel' --out-link ./result-birne
+  - nix build '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
+# - name: Build ahorn
+#   commands:
+#   - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel' --out-link ./result-ahorn
+# - name: Build porree
+#   commands:
+#   - nix build '.#nixosConfigurations.porree.config.system.build.toplevel' --out-link ./result-porree
+# - name: Build kfbox
+#   commands:
+#   - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel' --out-link ./result-kfbox
+# - name: Build bob
+#   commands:
+#   - nix build '.#nixosConfigurations.bob.config.system.build.toplevel' --out-link ./result-bob
+# - name: Build birne
+#   commands:
+#   - nix build '.#nixosConfigurations.birne.config.system.build.toplevel' --out-link ./result-birne
 
 ---
 kind: pipeline
