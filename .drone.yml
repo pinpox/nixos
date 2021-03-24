@@ -20,7 +20,7 @@ steps:
 - name: Build kartoffel
   commands:
   - ls
-  - nix build '.#nixosConfigurations.ahorn.config.toplevel'
+  - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel'
   # environment:
   #   NIX_PATH: nixpkgs=channel:nixos-unstable
 
