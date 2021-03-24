@@ -20,9 +20,9 @@ steps:
 - name: Build kartoffel
   commands:
   - nix build '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
-# - name: Build ahorn
-#   commands:
-#   - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel' --out-link ./result-ahorn
+- name: Build ahorn
+  commands:
+  - nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel'
 # - name: Build porree
 #   commands:
 #   - nix build '.#nixosConfigurations.porree.config.system.build.toplevel' --out-link ./result-porree
