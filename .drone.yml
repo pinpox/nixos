@@ -14,7 +14,6 @@ steps:
   commands:
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
-  - nix --experimental-features "nix-command flakes" flake list-inputs
 - name: Run flake checks
   commands:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
