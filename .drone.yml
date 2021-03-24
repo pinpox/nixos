@@ -32,9 +32,9 @@ steps:
 - name: Build bob
   commands:
   - nix build '.#nixosConfigurations.bob.config.system.build.toplevel'
-# - name: Build birne
-#   commands:
-#   - nix build '.#nixosConfigurations.birne.config.system.build.toplevel' --out-link ./result-birne
+- name: Build birne
+  commands:
+  - nix build '.#nixosConfigurations.birne.config.system.build.toplevel'
 
 ---
 kind: pipeline
