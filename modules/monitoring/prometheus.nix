@@ -107,8 +107,8 @@ in {
             {
               name = "all";
               webhook_configs = [{
-                url = "http://127.0.0.1:9999/lounge-rocks";
-                max_alerts = 5;
+                url = "http://127.0.0.1:8989/webhook";
+                # max_alerts = 5;
               }];
             }
           ];
