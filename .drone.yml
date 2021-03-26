@@ -35,32 +35,18 @@ steps:
 - name: Build birne
   commands:
   - nix build '.#nixosConfigurations.birne.config.system.build.toplevel'
-
----
-kind: pipeline
-name: Notifications
-type: docker
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-# http://plugins.drone.io/appleboy/drone-discord/
-- name: Notify IRC
-  image: plugins/irc
-  settings:
-    nick: drone-bot
-    channel: "#lounge-rocks"
-    host: chat.freenode.net
-    port: 6667
-    template: "[{{build.status}}]: {{build.message}} | #{{truncate build.commit 8}} {{build.event}} on {{repo.owner}}/{{repo.name}}/{{build.branch}} by {{build.author}} - {{build.link}}"
+- name: Notify
+  commands:
+  - nix run 'github:pinpox/http2irc#announce-drone'
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
+    TOKEN:
+      from_secret: irc_token
 
 trigger:
   branch:
   - main
   event:
-  - pull_request
   - push
 
 ---
@@ -88,31 +74,9 @@ steps:
     ssh_key:
       from_secret: deploy_key
 
-- name: Notify IRC
-  image: plugins/irc
-  settings:
-    nick: drone-bot
-    channel: "#lounge-rocks"
-    host: chat.freenode.net
-    port: 6667
-    template: "[{{build.status}}]: {{build.message}} | #{{truncate build.commit 8}} {{build.event}} on {{repo.owner}}/{{repo.name}}/{{build.branch}} by {{build.author}} - {{build.link}}"
-
 trigger:
   event:
   - cron
   cron:
   - daily
-
-# - name: Notify IRC
-#   image: plugins/irc
-#   settings:
-#     nick: drone-bot
-#     channel: "#lounge-rocks"
-#     host: chat.freenode.net
-#     port: 6667
-#     template: "[{{build.status}}]: {{build.message}} | #{{truncate build.commit 8}} {{build.event}} on {{repo.owner}}/{{repo.name}}/{{build.branch}} by {{build.author}} - {{build.link}}"
-
-# trigger:
-#   branch:
-#   - main
 
