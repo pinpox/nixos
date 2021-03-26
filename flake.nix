@@ -161,6 +161,7 @@
             # imported
             ./modules/drone-ci
             ./modules/binary-cache
+            ./modules/http2irc
             {
               pinpox.services.binary-cache.enable = true;
 
@@ -169,6 +170,7 @@
               # imported
               pinpox.services.droneci.enable = true;
               pinpox.services.droneci.runner-exec.enable = true;
+              pinpox.services.monitoring-server.http-irc.enable = true;
             }
 
             # TODO bepasty service is currently broken due to:

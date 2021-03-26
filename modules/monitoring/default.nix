@@ -53,21 +53,6 @@ in {
     #     repositories = [ "nixos/nixpkgs" "pinpox/nixos" "pinpox/nixos-home" ];
     #   };
 
-    #   http_response = {
-    #     urls = [
-    #       "https://pablo.tools"
-    #       "https://pass.pablo.tools"
-    #       "https://status.pablo.tools/login"
-    #       "https://home.pablo.tools"
-
-    #       "https://mm.0cx.de"
-    #       "https://pads.0cx.de"
-    #       "https://irc.0cx.de"
-
-    #       "https://megaclan3000.de"
-    #     ];
-    #   };
-
     # Open firewall ports on the wireguard interface
     networking.firewall.interfaces.wg0.allowedTCPPorts =
       lib.optional cfg.blackbox.enable 9115
