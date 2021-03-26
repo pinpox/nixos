@@ -57,7 +57,7 @@ in {
       ];
       serviceConfig = {
         Environment = [
-          "DRONE_RUNNER_CAPACITY=10"
+          "DRONE_RUNNER_CAPACITY=1"
           "CLIENT_DRONE_RPC_HOST=127.0.0.1:3030"
           "NIX_REMOTE=daemon"
           "PAGER=cat"
