@@ -20,7 +20,7 @@ in {
     ../virtualisation
     ../xserver.nix
     ../yubikey.nix
-    ../zsh.nix
+    ../zsh
     ../wireguard-client.nix
   ];
 
@@ -63,6 +63,7 @@ in {
         bluetooth.enable = true;
         locale.enable = true;
         nix.enable = true;
+        zsh.enable = true;
       };
 
       virtualisation = {
@@ -70,9 +71,7 @@ in {
         virtualbox.enable = true;
       };
 
-      services = {
-        xserver.enable = true;
-      };
+      services = { xserver.enable = true; };
 
       metrics.node.enable = true;
 

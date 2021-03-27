@@ -21,6 +21,7 @@
   ./mattermost
   ./mmonit.nix
   ./monit
+  ./zsh
   ./monitoring
   ./monitoring/grafana.nix
   ./monitoring/loki.nix
@@ -38,5 +39,4 @@
   ./yubikey.nix
   ./zabbix-agent.nix
   ./zabbix-server.nix
-  ./zsh.nix
 ]

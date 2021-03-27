@@ -66,7 +66,7 @@
             nix.enable = true;
           };
         }
-        ./modules/zsh.nix
+        ./modules/zsh
         ./modules/openssh.nix
         ./modules/networking.nix
       ];
