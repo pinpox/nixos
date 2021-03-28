@@ -14,7 +14,7 @@ in {
     ../fonts
 
     ../borg/default.nix
-    ../lvm-grub.nix
+    ../lvm-grub
     ../networking
     ../openssh
     ../sound
@@ -68,6 +68,7 @@ in {
         nix.enable = true;
         sound.enable = true;
         zsh.enable = true;
+        lvm-grub.enable = true;
       };
 
       virtualisation = {

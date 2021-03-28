@@ -12,7 +12,7 @@
   ./home-assistant
   ./irc-bot
   ./locale
-  ./lvm-grub.nix
+  ./lvm-grub
   ./mattermost
   ./zsh
   ./monitoring
