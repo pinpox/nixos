@@ -6,10 +6,9 @@
   ./bluetooth
   ./borg
   ./borg-server
-  ./custom-packages.nix
   ./drone-ci
   ./environment
-  ./fonts.nix
+  ./fonts
   ./hedgedoc.nix
   ./hello.nix # Example module
   ./home-assistant
