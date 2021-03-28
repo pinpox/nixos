@@ -1,7 +1,5 @@
 [
   # ./base/desktop.nix
-  # ./user-profiles/pinpox.nix
-  # ./user-profiles/root.nix
   ./bepasty
   ./bluetooth
   ./borg

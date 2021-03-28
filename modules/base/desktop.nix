@@ -4,6 +4,7 @@ let cfg = config.pinpox.desktop;
 in {
 
   imports = [
+    ../../users/pinpox.nix
 
     ../bluetooth
     ../environment
@@ -12,7 +13,6 @@ in {
     ../monitoring
     ../fonts
 
-    ../user-profiles/pinpox.nix
     ../borg/default.nix
     ../lvm-grub.nix
     ../networking

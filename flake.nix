@@ -51,7 +51,7 @@
         };
 
       base-modules-server = [
-        ./modules/user-profiles/pinpox.nix
+        ./users/pinpox.nix
         ./modules/hedgedoc.nix
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
         ./modules/borg/default.nix
