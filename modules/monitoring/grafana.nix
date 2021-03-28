@@ -7,7 +7,7 @@ in {
     enable = mkEnableOption "Grafana dashboard";
 
     domain = mkOption {
-      type =  types.str;
+      type = types.str;
       default = "status.pablo.tools";
       example = "dashboards.myhost.com";
       description = "Domain for grafana";
@@ -43,7 +43,5 @@ in {
         }
       ];
     };
-
   };
-
 }
