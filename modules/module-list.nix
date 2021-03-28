@@ -8,7 +8,6 @@
   ./borg-server
   ./custom-packages.nix
   ./drone-ci
-  ./dyndns.nix
   ./environment
   ./fonts.nix
   ./hedgedoc.nix
