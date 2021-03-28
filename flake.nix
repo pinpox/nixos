@@ -14,7 +14,8 @@
     nixos-home.url = "github:pinpox/nixos-home";
     nixos-home.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, nixpkgs-pinned, home-manager, nixos-home }:
+  outputs = { self, ...}@inputs:
+  with inputs;
     let
       # Function to create defult (common) system config options
       defFlakeSystem = baseCfg:
