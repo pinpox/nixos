@@ -72,7 +72,12 @@ in {
         WorkingDirectory = "/var/lib/http2irc";
         User = "http2irc";
         ExecStart = "${http2irc}/bin/http2irc";
+        Restart = "on-failure";
+        RestartSec="5s";
       };
     };
+
+    # Reverse proxy
+
   };
 }
