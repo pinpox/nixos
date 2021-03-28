@@ -22,27 +22,27 @@
   };
 
   networking = {
-    hostName = "bob"; # Define your hostname.
+
+    # Define the hostname
+    hostName = "bob";
+
+    # DHCP
     useDHCP = false;
     interfaces.ens192.useDHCP = true;
+
+    # Open ports in the firewall.
+    firewall.allowedTCPPorts = [ 80 443 ];
+
+    # Make the host resolv the cache to itself
+    extraHosts = ''
+      127.0.0.1 cache.lounge.rocks
+    '';
   };
 
   virtualisation.vmware.guest.enable = true;
 
+  # Workaround for problems with the dockerized CI
   systemd.enableUnifiedCgroupHierarchy = false;
-
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-
-
-    networking.extraHosts = ''
-      127.0.0.1 cache.lounge.rocks
-    '';
-
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -51,5 +51,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.09"; # Did you read the comment?
-
 }
