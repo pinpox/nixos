@@ -52,8 +52,8 @@
 
       base-modules-server = [
         ./users/pinpox.nix
-        ./modules/hedgedoc.nix
-        ./modules/lvm-grub.nix
+        ./modules/hedgedoc
+        ./modules/lvm-grub
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
         ./modules/borg/default.nix
         ./modules/environment
