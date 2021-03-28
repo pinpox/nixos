@@ -142,7 +142,6 @@
             ./modules/borg-server.nix
             ./modules/lvm-grub.nix
             ./modules/home-assistant/default.nix
-            # ./modules/monitoring/telegraf.nix
 
           ];
         };
@@ -180,7 +179,6 @@
             # ./modules/bepasty/default.nix
 
             # ./modules/lvm-grub.nix
-            # ./modules/monitoring/telegraf.nix
           ];
         };
 
@@ -195,7 +193,6 @@
               pinpox.services.go-karma-bot.enable = true;
             }
 
-            # ./modules/monitoring/telegraf.nix
             # ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
