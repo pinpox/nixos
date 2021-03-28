@@ -16,7 +16,7 @@ in {
     ../borg/default.nix
     ../lvm-grub.nix
     ../networking
-    ../openssh.nix
+    ../openssh
     ../sound.nix
     ../virtualisation
     ../xserver.nix
@@ -74,7 +74,10 @@ in {
         virtualbox.enable = true;
       };
 
-      services = { xserver.enable = true; };
+      services = {
+        xserver.enable = true;
+        openssh.enable = true;
+      };
 
       metrics.node.enable = true;
 

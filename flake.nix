@@ -69,7 +69,7 @@
         ./modules/monitoring
 
         ./modules/zsh
-        ./modules/openssh.nix
+        ./modules/openssh
         ./modules/networking
         {
           # pinpox.metrics.node.enable = true;

@@ -20,7 +20,7 @@
   ./monitoring
   ./networking
   ./nix-common
-  ./openssh.nix
+  ./openssh
   ./sound.nix
   ./thelounge.nix
   ./virtualisation
