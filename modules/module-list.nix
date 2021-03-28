@@ -19,8 +19,6 @@
   ./locale
   ./lvm-grub.nix
   ./mattermost
-  ./mmonit.nix
-  ./monit
   ./zsh
   ./monitoring
   ./monitoring/grafana.nix

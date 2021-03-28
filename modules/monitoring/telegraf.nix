@@ -17,10 +17,9 @@
           report_active = false;
         };
 
-        # TODO check out monit, SMART and ethtool inputs
+        # TODO check out, SMART and ethtool inputs
         # https://gist.github.com/pinpox/9345515664f8bddbd913f5559cdeac31
         # smart = {};
-        # monit = {};
         # ethtool = {};
 
         disk = { ignore_fs = [ "tmpfs" "devtmpfs" "devfs" ]; };
