@@ -14,8 +14,8 @@
     nixos-home.url = "github:pinpox/nixos-home";
     nixos-home.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, ...}@inputs:
-  with inputs;
+  outputs = { self, ... }@inputs:
+    with inputs;
     let
       # Function to create defult (common) system config options
       defFlakeSystem = baseCfg:
@@ -59,6 +59,11 @@
         ./modules/wireguard-client.nix
         ./modules/monitoring
         ./modules/nix-common
+        ./modules/borg-server
+        ./modules/irc-bot
+        ./modules/http2irc
+        ./modules/binary-cache
+        ./modules/drone-ci
         {
           # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
@@ -76,8 +81,6 @@
     in {
 
       nixosConfigurations = {
-
-        # inherit nixpkgs nixpkgs-pinned;
 
         kartoffel = defFlakeSystem {
           imports = [
@@ -143,7 +146,6 @@
             }
 
             # Modules
-            ./modules/borg-server
             ./modules/lvm-grub.nix
             ./modules/home-assistant/default.nix
 
@@ -157,23 +159,12 @@
             ./machines/bob/configuration.nix
             ./machines/bob/hardware-configuration.nix
 
-            # Modules
-            # ./modules/wireguard-client.nix
-
-            # TODO the drone-docker-exec module has no enable options yet and
-            # will therefore always be setup when the droneci/default.nix is
-            # imported
-            ./modules/drone-ci
-            ./modules/binary-cache
-            ./modules/http2irc
             {
               pinpox.services.binary-cache.enable = true;
 
-              # TODO the drone-docker-exec module has no enable options yet and
-              # will therefore always be setup when the droneci/default.nix is
-              # imported
               pinpox.services.droneci.enable = true;
               pinpox.services.droneci.runner-exec.enable = true;
+              pinpox.services.droneci.runner-docker.enable = true;
               pinpox.services.monitoring-server.http-irc.enable = true;
             }
 
@@ -182,7 +173,6 @@
             # https://github.com/bepasty/bepasty-server/issues/258
             # ./modules/bepasty/default.nix
 
-            # ./modules/lvm-grub.nix
           ];
         };
 
@@ -192,12 +182,8 @@
 
             { nix.autoOptimiseStore = true; }
 
-            ./modules/irc-bot
-            {
-              pinpox.services.go-karma-bot.enable = true;
-            }
+            { pinpox.services.go-karma-bot.enable = true; }
 
-            # ./modules/wireguard-client.nix
             ./modules/mattermost/default.nix
             ./modules/thelounge.nix
             ./modules/hedgedoc.nix
@@ -211,7 +197,6 @@
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
 
-            # ./modules/http2irc
             ./modules/monitoring
             ./modules/wireguard-client.nix
           ];
