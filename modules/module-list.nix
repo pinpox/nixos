@@ -35,6 +35,4 @@
   ./wireguard-client.nix
   ./xserver.nix
   ./yubikey.nix
-  ./zabbix-agent.nix
-  ./zabbix-server.nix
 ]
