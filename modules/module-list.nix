@@ -26,8 +26,6 @@
   ./monitoring/grafana.nix
   ./monitoring/loki.nix
   ./monitoring/prometheus.nix
-  ./monitoring/alertmanager-irc-relay.nix
-  # ./monitoring/telegraf.nix
   ./networking.nix
   ./nix-common
   ./openssh.nix

@@ -209,13 +209,11 @@
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
 
-            # ./modules/drone-ci/default.nix
-            ./modules/monitoring/prometheus.nix
-            ./modules/monitoring/loki.nix
+            ./modules/http2irc
             ./modules/monitoring/grafana.nix
-            ./modules/monitoring/alertmanager-irc-relay.nix
+            ./modules/monitoring/loki.nix
+            ./modules/monitoring/prometheus.nix
             ./modules/wireguard-client.nix
-            # ./modules/monitoring/telegraf.nix
           ];
         };
       };
