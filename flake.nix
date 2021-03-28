@@ -52,10 +52,12 @@
 
       base-modules-server = [
         ./modules/user-profiles/pinpox.nix
+        ./modules/hedgedoc.nix
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
         ./modules/borg/default.nix
         ./modules/environment
         ./modules/locale
+        ./modules/mattermost
         ./modules/wireguard-client.nix
         ./modules/monitoring
         ./modules/nix-common
@@ -185,11 +187,13 @@
 
             { nix.autoOptimiseStore = true; }
 
-            { pinpox.services.go-karma-bot.enable = true; }
+            {
+              pinpox.services.go-karma-bot.enable = true;
+              pinpox.services.hedgedoc.enable = true;
+              pinpox.services.mattermost.enable = true;
+            }
 
-            ./modules/mattermost/default.nix
             ./modules/thelounge.nix
-            ./modules/hedgedoc.nix
           ];
         };
 

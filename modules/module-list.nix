@@ -9,7 +9,7 @@
   ./drone-ci
   ./environment
   ./fonts
-  ./hedgedoc.nix
+  ./hedgedoc
   ./hello
   ./home-assistant
   ./irc-bot

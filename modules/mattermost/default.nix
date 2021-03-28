@@ -1,11 +1,19 @@
 { config, pkgs, lib, ... }:
-let
-  default_files = pkgs.writeTextFile {
-    name = "default.json";
-    text = builtins.readFile ./default.json;
-  };
-
+with lib;
+let cfg = config.pinpox.services.mattermost;
 in {
+
+  options.pinpox.services.mattermost = { enable = mkEnableOption "Mattermost server"; };
+  config = mkIf cfg.enable {
+
+
+    let
+      default_files = pkgs.writeTextFile {
+        name = "default.json";
+        text = builtins.readFile ./default.json;
+      };
+
+    in {
 
   # TODO set up IRC bridge
   # TODO setup reverse-proxy
@@ -109,17 +117,18 @@ in {
 
         # MM_EXTRA_SQLSETTINGS_DB_PASSWORD=
 
-      ];
+        ];
 
-      ExecStart =
-        "${pkgs.mattermost}/bin/mattermost -c /var/lib/mattermost/config/config.json";
-      WorkingDirectory = "/var/lib/mattermost";
-      Restart = "always";
-      RestartSec = "10";
-      LimitNOFILE = "49152";
+        ExecStart =
+          "${pkgs.mattermost}/bin/mattermost -c /var/lib/mattermost/config/config.json";
+          WorkingDirectory = "/var/lib/mattermost";
+          Restart = "always";
+          RestartSec = "10";
+          LimitNOFILE = "49152";
+        };
+        unitConfig.JoinsNamespaceOf = "postgresql.service";
+      };
     };
-    unitConfig.JoinsNamespaceOf = "postgresql.service";
-  };
 
   # systemd.services.matterircd = {
   #   description = "Mattermost IRC bridge service";
