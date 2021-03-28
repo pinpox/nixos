@@ -64,6 +64,7 @@
             environment.enable = true;
             locale.enable = true;
             nix.enable = true;
+            zsh.enable = true;
           };
         }
         ./modules/zsh
@@ -209,7 +210,7 @@
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
 
-            ./modules/http2irc
+            # ./modules/http2irc
             ./modules/monitoring/grafana.nix
             ./modules/monitoring/loki.nix
             ./modules/monitoring/prometheus.nix
