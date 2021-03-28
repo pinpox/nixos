@@ -10,7 +10,7 @@
   ./environment
   ./fonts
   ./hedgedoc.nix
-  ./hello.nix # Example module
+  ./hello
   ./home-assistant
   ./irc-bot
   ./locale

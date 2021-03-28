@@ -5,7 +5,7 @@ let
 in {
 
   options.pinpox.services.droneci = {
-    enable = mkEnableOption "hello service";
+    enable = mkEnableOption "DroneCI server";
     drone-admin = mkOption {
       type = types.str;
       default = "pinpox";
