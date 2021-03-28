@@ -5,7 +5,6 @@
   ./bepasty
   ./bluetooth
   ./borg
-  ./borg-monitor-repo.nix
   ./borg-server.nix
   ./custom-packages.nix
   ./drone-ci
