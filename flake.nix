@@ -208,9 +208,7 @@
             ./machines/porree/configuration.nix
 
             # ./modules/http2irc
-            ./modules/monitoring/grafana.nix
-            ./modules/monitoring/loki.nix
-            ./modules/monitoring/prometheus.nix
+            ./modules/monitoring
             ./modules/wireguard-client.nix
           ];
         };

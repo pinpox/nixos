@@ -21,9 +21,6 @@
   ./mattermost
   ./zsh
   ./monitoring
-  ./monitoring/grafana.nix
-  ./monitoring/loki.nix
-  ./monitoring/prometheus.nix
   ./networking.nix
   ./nix-common
   ./openssh.nix
