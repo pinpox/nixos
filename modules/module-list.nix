@@ -5,7 +5,7 @@
   ./bepasty
   ./bluetooth
   ./borg
-  ./borg-server.nix
+  ./borg-server
   ./custom-packages.nix
   ./drone-ci
   ./dyndns.nix

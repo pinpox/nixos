@@ -137,9 +137,12 @@
                 })
               ];
             }
+            {
+              pinpox.services.borg-server.enable = true;
+            }
 
             # Modules
-            ./modules/borg-server.nix
+            ./modules/borg-server
             ./modules/lvm-grub.nix
             ./modules/home-assistant/default.nix
 
