@@ -17,7 +17,7 @@ in {
     ../lvm-grub.nix
     ../networking
     ../openssh
-    ../sound.nix
+    ../sound
     ../virtualisation
     ../xserver.nix
     ../yubikey.nix
@@ -66,6 +66,7 @@ in {
         locale.enable = true;
         networking.enable = true;
         nix.enable = true;
+        sound.enable = true;
         zsh.enable = true;
       };
 

@@ -21,7 +21,7 @@
   ./networking
   ./nix-common
   ./openssh
-  ./sound.nix
+  ./sound
   ./thelounge.nix
   ./virtualisation
   ./wireguard-client.nix
