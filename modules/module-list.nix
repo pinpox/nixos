@@ -19,7 +19,7 @@
   ./mattermost
   ./zsh
   ./monitoring
-  ./networking.nix
+  ./networking
   ./nix-common
   ./openssh.nix
   ./sound.nix

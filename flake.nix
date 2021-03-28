@@ -64,6 +64,11 @@
         ./modules/http2irc
         ./modules/binary-cache
         ./modules/drone-ci
+        ./modules/monitoring
+
+        ./modules/zsh
+        ./modules/openssh.nix
+        ./modules/networking
         {
           # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
@@ -71,11 +76,9 @@
             locale.enable = true;
             nix.enable = true;
             zsh.enable = true;
+            networking.enable = true;
           };
         }
-        ./modules/zsh
-        ./modules/openssh.nix
-        ./modules/networking.nix
       ];
 
     in {
@@ -196,8 +199,6 @@
         porree = defFlakeSystem {
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
-
-            ./modules/monitoring
             ./modules/wireguard-client.nix
           ];
         };

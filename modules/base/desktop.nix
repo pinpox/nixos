@@ -10,11 +10,12 @@ in {
     ../locale
     ../nix-common
     ../monitoring
+    ../fonts
 
     ../user-profiles/pinpox.nix
     ../borg/default.nix
     ../lvm-grub.nix
-    ../networking.nix
+    ../networking
     ../openssh.nix
     ../sound.nix
     ../virtualisation
@@ -59,9 +60,11 @@ in {
 
     pinpox = {
       defaults = {
-        environment.enable = true;
         bluetooth.enable = true;
+        environment.enable = true;
+        fonts.enable = true;
         locale.enable = true;
+        networking.enable = true;
         nix.enable = true;
         zsh.enable = true;
       };
