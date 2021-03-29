@@ -56,7 +56,7 @@
 
         ./modules/binary-cache
         ./modules/borg-server
-        ./modules/borg/default.nix
+        ./modules/borg
         ./modules/drone-ci
         ./modules/environment
         ./modules/hedgedoc
@@ -85,6 +85,8 @@
       ];
 
     in {
+
+      nixosModules = builtins.listToAttrs (map (x: {name = x; value = import (./modules + "/${x}");})(builtins.attrNames (builtins.readDir ./modules)) );
 
       nixosConfigurations = {
 
