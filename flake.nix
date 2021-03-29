@@ -52,27 +52,26 @@
 
       base-modules-server = [
         ./users/pinpox.nix
-        ./modules/hedgedoc
-        ./modules/thelounge
-        ./modules/lvm-grub
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
-        ./modules/borg/default.nix
-        ./modules/environment
-        ./modules/locale
-        ./modules/mattermost
-        ./modules/wireguard-client
-        ./modules/monitoring
-        ./modules/nix-common
-        ./modules/borg-server
-        ./modules/irc-bot
-        ./modules/http2irc
-        ./modules/binary-cache
-        ./modules/drone-ci
-        ./modules/monitoring
 
-        ./modules/zsh
-        ./modules/openssh
+        ./modules/binary-cache
+        ./modules/borg-server
+        ./modules/borg/default.nix
+        ./modules/drone-ci
+        ./modules/environment
+        ./modules/hedgedoc
+        ./modules/http2irc
+        ./modules/irc-bot
+        ./modules/locale
+        ./modules/lvm-grub
+        ./modules/mattermost
+        ./modules/monitoring
         ./modules/networking
+        ./modules/nix-common
+        ./modules/openssh
+        ./modules/thelounge
+        ./modules/wireguard-client
+        ./modules/zsh
         {
           # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
