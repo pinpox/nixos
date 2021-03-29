@@ -23,6 +23,6 @@
   ./thelounge.nix
   ./virtualisation
   ./wireguard-client.nix
-  ./xserver.nix
+  ./xserver
   ./yubikey.nix
 ]

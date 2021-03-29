@@ -19,7 +19,7 @@ in {
     ../openssh
     ../sound
     ../virtualisation
-    ../xserver.nix
+    ../xserver
     ../yubikey.nix
     ../zsh
     ../wireguard-client.nix
