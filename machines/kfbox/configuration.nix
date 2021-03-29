@@ -18,7 +18,7 @@
 
     # Setup Yubikey SSH and GPG
     services.pcscd.enable = true;
-    services.udev.packages = [ pkgs.yubikey-personalization ];
+    # services.udev.packages = [ pkgs.yubikey-personalization ];
 
     fileSystems."/" = {
       device = "/dev/disk/by-label/nixos";

@@ -20,7 +20,7 @@ in {
     ../sound
     ../virtualisation
     ../xserver
-    ../yubikey.nix
+    ../yubikey
     ../zsh
     ../wireguard-client.nix
   ];
@@ -68,6 +68,7 @@ in {
         nix.enable = true;
         sound.enable = true;
         zsh.enable = true;
+        yubikey.enable = true;
         lvm-grub.enable = true;
       };
 

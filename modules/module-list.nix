@@ -24,5 +24,5 @@
   ./virtualisation
   ./wireguard-client.nix
   ./xserver
-  ./yubikey.nix
+  ./yubikey
 ]
