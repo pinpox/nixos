@@ -22,7 +22,7 @@ in {
     ../xserver
     ../yubikey
     ../zsh
-    ../wireguard-client.nix
+    ../wireguard-client
   ];
 
   options.pinpox.desktop = {

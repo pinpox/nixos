@@ -60,7 +60,7 @@
         ./modules/environment
         ./modules/locale
         ./modules/mattermost
-        ./modules/wireguard-client.nix
+        ./modules/wireguard-client
         ./modules/monitoring
         ./modules/nix-common
         ./modules/borg-server
@@ -204,7 +204,6 @@
         porree = defFlakeSystem {
           imports = base-modules-server ++ [
             ./machines/porree/configuration.nix
-            ./modules/wireguard-client.nix
           ];
         };
       };

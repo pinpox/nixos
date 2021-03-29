@@ -22,7 +22,7 @@
   ./sound
   ./thelounge
   ./virtualisation
-  ./wireguard-client.nix
+  ./wireguard-client
   ./xserver
   ./yubikey
 ]
