@@ -20,7 +20,7 @@
   ./nix-common
   ./openssh
   ./sound
-  ./thelounge.nix
+  ./thelounge
   ./virtualisation
   ./wireguard-client.nix
   ./xserver

@@ -53,6 +53,7 @@
       base-modules-server = [
         ./users/pinpox.nix
         ./modules/hedgedoc
+        ./modules/thelounge
         ./modules/lvm-grub
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
         ./modules/borg/default.nix
@@ -192,9 +193,8 @@
               pinpox.services.go-karma-bot.enable = true;
               pinpox.services.hedgedoc.enable = true;
               pinpox.services.mattermost.enable = true;
+              pinpox.services.thelounge.enable = true;
             }
-
-            ./modules/thelounge.nix
           ];
         };
 
