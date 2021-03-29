@@ -17,7 +17,7 @@
   outputs = { self, ... }@inputs:
     with inputs;
     let
-      # Function to create defult (common) system config options
+      # Function to create default (common) system config options
       defFlakeSystem = baseCfg:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
