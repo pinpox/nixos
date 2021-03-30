@@ -21,57 +21,27 @@
       defFlakeSystem = baseCfg:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-
-            self.nixosModules.activation-secrets
-            self.nixosModules.base
-            self.nixosModules.bepasty
-            self.nixosModules.binary-cache
-            self.nixosModules.bluetooth
-            self.nixosModules.borg
-            self.nixosModules.borg-server
-            self.nixosModules.drone-ci
-            self.nixosModules.environment
-            self.nixosModules.fonts
-            self.nixosModules.hedgedoc
-            self.nixosModules.hello
-            self.nixosModules.home-assistant
-            self.nixosModules.http2irc
-            self.nixosModules.irc-bot
-            self.nixosModules.locale
-            self.nixosModules.lvm-grub
-            self.nixosModules.mattermost
-            self.nixosModules.monitoring
-            self.nixosModules.networking
-            self.nixosModules.nix-common
-            self.nixosModules.openssh
-            self.nixosModules.sound
-            self.nixosModules.thelounge
-            self.nixosModules.virtualisation
-            self.nixosModules.wireguard-client
-            self.nixosModules.xserver
-            self.nixosModules.yubikey
-            self.nixosModules.zsh
+          modules = builtins.attrValues self.nixosModules ++ [
 
             ({ ... }: {
               imports = [
-                  {
-                    # Set the $NIX_PATH entry for nixpkgs. This is necessary in
-                    # this setup with flakes, otherwise commands like `nix-shell
-                    # -p pkgs.htop` will keep using an old version of nixpkgs.
-                    # With this entry in $NIX_PATH it is possible (and
-                    # recommended) to remove the `nixos` channel for both users
-                    # and root e.g. `nix-channel --remove nixos`. `nix-channel
-                    # --list` should be empty for all users afterwards
-                    nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                  }
-                  baseCfg
-                  home-manager.nixosModules.home-manager
-                  # DONT set useGlobalPackages! It's not necessary in newer
-                  # home-manager versions and does not work with configs using
-                  # `nixpkgs.config`
-                  { home-manager.useUserPackages = true; }
-                ];
+                {
+                  # Set the $NIX_PATH entry for nixpkgs. This is necessary in
+                  # this setup with flakes, otherwise commands like `nix-shell
+                  # -p pkgs.htop` will keep using an old version of nixpkgs.
+                  # With this entry in $NIX_PATH it is possible (and
+                  # recommended) to remove the `nixos` channel for both users
+                  # and root e.g. `nix-channel --remove nixos`. `nix-channel
+                  # --list` should be empty for all users afterwards
+                  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                }
+                baseCfg
+                home-manager.nixosModules.home-manager
+                # DONT set useGlobalPackages! It's not necessary in newer
+                # home-manager versions and does not work with configs using
+                # `nixpkgs.config`
+                { home-manager.useUserPackages = true; }
+              ];
 
               # Let 'nixos-version --json' know the Git revision of this flake.
               system.configurationRevision =
@@ -83,9 +53,9 @@
 
       base-modules-server = [
         ./users/pinpox.nix
-        { home-manager.users.pinpox = nixos-home.nixosModules.server; }
-
         {
+          home-manager.users.pinpox = nixos-home.nixosModules.server;
+
           # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
             environment.enable = true;
@@ -94,6 +64,7 @@
             zsh.enable = true;
             networking.enable = true;
           };
+          pinpox.services = { openssh.enable = true; };
         }
       ];
 
@@ -159,20 +130,12 @@
             ./machines/birne/hardware-configuration.nix
 
             {
-              nixpkgs.overlays = [
-                (final: prev: {
-                  nixpkgs-pinned = nixpkgs-pinned.legacyPackages.${prev.system};
-                })
-              ];
+              pinpox.services = {
+                borg-server.enable = true;
+                home-assistant.enable = true;
+                lvm-grub.enable = true;
+              };
             }
-            {
-              pinpox.services.borg-server.enable = true;
-              pinpox.defaults.lvm-grub.enable = true;
-            }
-
-            # Modules
-            ./modules/home-assistant/default.nix
-
           ];
         };
 
