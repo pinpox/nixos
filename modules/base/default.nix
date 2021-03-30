@@ -5,24 +5,6 @@ in {
 
   imports = [
     ../../users/pinpox.nix
-
-    ../bluetooth
-    ../environment
-    ../locale
-    ../nix-common
-    ../monitoring
-    ../fonts
-
-    ../borg/default.nix
-    ../lvm-grub
-    ../networking
-    ../openssh
-    ../sound
-    ../virtualisation
-    ../xserver
-    ../yubikey
-    ../zsh
-    ../wireguard-client
   ];
 
   options.pinpox.desktop = {

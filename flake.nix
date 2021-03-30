@@ -22,26 +22,57 @@
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            # Add home-manager option to all configs
+
+            self.nixosModules.activation-secrets
+            self.nixosModules.base
+            self.nixosModules.bepasty
+            self.nixosModules.binary-cache
+            self.nixosModules.bluetooth
+            self.nixosModules.borg
+            self.nixosModules.borg-server
+            self.nixosModules.drone-ci
+            self.nixosModules.environment
+            self.nixosModules.fonts
+            self.nixosModules.hedgedoc
+            self.nixosModules.hello
+            self.nixosModules.home-assistant
+            self.nixosModules.http2irc
+            self.nixosModules.irc-bot
+            self.nixosModules.locale
+            self.nixosModules.lvm-grub
+            self.nixosModules.mattermost
+            self.nixosModules.monitoring
+            self.nixosModules.networking
+            self.nixosModules.nix-common
+            self.nixosModules.openssh
+            self.nixosModules.sound
+            self.nixosModules.thelounge
+            self.nixosModules.virtualisation
+            self.nixosModules.wireguard-client
+            self.nixosModules.xserver
+            self.nixosModules.yubikey
+            self.nixosModules.zsh
+
             ({ ... }: {
               imports = [
-                {
-                  # Set the $NIX_PATH entry for nixpkgs. This is necessary in
-                  # this setup with flakes, otherwise commands like `nix-shell
-                  # -p pkgs.htop` will keep using an old version of nixpkgs.
-                  # With this entry in $NIX_PATH it is possible (and
-                  # recommended) to remove the `nixos` channel for both users
-                  # and root e.g. `nix-channel --remove nixos`. `nix-channel
-                  # --list` should be empty for all users afterwards
-                  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                }
-                baseCfg
-                home-manager.nixosModules.home-manager
-                # DONT set useGlobalPackages! It's not necessary in newer
-                # home-manager versions and does not work with configs using
-                # `nixpkgs.config`
-                { home-manager.useUserPackages = true; }
-              ];
+                  {
+                    # Set the $NIX_PATH entry for nixpkgs. This is necessary in
+                    # this setup with flakes, otherwise commands like `nix-shell
+                    # -p pkgs.htop` will keep using an old version of nixpkgs.
+                    # With this entry in $NIX_PATH it is possible (and
+                    # recommended) to remove the `nixos` channel for both users
+                    # and root e.g. `nix-channel --remove nixos`. `nix-channel
+                    # --list` should be empty for all users afterwards
+                    nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                  }
+                  baseCfg
+                  home-manager.nixosModules.home-manager
+                  # DONT set useGlobalPackages! It's not necessary in newer
+                  # home-manager versions and does not work with configs using
+                  # `nixpkgs.config`
+                  { home-manager.useUserPackages = true; }
+                ];
+
               # Let 'nixos-version --json' know the Git revision of this flake.
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
@@ -54,24 +85,6 @@
         ./users/pinpox.nix
         { home-manager.users.pinpox = nixos-home.nixosModules.server; }
 
-        ./modules/binary-cache
-        ./modules/borg-server
-        ./modules/borg
-        ./modules/drone-ci
-        ./modules/environment
-        ./modules/hedgedoc
-        ./modules/http2irc
-        ./modules/irc-bot
-        ./modules/locale
-        ./modules/lvm-grub
-        ./modules/mattermost
-        ./modules/monitoring
-        ./modules/networking
-        ./modules/nix-common
-        ./modules/openssh
-        ./modules/thelounge
-        ./modules/wireguard-client
-        ./modules/zsh
         {
           # pinpox.metrics.node.enable = true;
           pinpox.defaults = {
@@ -86,13 +99,17 @@
 
     in {
 
-      nixosModules = builtins.listToAttrs (map (x: {name = x; value = import (./modules + "/${x}");})(builtins.attrNames (builtins.readDir ./modules)) );
+      # Output all modules in ./modules to flake
+      nixosModules = builtins.listToAttrs (map (x: {
+        name = x;
+        value = import (./modules + "/${x}");
+      }) (builtins.attrNames (builtins.readDir ./modules)));
 
       nixosConfigurations = {
 
         kartoffel = defFlakeSystem {
+
           imports = [
-            ./modules/base/desktop.nix
             ./machines/kartoffel/hardware-configuration.nix
             {
 
@@ -117,7 +134,6 @@
 
         ahorn = defFlakeSystem {
           imports = [
-            ./modules/base/desktop.nix
             ./machines/ahorn/hardware-configuration.nix
             {
 
@@ -168,12 +184,13 @@
             ./machines/bob/hardware-configuration.nix
 
             {
-              pinpox.services.binary-cache.enable = true;
-
-              pinpox.services.droneci.enable = true;
-              pinpox.services.droneci.runner-exec.enable = true;
-              pinpox.services.droneci.runner-docker.enable = true;
-              pinpox.services.monitoring-server.http-irc.enable = true;
+              pinpox.services = {
+                binary-cache.enable = true;
+                droneci.enable = true;
+                droneci.runner-exec.enable = true;
+                droneci.runner-docker.enable = true;
+                monitoring-server.http-irc.enable = true;
+              };
             }
 
             # TODO bepasty service is currently broken due to:
@@ -191,10 +208,12 @@
             { nix.autoOptimiseStore = true; }
 
             {
-              pinpox.services.go-karma-bot.enable = true;
-              pinpox.services.hedgedoc.enable = true;
-              pinpox.services.mattermost.enable = true;
-              pinpox.services.thelounge.enable = true;
+              pinpox.services = {
+                go-karma-bot.enable = true;
+                hedgedoc.enable = true;
+                mattermost.enable = true;
+                thelounge.enable = true;
+              };
             }
           ];
         };
@@ -203,9 +222,8 @@
         #   defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
 
         porree = defFlakeSystem {
-          imports = base-modules-server ++ [
-            ./machines/porree/configuration.nix
-          ];
+          imports = base-modules-server
+            ++ [ ./machines/porree/configuration.nix ];
         };
       };
     };
