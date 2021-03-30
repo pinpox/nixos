@@ -21,10 +21,10 @@
       defFlakeSystem = baseCfg:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = builtins.attrValues self.nixosModules ++ [
+          modules = [
 
             ({ ... }: {
-              imports = [
+              imports = builtins.attrValues self.nixosModules ++ [
                 {
                   # Set the $NIX_PATH entry for nixpkgs. This is necessary in
                   # this setup with flakes, otherwise commands like `nix-shell
@@ -82,9 +82,7 @@
 
           imports = [
             ./machines/kartoffel/configuration.nix
-            {
-                pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop;
-            }
+            { pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop; }
           ];
         };
 
