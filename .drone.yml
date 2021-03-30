@@ -42,15 +42,16 @@ steps:
     NIX_PATH: nixpkgs=channel:nixos-unstable
     TOKEN:
       from_secret: irc_token
+  when:
+    status:
+    - failure
+    - success
 
 trigger:
   branch:
   - main
   event:
   - push
-  status:
-  - success
-  - failure
 
 ---
 kind: pipeline

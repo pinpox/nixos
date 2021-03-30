@@ -95,7 +95,7 @@
 
               boot.blacklistedKernelModules = [ "nouveau" ];
 
-              pinpox.desktop = {
+              pinpox.services = {
                 enable = true;
                 wireguardIp = "192.168.7.2";
                 hostname = "ahorn";
