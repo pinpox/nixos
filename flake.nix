@@ -105,22 +105,22 @@
           ];
         };
 
-        # birne = defFlakeSystem {
-        #   imports = base-modules-server ++ [
+        birne = defFlakeSystem {
+          imports = base-modules-server ++ [
 
-        #     # Machine specific config
-        #     ./machines/birne/configuration.nix
-        #     ./machines/birne/hardware-configuration.nix
+            # Machine specific config
+            ./machines/birne/configuration.nix
+            ./machines/birne/hardware-configuration.nix
 
-        #     {
-        #       pinpox.services = {
-        #         borg-server.enable = true;
-        #         home-assistant.enable = true;
-        #         lvm-grub.enable = true;
-        #       };
-        #     }
-        #   ];
-        # };
+            {
+              pinpox.services = {
+                borg-server.enable = true;
+                home-assistant.enable = true;
+              };
+              pinpox.services.lvm-grub.enable = true;
+            }
+          ];
+        };
 
         bob = defFlakeSystem {
           imports = base-modules-server ++ [
