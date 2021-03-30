@@ -81,7 +81,6 @@
       nixosConfigurations = {
 
         kartoffel = defFlakeSystem {
-
           imports = [
             ./machines/kartoffel/configuration.nix
             { pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop; }
@@ -90,83 +89,38 @@
 
         ahorn = defFlakeSystem {
           imports = [
-            ./machines/ahorn/hardware-configuration.nix
-            {
-
-              boot.blacklistedKernelModules = [ "nouveau" ];
-
-              pinpox.desktop = {
-                enable = true;
-                wireguardIp = "192.168.7.2";
-                hostname = "ahorn";
-                homeConfig = nixos-home.nixosModules.desktop;
-                bootDevice =
-                  "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
-              };
-            }
+            ./machines/ahorn/configuration.nix
+            { pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop; }
           ];
         };
 
         birne = defFlakeSystem {
           imports = base-modules-server ++ [
-
-            # Machine specific config
             ./machines/birne/configuration.nix
-            ./machines/birne/hardware-configuration.nix
-
-            {
-              pinpox.services = {
-                borg-server.enable = true;
-                home-assistant.enable = true;
-              };
-              pinpox.defaults.lvm-grub.enable = true;
-            }
           ];
         };
 
         bob = defFlakeSystem {
           imports = base-modules-server ++ [
-
-            # Machine specific config
             ./machines/bob/configuration.nix
-            ./machines/bob/hardware-configuration.nix
-
-            {
-              pinpox.services = {
-                binary-cache.enable = true;
-                droneci.enable = true;
-                droneci.runner-exec.enable = true;
-                droneci.runner-docker.enable = true;
-                monitoring-server.http-irc.enable = true;
-              };
-            }
           ];
         };
 
         kfbox = defFlakeSystem {
           imports = base-modules-server ++ [
             ./machines/kfbox/configuration.nix
-
-            { nix.autoOptimiseStore = true; }
-
-            {
-              pinpox.services = {
-                go-karma-bot.enable = true;
-                hedgedoc.enable = true;
-                mattermost.enable = true;
-                thelounge.enable = true;
-              };
-            }
           ];
         };
-
-        # mega =
-        #   defFlakeSystem { imports = [ ./machines/mega/configuration.nix ]; };
 
         porree = defFlakeSystem {
           imports = base-modules-server
             ++ [ ./machines/porree/configuration.nix ];
         };
+
+        # mega = defFlakeSystem {
+        #   imports = base-modules-server
+        #     ++ [ ./machines/mega/configuration.nix ];
+        # };
       };
     };
 }

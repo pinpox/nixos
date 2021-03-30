@@ -1,6 +1,16 @@
 # Configuration for bob
 { config, pkgs, ... }: {
 
+  imports = [ ./hardware-configuration.nix ];
+
+  pinpox.services = {
+    binary-cache.enable = true;
+    droneci.enable = true;
+    droneci.runner-exec.enable = true;
+    droneci.runner-docker.enable = true;
+    monitoring-server.http-irc.enable = true;
+  };
+
   users.users.root.openssh.authorizedKeys.keyFiles = [
     (builtins.fetchurl {
       url = "https://github.com/MayNiklas.keys";

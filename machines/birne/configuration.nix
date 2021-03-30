@@ -1,6 +1,7 @@
 # Configuration for birne
 
 { config, pkgs, ... }: {
+  imports = [ ./hardware-configuration.nix ];
 
   networking.hostName = "birne"; # Define your hostname.
 
@@ -11,12 +12,19 @@
   networking.interfaces.eno1.useDHCP = true;
 
   pinpox = {
+
+    services = {
+      borg-server.enable = true;
+      home-assistant.enable = true;
+    };
+
     wg-client = {
       enable = true;
       clientIp = "192.168.7.4";
     };
 
     defaults = {
+      lvm-grub.enable = true;
       environment.enable = true;
       locale.enable = true;
       nix.enable = true;
@@ -24,7 +32,6 @@
 
     metrics.node.enable = true;
   };
-
 
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";

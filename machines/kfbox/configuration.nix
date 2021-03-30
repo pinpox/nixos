@@ -6,13 +6,23 @@
 
     networking.hostName = "kfbox";
 
-    pinpox.wg-client = {
-      enable = true;
-      clientIp = "192.168.7.5";
+    pinpox = {
+      wg-client = {
+        enable = true;
+        clientIp = "192.168.7.5";
+      };
+
+      services = {
+        go-karma-bot.enable = true;
+        hedgedoc.enable = true;
+        mattermost.enable = true;
+        thelounge.enable = true;
+      };
+
+      metrics.node.enable = true;
     };
 
-
-      pinpox.metrics.node.enable = true;
+    nix.autoOptimiseStore = true;
 
     services.qemuGuest.enable = true;
 
@@ -26,11 +36,11 @@
       autoResize = true;
     };
 
-  fileSystems."/tmp" = {
-    fsType = "tmpfs";
-    device = "tmpfs";
-    options = [ "nosuid" "nodev" "relatime" "size=14G" ];
-  };
+    fileSystems."/tmp" = {
+      fsType = "tmpfs";
+      device = "tmpfs";
+      options = [ "nosuid" "nodev" "relatime" "size=14G" ];
+    };
 
     boot.growPartition = true;
     boot.kernelParams = [ "console=ttyS0" ];
