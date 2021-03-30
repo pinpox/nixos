@@ -81,24 +81,9 @@
         kartoffel = defFlakeSystem {
 
           imports = [
-            ./machines/kartoffel/hardware-configuration.nix
+            ./machines/kartoffel/configuration.nix
             {
-
-              # Video driver for nvidia graphics card
-              services.xserver.videoDrivers = [ "nvidia" ];
-              boot.blacklistedKernelModules = [ "nouveau" ];
-
-              # To build raspi images
-              boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-              pinpox.desktop = {
-                enable = true;
-                wireguardIp = "192.168.7.3";
-                hostname = "kartoffel";
-                homeConfig = nixos-home.nixosModules.desktop;
-                bootDevice =
-                  "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
-              };
+                pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop;
             }
           ];
         };
