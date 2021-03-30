@@ -117,7 +117,7 @@
                 borg-server.enable = true;
                 home-assistant.enable = true;
               };
-              pinpox.services.lvm-grub.enable = true;
+              pinpox.defaults.lvm-grub.enable = true;
             }
           ];
         };
