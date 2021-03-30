@@ -20,6 +20,7 @@
       # Function to create default (common) system config options
       defFlakeSystem = baseCfg:
         nixpkgs.lib.nixosSystem {
+
           system = "x86_64-linux";
           modules = [
 
@@ -82,39 +83,36 @@
 
         kartoffel = defFlakeSystem {
           imports = [
-            ./machines/kartoffel/configuration.nix
-            { pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop; }
+            (import ./machines/kartoffel/configuration.nix { inherit self; })
           ];
         };
 
         ahorn = defFlakeSystem {
-          imports = [
-            ./machines/ahorn/configuration.nix
-            { pinpox.desktop.homeConfig = nixos-home.nixosModules.desktop; }
-          ];
+          imports =
+            [ (import ./machines/ahorn/configuration.nix { inherit self; }) ];
         };
 
         birne = defFlakeSystem {
           imports = base-modules-server ++ [
-            ./machines/birne/configuration.nix
+            (import ./machines/birne/configuration.nix { inherit self; })
           ];
         };
 
         bob = defFlakeSystem {
-          imports = base-modules-server ++ [
-            ./machines/bob/configuration.nix
-          ];
+          imports = base-modules-server
+            ++ [ (import ./machines/bob/configuration.nix { inherit self; }) ];
         };
 
         kfbox = defFlakeSystem {
           imports = base-modules-server ++ [
-            ./machines/kfbox/configuration.nix
+            (import ./machines/kfbox/configuration.nix )
           ];
         };
 
         porree = defFlakeSystem {
-          imports = base-modules-server
-            ++ [ ./machines/porree/configuration.nix ];
+          imports = base-modules-server ++ [
+            (import ./machines/porree/configuration.nix )
+          ];
         };
 
         # mega = defFlakeSystem {

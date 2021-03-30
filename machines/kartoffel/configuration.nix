@@ -1,8 +1,9 @@
 # Configuration for kartoffel
-
-{ config, pkgs, inputs, ... }: {
+{ self, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
+
+  pinpox.desktop.homeConfig = self.inputs.nixos-home.nixosModules.desktop;
 
   pinpox.desktop = {
     enable = true;
@@ -17,5 +18,4 @@
 
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
 }

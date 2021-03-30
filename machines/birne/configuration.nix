@@ -1,6 +1,6 @@
 # Configuration for birne
 
-{ config, pkgs, ... }: {
+{ self, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
   networking.hostName = "birne"; # Define your hostname.
