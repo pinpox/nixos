@@ -1,13 +1,22 @@
-{ pkgs, config, ... }:
-
-let bepasty-host = "paste.lounge.rocks";
+{ config, pkgs, lib, ... }:
+with lib;
+let
+  cfg = config.pinpox.services.bepasty;
+  bepasty-host = "paste.lounge.rocks";
 in {
-  services.bepasty = {
-    enable = true;
-    servers."${bepasty-host}" = {
-      secretKeyFile = "/var/src/secrets/bepasty/key";
-      # extraConfig = '' '' ;
-      bind = "0.0.0.0:8000";
+
+  options.pinpox.services.bepasty = {
+    enable = mkEnableOption "bepasty server";
+  };
+
+  config = mkIf cfg.enable {
+    services.bepasty = {
+      enable = true;
+      servers."${bepasty-host}" = {
+        secretKeyFile = "/var/src/secrets/bepasty/key";
+        # extraConfig = '' '' ;
+        bind = "0.0.0.0:8000";
+      };
     };
   };
 
