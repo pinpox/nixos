@@ -34,13 +34,14 @@
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+
+                  # DONT set useGlobalPackages! It's not necessary in newer
+                  # home-manager versions and does not work with configs using
+                  # `nixpkgs.config`
+                  home-manager.useUserPackages = true;
                 }
                 baseCfg
                 home-manager.nixosModules.home-manager
-                # DONT set useGlobalPackages! It's not necessary in newer
-                # home-manager versions and does not work with configs using
-                # `nixpkgs.config`
-                { home-manager.useUserPackages = true; }
               ];
 
               # Let 'nixos-version --json' know the Git revision of this flake.
@@ -70,7 +71,8 @@
 
     in {
 
-      # Output all modules in ./modules to flake
+      # Output all modules in ./modules to flake. Modules should be in
+      # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (map (x: {
         name = x;
         value = import (./modules + "/${x}");
@@ -138,12 +140,6 @@
                 monitoring-server.http-irc.enable = true;
               };
             }
-
-            # TODO bepasty service is currently broken due to:
-            # https://github.com/NixOS/nixpkgs/issues/116326
-            # https://github.com/bepasty/bepasty-server/issues/258
-            # ./modules/bepasty/default.nix
-
           ];
         };
 

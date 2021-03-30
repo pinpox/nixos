@@ -1,3 +1,7 @@
+# TODO bepasty service is currently broken due to:
+# https://github.com/NixOS/nixpkgs/issues/116326
+# https://github.com/bepasty/bepasty-server/issues/258
+# ./modules/bepasty/default.nix
 { config, pkgs, lib, ... }:
 with lib;
 let
