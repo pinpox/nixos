@@ -11,6 +11,12 @@ in {
     fonts = {
       fontDir.enable = true;
       fonts = with pkgs; [
+        # TODO Try
+        # Roboto Mono
+        # Ubuntu mono
+        # Hack
+        # Victor Mono
+
         (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
         ubuntu_font_family
         pkgs.dejavu_fonts
