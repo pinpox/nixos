@@ -1,7 +1,13 @@
 with import <nixpkgs> { };
 let
   eval = import (pkgs.path + "/nixos/lib/eval-config.nix") {
-    modules = import ../modules/module-list.nix;
+    modules = [
+      "${
+        builtins.fetchTarball
+        "https://github.com/rycee/home-manager/archive/master.tar.gz"
+      }/nixos"
+    ] ++ map (x: ../modules + "/${x}")
+      (builtins.attrNames (builtins.readDir ../modules));
   };
 
   opts = (nixosOptionsDoc { options = eval.options; }).optionsJSON;
