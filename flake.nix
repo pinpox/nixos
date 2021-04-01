@@ -53,23 +53,6 @@
           ];
         };
 
-      base-modules-server = [
-        ./users/pinpox.nix
-        {
-          home-manager.users.pinpox = nixos-home.nixosModules.server;
-
-          # pinpox.metrics.node.enable = true;
-          pinpox.defaults = {
-            environment.enable = true;
-            locale.enable = true;
-            nix.enable = true;
-            zsh.enable = true;
-            networking.enable = true;
-          };
-          pinpox.services = { openssh.enable = true; };
-        }
-      ];
-
     in {
 
       # Output all modules in ./modules to flake. Modules should be in
@@ -104,15 +87,12 @@
         };
 
         kfbox = defFlakeSystem {
-          imports = base-modules-server ++ [
-            (import ./machines/kfbox/configuration.nix )
-          ];
+          imports = base-modules-server
+            ++ [ (import ./machines/kfbox/configuration.nix) ];
         };
 
         porree = defFlakeSystem {
-          imports = base-modules-server ++ [
-            (import ./machines/porree/configuration.nix )
-          ];
+          imports = [ (import ./machines/porree/configuration.nix {inherit self;} )];
         };
 
         # mega = defFlakeSystem {
