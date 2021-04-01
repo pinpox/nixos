@@ -45,6 +45,7 @@
                 home-manager.nixosModules.home-manager
               ];
 
+
               # Let 'nixos-version --json' know the Git revision of this flake.
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
@@ -76,28 +77,28 @@
         };
 
         birne = defFlakeSystem {
-          imports = base-modules-server ++ [
-            (import ./machines/birne/configuration.nix { inherit self; })
-          ];
+          imports =
+            [ (import ./machines/birne/configuration.nix { inherit self; }) ];
         };
 
         bob = defFlakeSystem {
-          imports = base-modules-server
-            ++ [ (import ./machines/bob/configuration.nix { inherit self; }) ];
+          imports =
+            [ (import ./machines/bob/configuration.nix { inherit self; }) ];
         };
 
         kfbox = defFlakeSystem {
-          imports = base-modules-server
-            ++ [ (import ./machines/kfbox/configuration.nix) ];
+          imports =
+            [ (import ./machines/kfbox/configuration.nix { inherit self; }) ];
         };
 
         porree = defFlakeSystem {
-          imports = [ (import ./machines/porree/configuration.nix {inherit self;} )];
+          imports =
+            [ (import ./machines/porree/configuration.nix { inherit self; }) ];
         };
 
         # mega = defFlakeSystem {
-        #   imports = base-modules-server
-        #     ++ [ ./machines/mega/configuration.nix ];
+        #   imports =
+        #     [ (import ./machines/mega/configuration.nix { inherit self; }) ];
         # };
       };
     };

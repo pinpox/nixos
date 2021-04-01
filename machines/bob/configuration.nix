@@ -3,12 +3,20 @@
 
   imports = [ ./hardware-configuration.nix ];
 
-  pinpox.services = {
-    binary-cache.enable = true;
-    droneci.enable = true;
-    droneci.runner-exec.enable = true;
-    droneci.runner-docker.enable = true;
-    monitoring-server.http-irc.enable = true;
+  pinpox = {
+    server = {
+      enable = true;
+      hostname = "bob";
+      homeConfig = self.inputs.nixos-home.nixosModules.server;
+    };
+
+    services = {
+      binary-cache.enable = true;
+      droneci.enable = true;
+      droneci.runner-exec.enable = true;
+      droneci.runner-docker.enable = true;
+      monitoring-server.http-irc.enable = true;
+    };
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
@@ -32,9 +40,6 @@
   };
 
   networking = {
-
-    # Define the hostname
-    hostName = "bob";
 
     # DHCP
     useDHCP = false;

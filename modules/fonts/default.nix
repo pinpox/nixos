@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.fonts;
-custominput = pkgs.callPackage ./input.nix {};
+# custominput = pkgs.callPackage ./input.nix {};
 monego = pkgs.callPackage ./monego.nix {};
 in {
 
@@ -18,7 +18,7 @@ in {
         # Ubuntu mono
         # Hack
         # Victor Mono
-        custominput
+        # custominput
         monego
 
         (nerdfonts.override {

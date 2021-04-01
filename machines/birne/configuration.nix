@@ -3,7 +3,6 @@
 { self, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
-  networking.hostName = "birne"; # Define your hostname.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -12,6 +11,13 @@
   networking.interfaces.eno1.useDHCP = true;
 
   pinpox = {
+
+
+    server = {
+      enable = true;
+      hostname = "birne";
+      homeConfig = self.inputs.nixos-home.nixosModules.server;
+    };
 
     services = {
       borg-server.enable = true;

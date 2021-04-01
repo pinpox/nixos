@@ -8,7 +8,7 @@ in {
   config = mkIf cfg.enable {
 
     # Allow unfree licenced packages
-    nixpkgs = { config.allowUnfree = true; };
+    nixpkgs.config.allowUnfree = true;
 
     # Enable flakes
     nix = {
