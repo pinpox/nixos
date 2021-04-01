@@ -45,7 +45,6 @@
                 home-manager.nixosModules.home-manager
               ];
 
-
               # Let 'nixos-version --json' know the Git revision of this flake.
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
@@ -63,43 +62,16 @@
         value = import (./modules + "/${x}");
       }) (builtins.attrNames (builtins.readDir ./modules)));
 
-      nixosConfigurations = {
-
-        kartoffel = defFlakeSystem {
+      # Each subdirectory in ./machins is a host. Add them all to
+      # nixosConfiguratons. Host configurations need a file called
+      # configuration.nix that will be read first
+      nixosConfigurations = builtins.listToAttrs (map (x: {
+        name = x;
+        value = defFlakeSystem {
           imports = [
-            (import ./machines/kartoffel/configuration.nix { inherit self; })
+            (import (./machines + "/${x}/configuration.nix") { inherit self; })
           ];
         };
-
-        ahorn = defFlakeSystem {
-          imports =
-            [ (import ./machines/ahorn/configuration.nix { inherit self; }) ];
-        };
-
-        birne = defFlakeSystem {
-          imports =
-            [ (import ./machines/birne/configuration.nix { inherit self; }) ];
-        };
-
-        bob = defFlakeSystem {
-          imports =
-            [ (import ./machines/bob/configuration.nix { inherit self; }) ];
-        };
-
-        kfbox = defFlakeSystem {
-          imports =
-            [ (import ./machines/kfbox/configuration.nix { inherit self; }) ];
-        };
-
-        porree = defFlakeSystem {
-          imports =
-            [ (import ./machines/porree/configuration.nix { inherit self; }) ];
-        };
-
-        # mega = defFlakeSystem {
-        #   imports =
-        #     [ (import ./machines/mega/configuration.nix { inherit self; }) ];
-        # };
-      };
+      }) (builtins.attrNames (builtins.readDir ./machines)));
     };
 }
