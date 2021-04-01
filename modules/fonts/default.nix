@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.fonts;
+custominput = pkgs.callPackage ./input.nix {};
+monego = pkgs.callPackage ./monego.nix {};
 in {
 
   options.pinpox.defaults.fonts = { enable = mkEnableOption "Fonts defaults"; };
@@ -16,8 +18,22 @@ in {
         # Ubuntu mono
         # Hack
         # Victor Mono
+        custominput
+        monego
 
-        (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+        (nerdfonts.override {
+          fonts = [
+            "SourceCodePro"
+            "Ubuntu"
+            "UbuntuMono"
+            "VictorMono"
+            "RobotoMono"
+            "Hermit"
+            "Hack"
+            "FiraMono"
+            "Go-Mono"
+          ];
+        })
         ubuntu_font_family
         pkgs.dejavu_fonts
         noto-fonts-emoji
