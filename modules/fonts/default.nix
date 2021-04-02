@@ -24,8 +24,34 @@ in {
         defaultFonts = {
           serif = [ "Source Serif Pro" ];
           sansSerif = [ "Source Sans Pro" ];
+          emoji = [ "Noto Color Emoji" ];
           monospace = [ "SauceCodePro Nerd Font Mono" ];
         };
+
+        localConf = ''
+          <?xml version="1.0"?>
+          <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+          <fontconfig>
+            <alias binding="weak">
+              <family>monospace</family>
+              <prefer>
+                <family>emoji</family>
+              </prefer>
+            </alias>
+            <alias binding="weak">
+              <family>sans-serif</family>
+              <prefer>
+                <family>emoji</family>
+              </prefer>
+            </alias>
+            <alias binding="weak">
+              <family>serif</family>
+              <prefer>
+                <family>emoji</family>
+              </prefer>
+            </alias>
+          </fontconfig>
+        '';
       };
     };
   };
