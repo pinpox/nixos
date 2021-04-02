@@ -44,7 +44,6 @@ in {
       defaults = {
         bluetooth.enable = true;
         environment.enable = true;
-        fonts.enable = true;
         locale.enable = true;
         networking.enable = true;
         nix.enable = true;
