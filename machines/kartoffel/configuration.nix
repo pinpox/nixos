@@ -3,7 +3,14 @@
 
   imports = [ ./hardware-configuration.nix ];
 
+    # environment.systemPackages = [self.wezterm];
+
+  mayniklas.services.hellonik.enable = true;
+
+
   pinpox.desktop.homeConfig = self.inputs.nixos-home.nixosModules.desktop;
+
+
 
   pinpox.desktop = {
     enable = true;
@@ -18,4 +25,5 @@
 
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
 }
