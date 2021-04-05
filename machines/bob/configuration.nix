@@ -22,7 +22,7 @@
   users.users.root.openssh.authorizedKeys.keyFiles = [
     (builtins.fetchurl {
       url = "https://github.com/MayNiklas.keys";
-      sha256 = "180458fg6i6sbqmyz18rb1hsq4226zdivqz86x9dwkv02fqvkygw";
+      sha256 = "180458fg6i6sbqmyz18rb2hsq4226zdivqz86x9dwkv02fqvkygw";
     })
   ];
 
