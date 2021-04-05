@@ -80,6 +80,7 @@ in {
     environment.systemPackages = with pkgs; [
       # borgbackup
       arandr
+      jetbrains-mono
       ctags
       git
       gnumake
