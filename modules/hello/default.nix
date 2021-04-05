@@ -4,7 +4,7 @@ let cfg = config.pinpox.services.hello;
 in {
   options.pinpox.services.hello = {
     enable = mkEnableOption "hello service";
-    greeter123 = mkOption {
+    greeter = mkOption {
       type = types.str;
       default = "world";
       example = "universe";
