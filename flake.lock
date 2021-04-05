@@ -73,16 +73,58 @@
         ]
       },
       "locked": {
-        "lastModified": 1617220862,
-        "narHash": "sha256-nLka+S6Vww8hTF3ZkzK/BezvgAo1Z433/L6TR1SiXyM=",
+        "lastModified": 1617625716,
+        "narHash": "sha256-B36WKNVwtmRk3oqJ9XbOca0iy1Ga1dW6E26iavRFPKQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ad04237d5142f53dcba258942b78e2d2bbf210c8",
+        "rev": "cc60c22c69e6967b732d02f072a9f1e30454e4f6",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1617465592,
+        "narHash": "sha256-Yc+nEWIbZ1lkyUF8+7cbYKt4OPwqnsSXThT80z5didU=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "6e3d93d7ccf0ec0f5faebc6a6a550a1299ca0d39",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "mayniklas": {
+      "inputs": {
+        "home-manager": "home-manager_2",
+        "nixos-home": "nixos-home",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1617649399,
+        "narHash": "sha256-jPUyM7/oPoqtWjIvt075Ev+3XL8v8bh5fUi8FM5laBg=",
+        "owner": "mayniklas",
+        "repo": "nixos",
+        "rev": "3cdf09ae5a0a936a4d31e02f902431ca4423fe30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mayniklas",
+        "repo": "nixos",
         "type": "github"
       }
     },
@@ -126,6 +168,26 @@
       }
     },
     "nixos-home": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1617044571,
+        "narHash": "sha256-1D0a9l+t7gyX6SEMeV/W08jYV08tzlxbKXsFR/XZ7Do=",
+        "owner": "mayniklas",
+        "repo": "nixos-home",
+        "rev": "9b6f15fcef88cdfcef5c681e87964acfcbd9f29a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mayniklas",
+        "repo": "nixos-home",
+        "type": "github"
+      }
+    },
+    "nixos-home_2": {
       "inputs": {
         "dotfiles-awesome": "dotfiles-awesome",
         "neovim-nightly": "neovim-nightly",
@@ -246,7 +308,8 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixos-home": "nixos-home",
+        "mayniklas": "mayniklas",
+        "nixos-home": "nixos-home_2",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-pinned": "nixpkgs-pinned"
       }
