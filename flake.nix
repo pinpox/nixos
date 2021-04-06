@@ -14,8 +14,6 @@
     nixos-home.url = "github:pinpox/nixos-home";
     nixos-home.inputs.nixpkgs.follows = "nixpkgs";
 
-    mayniklas.url = "github:mayniklas/nixos";
-    mayniklas.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, ... }@inputs:
     with inputs;
@@ -29,7 +27,6 @@
 
             ({ ... }: {
               imports = builtins.attrValues self.nixosModules ++ [
-                mayniklas.nixosModules.hellonik
                 {
                   # Set the $NIX_PATH entry for nixpkgs. This is necessary in
                   # this setup with flakes, otherwise commands like `nix-shell

@@ -5,12 +5,7 @@
 
     # environment.systemPackages = [self.wezterm];
 
-  mayniklas.services.hellonik.enable = true;
-
-
   pinpox.desktop.homeConfig = self.inputs.nixos-home.nixosModules.desktop;
-
-
 
   pinpox.desktop = {
     enable = true;
