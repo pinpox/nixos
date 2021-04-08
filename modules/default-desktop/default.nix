@@ -79,6 +79,8 @@ in {
     # $ nix search wget
     environment.systemPackages = with pkgs; [
       # borgbackup
+      recursive
+      lm_sensors
       arandr
       jetbrains-mono
       ctags
