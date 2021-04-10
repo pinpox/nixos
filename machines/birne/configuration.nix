@@ -3,7 +3,6 @@
 { self, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
-
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
@@ -12,11 +11,21 @@
 
   pinpox = {
 
-
     server = {
       enable = true;
       hostname = "birne";
-      homeConfig = self.inputs.nixos-home.nixosModules.server;
+
+      homeConfig = {
+
+        imports = [
+          ../../home-manager/home-server.nix
+          self.inputs.dotfiles-awesome.nixosModules.dotfiles
+          {
+            nixpkgs.overlays =
+              [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+          }
+        ];
+      };
     };
 
     services = {
