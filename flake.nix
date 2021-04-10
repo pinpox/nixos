@@ -4,15 +4,17 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # nixpkgs-pinned.url =
-    #   "github:nixos/nixpkgs/c4d27d698a5925b94715ae8972d215e033023cd9";
-    nixpkgs-pinned.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-home.url = "github:pinpox/nixos-home";
-    nixos-home.inputs.nixpkgs.follows = "nixpkgs";
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+
+    dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
+    dotfiles-awesome.inputs.nixpkgs.follows = "nixpkgs";
+
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
 
   };
   outputs = { self, ... }@inputs:
@@ -36,10 +38,11 @@
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                  nixpkgs.overlays = [ nur.overlay neovim-nightly.overlay ];
 
-                  # DONT set useGlobalPackages! It's not necessary in newer
+                  # DON'T set useGlobalPackages! It's not necessary in newer
                   # home-manager versions and does not work with configs using
-                  # `nixpkgs.config`
+                  # nixpkgs.config`
                   home-manager.useUserPackages = true;
                 }
                 baseCfg
