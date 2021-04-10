@@ -62,10 +62,10 @@ in {
 
       # Disable the python checks, they take for ever when building the
       # configuration
-      package = (home-assistant-package.overrideAttrs (old: {
-        doInstallCheck = false;
-        doCheck = false;
-      }));
+      # package = (home-assistant-package.overrideAttrs (old: {
+      #   doInstallCheck = false;
+      #   doCheck = false;
+      # }));
 
       # Configuration generated to /var/lib/hass/configuration.yaml
       config = {
