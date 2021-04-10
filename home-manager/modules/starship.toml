@@ -1,0 +1,13 @@
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[✗](bold red) "
+
+[aws]
+disabled = true
+
+[python]
+disabled = true
+
+[nix_shell]
+symbol = "❄  "
