@@ -1,0 +1,56 @@
+kind: pipeline
+name: default
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: Show flake info
+  image: nixpkgs/nix-flakes
+  commands:
+  - nix --experimental-features "nix-command flakes" flake show
+  - nix --experimental-features "nix-command flakes" flake metadata
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
+
+- name: Run flake checks
+  image: nixpkgs/nix-flakes
+  commands:
+  - nix --experimental-features "nix-command flakes" flake check --show-trace
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
+  when:
+    branch:
+    - master
+    event:
+    - push
+
+---
+kind: pipeline
+type: docker
+name: update flakes
+
+steps:
+- name: Update flake.lock
+  image: nixpkgs/nix-flakes
+  commands:
+  - nix flake update
+  environment:
+    NIX_PATH: nixpkgs=channel:nixos-unstable
+
+- name: Push updated flake.lock
+  image: appleboy/drone-git-push
+  settings:
+    branch: update-flake
+    remote: git@github.com:pinpox/nixos-home.git
+    force: true
+    commit_message: "❄️ Update flake.lock"
+    ssh_key:
+      from_secret: deploy_key
+  when:
+    branch:
+    - master
+    event:
+    - cron

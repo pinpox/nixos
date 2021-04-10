@@ -3,9 +3,18 @@
 
   imports = [ ./hardware-configuration.nix ];
 
-    # environment.systemPackages = [self.wezterm];
+  # environment.systemPackages = [self.wezterm];
 
-  pinpox.desktop.homeConfig = self.inputs.nixos-home.nixosModules.desktop;
+  pinpox.desktop.homeConfig = {
+    imports = [
+      ../../home-manager/home.nix
+      self.inputs.dotfiles-awesome.nixosModules.dotfiles
+      {
+        nixpkgs.overlays =
+          [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+      }
+    ];
+  };
 
   pinpox.desktop = {
     enable = true;

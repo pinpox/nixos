@@ -7,7 +7,17 @@
     server = {
       enable = true;
       hostname = "bob";
-      homeConfig = self.inputs.nixos-home.nixosModules.server;
+      homeConfig = {
+
+        imports = [
+          ../../home-manager/home-server.nix
+          self.inputs.dotfiles-awesome.nixosModules.dotfiles
+          {
+            nixpkgs.overlays =
+              [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+          }
+        ];
+      };
     };
 
     services = {
