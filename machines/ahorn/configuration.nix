@@ -3,7 +3,17 @@
 
   imports = [ ./hardware-configuration.nix ];
 
-  pinpox.desktop.homeConfig = self.inputs.nixos-home.nixosModules.desktop;
+
+
+
+  pinpox.desktop.homeConfig = {
+    imports = [
+      ../../home-manager/home.nix
+      self.inputs.dotfiles-awesome.nixosModules.dotfiles
+      { nixpkgs.overlays = [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ]; }
+    ];
+  };
+
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
