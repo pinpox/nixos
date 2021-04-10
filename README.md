@@ -99,16 +99,6 @@ krops deployment.
 sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
  ```
 
-# User-specific configuration
-
-User-specific configuration is installed by home-manager where needed. Setup for
-the `pinpox` user is hosted in a [separate
-repository](https://github.com/pinpox/nixos-home) so it can also be used
-independently.
-
-Since the repository for the user configuration is also a flake, it is pulled in
-and deployed automatically with the system configuration on NixOS systems.
-
 # Contributing?
 
 While contributions don't make much sense for a personal configuration repository,
