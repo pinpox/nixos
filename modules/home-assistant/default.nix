@@ -42,6 +42,8 @@ in {
     services.mosquitto = {
       enable = true;
 
+      checkPasswords = true;
+
       # Mosquitto is only listening on the local IP, traffic from outside is not
       # allowed.
       host = "192.168.2.84";
