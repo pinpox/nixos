@@ -89,11 +89,13 @@
       in rec {
         packages = flake-utils.lib.flattenTree {
           hello-custom = pkgs.callPackage ./packages/hello-custom { };
+          wezterm-bin = pkgs.callPackage ./packages/wezterm-bin { };
           # hello2 = pkgs.callPackage ./packages/wezterm { };
         };
 
         apps = {
           hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
+          wezterm-bin = flake-utils.lib.mkApp { drv = packages.wezterm-bin; };
         };
 
         # TODO we probably should set some default app and/or package
