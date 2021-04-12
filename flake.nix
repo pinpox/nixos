@@ -16,6 +16,8 @@
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
 
+    flake-utils.url = "github:numtide/flake-utils";
+
   };
   outputs = { self, ... }@inputs:
     with inputs;
@@ -77,5 +79,25 @@
           ];
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
-    };
+    } //
+
+    # All packages in the ./packages subfolder are also added to the flake.
+    # flake-utils is used for this part to make each package available for each
+    # system. This works as all packages are compatible with all architectures
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in rec {
+        packages = flake-utils.lib.flattenTree {
+          hello-custom = pkgs.callPackage ./packages/hello-custom { };
+          # hello2 = pkgs.callPackage ./packages/wezterm { };
+        };
+
+        apps = {
+          hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
+        };
+
+        # TODO we probably should set some default app and/or package
+        # defaultPackage = packages.hello;
+        # defaultApp = apps.hello;
+      });
 }
