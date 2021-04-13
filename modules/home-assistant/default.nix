@@ -2,18 +2,18 @@
 with lib;
 let
   cfg = config.pinpox.services.home-assistant;
-  home-assistant-package = pkgs.home-assistant.override {
-    extraComponents = [
-      # Fritzbox network statistics
-      # "fritzbox_netmonitor"
+  # home-assistant-package = pkgs.home-assistant.override {
+  #   extraComponents = [
+  #     # Fritzbox network statistics
+  #     # "fritzbox_netmonitor"
 
-      # Wifi led strip controller
-      "flux_led"
+  #     # Wifi led strip controller
+  #     # "flux_led"
 
-      # Not sure if needed with default_config?
-      "lovelace"
-    ];
-  };
+  #     # Not sure if needed with default_config?
+  #     "lovelace"
+  #   ];
+  # };
 in {
 
   options.pinpox.services.home-assistant = {
@@ -107,14 +107,19 @@ in {
 
         # Led strip wifi controller, component needs to be listed explicitely in
         # extraComponents above
-        light = [{
-          platform = "flux_led";
-          automatic_add = true;
-          devices = { "192.168.2.106" = { name = "flux_led"; }; };
-        }];
+        # light = [{
+        #   platform = "flux_led";
+        #   automatic_add = true;
+        #   devices = { "192.168.2.106" = { name = "flux_led"; }; };
+        # }];
 
         # Fritzbox network traffic stats
-        # sensor = [{ platform = "fritzbox_netmonitor"; }];
+        sensor = [{ platform = "fritzbox_netmonitor"; }];
+
+        # Metrics for prometheus
+        # prometheus = {
+        #   namespace = "hass";
+        # };
 
         # Enable MQTT and configure it to use the mosquitto broker
         mqtt = {
