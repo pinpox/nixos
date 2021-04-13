@@ -79,6 +79,7 @@ in {
     # $ nix search wget
     environment.systemPackages = with pkgs; [
       # borgbackup
+      (callPackage ../../packages/wezterm-bin {})
       recursive
       lm_sensors
       arandr
