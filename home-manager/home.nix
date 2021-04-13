@@ -99,7 +99,10 @@ in {
     ./modules/xdg.nix
     ./modules/xresources.nix
     ./modules/xscreensaver.nix
+    ./modules/wezterm
   ];
+
+  pinpox.programs.wezterm.enable = true;
 
   # Include man-pages
   manual.manpages.enable = true;
@@ -108,7 +111,7 @@ in {
   systemd.user.sessionVariables = { ZDOTDIR = "/home/pinpox/.config/zsh"; };
 
   home.sessionVariables = {
-    # Workaround for alacritty
+    # Workaround for alacritty (breaks wezterm and other apps!)
     # LIBGL_ALWAYS_SOFTWARE = "1";
     EDITOR = "nvim";
     VISUAL = "nvim";
