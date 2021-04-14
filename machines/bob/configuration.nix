@@ -37,6 +37,10 @@
   ];
 
   boot = {
+
+    # Enable arm emulation capabilities
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     loader = {
       grub = {
         enable = true;
