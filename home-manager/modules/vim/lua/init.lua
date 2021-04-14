@@ -17,6 +17,7 @@ require'compe'.setup {
 
 	source = {
 		path = true;
+		emoji = true;
 		buffer = true;
 		calc = true;
 		vsnip = true;
