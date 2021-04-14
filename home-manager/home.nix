@@ -5,6 +5,37 @@ let
     builtins.filter builtins.isString (builtins.split "\n" str);
 in {
 
+  # Imports
+  imports = [
+    # ./modules/autorandr.nix
+    # ./modules/grobi.nix
+    # ./modules/i3.nix
+    # ./modules/newsboat.nix
+    # ./modules/polybar.nix
+    # ./modules/rofi.nix
+    ./modules/alacritty.nix
+    ./modules/awesome.nix
+    ./modules/browsers.nix
+    ./modules/chromium.nix
+    ./modules/credentials.nix
+    ./modules/dunst.nix
+    ./modules/fonts.nix
+    ./modules/games.nix
+    ./modules/git.nix
+    ./modules/go.nix
+    ./modules/gtk.nix
+    ./modules/neomutt.nix
+    ./modules/picom.nix
+    ./modules/shell.nix
+    ./modules/vim
+    ./modules/xdg.nix
+    ./modules/xresources.nix
+    ./modules/xscreensaver.nix
+    ./modules/wezterm
+  ];
+
+  pinpox.programs.wezterm.enable = true;
+
   # Allow "unfree" licenced packages
   nixpkgs.config = { allowUnfree = true; };
 
@@ -73,36 +104,6 @@ in {
     yubioath-desktop
   ];
 
-  # Imports
-  imports = [
-    # ./modules/autorandr.nix
-    # ./modules/grobi.nix
-    # ./modules/i3.nix
-    # ./modules/newsboat.nix
-    # ./modules/polybar.nix
-    # ./modules/rofi.nix
-    ./modules/alacritty.nix
-    ./modules/awesome.nix
-    ./modules/browsers.nix
-    ./modules/chromium.nix
-    ./modules/credentials.nix
-    ./modules/dunst.nix
-    ./modules/fonts.nix
-    ./modules/games.nix
-    ./modules/git.nix
-    ./modules/go.nix
-    ./modules/gtk.nix
-    ./modules/neomutt.nix
-    ./modules/picom.nix
-    ./modules/shell.nix
-    ./modules/vim
-    ./modules/xdg.nix
-    ./modules/xresources.nix
-    ./modules/xscreensaver.nix
-    ./modules/wezterm
-  ];
-
-  pinpox.programs.wezterm.enable = true;
 
   # Include man-pages
   manual.manpages.enable = true;
@@ -111,8 +112,8 @@ in {
   systemd.user.sessionVariables = { ZDOTDIR = "/home/pinpox/.config/zsh"; };
 
   home.sessionVariables = {
-    # Workaround for alacritty (breaks wezterm and other apps!)
     # LIBGL_ALWAYS_SOFTWARE = "1";
+    # Workaround for alacritty (breaks wezterm and other apps!)
     EDITOR = "nvim";
     VISUAL = "nvim";
     ZDOTDIR = "/home/pinpox/.config/zsh";
