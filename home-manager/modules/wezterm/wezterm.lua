@@ -5,7 +5,7 @@ local wezterm = require 'wezterm';
 -- https://wezfurlong.org/wezterm/config/lua/window/set_right_status.html
 wezterm.on("update-right-status", function(window, pane)
 	-- "Wed Mar 3 08:14"
-	local date = wezterm.strftime("%a %b %-d %H:%M ");
+	local date = wezterm.strftime("📆  %a %b %-d %H:%M ");
 
 	local bat = ""
 	for _, b in ipairs(wezterm.battery_info()) do
