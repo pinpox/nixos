@@ -44,6 +44,7 @@ in {
     # material-design-icons
     # material-icons
     # nerdfonts
+    neuron-notes
     # paper-gtk-theme
     retroarch
     # seafile-client
