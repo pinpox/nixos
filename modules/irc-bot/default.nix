@@ -37,7 +37,7 @@ in {
 
     # User and group
     users.users.go-karma-bot = {
-      isNormalUser = false;
+      isSystemUser = true;
       home = "/var/lib/go-karma-bot";
       description = "go-karma-bot system user";
       extraGroups = [ "go-karma-bot" ];

@@ -45,7 +45,7 @@ in {
 
     # User and group
     users.users.http2irc = {
-      isNormalUser = false;
+      isSystemUser = true;
       home = "/var/lib/http2irc";
       description = "http2irc system user";
       extraGroups = [ "http2irc" ];
