@@ -98,6 +98,7 @@ in {
 
       colorizer
       committia-vim
+      neuron-vim
       BufOnly-vim
       ansible-vim
       base16-vim
@@ -132,6 +133,8 @@ in {
       vim-vinegar
       vim-visual-increment
       vim-which-key
+      nvim-bufferline-lua
+      nvim-web-devicons
       #vista-vim
     ];
   };

@@ -34,7 +34,7 @@ highlight Comment cterm=italic gui=italic
 let g:airline_theme='base16'
 let g:airline_symbols = {}
 let g:airline_symbols.linenr = 'ℓ'
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 
 let g:airline#extensions#nvimlsp#enabled = 0
 
@@ -47,7 +47,6 @@ set noshowmode " dont show the current mode below the bar
 let &colorcolumn=join(range(101,999),",")
 
 let g:buftabline_indicators=1
-
 
 let g:moonflyWithCocIndicator = 1
 set cmdheight=1
