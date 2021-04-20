@@ -37,7 +37,7 @@ in stdenv.mkDerivation rec {
   src = fetchurl {
     url =
       "https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu16.04.tar.xz";
-      sha256 = "sha256-foqKB1FHjker6JJ4ev90tHgOahp8eyupbBXPH1FaABU=";
+    sha256 = "15g4lav0if8pjq0pzlxd4vxlszah974r7k4v62iz0qyc9wfsil92";
   };
 
   nativeBuildInputs = [ pkg-config python3 perl ];
