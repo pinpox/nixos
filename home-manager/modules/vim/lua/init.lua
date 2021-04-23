@@ -108,7 +108,7 @@ vim.g.livedown_browser = "firefox"
 vim.g.fzf_files_options = '--preview "(coderay {} || cat {}) 2> /dev/null | head -\'.&lines.\'"'
 
 
-
+vim.g.indentLine_char = '│'
 
 
 require'bufferline'.setup{
@@ -159,3 +159,16 @@ require'bufferline'.setup{
 		-- end
 	},
 }
+
+require'nvim-web-devicons'.setup {
+	-- globally enable default icons (default to false)
+	-- will get overriden by `get_icons` option
+	default = true;
+}
+
+
+require('mappings')
+require('which-key')
+require('evil_lualine')
+
+

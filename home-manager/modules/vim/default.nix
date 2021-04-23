@@ -25,6 +25,24 @@ in {
     terraform # TODO add options to enable/disable large packages like terraform
   ];
 
+
+    xdg = {
+      enable = true;
+      configFile = {
+        nvim_lua = {
+          target = "nvim/lua";
+          source = ./lua;
+        };
+
+        nvim_vimscript = {
+          target = "nvim/vimscript";
+          source = ./vimscript;
+        };
+      };
+    };
+
+
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -57,11 +75,6 @@ in {
         lua << EOF
 
         ${lib.strings.fileContents ./lua/init.lua}
-
-        -- KEY MAPPINGS:
-        ${lib.strings.fileContents ./lua/mappings.lua}
-
-        ${lib.strings.fileContents ./lua/which-key.lua}
 
         EOF
 
@@ -100,6 +113,7 @@ in {
       committia-vim
       neuron-vim
       BufOnly-vim
+      lualine-nvim
       ansible-vim
       base16-vim
       fzf-vim
@@ -108,9 +122,8 @@ in {
       haskell-vim
       i3config-vim
       indentLine
+      indent-blankline-nvim
       tabular
-      vim-airline
-      vim-airline-themes
       vim-autoformat
       vim-better-whitespace
       vim-commentary
@@ -145,7 +158,6 @@ in {
 # fvictorio/vim-textobj-backticks'
 # jamessan/vim-gnupg', {'for': 'gpg'}   " Edit ggp-encrypted files
 # juliosueiras/vim-terraform-snippets'
-# lukas-reineke/indent-blankline.nvim'
 # nicwest/vim-camelsnek'
 # prabirshrestha/async.vim'
 # rafalbromirski/vim-aurora'
