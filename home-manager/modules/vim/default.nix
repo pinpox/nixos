@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ self, config, pkgs, lib, ... }:
 let
   vars = import ./vars.nix;
 
@@ -95,6 +95,8 @@ in {
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
 
+      (pkgs.callPackage ../../../packages/indent-blankline-nvim-lua { })
+
       # TODO Remove when PR is merged https://github.com/NixOS/nixpkgs/pull/117813
       # (plugin "nvim-whichkey-setup.lua" "AckslD/nvim-whichkey-setup.lua" "main"
       #   "59aa0a4287adf6c2c9faabf912cdc005230e7c98")
@@ -122,7 +124,7 @@ in {
       haskell-vim
       i3config-vim
       indentLine
-      indent-blankline-nvim
+      # indent-blankline-nvim
       tabular
       vim-autoformat
       vim-better-whitespace
