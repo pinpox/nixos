@@ -1,14 +1,5 @@
 " Plugin options
 
-" Switch
-let g:switch_custom_definitions =
-			\ [
-			\   ['foo', 'bar', 'baz'],
-			\   [ 'on', 'off'],
-			\   ['_', '#'],
-			\   ['LOW', 'HIGH']
-			\ ]
-
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 

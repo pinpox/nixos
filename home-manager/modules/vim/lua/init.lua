@@ -1,5 +1,44 @@
+-- vim.o:  global options
+-- vim.bo: buffer-local options
+-- vim.wo: window-local options
 
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt      = "menuone,noselect"
+vim.o.hidden           = true            -- Buffer becomes hidden when it is abandoned but is not unloaded
+vim.o.title            = true                   -- Show title in terminal window
+vim.o.autochdir        = true               -- Automatically change the working dir to the one of the file
+vim.o.autoindent       = true              -- always set autoindenting on
+vim.o.backspace        = "indent,eol,start" -- allow backspacing over everything in insert mode
+vim.o.clipboard        = "unnamedplus"      -- Set Clipboard to system's clipboard
+vim.o.cursorline       = true                 -- highlight current line
+vim.o.directory        = "~/.vimtmp"        -- Dir for temp files
+vim.o.foldlevelstart   = 20          -- start with open folds
+vim.o.foldmethod       = "syntax"          -- set folding based on syntax
+vim.o.history          = 50                 -- keep 50 lines of command line history
+vim.o.hlsearch         = true                   -- highlight matches
+vim.o.ignorecase       = true                 -- Case insensitive search
+vim.o.incsearch        = true                  -- search as characters are entered
+vim.o.laststatus       = 2               -- Always show the status line
+vim.o.lazyredraw       = true                 -- redraw only when we need to.
+vim.wo.relativenumber  = true             -- show relative line numbers
+vim.wo.number          = true                     -- show absolute line numbers
+vim.o.ruler            = true                      -- show the cursor position all the time
+vim.o.scrolloff        = 5                -- show lines above and below when scrolling
+vim.o.showcmd          = true                    -- display incomplete commands
+vim.o.smartcase        = true                  -- Case sensitive then capital is typed
+vim.o.synmaxcol        = 200              -- Maximum length of syntax highlighting
+vim.o.tabstop          = 4                  -- A tab is displayed 4 collumns wide
+vim.o.softtabstop      = 4              -- Size of a tab
+vim.o.shiftwidth       = 4               -- Size of a tab
+vim.o.expandtab        = false -- Don't expand tabs to spaces
+vim.o.undofile         = true                   -- Maintain undo history between sessions
+vim.o.undodir          = "~/.vimtmp"          -- Dir for undofiles, same dir as the tempdir
+vim.o.wildmenu         = true                   -- Complete commands
+vim.o.wrapscan         = true                   -- Wrap when searching to beginning
+vim.o.mouse            = "a"
+vim.o.swapfile         = false                 -- dont create a swapfile
+vim.o.backup           = false-- dont create backups
+-- vim.o.path            += "**"                   -- Search down into subfolders, provides tab-completion for all file-related tasks
+
 
 require'compe'.setup {
 	enabled = true;
@@ -172,43 +211,43 @@ require('evil_lualine')    -- This line was changed
 
 
 require('gitsigns').setup {
-  signs = {
+	signs = {
 
-	-- copy from : https://en.wikipedia.org/wiki/Box-drawing_character
-    add          = {hl = 'GitSignsAdd'   , text = '┃', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '┇', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '┇', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
-  numhl = false,
-  linehl = false,
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
-    buffer = true,
+		-- copy from : https://en.wikipedia.org/wiki/Box-drawing_character
+		add          = {hl = 'GitSignsAdd'   , text = '┃', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+		change       = {hl = 'GitSignsChange', text = '┇', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+		delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+		topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+		changedelete = {hl = 'GitSignsChange', text = '┇', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+	},
+	numhl = false,
+	linehl = false,
+	keymaps = {
+		-- Default keymap options
+		noremap = true,
+		buffer = true,
 
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
+		['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
+		['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
 
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
+		['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+		['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+		['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+		['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+		['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+		['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
 
-    -- Text objects
-    ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-    ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
-  },
-  watch_index = {
-    interval = 1000
-  },
-  current_line_blame = false,
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-  use_decoration_api = true,
-  use_internal_diff = true,  -- If luajit is present
+		-- Text objects
+		['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
+		['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
+	},
+	watch_index = {
+		interval = 1000
+	},
+	current_line_blame = false,
+	sign_priority = 6,
+	update_debounce = 100,
+	status_formatter = nil, -- Use default
+	use_decoration_api = true,
+	use_internal_diff = true,  -- If luajit is present
 }

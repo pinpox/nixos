@@ -58,9 +58,6 @@ in {
       # PLUGINS:
       (lib.strings.fileContents ./vimscript/plugins.vim)
 
-      # GENERAL OPTIONS:
-      (lib.strings.fileContents ./vimscript/general.vim)
-
       # FILE BROWSING:
       (lib.strings.fileContents ./vimscript/netrw.vim)
 
@@ -71,6 +68,26 @@ in {
       # https://github.com/windwp/nvim-autopairs
 
       ''
+
+        filetype plugin indent on
+        syntax enable                  " enable syntax highlighting
+        set conceallevel=0             " Don't ever hide stuff from me
+
+
+
+        " let g:go_auto_type_info = 1 "Show Go type info of variables
+        au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null "autoindent xml correctly
+        au BufRead,BufNewFile *.md setlocal textwidth=80 " Wrap markdown files to 80 chars per line
+        let g:tex_flavor = "latex"
+
+        " Cursor to last know position
+        if has("autocmd")
+            autocmd BufReadPost *
+                        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                        \   exe "normal! g`\"" |
+                        \ endif
+        endif
+
 
         lua << EOF
 
@@ -123,7 +140,7 @@ in {
       gotests-vim
       haskell-vim
       i3config-vim
-      indentLine
+      # indentLine
       # indent-blankline-nvim
       tabular
       vim-autoformat
