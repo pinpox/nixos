@@ -56,13 +56,7 @@ in {
     extraConfig = builtins.concatStringsSep "\n" [
 
       # PLUGINS:
-      (lib.strings.fileContents ./vimscript/plugins.vim)
-
-      # FILE BROWSING:
-      (lib.strings.fileContents ./vimscript/netrw.vim)
-
-      # APPEARANCE:
-      (lib.strings.fileContents ./vimscript/style.vim)
+      (lib.strings.fileContents ./vimscript.vim)
 
       # TODO
       # https://github.com/windwp/nvim-autopairs
