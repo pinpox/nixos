@@ -130,7 +130,9 @@ in {
       vim-devicons
       vim-easy-align
       vim-eunuch
-      vim-gitgutter
+      # vim-gitgutter
+      plenary-nvim
+      gitsigns-nvim
       vim-go
       vim-grammarous
       vim-gutentags
