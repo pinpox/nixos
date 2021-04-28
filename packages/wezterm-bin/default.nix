@@ -37,7 +37,7 @@ in stdenv.mkDerivation rec {
   src = fetchurl {
     url =
       "https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu16.04.tar.xz";
-    sha256 = "15g4lav0if8pjq0pzlxd4vxlszah974r7k4v62iz0qyc9wfsil92";
+    sha256 = "sha256-9SevnzIxCKywVwbZ7IlA50tf/e0zKrUOCepw5f3/Ab4=";
   };
 
   nativeBuildInputs = [ pkg-config python3 perl ];
@@ -51,17 +51,15 @@ in stdenv.mkDerivation rec {
   '';
 
   postFixup = ''
-       for artifact in wezterm wezterm-gui wezterm-mux-server strip-ansi-escapes; do
-    patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$out/bin/$artifact" || true
-         patchelf --set-rpath "${rpath}" $out/bin/$artifact
-       done
-     '';
+    for artifact in wezterm wezterm-gui wezterm-mux-server strip-ansi-escapes; do
+     patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$out/bin/$artifact" || true
+     patchelf --set-rpath "${rpath}" $out/bin/$artifact
+    done
+  '';
 
   meta = with stdenv.lib; {
-    description = "";
-    longDescription = "";
-    homepage = "";
-    changelog = "";
+    description = "Wezterm terminal (pre-compiled binary version)";
+    homepage = "https://github.com/wez/wezterm";
     license = licenses.gpl3Plus;
     maintainers = [ maintainers.pinpox ];
     platforms = platforms.all;
