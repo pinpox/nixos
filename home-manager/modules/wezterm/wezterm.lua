@@ -17,10 +17,16 @@ wezterm.on("update-right-status", function(window, pane)
 	}));
 end)
 
+
+
 return {
 
+	set_environment_variables = {
+		EDITOR = "nvim"
+	},
+
 	-- Uses $SHELL by default. Only needed when using the appimage build
-	default_prog = {"zsh", "-l"},
+	-- default_prog = {"zsh", "-l"},
 
 	-- Leader key, use with mods="LEADER"
 	leader = { key="a", mods="CTRL" },
