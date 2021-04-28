@@ -25,7 +25,7 @@ in {
     users.users.root.openssh.authorizedKeys.keyFiles = [
       (builtins.fetchurl {
         url = "https://github.com/pinpox.keys";
-        sha256 = "0si2xncbqjrxn42hvwj98in83mk2cl4rlanf32rlc8lxa2d79q5v";
+        sha256 = "sha256:0h24djs4qahfgi5yfp14n8ljrsng36vhnn91klrz0qxqffxkrh7s";
       })
     ];
   };
