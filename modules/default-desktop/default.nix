@@ -3,9 +3,7 @@ with lib;
 let cfg = config.pinpox.desktop;
 in {
 
-  imports = [
-    ../../users/pinpox.nix
-  ];
+  imports = [ ../../users/pinpox.nix ];
 
   options.pinpox.desktop = {
     enable = mkEnableOption "Enable the default desktop configuration";

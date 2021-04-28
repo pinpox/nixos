@@ -61,7 +61,6 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.timeout = 0;
 
-
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
 

@@ -1,3 +1,1 @@
-{ config, pkgs, lib, ... }: {
-  fonts.fontconfig.enable = true;
-}
+{ config, pkgs, lib, ... }: { fonts.fontconfig.enable = true; }

@@ -74,7 +74,7 @@ in {
         # Provides some sane defaults and minimal dependencies
         default_config = { };
 
-        shelly = {};
+        shelly = { };
 
         zeroconf = { default_interface = true; };
         # Basic settings for home-assistant

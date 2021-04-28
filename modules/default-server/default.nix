@@ -5,7 +5,7 @@ in {
 
   imports = [ ../../users/pinpox.nix ];
 
-  options.pinpox.server= {
+  options.pinpox.server = {
     enable = mkEnableOption "Enable the default server configuration";
 
     hostname = mkOption {
@@ -22,11 +22,9 @@ in {
 
   config = mkIf cfg.enable {
 
-
     networking.hostName = cfg.hostname;
 
     home-manager.users.pinpox = cfg.homeConfig;
-
 
     environment.systemPackages = with pkgs; [
       ctags
@@ -41,7 +39,6 @@ in {
       ripgrep
       wget
     ];
-
 
     # pinpox.metrics.node.enable = true;
     pinpox.defaults = {

@@ -1,7 +1,6 @@
 { lib, pkgs, config, ... }:
 with lib;
-let
-  cfg = config.pinpox.services.droneci;
+let cfg = config.pinpox.services.droneci;
 in {
 
   options.pinpox.services.droneci = {
@@ -58,7 +57,9 @@ in {
       ensureDatabases = [ cfg.drone-user ];
       ensureUsers = [{
         name = cfg.drone-user;
-        ensurePermissions = { "DATABASE ${ cfg.drone-user}" = "ALL PRIVILEGES"; };
+        ensurePermissions = {
+          "DATABASE ${cfg.drone-user}" = "ALL PRIVILEGES";
+        };
       }];
     };
 
@@ -84,14 +85,14 @@ in {
       };
     };
 
-    nix.allowedUsers = [  cfg.drone-user];
+    nix.allowedUsers = [ cfg.drone-user ];
 
-    users.groups."${ cfg.drone-user}" = { };
+    users.groups."${cfg.drone-user}" = { };
 
-    users.users."${ cfg.drone-user}" = {
+    users.users."${cfg.drone-user}" = {
       isSystemUser = true;
       createHome = true;
-      group = "${ cfg.drone-user}";
+      group = "${cfg.drone-user}";
     };
   };
 }

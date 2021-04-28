@@ -73,7 +73,7 @@ in {
         User = "http2irc";
         ExecStart = "${http2irc}/bin/http2irc";
         Restart = "on-failure";
-        RestartSec="5s";
+        RestartSec = "5s";
       };
     };
 

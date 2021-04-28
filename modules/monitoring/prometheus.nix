@@ -25,7 +25,7 @@ in {
 
     services.prometheus = {
       enable = true;
-      extraFlags = ["--log.level=debug"];
+      extraFlags = [ "--log.level=debug" ];
       environmentFile = /var/src/secrets/prometheus/envfile;
       alertmanagers =
         [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
@@ -35,7 +35,7 @@ in {
         {
           job_name = "drone";
           bearer_token = "$DRONE_TOKEN";
-          static_configs = [{ targets = ["drone.lounge.rocks"]; }];
+          static_configs = [{ targets = [ "drone.lounge.rocks" ]; }];
         }
         # {
         #   job_name = "homeassistant";
@@ -103,15 +103,13 @@ in {
               receiver = "all";
             }];
           };
-          receivers = [
-            {
-              name = "all";
-              webhook_configs = [{
-                url = "http://127.0.0.1:8989/webhook";
-                # max_alerts = 5;
-              }];
-            }
-          ];
+          receivers = [{
+            name = "all";
+            webhook_configs = [{
+              url = "http://127.0.0.1:8989/webhook";
+              # max_alerts = 5;
+            }];
+          }];
         };
       };
     };

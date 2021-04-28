@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchFromGitHub}:
+{ pkgs, stdenv, fetchFromGitHub }:
 pkgs.vimUtils.buildVimPluginFrom2Nix {
   pname = "indent-blankline-nvim-lua";
   version = "2021-04-23";
@@ -10,5 +10,4 @@ pkgs.vimUtils.buildVimPluginFrom2Nix {
   };
   meta.homepage = "https://github.com/lukas-reineke/indent-blankline.nvim/";
 }
-
 

@@ -105,7 +105,6 @@ in {
     yubioath-desktop
   ];
 
-
   # Include man-pages
   manual.manpages.enable = true;
 

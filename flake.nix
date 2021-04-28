@@ -96,7 +96,10 @@
 
         apps = {
           hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-          wezterm-bin = flake-utils.lib.mkApp { drv = packages.wezterm-bin; exePath= "/bin/wezterm";};
+          wezterm-bin = flake-utils.lib.mkApp {
+            drv = packages.wezterm-bin;
+            exePath = "/bin/wezterm";
+          };
         };
 
         # TODO we probably should set some default app and/or package

@@ -27,9 +27,10 @@ stdenv.mkDerivation {
   outputHashAlgo = "sha256";
   outputHashMode = "recursive";
   # outputHash = "sha256-kSDG4g29pzyO4ugIqPy3CzEVKlCfHA6qlEOpKISnM/I=";
-# outputHash = "sha256-fW5Ur0qjEBqpSEwUi7Ks8DP8VVDiTheGiPD3urbZIns="; # input400.zip
-# outputHash = "sha256-UWszhDoVCovKWuNbY/FEC33nf7C5FbfAUuZyGOXPrXM="; # input500.zip
-outputHash = "sha256-g3fY691IKNXaSHrdKfZFzFPIQUoyuzwk5foXqKDcsso="; # input450.zip
+  # outputHash = "sha256-fW5Ur0qjEBqpSEwUi7Ks8DP8VVDiTheGiPD3urbZIns="; # input400.zip
+  # outputHash = "sha256-UWszhDoVCovKWuNbY/FEC33nf7C5FbfAUuZyGOXPrXM="; # input500.zip
+  outputHash =
+    "sha256-g3fY691IKNXaSHrdKfZFzFPIQUoyuzwk5foXqKDcsso="; # input450.zip
 
   meta = with lib; {
     description = "Fonts for Code, from Font Bureau (Customized Version)";

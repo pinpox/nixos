@@ -25,23 +25,20 @@ in {
     terraform # TODO add options to enable/disable large packages like terraform
   ];
 
+  xdg = {
+    enable = true;
+    configFile = {
+      nvim_lua = {
+        target = "nvim/lua";
+        source = ./lua;
+      };
 
-    xdg = {
-      enable = true;
-      configFile = {
-        nvim_lua = {
-          target = "nvim/lua";
-          source = ./lua;
-        };
-
-        nvim_vimscript = {
-          target = "nvim/vimscript";
-          source = ./vimscript;
-        };
+      nvim_vimscript = {
+        target = "nvim/vimscript";
+        source = ./vimscript;
       };
     };
-
-
+  };
 
   programs.neovim = {
     enable = true;
