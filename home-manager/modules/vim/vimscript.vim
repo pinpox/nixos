@@ -23,7 +23,7 @@ nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>
 
 " packadd! vim-which-key " Needed so that vim-which-key functions are available here
-call which_key#register('<Space>', 'g:which_key_map')
+" call which_key#register('<Space>', 'g:which_key_map')
 
 set inccommand=nosplit
 

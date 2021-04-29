@@ -213,9 +213,14 @@ require'nvim-web-devicons'.setup {
 	default = true;
 }
 
-require('mappings')    -- This line was changed
-require('which-key')    -- This line was changed
-require('evil_lualine')    -- This line was changed
+require('mappings')
+require('evil_lualine')
+
+
+-- require('which-key')
+-- require('which-key-nvim')
+-- require'which-key'.setup{}
+--
 
 
 require('gitsigns').setup {

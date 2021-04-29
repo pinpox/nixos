@@ -105,12 +105,12 @@ in {
 
       (pkgs.callPackage ../../../packages/indent-blankline-nvim-lua { })
 
-      # TODO Remove when PR is merged https://github.com/NixOS/nixpkgs/pull/117813
-      # (plugin "nvim-whichkey-setup.lua" "AckslD/nvim-whichkey-setup.lua" "main"
-      #   "59aa0a4287adf6c2c9faabf912cdc005230e7c98")
+      # TODO Remove when PR is merged
+      # (pkgs.callPackage ../../../packages/which-key { })
+      (plugin "which-key.nvim" "folke/which-key.nvim" "main"
+        "7b1c6aa23061a9ed1acdfec3d20dc5e361ec01a3")
 
       vim-nix
-      nvim-whichkey-setup-lua
       # vim-indent-guides
       # vimpreviewpandoc
       nvim-compe
@@ -157,7 +157,6 @@ in {
       vim-textobj-user
       vim-vinegar
       vim-visual-increment
-      vim-which-key
       nvim-bufferline-lua
       nvim-web-devicons
       #vista-vim
