@@ -1,3 +1,15 @@
+local wk = require("which-key")
+wk.setup {}
+
+wk.register({
+	f = {
+		name = "+file",
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+		n = { "<cmd>enew<cr>", "New File" },
+	},
+}, {})
+
 -- Switcch ; and :
 vim.api.nvim_set_keymap('n', ';', ':', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', ':', ';', { noremap = true, silent = true })
