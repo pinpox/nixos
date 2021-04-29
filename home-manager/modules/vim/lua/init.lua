@@ -216,12 +216,7 @@ require'nvim-web-devicons'.setup {
 require('mappings')
 require('evil_lualine')
 
-
--- require('which-key')
--- require('which-key-nvim')
--- require'which-key'.setup{}
---
-
+require('which-key').setup {}
 
 require('gitsigns').setup {
 	signs = {
