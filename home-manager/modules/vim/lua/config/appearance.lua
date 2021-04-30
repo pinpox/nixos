@@ -1,6 +1,8 @@
 vim.g.indentLine_char = '│'
 vim.g.buftabline_indicators = 1
 
+require'colorizer'.setup()
+
 -- TODO convert to lua
 vim.cmd 'let $NVIM_TUI_ENABLE_TRUE_COLOR=1'
 vim.cmd "set listchars=tab:\\│\\ ,trail:·,nbsp:\\ " -- Display trailing whitespace

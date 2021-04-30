@@ -31,6 +31,7 @@ vim.o.timeoutlen       = 500                -- " Set timeout, e.g. used in which
 vim.g.mapleader        = " "                -- Set mapleader to space
 vim.o.cmdheight        = 1                  -- Height of the command section
 vim.cmd('filetype plugin indent on')        -- TODO: How do I do this in lua?
+vim.cmd('set termguicolors')
 
 -- window-local options
 vim.wo.number          = true               -- show absolute line numbers

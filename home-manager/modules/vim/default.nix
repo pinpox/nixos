@@ -105,6 +105,7 @@ in {
       neuron-vim
       nvim-bufferline-lua
       nvim-compe
+      nvim-colorizer-lua
       nvim-lspconfig
       nvim-web-devicons
       plenary-nvim
