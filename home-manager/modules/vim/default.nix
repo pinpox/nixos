@@ -1,6 +1,6 @@
 { self, config, pkgs, lib, ... }:
 let
-  vars = import ./vars.nix;
+  vars = import ../vars.nix;
 
   plugin = name: repo: branch: sha256:
   pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -31,6 +31,42 @@ in {
       nvim_lua = {
         target = "nvim/lua";
         source = ./lua;
+      };
+
+
+      nixcolors = {
+        target = "nvim/lua/config/nixcolors.lua";
+        text = ''
+          local M =  {}
+
+          M.Black         = "#${vars.colors.Black}"
+          M.DarkGrey      = "#${vars.colors.DarkGrey}"
+          M.Grey          = "#${vars.colors.Grey}"
+          M.BrightGrey    = "#${vars.colors.BrightGrey}"
+          M.DarkWhite     = "#${vars.colors.DarkWhite}"
+          M.White         = "#${vars.colors.White}"
+          M.BrightWhite   = "#${vars.colors.BrightWhite}"
+          M.DarkRed       = "#${vars.colors.DarkRed}"
+          M.Red           = "#${vars.colors.Red}"
+          M.BrightRed     = "#${vars.colors.BrightRed}"
+          M.DarkYellow    = "#${vars.colors.DarkYellow}"
+          M.Yellow        = "#${vars.colors.Yellow}"
+          M.BrightYellow  = "#${vars.colors.BrightYellow}"
+          M.DarkGreen     = "#${vars.colors.DarkGreen}"
+          M.Green         = "#${vars.colors.Green}"
+          M.BrightGreen   = "#${vars.colors.BrightGreen}"
+          M.DarkCyan      = "#${vars.colors.DarkCyan}"
+          M.Cyan          = "#${vars.colors.Cyan}"
+          M.BrightCyan    = "#${vars.colors.BrightCyan}"
+          M.DarkBlue      = "#${vars.colors.DarkBlue}"
+          M.Blue          = "#${vars.colors.Blue}"
+          M.BrightBlue    = "#${vars.colors.BrightBlue}"
+          M.DarkMagenta   = "#${vars.colors.DarkMagenta}"
+          M.Magenta       = "#${vars.colors.Magenta}"
+          M.BrightMagenta = "#${vars.colors.BrightMagenta}"
+
+          return M
+        '';
       };
 
       colors = {
@@ -75,7 +111,7 @@ in {
         " Add snippet directories from packages
         let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.Go}/share/vscode/extensions/golang.Go/snippets/']
 
-      '';
+    '';
 
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
