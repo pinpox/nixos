@@ -51,37 +51,37 @@ in {
         }
       ];
       colors = {
-        background = "#${vars.colors.base00}";
+        background = "#${vars.colors.Black}";
         focused = {
-          background = "#${vars.colors.base0D}";
-          border = "#${vars.colors.base0D}";
-          childBorder = "#${vars.colors.base0D}";
-          indicator = "#${vars.colors.base0D}";
-          text = "#${vars.colors.base00}";
+          background = "#${vars.colors.Blue}";
+          border = "#${vars.colors.Blue}";
+          childBorder = "#${vars.colors.Blue}";
+          indicator = "#${vars.colors.Blue}";
+          text = "#${vars.colors.Black}";
         };
 
         focusedInactive = {
-          background = "#${vars.colors.base03}";
-          border = "#${vars.colors.base03}";
-          childBorder = "#${vars.colors.base03}";
-          indicator = "#${vars.colors.base00}";
-          text = "#${vars.colors.base00}";
+          background = "#${vars.colors.BrightGrey}";
+          border = "#${vars.colors.BrightGrey}";
+          childBorder = "#${vars.colors.BrightGrey}";
+          indicator = "#${vars.colors.Black}";
+          text = "#${vars.colors.Black}";
         };
 
         unfocused = {
-          background = "#${vars.colors.base00}";
-          border = "#${vars.colors.base03}";
-          childBorder = "#${vars.colors.base03}";
-          indicator = "#${vars.colors.base00}";
-          text = "#${vars.colors.base0D}";
+          background = "#${vars.colors.Black}";
+          border = "#${vars.colors.BrightGrey}";
+          childBorder = "#${vars.colors.BrightGrey}";
+          indicator = "#${vars.colors.Black}";
+          text = "#${vars.colors.Blue}";
         };
 
         urgent = {
-          background = "#${vars.colors.base08}";
-          border = "#${vars.colors.base08}";
-          childBorder = "#${vars.colors.base08}";
-          indicator = "#${vars.colors.base08}";
-          text = "#${vars.colors.base00}";
+          background = "#${vars.colors.Red}";
+          border = "#${vars.colors.Red}";
+          childBorder = "#${vars.colors.Red}";
+          indicator = "#${vars.colors.Red}";
+          text = "#${vars.colors.Black}";
         };
       };
 

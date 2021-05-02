@@ -27,12 +27,12 @@ in {
         frame_width = 0;
         separator_color = "frame";
         sort = "yes";
-        frame_color = "#${vars.colors.base03}";
+        frame_color = "#${vars.colors.BrightGrey}";
         font = "${vars.font.normal.family} ${vars.font.normal.style} 8";
         line_height = 0;
         markup = "full";
         format =
-          "<b><span foreground='#${vars.colors.base0D}'>%s</span></b>\\n<span>%b</span>";
+          "<b><span foreground='#${vars.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
         alignment = "left";
         show_age_threshold = 60;
         word_wrap = "yes";
@@ -60,20 +60,20 @@ in {
       };
 
       urgency_low = {
-        background = "#${vars.colors.base01}";
-        foreground = "#${vars.colors.base03}";
+        background = "#${vars.colors.DarkGrey}";
+        foreground = "#${vars.colors.BrightGrey}";
         timeout = 5;
       };
 
       urgency_normal = {
-        background = "#${vars.colors.base01}";
-        foreground = "#${vars.colors.base05}";
+        background = "#${vars.colors.DarkGrey}";
+        foreground = "#${vars.colors.White}";
         timeout = 10;
       };
 
       urgency_critical = {
-        background = "#${vars.colors.base08}";
-        foreground = "#${vars.colors.base00}";
+        background = "#${vars.colors.Red}";
+        foreground = "#${vars.colors.Black}";
         timeout = 15;
       };
     };

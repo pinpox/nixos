@@ -21,38 +21,38 @@ in {
     colors = {
 
       window = {
-        background = "#${vars.colors.base00}";
-        # foreground = "#${vars.colors.base00}";
-        separator = "#${vars.colors.base0D}";
-        border = "#${vars.colors.base00}";
+        background = "#${vars.colors.Black}";
+        # foreground = "#${vars.colors.Black}";
+        separator = "#${vars.colors.Blue}";
+        border = "#${vars.colors.Black}";
       };
 
       rows = {
         normal = {
-          background = "#${vars.colors.base00}";
-          foreground = "#${vars.colors.base05}";
-          backgroundAlt = "#${vars.colors.base00}";
+          background = "#${vars.colors.Black}";
+          foreground = "#${vars.colors.White}";
+          backgroundAlt = "#${vars.colors.Black}";
           highlight = {
-            background = "#${vars.colors.base02}";
-            foreground = "#${vars.colors.base07}";
+            background = "#${vars.colors.Grey}";
+            foreground = "#${vars.colors.DarkGreen}";
           };
         };
         active = {
-          background = "#${vars.colors.base00}";
-          foreground = "#${vars.colors.base0D}";
-          backgroundAlt = "#${vars.colors.base00}";
+          background = "#${vars.colors.Black}";
+          foreground = "#${vars.colors.Blue}";
+          backgroundAlt = "#${vars.colors.Black}";
           highlight = {
-            background = "#${vars.colors.base00}";
-            foreground = "#${vars.colors.base0D}";
+            background = "#${vars.colors.Black}";
+            foreground = "#${vars.colors.Blue}";
           };
         };
         urgent = {
-          background = "#${vars.colors.base00}";
-          foreground = "#${vars.colors.base08}";
-          backgroundAlt = "#${vars.colors.base00}";
+          background = "#${vars.colors.Black}";
+          foreground = "#${vars.colors.Red}";
+          backgroundAlt = "#${vars.colors.Black}";
           highlight = {
-            background = "#${vars.colors.base00}";
-            foreground = "#${vars.colors.base08}";
+            background = "#${vars.colors.Black}";
+            foreground = "#${vars.colors.Red}";
           };
         };
       };

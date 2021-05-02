@@ -11,35 +11,35 @@ let
   materia_colors = pkgs.writeTextFile {
     name = "gtk-generated-colors";
     text = ''
-      BTN_BG=${vars.colors.base02}
-      BTN_FG=${vars.colors.base06}
+      BTN_BG=${vars.colors.Grey}
+      BTN_FG=${vars.colors.BrightWhite}
 
-      FG=${vars.colors.base05}
-      BG=${vars.colors.base00}
+      FG=${vars.colors.White}
+      BG=${vars.colors.Black}
 
-      HDR_BTN_BG=${vars.colors.base01}
-      HDR_BTN_FG=${vars.colors.base05}
+      HDR_BTN_BG=${vars.colors.DarkGrey}
+      HDR_BTN_FG=${vars.colors.White}
 
-      ACCENT_BG=${vars.colors.base0B}
-      ACCENT_FG=${vars.colors.base00}
+      ACCENT_BG=${vars.colors.Green}
+      ACCENT_FG=${vars.colors.Black}
 
-      HDR_FG=${vars.colors.base05}
-      HDR_BG=${vars.colors.base02}
+      HDR_FG=${vars.colors.White}
+      HDR_BG=${vars.colors.Grey}
 
-      MATERIA_SURFACE=${vars.colors.base02}
-      MATERIA_VIEW=${vars.colors.base01}
+      MATERIA_SURFACE=${vars.colors.Grey}
+      MATERIA_VIEW=${vars.colors.DarkGrey}
 
-      MENU_BG=${vars.colors.base02}
-      MENU_FG=${vars.colors.base06}
+      MENU_BG=${vars.colors.Grey}
+      MENU_FG=${vars.colors.BrightWhite}
 
-      SEL_BG=${vars.colors.base0D}
-      SEL_FG=${vars.colors.base0E}
+      SEL_BG=${vars.colors.Blue}
+      SEL_FG=${vars.colors.Magenta}
 
-      TXT_BG=${vars.colors.base02}
-      TXT_FG=${vars.colors.base06}
+      TXT_BG=${vars.colors.Grey}
+      TXT_FG=${vars.colors.BrightWhite}
 
-      WM_BORDER_FOCUS=${vars.colors.base05}
-      WM_BORDER_UNFOCUS=${vars.colors.base03}
+      WM_BORDER_FOCUS=${vars.colors.White}
+      WM_BORDER_UNFOCUS=${vars.colors.BrightGrey}
 
       UNITY_DEFAULT_LAUNCHER_STYLE=False
       NAME=generated

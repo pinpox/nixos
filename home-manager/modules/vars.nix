@@ -35,24 +35,6 @@
     Red = "F07178"; # #F07178
     DarkRed = ""; # TODO
 
-    # TODO/DEPRECATED: For compatibility with base16 themes.
-    base00 = Black;
-    base01 = DarkGrey;
-    base02 = Grey;
-    base03 = BrightGrey;
-    base04 = DarkWhite;
-    base05 = White;
-    base06 = BrightWhite;
-    base07 = DarkGreen;
-    base08 = Red;
-    base09 = DarkYellow;
-    base0A = Yellow;
-    base0B = Green;
-    base0C = Cyan;
-    base0D = Blue;
-    base0E = Magenta;
-    base0F = BrightRed;
-
   };
 
   font = {
