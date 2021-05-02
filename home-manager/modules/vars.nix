@@ -28,7 +28,7 @@
     base04 = "D8DEE9"; # #D8DEE9
     base05 = "E5E9F0"; # #E5E9F0
     base06 = "ECEFF4"; # #ECEFF4
-    base07 = "8FBCBB"; # #8FBCBB
+    base07 = "55D1B4"; # #55D1B4 Previously: #8FBCBB
     base08 = "F07178"; # #F07178
     base09 = "F78C6C"; # #F78C6C
     base0A = "FFCB6B"; # #FFCB6B
