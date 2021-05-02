@@ -15,7 +15,7 @@
     Yellow = "FFCB6B"; # #FFCB6B
     BrightYellow = ""; # TODO
 
-    DarkGreen= "55D1B4"; # #55D1B4 Previously: #8FBCBB
+    DarkGreen = "55D1B4"; # #55D1B4 Previously: #8FBCBB
     Green = "C3E88D"; # #C3E88D
     BrightGreen = ""; # TODO
 
@@ -23,7 +23,7 @@
     Cyan = "89DDFF"; # #89DDFF
     BrightCyan = ""; # TODO
 
-    DarkBlue= ""; # #TODO
+    DarkBlue = ""; # #TODO
     Blue = "82AAFF"; # #82AAFF
     BrightBlue = ""; # #TODO
 
@@ -38,19 +38,19 @@
     # TODO/DEPRECATED: For compatibility with base16 themes.
     base00 = Black;
     base01 = DarkGrey;
-    base02 = Grey ;
-    base03= BrightGrey;
-    base04 = DarkWhite ;
-    base05 = White ;
+    base02 = Grey;
+    base03 = BrightGrey;
+    base04 = DarkWhite;
+    base05 = White;
     base06 = BrightWhite;
     base07 = DarkGreen;
     base08 = Red;
-    base09 = DarkYellow ;
+    base09 = DarkYellow;
     base0A = Yellow;
-    base0B = Green ;
-    base0C = Cyan ;
+    base0B = Green;
+    base0C = Cyan;
     base0D = Blue;
-    base0E = Magenta ;
+    base0E = Magenta;
     base0F = BrightRed;
 
   };

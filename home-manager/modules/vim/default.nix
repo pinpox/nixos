@@ -2,16 +2,18 @@
 let
   vars = import ../vars.nix;
 
+  # Helper function to add plugins directly from GitHub if they are not
+  # packaged in nixpkgs yet
   plugin = name: repo: branch: sha256:
-  pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "vim-plugin-${name}";
-    version = "git";
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = branch;
-      rev = sha256;
+    pkgs.vimUtils.buildVimPluginFrom2Nix {
+      pname = "vim-plugin-${name}";
+      version = "git";
+      src = builtins.fetchGit {
+        url = "https://github.com/${repo}.git";
+        ref = branch;
+        rev = sha256;
+      };
     };
-  };
 
 in {
 
@@ -32,7 +34,6 @@ in {
         target = "nvim/lua";
         source = ./lua;
       };
-
 
       nixcolors = {
         target = "nvim/lua/config/nixcolors.lua";
@@ -71,7 +72,7 @@ in {
 
       colors = {
         target = "nvim/colors/generated.vim";
-        text = "\" File empty on purpouse";
+        text = ''" File empty on purpouse'';
       };
 
       nvim_vimscript = {
@@ -92,24 +93,24 @@ in {
     withRuby = true;
 
     extraConfig = ''
-        lua << EOF
+      lua << EOF
 
-        local utils = require('utils')
+      local utils = require('utils')
 
-        require('config.general') -- General options, should stay first!
-        require('config.appearance')
-        require('config.lsp')
-        require('config.devicons')
-        require('config.compe')
-        require('config.which-key')
-        require('config.bufferline')
-        require('config.lualine')
-        require('config.gitsigns')
+      require('config.general') -- General options, should stay first!
+      require('config.appearance')
+      require('config.lsp')
+      require('config.devicons')
+      require('config.compe')
+      require('config.which-key')
+      require('config.bufferline')
+      require('config.lualine')
+      require('config.gitsigns')
 
-        EOF
+      EOF
 
-        " Add snippet directories from packages
-        let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.Go}/share/vscode/extensions/golang.Go/snippets/']
+      " Add snippet directories from packages
+      let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.Go}/share/vscode/extensions/golang.Go/snippets/']
 
     '';
 
@@ -121,16 +122,15 @@ in {
       # TODO Remove when PR is merged
       # (pkgs.callPackage ../../../packages/which-key { })
       (plugin "which-key.nvim" "folke/which-key.nvim" "main"
-      "7b1c6aa23061a9ed1acdfec3d20dc5e361ec01a3")
+        "7b1c6aa23061a9ed1acdfec3d20dc5e361ec01a3")
 
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
-      "87c80e3f4a590d0387d9b128d1f1fc456759408a")
+        "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
       # nvim-treesitter
       BufOnly-vim
       ansible-vim
       base16-vim
-      colorizer
       committia-vim
       fzf-vim
       gitsigns-nvim
