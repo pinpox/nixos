@@ -106,6 +106,7 @@ in {
       require('config.bufferline')
       require('config.lualine')
       require('config.gitsigns')
+      require('config.treesitter')
 
       EOF
 
@@ -127,7 +128,7 @@ in {
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
         "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
-      # nvim-treesitter
+      nvim-treesitter
       BufOnly-vim
       ansible-vim
       base16-vim
