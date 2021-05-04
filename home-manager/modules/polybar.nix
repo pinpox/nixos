@@ -41,8 +41,8 @@ in {
         height = 22;
         radius = 0;
 
-        background = "#${vars.colors.base00}";
-        foreground = "#${vars.colors.base05}";
+        background = "#${vars.colors.Black}";
+        foreground = "#${vars.colors.White}";
 
         line-size = 0;
         border-size = 0;
@@ -60,14 +60,14 @@ in {
 
         tray-position = "right";
         tray-padding = 2;
-        tray-background = "#${vars.colors.base0D}";
+        tray-background = "#${vars.colors.Blue}";
       };
 
       "module/filesystem" = {
 
-        format-mounted-prefix-foreground = "#${vars.colors.base0D}";
-        format-unmounted-prefix-foreground = "#${vars.colors.base0D}";
-        label-unmounted-foreground = "#${vars.colors.base05}";
+        format-mounted-prefix-foreground = "#${vars.colors.Blue}";
+        format-unmounted-prefix-foreground = "#${vars.colors.Blue}";
+        label-unmounted-foreground = "#${vars.colors.White}";
 
         format-mounted-prefix-padding-right = 1;
         format-unmounted-prefix-padding-right = 1;
@@ -93,27 +93,27 @@ in {
         # Only show workspaces on the same output as the bar
         pin-workspaces = true;
         # label-mode-padding           = 2;
-        label-mode-background = "#${vars.colors.base05}";
+        label-mode-background = "#${vars.colors.White}";
 
         # focused                    = Active workspace on focused monitor
         label-focused = "%name%";
-        label-focused-background = "#${vars.colors.base0D}";
-        label-focused-foreground = "#${vars.colors.base00}";
+        label-focused-background = "#${vars.colors.Blue}";
+        label-focused-foreground = "#${vars.colors.Black}";
         label-focused-padding = 2;
 
         # unfocused                  = Inactive workspace on any monitor
         label-unfocused = "%name%";
-        label-unfocused-background = "${vars.colors.base01}";
+        label-unfocused-background = "${vars.colors.DarkGrey}";
         label-unfocused-padding = 2;
 
         # visible                    = Active workspace on unfocused monitor
         label-visible = "%name%";
-        label-visible-background = "#${vars.colors.base03}";
+        label-visible-background = "#${vars.colors.BrightGrey}";
         label-visible-padding = 2;
 
         # urgent                     = Workspace with urgency hint set
         label-urgent = "%name%";
-        label-urgent-background = "#${vars.colors.base08}";
+        label-urgent-background = "#${vars.colors.Red}";
         label-urgent-padding = 2;
 
       };
@@ -123,7 +123,7 @@ in {
         interval = 2;
         format-prefix-padding-right = 1;
         format-prefix = "";
-        format-prefix-foreground = "#${vars.colors.base0D}";
+        format-prefix-foreground = "#${vars.colors.Blue}";
         label = "%percentage%%";
         # format-padding = 2;
       };
@@ -134,7 +134,7 @@ in {
         format-prefix = "";
 
         format-prefix-padding-right = 1;
-        format-prefix-foreground = "#${vars.colors.base0D}";
+        format-prefix-foreground = "#${vars.colors.Blue}";
         label = "%percentage_used%%";
         # format-padding = 2;
       };
@@ -167,7 +167,7 @@ in {
 
         format-connected-prefix-padding-right = 1;
         format-connected-prefix = "";
-        format-connected-prefix-foreground = "#${vars.colors.base0D}";
+        format-connected-prefix-foreground = "#${vars.colors.Blue}";
         label-connected = "%local_ip%";
         # format-connected-prefix-padding = 1;
 
@@ -179,9 +179,9 @@ in {
 
       "module/date" = {
 
-        format-prefix-foreground = "#${vars.colors.base00}";
-        format-foreground = "#${vars.colors.base00}";
-        format-background = "#${vars.colors.base0D}";
+        format-prefix-foreground = "#${vars.colors.Black}";
+        format-foreground = "#${vars.colors.Black}";
+        format-background = "#${vars.colors.Blue}";
 
         type = "internal/date";
         interval = 5;
@@ -211,8 +211,8 @@ in {
         interval = 5;
 
         # label-muted-foreground = #666
-        ramp-volume-foreground = "#${vars.colors.base0D}";
-        format-volume-prefix-foreground = "#${vars.colors.base0D}";
+        ramp-volume-foreground = "#${vars.colors.Blue}";
+        format-volume-prefix-foreground = "#${vars.colors.Blue}";
 
         label-muted = "  0%";
         ramp-volume-0 = "";

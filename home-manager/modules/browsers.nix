@@ -47,10 +47,10 @@ in {
           # ~/.mozilla/firefox/pinpox/bookmarks.html
           # "browser.bookmarks.file" = 
 
-          # "browser.display.background_color" = "#${vars.colors.base00}";
-          # "browser.display.foreground_color" = "#${vars.colors.base05}";
+          # "browser.display.background_color" = "#${vars.colors.Black}";
+          # "browser.display.foreground_color" = "#${vars.colors.White}";
           "browser.display.use_system_colors" = "true";
-          "browser.anchor_color" = "#${vars.colors.base0A}";
+          "browser.anchor_color" = "#${vars.colors.Yellow}";
           # "browser.display.use_document_colors" = "false";
           # "browser.search.region" = "GB";
           # "browser.search.isUS" = false;
@@ -68,33 +68,33 @@ in {
                      :root {
 
              /* Minimal Functional Fox variables*/
-            --mff-bg: #${vars.colors.base00};
-            --mff-icon-color: #${vars.colors.base0D};
+            --mff-bg: #${vars.colors.Black};
+            --mff-icon-color: #${vars.colors.Blue};
             --mff-nav-toolbar-padding: 8px;
             --mff-sidebar-bg: var(--mff-bg);
-            --mff-sidebar-color: #${vars.colors.base04};
+            --mff-sidebar-color: #${vars.colors.DarkWhite};
 
             --mff-tab-border-radius: 0px;
-            --mff-tab-color: #${vars.colors.base05};
+            --mff-tab-color: #${vars.colors.White};
             --mff-tab-font-family: "Source Sans Pro", sans;
             --mff-tab-font-size: 11pt;
             --mff-tab-font-weight: 400;
             --mff-tab-height: 32px;
-            --mff-tab-pinned-bg: #${vars.colors.base0E};
-            --mff-tab-selected-bg: #${vars.colors.base03};
-            --mff-tab-selected-fg: #${vars.colors.base0A};
-            --mff-tab-soundplaying-bg: #${vars.colors.base0E};
+            --mff-tab-pinned-bg: #${vars.colors.Magenta};
+            --mff-tab-selected-bg: #${vars.colors.BrightGrey};
+            --mff-tab-selected-fg: #${vars.colors.Yellow};
+            --mff-tab-soundplaying-bg: #${vars.colors.Magenta};
 
-            --mff-urlbar-color: #${vars.colors.base05};
-            --mff-urlbar-focused-color: #${vars.colors.base0D};
+            --mff-urlbar-color: #${vars.colors.White};
+            --mff-urlbar-focused-color: #${vars.colors.Blue};
             --mff-urlbar-font-family: "Source Sans Pro", serif;
             --mff-urlbar-font-size: 12pt;
             --mff-urlbar-font-weight: 700;
-            --mff-urlbar-results-color: #${vars.colors.base05};
+            --mff-urlbar-results-color: #${vars.colors.White};
             --mff-urlbar-results-font-family: "Source Sans Pro", serif;
             --mff-urlbar-results-font-size: 12pt;
             --mff-urlbar-results-font-weight: 700;
-            --mff-urlbar-results-url-color: #${vars.colors.base0D};
+            --mff-urlbar-results-url-color: #${vars.colors.Blue};
 
             /*   --mff-tab-selected-bg: linear-gradient(90deg, rgba(232,74,95,1) 0%, rgba(255,132,124,1) 50%, rgba(254,206,168,1) 100%); */
             /*   --mff-urlbar-font-weight: 600; */
@@ -102,9 +102,9 @@ in {
             /* Overriden Firefox variables*/
             --autocomplete-popup-background: var(--mff-bg) !important;
             --default-arrowpanel-background: var(--mff-bg) !important;
-            --default-arrowpanel-color: #${vars.colors.base05}!important;
+            --default-arrowpanel-color: #${vars.colors.White}!important;
             --lwt-toolbarbutton-icon-fill: var(--mff-icon-color) !important;
-            --panel-disabled-color: #${vars.colors.base05}00;
+            --panel-disabled-color: #${vars.colors.White}00;
             --toolbar-bgcolor: var(--mff-bg) !important;
             --urlbar-separator-color: transparent !important;
           }
@@ -116,7 +116,7 @@ in {
           }
 
           .tab-text[selected="true"] {
-            color: #${vars.colors.base0A} !important;
+            color: #${vars.colors.Yellow} !important;
           }
 
           .tab-background:not[visuallyselected] {
@@ -137,7 +137,7 @@ in {
 
           .tab-background {
             border: none !important;
-            background: #${vars.colors.base02} !important;
+            background: #${vars.colors.Grey} !important;
           }
 
           .tabbrowser-arrowscrollbox {

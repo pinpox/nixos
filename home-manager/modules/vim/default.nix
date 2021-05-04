@@ -1,7 +1,9 @@
 { self, config, pkgs, lib, ... }:
 let
-  vars = import ./vars.nix;
+  vars = import ../vars.nix;
 
+  # Helper function to add plugins directly from GitHub if they are not
+  # packaged in nixpkgs yet
   plugin = name: repo: branch: sha256:
     pkgs.vimUtils.buildVimPluginFrom2Nix {
       pname = "vim-plugin-${name}";
@@ -33,6 +35,46 @@ in {
         source = ./lua;
       };
 
+      nixcolors = {
+        target = "nvim/lua/config/nixcolors.lua";
+        text = ''
+          local M =  {}
+
+          M.Black         = "#${vars.colors.Black}"
+          M.DarkGrey      = "#${vars.colors.DarkGrey}"
+          M.Grey          = "#${vars.colors.Grey}"
+          M.BrightGrey    = "#${vars.colors.BrightGrey}"
+          M.DarkWhite     = "#${vars.colors.DarkWhite}"
+          M.White         = "#${vars.colors.White}"
+          M.BrightWhite   = "#${vars.colors.BrightWhite}"
+          M.DarkRed       = "#${vars.colors.DarkRed}"
+          M.Red           = "#${vars.colors.Red}"
+          M.BrightRed     = "#${vars.colors.BrightRed}"
+          M.DarkYellow    = "#${vars.colors.DarkYellow}"
+          M.Yellow        = "#${vars.colors.Yellow}"
+          M.BrightYellow  = "#${vars.colors.BrightYellow}"
+          M.DarkGreen     = "#${vars.colors.DarkGreen}"
+          M.Green         = "#${vars.colors.Green}"
+          M.BrightGreen   = "#${vars.colors.BrightGreen}"
+          M.DarkCyan      = "#${vars.colors.DarkCyan}"
+          M.Cyan          = "#${vars.colors.Cyan}"
+          M.BrightCyan    = "#${vars.colors.BrightCyan}"
+          M.DarkBlue      = "#${vars.colors.DarkBlue}"
+          M.Blue          = "#${vars.colors.Blue}"
+          M.BrightBlue    = "#${vars.colors.BrightBlue}"
+          M.DarkMagenta   = "#${vars.colors.DarkMagenta}"
+          M.Magenta       = "#${vars.colors.Magenta}"
+          M.BrightMagenta = "#${vars.colors.BrightMagenta}"
+
+          return M
+        '';
+      };
+
+      colors = {
+        target = "nvim/colors/generated.vim";
+        text = ''" File empty on purpouse'';
+      };
+
       nvim_vimscript = {
         target = "nvim/vimscript";
         source = ./vimscript;
@@ -50,55 +92,27 @@ in {
     withPython3 = true;
     withRuby = true;
 
-    extraConfig = builtins.concatStringsSep "\n" [
+    extraConfig = ''
+      lua << EOF
 
-      # PLUGINS:
-      (lib.strings.fileContents ./vimscript.vim)
+      local utils = require('utils')
 
-      # TODO
-      # https://github.com/windwp/nvim-autopairs
+      require('config.general') -- General options, should stay first!
+      require('config.appearance')
+      require('config.lsp')
+      require('config.devicons')
+      require('config.compe')
+      require('config.which-key')
+      require('config.bufferline')
+      require('config.lualine')
+      require('config.gitsigns')
 
-      ''
+      EOF
 
-        filetype plugin indent on
-        syntax enable                  " enable syntax highlighting
-        set conceallevel=0             " Don't ever hide stuff from me
+      " Add snippet directories from packages
+      let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.Go}/share/vscode/extensions/golang.Go/snippets/']
 
-
-
-        " let g:go_auto_type_info = 1 "Show Go type info of variables
-        au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null "autoindent xml correctly
-        au BufRead,BufNewFile *.md setlocal textwidth=80 " Wrap markdown files to 80 chars per line
-        let g:tex_flavor = "latex"
-
-        " Cursor to last know position
-        if has("autocmd")
-            autocmd BufReadPost *
-                        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-                        \   exe "normal! g`\"" |
-                        \ endif
-        endif
-
-
-        lua << EOF
-
-        ${lib.strings.fileContents ./lua/init.lua}
-
-        EOF
-
-        ${lib.strings.fileContents ./vimscript/lsp-config.vim}
-
-        " Add snippet directories from packages
-        let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.Go}/share/vscode/extensions/golang.Go/snippets/']
-
-        inoremap <silent><expr> <C-Space> compe#complete()
-        inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-        inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-        inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-        inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-      ''
-
-    ];
+    '';
 
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
@@ -110,29 +124,27 @@ in {
       (plugin "which-key.nvim" "folke/which-key.nvim" "main"
         "7b1c6aa23061a9ed1acdfec3d20dc5e361ec01a3")
 
-      vim-nix
-      # vim-indent-guides
-      # vimpreviewpandoc
-      nvim-compe
-      nvim-lspconfig
-      vim-vsnip
-      vim-vsnip-integ
-      # nvim-treesitter
+      (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
+        "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
-      colorizer
-      committia-vim
-      neuron-vim
+      # nvim-treesitter
       BufOnly-vim
-      lualine-nvim
       ansible-vim
       base16-vim
+      committia-vim
       fzf-vim
-      vista-vim
+      gitsigns-nvim
       gotests-vim
       haskell-vim
       i3config-vim
-      # indentLine
-      # indent-blankline-nvim
+      lualine-nvim
+      neuron-vim
+      nvim-bufferline-lua
+      nvim-compe
+      nvim-colorizer-lua
+      nvim-lspconfig
+      nvim-web-devicons
+      plenary-nvim
       tabular
       vim-autoformat
       vim-better-whitespace
@@ -140,15 +152,13 @@ in {
       vim-devicons
       vim-easy-align
       vim-eunuch
-      # vim-gitgutter
-      plenary-nvim
-      gitsigns-nvim
       vim-go
       vim-grammarous
       vim-gutentags
       vim-illuminate
       vim-indent-object
       vim-markdown
+      vim-nix
       vim-repeat
       vim-sandwich
       vim-snippets
@@ -157,22 +167,18 @@ in {
       vim-textobj-user
       vim-vinegar
       vim-visual-increment
-      nvim-bufferline-lua
-      nvim-web-devicons
-      #vista-vim
+      vim-vsnip
+      vim-vsnip-integ
+      vista-vim
     ];
   };
 }
 
 # TODO Missing plugins
-# AndrewRadev/switch.vim'
+# autopairs
 # fvictorio/vim-textobj-backticks'
 # jamessan/vim-gnupg', {'for': 'gpg'}   " Edit ggp-encrypted files
-# juliosueiras/vim-terraform-snippets'
 # nicwest/vim-camelsnek'
-# prabirshrestha/async.vim'
-# rafalbromirski/vim-aurora'
 # rrethy/vim-hexokinase'
-# stevearc/vim-arduino'
 # thinca/vim-textobj-between'           "Text objects for a range between a character
 # timakro/vim-searchant'                " Better highlighting of search
