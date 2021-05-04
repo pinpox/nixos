@@ -1,9 +1,3 @@
--- Name:         Onebuddy
--- Description:  Light and dark atom one theme
--- Author:       Th3Whit3Wolf <the.white.wolf.is.1337@gmail.com>
--- Maintainer:   Th3Whit3Wolf <the.white.wolf.is.1337@gmail.com>
--- Website:      httpc.//github.com/Th3Whit3Wolf/onebuddy
--- License:      MIT
 local Color, c, Group, g, s = require("colorbuddy").setup()
 local b   = s.bold
 local i   = s.italic
@@ -18,7 +12,8 @@ local v   = vim
 -- TODO Think of a better colorscheme name
 v.g.colors_name = 'generated'
 
-local nixColors = require("nixcolors")
+
+local nixcolors = require('nixcolors')
 
 -------------------------
 -- Vim Primary Colors --
@@ -33,7 +28,7 @@ Color.new('DarkWhite',     nixcolors.DarkWhite)
 Color.new('White',         nixcolors.White)
 Color.new('BrightWhite',   nixcolors.BrightWhite)
 
-Color.new('DarkRed',       nixoclors.DarkRed)
+Color.new('DarkRed',       nixcolors.DarkRed)
 Color.new('Red',           nixcolors.Red)
 Color.new('BrightRed',     nixcolors.BrightRed)
 
@@ -58,9 +53,9 @@ Color.new('Magenta',       nixcolors.Magenta)
 Color.new('BrightMagenta', nixcolors.BrightMagenta)
 
 
--------------------------
--- Vim Terminal Colors --
--------------------------
+---------------------------
+---- Vim Terminal Colors --
+---------------------------
 
 v.g.terminal_color_0  = "#353a44"  -- TODO: use nixcolors here
 v.g.terminal_color_8  = "#353a44"  -- TODO: use nixcolors here
@@ -79,9 +74,9 @@ v.g.terminal_color_14 = "#65c2cd"  -- TODO: use nixcolors here
 v.g.terminal_color_7  = "#e3e5e9"  -- TODO: use nixcolors here
 v.g.terminal_color_15 = "#e3e5e9"  -- TODO: use nixcolors here
 
-----------------------
--- Vim Editor Color --
-----------------------
+------------------------
+---- Vim Editor Color --
+------------------------
 
 Group.new('Normal',                        c.White, c.Black, no)
 Group.new('bold',                          c.none,   c.none,   b)
@@ -126,18 +121,18 @@ Group.new('WildMenu',                      c.White, c.Grey, no)
 Group.new('SignColumn',                    c.none,   c.none,   no)
 Group.new('Special',                       c.Cyan, c.none,   no)
 
----------------------------
--- Vim Help Highlighting --
----------------------------
+-----------------------------
+---- Vim Help Highlighting --
+-----------------------------
 
 Group.new('helpCommand',                   c.DarkYellow, c.none,   no)
 Group.new('helpExample',                   c.DarkYellow, c.none,   no)
 Group.new('helpHeader',                    c.White, c.none,   b)
 Group.new('helpSectionDelim',              c.Grey, c.none,   no)
 
-----------------------------------
--- Standard Syntax Highlighting --
-----------------------------------
+------------------------------------
+---- Standard Syntax Highlighting --
+------------------------------------
 
 Group.new('Comment',                       c.Grey, c.none,   i)
 Group.new('Constant',                      c.Green, c.none,   no)
@@ -175,9 +170,9 @@ Group.new('Ignore',                        c.none,   c.none,   no)
 Group.new('Error',                         c.Red, c.Grey, b)
 Group.new('Todo',                          c.Magenta, c.Grey, no)
 
------------------------
--- Diff Highlighting --
------------------------
+-------------------------
+---- Diff Highlighting --
+-------------------------
 
 Group.new('DiffAdd',                       c.Green, c.Grey, no)
 Group.new('DiffChange',                    c.Yellow, c.Grey, no)
@@ -189,14 +184,14 @@ Group.new('DiffNewFile',                   c.Green, c.Grey, no)
 Group.new('DiffLine',                      c.Cyan, c.Grey, no)
 Group.new('DiffRemoved',                   c.Red, c.Grey, no)
 
----------------------------
--- Filetype Highlighting --
----------------------------
+-----------------------------
+---- Filetype Highlighting --
+-----------------------------
 
--- Asciidoc
+---- Asciidoc
 Group.new('asciidocListingBlock',          c.DarkWhite, c.none,   no)
 
--- C/C++ highlighting
+---- C/C++ highlighting
 Group.new('cInclude',                      c.Magenta, c.none,   no)
 Group.new('cPreCondit',                    c.Magenta, c.none,   no)
 Group.new('cPreConditMatch',               c.Magenta, c.none,   no)
@@ -220,7 +215,7 @@ Group.new('cppStatement',                  c.Magenta, c.none,   no)
 Group.new('cppConstant',                   c.Red, c.none,   no)
 Group.new('cCppString',                    c.Green, c.none,   no)
 
--- Cucumber
+---- Cucumber
 Group.new('cucumberGiven',                 c.Cyan, c.none,   no)
 Group.new('cucumberWhen',                  c.Cyan, c.none,   no)
 Group.new('cucumberWhenAnd',               c.Cyan, c.none,   no)
@@ -234,7 +229,7 @@ Group.new('cucumberScenarioOutline',       c.Magenta, c.none,   b)
 Group.new('cucumberTags',                  c.Grey, c.none,   b)
 Group.new('cucumberDelimiter',             c.Grey, c.none,   b)
 
--- CSS/Sass
+---- CSS/Sass
 Group.new('cssAttrComma',                  c.Magenta, c.none,   no)
 Group.new('cssAttributeSelector',          c.Green, c.none,   no)
 Group.new('cssBraces',                     c.DarkWhite, c.none,   no)
@@ -282,14 +277,14 @@ Group.new('elixirModuleDeclaration',       c.Yellow, c.none,   no)
 Group.new('elixirInclude',                 c.Red, c.none,   no)
 Group.new('elixirOperator',                c.Yellow, c.none,   no)
 
--- Go
+---- Go
 Group.new('goDeclaration',                 c.Magenta, c.none,   no)
 Group.new('goField',                       c.Red, c.none,   no)
 Group.new('goMethod',                      c.Green, c.none,   no)
 Group.new('goType',                        c.Magenta, c.none,   no)
 Group.new('goUnsignedInts',                c.Green, c.none,   no)
 
--- Haskell
+---- Haskell
 Group.new('haskellDeclKeyword',            c.Cyan, c.none,   no)
 Group.new('haskellType',                   c.Green, c.none,   no)
 Group.new('haskellWhere',                  c.Red, c.none,   no)
@@ -310,7 +305,7 @@ Group.new('htmlTag',                       c.DarkWhite, c.none,   no)
 Group.new('htmlEndTag',                    c.DarkWhite, c.none,   no)
 Group.new('MatchTag',                      c.Red, c.Grey, ul + b)
 
--- JavaScript
+---- JavaScript
 Group.new('coffeeString',                  c.Green, c.none,   no)
 Group.new('javaScriptBraces',              c.DarkWhite, c.none,   no)
 Group.new('javaScriptFunction',            c.Magenta, c.none,   no)
@@ -406,7 +401,7 @@ Group.new('phpParent',                     c.Grey, c.none,   no)
 Group.new('phpType',                       c.Magenta, c.none,   no)
 Group.new('phpSuperGlobals',               c.Red, c.none,   no)
 
--- Pug (Formerly Jade)
+---- Pug (Formerly Jade)
 Group.new('pugAttributesDelimiter',        c.Yellow, c.none,   no)
 Group.new('pugClass',                      c.Yellow, c.none,   no)
 Group.new('pugDocType',                    c.Grey, c.none,   i)
@@ -486,7 +481,7 @@ Group.new('xmlEndTag',                     c.Red, c.none,   no)
 Group.new('xmlTag',                        c.Red, c.none,   no)
 Group.new('xmlTagName',                    c.Red, c.none,   no)
 
--- ZSH
+---- ZSH
 Group.new('zshCommands',                   c.White, c.none,   no)
 Group.new('zshDeref',                      c.Red, c.none,   no)
 Group.new('zshShortDeref',                 c.Red, c.none,   no)
@@ -528,9 +523,9 @@ Group.new('NERDTreeFile',                  c.White, c.none,   no)
 Group.new('CocFloating',                   c.White, c.none,   no)
 Group.new('NormalFloat',                   c.White, c.Grey, no)
 
------------------------------
--- TreeSitter Highlighting --
------------------------------
+-------------------------------
+---- TreeSitter Highlighting --
+-------------------------------
 Group.new('TSAnnotation',                  c.DarkYellow, c.none,   no)
 Group.new('TSAttribute',                   c.Green, c.none,   no)
 Group.new('TSBoolean',                     c.Yellow, c.none,   no)
@@ -581,9 +576,9 @@ Group.new('TSURI',                         c.DarkYellow, c.none,   no)
 Group.new('TSVariable',                    c.Green, c.none,   no)
 Group.new('TSVariableBuiltin',             c.DarkYellow, c.none,   no)
 
------------------------------
---     LSP Highlighting    --
------------------------------
+-------------------------------
+----     LSP Highlighting    --
+-------------------------------
 Group.new('LspDiagnosticsDefaultError',           c.Red, c.none,   no)
 Group.new('LspDiagnosticsDefaultWarning',         c.DarkYellow, c.none,   no)
 Group.new('LspDiagnosticsDefaultInformation',     c.Green, c.none,   no)
@@ -596,16 +591,18 @@ Group.new('LspDiagnosticsUnderlineError',         c.Red, c.none,   ul)
 Group.new('LspDiagnosticsUnderlineWarning',       c.DarkYellow, c.none,   ul)
 Group.new('LspDiagnosticsUnderlineInformation',   c.Green, c.none,   ul)
 Group.new('LspDiagnosticsUnderlineHint',          c.Green, c.none,   ul)
-Group.new('LspDiagnosticsFloatingError',          c.Red, g.Grey, ul)
-Group.new('LspDiagnosticsFloatingWarning',        c.DarkYellow, g.Grey, ul)
-Group.new('LspDiagnosticsFloatingInformation',    c.Green, g.Grey, ul)
-Group.new('LspDiagnosticsFloatingHint',           c.Green, g.Grey, ul)
+Group.new('LspDiagnosticsFloatingError',          c.Red, c.Grey, ul)
+Group.new('LspDiagnosticsFloatingWarning',        c.DarkYellow, c.Grey, ul)
+Group.new('LspDiagnosticsFloatingInformation',    c.Green, c.Grey, ul)
+Group.new('LspDiagnosticsFloatingHint',           c.Green, c.Grey, ul)
 Group.new('LspDiagnosticsSignError',              c.Red, c.none,   no)
 Group.new('LspDiagnosticsSignWarning',            c.DarkYellow, c.none,   no)
 Group.new('LspDiagnosticsSignInformation',        c.Green, c.none,   no)
 Group.new('LspDiagnosticsSignHint',               c.Green, c.none,   no)
 
--- Git and git related plugins
+
+
+---- Git and git related plugins
 Group.new('gitcommitComment',        c.Grey,                 c.none,                   no)
 Group.new('gitcommitUnmerged',       c.Green,                 c.none,                   no)
 Group.new('gitcommitOnBranch',       c.none,                   c.none,                   no)

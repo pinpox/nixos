@@ -14,4 +14,4 @@ vim.cmd "set list"
 vim.cmd 'set noshowmode'                            -- Don't show current mode below the bar
 vim.cmd 'match CursorLine /\\%>100c/'               -- Color lines exceeding length of 100
 
-require('colorbuddy').colorscheme('generated')
+-- require('colorbuddy').colorscheme('pinpox-colors')

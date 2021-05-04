@@ -30,13 +30,23 @@ in {
   xdg = {
     enable = true;
     configFile = {
-      nvim_lua = {
-        target = "nvim/lua";
-        source = ./lua;
+
+      nvim_lua_config = {
+        target = "nvim/lua/config";
+        source = ./lua/config;
       };
 
-      nixcolors = {
-        target = "nvim/lua/config/nixcolors.lua";
+      nvim_lua_utils = {
+        target = "nvim/lua/utils";
+        source = ./lua/utils;
+      };
+
+     colors = {
+       target = "nvim/colors/generated.vim";
+       text = ''" File empty on purpouse'';
+     };
+      nvim_lua_nixcolors = {
+        target = "nvim/lua/nixcolors.lua";
         text = ''
           local M =  {}
 
@@ -67,13 +77,10 @@ in {
           M.BrightMagenta = "#${vars.colors.BrightMagenta}"
 
           return M
+
         '';
       };
 
-      colors = {
-        target = "nvim/colors/generated.vim";
-        text = ''" File empty on purpouse'';
-      };
 
       nvim_vimscript = {
         target = "nvim/vimscript";
@@ -98,7 +105,9 @@ in {
       local utils = require('utils')
 
       require('config.general') -- General options, should stay first!
+      require('config.pinpox-colors')
       require('config.appearance')
+      require('config.treesitter')
       require('config.lsp')
       require('config.devicons')
       require('config.compe')
@@ -106,7 +115,6 @@ in {
       require('config.bufferline')
       require('config.lualine')
       require('config.gitsigns')
-      require('config.treesitter')
 
       EOF
 
