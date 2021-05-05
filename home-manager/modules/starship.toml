@@ -11,3 +11,12 @@ disabled = true
 
 [nix_shell]
 symbol = "❄  "
+
+[git_status]
+
+ahead = "↑"
+behind = "↓"
+diverged = "↕"
+modified = "!"
+staged = "±"
+renamed = "→"
