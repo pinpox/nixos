@@ -25,6 +25,7 @@ in {
     gopls # LSP go
     terraform-ls # LSP terraform
     terraform # TODO add options to enable/disable large packages like terraform
+    libgccjit # Needed for treesitter
   ];
 
   xdg = {
