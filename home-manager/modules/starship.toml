@@ -1,7 +1,8 @@
 # Replace the "❯" symbol in the prompt with "➜"
 [character]                            # The name of the module we are configuring is "character"
-success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[✗](bold red) "
+success_symbol = "[»](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+#error_symbol = "[✗](bold red) "
+error_symbol = "[×](bold red) "
 
 [aws]
 disabled = true
@@ -20,3 +21,11 @@ diverged = "↕"
 modified = "!"
 staged = "±"
 renamed = "→"
+
+
+[directory]
+truncate_to_repo	= false
+fish_style_pwd_dir_length = 2
+
+[directory.substitutions]
+"~/code/github.com/pinpox/nixos" = "<nixos>"
