@@ -94,7 +94,6 @@ in {
     xarchiver
     xclip
     xfce.exo # thunar "open terminal here"
-    xfce.gvfs
     xfce.thunar
     xfce.thunar-archive-plugin
     xfce.thunar-volman

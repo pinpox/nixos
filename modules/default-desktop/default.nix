@@ -116,6 +116,7 @@ in {
     networking.hostName = cfg.hostname;
 
     programs.dconf.enable = true;
+    services.gvfs.enable = true;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

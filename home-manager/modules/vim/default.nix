@@ -96,7 +96,6 @@ in {
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
-    withPython = true;
     withPython3 = true;
     withRuby = true;
 
