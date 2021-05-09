@@ -77,6 +77,7 @@
         locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
       };
 
+
       # Alertmanager
       "vpn.alerts.pablo.tools" = {
         listen = [{
@@ -97,6 +98,13 @@
           proxyPass = "http://birne.wireguard:8123";
           proxyWebsockets = true;
         };
+      };
+
+      # Filebrowser
+      "files.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://birne.wireguard:8787"; };
       };
     };
   };
