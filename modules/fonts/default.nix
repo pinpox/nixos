@@ -13,19 +13,19 @@ in {
     fonts = {
       fontDir.enable = true;
       fonts = with pkgs; [
-        (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
         source-sans-pro
         source-serif-pro
         noto-fonts-emoji
         corefonts
+        recursive
       ];
 
       fontconfig = {
         defaultFonts = {
-          serif = [ "Source Serif Pro" ];
-          sansSerif = [ "Source Sans Pro" ];
+          serif = [ "Recursive Sans Casual Static Medium" ];
+          sansSerif = [ "Recursive Sans Linear Static Medium" ];
+          monospace = [ "Recursive Mono Linear Static" ];
           emoji = [ "Noto Color Emoji" ];
-          monospace = [ "SauceCodePro Nerd Font Mono" ];
         };
 
         localConf = ''

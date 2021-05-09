@@ -38,16 +38,16 @@
 
   font = {
     normal = {
-      family = "Sauce Code Pro Nerd Font Mono";
-      style = "Semibold";
+      family = "Recursive Sans Casual Static";
+      style = "Medium";
     };
     bold = {
-      family = "Sauce Code Pro Nerd Font Mono";
+      family = "Recursive Sans Casual Static";
       style = "Bold";
     };
     italic = {
-      family = "Sauce Code Pro Nerd Font Mono";
-      style = "Semibold Italic";
+      family = "Recursive Sans Casual Static";
+      style = "Medium Italic";
     };
     size = 10;
   };

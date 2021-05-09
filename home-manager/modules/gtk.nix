@@ -74,8 +74,8 @@ in {
     enable = true;
 
     font = {
-      name = "Source Sans Pro";
-      package = pkgs.source-sans-pro;
+      name = "Recursive Sans Linear Static Medium";
+      package = pkgs.recursive;
     };
 
     iconTheme = {
