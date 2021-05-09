@@ -3,28 +3,23 @@ with lib;
 let
   cfg = config.pinpox.services.filebrowser;
 
-filebrowser = pkgs.buildGoModule rec {
-
-    pname = "filebrowser";
-    version = "2.15.0";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "filebrowser";
-      repo = "filebrowser";
-      rev = "v${version}";
-      sha256 = "sha256-+XBi4rexNwjwEW7h8/6/5aZfnnfl7URp38rcDyn3CAc=";
+  filebrowser = pkgs.stdenv.mkDerivation rec {
+    name = "filebrowser";
+    version = "v2.15.0";
+    src = pkgs.fetchurl {
+      url =
+        "https://github.com/filebrowser/filebrowser/releases/download/${version}/linux-amd64-filebrowser.tar.gz";
+      sha256 = "0ryh35n0z241sfhcnwac0qa1vpxdn8bnlpw4kqhz686mvnr1p1x4";
     };
 
-    vendorSha256 = "sha256-iq7/CUA1uLKk1W8YGAfcdXFpyT2ZBxUxuYOIeO7zVN8=";
-    subPackages = [ "." ];
+    # Work around the "unpacker appears to have produced no directories"
+    # case that happens when the archive doesn't have a subdirectory.
+    setSourceRoot = "sourceRoot=`pwd`";
 
-    meta = with lib; {
-      description = "TODO";
-      homepage = "TODO";
-      # license = license;
-      maintainers = with maintainers; [ pinpox ];
-      platforms = platforms.linux;
-    };
+    installPhase = ''
+      mkdir -p $out/bin
+      cp filebrowser "$out"/bin/filebrowser
+    '';
   };
 
 in {
@@ -52,10 +47,8 @@ in {
       after = [ "network.target" ];
       description = "Start filebrowser";
       serviceConfig = {
-        # EnvironmentFile = [ "/var/src/secrets/filebrowser/envfile" ];
-        # Environment = [
-        #   "IRC_CHANNEL='#lounge-rocks'"
-        # ];
+        EnvironmentFile = [ "/var/src/secrets/filebrowser/envfile" ];
+        # Environment = [ ];
         WorkingDirectory = "/var/lib/filebrowser";
         User = "filebrowser";
         ExecStart = "${filebrowser}/bin/filebrowser";

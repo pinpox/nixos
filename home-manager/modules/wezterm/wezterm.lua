@@ -21,6 +21,9 @@ end)
 
 return {
 
+	warn_about_missing_glyphs = false,
+
+
 	set_environment_variables = {
 		EDITOR = "nvim"
 	},

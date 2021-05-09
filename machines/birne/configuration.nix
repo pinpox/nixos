@@ -11,6 +11,8 @@
 
   pinpox = {
 
+    services.filebrowser.enable = true;
+
     server = {
       enable = true;
       hostname = "birne";

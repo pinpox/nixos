@@ -5,8 +5,6 @@
 
   # environment.systemPackages = [self.wezterm];
 
-  # pinpox.services.filebrowser.enable = true;
-
   pinpox.desktop.homeConfig = {
     imports = [
       ../../home-manager/home.nix
