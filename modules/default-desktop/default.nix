@@ -96,9 +96,15 @@ in {
       wget
     ];
 
+services.logind.extraConfig = ''
+    RuntimeDirectorySize=20G
+  '';
+
     boot = {
       # Use GRUB2 as EFI boot loader.
       loader.grub.useOSProber = true;
+
+      tmpOnTmpfs = false;
 
       # Encrypted drive to be mounted by the bootloader. Path of the device will
       # have to be changed for each install.
