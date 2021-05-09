@@ -7,7 +7,8 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs;
-      [ (callPackage ../../../packages/wezterm-bin { }) ];
+      [ (callPackage ../../../packages/wezterm-nightly { }) ];
+      # [ (callPackage ../../../packages/wezterm-bin { }) ];
 
     xdg = {
       enable = true;
