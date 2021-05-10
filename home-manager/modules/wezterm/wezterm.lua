@@ -58,7 +58,7 @@ return {
 	-- Default font
 	font = wezterm.font_with_fallback( {
 		{family="Recursive Mono Linear Static", weight="Medium"},
-		"TerminessTTF Nerd Font",
+		"Inconsolata Nerd Font Mono",
 		"Noto Color Emoji",
 	}),
 
@@ -68,7 +68,7 @@ return {
 			italic=true,
 			font = wezterm.font_with_fallback( {
 				{family="Recursive Mono Casual Static", italic=true},
-				"TerminessTTF Nerd Font",
+				"Inconsolata Nerd Font Mono",
 				"Noto Color Emoji",
 			}),
 		},
@@ -77,7 +77,7 @@ return {
 			intensity="Bold", italic=false,
 			font = wezterm.font_with_fallback( {
 				{family="Recursive Mono Linear Static", weight="Bold"},
-				"TerminessTTF Nerd Font",
+				"Inconsolata Nerd Font Mono",
 				"Noto Color Emoji",
 			}),
 		},
@@ -86,7 +86,7 @@ return {
 			intensity="Bold", italic=true,
 			font = wezterm.font_with_fallback( {
 				{family="Recursive Mono Casual Static", weight="Bold", italic=true},
-				"TerminessTTF Nerd Font",
+				"Inconsolata Nerd Font Mono",
 				"Noto Color Emoji",
 			}),
 		},
