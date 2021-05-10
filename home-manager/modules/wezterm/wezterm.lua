@@ -18,10 +18,7 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 
-
 return {
-
-	warn_about_missing_glyphs = false,
 
 
 	set_environment_variables = {
@@ -57,14 +54,45 @@ return {
 		{ key = "9",   mods="CTRL",       action=wezterm.action{ActivateTab=(9-1)}},
 	},
 
+
 	-- Default font
-	font=wezterm.font("Recursive Mono Linear Static", {weight="DemiBold"}),
-	font_size = 12.4,
+	font = wezterm.font_with_fallback( {
+		{family="Recursive Mono Linear Static", weight="Medium"},
+		"TerminessTTF Nerd Font",
+		"Noto Color Emoji",
+	}),
 
-	-- freetype_load_flags = "NO_HINTING",-- "FORCE_AUTOHINT", "NO_AUTOHINT", "NO_HINTING",
-	-- freetype_load_target = "HorizontalLcd",
-	freetype_render_target = "Light", -- "Normal",
+	font_rules={
+		{
+			-- Italic
+			italic=true,
+			font = wezterm.font_with_fallback( {
+				{family="Recursive Mono Casual Static", italic=true},
+				"TerminessTTF Nerd Font",
+				"Noto Color Emoji",
+			}),
+		},
+		{
+			-- Bold
+			intensity="Bold", italic=false,
+			font = wezterm.font_with_fallback( {
+				{family="Recursive Mono Linear Static", weight="Bold"},
+				"TerminessTTF Nerd Font",
+				"Noto Color Emoji",
+			}),
+		},
+		{
+			-- Bold Italic
+			intensity="Bold", italic=true,
+			font = wezterm.font_with_fallback( {
+				{family="Recursive Mono Casual Static", weight="Bold", italic=true},
+				"TerminessTTF Nerd Font",
+				"Noto Color Emoji",
+			}),
+		},
+	},
 
+	-- Font options
 	harfbuzz_features = {
 		"dlig", -- Ligatures
 		"ss01", -- Single-story a
@@ -80,32 +108,15 @@ return {
 		"ss11", -- Simplified 1
 		"ss12", -- Simplified @
 	},
-	-- line_height = 0.95,
 
-	font_rules={
-		{
-			intensity="Normal",
-			italic=false,
-			font=wezterm.font("Recursive Mono Linear Static", {weight="DemiBold"}),
-		},
-		{
-			italic=true,
-			font=wezterm.font("Recursive Mono Casual Static", {italic=true}),
-		},
-		{
-			intensity="Bold", italic=false,
-			font=wezterm.font("Recursive Mono Linear Static", {bold=true}),
-		},
-		{
-			intensity="Bold", italic=true,
-			font=wezterm.font("Recursive Mono Linear Static", {bold=true, italic=true}),
-		},
-	},
+	-- Font rendering
+	freetype_render_target = "Light",
+
 
 	-- Cursor style
 	default_cursor_style = "SteadyBar",
 
-	-- set to true to hide the tab bar when there is only a single tab
+	-- Hide tab bar when there is only a single tab
 	hide_tab_bar_if_only_one_tab = true,
 
 	-- Transparency
