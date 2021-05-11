@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -10,13 +11,18 @@
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
+    wallpaper-generator.url = "github:pinpox/wallpaper-generator";
+    wallpaper-generator.flake = false;
+    wallpaper-generator.inputs.nixpkgs.follows = "nixpkgs";
+
     dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
     dotfiles-awesome.inputs.nixpkgs.follows = "nixpkgs";
+    dotfiles-awesome.inputs.wallpaper-generator.follows = "wallpaper-generator";
 
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
-    flake-utils.url = "github:numtide/flake-utils";
 
   };
   outputs = { self, ... }@inputs:
