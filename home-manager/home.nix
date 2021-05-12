@@ -52,7 +52,6 @@ in {
     # vagrant
     # virt-manager
     arandr
-    arc-theme
     arduino
     arduino-cli
     asciinema
