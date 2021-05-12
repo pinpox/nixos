@@ -147,7 +147,6 @@ in {
       haskell-vim
       i3config-vim
       lualine-nvim
-      neuron-vim
       nvim-bufferline-lua
       nvim-compe
       nvim-colorizer-lua
