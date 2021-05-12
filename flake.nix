@@ -23,9 +23,6 @@
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
-    krops.url = "git+https://cgit.krebsco.de/krops";
-    krops.flake = false;
-
   };
   outputs = { self, ... }@inputs:
     with inputs;
@@ -98,6 +95,7 @@
       in rec {
         packages = flake-utils.lib.flattenTree {
           hello-custom = pkgs.callPackage ./packages/hello-custom { };
+          flops = pkgs.callPackage ./packages/flops { };
           wezterm-bin = pkgs.callPackage ./packages/wezterm-bin { };
           # hello2 = pkgs.callPackage ./packages/wezterm { };
         };
@@ -108,6 +106,7 @@
             drv = packages.wezterm-bin;
             exePath = "/bin/wezterm";
           };
+          flops = flake-utils.lib.mkApp { drv = packages.flops; };
         };
 
         # TODO we probably should set some default app and/or package

@@ -89,22 +89,6 @@
         "type": "github"
       }
     },
-    "krops": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1616536057,
-        "narHash": "sha256-ZjVOVZL2HVLFZfEtvfOBqxQe1omQOV53Ijw4iVUcrx4=",
-        "ref": "master",
-        "rev": "cccebf3ff7a53336b3f106cb96dddd5892d427ed",
-        "revCount": 104,
-        "type": "git",
-        "url": "https://cgit.krebsco.de/krops"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://cgit.krebsco.de/krops"
-      }
-    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -186,7 +170,6 @@
         "dotfiles-awesome": "dotfiles-awesome",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "krops": "krops",
         "neovim-nightly": "neovim-nightly",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
