@@ -16,20 +16,34 @@ wk.register({
 
 	h = {
 	    name = "Help",
-	    h = { '<cmd>lua vim.lsp.buf.hover()<CR>', 'Hover information' },
-	    s = { '<cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature' },
+	    h = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
+	    s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
+	    l = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
+	    g = { ':lua require"gitsigns".blame_line()<CR>',             'Git Blame line' },
+	},
+
+	g = {
+	    name = "Git",
+	    s = { ':lua require"gitsigns".stage_hunk()<CR>',      'Stage hunk' },
+	    u = { ':lua require"gitsigns".undo_stage_hunk()<CR>', 'Undo stage hunk' },
+	    r = { ':lua require"gitsigns".reset_hunk()<CR>',      'Reset hunk' },
+	    R = { ':lua require"gitsigns".reset_buffer()<CR>',    'Reset buffer' },
+	    p = { ':lua require"gitsigns".preview_hunk()<CR>',    'Preview hunk' },
 	},
 
     },
+
+    r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
 
     g = {
 
 	name = "Goto",
 
-	d = { ':lua vim.lsp.buf.definition()<CR>',     'Definition'},
-	D = { ':lua vim.lsp.buf.declaration()<CR>',    'Declaration'},
-	r = { ':lua vim.lsp.buf.references()<CR>',     'References'},
-	i = { ':lua vim.lsp.buf.implementation()<CR>', 'Implementation'},
+	d = { ':lua vim.lsp.buf.definition()<CR>',       'Definition'},
+	t = { ':lua vim.lsp.buf.type_definition()<CR>',  'Type Definition'},
+	D = { ':lua vim.lsp.buf.declaration()<CR>',      'Declaration'},
+	r = { ':lua vim.lsp.buf.references()<CR>',       'References'},
+	i = { ':lua vim.lsp.buf.implementation()<CR>',   'Implementation'},
 	j = { ':lua vim.lsp.diagnostic.goto_next()<CR>', 'Next diagnostic' },
 	k = { ':lua vim.lsp.diagnostic.goto_prev()<CR>', 'Previuous diagnostic' },
 
@@ -93,4 +107,10 @@ wk.register({
 
 }, {mode = 'i'})
 
+-- TODO Set some keybinds conditional on server capabilities
+-- if client.resolved_capabilities.document_formatting then
+--   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+-- elseif client.resolved_capabilities.document_range_formatting then
+--   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+-- end
 
