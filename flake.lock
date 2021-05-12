@@ -41,11 +41,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1619345332,
-        "narHash": "sha256-qHnQkEp1uklKTpx3MvKtY6xzgcqXDsz5nLilbbuL+3A=",
+        "lastModified": 1620759905,
+        "narHash": "sha256-WiyWawrgmyN0EdmiHyG2V+fqReiVi8bM9cRdMaKQOFg=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "2ebf2558e5bf978c7fb8ea927dfaed8fefab2e28",
+        "rev": "b543720b25df6ffdfcf9227afafc5b8c1fabfae8",
         "type": "github"
       },
       "original": {
@@ -89,6 +89,22 @@
         "type": "github"
       }
     },
+    "krops": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1616536057,
+        "narHash": "sha256-ZjVOVZL2HVLFZfEtvfOBqxQe1omQOV53Ijw4iVUcrx4=",
+        "ref": "master",
+        "rev": "cccebf3ff7a53336b3f106cb96dddd5892d427ed",
+        "revCount": 104,
+        "type": "git",
+        "url": "https://cgit.krebsco.de/krops"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://cgit.krebsco.de/krops"
+      }
+    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -98,11 +114,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1620681494,
-        "narHash": "sha256-fGnEPBggRxgR9z2t9N4k1ZD9FNWpLzpSEC5mHqresCU=",
+        "lastModified": 1620779525,
+        "narHash": "sha256-k4ePrffhuZoSDqZMOMHx1Rb/ehd6cjvJvc/Wh9Wr8Rg=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "133351cbf80d620513eb6eb1b63eae15312eaeed",
+        "rev": "61aefaf2993c0b55f6123ba4b0bd41b1caf1fcd3",
         "type": "github"
       },
       "original": {
@@ -121,11 +137,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1620720753,
-        "narHash": "sha256-tAsPBQlTiiMI2Ar3d4yTzay47AzmaXLtj/UhqR06U9M=",
+        "lastModified": 1620807222,
+        "narHash": "sha256-7BW0sFQMXvs/BZPIKqfvgX+xMKF5M3TQajBARKoVNyg=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "36e7061a9b1567cfebff53dab4c5dd98d6c0d720",
+        "rev": "390d6e15256b7c87d5b41085896365588d49ecd4",
         "type": "github"
       },
       "original": {
@@ -152,11 +168,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1620723568,
-        "narHash": "sha256-9nqqriEJ+Pi20XOggb4QavTtmS/XVyRR9mWVcCfOwuk=",
+        "lastModified": 1620799450,
+        "narHash": "sha256-eGnmlW2yAtIMC22BJ3wEUfLfqgBLDhi/blq9h38TOas=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "9fc5e387c6642543ced420b0dd420018f1e8096c",
+        "rev": "a8300533f914711414f152bd6285a6212f78d260",
         "type": "github"
       },
       "original": {
@@ -170,6 +186,7 @@
         "dotfiles-awesome": "dotfiles-awesome",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "krops": "krops",
         "neovim-nightly": "neovim-nightly",
         "nixpkgs": "nixpkgs",
         "nur": "nur",

@@ -23,6 +23,8 @@
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
+    krops.url = "git+https://cgit.krebsco.de/krops";
+    krops.flake = false;
 
   };
   outputs = { self, ... }@inputs:
