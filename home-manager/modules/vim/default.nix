@@ -128,11 +128,7 @@ in {
 
       (pkgs.callPackage ../../../packages/indent-blankline-nvim-lua { })
 
-      # TODO Remove when PR is merged
-      # (pkgs.callPackage ../../../packages/which-key { })
-      (plugin "which-key.nvim" "folke/which-key.nvim" "main"
-        "7b1c6aa23061a9ed1acdfec3d20dc5e361ec01a3")
-
+      # TODO Submit PR to add to nixpkgs
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
         "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
@@ -166,6 +162,7 @@ in {
       vim-illuminate
       vim-indent-object
       vim-markdown
+      which-key-nvim
       vim-nix
       vim-repeat
       vim-sandwich
@@ -176,6 +173,7 @@ in {
       vim-vinegar
       vim-visual-increment
       vim-vsnip
+      vim-gnupg
       vim-vsnip-integ
       vista-vim
     ];
@@ -185,8 +183,6 @@ in {
 # TODO Missing plugins
 # autopairs
 # fvictorio/vim-textobj-backticks'
-# jamessan/vim-gnupg', {'for': 'gpg'}   " Edit ggp-encrypted files
 # nicwest/vim-camelsnek'
-# rrethy/vim-hexokinase'
 # thinca/vim-textobj-between'           "Text objects for a range between a character
 # timakro/vim-searchant'                " Better highlighting of search
