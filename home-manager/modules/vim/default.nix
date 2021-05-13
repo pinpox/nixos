@@ -42,10 +42,10 @@ in {
         source = ./lua/utils;
       };
 
-     colors = {
-       target = "nvim/colors/generated.vim";
-       text = ''" File empty on purpouse'';
-     };
+      colors = {
+        target = "nvim/colors/generated.vim";
+        text = ''" File empty on purpouse'';
+      };
       nvim_lua_nixcolors = {
         target = "nvim/lua/nixcolors.lua";
         text = ''
@@ -81,7 +81,6 @@ in {
 
         '';
       };
-
 
       nvim_vimscript = {
         target = "nvim/vimscript";
@@ -132,6 +131,13 @@ in {
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
         "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
+      # TODO Submit PR to update in nixpkgs. Support for expr mappings was
+      # added in this commit
+      (plugin "which-key-nvim" "folke/which-key.nvim" "main"
+        "9d2785c4d44b4a8ca1095856cb4ee34a32497cf6")
+
+
+      friendly-snippets
       nvim-treesitter
       BufOnly-vim
       ansible-vim
@@ -162,7 +168,8 @@ in {
       vim-illuminate
       vim-indent-object
       vim-markdown
-      which-key-nvim
+      # which-key-nvim
+      # TODO include when nixpkgs is merged (commit after 2021-05-13)
       vim-nix
       vim-repeat
       vim-sandwich

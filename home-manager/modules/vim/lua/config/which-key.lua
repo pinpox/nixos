@@ -1,116 +1,128 @@
 local wk = require("which-key")
-wk.setup {}
-
------------------
--- Normal mode --
------------------
-
-wk.register({
-
-    -- Leader key
-    ["<leader>"] = {
-
-	F = { ':GFiles<CR>',  'Git files' },
-	f = { ':Files<CR>',   'Files' },
-	b = { ':Buffers<CR>', 'Buffers' },
-
-	h = {
-	    name = "Help",
-	    h = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
-	    s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
-	    l = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
-	    g = { ':lua require"gitsigns".blame_line()<CR>',             'Git Blame line' },
+wk.setup {
+    plugins = {
+	registers = true, -- Show registers and macros on " and @
+	-- spelling = {
+	    --     enabled = true, -- z= to select spelling suggestions
+	    --     suggestions = 5,
+	    -- },
 	},
+    }
+
+    -----------------
+    -- Normal mode --
+    -----------------
+
+    wk.register({
+
+	-- Leader key
+	["<leader>"] = {
+
+	    F = { ':GFiles<CR>',  'Git files' },
+	    f = { ':Files<CR>',   'Files' },
+	    b = { ':Buffers<CR>', 'Buffers' },
+
+	    h = {
+		name = "Help",
+		h = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
+		s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
+		l = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
+		g = { ':lua require"gitsigns".blame_line()<CR>',             'Git Blame line' },
+	    },
+
+	    g = {
+		name = "Git",
+		s = { ':lua require"gitsigns".stage_hunk()<CR>',      'Stage hunk' },
+		u = { ':lua require"gitsigns".undo_stage_hunk()<CR>', 'Undo stage hunk' },
+		r = { ':lua require"gitsigns".reset_hunk()<CR>',      'Reset hunk' },
+		R = { ':lua require"gitsigns".reset_buffer()<CR>',    'Reset buffer' },
+		p = { ':lua require"gitsigns".preview_hunk()<CR>',    'Preview hunk' },
+	    },
+
+	},
+
+	r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
 
 	g = {
-	    name = "Git",
-	    s = { ':lua require"gitsigns".stage_hunk()<CR>',      'Stage hunk' },
-	    u = { ':lua require"gitsigns".undo_stage_hunk()<CR>', 'Undo stage hunk' },
-	    r = { ':lua require"gitsigns".reset_hunk()<CR>',      'Reset hunk' },
-	    R = { ':lua require"gitsigns".reset_buffer()<CR>',    'Reset buffer' },
-	    p = { ':lua require"gitsigns".preview_hunk()<CR>',    'Preview hunk' },
+
+	    name = "Goto",
+
+	    d = { ':lua vim.lsp.buf.definition()<CR>',       'Definition'},
+	    t = { ':lua vim.lsp.buf.type_definition()<CR>',  'Type Definition'},
+	    D = { ':lua vim.lsp.buf.declaration()<CR>',      'Declaration'},
+	    r = { ':lua vim.lsp.buf.references()<CR>',       'References'},
+	    i = { ':lua vim.lsp.buf.implementation()<CR>',   'Implementation'},
+	    j = { ':lua vim.lsp.diagnostic.goto_next()<CR>', 'Next diagnostic' },
+	    k = { ':lua vim.lsp.diagnostic.goto_prev()<CR>', 'Previuous diagnostic' },
+
 	},
 
-    },
+	-- Cycle buffers
+	['<C-n>'] = { ':bnext<CR>', 'Next buffer'},
+	['<C-p>'] = { ':bprev<CR>', 'Previous buffer'},
 
-    r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
+	-- Switch ; and :
+	[';'] = { ':', 'Switch ; and :'},
+	[':'] = { ';', 'Switch : and ;'},
 
-    g = {
+	-- Remap the arrow keys to nothing
+	['<left>']  = { '<nop>', 'Nothing'},
+	['<right>'] = { '<nop>', 'Nothing'},
+	['<up>']    = { '<nop>', 'Nothing'},
+	['<down>']  = { '<nop>', 'Nothing'},
 
-	name = "Goto",
+	-- Use Q for playing q macro
+	Q = { '@q', 'Play q macro' },
 
-	d = { ':lua vim.lsp.buf.definition()<CR>',       'Definition'},
-	t = { ':lua vim.lsp.buf.type_definition()<CR>',  'Type Definition'},
-	D = { ':lua vim.lsp.buf.declaration()<CR>',      'Declaration'},
-	r = { ':lua vim.lsp.buf.references()<CR>',       'References'},
-	i = { ':lua vim.lsp.buf.implementation()<CR>',   'Implementation'},
-	j = { ':lua vim.lsp.diagnostic.goto_next()<CR>', 'Next diagnostic' },
-	k = { ':lua vim.lsp.diagnostic.goto_prev()<CR>', 'Previuous diagnostic' },
+    })
 
-    },
+    -- Hide bufferline mappings
+    for i=1,9 do
+	wk.register({
+	    [tostring(i)] = "which_key_ignore",
+	}, { prefix = "<leader>"})
+    end
 
-    -- Cycle buffers
-    ['<C-n>'] = { ':bnext<CR>', 'Next buffer'},
-    ['<C-p>'] = { ':bprev<CR>', 'Previous buffer'},
+    -----------------
+    -- Visual mode --
+    -----------------
 
-    -- Switch ; and :
-    [';'] = { ':', 'Switch ; and :'},
-    [':'] = { ';', 'Switch : and ;'},
-
-    -- Remap the arrow keys to nothing
-    ['<left>']  = { '<nop>', 'Nothing'},
-    ['<right>'] = { '<nop>', 'Nothing'},
-    ['<up>']    = { '<nop>', 'Nothing'},
-    ['<down>']  = { '<nop>', 'Nothing'},
-
-    -- Use Q for playing q macro
-    Q = { '@q', 'Play q macro' },
-
-})
-
--- Hide bufferline mappings
-for i=1,9 do
     wk.register({
-	[tostring(i)] = "which_key_ignore",
-    }, { prefix = "<leader>"})
-end
 
------------------
--- Visual mode --
------------------
+	-- Switch ; and :
+	[';'] = { ':', 'Switch ; and :'},
+	[':'] = { ';', 'Switch ; and :'},
 
-wk.register({
+	-- Indent lines and reselect visual group
+	['<'] = { '<gv', 'Reselect on indenting lines'},
+	['>'] = { '>gv', 'Reselect on indenting lines'},
 
-    -- Switch ; and :
-    [';'] = { ':', 'Switch ; and :'},
-    [':'] = { ';', 'Switch ; and :'},
+	-- Move lines up and down
+	['<C-k>'] = { ":m-2<CR>gv", 'Move line up'},
+	['<C-j>'] = { ":m '>+<CR>gv", 'Move line down'},
 
-    -- Indent lines and reselect visual group
-    ['<'] = { '<gv', 'Reselect on indenting lines'},
-    ['>'] = { '>gv', 'Reselect on indenting lines'},
+    }, {mode = 'v'})
 
-    -- Move lines up and down
-    ['<C-k>'] = { ":m-2<CR>gv", 'Move line up'},
-    ['<C-j>'] = { ":m '>+<CR>gv", 'Move line down'},
+    -----------------
+    -- Insert mode --
+    -----------------
+    --
+    -- nvim_set_keymap('c', '',   'print(1)',   { noremap = true, expr = true })
 
-}, {mode = 'v'})
+    wk.register({
 
------------------
--- Insert mode --
------------------
+	-- Completion
+	['<C-Space>'] = { "compe#complete()",      'Trigger completion', expr=true },
+	['<CR>']      = { "compe#confirm('<CR>')", 'Confirm completion', expr=true },
+	-- ['<C-e>'] = { "<C-o>:call compe#close('C-e')<CR>", 'Close completion'},
+    }, {mode = 'i'})
 
-wk.register({
 
-    -- Completion
-    ['<C-Space>'] = { '<C-o>:call compe#complete()<CR>', 'Trigger completion'},
-    ['<C-e>'] = { "<C-o>:call compe#close('C-e')<CR>", 'Close completion'},
 
-}, {mode = 'i'})
-
--- TODO Set some keybinds conditional on server capabilities
--- if client.resolved_capabilities.document_formatting then
---   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
--- elseif client.resolved_capabilities.document_range_formatting then
---   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
--- end
+    -- TODO Set some keybinds conditional on server capabilities
+    -- if client.resolved_capabilities.document_formatting then
+    --   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    -- elseif client.resolved_capabilities.document_range_formatting then
+    --   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    -- end
 
