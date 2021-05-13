@@ -39,9 +39,10 @@ wk.setup {
 		p = { ':lua require"gitsigns".preview_hunk()<CR>',    'Preview hunk' },
 	    },
 
+	    r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
+
 	},
 
-	r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
 
 	g = {
 
