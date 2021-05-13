@@ -131,10 +131,14 @@ in {
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
         "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
+      # (plugin "todo-comments.nvim" "folke/todo-comments.nvim" "main"
+      #   "b09c700ecf878092e91ed4b041c6eb7c840df994")
+
       # TODO Submit PR to update in nixpkgs. Support for expr mappings was
       # added in this commit
       (plugin "which-key-nvim" "folke/which-key.nvim" "main"
         "9d2785c4d44b4a8ca1095856cb4ee34a32497cf6")
+
 
 
       friendly-snippets
