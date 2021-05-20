@@ -4,6 +4,13 @@ local gears = require("gears")
 
 local prompt_widget= awful.widget.prompt()
 
+local function osExecute(cmd)
+    local fileHandle     = assert(io.popen(cmd, 'r'))
+    local commandOutput  = assert(fileHandle:read('*a'))
+    local returnTable    = {fileHandle:close()}
+    return commandOutput,returnTable[3]            -- rc[3] contains returnCode
+end
+
 local text_widget = {
     text   = "Results will be shown here",
     id = 'results',
@@ -58,9 +65,16 @@ awful.prompt.run{
     -- Called when typing
     changed_callback = function(input_text)
 	-- TODO generate list of executables in $PATH
+	--
+	-- fd . $(echo $PATH | tr ":" " ") | xargs basename -a | sort -u
+	--
+	-- TODO filter with rg
+	-- TODO colors Ansi to pango
+	-- rg . --color ansi | ansifilter -M
+	--
 	-- Filter based on input
 	-- Show choices
-	w.widget.results.text = input_text
+	w.widget.results.markup = osExecute("echo $PATH | tr ':' ' ' | /nix/store/adb5m8w4shn9bi2whnffj3hjsvgwmvr9-fd-8.2.1/bin/fd -a | rg --color ansi " .. input_text .. " | /nix/store/d13gy8jj5sy7zbrhni6nbzgp13mhpc80-ansifilter-2.18/bin/ansifilter -M")
     end
 }
 
