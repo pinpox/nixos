@@ -1,89 +1,129 @@
 local wk = require("which-key")
-wk.setup {}
+wk.setup {
+    plugins = {
+	registers = true, -- Show registers and macros on " and @
+	-- spelling = {
+	    --     enabled = true, -- z= to select spelling suggestions
+	    --     suggestions = 5,
+	    -- },
+	},
+    }
 
-wk.register({
-	f = {
-		name = "+file",
-		f = { ":Files<CR>",  "Find files" },
-		F = { ":GFiles<CR>", "Find git files" },
+    -----------------
+    -- Normal mode --
+    -----------------
+
+    wk.register({
+
+	-- Leader key
+	["<leader>"] = {
+
+	    F = { ':GFiles<CR>',  'Git files' },
+	    f = { ':Files<CR>',   'Files' },
+	    b = { ':Buffers<CR>', 'Buffers' },
+
+	    h = {
+		name = "Help",
+		h = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
+		s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
+		l = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
+		g = { ':lua require"gitsigns".blame_line()<CR>',             'Git Blame line' },
+	    },
+
+	    g = {
+		name = "Git",
+		s = { ':lua require"gitsigns".stage_hunk()<CR>',      'Stage hunk' },
+		u = { ':lua require"gitsigns".undo_stage_hunk()<CR>', 'Undo stage hunk' },
+		r = { ':lua require"gitsigns".reset_hunk()<CR>',      'Reset hunk' },
+		R = { ':lua require"gitsigns".reset_buffer()<CR>',    'Reset buffer' },
+		p = { ':lua require"gitsigns".preview_hunk()<CR>',    'Preview hunk' },
+	    },
+
+	    r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
+
 	},
 
-}, { prefix = "<leader>"})
+
+	g = {
+
+	    name = "Goto",
+
+	    d = { ':lua vim.lsp.buf.definition()<CR>',       'Definition'},
+	    t = { ':lua vim.lsp.buf.type_definition()<CR>',  'Type Definition'},
+	    D = { ':lua vim.lsp.buf.declaration()<CR>',      'Declaration'},
+	    r = { ':lua vim.lsp.buf.references()<CR>',       'References'},
+	    i = { ':lua vim.lsp.buf.implementation()<CR>',   'Implementation'},
+	    j = { ':lua vim.lsp.diagnostic.goto_next()<CR>', 'Next diagnostic' },
+	    k = { ':lua vim.lsp.diagnostic.goto_prev()<CR>', 'Previuous diagnostic' },
+
+	},
+
+	-- Cycle buffers
+	['<C-n>'] = { ':bnext<CR>', 'Next buffer'},
+	['<C-p>'] = { ':bprev<CR>', 'Previous buffer'},
+
+	-- Switch ; and :
+	[';'] = { ':', 'Switch ; and :'},
+	[':'] = { ';', 'Switch : and ;'},
+
+	-- Remap the arrow keys to nothing
+	['<left>']  = { '<nop>', 'Nothing'},
+	['<right>'] = { '<nop>', 'Nothing'},
+	['<up>']    = { '<nop>', 'Nothing'},
+	['<down>']  = { '<nop>', 'Nothing'},
+
+	-- Use Q for playing q macro
+	Q = { '@q', 'Play q macro' },
+
+    })
+
+    -- Hide bufferline mappings
+    for i=1,9 do
+	wk.register({
+	    [tostring(i)] = "which_key_ignore",
+	}, { prefix = "<leader>"})
+    end
+
+    -----------------
+    -- Visual mode --
+    -----------------
+
+    wk.register({
+
+	-- Switch ; and :
+	[';'] = { ':', 'Switch ; and :'},
+	[':'] = { ';', 'Switch ; and :'},
+
+	-- Indent lines and reselect visual group
+	['<'] = { '<gv', 'Reselect on indenting lines'},
+	['>'] = { '>gv', 'Reselect on indenting lines'},
+
+	-- Move lines up and down
+	['<C-k>'] = { ":m-2<CR>gv", 'Move line up'},
+	['<C-j>'] = { ":m '>+<CR>gv", 'Move line down'},
+
+    }, {mode = 'v'})
+
+    -----------------
+    -- Insert mode --
+    -----------------
+    --
+    -- nvim_set_keymap('c', '',   'print(1)',   { noremap = true, expr = true })
+
+    wk.register({
+
+	-- Completion
+	['<C-Space>'] = { "compe#complete()",      'Trigger completion', expr=true },
+	['<CR>']      = { "compe#confirm('<CR>')", 'Confirm completion', expr=true },
+	-- ['<C-e>'] = { "<C-o>:call compe#close('C-e')<CR>", 'Close completion'},
+    }, {mode = 'i'})
 
 
-vim.api.nvim_set_keymap('n', '<leader>b', ':Buffers<CR>', { noremap = true, silent = true })
 
--- Switch ; and :
-vim.api.nvim_set_keymap('n', ';', ':', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ':', ';', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', ';', ':', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', ':', ';', { noremap = true, silent = true })
+    -- TODO Set some keybinds conditional on server capabilities
+    -- if client.resolved_capabilities.document_formatting then
+    --   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    -- elseif client.resolved_capabilities.document_range_formatting then
+    --   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    -- end
 
-
-
--- Remap the arrow keys to nothing
-vim.api.nvim_set_keymap('n', '<left>', '<nop>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<right>', '<nop>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<up>', '<nop>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<down>', '<nop>', { noremap = true, silent = true })
-
--- Cycle buffers
-vim.api.nvim_set_keymap('n', '<C-n>', ':bnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-p>', ':bprev<CR>', { noremap = true, silent = true })
-
--- indent lines and reselect visual group
-vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true, silent = true })
-
-
--- move lines up and down
--- vnoremap <C-k> :m-2<CR>gv
--- vnoremap <C-j> :m '>+<CR>gv
-
--- Overwrite with yanked text in visual mode
--- xnoremap p "_dP
-
--- Use Q for playing q macro
-vim.api.nvim_set_keymap('n', 'Q', '@q', { noremap = true, silent = true })
-
--- Spell checking
-vim.api.nvim_set_keymap('n', '<F5>', '[s', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<F6>', '1z=', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<F7>', 'z=', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<F8>', ':spellr<CR>', { noremap = true, silent = true })
-
-
-
-
-
-
--- TODO mappings to lua
--- " LSP config (the mappings used in the default file don't quite work right)
-vim.api.nvim_set_keymap('n', 'gd',    '<cmd>lua vim.lsp.buf.definition()<CR>',       { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'gD',    '<cmd>lua vim.lsp.buf.declaration()<CR>',      { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'gr',    '<cmd>lua vim.lsp.buf.references()<CR>',       { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'gi',    '<cmd>lua vim.lsp.buf.implementation()<CR>',   { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'K',     '<cmd>lua vim.lsp.buf.hover()<CR>',            { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>',   { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', { noremap = true, silent = true})
-
--- Start interactive EasyAlign in visual mode (e.g. vipga)
--- xmap ga <Plug>(EasyAlign)
-
--- Start interactive EasyAlign for a motion/text object (e.g. gaip)
--- nmap ga <Plug>(EasyAlign)
-
--- Leader keys
--- let g:mapleader      = "\<Space>"
--- let g:maplocalleader = ','
--- nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
--- nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>
-
--- Completion
-vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', { noremap = true, silent = true})
--- inoremap <silent><expr> <C-Space> compe#complete()
--- inoremap <silent><expr> <CR>      compe#confirm('<CR>')
--- inoremap <silent><expr> <C-e>     compe#close('<C-e>')
--- inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
--- inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })

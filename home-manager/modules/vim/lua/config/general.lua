@@ -47,7 +47,8 @@ vim.o.swapfile         = false              -- dont create a swapfile
 vim.o.undofile         = true               -- Maintain undo history between sessions
 
 -- Indention
-vim.o.shiftwidth       = 4                  -- Size of a tab
+-- TODO look at: https://stackoverflow.com/questions/3682582/how-to-use-only-tab-not-space-in-vim
+vim.bo.shiftwidth       = 4                  -- Size of a tab
 vim.o.autoindent       = true               -- always set autoindenting on
 vim.bo.expandtab       = false              -- Don't expand tabs to spaces
 vim.o.softtabstop      = 4                  -- Size of a tab

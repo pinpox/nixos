@@ -16,6 +16,11 @@ require'lspconfig'.jsonls.setup {
 	}
 }
 
+-- lspconfig updates while typing
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+vim.lsp.diagnostic.on_publish_diagnostics, {
+    update_in_insert = true, })
+
 -- TODO auto-format on save
 -- autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
 -- autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)

@@ -42,10 +42,10 @@ in {
         source = ./lua/utils;
       };
 
-     colors = {
-       target = "nvim/colors/generated.vim";
-       text = ''" File empty on purpouse'';
-     };
+      colors = {
+        target = "nvim/colors/generated.vim";
+        text = ''" File empty on purpouse'';
+      };
       nvim_lua_nixcolors = {
         target = "nvim/lua/nixcolors.lua";
         text = ''
@@ -82,7 +82,6 @@ in {
         '';
       };
 
-
       nvim_vimscript = {
         target = "nvim/vimscript";
         source = ./vimscript;
@@ -107,7 +106,7 @@ in {
       require('config.general') -- General options, should stay first!
       require('config.pinpox-colors')
       require('config.appearance')
-      require('config.treesitter')
+      -- require('config.treesitter')
       require('config.lsp')
       require('config.devicons')
       require('config.compe')
@@ -128,15 +127,20 @@ in {
 
       (pkgs.callPackage ../../../packages/indent-blankline-nvim-lua { })
 
-      # TODO Remove when PR is merged
-      # (pkgs.callPackage ../../../packages/which-key { })
-      (plugin "which-key.nvim" "folke/which-key.nvim" "main"
-        "7b1c6aa23061a9ed1acdfec3d20dc5e361ec01a3")
-
+      # TODO Submit PR to add to nixpkgs
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
         "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
-      nvim-treesitter
+      # (plugin "todo-comments.nvim" "folke/todo-comments.nvim" "main"
+      #   "b09c700ecf878092e91ed4b041c6eb7c840df994")
+
+      # TODO Submit PR to update in nixpkgs. Support for expr mappings was
+      # added in this commit
+      (plugin "which-key-nvim" "folke/which-key.nvim" "main"
+        "386591e24afe88c1c52c2291d450e7d7ad9cf02a")
+
+      friendly-snippets
+      #      nvim-treesitter
       BufOnly-vim
       ansible-vim
       base16-vim
@@ -147,7 +151,6 @@ in {
       haskell-vim
       i3config-vim
       lualine-nvim
-      neuron-vim
       nvim-bufferline-lua
       nvim-compe
       nvim-colorizer-lua
@@ -162,23 +165,23 @@ in {
       vim-easy-align
       vim-eunuch
       vim-go
-      vim-grammarous
       vim-gutentags
       vim-illuminate
-      vim-indent-object
+      # vim-indent-object
       vim-markdown
+      #      # TODO include when nixpkgs is merged (commit after 2021-05-13)
+      #      # which-key-nvim
       vim-nix
       vim-repeat
       vim-sandwich
-      vim-snippets
       vim-table-mode
       vim-terraform
       vim-textobj-user
       vim-vinegar
       vim-visual-increment
       vim-vsnip
+      vim-gnupg
       vim-vsnip-integ
-      vista-vim
     ];
   };
 }
@@ -186,8 +189,6 @@ in {
 # TODO Missing plugins
 # autopairs
 # fvictorio/vim-textobj-backticks'
-# jamessan/vim-gnupg', {'for': 'gpg'}   " Edit ggp-encrypted files
 # nicwest/vim-camelsnek'
-# rrethy/vim-hexokinase'
 # thinca/vim-textobj-between'           "Text objects for a range between a character
 # timakro/vim-searchant'                " Better highlighting of search

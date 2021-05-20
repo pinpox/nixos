@@ -19,6 +19,7 @@ diverged = "↕"
 modified = "!"
 staged = "±"
 renamed = "→"
+disabled = true
 
 
 [directory]
@@ -28,3 +29,4 @@ fish_style_pwd_dir_length = 2
 [directory.substitutions]
 "~/code/github.com/pinpox/nixos" = "<pinpox/nixos>"
 "~/code/github.com/pinpox/dotfiles-awesome" = "<pinpox/dotfiles-awesome>"
+

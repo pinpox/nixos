@@ -16,3 +16,6 @@ vim.cmd 'match CursorLine /\\%>100c/'               -- Color lines exceeding len
 vim.cmd 'set signcolumn=yes'
 
 -- require('colorbuddy').colorscheme('pinpox-colors')
+
+-- todo-comments.nvim
+-- require("todo-comments").setup {}
