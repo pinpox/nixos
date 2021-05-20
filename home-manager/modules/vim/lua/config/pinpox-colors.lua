@@ -520,8 +520,8 @@ Group.new('ALEErrorSign',                  c.Red, c.none,   no)
 Group.new('NERDTreeFile',                  c.White, c.none,   no)
 
 -- Coc.nvim Floating Background fix
-Group.new('CocFloating',                   c.White, c.none,   no)
-Group.new('NormalFloat',                   c.White, c.Grey, no)
+-- Group.new('CocFloating',                   c.White, c.none,   no)
+-- Group.new('NormalFloat',                   c.White, c.Grey, no)
 
 -------------------------------
 ---- TreeSitter Highlighting --

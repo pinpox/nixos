@@ -106,7 +106,7 @@ in {
       require('config.general') -- General options, should stay first!
       require('config.pinpox-colors')
       require('config.appearance')
-      require('config.treesitter')
+      -- require('config.treesitter')
       require('config.lsp')
       require('config.devicons')
       require('config.compe')
@@ -137,12 +137,10 @@ in {
       # TODO Submit PR to update in nixpkgs. Support for expr mappings was
       # added in this commit
       (plugin "which-key-nvim" "folke/which-key.nvim" "main"
-        "9d2785c4d44b4a8ca1095856cb4ee34a32497cf6")
-
-
+        "386591e24afe88c1c52c2291d450e7d7ad9cf02a")
 
       friendly-snippets
-      nvim-treesitter
+      #      nvim-treesitter
       BufOnly-vim
       ansible-vim
       base16-vim
@@ -167,17 +165,15 @@ in {
       vim-easy-align
       vim-eunuch
       vim-go
-      vim-grammarous
       vim-gutentags
       vim-illuminate
-      vim-indent-object
+      # vim-indent-object
       vim-markdown
-      # which-key-nvim
-      # TODO include when nixpkgs is merged (commit after 2021-05-13)
+      #      # TODO include when nixpkgs is merged (commit after 2021-05-13)
+      #      # which-key-nvim
       vim-nix
       vim-repeat
       vim-sandwich
-      vim-snippets
       vim-table-mode
       vim-terraform
       vim-textobj-user
@@ -186,7 +182,6 @@ in {
       vim-vsnip
       vim-gnupg
       vim-vsnip-integ
-      vista-vim
     ];
   };
 }
