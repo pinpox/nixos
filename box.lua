@@ -1,4 +1,6 @@
 local awful = require("awful")
+
+	awful.spawn("notify-send 'GO'")
 local wibox = require("wibox")
 local gears = require("gears")
 
@@ -11,9 +13,16 @@ local function osExecute(cmd)
     return commandOutput,returnTable[3]            -- rc[3] contains returnCode
 end
 
-local text_widget = {
-    text   = "Results will be shown here",
-    id = 'results',
+local optionsTextWidget = {
+    text   = "Options will be shown here",
+    id = 'listoptions',
+    widget = wibox.widget.textbox
+}
+
+
+local selectedTextWidget = {
+    text   = "Matched will be shown here",
+    id = 'selectedoption',
     widget = wibox.widget.textbox
 }
 
@@ -32,29 +41,38 @@ local w = wibox {
 
 
 w:setup {
-    text_widget,
     {
 	layout = wibox.container.margin,
 	left = 10,
 	prompt_widget,
     },
+    selectedTextWidget,
+    optionsTextWidget ,
     id = 'left',
     layout = wibox.layout.fixed.vertical
 }
+
+
 
 w.visible = true
 
 awful.placement.top(w, { margins = {top = 400}, parent = awful.screen.focused()})
 
+
+local allexecutables = osExecute('find $(echo $PATH | tr ":" " ") | xargs basename -a | sort -u' )
+
+local selectedCommand = ""
+
 awful.prompt.run{
     prompt = "<b>Search</b>: ",
+
 
     textbox = prompt_widget.widget,
 
     -- Called when pressing enter
     exe_callback = function(input_text)
 	if not input_text or #input_text == 0 then return end
-	awful.spawn("notify-send 'You selected " .. input_text.."'")
+	awful.spawn("notify-send 'You selected " .. selectedCommand .."'")
     end,
 
     -- Called when done (after execution or escape)
@@ -64,17 +82,32 @@ awful.prompt.run{
 
     -- Called when typing
     changed_callback = function(input_text)
-	-- TODO generate list of executables in $PATH
-	--
-	-- fd . $(echo $PATH | tr ":" " ") | xargs basename -a | sort -u
-	--
-	-- TODO filter with rg
-	-- TODO colors Ansi to pango
-	-- rg . --color ansi | ansifilter -M
-	--
-	-- Filter based on input
-	-- Show choices
-	w.widget.results.markup = osExecute("echo $PATH | tr ':' ' ' | /nix/store/adb5m8w4shn9bi2whnffj3hjsvgwmvr9-fd-8.2.1/bin/fd -a | rg --color ansi " .. input_text .. " | /nix/store/d13gy8jj5sy7zbrhni6nbzgp13mhpc80-ansifilter-2.18/bin/ansifilter -M")
+
+	-- Split lines
+	local grepExes= {}
+	for line in allexecutables:gmatch("([^\n]*)\n?") do
+
+	    -- find lines beginning with input. Not fuzzy for now
+	    if line:find("^"..input_text ) ~= nil then
+		table.insert (grepExes, line)
+	    end
+	end
+
+	if #grepExes == 0 then
+	    w.widget.listoptions.text = "none left"
+	    return
+	end
+
+	selectedCommand = table.remove(grepExes, 1)
+
+	-- First opiton shown as match
+	w.widget.selectedoption.markup= '<span foreground="#00ff00">' .. selectedCommand .. '</span>'
+
+
+
+	-- Rest listed as remaining options
+	w.widget.listoptions.text = table.concat(grepExes, "\n")
+
     end
 }
 
