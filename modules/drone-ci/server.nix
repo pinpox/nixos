@@ -1,6 +1,10 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.pinpox.services.droneci;
+let
+  cfg = config.pinpox.services.droneci;
+  # TODO remove when https://github.com/NixOS/nixpkgs/pull/124014 is merged in
+  # unstable
+  drone2 = pkgs.callPackage ../../packages/drone2 { };
 in {
 
   options.pinpox.services.droneci = {
@@ -46,7 +50,11 @@ in {
           "DRONE_USER_FILTER=lounge-rocks"
           "DRONE_USER_CREATE=username:${cfg.drone-admin},admin:true"
         ];
-        ExecStart = "${pkgs.drone}/bin/drone-server";
+
+        # TODO remove when https://github.com/NixOS/nixpkgs/pull/124014 is
+        # merged in unstable
+        # ExecStart = "${pkgs.drone}/bin/drone-server";
+        ExecStart = "${drone2}/bin/drone-server";
         User = cfg.drone-user;
         Group = cfg.drone-user;
       };
