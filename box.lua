@@ -1,10 +1,11 @@
 local awful = require("awful")
-
-	awful.spawn("notify-send 'GO'")
 local wibox = require("wibox")
 local gears = require("gears")
 
 local prompt_widget= awful.widget.prompt()
+
+local border_color = "#eeeeee"
+local match_color = "#00ff00"
 
 local function osExecute(cmd)
     local fileHandle     = assert(io.popen(cmd, 'r'))
@@ -28,7 +29,7 @@ local selectedTextWidget = {
 
 local w = wibox {
     -- bg = '#1e252c',
-    -- border_color = '#84bd00',
+    border_color = border_color,
     border_width = 1,
     max_widget_size = 500,
     ontop = true,
@@ -45,9 +46,16 @@ w:setup {
 	layout = wibox.container.margin,
 	left = 10,
 	prompt_widget,
+	id = 'wprompt',
+    },
+
+    {
+	layout = wibox.container.margin,
+	left = 10,
+	optionsTextWidget ,
+	id = 'optionsid',
     },
     selectedTextWidget,
-    optionsTextWidget ,
     id = 'left',
     layout = wibox.layout.fixed.vertical
 }
@@ -64,8 +72,7 @@ local allexecutables = osExecute('find $(echo $PATH | tr ":" " ") | xargs basena
 local selectedCommand = ""
 
 awful.prompt.run{
-    prompt = "<b>Search</b>: ",
-
+    prompt = "<b>Run</b>: ",
 
     textbox = prompt_widget.widget,
 
@@ -101,12 +108,19 @@ awful.prompt.run{
 	selectedCommand = table.remove(grepExes, 1)
 
 	-- First opiton shown as match
-	w.widget.selectedoption.markup= '<span foreground="#00ff00">' .. selectedCommand .. '</span>'
+	--
+	local keys = ""
+	for k,v in pairs(w) do
+	    keys = keys .. ", " .. k
+	end
 
 
+	w.widget.selectedoption.markup= keys -- '<span foreground="'..match_color..'">' .. selectedCommand .. '</span>'
 
 	-- Rest listed as remaining options
-	w.widget.listoptions.text = table.concat(grepExes, "\n")
+	-- w.widget.listoptions.text = table.concat(grepExes, "\n")
+	-- w.widget.listoptions.text = "test"
+	-- w:get_children_by_id("options_id")[1].text = "testiresntirsent"
 
     end
 }
