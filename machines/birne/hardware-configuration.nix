@@ -12,6 +12,14 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # ZFS support
+  boot.supportedFilesystems = [ "zfs" ];
+
+  # Needed for ZFS
+  # head -c4 /dev/urandom | od -A none -t x4
+  networking.hostId = "887bde8c"; 
+
+
   # Efi partition (SSD)
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/E45C-8185";
