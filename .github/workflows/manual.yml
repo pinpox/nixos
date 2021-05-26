@@ -22,6 +22,7 @@ jobs:
             experimental-features = nix-command flakes
       - name: Build html
         run: |
+            export NIXPKGS_ALLOW_BROKEN=1
             nix-build ./manual/manual.nix -A html
             mkdir docs
             curl https://nixos.org/favicon.ico -o docs/favicon.ico
