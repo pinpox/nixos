@@ -13,12 +13,12 @@ in {
       enable = true;
       environmentFile = /var/src/secrets/hedgedoc/envfile;
       configuration = {
-        protocolUseSSL = true;
 
+        protocolUseSSL = true; # Use https when loading assets
         allowEmailRegister = false; # Disable registration
 
         domain = "pads.0cx.de";
-        host = "127.0.0.1";
+        # host = "127.0.0.1"; # Default
         # port = 3000; # Default
         allowOrigin = [ "localhost" ]; # TODO not sure if neeeded
 
@@ -28,18 +28,6 @@ in {
         };
 
         useCDN = true;
-        csp = {
-          enable = false;
-          directives = { scriptSrc = "pads.0cx.de"; };
-          upgradeInsecureRequest = "auto";
-          addDefaults = true;
-        };
-
-        # mattermost = {
-        #   # clientSecret set in envfile
-        #   # clientID set in envfile
-        #   baseURL = "https://mm.0cx.de/login";
-        # };
 
         # TODO check out github integration
         # github = {}
