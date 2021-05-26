@@ -49,7 +49,7 @@ in rec {
   # Individual machines
   ahorn = createHost "ahorn" "root@192.168.7.2";
   birne = createHost "birne" "root@192.168.2.84";
-  bob = createHost "bob" "root@bob:2222";
+  bob = createHost "bob" "root@drone.lounge.rocks:2222";
   kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
   kfbox = createHost "kfbox" "root@46.38.242.17";
   mega = createHost "mega" "root@mega.public";
