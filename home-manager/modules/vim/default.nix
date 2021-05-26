@@ -134,11 +134,6 @@ in {
       # (plugin "todo-comments.nvim" "folke/todo-comments.nvim" "main"
       #   "b09c700ecf878092e91ed4b041c6eb7c840df994")
 
-      # TODO Submit PR to update in nixpkgs. Support for expr mappings was
-      # added in this commit
-      (plugin "which-key-nvim" "folke/which-key.nvim" "main"
-        "386591e24afe88c1c52c2291d450e7d7ad9cf02a")
-
       friendly-snippets
       #      nvim-treesitter
       BufOnly-vim
@@ -169,8 +164,7 @@ in {
       vim-illuminate
       # vim-indent-object
       vim-markdown
-      #      # TODO include when nixpkgs is merged (commit after 2021-05-13)
-      #      # which-key-nvim
+      which-key-nvim
       vim-nix
       vim-repeat
       vim-sandwich
