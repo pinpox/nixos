@@ -19,7 +19,7 @@ diverged = "↕"
 modified = "!"
 staged = "±"
 renamed = "→"
-disabled = true
+# disabled = true
 
 
 [directory]
