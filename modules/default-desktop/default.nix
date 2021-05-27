@@ -11,26 +11,36 @@ in {
     homeConfig = mkOption {
       type = types.attrs;
       default = null;
+      example = "{}";
+      description = "Main users account home-manager configuration for the host";
     };
 
     wireguardIp = mkOption {
       type = types.str;
       default = null;
+      description = "Wireguard for the wg0 VPN";
+      example = "192.168.7.XXX";
     };
 
     stateVersion = mkOption {
       type = types.str;
       default = "20.03";
+      example = "21.09";
+      description = "NixOS state-Version";
     };
 
     hostname = mkOption {
       type = types.str;
       default = null;
+      example = "deepblue";
+      description = "hostname to identify the instance";
     };
 
     bootDevice = mkOption {
       type = types.str;
       default = null;
+      description = "Path of the underlying luks-encrypted root.\nGet UUID from e.g.\nblkid /dev/sda2";
+      example = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
     };
   };
 

@@ -11,11 +11,15 @@ in {
     hostname = mkOption {
       type = types.str;
       default = null;
+      example = "deepblue";
+      description = "hostname to identify the instance";
     };
 
     homeConfig = mkOption {
       type = types.attrs;
       default = null;
+      example = "{}";
+      description = "Main users account home-manager configuration for the host";
     };
 
   };
