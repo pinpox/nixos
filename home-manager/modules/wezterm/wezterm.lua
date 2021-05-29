@@ -33,8 +33,8 @@ return {
 
 	keys = {
 		-- Panes
-		{ key = "\\",  mods="LEADER",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-		{ key = "|",   mods="LEADER",     action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+		{ key = "|",  mods="LEADER",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+		{ key = "\\",   mods="LEADER",     action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
 		{ key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentPane={confirm=true}}},
 		{ key = "h",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Left"}},
 		{ key = "l",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Right"}},
