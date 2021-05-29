@@ -139,6 +139,7 @@ in {
       #      nvim-treesitter
       BufOnly-vim
       ansible-vim
+      lspsaga-nvim
       base16-vim
       committia-vim
       fzf-vim
