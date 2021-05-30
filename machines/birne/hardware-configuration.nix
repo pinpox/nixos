@@ -44,6 +44,11 @@
 
   # Backup drive for borgbackup
   fileSystems."/mnt/backup" = {
+    device = "/dev/disk/by-uuid/9961fd1b-3162-474d-9e2e-7cb7d269cd0e";
+    fsType = "ext4";
+  };
+
+  fileSystems."/mnt/backup-old" = {
     device = "/dev/disk/by-uuid/a6a101de-0238-4b87-ada2-76653ce51cfc";
     fsType = "ext4";
   };
