@@ -13,7 +13,7 @@ in {
     # ./modules/newsboat.nix
     # ./modules/polybar.nix
     # ./modules/rofi.nix
-    ./modules/alacritty.nix
+    ./modules/alacritty
     ./modules/awesome.nix
     ./modules/browsers.nix
     ./modules/chromium.nix
@@ -41,16 +41,8 @@ in {
 
   # Install these packages for my user
   home.packages = with pkgs; [
-    # material-design-icons
-    # material-icons
-    # nerdfonts
     neuron-notes
-    # paper-gtk-theme
     retroarch
-    # seafile-client
-    # universal-ctags # Support for Markdwon tags in vim with tagbar
-    # vagrant
-    # virt-manager
     arandr
     arduino
     arduino-cli
