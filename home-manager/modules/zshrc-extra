@@ -18,3 +18,8 @@ bindkey "$terminfo[kcuu1]" history-search-backward
 bindkey "$terminfo[kcud1]" history-search-forward
 eval "$(h --setup ~/code)"
 bindkey -s "^T" 'pazi_cd --pipe="fzf"^M'
+
+# Start x on first login
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+	startx
+fi

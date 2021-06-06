@@ -8,7 +8,7 @@ in {
   # Imports
   imports = [
     # ./modules/autorandr.nix
-    # ./modules/grobi.nix
+    ./modules/grobi.nix
     # ./modules/i3.nix
     # ./modules/newsboat.nix
     # ./modules/polybar.nix
