@@ -41,16 +41,7 @@ in {
 
   # Install these packages for my user
   home.packages = with pkgs; [
-    # material-design-icons
-    # material-icons
-    # nerdfonts
-    neuron-notes
-    # paper-gtk-theme
     retroarch
-    # seafile-client
-    # universal-ctags # Support for Markdwon tags in vim with tagbar
-    # vagrant
-    # virt-manager
     arandr
     arduino
     arduino-cli
@@ -64,6 +55,7 @@ in {
     h # https://github.com/zimbatm/h
     htop
     httpie
+    fd
     hugo
     imagemagick
     libnotify
