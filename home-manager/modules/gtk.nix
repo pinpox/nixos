@@ -57,7 +57,7 @@ in {
       generated-gtk-theme = self.stdenv.mkDerivation rec {
         name = "generated-gtk-theme";
         src = materia-theme;
-        buildInputs = with self; [ sassc bc which inkscape-old optipng ];
+        buildInputs = with self; [ sassc bc which inkscape-old optipng meson ];
         installPhase = ''
           HOME=/build
           chmod 777 -R .
