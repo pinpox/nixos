@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 let
-inkscape-old = pkgs.callPackage ../../packages/inkscape-old { };
   vars = import ./vars.nix;
   materia-theme = pkgs.fetchFromGitHub {
     owner = "nana-4";
@@ -57,7 +56,7 @@ in {
       generated-gtk-theme = self.stdenv.mkDerivation rec {
         name = "generated-gtk-theme";
         src = materia-theme;
-        buildInputs = with self; [ sassc bc which inkscape-old optipng ];
+        buildInputs = with self; [ sassc bc which inkscape optipng ];
         installPhase = ''
           HOME=/build
           chmod 777 -R .
