@@ -177,7 +177,7 @@ in {
 
   programs.htop = {
     enable = true;
-    treeView = true;
+    settings.tree_view = true;
   };
 
   programs.jq.enable = true;
