@@ -4,8 +4,11 @@ let
   materia-theme = pkgs.fetchFromGitHub {
     owner = "nana-4";
     repo = "materia-theme";
-    rev = "e329aaee160c82e85fe91a6467c666c7f9f2a7df";
-    sha256 = "1qmq5ycfpzv0rcp5aav4amlglkqy02477i4bdi7lgpbn0agvms6c";
+    rev = "76cac96ca7fe45dc9e5b9822b0fbb5f4cad47984";
+    sha256 = "sha256-0eCAfm/MWXv6BbCl2vbVbvgv8DiUH09TAUhoKq7Ow0k=";
+    # Old version
+    # "e329aaee160c82e85fe91a6467c666c7f9f2a7df";
+    # sha256 = "1qmq5ycfpzv0rcp5aav4amlglkqy02477i4bdi7lgpbn0agvms6c";
     fetchSubmodules = true;
   };
   materia_colors = pkgs.writeTextFile {
@@ -51,18 +54,26 @@ in {
 
   nixpkgs.overlays = [
     (self: super: {
+      rendersvg = self.runCommandNoCC "rendersvg" { } ''
+        mkdir -p $out/bin
+        ln -s ${self.resvg}/bin/resvg $out/bin/rendersvg
+      '';
       generated-gtk-theme = self.stdenv.mkDerivation rec {
+
         name = "generated-gtk-theme";
         src = materia-theme;
-        buildInputs = with self; [ sassc bc which inkscape optipng ];
+        buildInputs = with self; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
+        MATERIA_COLORS = materia_colors;
+        phases = [ "unpackPhase" "installPhase" ];
         installPhase = ''
           HOME=/build
           chmod 777 -R .
           patchShebangs .
           mkdir -p $out/share/themes
-          substituteInPlace change_color.sh --replace "\$HOME/.themes" "$out/share/themes"
+          mkdir bin
+          sed -e 's/handle-horz-.*//' -e 's/handle-vert-.*//' -i ./src/gtk-2.0/assets.txt
           echo "Changing colours:"
-          ./change_color.sh -o Generated ${materia_colors}
+          ./change_color.sh -o Generated "$MATERIA_COLORS" -i False -t "$out/share/themes"
           chmod 555 -R .
         '';
       };
