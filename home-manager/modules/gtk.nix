@@ -4,10 +4,8 @@ let
   materia-theme = pkgs.fetchFromGitHub {
     owner = "nana-4";
     repo = "materia-theme";
-    # rev = "e329aaee160c82e85fe91a6467c666c7f9f2a7df";
-    # sha256 = "1qmq5ycfpzv0rcp5aav4amlglkqy02477i4bdi7lgpbn0agvms6c";
-    rev = "76cac96ca7fe45dc9e5b9822b0fbb5f4cad47984";
-    sha256 = "sha256-0eCAfm/MWXv6BbCl2vbVbvgv8DiUH09TAUhoKq7Ow0k=";
+    rev = "e329aaee160c82e85fe91a6467c666c7f9f2a7df";
+    sha256 = "1qmq5ycfpzv0rcp5aav4amlglkqy02477i4bdi7lgpbn0agvms6c";
     fetchSubmodules = true;
   };
   materia_colors = pkgs.writeTextFile {
