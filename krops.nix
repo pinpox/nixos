@@ -44,7 +44,7 @@ in rec {
   # Define deployments
 
   # Run with (e.g.):
-  # nix-build ./krop.nix -A kartoffel && ./result
+  # nix-build ./krops.nix -A kartoffel && ./result
 
   # Individual machines
   ahorn = createHost "ahorn" "root@192.168.7.2";
