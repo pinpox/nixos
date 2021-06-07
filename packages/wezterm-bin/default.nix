@@ -57,7 +57,7 @@ in stdenv.mkDerivation rec {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Wezterm terminal (pre-compiled binary version)";
     homepage = "https://github.com/wez/wezterm";
     license = licenses.gpl3Plus;
