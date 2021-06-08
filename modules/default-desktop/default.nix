@@ -98,6 +98,7 @@ in {
       killall
       neovim
       nixfmt
+      wezterm-nightly
       nodejs
       openvpn
       python

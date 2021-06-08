@@ -48,7 +48,8 @@
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                  nixpkgs.overlays = [ nur.overlay neovim-nightly.overlay ];
+                  nixpkgs.overlays =
+                    [ self.overlay nur.overlay neovim-nightly.overlay ];
 
                   # DON'T set useGlobalPackages! It's not necessary in newer
                   # home-manager versions and does not work with configs using
@@ -68,6 +69,9 @@
         };
 
     in {
+
+      # Expose overlay to flake outputs, to allow using it from other flakes.
+      overlay = final: prev: (import ./overlays) final prev;
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
@@ -94,15 +98,18 @@
     # system. This works as all packages are compatible with all architectures
     (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
     (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
+      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlay;
       in rec {
+        # Custom packages added via the overlay are selectively added here, to
+        # allow using them from other flakes that import this one.
         packages = flake-utils.lib.flattenTree {
-          hello-custom = pkgs.callPackage ./packages/hello-custom { };
-          wezterm-bin = pkgs.callPackage ./packages/wezterm-bin { };
-          # hello2 = pkgs.callPackage ./packages/wezterm { };
+          wezterm-bin = pkgs.wezterm-bin;
+          wezterm-nightly = pkgs.wezterm-nightly;
+          hello-custom = pkgs.hello-custom;
         };
 
         apps = {
+          # Allow custom packages to be run using `nix run`
           hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
           wezterm-bin = flake-utils.lib.mkApp {
             drv = packages.wezterm-bin;
