@@ -126,20 +126,11 @@ in {
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
 
-      # TODO use flake inputs for this
-      (pkgs.callPackage ../../../packages/indent-blankline-nvim-lua { })
-
-      # TODO Submit PR to add to nixpkgs
-      # TODO use flake inputs for this
-      (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
-        "87c80e3f4a590d0387d9b128d1f1fc456759408a")
-
-      # (plugin "todo-comments.nvim" "folke/todo-comments.nvim" "main"
-      #   "b09c700ecf878092e91ed4b041c6eb7c840df994")
-
-      friendly-snippets
       #      nvim-treesitter
+      indent-blankline-nvim-lua
+      colorbuddy-nvim
       BufOnly-vim
+      friendly-snippets
       ansible-vim
       lspsaga-nvim
       base16-vim
