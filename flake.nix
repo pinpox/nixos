@@ -80,15 +80,12 @@
           ];
         };
 
-
-myoverlay = import ./overlays inputs;
-
     in {
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
-      # overlay = final: prev: (import ./overlays inputs) final prev;
-      overlay = myoverlay;
-
+      # Flake inputs are passed to the overlay so that the packages defined in
+      # it can use the sources pinned in flake.lock
+      overlay = final: prev: (import ./overlays inputs) final prev;
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
