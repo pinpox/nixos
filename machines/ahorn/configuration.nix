@@ -9,7 +9,7 @@
       self.inputs.dotfiles-awesome.nixosModules.dotfiles
       {
         nixpkgs.overlays =
-          [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+          [self.overlay self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
       }
     ];
   };
