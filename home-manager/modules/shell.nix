@@ -106,7 +106,7 @@ in {
         src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
       }
       {
-        # TODO use flake inputs for this
+        # TODO use flake inputs/overlay for this
         name = "zsh-abbrev-alias";
         file = "abbrev-alias.plugin.zsh";
         src = builtins.fetchGit {

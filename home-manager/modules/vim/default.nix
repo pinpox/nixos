@@ -126,9 +126,11 @@ in {
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
 
+      # TODO use flake inputs for this
       (pkgs.callPackage ../../../packages/indent-blankline-nvim-lua { })
 
       # TODO Submit PR to add to nixpkgs
+      # TODO use flake inputs for this
       (plugin "colorbuddy.nvim" "tjdevries/colorbuddy.nvim" "master"
         "87c80e3f4a590d0387d9b128d1f1fc456759408a")
 
@@ -183,6 +185,7 @@ in {
 }
 
 # TODO Missing plugins
+# TODO use flake inputs for this, if needed
 # autopairs
 # fvictorio/vim-textobj-backticks'
 # nicwest/vim-camelsnek'
