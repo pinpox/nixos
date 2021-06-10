@@ -8,7 +8,7 @@
 }:
 
 let
-  rpath = stdenv.lib.makeLibraryPath [
+  rpath = lib.makeLibraryPath [
     dbus
     egl-wayland
     fontconfig
