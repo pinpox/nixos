@@ -89,6 +89,22 @@
         "type": "github"
       }
     },
+    "indent-blankline-nvim-lua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1615001221,
+        "narHash": "sha256-ymBud3DW1koAjLLOOYEYAytd1GURIKFBVw+0SXU1fFI=",
+        "owner": "lukas-reineke",
+        "repo": "indent-blankline.nvim",
+        "rev": "47691a67b690ad6ebd9df67574691822d226a5b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lukas-reineke",
+        "repo": "indent-blankline.nvim",
+        "type": "github"
+      }
+    },
     "krops": {
       "flake": false,
       "locked": {
@@ -114,11 +130,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1623084223,
-        "narHash": "sha256-lhKgG4L5UAt9zb5KH8YvpR/y7E4Dh9Ekb4BkEPHAY+Y=",
+        "lastModified": 1623312355,
+        "narHash": "sha256-BMt2WAAPB78TrLvcmANXMgeEyhN4YbYsAzMMIv1sR4Y=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "93f15db5d61800a2029aa20684be31c96ebcca5b",
+        "rev": "21645e603cbc7003898315d753a0f3f7c867f68a",
         "type": "github"
       },
       "original": {
@@ -137,11 +153,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1623140234,
-        "narHash": "sha256-VQRvN/h9RAgSRiJlTSXQrnK6/EBTTi4tBntVYUX4c8s=",
+        "lastModified": 1623313008,
+        "narHash": "sha256-x6VgPWdwEjbAn6xUgtM+21CAjwCAg2MaaGJtxFLbn+c=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "61e380e6859517ad6f21e8650e55ff3f0bcf2a32",
+        "rev": "b40ca8a8b0535fd2d42c01cd08e0730516d4ae1c",
         "type": "github"
       },
       "original": {
@@ -168,11 +184,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1623298472,
-        "narHash": "sha256-+U4PflslnjKGLIOImuVD5TVZ30ZyJFHFzDsqB9Vf9+Y=",
+        "lastModified": 1623311631,
+        "narHash": "sha256-3lzdbWWoSE8zbNKvB2yOY1AAtLL/nIWcD94uRCwATvU=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "dada4118723653e35b915219fd80f48de44504a2",
+        "rev": "97b0f023d370295a84c644be037b49bcf9c63c85",
         "type": "github"
       },
       "original": {
@@ -186,6 +202,7 @@
         "dotfiles-awesome": "dotfiles-awesome",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
         "krops": "krops",
         "neovim-nightly": "neovim-nightly",
         "nixpkgs": "nixpkgs",

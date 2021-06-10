@@ -26,6 +26,10 @@
     krops.url = "git+https://cgit.krebsco.de/krops";
     krops.flake = false;
 
+    indent-blankline-nvim-lua.url =
+      "github:lukas-reineke/indent-blankline.nvim";
+    indent-blankline-nvim-lua.flake = false;
+
   };
   outputs = { self, ... }@inputs:
     with inputs;
