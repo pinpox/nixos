@@ -208,7 +208,8 @@
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "wallpaper-generator": "wallpaper-generator",
-        "zsh-abbrev-alias": "zsh-abbrev-alias"
+        "zsh-abbrev-alias": "zsh-abbrev-alias",
+        "zsh-colored-man-pages": "zsh-colored-man-pages"
       }
     },
     "wallpaper-generator": {
@@ -240,6 +241,22 @@
       "original": {
         "owner": "momo-lab",
         "repo": "zsh-abbrev-alias",
+        "type": "github"
+      }
+    },
+    "zsh-colored-man-pages": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1554205411,
+        "narHash": "sha256-087bNmB5gDUKoSriHIjXOVZiUG5+Dy9qv3D69E8GBhs=",
+        "owner": "ael-code",
+        "repo": "zsh-colored-man-pages",
+        "rev": "57bdda68e52a09075352b18fa3ca21abd31df4cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ael-code",
+        "repo": "zsh-colored-man-pages",
         "type": "github"
       }
     }
