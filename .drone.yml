@@ -19,22 +19,22 @@ steps:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
 - name: Build kartoffel
   commands:
-  - nix build -vvvvvvvvvvvvv -L '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
+  - nix build -v -L '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
 - name: Build ahorn
   commands:
-  - nix build -vvvvvvvvvvvvv -L '.#nixosConfigurations.ahorn.config.system.build.toplevel'
+  - nix build -v -L '.#nixosConfigurations.ahorn.config.system.build.toplevel'
 - name: Build porree
   commands:
-  - nix build -vvvvvvvvvvvvv -L '.#nixosConfigurations.porree.config.system.build.toplevel'
+  - nix build -v -L '.#nixosConfigurations.porree.config.system.build.toplevel'
 - name: Build kfbox
   commands:
-  - nix build -vvvvvvvvvvvvv -L '.#nixosConfigurations.kfbox.config.system.build.toplevel'
+  - nix build -v -L '.#nixosConfigurations.kfbox.config.system.build.toplevel'
 - name: Build bob
   commands:
-  - nix build -vvvvvvvvvvvvv -L '.#nixosConfigurations.bob.config.system.build.toplevel'
+  - nix build -v -L '.#nixosConfigurations.bob.config.system.build.toplevel'
 - name: Build birne
   commands:
-  - nix build -vvvvvvvvvvvvv -L '.#nixosConfigurations.birne.config.system.build.toplevel'
+  - nix build -v -L '.#nixosConfigurations.birne.config.system.build.toplevel'
 # - name: Notify
 #   commands:
 #   - nix run -v 'github:pinpox/http2irc#announce-drone'
