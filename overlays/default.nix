@@ -12,6 +12,7 @@ in self: super: {
   # needed.
   wezterm-bin = super.pkgs.callPackage ../packages/wezterm-bin { };
   wezterm-nightly = super.pkgs.callPackage ../packages/wezterm-nightly { };
+  filebrowser = super.pkgs.callPackage ../packages/filebrowser { };
 
   # Vim plugins, added inside existing pkgs.vimPlugins
   vimPlugins = super.vimPlugins // {

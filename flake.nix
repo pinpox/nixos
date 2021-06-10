@@ -120,6 +120,7 @@
           wezterm-bin = pkgs.wezterm-bin;
           wezterm-nightly = pkgs.wezterm-nightly;
           hello-custom = pkgs.hello-custom;
+          filebrowser = pkgs.filebrowser;
         };
 
         apps = {
