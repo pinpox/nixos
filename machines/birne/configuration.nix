@@ -18,13 +18,15 @@
       hostname = "birne";
 
       homeConfig = {
-
         imports = [
           ../../home-manager/home-server.nix
           self.inputs.dotfiles-awesome.nixosModules.dotfiles
           {
-            nixpkgs.overlays =
-              [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+            nixpkgs.overlays = [
+              self.overlay
+              self.inputs.nur.overlay
+              self.inputs.neovim-nightly.overlay
+            ];
           }
         ];
       };
@@ -54,9 +56,7 @@
   security.acme.email = "letsencrypt@pablo.tools";
 
   # Allow filebrowser port on wireguard interface
-  networking.firewall = {
-    interfaces.wg0.allowedTCPPorts = [ 8787 ];
-  };
+  networking.firewall = { interfaces.wg0.allowedTCPPorts = [ 8787 ]; };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];

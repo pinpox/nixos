@@ -77,7 +77,6 @@
         locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
       };
 
-
       # Alertmanager
       "vpn.alerts.pablo.tools" = {
         listen = [{
@@ -127,8 +126,12 @@
           ../../home-manager/home-server.nix
           self.inputs.dotfiles-awesome.nixosModules.dotfiles
           {
-            nixpkgs.overlays =
-              [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+            # TODO add overlays to all machines at once
+            nixpkgs.overlays = [
+              self.overlay
+              self.inputs.nur.overlay
+              self.inputs.neovim-nightly.overlay
+            ];
           }
         ];
       };

@@ -13,8 +13,12 @@
           ../../home-manager/home-server.nix
           self.inputs.dotfiles-awesome.nixosModules.dotfiles
           {
-            nixpkgs.overlays =
-              [ self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+            # TODO add overlays to all machines at once
+            nixpkgs.overlays = [
+              self.overlay
+              self.inputs.nur.overlay
+              self.inputs.neovim-nightly.overlay
+            ];
           }
         ];
       };
