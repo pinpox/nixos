@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 let
   vars = import ./vars.nix;
+
+      # TODO use flake inputs
   materia-theme = pkgs.fetchFromGitHub {
     owner = "nana-4";
     repo = "materia-theme";

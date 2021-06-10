@@ -12,6 +12,7 @@ let
       owner = "pinpox";
       repo = "go-karma-bot";
       rev = "v${version}";
+      # TODO use flake inputs
       sha256 = "sha256-L/mL37XMERbn4rhJMq0iFIGRYo2mHWIR4cSgTty0I1U=";
     };
 

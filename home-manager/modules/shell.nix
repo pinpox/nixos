@@ -106,22 +106,14 @@ in {
         src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
       }
       {
-        # TODO use flake inputs/overlay for this
         name = "zsh-abbrev-alias";
         file = "abbrev-alias.plugin.zsh";
-        src = builtins.fetchGit {
-          # Updated 2020-12-31
-          url = "https://github.com/momo-lab/zsh-abbrev-alias";
-          rev = "2f3d218f426aff21ac888217b0284a3a1470e274";
-        };
+        src = "${pkgs.zsh-abbrev-alias}/share/zsh-abbrev-alias";
       }
       {
         name = "zsh-colored-man-pages";
         file = "colored-man-pages.plugin.zsh";
-        src = builtins.fetchGit {
-          url = "https://github.com/ael-code/zsh-colored-man-pages";
-          rev = "57bdda68e52a09075352b18fa3ca21abd31df4cb";
-        };
+        src = "${pkgs.zsh-colored-man-pages}/share/zsh-colored-man-pages";
       }
       {
         name = "zsh-fzf-tab";

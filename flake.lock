@@ -207,7 +207,8 @@
         "neovim-nightly": "neovim-nightly",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
-        "wallpaper-generator": "wallpaper-generator"
+        "wallpaper-generator": "wallpaper-generator",
+        "zsh-abbrev-alias": "zsh-abbrev-alias"
       }
     },
     "wallpaper-generator": {
@@ -223,6 +224,22 @@
       "original": {
         "owner": "pinpox",
         "repo": "wallpaper-generator",
+        "type": "github"
+      }
+    },
+    "zsh-abbrev-alias": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1613187455,
+        "narHash": "sha256-gXdfLIYcdTgd4YR0zVks9A7Bu3pYYU6Pm+B7fwJIjD0=",
+        "owner": "momo-lab",
+        "repo": "zsh-abbrev-alias",
+        "rev": "b9fecabca3798785f262976d5ffb315a134e1344",
+        "type": "github"
+      },
+      "original": {
+        "owner": "momo-lab",
+        "repo": "zsh-abbrev-alias",
         "type": "github"
       }
     }

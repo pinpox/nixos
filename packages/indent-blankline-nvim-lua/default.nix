@@ -1,9 +1,14 @@
-{ pkgs, stdenv, fetchFromGitHub, inputs }:
+{ pkgs, stdenv, fetchFromGitHub, inputs,... }:
 pkgs.vimUtils.buildVimPluginFrom2Nix {
   pname = "indent-blankline-nvim-lua";
-  version = "2021-04-23";
-
+  version = "latest";
   src = inputs.indent-blankline-nvim-lua;
-  meta.homepage = "https://github.com/lukas-reineke/indent-blankline.nvim/";
+
+  meta = with lib; {
+    description = "Indent guides for Neovim";
+    homepage = "https://github.com/lukas-reineke/indent-blankline.nvim/";
+    # license = licenses.mit;
+    platforms = platforms.unix;
+  };
 }
 

@@ -26,9 +26,17 @@
     krops.url = "git+https://cgit.krebsco.de/krops";
     krops.flake = false;
 
+    # Vim plugins
     indent-blankline-nvim-lua.url =
       "github:lukas-reineke/indent-blankline.nvim";
     indent-blankline-nvim-lua.flake = false;
+
+    # ZSH plugins
+    zsh-abbrev-alias.url = "github:momo-lab/zsh-abbrev-alias";
+    zsh-abbrev-alias.flake = false;
+
+    zsh-colored-man-pages.url = "github:ael-code/zsh-colored-man-pages";
+    zsh-colored-man-pages.flake = false;
 
   };
   outputs = { self, ... }@inputs:
@@ -72,10 +80,15 @@
           ];
         };
 
+
+myoverlay = import ./overlays inputs;
+
     in {
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
-      overlay = final: prev: (import ./overlays) final prev;
+      # overlay = final: prev: (import ./overlays inputs) final prev;
+      overlay = myoverlay;
+
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
