@@ -41,6 +41,10 @@ in {
 
   # Install these packages for my user
   home.packages = with pkgs; [
+    # Local packages
+    zk
+
+    # From nixpkgs
     retroarch
     arandr
     arduino
@@ -79,6 +83,7 @@ in {
     tealdeer
     thunderbird-bin
     timewarrior
+    sqlite
     unzip
     viewnior
     vlc
