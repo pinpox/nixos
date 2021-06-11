@@ -53,15 +53,15 @@
 
 
 pre.syntax-highlight code span.comment {
-  color: rgba(240,240,240, 0.3);
-  font-weight: 200;
+		color: rgba(240,240,240, 0.3);
+		font-weight: 200;
 }
 pre.ft-syntax-highlight code span.url {
-  text-decoration: underline;
+		text-decoration: underline;
 }
 pre.ft-syntax-highlight code span.value {
-  color: rgb(180,180,180);
-  font-weight: 300;
+		color: rgb(180,180,180);
+		font-weight: 300;
 }
 /*    => syntax theme: one-dark*/
 pre.syntax-highlight code span.boolean,
@@ -88,23 +88,32 @@ pre.syntax-highlight code span.variable { color: inherit; }
 
 
 .flex-container {
-	display: flex;
+		display: flex;
 }
 
 .box {
-	flex: 1;
-	max-width: 60px;
+		flex: 1;
+		max-width: 60px;
 }
 
 
 .box:after {
-	content: "";
-	display: block;
-	padding-bottom: 100%;
+		content: "";
+		display: block;
+		padding-bottom: 100%;
 }
 
 body {
-	padding-left: 5%;
-	padding-right: 5%;
-	padding-top: 100px;
+		padding-left: 5%;
+		padding-right: 5%;
+		padding-top: 100px;
+}
+
+
+
+form {
+}
+
+#box1 {
+		background: var(--kb-color);
 }

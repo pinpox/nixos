@@ -1,0 +1,80 @@
+// Tabs styles
+
+// Compile with `sass sv-tabs.scss:sv-tabs.css --no-source-map`
+
+$spacing-unit: 16px !default;
+$base-border: 1px solid #ccc !default;
+$bd-rad: 4px !default;
+
+$tab-bg-on: #fff !default;
+$tab-bg-off: #eee !default;
+$tab-bg-hover: #ddd !default;
+
+$tab-text-on: #666 !default;
+$tab-text-off: #666 !default;
+
+
+.sv-tabs-wrapper {
+	margin-bottom: $spacing-unit;
+}
+
+.sv-tabs-tab-list {
+	display: flex;
+	flex-wrap: wrap;
+	border-bottom: $base-border;
+}
+
+.sv-tabs-tab {
+	list-style: none;
+	min-width: 100px;
+	margin: 0 0 -1px ($spacing-unit / 4);
+	padding: ($spacing-unit / 4) $spacing-unit;
+
+	border: $base-border;
+	border-radius: $bd-rad $bd-rad 0 0;
+	background-color: $tab-bg-off;
+	line-height: 1.2;
+	text-align: center;
+
+	&, &:hover, &:active, &:focus {
+		color: $tab-text-off;
+		text-decoration: none;
+	}
+	&:hover, &:active, &:focus {
+		background-color: $tab-bg-hover;
+	}
+	&.active {
+		background-color: $tab-bg-on;
+		border-bottom-color: $tab-bg-on;
+		color: $tab-text-on;
+	}
+}
+
+.sv-tabs-panel {
+	display: none;
+	padding: $spacing-unit 0;
+
+	&.active {
+		display: block;
+	}
+	&:target {
+		background-color: transparent;
+	}
+}
+
+
+// utilities
+.sv-tabs-grow > .sv-tabs-tab {
+	flex-grow: 1;
+}
+
+.sv-tabs-onetab > .sv-tabs-tab-list {
+	display: none;
+}
+
+@media (max-width: 899px) {
+	.sv-tabs-tab {
+		flex: 1 1 0;
+		min-width: auto;
+	}
+}
