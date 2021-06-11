@@ -18,6 +18,10 @@ buildGoModule rec {
     sha256 = "sha256-EFVNEkBYkhArtUfULZVRPxFCVaPHamadqFxi7zV7y8g=";
   };
 
+  # buildFlagsArray = [ "--tags \"fts\"" ];
+
+  buildFlags = "--tags fts5";
+
   meta = with lib; {
     maintainers = with maintainers; [ pinpox ];
     license = licenses.gpl3;
