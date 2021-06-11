@@ -20,7 +20,6 @@ end)
 
 return {
 
-
 	set_environment_variables = {
 		EDITOR = "nvim"
 	},
@@ -33,8 +32,8 @@ return {
 
 	keys = {
 		-- Panes
-		{ key = "|",  mods="LEADER",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-		{ key = "\\",   mods="LEADER",     action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+		{ key = "|",  mods="LEADER",      action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+		{ key = "\\",   mods="LEADER",    action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
 		{ key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentPane={confirm=true}}},
 		{ key = "h",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Left"}},
 		{ key = "l",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Right"}},
@@ -125,7 +124,7 @@ return {
 	colors = {
 
 		foreground = "#E5E9F0",
-		background = "#2E3440",
+		background = "#24283B",
 
 		-- Overrides the cell background color when the current cell is occupied by the
 		-- cursor and the cursor style is set to Block
@@ -143,8 +142,8 @@ return {
 		split = "#82AAFF",
 
 		-- Default colors
-		ansi    = {"#2E3440", "#F07178", "#C3E88D", "#FFCB6B", "#82AAFF", "#C792EA", "#89DDFF", "#E5E9F0"},
-		brights = {"#4C566A", "#F07178", "#C3E88D", "#FFCB6B", "#82AAFF", "#C792EA", "#89DDFF", "#8FBCBB"},
+		ansi    = {"#24283B", "#F07178", "#68f288", "#FFCB6B", "#82AAFF", "#C792EA", "#89DDFF", "#E5E9F0"},
+		brights = {"#505362", "#FF5370", "#C3E88D", "#ffe66b", "#9BBBFF", "#D8B3F0", "#A1E4FF", "#ECEFF4"},
 
 		tab_bar = {
 

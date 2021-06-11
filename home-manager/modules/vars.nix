@@ -1,11 +1,12 @@
 {
   colors = rec {
 
-    Black = "2E3440";         #2E3440
+    # Black = "2E3440";         #2E3440
+                             Black = "24283B"; #24283B
 
-    DarkGrey = "3B4252";      #3B4252
-    Grey = "434C5E";          #434C5E
-    BrightGrey = "4C566A";    #4C566A
+    DarkGrey = "3a3e4f";      #3a3e4f
+    Grey = "505362";          #505362
+    BrightGrey = "666976";    #666976
 
     DarkWhite = "D8DEE9";     #D8DEE9
     White = "E5E9F0";         #E5E9F0
@@ -16,8 +17,8 @@
     BrightYellow = "FFE66B";  #ffe66b
 
     DarkGreen = "55D1B4";     #55D1B4
-    Green = "C3E88D";         #C3E88D
-    BrightGreen = "68f288";   #68f288
+    Green = "68f288";         #68f288
+    BrightGreen = "C3E88D";   #C3E88D
 
     DarkCyan = "6EB1CC";      #6EB1CC
     Cyan = "89DDFF";          #89DDFF
