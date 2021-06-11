@@ -121,6 +121,7 @@
           wezterm-nightly = pkgs.wezterm-nightly;
           hello-custom = pkgs.hello-custom;
           filebrowser = pkgs.filebrowser;
+          zk = pkgs.zk;
         };
 
         apps = {
