@@ -65,6 +65,25 @@ require'lspconfig'.jsonls.setup {
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = true, })
 
+local lspconfig = require('lspconfig')
+local configs = require('lspconfig/configs')
+
+configs.zk = {
+  default_config = {
+    cmd = {'zk', 'lsp', '--log', '/tmp/zk-lsp.log'},
+    filetypes = {'markdown'},
+    root_dir = function()
+      return vim.loop.cwd()
+    end,
+    settings = {}
+  };
+}
+
+lspconfig.zk.setup({ on_attach = function(client, buffer) 
+  -- some custom on_attach function for doing keybindings and other things..
+  -- see: https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
+end })
+
 -- TODO auto-format on save
 -- autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
 -- autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)

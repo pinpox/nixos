@@ -27,6 +27,7 @@ in {
     terraform # TODO add options to enable/disable large packages like terraform
     libgccjit # Needed for treesitter
     sumneko-lua-language-server # Lua language server
+    zk
   ];
 
   xdg = {
@@ -115,6 +116,7 @@ in {
       require('config.bufferline')
       require('config.lualine')
       require('config.gitsigns')
+      require('config.zk')
 
       EOF
 
@@ -127,6 +129,8 @@ in {
     plugins = with pkgs.vimPlugins; [
 
       #      nvim-treesitter
+      zk-nvim
+      nvim-fzf
       indent-blankline-nvim-lua
       colorbuddy-nvim
       BufOnly-vim
