@@ -31,6 +31,12 @@
       "github:lukas-reineke/indent-blankline.nvim";
     indent-blankline-nvim-lua.flake = false;
 
+    nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
+    nvim-fzf.flake = false;
+
+    zk-nvim.url = "github:megalithic/zk.nvim";
+    zk-nvim.flake = false;
+
     # ZSH plugins
     zsh-abbrev-alias.url = "github:momo-lab/zsh-abbrev-alias";
     zsh-abbrev-alias.flake = false;

@@ -21,6 +21,8 @@ in self: super: {
       super.pkgs.callPackage ../packages/indent-blankline-nvim-lua {
         inputs = inputs;
       };
+    zk-nvim = super.pkgs.callPackage ../packages/zk-nvim { inputs = inputs; };
+    nvim-fzf = super.pkgs.callPackage ../packages/nvim-fzf { inputs = inputs; };
   };
 
   # ZSH plugins
