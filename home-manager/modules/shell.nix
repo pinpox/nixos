@@ -22,6 +22,7 @@ in {
     sessionVariables = {
       RPS1 = ""; # Disable the right side prompt that "walters" theme introduces
       ZDOTDIR = "/home/pinpox/.config/zsh";
+      ZK_NOTEBOOK_DIR = "/home/pinpox/Notes";
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
