@@ -137,6 +137,11 @@ in {
     # Keyring
     gnome-keyring = { enable = true; };
 
+    syncthing = {
+      enable = true;
+      tray.enable = true;
+    };
+
   };
 
   # This value determines the Home Manager release that your
