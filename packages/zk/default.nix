@@ -1,4 +1,4 @@
-{ lib, fetchFromGitHub, buildGoModule }:
+{ lib, fetchFromGitHub, buildGoModule, icu }:
 
 buildGoModule rec {
   pname = "zk";
@@ -18,9 +18,15 @@ buildGoModule rec {
     sha256 = "sha256-EFVNEkBYkhArtUfULZVRPxFCVaPHamadqFxi7zV7y8g=";
   };
 
-  # buildFlagsArray = [ "--tags \"fts\"" ];
+  buildInputs = [icu];
 
-  buildFlags = "--tags fts5";
+  CGO_ENABLED = 1;
+
+  buildFlags = [ "-tags fts5" "-tags icu" ];
+
+  buildFlagsArray = [
+    "-ldflags=-X=main.Build=${version} -X=main.Build=${version}"
+  ];
 
   meta = with lib; {
     maintainers = with maintainers; [ pinpox ];
