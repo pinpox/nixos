@@ -32,17 +32,19 @@ in {
     ./modules/xresources.nix
     ./modules/xscreensaver.nix
     ./modules/wezterm
+    ./modules/zk
   ];
 
-  pinpox.programs.wezterm.enable = true;
+  pinpox.programs = {
+    wezterm.enable = true;
+    zk.enable = true;
+  };
 
   # Allow "unfree" licenced packages
   nixpkgs.config = { allowUnfree = true; };
 
   # Install these packages for my user
   home.packages = with pkgs; [
-    # Local packages
-    zk
 
     # From nixpkgs
     retroarch
