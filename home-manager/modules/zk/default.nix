@@ -13,7 +13,7 @@ in {
 
       shellAliases = {
         # Edit interactively
-        zke = "${pkgs.zk}/bin/zk edit --interactive";
+        zke = "${pkgs.zk}/bin/zk edit --interactive -x journal";
       };
     };
 
