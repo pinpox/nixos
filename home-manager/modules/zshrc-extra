@@ -1,10 +1,11 @@
+# Aliases expanded only at beginning of lines
 abbrev-alias m="neomutt"
 abbrev-alias o="xdg-open"
 abbrev-alias q="exit"
 abbrev-alias snvim="sudo -E nvim"
 abbrev-alias v="nvim"
 
-# Global aliases, get expaned everywhere
+# Global aliases, get expanded everywhere
 abbrev-alias -g G="| rg -i"
 abbrev-alias -g P="| tb"
 
@@ -14,10 +15,18 @@ take () {mkdir -p -- "$1" && cd -- "$1"; }
 # Create and change to a new temporary directory
 ttake () { cd $(mktemp -d) }
 
+# Bind up and down keys to history matching partial input
 bindkey "$terminfo[kcuu1]" history-search-backward
 bindkey "$terminfo[kcud1]" history-search-forward
+
+# Init h (https://github.com/zimbatm/h)
 eval "$(h --setup ~/code)"
+
+# fzf-compete files with ctrl+t
 bindkey -s "^T" 'pazi_cd --pipe="fzf"^M'
+
+# Make tab-completion case-insensitive
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Start x on first login
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
