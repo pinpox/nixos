@@ -18,15 +18,14 @@ buildGoModule rec {
     sha256 = "sha256-EFVNEkBYkhArtUfULZVRPxFCVaPHamadqFxi7zV7y8g=";
   };
 
-  buildInputs = [icu];
+  buildInputs = [ icu ];
 
   CGO_ENABLED = 1;
 
-  buildFlags = [ "-tags fts5" "-tags icu" ];
+  preBuild = ''buildFlagsArray+=("-tags" "fts5 icu")'';
 
-  buildFlagsArray = [
-    "-ldflags=-X=main.Build=${version} -X=main.Build=${version}"
-  ];
+  buildFlagsArray =
+    [ "-ldflags=-X=main.Build=${version} -X=main.Build=${version}" ];
 
   meta = with lib; {
     maintainers = with maintainers; [ pinpox ];
