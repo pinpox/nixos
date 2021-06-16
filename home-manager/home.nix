@@ -139,10 +139,10 @@ in {
     # Keyring
     gnome-keyring = { enable = true; };
 
-    syncthing = {
-      enable = true;
-      tray.enable = true;
-    };
+    # syncthing = {
+    #   enable = true;
+    #   tray.enable = true;
+    # };
 
   };
 
