@@ -36,7 +36,11 @@ in {
       share = true;
     };
 
-    dirHashes = { docs = "$HOME/Documents"; };
+    dirHashes = {
+      # Allows addressing directorys by shortname, e.g. `cd ~notes`
+      docs = "$HOME/Documents";
+      notes = "$HOME/Notes";
+    };
 
     shellAliases = {
 
