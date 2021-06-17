@@ -7,6 +7,4 @@ tags:
 - {{slug title}}
 ---
 
-# {{title}}
-
 {{content}}
