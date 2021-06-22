@@ -6,30 +6,31 @@ let
 in self: super: {
 
   # Example package, used only for tests
-  hello-custom = super.pkgs.callPackage ../packages/hello-custom { };
+  hello-custom = super.callPackage ../packages/hello-custom { };
 
   # Custom packages. Will be made available on all machines and used where
   # needed.
-  wezterm-bin = super.pkgs.callPackage ../packages/wezterm-bin { };
-  wezterm-nightly = super.pkgs.callPackage ../packages/wezterm-nightly { };
-  filebrowser = super.pkgs.callPackage ../packages/filebrowser { };
-  zk = super.pkgs.callPackage ../packages/zk { };
+  wezterm-bin = super.callPackage ../packages/wezterm-bin { };
+  wezterm-nightly = super.callPackage ../packages/wezterm-nightly { };
+  filebrowser = super.callPackage ../packages/filebrowser { };
+  zk = super.callPackage ../packages/zk { };
 
   # Vim plugins, added inside existing pkgs.vimPlugins
   vimPlugins = super.vimPlugins // {
     indent-blankline-nvim-lua =
-      super.pkgs.callPackage ../packages/indent-blankline-nvim-lua {
+      super.callPackage ../packages/indent-blankline-nvim-lua {
         inputs = inputs;
       };
-    zk-nvim = super.pkgs.callPackage ../packages/zk-nvim { inputs = inputs; };
-    nvim-fzf = super.pkgs.callPackage ../packages/nvim-fzf { inputs = inputs; };
+    zk-nvim = super.callPackage ../packages/zk-nvim { inputs = inputs; };
+    nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
   };
 
   # ZSH plugins
   zsh-abbrev-alias =
-    super.pkgs.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
+    super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
   zsh-colored-man-pages =
-    super.pkgs.callPackage ../packages/zsh-colored-man-pages {
+    super.callPackage ../packages/zsh-colored-man-pages {
       inputs = inputs;
     };
 }
+
