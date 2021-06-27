@@ -15,8 +15,8 @@ vendorSha256 = "sha256-wP3ltbblyzA5bISvTqwnLkoupUCcfgQCRz6IdoFgjLc=";
   src = fetchFromGitHub {
     owner = "mickael-menu";
     repo = "zk";
-    rev = "feature/list-json";
-    sha256 = "sha256-WS3NzJD49qvmzp2qzAufkfGgDV2u7qUQcTxnpSGZJ3Y=";
+    rev = "feature/graph";
+    sha256 = "sha256-NLQIsC1+TBRQ3PUWMZ8aauZQ5qtENeW4CIWEx/5F7NU=";
 
     # rev = "v${version}";
     # sha256 = "sha256-EFVNEkBYkhArtUfULZVRPxFCVaPHamadqFxi7zV7y8g=";
