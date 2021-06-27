@@ -12,8 +12,9 @@ in {
       sessionVariables.ZK_NOTEBOOK_DIR = "/home/pinpox/Notes";
 
       shellAliases = {
-        # Edit interactively
+        # Edit notes
         zke = "${pkgs.zk}/bin/zk edit --interactive -x journal";
+        zkn = "${pkgs.zk}/bin/zk new inbox";
       };
     };
 
