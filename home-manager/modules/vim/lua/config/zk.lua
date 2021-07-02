@@ -4,5 +4,5 @@ require("zk").setup({
   default_keymaps = true,
   default_notebook_path = vim.env.ZK_NOTEBOOK_DIR or "/home/pinpox/Notes",
   fuzzy_finder = "fzf", -- or "telescope"
-  link_format = "markdown" -- or "wiki"
+  link_format = "wiki" -- or "wiki"
 })
