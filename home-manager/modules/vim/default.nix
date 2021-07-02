@@ -161,7 +161,7 @@ in {
       vim-gutentags
       vim-illuminate
       # vim-indent-object
-      vim-markdown
+      # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
       which-key-nvim
       vim-nix
       vim-repeat

@@ -375,10 +375,10 @@ Group.new('jsonStringSQError',             c.Red, c.none,   r)
 Group.new('jsonSemicolonError',            c.Red, c.none,   r)
 
 -- Markdown
-Group.new('markdownUrl',                   c.Grey, c.none,   no)
+Group.new('markdownUrl',                   c.DarkBlue, c.none,   no)
 Group.new('markdownBold',                  c.Yellow, c.none,   b)
-Group.new('markdownItalic',                c.Yellow, c.none,   b)
-Group.new('markdownCode',                  c.Green, c.none,   no)
+Group.new('markdownItalic',                c.Yellow, c.none,   i)
+Group.new('markdownCode',                  c.DarkGreen, c.none,   no)
 Group.new('markdownCodeBlock',             c.Red, c.none,   no)
 Group.new('markdownCodeDelimiter',         c.Green, c.none,   no)
 Group.new('markdownHeadingDelimiter',      c.BrightRed, c.none,   no)
@@ -390,6 +390,42 @@ Group.new('markdownH4',                    c.Red, c.none,   no)
 Group.new('markdownH5',                    c.Red, c.none,   no)
 Group.new('markdownH6',                    c.Red, c.none,   no)
 Group.new('markdownListMarker',            c.Red, c.none,   no)
+Group.new('markdownlinktext',              c.Blue, c.none,  no)
+
+
+-- TODO possible additional markdown groups
+-- 'markdownfootnote'
+-- 'markdownfootnotedefinition'
+-- 'markdownlinebreak'
+
+-- Markdown (keep consistent with HTML, above
+-- Group.new('markdownItalic', c.fg3, c.none, i)
+-- Group.new('markdownH1', g.htmlH1, g.htmlH1, g.htmlH1)
+-- Group.new('markdownH2', g.htmlH2, g.htmlH2, g.htmlH2)
+-- Group.new('markdownH3', g.htmlH3, g.htmlH3, g.htmlH3)
+-- Group.new('markdownH4', g.htmlH4, g.htmlH4, g.htmlH4)
+-- Group.new('markdownH5', g.htmlH5, g.htmlH5, g.htmlH5)
+-- Group.new('markdownH6', g.htmlH6, g.htmlH6, g.htmlH6)
+-- Group.new('markdownCode', c.purple2, c.none, no)
+-- Group.new('mkdCode', g.markdownCode, g.markdownCode, g.markdownCode)
+-- Group.new('markdownCodeBlock', c.aqua0, c.none, no)
+-- Group.new('markdownCodeDelimiter', c.orange0, c.none, no)
+-- Group.new('mkdCodeDelimiter', g.markdownCodeDelimiter, g.markdownCodeDelimiter, g.markdownCodeDelimiter)
+-- Group.new('markdownBlockquote', c.grey, c.none, no)
+-- Group.new('markdownListMarker', c.grey, c.none, no)
+-- Group.new('markdownOrderedListMarker', c.grey, c.none, no)
+-- Group.new('markdownRule', c.grey, c.none, no)
+-- Group.new('markdownHeadingRule', c.grey, c.none, no)
+-- Group.new('markdownUrlDelimiter', c.fg3, c.none, no)
+-- Group.new('markdownLinkDelimiter', c.fg3, c.none, no)
+-- Group.new('markdownLinkTextDelimiter', c.fg3, c.none, no)
+-- Group.new('markdownHeadingDelimiter', c.orange0, c.none, no)
+-- Group.new('markdownUrl', c.purple0, c.none, no)
+-- Group.new('markdownUrlTitleDelimiter', c.green, c.none, no)
+-- Group.new('markdownLinkText', g.htmlLink, g.htmlLink, g.htmlLink)
+-- Group.new('markdownIdDeclaration', g.markdownLinkText, g.markdownLinkText, g.markdownLinkText)
+
+
 
 -- PHP
 Group.new('phpClass',                      c.DarkYellow, c.none,   no)
