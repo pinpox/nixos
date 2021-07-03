@@ -81,6 +81,8 @@ in {
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
       yotp = "${pkgs.yubikey-manager}/bin/ykman oath accounts code";
       zzz = "systemctl suspend";
+
+      serve = "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'"
     };
 
     prezto = {
