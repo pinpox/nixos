@@ -16,7 +16,7 @@ language = "en"
 default-title = "Untitled"
 
 # Template used to generate a note's filename, without extension.
-filename = "{{slug title}}"
+filename = "{{date now '%Y-%m-%d-%H%M%S' }}"
 
 # The file extension used for the notes.
 extension = "md"
@@ -82,7 +82,7 @@ template = "journal.md"
 
 # Format used to generate links between notes.
 # Either "wiki", "markdown" or a custom template. Default is "markdown".
-link-format = "wiki"
+link-format = "markdown"
 # Indicates whether a link's path will be percent-encoded.
 # Defaults to true for "markdown" format and false for "wiki" format.
 #link-encode-path = true
@@ -185,7 +185,7 @@ path = "zk list --quiet --format {{path}} --delimiter , $@"
 #hist = "zk list --format path --delimiter0 --quiet $@ | xargs -t -0 git log --patch --"
 
 # Edit this configuration file.
-conf = '$EDITOR "$ZK_NOTEBOOK_DIR/.zk/config.toml"'
+conf = '$EDITOR "~/code/github.com/pinpox/nixos/home-manager/modules/zk/config.toml"'
 
 # Edit journal
 journal = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal"'
