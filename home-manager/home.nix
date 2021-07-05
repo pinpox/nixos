@@ -27,6 +27,7 @@ in {
     ./modules/neomutt.nix
     ./modules/picom.nix
     ./modules/shell.nix
+    ./modules/tmux
     ./modules/vim
     ./modules/xdg.nix
     ./modules/xresources.nix
@@ -38,6 +39,7 @@ in {
   pinpox.programs = {
     wezterm.enable = true;
     zk.enable = true;
+    tmux.enable = true;
   };
 
   # Allow "unfree" licenced packages

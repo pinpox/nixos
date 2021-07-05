@@ -167,13 +167,6 @@ in {
     enableZshIntegration = true;
   };
 
-  programs.tmux = {
-    enable = true;
-    clock24 = true;
-    prefix = "C-a";
-    newSession = true;
-  };
-
   programs.htop = {
     enable = true;
     settings.tree_view = true;
