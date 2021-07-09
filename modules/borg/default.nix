@@ -49,7 +49,9 @@
       "/*/Cache"
       "/*/Downloads"
       "/*/Seafile"
-      "/*/Projects/nixpkgs"
+      "/*/code/nixpkgs"
+      "/*/code/github.com/pinpox/nixpkgs"
+      "/*/code/github.com/NixOS/nixpkgs"
       "/*/VirtualBox VMs"
       "discord/Cache"
     ];
