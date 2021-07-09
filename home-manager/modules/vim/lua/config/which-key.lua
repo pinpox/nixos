@@ -62,10 +62,6 @@ wk.setup {
 	['<C-n>'] = { ':bnext<CR>', 'Next buffer'},
 	['<C-p>'] = { ':bprev<CR>', 'Previous buffer'},
 
-	-- Switch ; and :
-	[';'] = { ':', 'Switch ; and :'},
-	[':'] = { ';', 'Switch : and ;'},
-
 	-- Remap the arrow keys to nothing
 	['<left>']  = { '<nop>', 'Nothing'},
 	['<right>'] = { '<nop>', 'Nothing'},
@@ -83,6 +79,15 @@ wk.setup {
 	    [tostring(i)] = "which_key_ignore",
 	}, { prefix = "<leader>"})
     end
+
+    wk.register({
+
+	-- Switch ; and :
+	[';'] = { ':', 'Switch ; and :'},
+	[':'] = { ';', 'Switch ; and :'},
+
+    }, {mode = 'n', silent=false})
+
 
     -----------------
     -- Visual mode --
@@ -102,7 +107,7 @@ wk.setup {
 	['<C-k>'] = { ":m-2<CR>gv", 'Move line up'},
 	['<C-j>'] = { ":m '>+<CR>gv", 'Move line down'},
 
-    }, {mode = 'v'})
+    }, {mode = 'v', silent=false})
 
     -----------------
     -- Insert mode --
