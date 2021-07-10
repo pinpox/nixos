@@ -26,6 +26,31 @@ in {
 
   config = mkIf cfg.enable {
 
+    services.nginx = {
+      enable = true;
+      recommendedOptimisation = true;
+      clientMaxBodySize = "128m";
+      recommendedProxySettings = true;
+
+      virtualHosts = {
+        "backup-reports" = {
+
+          # Allow listing directory contents. Not strictly necessary, but easier
+          # to debugn
+          extraConfig = "autoindex on;";
+
+          # TODO create this directory if it does not exist
+          root = "/var/www/backup-reports";
+
+          # Only accessible over wireguard VPN
+          listen = [{
+            addr = "${config.pinpox.wg-client.clientIp}";
+            port = 80;
+          }];
+        };
+      };
+    };
+
     # Create a repository for each of the hosts authorizing the provided keys
     services.borgbackup.repos = builtins.mapAttrs (name: value: {
       authorizedKeys = value.authorizedKeys;
@@ -42,7 +67,7 @@ in {
           serviceConfig.Type = "oneshot";
           script = ''
             export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
-            ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /tmp/borg-${hostname}.json
+            ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
           '';
         };
       }) (builtins.attrNames cfg.repositories));
