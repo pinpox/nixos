@@ -46,7 +46,7 @@
     clientMaxBodySize = "128m";
     recommendedProxySettings = true;
 
-    # Needed for bitwarden_rs, it seems to have trouble serving scripts for
+    # Needed for vaultwarden, it seems to have trouble serving scripts for
     # the frontend without it.
     commonHttpConfig = ''
       server_names_hash_bucket_size 128;
@@ -63,7 +63,7 @@
         root = "/var/www/pablo-tools";
       };
 
-      # Password manager (bitwarden) instance
+      # Password manager (vaultwarden) instance
       "pass.pablo.tools" = {
         forceSSL = true;
         enableACME = true;
@@ -218,8 +218,8 @@
     };
   };
 
-  # Bitwarden_rs installed via nixpkgs.
-  services.bitwarden_rs = {
+  # Vaultwarden installed via nixpkgs.
+  services.vaultwarden = {
     enable = true;
     config = {
       domain = "https://pass.pablo.tools:443";
