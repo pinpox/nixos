@@ -15,12 +15,14 @@ in {
       configuration = {
 
         protocolUseSSL = true; # Use https when loading assets
-        allowEmailRegister = false; # Disable registration
+        allowEmailRegister = false; # Disable email registration
+        email = false; # Disable email login
 
         domain = "pads.0cx.de";
         # host = "127.0.0.1"; # Default
         # port = 3000; # Default
-        allowOrigin = [ "localhost" ]; # TODO not sure if neeeded
+        # allowOrigin = [ "localhost" ]; # TODO not sure if neeeded
+        debug = true;
 
         db = {
           dialect = "sqlite";
