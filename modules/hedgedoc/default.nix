@@ -30,13 +30,6 @@ in {
         };
 
         useCDN = true;
-
-        # TODO check out github integration
-        # github = {}
-
-        # TODO check out oauth2 integration
-        # oauth2 = {};
-
       };
     };
   };
