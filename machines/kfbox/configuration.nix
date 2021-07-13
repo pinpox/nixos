@@ -33,6 +33,7 @@
       hedgedoc.enable = true;
       mattermost.enable = true;
       thelounge.enable = true;
+      kf-homepage.enable = true;
     };
 
     metrics.node.enable = true;
