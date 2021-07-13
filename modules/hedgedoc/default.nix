@@ -4,7 +4,7 @@ let cfg = config.pinpox.services.hedgedoc;
 in {
 
   options.pinpox.services.hedgedoc = {
-    enable = mkEnableOption "Hedgodoc server";
+    enable = mkEnableOption "Hedgedoc server";
   };
   config = mkIf cfg.enable {
 
