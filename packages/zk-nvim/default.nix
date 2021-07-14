@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchFromGitHub, lib, inputs,... }:
+{ pkgs, stdenv, fetchFromGitHub, lib, inputs, ... }:
 pkgs.vimUtils.buildVimPluginFrom2Nix {
   pname = "zk-nvim";
   version = "latest";
