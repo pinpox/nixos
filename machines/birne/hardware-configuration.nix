@@ -17,8 +17,7 @@
 
   # Needed for ZFS
   # head -c4 /dev/urandom | od -A none -t x4
-  networking.hostId = "887bde8c"; 
-
+  networking.hostId = "887bde8c";
 
   # Efi partition (SSD)
   fileSystems."/boot" = {
