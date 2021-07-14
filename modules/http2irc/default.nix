@@ -8,7 +8,7 @@ let
     pname = "http2irc";
     version = "1.0";
 
-      # TODO use flake inputs
+    # TODO use flake inputs
     src = pkgs.fetchFromGitHub {
       owner = "pinpox";
       repo = "http2irc";

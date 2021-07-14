@@ -12,7 +12,8 @@ in {
       type = types.attrs;
       default = null;
       example = "{}";
-      description = "Main users account home-manager configuration for the host";
+      description =
+        "Main users account home-manager configuration for the host";
     };
 
     wireguardIp = mkOption {
@@ -39,7 +40,10 @@ in {
     bootDevice = mkOption {
       type = types.str;
       default = null;
-      description = "Path of the underlying luks-encrypted root.\nGet UUID from e.g.\nblkid /dev/sda2";
+      description = ''
+        Path of the underlying luks-encrypted root.
+        Get UUID from e.g.
+        blkid /dev/sda2'';
       example = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
     };
   };
@@ -107,9 +111,9 @@ in {
       wget
     ];
 
-services.logind.extraConfig = ''
-    RuntimeDirectorySize=20G
-  '';
+    services.logind.extraConfig = ''
+      RuntimeDirectorySize=20G
+    '';
 
     boot = {
       # Use GRUB2 as EFI boot loader.

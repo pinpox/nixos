@@ -1,7 +1,6 @@
 { lib, pkgs, config, ... }:
 with lib;
-let
-  cfg = config.pinpox.services.filebrowser;
+let cfg = config.pinpox.services.filebrowser;
 
 in {
 

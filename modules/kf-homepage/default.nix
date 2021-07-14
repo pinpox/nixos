@@ -1,12 +1,10 @@
 { lib, pkgs, config, ... }:
 with lib;
-let
-  cfg = config.pinpox.services.kf-homepage;
-
+let cfg = config.pinpox.services.kf-homepage;
 
 in {
 
-  options.pinpox.services.kf-homepage= {
+  options.pinpox.services.kf-homepage = {
     enable = mkEnableOption "Krosse Flagge Homepage";
   };
 

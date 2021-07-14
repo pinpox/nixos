@@ -19,7 +19,8 @@ in {
       type = types.attrs;
       default = null;
       example = "{}";
-      description = "Main users account home-manager configuration for the host";
+      description =
+        "Main users account home-manager configuration for the host";
     };
 
   };
