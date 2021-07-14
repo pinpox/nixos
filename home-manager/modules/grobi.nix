@@ -7,11 +7,7 @@
       rules = [{
         name = "kartoffel";
         outputs_connected = [ "DVI-D-0" "DP-0" "DVI-D-1" ];
-        configure_row = [
-          "DVI-D-0"
-          "DP-0"
-          "DVI-D-1"
-        ];
+        configure_row = [ "DVI-D-0" "DP-0" "DVI-D-1" ];
         atomic = true;
         execute_after = [''
           ${pkgs.xorg.xrandr}/bin/xrandr \
