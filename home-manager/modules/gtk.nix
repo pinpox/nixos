@@ -2,7 +2,7 @@
 let
   vars = import ./vars.nix;
 
-      # TODO use flake inputs
+  # TODO use flake inputs
   materia-theme = pkgs.fetchFromGitHub {
     owner = "nana-4";
     repo = "materia-theme";
@@ -64,7 +64,17 @@ in {
 
         name = "generated-gtk-theme";
         src = materia-theme;
-        buildInputs = with self; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
+        buildInputs = with self; [
+          sassc
+          bc
+          which
+          rendersvg
+          meson
+          ninja
+          nodePackages.sass
+          gtk4.dev
+          optipng
+        ];
         MATERIA_COLORS = materia_colors;
         phases = [ "unpackPhase" "installPhase" ];
         installPhase = ''

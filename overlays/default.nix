@@ -29,8 +29,6 @@ in self: super: {
   zsh-abbrev-alias =
     super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
   zsh-colored-man-pages =
-    super.callPackage ../packages/zsh-colored-man-pages {
-      inputs = inputs;
-    };
+    super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };
 }
 

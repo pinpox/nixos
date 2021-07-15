@@ -82,7 +82,8 @@ in {
       yotp = "${pkgs.yubikey-manager}/bin/ykman oath accounts code";
       zzz = "systemctl suspend";
 
-      serve = "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
+      serve =
+        "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
     prezto = {

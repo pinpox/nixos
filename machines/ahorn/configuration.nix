@@ -8,8 +8,11 @@
       ../../home-manager/home.nix
       self.inputs.dotfiles-awesome.nixosModules.dotfiles
       {
-        nixpkgs.overlays =
-          [self.overlay self.inputs.nur.overlay self.inputs.neovim-nightly.overlay ];
+        nixpkgs.overlays = [
+          self.overlay
+          self.inputs.nur.overlay
+          self.inputs.neovim-nightly.overlay
+        ];
       }
     ];
   };

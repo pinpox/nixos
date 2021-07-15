@@ -6,11 +6,11 @@ in {
     mkEnableOption "wezterm terminal emulator";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;
-    [
+    home.packages = with pkgs; [
       inconsolata-nerdfont # Fallback Nerd Font to provide special glyphs
-      (callPackage ../../../packages/wezterm-nightly { }) ];
-      # [ (callPackage ../../../packages/wezterm-bin { }) ];
+      (callPackage ../../../packages/wezterm-nightly { })
+    ];
+    # [ (callPackage ../../../packages/wezterm-bin { }) ];
 
     xdg = {
       enable = true;
