@@ -32,7 +32,7 @@ in {
     home-manager.users.pinpox = cfg.homeConfig;
 
     environment.systemPackages = with pkgs; [
-      ctags
+      universal-ctags
       git
       gnumake
       go

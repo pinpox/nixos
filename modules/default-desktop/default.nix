@@ -95,7 +95,7 @@ in {
       lm_sensors
       arandr
       jetbrains-mono
-      ctags
+      universal-ctags
       git
       gnumake
       go
