@@ -23,6 +23,8 @@ let
       machine-config.file = toString ./.;
     }];
 
+  # In case the custom cache is down, systems can still be rebuild with:
+  # nixos-rebuild switch --flake '.#hostname' --option substituters http://cache.nixos.org
   command = targetPath: ''
     nix-shell -p git --run '
       nixos-rebuild switch -v --show-trace --flake ${targetPath}/machine-config || \
