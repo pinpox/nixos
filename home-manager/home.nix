@@ -51,8 +51,8 @@ in {
     # From nixpkgs
     retroarch
     arandr
-    arduino
-    arduino-cli
+    # arduino
+    # arduino-cli
     asciinema
     calibre
     cbatticon
