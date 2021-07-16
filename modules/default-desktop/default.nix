@@ -137,7 +137,15 @@ in {
     networking.hostName = cfg.hostname;
 
     programs.dconf.enable = true;
-    services.gvfs.enable = true;
+
+    # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
+    # is required.
+    services.gvfs = {
+      enable = true;
+      # Default package does not support all protocols. Use the full-featured
+      # gnome version
+      package = lib.mkForce pkgs.gnome3.gvfs;
+    };
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
