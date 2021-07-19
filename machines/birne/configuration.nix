@@ -83,8 +83,21 @@
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
 
-  # Allow filebrowser port on wireguard interface
-  networking.firewall = { interfaces.wg0.allowedTCPPorts = [ 8787 ]; };
+  services.adguardhome = {
+    # enable = true;
+    port = 5353;
+  };
+
+  networking.firewall = {
+    # interfaces.eno1.allowedTCPPorts = [ 53];
+
+    interfaces.wg0.allowedTCPPorts = [
+      # Allow filebrowser port on wireguard interface
+      8787
+      # Adguardhome
+      # 5353
+    ];
+  };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
