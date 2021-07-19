@@ -11,7 +11,8 @@
 
   pinpox = {
 
-    services.filebrowser.enable = true;
+    # Enable nextcloud configuration
+    services.nextcloud.enable = true;
 
     server = {
       enable = true;
@@ -33,6 +34,8 @@
     };
 
     services = {
+
+      # Set up borg repositories for all hosts
       borg-server.enable = true;
 
       borg-server.repositories = {
@@ -82,9 +85,6 @@
 
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
-
-  # Allow filebrowser port on wireguard interface
-  networking.firewall = { interfaces.wg0.allowedTCPPorts = [ 8787 ]; };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
