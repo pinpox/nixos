@@ -99,6 +99,16 @@
         };
       };
 
+      # Nextcloud
+      "files.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://birne.wireguard:9876";
+          proxyWebsockets = true;
+        };
+      };
+
       # Filebrowser
       "vpn.files.pablo.tools" = {
         listen = [{
