@@ -1,0 +1,6 @@
+[book]
+authors = ["Pablo Ovelleiro Corral"]
+language = "en"
+multilingual = false
+src = "src"
+title = "NixOS Configuration"
