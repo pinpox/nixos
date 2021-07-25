@@ -27,6 +27,15 @@ in {
       # phpExtraExtensions = [];
       home = "/var/lib/nextcloud";
 
+      poolSettings = {
+        pm = "dynamic";
+        "pm.max_children" = "160";
+        "pm.max_requests" = "700";
+        "pm.max_spare_servers" = "120";
+        "pm.min_spare_servers" = "40";
+        "pm.start_servers" = "40";
+      };
+
       config = {
 
         # Database
@@ -45,17 +54,15 @@ in {
       };
     };
 
-    # Allow incoming traffic on the VPN interface
-    networking.firewall = { interfaces.wg0.allowedTCPPorts = [ 9876 ]; };
-
-    # SSL is handled by the world-facing reverse proxy on porree, nextcloud
-    # listens only on the VPN interface with HTTP
+    # Reverse proxy
     services.nginx.virtualHosts = {
       "files.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.4";
-          port = 9876;
-        }];
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.2:9876";
+          proxyWebsockets = true;
+        };
       };
     };
 
