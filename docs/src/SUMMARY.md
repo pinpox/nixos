@@ -1,6 +1,5 @@
 # Summary
 
-
 [Readme](../../README.md)
 
 - [Repository Structure](./structure.md)
@@ -16,6 +15,9 @@
 	- [Keys](./users/keys.md)
 - [Monitoring](./monitoring.md)
 - [Backup Stategy](./backup.md)
+	- [Initialize Repository](./backup/init_repo.md)
+	- [Includes and Excludes](./backup/paths.md)
+	- [Monitoring Reports](./backup/reports.md)
 - [Cache](./cache.md)
 - [Common Tasks](./tasks/main.md)
 	- [Adding Hosts](./tasks/add_host.md)
