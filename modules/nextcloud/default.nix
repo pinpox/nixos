@@ -91,6 +91,7 @@ in {
       after = [ "postgresql.service" ];
     };
 
-    # TODO Backup
+    # Backup
+    services.borgbackup.jobs.box-backup.paths = [ "/var/lib/nextcloud" ];
   };
 }
