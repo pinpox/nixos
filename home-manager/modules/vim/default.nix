@@ -2,6 +2,9 @@
 let
   vars = import ../vars.nix;
 
+  # TODO put in a better place
+  utils = import ../../../utils { pkgs =  pkgs; };
+
   # Helper function to add plugins directly from GitHub if they are not
   # packaged in nixpkgs yet
   plugin = name: repo: branch: sha256:
@@ -28,7 +31,6 @@ in {
     libgccjit # Needed for treesitter
     sumneko-lua-language-server # Lua language server
 
-
     cargo
     rustc
     rustfmt
@@ -38,6 +40,12 @@ in {
   xdg = {
     enable = true;
     configFile = {
+
+      nixcolors-lua = {
+        target = "nvim/lua/nixcolors.lua";
+        source =
+          utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache vars.colors;
+      };
 
       nvim_lua_config = {
         target = "nvim/lua/config";
@@ -52,41 +60,6 @@ in {
       colors = {
         target = "nvim/colors/generated.vim";
         text = ''" File empty on purpouse'';
-      };
-      nvim_lua_nixcolors = {
-        target = "nvim/lua/nixcolors.lua";
-        text = ''
-          local M =  {}
-
-          M.Black         = "#${vars.colors.Black}"
-          M.DarkGrey      = "#${vars.colors.DarkGrey}"
-          M.Grey          = "#${vars.colors.Grey}"
-          M.BrightGrey    = "#${vars.colors.BrightGrey}"
-          M.DarkWhite     = "#${vars.colors.DarkWhite}"
-          M.White         = "#${vars.colors.White}"
-          M.BrightWhite   = "#${vars.colors.BrightWhite}"
-          M.DarkRed       = "#${vars.colors.DarkRed}"
-          M.Red           = "#${vars.colors.Red}"
-          M.BrightRed     = "#${vars.colors.BrightRed}"
-          M.DarkYellow    = "#${vars.colors.DarkYellow}"
-          M.Yellow        = "#${vars.colors.Yellow}"
-          M.BrightYellow  = "#${vars.colors.BrightYellow}"
-          M.DarkGreen     = "#${vars.colors.DarkGreen}"
-          M.Green         = "#${vars.colors.Green}"
-          M.BrightGreen   = "#${vars.colors.BrightGreen}"
-          M.DarkCyan      = "#${vars.colors.DarkCyan}"
-          M.Cyan          = "#${vars.colors.Cyan}"
-          M.BrightCyan    = "#${vars.colors.BrightCyan}"
-          M.DarkBlue      = "#${vars.colors.DarkBlue}"
-          M.Blue          = "#${vars.colors.Blue}"
-          M.BrightBlue    = "#${vars.colors.BrightBlue}"
-          M.DarkMagenta   = "#${vars.colors.DarkMagenta}"
-          M.Magenta       = "#${vars.colors.Magenta}"
-          M.BrightMagenta = "#${vars.colors.BrightMagenta}"
-
-          return M
-
-        '';
       };
 
       nvim_vimscript = {

@@ -54,7 +54,7 @@ in {
     # arduino
     # arduino-cli
     asciinema
-    calibre
+    # calibre
     cbatticon
     evince
     exa
