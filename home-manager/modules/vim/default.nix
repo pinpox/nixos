@@ -1,9 +1,7 @@
-{ self, config, pkgs, lib, ... }:
+{ self, config, pkgs, lib, utils, ... }:
 let
   vars = import ../vars.nix;
 
-  # TODO put in a better place
-  utils = import ../../../utils { pkgs =  pkgs; };
 
   # Helper function to add plugins directly from GitHub if they are not
   # packaged in nixpkgs yet
