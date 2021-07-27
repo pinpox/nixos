@@ -39,9 +39,10 @@ in {
   _module.args.utils = import ../utils { inherit pkgs; };
 
   pinpox.programs = {
+    firefox.enable = true;
+    tmux.enable = true;
     wezterm.enable = true;
     zk.enable = true;
-    tmux.enable = true;
   };
 
   # Allow "unfree" licenced packages

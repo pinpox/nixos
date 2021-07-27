@@ -1,74 +1,82 @@
 { config, pkgs, lib, nur, utils, ... }:
-let vars = import ../vars.nix;
+with lib;
+let
+  vars = import ../vars.nix;
+  cfg = config.pinpox.programs.wezterm;
 in {
-  # Browserpass
-  programs.browserpass = {
-    enable = true;
-    # browsers = [ "chromium" "firefox" ];
-    browsers = [ "firefox" ];
-  };
+  options.pinpox.programs.firefox.enable = mkEnableOption "firefox browser";
 
-  programs.firefox = {
-    enable = true;
-    package = pkgs.firefox;
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      bitwarden
-      darkreader
-      https-everywhere
-      ublock-origin
-    ];
+  config = mkIf cfg.enable {
 
-    profiles = {
-      pinpox = {
+    # Browserpass
+    programs.browserpass = {
+      enable = true;
+      # browsers = [ "chromium" "firefox" ];
+      browsers = [ "firefox" ];
+    };
 
-        # Extra preferences to add to user.js.
-        # extraConfig = "";
+    programs.firefox = {
+      enable = true;
+      package = pkgs.firefox;
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        bitwarden
+        darkreader
+        https-everywhere
+        ublock-origin
+      ];
 
-        isDefault = true;
-        settings = {
+      profiles = {
+        pinpox = {
 
-          # Set the homepage
-          "browser.startup.homepage" = "https://nixos.org";
+          # Extra preferences to add to user.js.
+          # extraConfig = "";
 
-          # Export bookmarks to bookmarks.html when closing firefox
-          "browser.bookmarks.autoExportHTML" = "true";
+          isDefault = true;
+          settings = {
 
-          # Path where to export. Default is:
-          # ~/.mozilla/firefox/pinpox/bookmarks.html
-          # "browser.bookmarks.file" = 
+            # Set the homepage
+            "browser.startup.homepage" = "https://nixos.org";
 
-          # "browser.display.background_color" = "#${vars.colors.Black}";
-          # "browser.display.foreground_color" = "#${vars.colors.White}";
-          "browser.display.use_system_colors" = "true";
-          "browser.anchor_color" = "#${vars.colors.Yellow}";
-          # "browser.display.use_document_colors" = "false";
-          # "browser.search.region" = "GB";
-          # "browser.search.isUS" = false;
-          # "distribution.searchplugins.defaultLocale" = "en-GB";
-          # "general.useragent.locale" = "en-GB";
-          # "browser.bookmarks.showMobileBookmarks" = true;
-          # TODO disable passwort manager
-          # TODO if possible, enable sync (log in)
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-          "extensions.activeThemeID" = "default-theme@mozilla.org";
-          "devtools.theme" = "dark";
-        };
+            # Export bookmarks to bookmarks.html when closing firefox
+            "browser.bookmarks.autoExportHTML" = "true";
 
-        userChrome = builtins.readFile
-          (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
-            vars);
+            # Path where to export. Default is:
+            # ~/.mozilla/firefox/pinpox/bookmarks.html
+            # "browser.bookmarks.file" = 
 
-        # TODO
-        userContent = ''
-          @import url("userChrome.css");
+            # "browser.display.background_color" = "#${vars.colors.Black}";
+            # "browser.display.foreground_color" = "#${vars.colors.White}";
+            "browser.display.use_system_colors" = "true";
+            "browser.anchor_color" = "#${vars.colors.Yellow}";
+            # "browser.display.use_document_colors" = "false";
+            # "browser.search.region" = "GB";
+            # "browser.search.isUS" = false;
+            # "distribution.searchplugins.defaultLocale" = "en-GB";
+            # "general.useragent.locale" = "en-GB";
+            # "browser.bookmarks.showMobileBookmarks" = true;
+            # TODO disable passwort manager
+            # TODO if possible, enable sync (log in)
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+            "extensions.activeThemeID" = "default-theme@mozilla.org";
+            "devtools.theme" = "dark";
+          };
 
-          /* Removes white loading page */
-          @-moz-document url(about:blank), url(about:newtab), url(about:home) {
-            html:not(#ublock0-epicker), html:not(#ublock0-epicker) body, #newtab-customize-overlay {
-              background: var(--mff-bg) !important;
+          userChrome = builtins.readFile
+            (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
+              vars);
+
+          # TODO
+          userContent = ''
+            @import url("userChrome.css");
+
+            /* Removes white loading page */
+            @-moz-document url(about:blank), url(about:newtab), url(about:home) {
+              html:not(#ublock0-epicker), html:not(#ublock0-epicker) body, #newtab-customize-overlay {
+                background: var(--mff-bg) !important;
+              }
             }
-          }
-        '';
+          '';
+        };
       };
     };
   };
