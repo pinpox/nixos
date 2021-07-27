@@ -36,6 +36,8 @@ in {
     ./modules/zk
   ];
 
+  _module.args.utils = import ../utils { inherit pkgs; };
+
   pinpox.programs = {
     wezterm.enable = true;
     zk.enable = true;
