@@ -1,0 +1,16 @@
+{ lib, ... }:
+
+let
+  ext = lib.makeExtensible (self:
+    let
+      callLibs = file: import file { inherit lib; ext = self; };
+    in with self; {
+      # fn = callLibs ./fn.nix;
+      utils = callLibs ./utils.nix;
+    }
+  );
+in {
+  _module.args = {
+    inherit ext;
+  };
+}

@@ -1,4 +1,4 @@
-{ self, config, pkgs, lib, ... }:
+{ self, config, pkgs, lib, utils, ... }:
 let
   vars = import ../vars.nix;
 
@@ -32,6 +32,12 @@ in {
   xdg = {
     enable = true;
     configFile = {
+
+      testfile = {
+        target = "nvim/lua/testfile.lua";
+        source =
+          utils.renderMustache "testfile.lua" ./test.mustache vars.colors;
+      };
 
       nvim_lua_config = {
         target = "nvim/lua/config";

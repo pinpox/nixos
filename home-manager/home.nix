@@ -34,6 +34,7 @@ in {
     ./modules/xscreensaver.nix
     ./modules/wezterm
     ./modules/zk
+    ./modules/utils
   ];
 
   pinpox.programs = {
@@ -54,7 +55,7 @@ in {
     # arduino
     # arduino-cli
     asciinema
-    calibre
+    # calibre
     cbatticon
     evince
     exa
