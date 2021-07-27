@@ -15,7 +15,6 @@ in {
     # ./modules/rofi.nix
     ./modules/alacritty.nix
     ./modules/awesome.nix
-    ./modules/browsers.nix
     ./modules/chromium.nix
     ./modules/credentials.nix
     ./modules/dunst.nix
@@ -33,6 +32,7 @@ in {
     ./modules/xresources.nix
     ./modules/xscreensaver.nix
     ./modules/wezterm
+    ./modules/firefox
     ./modules/zk
   ];
 
