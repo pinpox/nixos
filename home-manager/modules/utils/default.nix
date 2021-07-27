@@ -1,9 +1,9 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   ext = lib.makeExtensible (self:
     let
-      callLibs = file: import file { inherit lib; ext = self; };
+      callLibs = file: import file { inherit lib; inherit pkgs; ext = self; };
     in with self; {
       # fn = callLibs ./fn.nix;
       utils = callLibs ./utils.nix;
