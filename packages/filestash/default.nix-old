@@ -1,0 +1,54 @@
+
+/* { lib, fetchFromGitHub, buildGoModule, pkg-config, glib }:
+
+buildGoModule rec {
+  pname = "filestash";
+  version = "TODO";
+
+  vendorSha256 = null;
+
+  doCheck = false;
+
+  src = fetchFromGitHub {
+    owner = "mickael-kerjean";
+    repo = "filestash";
+    rev = "80949194b772c3815a9ce438b2c67a05abfa0d86";
+    sha256 = "sha256-gjTJ3icO1vJ1gmSkESN1pSowsO9wqWG06b514laEIts=";
+    # fetchSubmodules = true;
+  };
+
+nativeBuildInputs = [ pkg-config glib ];
+buildInputs = [ glib ];
+
+  CGO_ENABLED = 1;
+  # PKG_CONFIG_PATH = "/usr/local/lib/pkgconfig/";
+  CGO_CFLAGS_ALLOW = "-fopenmp";
+
+  preBuild = ''buildFlagsArray+=("-tags" "fts5")'';
+
+makeFlags = [ "PKG_CONFIG_PATH=$(PKG_CONFIG_PATH)" ];
+
+  buildPhase = ''
+
+    echo "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      echo $PKG_CONFIG_PATH
+    echo "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+
+      go build -mod=vendor -o dist/filestash server/main.go
+
+  '';
+
+  buildFlagsArray = [
+    "-ldflags -X github.com/mickael-kerjean/filestash/server/common.BUILD_DATE=${version}"
+    "-X github.com/mickael-kerjean/filestash/server/common.BUILD_REF=${version}"
+    "-o dist/filestash server/main.go"
+  ];
+
+  meta = with lib; {
+    maintainers = with maintainers; [ pinpox ];
+    # license = licenses.gpl3;
+    description = "TODO";
+    homepage = "https://filestash.app";
+  };
+}
+*/
