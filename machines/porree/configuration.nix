@@ -100,16 +100,16 @@
       };
 
       # Filebrowser
-      "vpn.files.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://birne.wireguard:8787"; };
-      };
+      # "vpn.files.pablo.tools" = {
+      #   listen = [{
+      #     addr = "192.168.7.1";
+      #     port = 443;
+      #     ssl = true;
+      #   }];
+      #   forceSSL = true;
+      #   enableACME = true;
+      #   locations."/" = { proxyPass = "http://birne.wireguard:8787"; };
+      # };
     };
   };
 

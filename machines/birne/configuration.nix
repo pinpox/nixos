@@ -11,7 +11,8 @@
 
   pinpox = {
 
-    services.filebrowser.enable = true;
+    # Enable nextcloud configuration
+    services.nextcloud.enable = true;
 
     server = {
       enable = true;
@@ -33,6 +34,8 @@
     };
 
     services = {
+
+      # Set up borg repositories for all hosts
       borg-server.enable = true;
 
       borg-server.repositories = {
@@ -83,8 +86,32 @@
   security.acme.acceptTerms = true;
   security.acme.email = "letsencrypt@pablo.tools";
 
-  # Allow filebrowser port on wireguard interface
-  networking.firewall = { interfaces.wg0.allowedTCPPorts = [ 8787 ]; };
+  # services.syncthing = {
+
+  #   enable = true;
+  #   guiAddress = "192.168.7.4:8384";
+
+  #   # TCP 22000 for transfers - UDP 21027
+  #   openDefaultPorts = true;
+
+  #   # relay = {};
+
+  #   declarative = {
+  #     folders = {
+  #       "/var/lib/syncthing/syncfolder" = {
+  #         id = "var-testfolder";
+  #         devices = [ "ahorn" ];
+
+  #       };
+  #     };
+  #     devices = {
+  #       "ahorn".id =
+  #         "JIWYVTJ-2ZQUGUY-LCUXHMW-SUN4R4L-BFQMDB2-SBNAIYG-FIDZMWD-PDB57A2";
+  #       "kartoffel".id =
+  #         "WIUZWCU-VTH3WOD-ZRHKCD4-CG2TKHY-NTN5A5B-IOXZ4DG-BIDHMFC-QW7C4QF";
+  #     };
+  #   };
+  # };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
