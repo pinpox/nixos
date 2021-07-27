@@ -38,7 +38,7 @@
 
   font = {
     normal = {
-      family = "Recursive Sans Casual Static";
+      family = "Recursive Sans Linear Static";
       style = "Medium";
     };
     bold = {
