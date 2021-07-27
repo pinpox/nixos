@@ -3,6 +3,8 @@ require'lspconfig'.gopls.setup{}
 require'lspconfig'.terraformls.setup{}
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.yamlls.setup{}
+require'lspconfig'.rust_analyzer.setup{}
+
 
 require'lspconfig'.sumneko_lua.setup {
     cmd = { 'lua-language-server' },

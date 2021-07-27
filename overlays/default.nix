@@ -4,7 +4,6 @@ let
   # instead of having to keep sha256 hashes in each package for src
   inherit inputs;
 in self: super: {
-
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
 
