@@ -90,6 +90,10 @@ in {
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+
+      # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
+      nur.repos.mic92.irc-announce
+
       # borgbackup
       recursive
       lm_sensors
