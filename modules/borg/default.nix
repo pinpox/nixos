@@ -64,7 +64,7 @@
     startAt = "daily";
 
     # Write information for last snapshot to be retrieved by the monitoring
-    # readWritePaths = [ "/var/log" ];
+    # readWritePaths = [ "/dev/stderr" ];
 
     postCreate = ''
     ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "[${config.networking.hostName}] Backup created: $archiveName"
