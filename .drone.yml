@@ -35,17 +35,13 @@ steps:
 - name: Build birne
   commands:
   - nix build -v -L '.#nixosConfigurations.birne.config.system.build.toplevel'
-# - name: Notify
-#   commands:
-#   - nix run -v 'github:pinpox/http2irc#announce-drone'
-#   environment:
-#     NIX_PATH: nixpkgs=channel:nixos-unstable
-#     TOKEN:
-#       from_secret: irc_token
-#   when:
-#     status:
-#     - failure
-#     - success
+- name: Notify
+  commands:
+    - 'nix run "github:mic92/nur-packages#irc-announce" -- irc.hackint.org 6697 backup-reporter "#lounge-rocks-log" 1 "[$DRONE_REPO] ($DRONE_BUILD_EVENT) $DRONE_BUILD_STATUS $DRONE_COMMIT_MESSAGE"'
+  when:
+    status:
+    - failure
+    - success
 
 trigger:
   branch:
@@ -73,7 +69,6 @@ steps:
     remote: git@github.com:pinpox/nixos.git
     force: true
     commit: true
-    force: true
     commit_message: "❄ Update flake.lock"
     ssh_key:
       from_secret: deploy_key
