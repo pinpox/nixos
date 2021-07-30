@@ -36,6 +36,7 @@
       "/*/.config/Signal"
       "/*/.local/share/Steam"
       "/*/.config/chromium"
+      "/*/.rustup"
       "/*/.config/discord"
       "/*/.container-diff"
       "/*/.gvfs/"
