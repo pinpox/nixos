@@ -50,7 +50,7 @@ in {
 
         defaultPhoneRegion = "DE";
         extraTrustedDomains = [ "birne.wireguard" ];
-        trustedProxies = [ "192.168.7.1" "94.16.114.42" "birne.wireguard" ];
+        trustedProxies = [ "192.168.7.1" "94.16.108.229" "birne.wireguard" ];
       };
     };
 

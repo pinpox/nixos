@@ -41,7 +41,8 @@ in {
         192.168.7.6 mega.wireguard
 
         # Public
-        94.16.114.42 porree.public
+        94.16.114.42 porree-old.public
+        94.16.108.229 porree.public
         46.38.242.17 kfbox.public
         93.177.66.52 kfbox-old
         5.181.48.121 mega.public

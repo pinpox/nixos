@@ -55,7 +55,7 @@ in rec {
   kartoffel = createHost "kartoffel" "root@kartoffel.wireguard";
   kfbox = createHost "kfbox" "root@46.38.242.17";
   mega = createHost "mega" "root@mega.public";
-  porree = createHost "porree" "root@porree.public";
+  porree = createHost "porree" "root@94.16.108.229";
 
   # Groups
   all = pkgs.writeScript "deploy-all"
