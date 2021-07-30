@@ -31,6 +31,8 @@ in {
 
     services.postgresql.enable = true;
 
+    services.postgresql.package = pkgs.postgresql_11;
+
     # The systemd service will fail to execute the preStart hook
     # if the WorkingDirectory does not exist
 
