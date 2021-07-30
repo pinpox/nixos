@@ -34,6 +34,7 @@
       "*/cache2"
       "/*/.cache"
       "/*/.config/Signal"
+      "/*/.local/share/Steam"
       "/*/.config/chromium"
       "/*/.config/discord"
       "/*/.container-diff"
