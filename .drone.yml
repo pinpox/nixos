@@ -37,7 +37,7 @@ steps:
   - nix build -v -L '.#nixosConfigurations.birne.config.system.build.toplevel'
 - name: Notify
   commands:
-    - 'nix run "github:mic92/nur-packages#irc-announce" -- irc.hackint.org 6697 backup-reporter "#lounge-rocks-log" 1 "[$DRONE_REPO] ($DRONE_BUILD_EVENT) $DRONE_BUILD_STATUS $DRONE_COMMIT_MESSAGE" || true'
+    - 'nix run "github:mic92/nur-packages#irc-announce" -- irc.hackint.org 6697 bob-the-builder "#lounge-rocks-log" 1 "[$DRONE_REPO] ($DRONE_BUILD_EVENT) $DRONE_BUILD_STATUS | $DRONE_COMMIT_MESSAGE" || true'
   environment:
     LOGNAME: drone
   when:
