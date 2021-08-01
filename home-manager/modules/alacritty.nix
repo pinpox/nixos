@@ -21,7 +21,21 @@ in {
         };
       };
 
-      font = vars.font;
+      font = {
+        normal = {
+          family = "Recursive Mono Linear Static";
+          # style = vars.font.normal.style;
+        };
+        bold = {
+          family = "Recursive Mono Linear Static";
+          style = vars.font.bold.style;
+        };
+        italic = {
+          family = "Recursive Mono Linear Static";
+          style = vars.font.italic.style;
+        };
+      };
+
       cursor = { style = "Beam"; };
       colors = {
         primary = {
@@ -56,11 +70,11 @@ in {
 
       key_bindings = [
         # Clear terminal
-        {
-          key = "K";
-          mods = "Control";
-          chars = "\\x0c";
-        }
+        # {
+        #   key = "K";
+        #   mods = "Control";
+        #   chars = "\\x0c";
+        # }
       ];
     };
   };
