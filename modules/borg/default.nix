@@ -34,7 +34,9 @@
       "*/cache2"
       "/*/.cache"
       "/*/.config/Signal"
+      "/*/.local/share/Steam"
       "/*/.config/chromium"
+      "/*/.rustup"
       "/*/.config/discord"
       "/*/.container-diff"
       "/*/.gvfs/"
@@ -67,10 +69,10 @@
     # readWritePaths = [ "/dev/stderr" "/proc/self/fd/2" ];
 
     postCreate = ''
-      ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "[${config.networking.hostName}] Backup created: $archiveName"
+      ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup created: $archiveName"
         '';
     postHook = ''
-      ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "[${config.networking.hostName}] Backup finished with status $exitStatus"
+      ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup finished with status $exitStatus"
         '';
     #   borg info --json --last 1 borg@birne.wireguard:. > /var/log/borgbackup-last-info
     #   echo $exitStatus > /var/log/borgbackup-last-status

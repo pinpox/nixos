@@ -98,6 +98,11 @@ in {
       };
     };
 
+    # Exclude loki directory from backup
+    services.borgbackup.jobs.box-backup.exclude = [
+      config.services.loki.configuration.storage_config.filesystem.directory
+    ];
+
     #TODO For Alertmanager?
     # ruler:
     #   storage:

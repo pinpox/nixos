@@ -127,6 +127,7 @@
           wezterm-nightly = pkgs.wezterm-nightly;
           hello-custom = pkgs.hello-custom;
           filebrowser = pkgs.filebrowser;
+          darktile = pkgs.darktile;
           zk = pkgs.zk;
         };
 

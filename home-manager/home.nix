@@ -61,6 +61,7 @@ nmap
     asciinema
     # calibre
     cbatticon
+    darktile
     evince
     exa
     gcc

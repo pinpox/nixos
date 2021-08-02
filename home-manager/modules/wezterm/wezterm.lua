@@ -24,6 +24,9 @@ return {
 		EDITOR = "nvim"
 	},
 
+	-- Close pane/tab when shell exits (e.g. Ctrl-D)
+    exit_behavior = "Close",
+
 	-- Uses $SHELL by default. Only needed when using the appimage build
 	-- default_prog = {"zsh", "-l"},
 
@@ -32,8 +35,8 @@ return {
 
 	keys = {
 		-- Panes
-		{ key = "|",  mods="LEADER",      action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-		{ key = "\\",   mods="LEADER",    action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+		{ key = "|",   mods="LEADER",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+		{ key = "\\",  mods="LEADER",     action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
 		{ key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentPane={confirm=true}}},
 		{ key = "h",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Left"}},
 		{ key = "l",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Right"}},
@@ -110,7 +113,6 @@ return {
 
 	-- Font rendering
 	freetype_render_target = "Light",
-
 
 	-- Cursor style
 	default_cursor_style = "SteadyBar",

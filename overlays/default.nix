@@ -6,6 +6,7 @@ let
 in self: super: {
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
+  darktile = super.callPackage ../packages/darktile { };
 
   # Custom packages. Will be made available on all machines and used where
   # needed.
