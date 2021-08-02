@@ -61,6 +61,8 @@ in {
     };
 
     services.postgresql = {
+
+    package = pkgs.postgresql_11;
       enable = true;
       ensureDatabases = [ cfg.drone-user ];
       ensureUsers = [{
