@@ -11,9 +11,6 @@
 
   pinpox = {
 
-    # Enable nextcloud configuration
-    services.nextcloud.enable = true;
-
     server = {
       enable = true;
       hostname = "birne";
