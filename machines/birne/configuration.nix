@@ -9,6 +9,16 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
+
+  users = {
+    users.nextcloud = {
+      isNormalUser = true;
+      openssh.authorizedKeys.keyFiles = [
+        ./nextcloud-key-public
+      ];
+    };
+  };
+
   pinpox = {
 
     server = {
@@ -29,6 +39,9 @@
         ];
       };
     };
+
+
+
 
     services = {
 
