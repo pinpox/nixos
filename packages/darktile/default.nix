@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "darktile";
-  version = "0.0.9";
+  version = "0.0.10";
 
   vendorSha256 = null;
 
@@ -26,7 +26,7 @@ buildGoModule rec {
     owner = "liamg";
     repo = "darktile";
     rev = "v${version}";
-    sha256 = "sha256-NMo9DC9O87U4TdnoHaNseFdF5KuZnmFpfQK22T758eo=";
+    sha256 = "sha256-A4yDC+psE00FXQcdBQv/GaM3VFYF3WPWMwVnPLYnsl0=";
   };
 
   meta = with lib; {
