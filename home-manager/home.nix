@@ -12,7 +12,7 @@ in {
     # ./modules/i3.nix
     # ./modules/newsboat.nix
     # ./modules/polybar.nix
-    # ./modules/rofi.nix
+    ./modules/rofi
     ./modules/alacritty.nix
     ./modules/awesome.nix
     ./modules/chromium.nix
@@ -43,6 +43,7 @@ in {
     tmux.enable = true;
     wezterm.enable = true;
     zk.enable = true;
+    rofi.enable = true;
   };
 
   # Allow "unfree" licenced packages

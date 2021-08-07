@@ -30,6 +30,10 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
 
+
+  hardware.sane.enable = true;
+    users.users.pinpox.extraGroups = [ "scanner" "lp" ];
+
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
