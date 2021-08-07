@@ -53,6 +53,8 @@ in {
   home.packages = with pkgs; [
 
     # From nixpkgs
+inetutils
+nmap
     retroarch
     arandr
     # arduino
