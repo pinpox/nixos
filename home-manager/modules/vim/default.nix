@@ -22,7 +22,7 @@ in {
     nodePackages.pyright # LSP python
     nodePackages.yaml-language-server # LSP yaml
     nodePackages.vscode-json-languageserver-bin # LSP json
-    vscode-extensions.golang.Go # Golang snippets
+    vscode-extensions.golang.go # Golang snippets
     gopls # LSP go
     terraform-ls # LSP terraform
     terraform # TODO add options to enable/disable large packages like terraform
@@ -97,7 +97,7 @@ in {
       EOF
 
       " Add snippet directories from packages
-      let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.Go}/share/vscode/extensions/golang.Go/snippets/']
+      let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.go}/share/vscode/extensions/golang.Go/snippets/']
 
     '';
 
