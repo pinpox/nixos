@@ -143,6 +143,9 @@
       clientIp = "192.168.7.1";
     };
 
+    # Enable nextcloud configuration
+    services.nextcloud.enable = true;
+
     metrics.node.enable = true;
     metrics.blackbox.enable = true;
 

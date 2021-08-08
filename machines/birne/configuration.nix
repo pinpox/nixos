@@ -9,10 +9,19 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-  pinpox = {
 
-    # Enable nextcloud configuration
-    services.nextcloud.enable = true;
+    users.groups.nextcloud= { name = "nextcloud"; };
+
+  users = {
+    users.nextcloud = {
+      isNormalUser = true;
+      openssh.authorizedKeys.keyFiles = [
+        ./nextcloud-key-public
+      ];
+    };
+  };
+
+  pinpox = {
 
     server = {
       enable = true;
@@ -32,6 +41,9 @@
         ];
       };
     };
+
+
+
 
     services = {
 
