@@ -10,6 +10,8 @@
   networking.interfaces.eno1.useDHCP = true;
 
 
+    users.groups.nextcloud= { name = "nextcloud"; };
+
   users = {
     users.nextcloud = {
       isNormalUser = true;
