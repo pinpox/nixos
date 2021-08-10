@@ -113,6 +113,7 @@ in {
       ripgrep
       ruby
       wget
+      time
     ];
 
     services.logind.extraConfig = ''

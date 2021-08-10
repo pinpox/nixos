@@ -88,6 +88,13 @@ in {
           external_url = "https://home.pablo.tools";
         };
 
+        http = {
+          use_x_forwarded_for = true;
+          trusted_proxies = [
+            "192.168.7.1"
+          ];
+        };
+
         frontend = { };
         "map" = { };
         shopping_list = { };
