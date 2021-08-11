@@ -32,6 +32,7 @@
       go-karma-bot.enable = false;
       hedgedoc.enable = true;
       mattermost.enable = true;
+      miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
     };
