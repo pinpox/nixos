@@ -2,7 +2,6 @@
 let
   vars = import ../vars.nix;
 
-
   # Helper function to add plugins directly from GitHub if they are not
   # packaged in nixpkgs yet
   plugin = name: repo: branch: sha256:
@@ -17,6 +16,25 @@ let
     };
 
 in {
+
+
+
+  # Workaround for plenary-nvim until fix hits unstable channel
+  # https://github.com/NixOS/nixpkgs/pull/134098
+  # TODO remove me when merged
+  nixpkgs.overlays = [
+    (self: super: {
+      lua51Packages = super.lua51Packages.extend (_: lsuper: {
+        plenary-nvim = lsuper.plenary-nvim.overrideAttrs (_: {
+          knownRockspec = (self.fetchurl {
+            url =
+              "https://raw.githubusercontent.com/nvim-lua/plenary.nvim/master/plenary.nvim-scm-1.rockspec";
+            sha256 = "08kv1s66zhl9amzy9gx3101854ig992kl1gzzr51sx3szr43bx3x";
+          });
+        });
+      });
+    })
+  ];
 
   home.packages = with pkgs; [
     nodePackages.pyright # LSP python
@@ -41,8 +59,8 @@ in {
 
       nixcolors-lua = {
         target = "nvim/lua/nixcolors.lua";
-        source =
-          utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache vars.colors;
+        source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache
+          vars.colors;
       };
 
       nvim_lua_config = {

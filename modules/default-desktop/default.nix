@@ -114,6 +114,7 @@ in {
       ruby
       wget
       time
+      zola
     ];
 
     services.logind.extraConfig = ''
