@@ -107,6 +107,18 @@ wk.setup {
 	['<C-k>'] = { ":m-2<CR>gv", 'Move line up'},
 	['<C-j>'] = { ":m '>+<CR>gv", 'Move line down'},
 
+	['<C-a>'] = { "g<C-a>", 'Visual increment numbers'},
+	['<C-x>'] = { "g<C-x>", 'Visual decrement numbers'},
+	['g<C-a>'] = { "<C-a>", 'Increment numbers'},
+	['g<C-x>'] = { "<C-x>", 'Decrement numbers'},
+
+
+
+-- vnoremap <C-a> g<C-a>
+-- vnoremap <C-x> g<C-x>
+-- vnoremap g<C-a> <C-a>
+-- vnoremap g<C-x> <C-x>
+
     }, {mode = 'v', silent=false})
 
     -----------------

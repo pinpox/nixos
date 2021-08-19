@@ -165,7 +165,7 @@ in {
       vim-terraform
       vim-textobj-user
       vim-vinegar
-      vim-visual-increment
+      # vim-visual-increment
       vim-vsnip
       vim-gnupg
       vim-vsnip-integ
