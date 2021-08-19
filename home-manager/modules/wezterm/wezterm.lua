@@ -31,7 +31,7 @@ return {
 	-- default_prog = {"zsh", "-l"},
 
 	-- Leader key, use with mods="LEADER"
-	leader = { key="a", mods="CTRL" },
+	leader = { key="\\", mods="CTRL" },
 
 	keys = {
 		-- Panes
