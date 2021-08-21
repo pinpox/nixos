@@ -26,7 +26,7 @@ let
 
 in rustPlatform.buildRustPackage rec {
   pname = "wezterm-nightly";
-  version = "20210814-nightly";
+  version = "20210818-nightly";
 
   src = fetchFromGitHub {
     owner = "wez";
@@ -40,7 +40,7 @@ in rustPlatform.buildRustPackage rec {
     echo ${version} > .tag
   '';
 
-  cargoSha256 = "sha256-HyBGFSm8LTRsGEilKMzslKiUfUzEO186GoWu8Mgqlb0=";
+  cargoSha256 = "sha256-S5nLkBjMZp2VTAKYUDzTxShIgHsjgAw/MICUEUDX7n8=";
 
   nativeBuildInputs = [ pkg-config python3 perl ];
 
