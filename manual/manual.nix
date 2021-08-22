@@ -1,4 +1,4 @@
-with import <nixpkgs> { config.allowUnfree = true; };
+with import <nixpkgs> { };
 let
   eval = import (pkgs.path + "/nixos/lib/eval-config.nix") {
     modules = [
