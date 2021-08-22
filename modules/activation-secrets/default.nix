@@ -15,22 +15,27 @@ let
       path = mkOption {
         type = types.str;
         default = "/run/keys/${config.name}";
+        description = "Path to place the secret file";
       };
       mode = mkOption {
         type = types.str;
         default = "0400";
+        description = "Unix permission";
       };
       owner = mkOption {
         type = types.str;
         default = "root";
+        description = "Owner of the file";
       };
       group-name = mkOption {
         type = types.str;
         default = "root";
+        description = "Group of the file";
       };
       source-path = mkOption {
         type = types.str;
         default = "/var/src/secrets/${config.name}";
+        description = "Source to copy from";
       };
     };
   });
