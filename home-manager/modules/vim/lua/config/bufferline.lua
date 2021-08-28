@@ -2,7 +2,6 @@ require'bufferline'.setup{
 	options = {
 		numbers =  "ordinal",
 		number_style = "normal",
-		mappings = true, --  <leader>1-9 mappings to navigate tabs
 		buffer_close_icon= '',
 		modified_icon = '●',
 		close_icon = '',
