@@ -120,7 +120,7 @@ in {
       haskell-vim
       i3config-vim
       lualine-nvim
-      nvim-bufferline-lua
+      bufferline-nvim
       nvim-compe
       nvim-colorizer-lua
       nvim-lspconfig
