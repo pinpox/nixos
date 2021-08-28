@@ -31,6 +31,8 @@
       droneci.runner-docker.enable = true;
       monitoring-server.http-irc.enable = true;
     };
+
+    metrics.node.enable = true;
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
@@ -64,7 +66,11 @@
     interfaces.ens192.useDHCP = true;
 
     # Open ports in the firewall.
-    firewall.allowedTCPPorts = [ 80 443 ];
+    firewall.allowedTCPPorts = [
+      80
+      443
+      9100 # Node exporter. Host is behind external firewall
+    ];
 
     # Make the host resolv the cache to itself
     extraHosts = ''
