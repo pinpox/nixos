@@ -2,8 +2,13 @@
   description = "My machines";
 
   inputs = {
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     flake-utils.url = "github:numtide/flake-utils";
+
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,13 +21,18 @@
     wallpaper-generator.inputs.nixpkgs.follows = "nixpkgs";
 
     dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
-    dotfiles-awesome.inputs.nixpkgs.follows = "nixpkgs";
-    dotfiles-awesome.inputs.wallpaper-generator.follows = "wallpaper-generator";
+    dotfiles-awesome.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      wallpaper-generator.follows = "wallpaper-generator";
+      flake-utils.follows = "flake-utils";
+      flake-compat.follows = "flake-compat";
+    };
 
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
+    # Krops
     krops.url = "git+https://cgit.krebsco.de/krops";
     krops.flake = false;
 
