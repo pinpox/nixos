@@ -10,6 +10,7 @@
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
 
+    # Home-manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -53,6 +54,9 @@
 
     zsh-colored-man-pages.url = "github:ael-code/zsh-colored-man-pages";
     zsh-colored-man-pages.flake = false;
+
+    forgit.url = "github:wfxr/forgit";
+    forgit.flake = false;
 
   };
   outputs = { self, ... }@inputs:

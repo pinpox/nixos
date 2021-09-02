@@ -30,5 +30,8 @@ in self: super: {
     super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
   zsh-colored-man-pages =
     super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };
+
+  forgit =
+    super.callPackage ../packages/forgit { inputs = inputs; };
 }
 

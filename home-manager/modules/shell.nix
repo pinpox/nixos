@@ -42,6 +42,8 @@ in {
       notes = "$HOME/Notes";
     };
 
+
+
     shellAliases = {
 
       # Exa ls replacement
@@ -127,6 +129,11 @@ in {
         name = "zsh-fzf-tab";
         file = "fzf-tab.plugin.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+      {
+        name = "forgit";
+        file = "forgit.plugin.zsh";
+        src = "${pkgs.forgit}/share/forgit";
       }
     ];
   };
