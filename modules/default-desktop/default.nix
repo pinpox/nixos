@@ -95,25 +95,26 @@ in {
       nur.repos.mic92.irc-announce
 
       # borgbackup
-      recursive
-      lm_sensors
+      # wezterm-nightly
       arandr
-      jetbrains-mono
-      universal-ctags
+      binutils
       git
       gnumake
       go
+      jetbrains-mono
       killall
+      lm_sensors
       neovim
       nixfmt
-      # wezterm-nightly
       nodejs
       openvpn
       python
+      recursive
       ripgrep
       ruby
-      wget
       time
+      universal-ctags
+      wget
       zola
     ];
 
