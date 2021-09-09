@@ -2,7 +2,7 @@
 with lib;
 let
   vars = import ../vars.nix;
-  cfg = config.pinpox.programs.wezterm;
+  cfg = config.pinpox.programs.firefox;
 in {
   options.pinpox.programs.firefox.enable = mkEnableOption "firefox browser";
 
