@@ -169,9 +169,10 @@
         "https://drone.lounge.rocks"
         "https://lounge.rocks"
         "https://pass.pablo.tools"
-        "https://vpn.pablo.tools"
+        # "https://vpn.pablo.tools"
         "https://pinpox.github.io/nixos/"
         "https://pads.0cx.de"
+        "https://news.0cx.de"
         "https://mm.0cx.de"
         "https://irc.0cx.de"
       ];
