@@ -15,6 +15,16 @@ in {
   };
 
   config = mkIf cfg.enable {
+
+    # SMTP password file
+    users.users.grafana = { extraGroups = [ "keys" ]; };
+    krops.secrets.files = {
+      grafana-smtp-pass = {
+        owner = "grafana";
+        source-path = "/var/src/secrets/grafana/smtp-password";
+      };
+    };
+
     # Graphana fronend
     services.grafana = {
       enable = true;
@@ -22,6 +32,15 @@ in {
       # Default is 3000
       port = 9005;
       addr = "127.0.0.1";
+
+      # Mail notifications
+      smtp = {
+        enable = true;
+        host = "smtp.sendgrid.net:587";
+        user = "apikey";
+        passwordFile = "/run/keys/grafana-smtp-pass";
+        fromAddress = "status@pablo.tools";
+      };
 
       # TODO add plugins here, instead of using grafana-cli
       # declarativePlugins = with pkgs.grafanaPlugins [
