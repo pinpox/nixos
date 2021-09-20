@@ -18,15 +18,15 @@
     enable = true;
     hydraURL = "https://hydra.lounge.rocks"; # externally visible URL
     notificationSender = "hydra@localhost"; # e-mail of hydra service
-    port = 9876; #Default
+    port = 9876; # Default
     # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
     buildMachinesFiles = [ ];
     # you will probably also want, otherwise *everything* will be built from scratch
     useSubstitutes = true;
   };
 
-   # nix.allowedUsers = [ "hydra" ];
-nix.allowedUsers = [ "hydra" "hydra-queue-runner" "hydra-www" ];
+  # nix.allowedUsers = [ "hydra" ];
+  nix.allowedUsers = [ "hydra" "hydra-queue-runner" "hydra-www" ];
 
   pinpox = {
     server = {
@@ -61,7 +61,7 @@ nix.allowedUsers = [ "hydra" "hydra-queue-runner" "hydra-www" ];
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
-    (builtins.fetchurl {
+    (pkgs.fetchurl {
       url = "https://github.com/MayNiklas.keys";
       sha256 = "sha256:174dbx0kkrfdfdjswdny25nf7phgcb9k8i6z3rqqcy9l24f8xcp3";
     })
