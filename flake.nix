@@ -102,6 +102,8 @@
 
     in {
 
+      # hydraJobs
+
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
@@ -114,7 +116,7 @@
         value = import (./modules + "/${x}");
       }) (builtins.attrNames (builtins.readDir ./modules)));
 
-      # Each subdirectory in ./machins is a host. Add them all to
+      # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
       nixosConfigurations = builtins.listToAttrs (map (x: {
@@ -125,7 +127,14 @@
           ];
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
+
+    checks."x86_64-linux".example = self.packages."x86_64-linux".hello-custom;
+
+hydraJobs = (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair "nixos-${name}" config.config.system.build.toplevel) self.nixosConfigurations);
+              # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair "home-manager-${name}" config.activation-script) self.hmConfigurations);
+
     } //
+
 
     # All packages in the ./packages subfolder are also added to the flake.
     # flake-utils is used for this part to make each package available for each
@@ -144,6 +153,13 @@
           darktile = pkgs.darktile;
           zk = pkgs.zk;
         };
+
+
+
+    # checks = forAllSystems (system: {
+    #     build = self.defaultPackage.${system};
+    #     # FIXME: add a proper test.
+    #   });
 
         apps = {
           # Allow custom packages to be run using `nix run`
