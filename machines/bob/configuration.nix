@@ -1,5 +1,6 @@
 # Configuration for bob
-{ self, ... }: {
+{ self, ... }: {pkgs, ...}:
+{
 
   imports = [ ./hardware-configuration.nix ];
 
@@ -61,7 +62,7 @@
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
-    (pkgs.fetchurl {
+    ( pkgs.fetchurl {
       url = "https://github.com/MayNiklas.keys";
       sha256 = "sha256:174dbx0kkrfdfdjswdny25nf7phgcb9k8i6z3rqqcy9l24f8xcp3";
     })
