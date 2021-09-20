@@ -49,7 +49,7 @@ in {
       isSystemUser = true;
       home = "/var/lib/http2irc";
       description = "http2irc system user";
-      extraGroups = [ "http2irc" ];
+      group = "http2irc";
       createHome = true;
     };
 
