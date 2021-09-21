@@ -163,7 +163,6 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
-          "neovim-nightly",
           "nixpkgs"
         ]
       },
@@ -223,11 +222,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1632125419,
-        "narHash": "sha256-05vU9K/MnI/2BEg5VnkjtL9T92ZTkAyBDTzpHJPkFkY=",
+        "lastModified": 1632164655,
+        "narHash": "sha256-/axLBf2HToP1QsnrbQGVakguc+jEJ8lSxbu6EnyRLVU=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "be563d4ba29e519d666d77e750909e7ddfa1c81c",
+        "rev": "8662f413b12d4ca0433149ec3e9b9ab85537e06b",
         "type": "github"
       },
       "original": {
@@ -274,11 +273,11 @@
     "wallpaper-generator": {
       "flake": false,
       "locked": {
-        "lastModified": 1629971373,
-        "narHash": "sha256-9WHOR7aZDzG184zrqhAxZV7H8S7zJtMahQpa0JvvY6k=",
+        "lastModified": 1632148204,
+        "narHash": "sha256-Bu/dnkZ3Wrx4JHsyTVauvIJqeK/tGpuObrE0A1cNRHg=",
         "owner": "pinpox",
         "repo": "wallpaper-generator",
-        "rev": "a50b7bcdd092bd421abaf781abd02923c5569dfc",
+        "rev": "3f87b0452a4ff66bbc60fac98f9c91c9610591bf",
         "type": "github"
       },
       "original": {
