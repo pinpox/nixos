@@ -23,8 +23,8 @@ buildGoModule rec {
 
   preBuild = ''buildFlagsArray+=("-tags" "fts5 icu")'';
 
-  buildFlagsArray =
-    [ "-ldflags=-X=main.Build=${version} -X=main.Build=${version}" ];
+  # trace: warning: Use the `ldflags` and/or `tags` attributes instead of `buildFlags`/`buildFlagsArray`
+  ldflags = [ "-X=main.Build=${version}" "-X=main.Build=${version}" ];
 
   meta = with lib; {
     maintainers = with maintainers; [ pinpox ];

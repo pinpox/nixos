@@ -15,11 +15,7 @@ buildGoModule rec {
     sha256 = "sha256-MKV5kor+Wm9cuIFFcjSNyCgVKtY+/B9sgBOXMMRvMPI=";
   };
 
-  preBuild = ''
-    buildFlagsArray+=( "-tags" "${
-      lib.optionalString (!enableUnfree) "oss nolimit"
-    }" )
-  '';
+  tags = lib.lists.optional (!enableUnfree) [ "oss" "nolimit" ];
 
   meta = with lib; {
     maintainers = with maintainers; [ elohmeier vdemeester ];
