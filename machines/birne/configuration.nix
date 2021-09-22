@@ -26,20 +26,6 @@
     server = {
       enable = true;
       hostname = "birne";
-
-      homeConfig = {
-        imports = [
-          ../../home-manager/home-server.nix
-          self.inputs.dotfiles-awesome.nixosModules.dotfiles
-          {
-            nixpkgs.overlays = [
-              self.overlay
-              self.inputs.nur.overlay
-              self.inputs.neovim-nightly.overlay
-            ];
-          }
-        ];
-      };
     };
 
 

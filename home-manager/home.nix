@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nur, awesome-config, wallpaper-generator, ... }:
+{ config, pkgs, lib, nur, awesome-config, wallpaper-generator, inputs, ... }:
 let
   vars = import ./vars.nix;
   splitString = str:
@@ -53,8 +53,8 @@ in {
   home.packages = with pkgs; [
 
     # From nixpkgs
-inetutils
-nmap
+    inetutils
+    nmap
     retroarch
     arandr
     # arduino

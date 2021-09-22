@@ -120,22 +120,6 @@
     server = {
       enable = true;
       hostname = "porree";
-      homeConfig = {
-
-        imports = [
-          ../../home-manager/home-server.nix
-          self.inputs.dotfiles-awesome.nixosModules.dotfiles
-          {
-            # TODO add overlays to all machines at once
-            nixpkgs.overlays = [
-              self.overlay
-              self.inputs.nur.overlay
-              self.inputs.neovim-nightly.overlay
-            ];
-          }
-        ];
-      };
-
     };
 
     wg-client = {

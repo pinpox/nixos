@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, self-overlay, ... }:
 with lib;
 let cfg = config.pinpox.desktop;
 in {
@@ -8,13 +8,13 @@ in {
   options.pinpox.desktop = {
     enable = mkEnableOption "Enable the default desktop configuration";
 
-    homeConfig = mkOption {
-      type = types.attrs;
-      default = null;
-      example = "{}";
-      description =
-        "Main users account home-manager configuration for the host";
-    };
+    # homeConfig = mkOption {
+    #   type = types.attrs;
+    #   default = null;
+    #   example = "{}";
+    #   description =
+    #     "Main users account home-manager configuration for the host";
+    # };
 
     wireguardIp = mkOption {
       type = types.str;
@@ -50,7 +50,16 @@ in {
 
   config = mkIf cfg.enable {
 
-    home-manager.users.pinpox = cfg.homeConfig;
+     home-manager.users.pinpox = {
+      imports = [
+        ../../home-manager/home.nix
+        inputs.dotfiles-awesome.nixosModules.dotfiles
+        {
+          nixpkgs.overlays =
+            [ self-overlay inputs.nur.overlay inputs.neovim-nightly.overlay ];
+        }
+      ];
+    };
 
     pinpox = {
       defaults = {

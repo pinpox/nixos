@@ -68,6 +68,8 @@
 
           system = "x86_64-linux";
           modules = [
+            { _module.args.inputs = inputs; }
+            { _module.args.self-overlay = self.overlay; }
 
             ({ ... }: {
               imports = builtins.attrValues self.nixosModules ++ [

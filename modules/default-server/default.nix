@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, self-overlay, ... }:
 with lib;
 let cfg = config.pinpox.server;
 in {
@@ -15,13 +15,13 @@ in {
       description = "hostname to identify the instance";
     };
 
-    homeConfig = mkOption {
-      type = types.attrs;
-      default = null;
-      example = "{}";
-      description =
-        "Main users account home-manager configuration for the host";
-    };
+    # homeConfig = mkOption {
+    #   type = types.attrs;
+    #   default = null;
+    #   example = "{}";
+    #   description =
+    #     "Main users account home-manager configuration for the host";
+    # };
 
   };
 
@@ -29,7 +29,17 @@ in {
 
     networking.hostName = cfg.hostname;
 
-    home-manager.users.pinpox = cfg.homeConfig;
+    # Server-specific home-manager config
+    home-manager.users.pinpox = {
+      imports = [
+        ../../home-manager/home-server.nix
+        inputs.dotfiles-awesome.nixosModules.dotfiles
+        {
+          nixpkgs.overlays =
+            [ self-overlay inputs.nur.overlay inputs.neovim-nightly.overlay ];
+        }
+      ];
+    };
 
     environment.systemPackages = with pkgs; [
       universal-ctags

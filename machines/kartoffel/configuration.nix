@@ -5,20 +5,6 @@
 
   # environment.systemPackages = [self.wezterm];
 
-  pinpox.desktop.homeConfig = {
-    imports = [
-      ../../home-manager/home.nix
-      self.inputs.dotfiles-awesome.nixosModules.dotfiles
-      {
-        nixpkgs.overlays = [
-          self.overlay
-          self.inputs.nur.overlay
-          self.inputs.neovim-nightly.overlay
-        ];
-      }
-    ];
-  };
-
   pinpox.desktop = {
     enable = true;
     wireguardIp = "192.168.7.3";
