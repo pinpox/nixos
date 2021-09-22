@@ -1,6 +1,6 @@
 # Configuration for bob
-{ self, ... }: {pkgs, ...}:
-{
+{ self, ... }:
+{ pkgs, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
 
@@ -24,6 +24,20 @@
     buildMachinesFiles = [ ];
     # you will probably also want, otherwise *everything* will be built from scratch
     useSubstitutes = true;
+
+    extraConfig = ''
+      <hydra_notify>
+        <prometheus>
+          listen_address = 127.0.0.1
+          port = 9199
+        </prometheus>
+      </hydra_notify>
+      <runcommand>
+      <command>
+        ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 hydra-reporter "#lounge-rocks-log" 1 "build triggered"
+      </command>
+      </runcommand>
+    '';
   };
 
   # nix.allowedUsers = [ "hydra" ];
@@ -62,7 +76,7 @@
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [
-    ( pkgs.fetchurl {
+    (pkgs.fetchurl {
       url = "https://github.com/MayNiklas.keys";
       sha256 = "sha256:174dbx0kkrfdfdjswdny25nf7phgcb9k8i6z3rqqcy9l24f8xcp3";
     })
