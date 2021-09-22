@@ -14,15 +14,6 @@ in {
       example = "deepblue";
       description = "hostname to identify the instance";
     };
-
-    # homeConfig = mkOption {
-    #   type = types.attrs;
-    #   default = null;
-    #   example = "{}";
-    #   description =
-    #     "Main users account home-manager configuration for the host";
-    # };
-
   };
 
   config = mkIf cfg.enable {
@@ -31,6 +22,10 @@ in {
 
     # Server-specific home-manager config
     home-manager.users.pinpox = {
+
+      # Pass inputs to home-manager modules
+      _module.args.flake-inputs = inputs;
+
       imports = [
         ../../home-manager/home-server.nix
         inputs.dotfiles-awesome.nixosModules.dotfiles

@@ -58,6 +58,12 @@
     forgit.url = "github:wfxr/forgit";
     forgit.flake = false;
 
+    nix-apple-fonts.url = "github:pinpox/nix-apple-fonts";
+
+    nix-apple-fonts.inputs.flake-compat.follows = "flake-compat";
+    nix-apple-fonts.inputs.flake-utils.follows = "flake-utils";
+    nix-apple-fonts.inputs.nixpkgs.follows = "nixpkgs";
+
   };
   outputs = { self, ... }@inputs:
     with inputs;
@@ -68,6 +74,8 @@
 
           system = "x86_64-linux";
           modules = [
+
+            # Make inputs and overlay accessible as module parameters
             { _module.args.inputs = inputs; }
             { _module.args.self-overlay = self.overlay; }
 

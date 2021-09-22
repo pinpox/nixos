@@ -6,15 +6,8 @@ in {
   imports = [ ../../users/pinpox.nix ];
 
   options.pinpox.desktop = {
-    enable = mkEnableOption "Enable the default desktop configuration";
 
-    # homeConfig = mkOption {
-    #   type = types.attrs;
-    #   default = null;
-    #   example = "{}";
-    #   description =
-    #     "Main users account home-manager configuration for the host";
-    # };
+    enable = mkEnableOption "Enable the default desktop configuration";
 
     wireguardIp = mkOption {
       type = types.str;
@@ -50,7 +43,11 @@ in {
 
   config = mkIf cfg.enable {
 
-     home-manager.users.pinpox = {
+    home-manager.users.pinpox = {
+
+      # Pass inputs to home-manager modules
+      _module.args.flake-inputs = inputs;
+
       imports = [
         ../../home-manager/home.nix
         inputs.dotfiles-awesome.nixosModules.dotfiles
