@@ -1,7 +1,7 @@
 { lib, fetchFromGitHub, buildGoModule, enableUnfree ? true }:
 
 buildGoModule rec {
-  pname = "drone.io${lib.optionalString (!enableUnfree) "-oss"}";
+  pname = "drone.io";
   version = "2.0.3";
 
   vendorSha256 = "sha256-3qTH/p0l6Ke1F9SUcvK2diqZooOMnlXYO1PHLdJJ8PM=";
@@ -15,7 +15,7 @@ buildGoModule rec {
     sha256 = "sha256-MKV5kor+Wm9cuIFFcjSNyCgVKtY+/B9sgBOXMMRvMPI=";
   };
 
-  tags = lib.lists.optional (!enableUnfree) [ "oss" "nolimit" ];
+  tags = [ "nolimit" ];
 
   meta = with lib; {
     maintainers = with maintainers; [ elohmeier vdemeester ];
