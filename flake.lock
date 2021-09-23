@@ -94,11 +94,11 @@
     "forgit": {
       "flake": false,
       "locked": {
-        "lastModified": 1627920902,
-        "narHash": "sha256-X2tyQtXrKgY5MLAqozqCUlZo+2dgcrY6MP8mSpjPSfA=",
+        "lastModified": 1632363443,
+        "narHash": "sha256-foi5zb7oZOfxBmpYmDq30VCenKPS//nxKSzqi+hsvoY=",
         "owner": "wfxr",
         "repo": "forgit",
-        "rev": "9f3a4239205b638b8c535220bfec0b1fbca2d620",
+        "rev": "810735294107ef1b1de66cf1cdfc358fc14049ac",
         "type": "github"
       },
       "original": {
@@ -249,11 +249,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1632318744,
-        "narHash": "sha256-2XMBjCVMhzBir9UR2r6mMKXVHdKCX7GXlYdtPl/x5XM=",
+        "lastModified": 1632382648,
+        "narHash": "sha256-XxpX9c190aweDR0pDEds8xfhKQ7C0FKlRYUqQxE9OVw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "51a5a1883a399516cff51143509d5fcc31245ef3",
+        "rev": "57e193e20b4cbdfb5310974ef0a72aa6880eaafb",
         "type": "github"
       },
       "original": {
