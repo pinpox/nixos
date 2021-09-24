@@ -94,11 +94,11 @@
     "forgit": {
       "flake": false,
       "locked": {
-        "lastModified": 1627920902,
-        "narHash": "sha256-X2tyQtXrKgY5MLAqozqCUlZo+2dgcrY6MP8mSpjPSfA=",
+        "lastModified": 1632363443,
+        "narHash": "sha256-foi5zb7oZOfxBmpYmDq30VCenKPS//nxKSzqi+hsvoY=",
         "owner": "wfxr",
         "repo": "forgit",
-        "rev": "9f3a4239205b638b8c535220bfec0b1fbca2d620",
+        "rev": "810735294107ef1b1de66cf1cdfc358fc14049ac",
         "type": "github"
       },
       "original": {
@@ -114,11 +114,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1632256651,
-        "narHash": "sha256-+jbZKohfqTjp/5SwudwIhYzmFqmGDlIG99V5lOE4Yjg=",
+        "lastModified": 1632431340,
+        "narHash": "sha256-9xUnx5aeDp8Irg2/rWBKn3AjiiQTtsjTX0UshzMXy94=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "58aa667e28ca4a6a2159b1f3258ef5d494d5ecb6",
+        "rev": "b0651cc2173427857b172604f85da6afe69e1d41",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     "indent-blankline-nvim-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1632193593,
-        "narHash": "sha256-xK2XNOx0RSIGKC171DGmOrcg7ctSimX4skah7uCGHAM=",
+        "lastModified": 1632460160,
+        "narHash": "sha256-rsSB4ehI0bE/PgV2fNIKr7m0cpRukP5FIFNZ2wOnC1g=",
         "owner": "lukas-reineke",
         "repo": "indent-blankline.nvim",
-        "rev": "f39a3a58baa7f6dbe76db9c8b36473eedb27348d",
+        "rev": "5f858be6fc9c9a379ae98a814776be3ceb288536",
         "type": "github"
       },
       "original": {
@@ -169,11 +169,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1632274352,
-        "narHash": "sha256-s05JpJx5JDnpfNZzvF20hfyB7wPYKeXmfg5gPr+14mw=",
+        "lastModified": 1632446410,
+        "narHash": "sha256-TkD1UKZkNe/d4rF+5Zf5lha0ixRT6LSFeA/TenPWZxM=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "e8fb0728e220bb378a8689415c3915fe5912e987",
+        "rev": "433bda405e1fa82db23660a73f275cac5ecca95e",
         "type": "github"
       },
       "original": {
@@ -192,11 +192,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1632298364,
-        "narHash": "sha256-bnsnSLbo+w7/N+RLe94wtyndS7oe4/OrPWumpll/Iiw=",
+        "lastModified": 1632471179,
+        "narHash": "sha256-XHYRVKt+tQxcVv9KmM/7JK6KOhU/KlyrDhFxVXDfiAE=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "3ad7af804feb558b1869c689c92707d1da57bb42",
+        "rev": "5c16bf28d8b4115cdcb9bf415272d5f76a2951a4",
         "type": "github"
       },
       "original": {
@@ -233,11 +233,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1631962327,
-        "narHash": "sha256-h2fgtNHozEcB42BQ1QVWAJUpQ1FA3gpgq/RrOKAxbfE=",
+        "lastModified": 1632411313,
+        "narHash": "sha256-lekODc44lVo9/0EwGiX6LoEt2KhiPdcfNopealMJ7n4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bc9b956714ed6eac5f8888322aac5bc41389defa",
+        "rev": "51bcdc4cdaac48535dabf0ad4642a66774c609ed",
         "type": "github"
       },
       "original": {
@@ -249,11 +249,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1632318744,
-        "narHash": "sha256-2XMBjCVMhzBir9UR2r6mMKXVHdKCX7GXlYdtPl/x5XM=",
+        "lastModified": 1632493269,
+        "narHash": "sha256-I5iqmmrqoSRJPL5f2sWwbF7Bvzda8WkbwBraS0FDOsc=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "51a5a1883a399516cff51143509d5fcc31245ef3",
+        "rev": "dae15adbabe8c2eeb0c77433b2056a5f692065e2",
         "type": "github"
       },
       "original": {
@@ -301,11 +301,11 @@
     "wallpaper-generator": {
       "flake": false,
       "locked": {
-        "lastModified": 1632148204,
-        "narHash": "sha256-Bu/dnkZ3Wrx4JHsyTVauvIJqeK/tGpuObrE0A1cNRHg=",
+        "lastModified": 1632399088,
+        "narHash": "sha256-BAsPz6O6QUfE7r1p2TacuCoZCXMKBBRyuTYlkwqzrMQ=",
         "owner": "pinpox",
         "repo": "wallpaper-generator",
-        "rev": "3f87b0452a4ff66bbc60fac98f9c91c9610591bf",
+        "rev": "5fa99fd91ac900c592e28afd0ec43499c4b05d18",
         "type": "github"
       },
       "original": {
