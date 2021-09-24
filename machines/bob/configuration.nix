@@ -33,7 +33,7 @@
         </prometheus>
       </hydra_notify>
       <runcommand>
-        command = cat $HYDRA_JSON >> /tmp/test.log
+        command = ${pkgs.coreutils}/bin/cat $HYDRA_JSON >> /tmp/test.log.json
       </runcommand>
     '';
   };
