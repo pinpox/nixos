@@ -33,9 +33,7 @@
         </prometheus>
       </hydra_notify>
       <runcommand>
-      <command>
-        ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 hydra-reporter "#lounge-rocks-log" 1 "build triggered"
-      </command>
+        command = ${pkgs.coreutils}/bin/cat $HYDRA_JSON >> /tmp/test.log.json
       </runcommand>
     '';
   };
