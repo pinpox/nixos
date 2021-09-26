@@ -6,7 +6,7 @@ in {
   imports = [ ../../users/pinpox.nix ];
 
   options.pinpox.server = {
-    enable = mkEnableOption "Enable the default server configuration";
+    enable = mkEnableOption "the default server configuration";
 
     hostname = mkOption {
       type = types.str;

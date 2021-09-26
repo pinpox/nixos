@@ -7,7 +7,7 @@ in {
 
   options.pinpox.desktop = {
 
-    enable = mkEnableOption "Enable the default desktop configuration";
+    enable = mkEnableOption "the default desktop configuration";
 
     wireguardIp = mkOption {
       type = types.str;
