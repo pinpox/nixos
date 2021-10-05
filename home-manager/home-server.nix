@@ -15,7 +15,7 @@ in {
   imports = [
     ./modules/credentials.nix
     ./modules/git.nix
-    ./modules/shell.nix
+    ./modules/shell
     ./modules/vim
     ./modules/xdg.nix
   ];
