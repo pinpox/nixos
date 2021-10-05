@@ -5,7 +5,13 @@
 
       ignores = [ "tags" "*.swp" ];
 
-      extraConfig = { pull.rebase = false; };
+      extraConfig = {
+        # Possibly change this to "main" when majority of projects have
+        # switched branch names
+        init.defaultBranch = "master";
+
+        pull.rebase = false;
+      };
 
       signing = {
         key = "823A6154426408D3";
