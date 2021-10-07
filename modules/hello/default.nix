@@ -13,6 +13,9 @@ in {
   };
 
   config = mkIf cfg.enable {
+
+    environment.systemPackages = [ pkgs.hello ];
+
     systemd.services.hello = {
       wantedBy = [ "multi-user.target" ];
       serviceConfig.ExecStart =
