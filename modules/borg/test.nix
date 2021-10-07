@@ -1,4 +1,4 @@
-{ pkgs, system ? builtins.currentSystem, ... }:
+{ pkgs, system, self, ... }:
 
 with import (pkgs + "/nixos/lib/testing-python.nix") { inherit system; };
 

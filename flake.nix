@@ -178,7 +178,7 @@
 
         checks = builtins.listToAttrs (map (x: {
           name = x;
-          value = import (./modules + "/${x}/test.nix");
+          value = (import (./modules + "/${x}/test.nix")) {pkgs = nixpkgs; inherit system self; };
         }) (builtins.filter (p:
           # Check if module contains a test.nix file
           builtins.pathExists (./modules + "/${p}/test.nix"))
