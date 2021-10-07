@@ -106,6 +106,7 @@
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
               nix.registry.nixpkgs.flake = nixpkgs;
+              nix.registry.pinpox.flake = self;
             })
           ];
         };
@@ -164,11 +165,6 @@
           zk = pkgs.zk;
         };
 
-        # checks = forAllSystems (system: {
-        #     build = self.defaultPackage.${system};
-        #     # FIXME: add a proper test.
-        #   });
-
         apps = {
           # Allow custom packages to be run using `nix run`
           hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
@@ -177,6 +173,41 @@
             exePath = "/bin/wezterm";
           };
         };
+
+        # Checks to run with `nix flake check -L`, e.g. to check modules in a VM
+
+        checks = builtins.listToAttrs (map (x: {
+          name = x;
+          value = import (./modules + "/${x}/test.nix");
+        }) (builtins.filter (p:
+          # Check if module contains a test.nix file
+          builtins.pathExists (./modules + "/${p}/test.nix"))
+          (builtins.attrNames (builtins.readDir ./modules)))) //
+
+          {
+
+            vmTest = with import (nixpkgs + "/nixos/lib/testing-python.nix") {
+              inherit system;
+            };
+
+              makeTest {
+                nodes = {
+                  client = { ... }: {
+                    imports = [ self.nixosModules.hello ];
+
+                    pinpox.services.hello.enable = true;
+                  };
+                };
+
+                # https://nixos.org/manual/nixos/stable/index.html#sec-writing-nixos-tests
+                testScript = ''
+                  start_all()
+                  client.wait_for_unit("multi-user.target")
+                  print(client.succeed("uname"))
+                  print(client.succeed("hello"))
+                '';
+              };
+          };
 
         # TODO we probably should set some default app and/or package
         # defaultPackage = packages.hello;
