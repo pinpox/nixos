@@ -174,14 +174,21 @@
           };
         };
 
-        # Checks to run with `nix flake check -L`, e.g. to check modules in a VM
-
+        # Checks to run with `nix flake check -L`, will run in a QEMU VM.
+        # Looks for all ./modules/<module name>/test.nix files and adds them to
+        # the flake's checks output. The test.nix file is optional and may be
+        # added to any module.
         checks = builtins.listToAttrs (map (x: {
           name = x;
-          value = (import (./modules + "/${x}/test.nix")) {pkgs = nixpkgs; inherit system self; };
-        }) (builtins.filter (p:
-          # Check if module contains a test.nix file
-          builtins.pathExists (./modules + "/${p}/test.nix"))
+          value = (import (./modules + "/${x}/test.nix")) {
+            pkgs = nixpkgs;
+            inherit system self;
+          };
+        }) (
+          # Filter list of modules, leaving only modules which contain a
+          # `test.nix` file
+          builtins.filter
+          (p: builtins.pathExists (./modules + "/${p}/test.nix"))
           (builtins.attrNames (builtins.readDir ./modules))));
 
         # TODO we probably should set some default app and/or package
