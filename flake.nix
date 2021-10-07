@@ -182,32 +182,7 @@
         }) (builtins.filter (p:
           # Check if module contains a test.nix file
           builtins.pathExists (./modules + "/${p}/test.nix"))
-          (builtins.attrNames (builtins.readDir ./modules)))) //
-
-          {
-
-            vmTest = with import (nixpkgs + "/nixos/lib/testing-python.nix") {
-              inherit system;
-            };
-
-              makeTest {
-                nodes = {
-                  client = { ... }: {
-                    imports = [ self.nixosModules.hello ];
-
-                    pinpox.services.hello.enable = true;
-                  };
-                };
-
-                # https://nixos.org/manual/nixos/stable/index.html#sec-writing-nixos-tests
-                testScript = ''
-                  start_all()
-                  client.wait_for_unit("multi-user.target")
-                  print(client.succeed("uname"))
-                  print(client.succeed("hello"))
-                '';
-              };
-          };
+          (builtins.attrNames (builtins.readDir ./modules))));
 
         # TODO we probably should set some default app and/or package
         # defaultPackage = packages.hello;
