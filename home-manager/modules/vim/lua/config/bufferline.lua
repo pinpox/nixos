@@ -1,7 +1,8 @@
 require'bufferline'.setup{
 	options = {
-		numbers =  "ordinal",
-		number_style = "normal",
+		numbers = function(opts)
+			return string.format('%s', opts.ordinal)
+		end,
 		buffer_close_icon= '',
 		modified_icon = '●',
 		close_icon = '',
