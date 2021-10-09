@@ -29,29 +29,18 @@
       notes = "$HOME/Notes";
     };
 
-    shellAliases = {
+    shellAliases = rec {
 
       # Exa ls replacement
       ls = "${pkgs.exa}/bin/exa --group-directories-first";
-      l = "${pkgs.exa}/bin/exa -lbF --git --group-directories-first --icons";
-      ll = "${pkgs.exa}/bin/exa -lbGF --git --group-directories-first --icons";
-      llm =
-        "${pkgs.exa}/bin/exa -lbGd --git --sort=modified --group-directories-first --icons";
-      la =
-        "${pkgs.exa}/bin/exa -lbhHigmuSa --time-style=long-iso --git --color-scale --group-directories-first --icons";
-      lx =
-        "${pkgs.exa}/bin/exa -lbhHigmuSa@ --time-style=long-iso --git --color-scale --group-directories-first --icons";
-      lt =
-        "${pkgs.exa}/bin/exa --tree --level=2 --group-directories-first --icons";
+      l = "${ls} -lbF --git --icons";
+      ll = "${l} -G";
+      la = "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
+      lt = "${ls} --tree --level=2 --icons";
 
       # Pastebin (termbin.com)
       tb = "${pkgs.netcat-gnu}/bin/nc termbin.com 9999";
-      tbc =
-        "${pkgs.netcat-gnu}/bin/nc termbin.com 9999 | ${pkgs.xclip}/bin/xclip -selection c";
-
-      # Gitignores
-      git-ignore-create-go =
-        "${pkgs.curl}/bin/curl 'https://www.toptal.com/developers/gitignore/api/vim,go,tags,ssh' > .gitignore";
+      tbc = "${tb} | ${pkgs.xclip}/bin/xclip -selection c";
 
       # Frequendly used folders
       cdn = "cd ~/code/github.com/pinpox/nixos";
@@ -66,8 +55,10 @@
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
-      yotp =
-        "${pkgs.yubikey-manager}/bin/ykman oath accounts code | ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip";
+      yotp = ''
+        ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
+        ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
+      '';
       zzz = "systemctl suspend";
 
       serve =

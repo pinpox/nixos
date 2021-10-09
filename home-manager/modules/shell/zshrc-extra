@@ -10,10 +10,13 @@ abbrev-alias -g G="| rg -i"
 abbrev-alias -g P="| tb"
 
 # Create and change to a directory
-take () {mkdir -p -- "$1" && cd -- "$1"; }
+take () { mkdir -p -- "$1" && cd -- "$1"; }
 
 # Create and change to a new temporary directory
 ttake () { cd $(mktemp -d) }
+
+# Use `line 10 /etc/hosts` to get 10th line of file
+line () { awk "NR == $1" "$2" }
 
 # Bind up and down keys to history matching partial input
 bindkey "$terminfo[kcuu1]" history-search-backward
