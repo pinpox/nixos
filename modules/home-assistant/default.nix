@@ -126,9 +126,9 @@ in {
         sensor = [{ platform = "fritzbox_netmonitor"; }];
 
         # Metrics for prometheus
-        # prometheus = {
-        #   namespace = "hass";
-        # };
+        prometheus = {
+          namespace = "hass";
+        };
 
         # Enable MQTT and configure it to use the mosquitto broker
         mqtt = {
