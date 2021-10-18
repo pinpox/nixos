@@ -96,7 +96,7 @@ omnisharp-roslyn # Csharp LSP
       require('config.bufferline')
       require('config.lualine')
       require('config.gitsigns')
-      require('config.zk')
+      -- require('config.zk')
 
       EOF
 
@@ -109,7 +109,7 @@ omnisharp-roslyn # Csharp LSP
     plugins = with pkgs.vimPlugins; [
 
       #      nvim-treesitter
-      zk-nvim
+      # zk-nvim
       nvim-fzf
       indent-blankline-nvim-lua
       colorbuddy-nvim
