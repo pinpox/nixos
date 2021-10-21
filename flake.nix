@@ -45,6 +45,10 @@
     nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
     nvim-fzf.flake = false;
 
+
+    fzf-lua.url = "github:ibhagwan/fzf-lua";
+    fzf-lua.flake = false;
+
     zk-nvim.url = "github:megalithic/zk.nvim";
     zk-nvim.flake = false;
 

@@ -111,15 +111,14 @@ omnisharp-roslyn # Csharp LSP
       #      nvim-treesitter
       # zk-nvim
       nvim-fzf
+      fzf-lua
       indent-blankline-nvim-lua
       colorbuddy-nvim
       BufOnly-vim
       friendly-snippets
       ansible-vim
-      lspsaga-nvim
       base16-vim
       committia-vim
-      fzf-vim
       gitsigns-nvim
       gotests-vim
       haskell-vim

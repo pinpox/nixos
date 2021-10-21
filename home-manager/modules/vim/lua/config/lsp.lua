@@ -92,8 +92,8 @@ end })
 -- autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100
 --
 
-local saga = require 'lspsaga'
-saga.init_lsp_saga()
+-- local saga = require 'lspsaga'
+-- saga.init_lsp_saga()
 
 -- DOC: To override defaults see: https://github.com/glepnir/lspsaga.nvim/
 -- saga.init_lsp_saga {
