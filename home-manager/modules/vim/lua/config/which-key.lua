@@ -18,9 +18,9 @@ wk.setup {
 	-- Leader key
 	["<leader>"] = {
 
-	    F = { ':GFiles<CR>',  'Git files' },
-	    f = { ':Files<CR>',   'Files' },
-	    b = { ':Buffers<CR>', 'Buffers' },
+	    F = { ':FzfLua git_files<CR>',  'Git files' },
+	    f = { ':FzfLua files<CR>',   'Files' },
+	    b = { ':FzfLua buffers<CR>', 'Buffers' },
 
 	    h = {
 		name = "Help",
@@ -120,8 +120,6 @@ wk.setup {
 	['<C-x>'] = { "g<C-x>", 'Visual decrement numbers'},
 	['g<C-a>'] = { "<C-a>", 'Increment numbers'},
 	['g<C-x>'] = { "<C-x>", 'Decrement numbers'},
-
-
 
 -- vnoremap <C-a> g<C-a>
 -- vnoremap <C-x> g<C-x>

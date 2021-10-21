@@ -20,6 +20,14 @@ end)
 
 return {
 
+
+  window_padding = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
+  },
+
 	set_environment_variables = {
 		EDITOR = "nvim"
 	},
@@ -123,41 +131,7 @@ return {
 	-- Transparency
 	window_background_opacity = 0.9,
 
-	colors = {
-
-		foreground = "#E5E9F0",
-		background = "#24283B",
-
-		-- Overrides the cell background color when the current cell is occupied by the
-		-- cursor and the cursor style is set to Block
-		cursor_bg = "#E5E9F0",
-
-		-- Overrides the text color when the current cell is occupied by the cursor
-		cursor_fg = "#F07178",
-
-		-- Specifies the border color of the cursor when the cursor style is set to Block,
-		-- of the color of the vertical or horizontal bar when the cursor style is set to
-		-- Bar or Underline.
-		cursor_border = "#82AAFF",
-
-		-- The color of the split lines between panes
-		split = "#82AAFF",
-
-		-- Default colors
-		ansi    = {"#24283B", "#F07178", "#68f288", "#FFCB6B", "#82AAFF", "#C792EA", "#89DDFF", "#E5E9F0"},
-		brights = {"#505362", "#FF5370", "#C3E88D", "#ffe66b", "#9BBBFF", "#D8B3F0", "#A1E4FF", "#ECEFF4"},
-
-		tab_bar = {
-
-			-- The color of the strip that goes along the top of the window
-			background = "#3B4252",
-
-			-- The active tab is the one that has focus in the window
-			active_tab         = { bg_color = "#82AAFF", fg_color = "#2E3440" },
-			inactive_tab       = { bg_color = "#2E3440", fg_color = "#808080" },
-			inactive_tab_hover = { bg_color = "#3b3052", fg_color = "#909090" },
-		},
-	},
+	colors = require("colors"),
 
 }
 

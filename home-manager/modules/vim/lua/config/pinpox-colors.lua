@@ -9,6 +9,7 @@ local sto = s.standout
 local no  = s.NONE
 local v   = vim
 
+
 -- TODO Think of a better colorscheme name
 v.g.colors_name = 'generated'
 
