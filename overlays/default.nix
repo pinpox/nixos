@@ -33,5 +33,8 @@ in self: super: {
 
   forgit =
     super.callPackage ../packages/forgit { inputs = inputs; };
+
+  xscreensaver =
+    super.callPackage ../packages/xscreensaver {  };
 }
 

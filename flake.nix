@@ -163,6 +163,7 @@
           filebrowser = pkgs.filebrowser;
           darktile = pkgs.darktile;
           zk = pkgs.zk;
+          xscreensaver = pkgs.xscreensaver;
         };
 
         apps = {
