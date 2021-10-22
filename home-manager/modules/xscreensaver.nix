@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       fadeTicks = 20;
-      lock = true;
+      lock = false;
       mode = "blank";
     };
   };

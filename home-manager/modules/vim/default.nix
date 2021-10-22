@@ -78,6 +78,10 @@ omnisharp-roslyn # Csharp LSP
     withRuby = true;
 
     extraConfig = ''
+
+      source ~/.config/nvim/vimscript/wilder.vim
+
+
       lua << EOF
 
 
@@ -154,6 +158,9 @@ omnisharp-roslyn # Csharp LSP
       vim-vsnip
       vim-gnupg
       vim-vsnip-integ
+
+      wilder-nvim
+      diffview-nvim
     ];
   };
 }

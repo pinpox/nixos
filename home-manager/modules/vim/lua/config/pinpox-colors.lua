@@ -122,6 +122,18 @@ Group.new('WildMenu',     c.White,     c.Grey,       no)
 Group.new('SignColumn',   c.none,      c.none,       no)
 Group.new('Special',      c.Cyan,      c.none,       no)
 
+------------------------------
+---- Wilder.nvim Popup-Menu --
+------------------------------
+
+Group.new('WilderDefault',        c.White,      c.none,       no)
+Group.new('WilderAccent',         c.Yellow,     c.none,       no)
+Group.new('WilderSelected',       c.Blue,       c.BrightGrey, b)
+Group.new('WilderSelectedAccent', c.Magenta,    c.BrightGrey, b)
+Group.new('WilderError',          c.Red,        c.none,       no)
+Group.new('WilderSeparator',      c.Green,      c.Grey,       no)
+Group.new('WilderBorder',         c.Blue,       c.none,       no)
+
 -----------------------------
 ---- Vim Help Highlighting --
 -----------------------------
