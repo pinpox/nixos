@@ -1,6 +1,9 @@
 { self, ... }: {
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ 
+    ./hardware-configuration.nix 
+    self.inputs.ha-relay.nixosModules.ha-relay
+  ];
 
   programs.gnupg.agent = {
     enable = true;
