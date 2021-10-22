@@ -123,6 +123,32 @@
         "type": "github"
       }
     },
+    "ha-relay": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1634894087,
+        "narHash": "sha256-MgQngfWxUFOmYax02Xp7a6639VVzK4W7grf2DERtE74=",
+        "owner": "pinpox",
+        "repo": "home-assistant-grafana-relay",
+        "rev": "8d329421bafba294f1ab95d9c64b3f0089a147b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "home-assistant-grafana-relay",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -185,11 +211,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1634758060,
-        "narHash": "sha256-JCp7YsTojCApuvtdGuzU6WzkCI1ZhiMramoQDDLlvqA=",
+        "lastModified": 1634834187,
+        "narHash": "sha256-L/nuK/voar1fwM3tNHms953QQ80UNghqvsQootaOYQE=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "d0f10a7addc17149d7e63ff20705762c357eb469",
+        "rev": "cb15055c294e6ebb9b2a65041cbff0a79cd3e69e",
         "type": "github"
       },
       "original": {
@@ -208,11 +234,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1634804037,
-        "narHash": "sha256-rX/G0AscoIQG/C0c9eq/jjjvHPcrzVQxkfPv/PFW8Tc=",
+        "lastModified": 1634890407,
+        "narHash": "sha256-gCkD8sj7bFS/JY+O+5JpAJXa6OBm3ZOzLgzxLuLWAKY=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "a7ebb71597c3288f92fa55d82d93f7e42e0510f6",
+        "rev": "3ee0aa4bfa70a9990ae0ee05daec06b5e4288ddb",
         "type": "github"
       },
       "original": {
@@ -265,11 +291,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1634878602,
-        "narHash": "sha256-6szosuaBvlM81iDjx+I6nGPd5Oz5ZSP7F/r/G9PTuVI=",
+        "lastModified": 1634894948,
+        "narHash": "sha256-CRrIz4o/eC/PYJ1Hph501aZv0pfnOMVTvH0PMMDkSSM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d52954c01880ee9df2507e92d8560fdc28795a20",
+        "rev": "c4f9bb6ada83e3fc7fe98d35b41013fee207b603",
         "type": "github"
       },
       "original": {
@@ -301,6 +327,7 @@
         "flake-utils": "flake-utils",
         "forgit": "forgit",
         "fzf-lua": "fzf-lua",
+        "ha-relay": "ha-relay",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
         "krops": "krops",

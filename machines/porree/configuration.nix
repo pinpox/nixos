@@ -127,6 +127,14 @@
       clientIp = "192.168.7.1";
     };
 
+    services.home-assistant-grafana-relay = {
+      enable = true;
+      listenHost = "localhost";
+      haUri = "http://home.pablo.tools/api/services/notify/notify";
+      listenPort = "12000";
+      envFile = "/var/src/secrets/ha-relay/envfile";
+    };
+
     # Enable nextcloud configuration
     services.nextcloud.enable = true;
 

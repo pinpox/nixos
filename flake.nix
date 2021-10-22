@@ -29,6 +29,13 @@
       flake-compat.follows = "flake-compat";
     };
 
+    ha-relay.url = "github:pinpox/home-assistant-grafana-relay";
+    ha-relay.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      flake-utils.follows = "flake-utils";
+      flake-compat.follows = "flake-compat";
+    };
+
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly.inputs.flake-utils.follows = "flake-utils";
