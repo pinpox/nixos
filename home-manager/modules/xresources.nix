@@ -19,8 +19,8 @@ in {
     "color14" = "#${vars.colors.Magenta}";
     "color15" = "#${vars.colors.BrightRed}";
 
-    "xterm*foreground" = "#${vars.colors.White}";
-    "xterm*background" = "#${vars.colors.Black}";
+    "foreground" = "#${vars.colors.White}";
+    "background" = "#${vars.colors.Black}";
     "xterm*cursorColor" = "#${vars.colors.White}";
     "xterm*color0" = "#${vars.colors.Black}";
     "xterm*color1" = "#${vars.colors.Red}";
