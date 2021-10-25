@@ -35,8 +35,12 @@
       ls = "${pkgs.exa}/bin/exa --group-directories-first";
       l = "${ls} -lbF --git --icons";
       ll = "${l} -G";
-      la = "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
+      la =
+        "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
       lt = "${ls} --tree --level=2 --icons";
+
+      # Git
+      gs = "${pkgs.git}/bin/git status";
 
       # Pastebin (termbin.com)
       tb = "${pkgs.netcat-gnu}/bin/nc termbin.com 9999";
@@ -56,9 +60,9 @@
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
       yotp = ''
-        ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
-        ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
-      '';
+          ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
+        	  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
+        			'';
       zzz = "systemctl suspend";
 
       serve =
