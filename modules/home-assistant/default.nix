@@ -42,20 +42,20 @@ in {
     services.mosquitto = {
       enable = true;
 
-      checkPasswords = true;
-
-      # Mosquitto is only listening on the local IP, traffic from outside is not
+      t# Mosquitto is only listening on the local IP, traffic from outside is not
       # allowed.
-      host = "192.168.2.84";
-      port = 1883;
-      users = {
-        # No real authentication needed here, since the local network is
-        # trusted.
-        mosquitto = {
-          acl = [ "pattern readwrite #" ];
-          password = "mosquitto";
+      listeners = [{
+        address = "192.168.2.84";
+        port = 1883;
+        users = {
+          # No real authentication needed here, since the local network is
+          # trusted.
+          mosquitto = {
+            acl = [ "readwrite #" ];
+            password = "mosquitto";
+          };
         };
-      };
+      }];
     };
 
     # Enable home-assistant service
@@ -90,9 +90,7 @@ in {
 
         http = {
           use_x_forwarded_for = true;
-          trusted_proxies = [
-            "192.168.7.1"
-          ];
+          trusted_proxies = [ "192.168.7.1" ];
         };
 
         frontend = { };
@@ -126,9 +124,7 @@ in {
         sensor = [{ platform = "fritzbox_netmonitor"; }];
 
         # Metrics for prometheus
-        prometheus = {
-          namespace = "hass";
-        };
+        prometheus = { namespace = "hass"; };
 
         # Enable MQTT and configure it to use the mosquitto broker
         mqtt = {
