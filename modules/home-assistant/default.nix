@@ -42,7 +42,7 @@ in {
     services.mosquitto = {
       enable = true;
 
-      t# Mosquitto is only listening on the local IP, traffic from outside is not
+      # Mosquitto is only listening on the local IP, traffic from outside is not
       # allowed.
       listeners = [{
         address = "192.168.2.84";
