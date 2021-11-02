@@ -52,12 +52,8 @@
     nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
     nvim-fzf.flake = false;
 
-
     fzf-lua.url = "github:ibhagwan/fzf-lua";
     fzf-lua.flake = false;
-
-    zk-nvim.url = "github:megalithic/zk.nvim";
-    zk-nvim.flake = false;
 
     # ZSH plugins
     zsh-abbrev-alias.url = "github:momo-lab/zsh-abbrev-alias";
@@ -79,6 +75,7 @@
   outputs = { self, ... }@inputs:
     with inputs;
     let
+      lib = pkgs.self.inpts.nixpkgs.lib;
       # Function to create default (common) system config options
       defFlakeSystem = baseCfg:
         nixpkgs.lib.nixosSystem {
@@ -122,6 +119,10 @@
           ];
         };
 
+      # with inputs;
+      # let
+      #   system = "x86_64-linux";
+
     in {
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
@@ -148,13 +149,44 @@
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
 
-      # Hydra build jobs. Builds all configs in the CI to verify integrity
-      hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
-        nixpkgs.lib.nameValuePair "nixos-${name}"
-        config.config.system.build.toplevel) self.nixosConfigurations);
-      # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-      # "home-manager-${name}" config.activation-script)
-      # self.hmConfigurations);
+      # Generate completely pre-configured qcow2 image
+      # To generate the .qcow2 file run: nix build '.#qcow2-images.hostname'
+      qcow2-images = builtins.listToAttrs (map (x: {
+        name = x;
+        value = import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+          # See for further options:
+          # https://github.com/NixOS/nixpkgs/blob/master/nixos/lib/make-disk-image.nix
+          config = (self.nixosConfigurations."${x}").config;
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config = { allowUnfree = true; };
+          };
+          lib = nixpkgs.lib;
+          format = "raw";
+          # diskSize = 16384;
+          diskSize = "auto";
+          bootSize = "512M";
+
+          # contents = [];
+
+          fsType = "ext4";
+          label = "nixos";
+          partitionTableType = "efi";
+          # installBootLoader = true;
+          # installBootLoader
+          name = "${x}-disk-image";
+          configFile = ./machines + "/${x}/configuration.nix";
+        };
+      }) (builtins.attrNames (builtins.readDir ./machines)));
+
+      /* # Hydra build jobs. Builds all configs in the CI to verify integrity
+         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
+         nixpkgs.lib.nameValuePair "nixos-${name}"
+         config.config.system.build.toplevel) self.nixosConfigurations);
+            # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+            # "home-manager-${name}" config.activation-script)
+            # self.hmConfigurations);
+      */
 
     } //
 
@@ -173,7 +205,6 @@
           hello-custom = pkgs.hello-custom;
           filebrowser = pkgs.filebrowser;
           darktile = pkgs.darktile;
-          zk = pkgs.zk;
           xscreensaver = pkgs.xscreensaver;
         };
 
