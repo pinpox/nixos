@@ -148,6 +148,8 @@
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
 
+      /*
+
       # Hydra build jobs. Builds all configs in the CI to verify integrity
       hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
         nixpkgs.lib.nameValuePair "nixos-${name}"
@@ -155,6 +157,7 @@
       # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
       # "home-manager-${name}" config.activation-script)
       # self.hmConfigurations);
+      */
 
     } //
 
@@ -173,7 +176,6 @@
           hello-custom = pkgs.hello-custom;
           filebrowser = pkgs.filebrowser;
           darktile = pkgs.darktile;
-          zk = pkgs.zk;
           xscreensaver = pkgs.xscreensaver;
         };
 
