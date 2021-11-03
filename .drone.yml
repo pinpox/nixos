@@ -12,6 +12,8 @@ clone:
 steps:
 - name: Show flake info
   commands:
+
+  - ssh-agent -k
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
