@@ -17,6 +17,7 @@ steps:
   - mkdir ~/.ssh
   - ssh-keyscan -t ed25519 git.lounge.rocks >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
+  - ssh -T git@git.lounge.rocks
   - echo "CLONING"
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
