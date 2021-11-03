@@ -13,7 +13,7 @@ steps:
 - name: Show flake info
   commands:
   - eval "$(ssh-agent -s)"
-  - echo "$SSH_DEPLOY_KEY" | ssh-add -
+  - ssh-add <(echo "$SSH_DEPLOY_KEY")
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
 - name: Run flake checks
