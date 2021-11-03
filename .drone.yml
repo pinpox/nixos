@@ -15,11 +15,12 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
-  - ssh-keyscan -H git.lounge.rocks >> ~/.ssh/known_hosts
+  - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
   - ssh-keyscan github.com >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
   - chmod 600 ~/.ssh/known_hosts
   - echo "CLONING"
+  - echo $HOME
   - whoami
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
