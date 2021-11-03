@@ -22,6 +22,7 @@ steps:
   - cat ~/.ssh/known_hosts
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
+  - echo "RUNNING CHECK"
   - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
     LOGNAME: drone
