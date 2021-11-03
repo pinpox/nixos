@@ -14,6 +14,7 @@ steps:
   commands:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
+  - mkdir ~/.ssh
   - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
