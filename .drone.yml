@@ -17,6 +17,12 @@ steps:
   - echo "${SSH_DEPLOY_KEY}" | ssh-add -
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
+  environment:
+    LOGNAME: drone
+    SSH_DEPLOY_KEY:
+      from_secret: gitea_deploy_key
+    TEST_KEY:
+      from_secret: test_key
 - name: Run flake checks
   commands:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
@@ -41,12 +47,6 @@ steps:
 - name: Notify
   commands:
     - 'nix run "github:mic92/nur-packages#irc-announce" -- irc.hackint.org 6697 bob-the-builder "#lounge-rocks-log" 1 "🛠️ [$DRONE_REPO] ($DRONE_BUILD_EVENT) $DRONE_BUILD_STATUS | $DRONE_COMMIT_MESSAGE" || true'
-  environment:
-    LOGNAME: drone
-    SSH_DEPLOY_KEY:
-      from_secret: gitea_deploy_key
-    TEST_KEY:
-      from_secret: test_key
   when:
     status:
     - failure
