@@ -15,10 +15,11 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
-  - ssh-keyscan -t ed25519,rsa git.lounge.rocks >> ~/.ssh/known_hosts
+  - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
+  - ssh-keyscan github.com >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
-  - ssh -T git@git.lounge.rocks
   - echo "CLONING"
+  - whoami
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
@@ -27,8 +28,6 @@ steps:
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
-    TEST_KEY:
-      from_secret: test_key
 
 - name: Run flake checks
   commands:
