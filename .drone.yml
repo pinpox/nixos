@@ -22,6 +22,8 @@ steps:
   - echo "SCAANNING"
   - ssh-keyscan -t rsa git.lounge.rocks >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
+  - echo "CLONING"
+  - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - echo "RUNNING CHECK"
