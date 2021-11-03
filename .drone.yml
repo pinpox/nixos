@@ -48,6 +48,7 @@ steps:
 trigger:
   branch:
   - main
+  - test-sops-nix
   event:
   - push
 
