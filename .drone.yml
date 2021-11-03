@@ -13,7 +13,7 @@ steps:
 - name: Show flake info
   commands:
   - eval "$(ssh-agent -s)"
-  - ssh-add - <<< "${SSH_DEPLOY_KEY}"
+  - echo "${SSH_DEPLOY_KEY}" | ssh-add -
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
 - name: Run flake checks
@@ -58,9 +58,11 @@ trigger:
 
 
 ---
+
 kind: secret
 name: gitea_deploy_key
 data: iBrvbXBQwubLz7gYlRFC8uDRjMtIRmmqGwJ9eC3iMbMxXijFjI270OE4mUkPtq5fFny2Vak/VNqKED3yWzSQ9m4lC3ho4pQs6ahRs1vBNj6YddhichI9Yo0p5LoK4e/gfHfqIOa761CzxXyAY85RmBA8Q21HvLGzPOu0ARDxo9rxjHIefzQeIMyborqSpS9+eHhYxJfq+89F1/gRenYAWbCpsynnlZXMyxPA4Yox3+cWyH37d4mYbqfB6Sb1H2rxaXWL2MIIBM+hr1IsB/+/uPshHEsPtSMmYwO1ZfJA0Mqs1O9UifFkMd3qUR5ZBgc1BlAWYSCMxtKdTUEY01aScdcNgbF5oKe746X78BwzPprAP443AnW0cbyaOB3baA5sXpeKVwPQxxCJQIrkmAVTQEpWacO3XsBbpsuhQ6nsFgFazwd4N2tAk3F4D/CsH2CoxghLx1YJUWHg2yaMouxeyWWRf97Bg0VnNuXcskK2qqJIBmNMef6ukj4BsN4qFTaUbodPduayu1Ygf+gEJ1dvOGjoPH1SiwS+dTm0OsSSUjCKbqWkvV2Oh2C1xw==
+
 ---
 kind: pipeline
 type: docker
