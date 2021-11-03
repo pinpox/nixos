@@ -17,6 +17,7 @@ steps:
   - mkdir ~/.ssh
   - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
   - ssh-keyscan github.com >> ~/.ssh/known_hosts
+  - cat ~/.ssh/known_hosts
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
