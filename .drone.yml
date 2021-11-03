@@ -15,9 +15,9 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
-  - cat ~/.ssh/known_hosts
   - ssh-keygen -R domain.com
   - ssh-keyscan -t ed25519 git.lounge.rocks >> ~/.ssh/known_hosts
+  - cat ~/.ssh/known_hosts
   - echo "CLONING"
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
