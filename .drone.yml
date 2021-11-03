@@ -14,7 +14,9 @@ steps:
   commands:
   - eval "$(ssh-agent -s)"
   - echo $TEST_KEY
-  - echo $SSH_DEPLOY_KEY | ssh-add -
+
+  - ssh-add - <<< "${SSH_DEPLOY_KEY}"
+  # - echo $SSH_DEPLOY_KEY | ssh-add -
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   environment:
