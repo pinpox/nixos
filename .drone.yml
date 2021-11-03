@@ -15,7 +15,6 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
-  - ssh-keygen -R domain.com
   - ssh-keyscan -t ed25519 git.lounge.rocks >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
   - echo "CLONING"
