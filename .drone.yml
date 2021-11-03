@@ -13,7 +13,6 @@ steps:
 - name: Show flake info
   commands:
   - echo $SSH_DEPLOY_KEY
-  - whomi
   - env
   - echo $CLIENT_DRONE_RPC_HOST
   - nix --experimental-features "nix-command flakes" flake show
