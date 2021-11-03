@@ -12,6 +12,7 @@ clone:
 steps:
 - name: Show flake info
   commands:
+  - echo $SSH_DEPLOY_KEY
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
 - name: Run flake checks
@@ -40,6 +41,8 @@ steps:
     - 'nix run "github:mic92/nur-packages#irc-announce" -- irc.hackint.org 6697 bob-the-builder "#lounge-rocks-log" 1 "🛠️ [$DRONE_REPO] ($DRONE_BUILD_EVENT) $DRONE_BUILD_STATUS | $DRONE_COMMIT_MESSAGE" || true'
   environment:
     LOGNAME: drone
+    SSH_DEPLOY_KEY:
+      from_secret: 'git-deploy-key'
   when:
     status:
     - failure

@@ -45,7 +45,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # secrets.url = "path:../nixos-secrets";
-    secrets.url = "git+ssh://porree.public/home/pinpox/repos/nixos-secrets";
+    secrets.url = "git+ssh://git@git.lounge.rocks/pinpox/nixos-secrets";
     secrets.flake = false;
 
     # Krops

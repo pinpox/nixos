@@ -291,11 +291,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1635930672,
-        "narHash": "sha256-nNqwxC17Z+4WTdV8D5BfsfCOxSJl4rnDWbVSUMXGgxU=",
+        "lastModified": 1635949385,
+        "narHash": "sha256-z5Ef6MsfmyEjH3qEZwrxBbkZXwPDeRG43tSJXphp0OI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "15697042f0863030801ba9594fe9b3bc7cc62fe8",
+        "rev": "4b50c9503304f0ec63cab98f0612262259d90cb3",
         "type": "github"
       },
       "original": {
@@ -353,11 +353,11 @@
         "rev": "b7d20ddba9f7ad3fa756354037799f09bb48272c",
         "revCount": 2,
         "type": "git",
-        "url": "ssh://porree.public/home/pinpox/repos/nixos-secrets"
+        "url": "ssh://git@git.lounge.rocks/pinpox/nixos-secrets"
       },
       "original": {
         "type": "git",
-        "url": "ssh://porree.public/home/pinpox/repos/nixos-secrets"
+        "url": "ssh://git@git.lounge.rocks/pinpox/nixos-secrets"
       }
     },
     "sops-nix": {
