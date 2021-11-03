@@ -14,7 +14,7 @@ steps:
   commands:
   - eval "$(ssh-agent -s)"
   - echo $TEST_KEY
-  - echo "${SSH_DEPLOY_KEY}" | ssh-add -
+  - echo $SSH_DEPLOY_KEY | ssh-add -
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   environment:
@@ -23,6 +23,7 @@ steps:
       from_secret: gitea_deploy_key
     TEST_KEY:
       from_secret: test_key
+
 - name: Run flake checks
   commands:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
