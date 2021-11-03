@@ -12,8 +12,16 @@ clone:
 steps:
 - name: Show flake info
   commands:
+  - mkdir ~/.ssh
+  - echo $SSH_DEPLOY_KEY >> ~/.ssh/privkey
+  - chmod 400 ~/.ssh/privkey
   - eval "$(ssh-agent -s)"
-  - ssh-add <(echo "$SSH_DEPLOY_KEY")
+  - ssh-add ~/.ssh/privkey
+
+
+
+  # - eval "$(ssh-agent -s)"
+  # - ssh-add <(echo "$SSH_DEPLOY_KEY")
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
 - name: Run flake checks
