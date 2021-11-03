@@ -15,12 +15,11 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
-  - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
   - ssh-keyscan github.com >> ~/.ssh/known_hosts
   - echo "KNOWNH OSTS"
   - cat ~/.ssh/known_hosts
   - echo "SCAANNING"
-  - ssh-keyscan -t rsa git.lounge.rocks >> ~/.ssh/known_hosts
+  - ssh-keyscan -t rsa,ed25519 git.lounge.rocks >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
   - echo "CLONING"
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
