@@ -18,6 +18,7 @@ steps:
   - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
   - ssh-keyscan github.com >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
+  - chmod 600 ~/.ssh/known_hosts
   - echo "CLONING"
   - whoami
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
