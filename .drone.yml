@@ -12,6 +12,7 @@ clone:
 steps:
 - name: Show flake info
   commands:
+  - eval "$(ssh-agent -s)"
   - ssh-add - <<< "${SSH_DEPLOY_KEY}"
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
