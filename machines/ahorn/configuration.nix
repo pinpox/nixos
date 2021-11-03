@@ -1,6 +1,9 @@
 # Configuration file for ahorn
 { self, ... }: {
 
+  sops.defaultSopsFile = "${self.inputs.secrets}/secrets/ahorn.yaml";
+  sops.secrets.example-key = {};
+
   imports = [ ./hardware-configuration.nix ];
 
   boot.blacklistedKernelModules = [ "nouveau" ];

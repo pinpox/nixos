@@ -38,7 +38,7 @@ Finally, use `krops` to deploy the machine's configuration from a host that has
 the secrets in it's store.
 
 ```bash
-nix-build ./krop.nix -A <machine name> && ./result
+nix-build ./krops.nix -A <machine name> && ./result
 ```
 
 It is also possible to build on the system itself when logged in, e.g. to get
@@ -62,6 +62,21 @@ sudo nixos-rebuild --flake ".#kartoffel" switch
 
 The services running on each host are documented in the host-specific
 `README.md` files.
+
+# Secrets TODO
+TODO: link to sops-nix
+TODO: secret repo structure and setup
+user -> gpg
+hosts -> age
+
+TODO adding users/collaboraators
+
+TODO adding hosts: Get public age key from new host
+```
+nix-shell -p ssh-to-age --run 'ssh-keyscan my-server.com | ssh-to-age'
+```
+
+TODO editing secrsets
 
 # Deployment
 

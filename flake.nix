@@ -40,6 +40,14 @@
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
+    # Sops
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # secrets.url = "path:../nixos-secrets";
+    secrets.url = "git+ssh://porree.public/home/pinpox/repos/nixos-secrets";
+    secrets.flake = false;
+
     # Krops
     krops.url = "git+https://cgit.krebsco.de/krops";
     krops.flake = false;
@@ -51,7 +59,6 @@
 
     nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
     nvim-fzf.flake = false;
-
 
     fzf-lua.url = "github:ibhagwan/fzf-lua";
     fzf-lua.flake = false;
@@ -111,6 +118,7 @@
                 }
                 baseCfg
                 home-manager.nixosModules.home-manager
+                sops-nix.nixosModules.sops
               ];
 
               # Let 'nixos-version --json' know the Git revision of this flake.
@@ -148,15 +156,13 @@
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
 
-      /*
-
-      # Hydra build jobs. Builds all configs in the CI to verify integrity
-      hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
-        nixpkgs.lib.nameValuePair "nixos-${name}"
-        config.config.system.build.toplevel) self.nixosConfigurations);
-      # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-      # "home-manager-${name}" config.activation-script)
-      # self.hmConfigurations);
+      /* # Hydra build jobs. Builds all configs in the CI to verify integrity
+         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
+           nixpkgs.lib.nameValuePair "nixos-${name}"
+           config.config.system.build.toplevel) self.nixosConfigurations);
+         # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+         # "home-manager-${name}" config.activation-script)
+         # self.hmConfigurations);
       */
 
     } //
