@@ -30,6 +30,7 @@ steps:
 
 - name: Show flake info
   commands:
+  - ls
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
