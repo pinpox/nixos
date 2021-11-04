@@ -72,66 +72,58 @@ hosts -> age
 TODO adding users/collaboraators
 TODO adding hosts: Get public age key from new host
 
-```
-nix-shell -p ssh-to-age --run 'ssh-keyscan my-server.com | ssh-to-age'
-```
+## Adding new hosts
 
-Get age key
-```
+### Get public host key
 
-×  nix-shell -p ssh-to-age --run 'ssh-keyscan birne.wireguard | ssh-to-age'
+Get the public host key of the host. It will be used to encrypt secrets so that
+the new host can decrypt them. Assuming the host is reachabe under
+`new-host.tld` via SSH, use the following:
 
-# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
-# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
-# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
-# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
-# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
+```bash
+nix-shell -p ssh-to-age --run 'ssh-keyscan new-host.tld | ssh-to-age'
+
+# ...
+
 skipped key: got ssh-rsa key type, but only ed25519 keys are supported
-age15vyvc05tggq6krzha7qk5u05jqdwq25yj2tv9gmrwa5u2yzp7prs2ex76d
-
+age1XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-Add key and regex section to .sops.yaml
-```diff
-diff --git a/.sops.yaml b/.sops.yaml
-index 6081ef5..f9b52ec 100644
---- a/.sops.yaml
-+++ b/.sops.yaml
-@@ -1,6 +1,7 @@
+### Add key and path to `.sops.yaml`
+
+Add the printed key (last line of previous output) and add to the `keys:`
+section in `.sops.yaml`. Also add a new `creation_rule` referencing the added
+key and the admin (`pinpox`) key for encryption.
+
+```yaml
  keys:
    - &pinpox D03B218CAE771F77D7F920D9823A6154426408D3
-   - &ahorn age1fkswsccryyr3akpcfhz6xrergjwrhzn5lr5z3gxu8ygdxc5jpursaysws8
-+  - &birne age15vyvc05tggq6krzha7qk5u05jqdwq25yj2tv9gmrwa5u2yzp7prs2ex76d
+   - &new-host age1XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
  creation_rules:
-   - path_regex: hosts/ahorn/[^/]+\.yaml$
-     key_groups:
-@@ -8,6 +9,12 @@ creation_rules:
-       - *pinpox
-       age:
-       - *ahorn
-+  - path_regex: hosts/birne/[^/]+\.yaml$
-+    key_groups:
-+    - pgp:
-+      - *pinpox
-+      age:
-+      - *birne
-   - path_regex: hosts/kartoffel/[^/]+\.yaml$
-     key_groups:
-     - pgp:
+  - path_regex: hosts/new-host/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+      - *pinpox
+      age:
+      - *new-host
 ```
 
-Create directory for host and edit
-```
-mkdir hosts/birne
-nix-shell -p sops --run "sops hosts/birne/secrets.yaml"
-```
+### Create secrets file
 
+Create a new directory to hold all secret files for the host according to the
+specified path and a `secrets.yaml` in it. At least, this file is assumend to be
+present by the configuration.
+
+```
+mkdir hosts/new-host
+nix-shell -p sops --run "sops hosts/new-host/secrets.yaml"
+```
 
 ### Adding or editing secrets
 
 TODO 
 ```
-nix-shell -p sops --run "sops hosts/ahorn/secrets.yaml"
+nix-shell -p sops --run "sops hosts/my-host/secrets.yaml"
 ```
 
 

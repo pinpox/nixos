@@ -116,7 +116,7 @@
                   # nixpkgs.config`
                   home-manager.useUserPackages = true;
 
-                  sops.defaultSopsFile = "${self.inputs.secrets}/hosts/${config.networking.hostName}/borg.yaml";
+                  sops.defaultSopsFile = "${self.inputs.secrets}/hosts/${config.networking.hostName}/secrets.yaml";
                 }
                 baseCfg
                 home-manager.nixosModules.home-manager

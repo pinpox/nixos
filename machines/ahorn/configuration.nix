@@ -1,7 +1,6 @@
 # Configuration file for ahorn
 { self, ... }: {
 
-
   imports = [ ./hardware-configuration.nix ];
 
   boot.blacklistedKernelModules = [ "nouveau" ];

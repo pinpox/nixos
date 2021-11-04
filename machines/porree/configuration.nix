@@ -1,9 +1,7 @@
 { self, ... }: {
 
-  imports = [ 
-    ./hardware-configuration.nix 
-    self.inputs.ha-relay.nixosModules.ha-relay
-  ];
+  imports =
+    [ ./hardware-configuration.nix self.inputs.ha-relay.nixosModules.ha-relay ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -137,6 +135,8 @@
       listenPort = "12000";
       envFile = "/var/src/secrets/ha-relay/envfile";
     };
+
+    services.borg-backup.enable = true;
 
     # Enable nextcloud configuration
     services.nextcloud.enable = true;
