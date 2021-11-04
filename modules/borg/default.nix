@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
 
-  sops.secrets.borg.passphrase = {};
-  sops.secrets.borg.ssh.private = {};
+  sops.secrets."borg/passphase" = {};
+  sops.secrets."borg/ssh/private" = {};
 
   # Backup with borgbackup to remote server. The connection key and repository
   # encryption passphrase is read from /secrets. This directory has to be
@@ -23,10 +23,10 @@
     # Encryption and connection keys are read from /secrets
     encryption = {
       mode = "repokey";
-      passCommand = "cat ${config.sops.secrets.borg.passphrase.path}";
+      passCommand = "cat ${config.sops.secrets."borg/passphrase".path}";
     };
 
-    environment.BORG_RSH = "ssh -i ${config.sops.secrets.borg.ssh.private.path}";
+    environment.BORG_RSH = "ssh -i ${config.sops.secrets."borg/ssh/private".path}";
 
     # Print more infomation to log and set intervals at which resumable
     # checkpoints are created
