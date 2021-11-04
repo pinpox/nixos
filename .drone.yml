@@ -19,7 +19,6 @@ steps:
   - ssh-keyscan -H git.lounge.rocks >> ./known_hosts
   - ssh-keyscan -H lounge.rocks >> ./known_hosts
   - ssh-keyscan -H github.com >> ./known_hosts
-  - whoami
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
