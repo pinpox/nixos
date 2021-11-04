@@ -15,7 +15,6 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir $HOME/.ssh
-# -o UserKnownHostsFile=~/my_temporary_known_host
   - touch ./known_hosts
   - ssh-keyscan -H git.lounge.rocks >> ./known_hosts
   - ssh-keyscan -H lounge.rocks >> ./known_hosts
@@ -26,7 +25,7 @@ steps:
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
-    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts -o StrictHostKeyChecking=no"
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
