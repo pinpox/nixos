@@ -16,15 +16,10 @@ steps:
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir $HOME/.ssh
 # -o UserKnownHostsFile=~/my_temporary_known_host
-  # - ssh-keyscan git.lounge.rocks >> $HOME/.ssh/known_hosts
-  - ssh-keyscan -H git.lounge.rocks >> $HOME/.ssh/known_hosts
-  - ssh-keyscan -H lounge.rocks >> $HOME/.ssh/known_hosts
-  - ssh-keyscan -H github.com >> $HOME/.ssh/known_hosts
-  - cat $HOME/.ssh/known_hosts
-  - chmod 600 $HOME/.ssh/known_hosts
-  - echo "CLONING"
-  - echo $HOME
-  # - ssh -vvv -T git@git.lounge.rocks
+  - touch ./known_hosts
+  - ssh-keyscan -H git.lounge.rocks >> ./known_hosts
+  - ssh-keyscan -H lounge.rocks >> ./known_hosts
+  - ssh-keyscan -H github.com >> ./known_hosts
   - whoami
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
