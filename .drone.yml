@@ -25,7 +25,7 @@ steps:
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
-    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts -o StrictHostKeyChecking=no"
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
