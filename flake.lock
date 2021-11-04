@@ -172,11 +172,11 @@
     "indent-blankline-nvim-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1635301910,
-        "narHash": "sha256-IAWaigLvNNdEafzOlWxyvrmX5NPWAmnM32Oe477MzXw=",
+        "lastModified": 1636002796,
+        "narHash": "sha256-ggeCNb5WsHfCNYD3yZcNY0Z3TiiAUsGyo/SoGKrzK/E=",
         "owner": "lukas-reineke",
         "repo": "indent-blankline.nvim",
-        "rev": "252797e7a96fa4f7c6ccdcdff3f488fdd48b1d09",
+        "rev": "fc8da808e7c2fc5658cc498557144921435d9de8",
         "type": "github"
       },
       "original": {
@@ -211,11 +211,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1635897724,
-        "narHash": "sha256-QFqiQUDosXdjpnDupQMUvS+DII7a5p/EAe3TrchobYw=",
+        "lastModified": 1635978264,
+        "narHash": "sha256-+MVrDbCihQ6jQbp+4xBLiB1kAOq8M/FKT/Hfx20W5AU=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "7899c4099b38f2198c86b08138f813c530fdc20f",
+        "rev": "f26b391317281d0520056eaa8312cf25e654149f",
         "type": "github"
       },
       "original": {
@@ -234,11 +234,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1635927209,
-        "narHash": "sha256-xC8UnXDo+ustJza1gN8Dyqoz0eLiJXVrJsBLQtDi0tM=",
+        "lastModified": 1636013597,
+        "narHash": "sha256-ZbTsr6MgEPfobUYRDcpMKGDJqrP2yYBeqfVxE7x/pXo=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "0634554dc8c99ac857e8a438ca57db51a7abfaff",
+        "rev": "4a24f8c327b4c595a09eca7d831fd29b40bfddf4",
         "type": "github"
       },
       "original": {
@@ -291,11 +291,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1635949385,
-        "narHash": "sha256-z5Ef6MsfmyEjH3qEZwrxBbkZXwPDeRG43tSJXphp0OI=",
+        "lastModified": 1636008211,
+        "narHash": "sha256-kNy2aQ9uhJ9sXkQn+G90DsmSGgfk22lfSpqlm+CRBKw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4b50c9503304f0ec63cab98f0612262259d90cb3",
+        "rev": "eed6ce5dd4e60583c5c673771caffa3d5425bfa7",
         "type": "github"
       },
       "original": {
@@ -347,11 +347,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1635939318,
-        "narHash": "sha256-//s7Uyxyv5axzyg8NUT/b94OTfSbapkUN7zrgSVRLt0=",
+        "lastModified": 1636016766,
+        "narHash": "sha256-vZFtlU5XprXy1oqCPfelSZ7m1mKJsVYwU6O21W2schA=",
         "ref": "master",
-        "rev": "b7d20ddba9f7ad3fa756354037799f09bb48272c",
-        "revCount": 2,
+        "rev": "f02c6b3deb79e3f2a03cbd9338e944c8a6e09da6",
+        "revCount": 3,
         "type": "git",
         "url": "ssh://git@git.lounge.rocks/pinpox/nixos-secrets"
       },

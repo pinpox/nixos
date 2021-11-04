@@ -70,13 +70,19 @@ user -> gpg
 hosts -> age
 
 TODO adding users/collaboraators
-
 TODO adding hosts: Get public age key from new host
+
 ```
 nix-shell -p ssh-to-age --run 'ssh-keyscan my-server.com | ssh-to-age'
 ```
 
-TODO editing secrsets
+### Adding or editing secrets
+
+TODO 
+```
+nix-shell -p sops --run "sops hosts/ahorn/secrets.yaml"
+```
+
 
 # Deployment
 
