@@ -2,7 +2,7 @@
 { self, ... }: {
 
   sops.defaultSopsFile = "${self.inputs.secrets}/hosts/ahorn/secrets.yaml";
-  sops.secrets.borg-passphrase = {};
+  sops.secrets.borg_passphrase = {};
 
   imports = [ ./hardware-configuration.nix ];
 
