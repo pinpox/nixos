@@ -76,6 +76,57 @@ TODO adding hosts: Get public age key from new host
 nix-shell -p ssh-to-age --run 'ssh-keyscan my-server.com | ssh-to-age'
 ```
 
+Get age key
+```
+
+×  nix-shell -p ssh-to-age --run 'ssh-keyscan birne.wireguard | ssh-to-age'
+
+# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
+# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
+# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
+# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
+# birne.wireguard:22 SSH-2.0-OpenSSH_8.7
+skipped key: got ssh-rsa key type, but only ed25519 keys are supported
+age15vyvc05tggq6krzha7qk5u05jqdwq25yj2tv9gmrwa5u2yzp7prs2ex76d
+
+```
+
+Add key and regex section to .sops.yaml
+```diff
+diff --git a/.sops.yaml b/.sops.yaml
+index 6081ef5..f9b52ec 100644
+--- a/.sops.yaml
++++ b/.sops.yaml
+@@ -1,6 +1,7 @@
+ keys:
+   - &pinpox D03B218CAE771F77D7F920D9823A6154426408D3
+   - &ahorn age1fkswsccryyr3akpcfhz6xrergjwrhzn5lr5z3gxu8ygdxc5jpursaysws8
++  - &birne age15vyvc05tggq6krzha7qk5u05jqdwq25yj2tv9gmrwa5u2yzp7prs2ex76d
+ creation_rules:
+   - path_regex: hosts/ahorn/[^/]+\.yaml$
+     key_groups:
+@@ -8,6 +9,12 @@ creation_rules:
+       - *pinpox
+       age:
+       - *ahorn
++  - path_regex: hosts/birne/[^/]+\.yaml$
++    key_groups:
++    - pgp:
++      - *pinpox
++      age:
++      - *birne
+   - path_regex: hosts/kartoffel/[^/]+\.yaml$
+     key_groups:
+     - pgp:
+```
+
+Create directory for host and edit
+```
+mkdir hosts/birne
+nix-shell -p sops --run "sops hosts/birne/secrets.yaml"
+```
+
+
 ### Adding or editing secrets
 
 TODO 

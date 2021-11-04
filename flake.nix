@@ -97,7 +97,7 @@
             { _module.args.inputs = inputs; }
             { _module.args.self-overlay = self.overlay; }
 
-            ({ ... }: {
+            ({ config, ... }: {
               imports = builtins.attrValues self.nixosModules ++ [
                 {
                   # Set the $NIX_PATH entry for nixpkgs. This is necessary in
@@ -115,6 +115,8 @@
                   # home-manager versions and does not work with configs using
                   # nixpkgs.config`
                   home-manager.useUserPackages = true;
+
+                  sops.defaultSopsFile = "${self.inputs.secrets}/hosts/${config.networking.hostName}/borg.yaml";
                 }
                 baseCfg
                 home-manager.nixosModules.home-manager
