@@ -23,7 +23,7 @@ steps:
   - chmod 600 ~/.ssh/known_hosts
   - echo "CLONING"
   - echo $HOME
-  - ssh  -T git@git.lounge.rocks
+  - ssh -vvv -T git@git.lounge.rocks
   - whoami
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
