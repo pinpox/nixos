@@ -14,13 +14,13 @@ steps:
   commands:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
-  - mkdir ~/.ssh
-  # - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
-  - ssh-keyscan -H git.lounge.rocks >> ~/.ssh/known_hosts
-  - ssh-keyscan -H lounge.rocks >> ~/.ssh/known_hosts
-  - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-  - cat ~/.ssh/known_hosts
-  - chmod 600 ~/.ssh/known_hosts
+  - mkdir $HOME/.ssh
+  # - ssh-keyscan git.lounge.rocks >> $HOME/.ssh/known_hosts
+  - ssh-keyscan -H git.lounge.rocks >> $HOME/.ssh/known_hosts
+  - ssh-keyscan -H lounge.rocks >> $HOME/.ssh/known_hosts
+  - ssh-keyscan -H github.com >> $HOME/.ssh/known_hosts
+  - cat $HOME/.ssh/known_hosts
+  - chmod 600 $HOME/.ssh/known_hosts
   - echo "CLONING"
   - echo $HOME
   - ssh -vvv -T git@git.lounge.rocks
