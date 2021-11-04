@@ -10,21 +10,24 @@ clone:
   depth: 1
 
 steps:
-- name: Show flake info
+- name: Prepare repository access
   commands:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - ssh-keyscan -H git.lounge.rocks >> ./known_hosts
   - ssh-keyscan -H github.com >> ./known_hosts
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
-  - nix --experimental-features "nix-command flakes" flake show
-  - nix --experimental-features "nix-command flakes" flake metadata
-  - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
     GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
+
+- name: Show flake info
+  commands:
+  - nix --experimental-features "nix-command flakes" flake show
+  - nix --experimental-features "nix-command flakes" flake metadata
+  - nix --experimental-features "nix-command flakes" flake check --show-trace
 
 - name: Run flake checks
   commands:
