@@ -16,6 +16,7 @@ steps:
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - ssh-keyscan -H git.lounge.rocks >> ./known_hosts
   - ssh-keyscan -H github.com >> ./known_hosts
+  - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   environment:
     GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
     SSH_DEPLOY_KEY:
