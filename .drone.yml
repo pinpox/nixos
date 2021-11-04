@@ -15,10 +15,12 @@ steps:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir ~/.ssh
+  - echo 'git.lounge.rocks ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhdkTwMnd0mp+nUF95/JOKXG2HL/NndrPAPTKy3YzGv/Joa3kvMHFlbQM3AR2wohzyAw88CgxuLGZq6WuKjkE1CayFrDqs5Gum5kjx3ULFr2xP6kaeljMC2HIwYfqMtDE/4ELvp8ryUwyrOFPXxoiDrepFAby4wyx2s6CkQPKa36S72cFYgIVf8W3bdgFExxAI/bBrDHkN2k+nfrZ58LT4SFaw19ZSOmhn14LcFb8X1vjj2gMjmfRGMlHl9DlkPSYQcZlY8u+lgO69FF3hGP+S8PT0JIwjKRGtAKOLi0IXTXfl/89LWTGfE9vOP59ovAVE/v5Zzvf07/1nCdlQx+VuEpNkSNYbopPnLT+sixjMj5AMMWHdcbp8XkXZSxuDUHpW9yfpeoLV7Z2JT2iTXqvx0rVAeTmjqfKHfuDiJdWPnJOqG9B2jAMN6l4RegfLP7D7NnIb52ypjYQXFZfFiy4I2pgKHfXJHpK1GJ7AAGE6PRfPPPid3NMii8lEnR9u7SqHZRMy/59ou5X5sbgaeS9WL37APZzV4aqPCwGnKD0dFrmBrvyBgge5nu6rSm8fbdVeXfQfCSlN/AjqijBB+BOzm32kIM0a5xhxfI2LZD8Gh5a1a287dFQV1aK/5RsF0zYqRHUozhIhV9rWwi/hUOaPUGFBBQxXbYPtneVw73kghw==' > $HOME/.ssh/known_hosts
+  # - echo 'git.lounge.rocks ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDtJHqD/P0yVmCopIy2CHqYx09f3l0dzbo2ak+VtXC9i' >> 
   # - ssh-keyscan git.lounge.rocks >> ~/.ssh/known_hosts
-  - ssh-keyscan -H git.lounge.rocks >> ~/.ssh/known_hosts
-  - ssh-keyscan -H lounge.rocks >> ~/.ssh/known_hosts
-  - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+  # - ssh-keyscan -H git.lounge.rocks >> ~/.ssh/known_hosts
+  # - ssh-keyscan -H lounge.rocks >> ~/.ssh/known_hosts
+  # - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
   - cat ~/.ssh/known_hosts
   - chmod 600 ~/.ssh/known_hosts
   - echo "CLONING"
