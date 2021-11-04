@@ -1,8 +1,7 @@
 # Configuration file for ahorn
 { self, ... }: {
 
-  sops.defaultSopsFile = "${self.inputs.secrets}/hosts/ahorn/secrets.yaml";
-  sops.secrets.borg_passphrase = {};
+  sops.defaultSopsFile = "${self.inputs.secrets}/hosts/${config.networking.hostname}/borg.yaml";
 
   imports = [ ./hardware-configuration.nix ];
 
