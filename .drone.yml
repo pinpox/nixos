@@ -24,7 +24,7 @@ steps:
   - chmod 600 $HOME/.ssh/known_hosts
   - echo "CLONING"
   - echo $HOME
-  - ssh -vvv -T git@git.lounge.rocks
+  # - ssh -vvv -T git@git.lounge.rocks
   - whoami
   - GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   - nix --experimental-features "nix-command flakes" flake show
