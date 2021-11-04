@@ -22,8 +22,8 @@ steps:
   - cat ./known_hosts
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
   environment:
-    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
-    # GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts -o StrictHostKeyChecking=no"
+    # GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts -o StrictHostKeyChecking=no"
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
