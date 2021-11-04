@@ -33,6 +33,8 @@ steps:
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
+  environment:
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts -o StrictHostKeyChecking=no"
 
 - name: Run flake checks
   commands:
