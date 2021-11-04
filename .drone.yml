@@ -21,6 +21,7 @@ steps:
   - ssh-keyscan -H github.com >> ./known_hosts
   - cat ./known_hosts
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
+  - ls nixos-secrets
   environment:
     # GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
     GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts -o StrictHostKeyChecking=no"
