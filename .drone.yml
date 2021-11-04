@@ -14,7 +14,6 @@ steps:
   commands:
   - eval "$(ssh-agent -s)"
   - ssh-add - <<< $SSH_DEPLOY_KEY
-  - mkdir $HOME/.ssh
   - touch ./known_hosts
   - ssh-keyscan -H git.lounge.rocks >> ./known_hosts
   - ssh-keyscan -H lounge.rocks >> ./known_hosts
