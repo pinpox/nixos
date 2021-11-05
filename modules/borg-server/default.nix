@@ -61,7 +61,6 @@ in {
 
 
 
-    sops.secrets.borg-server = { };
 
 
 
@@ -74,7 +73,8 @@ in {
         value = {
           serviceConfig.Type = "oneshot";
           script = ''
-            export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
+            #export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
+            export BORG_PASSCOMMAND='cat ${sops.secrets."borg-server/${hostname}".path}'
             ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
           '';
         };
