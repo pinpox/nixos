@@ -26,6 +26,8 @@ in {
 
   config = mkIf cfg.enable {
 
+
+
     services.nginx = {
       enable = true;
       recommendedOptimisation = true;
@@ -36,7 +38,7 @@ in {
         "backup-reports" = {
 
           # Allow listing directory contents. Not strictly necessary, but easier
-          # to debugn
+          # to debug
           extraConfig = "autoindex on;";
 
           # TODO create this directory if it does not exist
@@ -56,6 +58,12 @@ in {
       authorizedKeys = value.authorizedKeys;
       path = /mnt/backup/borg-nix + "/${name}";
     }) cfg.repositories;
+
+
+
+    sops.secrets.borg-server = { };
+
+
 
     systemd = {
 
