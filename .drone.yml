@@ -39,6 +39,8 @@ steps:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
     GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=no"
+    SSH_DEPLOY_KEY:
+      from_secret: gitea_deploy_key
 
 - name: Run flake checks
   commands:
