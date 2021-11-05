@@ -34,11 +34,8 @@ steps:
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
-  environment:
-    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
-    LOGNAME: drone
-    SSH_DEPLOY_KEY:
-      from_secret: gitea_deploy_key
+  # environment:
+  #   GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
 
 - name: Build kartoffel
   commands:
