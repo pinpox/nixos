@@ -19,32 +19,20 @@ steps:
   - ssh-keyscan -H git.lounge.rocks >> $HOME/.ssh/known_hosts
   - ssh-keyscan -H lounge.rocks >> $HOME/.ssh/known_hosts
   - ssh-keyscan -H github.com >> $HOME/.ssh/known_hosts
-  - cat $HOME/.ssh/known_hosts
-  - echo $GIT_SSH_COMMAND
   - git clone git@git.lounge.rocks:pinpox/nixos-secrets.git
-  - ls nixos-secrets
   environment:
-    # GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
+  #   GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=no"
     GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
 
-- name: Show flake info
+- name: Flake info and checks
   commands:
-  # - eval "$(ssh-agent -s)"
-  # - ssh-add - <<< $SSH_DEPLOY_KEY
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
-  # environment:
-  #   GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=no"
-  #   SSH_DEPLOY_KEY:
-  #     from_secret: gitea_deploy_key
 
-- name: Run flake checks
-  commands:
-  - nix --experimental-features "nix-command flakes" flake check --show-trace
 - name: Build kartoffel
   commands:
   - nix build -v -L '.#nixosConfigurations.kartoffel.config.system.build.toplevel'
