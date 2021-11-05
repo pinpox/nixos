@@ -25,7 +25,7 @@ steps:
   - ls nixos-secrets
   environment:
     # GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=./known_hosts"
-    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts -o StrictHostKeyChecking=no"
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
     LOGNAME: drone
     SSH_DEPLOY_KEY:
       from_secret: gitea_deploy_key
