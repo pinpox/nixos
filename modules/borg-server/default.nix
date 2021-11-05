@@ -26,8 +26,6 @@ in {
 
   config = mkIf cfg.enable {
 
-
-
     services.nginx = {
       enable = true;
       recommendedOptimisation = true;
@@ -59,22 +57,17 @@ in {
       path = /mnt/backup/borg-nix + "/${name}";
     }) cfg.repositories;
 
-
-
-
-
-
     systemd = {
 
       # Create a service for each hosts that exports the information of the
       # last archive of the corresponding repository
       services = builtins.listToAttrs (map (hostname: {
         name = "borgbackup-monitor-${hostname}";
-        value = {
+        value = let sops.secrets."borg-server/${hostname}" = { };
+        in {
           serviceConfig.Type = "oneshot";
           script = ''
-            #export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
-            export BORG_PASSCOMMAND='cat ${sops.secrets."borg-server/${hostname}".path}'
+            export BORG_PASSCOMMAND='cat /run/secrets/borg-server/${hostname}'
             ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
           '';
         };
