@@ -12,7 +12,8 @@ clone:
 steps:
 - name: Prepare Gitea access
   commands:
-  - eval "$(ssh-agent -s)"
+  - ssh-agent -s > tmp-agent
+  - cat tmp-agent | eval
   - ssh-add - <<< $SSH_DEPLOY_KEY
   - mkdir $HOME/.ssh
   - touch $HOME/.ssh/known_hosts
@@ -29,14 +30,12 @@ steps:
 
 - name: Flake info and checks
   commands:
+  - cat tmp-agent | eval
   - nix --experimental-features "nix-command flakes" flake show
   - nix --experimental-features "nix-command flakes" flake metadata
   - nix --experimental-features "nix-command flakes" flake check --show-trace
   environment:
     GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
-    LOGNAME: drone
-    SSH_DEPLOY_KEY:
-      from_secret: gitea_deploy_key
 
 - name: Build kartoffel
   commands:
