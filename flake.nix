@@ -116,7 +116,14 @@
                   # nixpkgs.config`
                   home-manager.useUserPackages = true;
 
-                  sops.defaultSopsFile = "${self.inputs.secrets}/hosts/${config.networking.hostName}/secrets.yaml";
+                  sops.defaultSopsFile =
+                    "${self.inputs.secrets}/hosts/${config.networking.hostName}/secrets.yaml";
+
+                  sops.secrets.deploy_private_key = {
+                    sopsFile = "${self.inputs.secrets}/hosts/common.yaml";
+                    path = "/root/.ssh/deploy_key";
+                  };
+
                 }
                 baseCfg
                 home-manager.nixosModules.home-manager
