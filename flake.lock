@@ -347,11 +347,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1636101865,
-        "narHash": "sha256-63hGSAJAGw8HkaodkuvsAnnpWxt9rNqAwVie20cwGyw=",
+        "lastModified": 1636109009,
+        "narHash": "sha256-fqjk2UBDz8voCqefaB5jMfMYR3IApYWvUWTaAjfZ67g=",
         "ref": "master",
-        "rev": "7beebe75af86659682052936b7e0b236d2fc7a9b",
-        "revCount": 13,
+        "rev": "49087241aea1f23d305a4e63f8aa4a850a128aef",
+        "revCount": 14,
         "type": "git",
         "url": "ssh://git@git.lounge.rocks/pinpox/nixos-secrets"
       },
