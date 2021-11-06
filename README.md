@@ -74,6 +74,13 @@ TODO adding hosts: Get public age key from new host
 
 ## Adding new hosts
 
+
+### TODO first deploy
+TODO deploy_key missing for accesssing secrtes
+```
+nixos-rebuild switch --flake '.#porree' --target-host 'root@porree.public'
+```
+
 ### Get public host key
 
 Get the public host key of the host. It will be used to encrypt secrets so that
