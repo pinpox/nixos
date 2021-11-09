@@ -1,42 +1,63 @@
-{ nixpkgs ? <nixpkgs>, system ? "x86_64-linux" }:
+{ config, pkgs, lib, modulesPath, ... }:
+with lib; {
 
-let
-  myconfig = { pkgs, ... }: {
-    imports =
-      [ <nixpkgs/nixos/maintainers/scripts/openstack/openstack-image.nix> ];
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-    networking.hostName = "my-nix-host-3";
+  config = {
 
-    # Set localization properties and timezone
+    # Filesystems
+    fileSystems."/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "ext4";
+      autoResize = true;
+    };
+
+    # Bootloader
+    boot.growPartition = true;
+    boot.kernelParams = [ "console=ttyS0" ];
+    boot.loader.grub.device = "/dev/vda";
+    boot.loader.timeout = 0;
+
+    # Locale settings
     i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
       keyMap = "colemak";
     };
 
-    time.timeZone = "Europe/Berlin";
+    # TODO set hostname
+    networking.hostName = "my-nixos-host";
 
-    # Put all the stuff I want running in my instance here
-    services.nginx = {
+    # Openssh
+    programs.ssh.startAgent = false;
+    services.openssh = {
       enable = true;
-      recommendedGzipSettings = true;
-      recommendedOptimisation = true;
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
-      virtualHosts."example.com" = {
-        # enableACME = true;
-        # forceSSL = true;
-        locations."/".root = "${pkgs.nginx}/html";
+      passwordAuthentication = false;
+      startWhenNeeded = true;
+      challengeResponseAuthentication = false;
+      permitRootLogin = "yes";
+    };
+
+    users = {
+      users.root = {
+        openssh.authorizedKeys.keyFiles = [
+          (pkgs.fetchurl {
+            url = "https://github.com/pinpox.keys";
+            sha256 = "sha256-Cf/PSZemROU/Y0EEnr6A+FXE0M3+Kso5VqJgomGST/U=";
+          })
+        ];
       };
     };
 
-    environment.systemPackages = with pkgs; [ tmux vim ];
+    # Enable flakes
+    nix.package = pkgs.nixFlakes;
 
-    users.extraUsers.root.password = "root";
-    users.extraUsers.p.password = "p";
+    # Install some basic utilities
+    environment.systemPackages = [ pkgs.git pkgs.ag pkgs.htop ];
+
+    # Let 'nixos-version --json' know about the Git revision
+    # of this flake.
+    # system.configurationRevision = pkgs.lib.mkIf (self ? rev) self.rev;
+
   };
-
-  evalNixos = configuration:
-    import "${nixpkgs}/nixos" { inherit system configuration; };
-
-in { iso = (evalNixos myconfig).config.system.build.openstackImage; }
+}

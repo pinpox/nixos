@@ -174,6 +174,20 @@
          # self.hmConfigurations);
       */
 
+      # nix build '.#base-image'
+      base-image = let system = "x86_64-linux";
+      in import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+        pkgs = nixpkgs.legacyPackages."${system}";
+        lib = nixpkgs.lib;
+        config = (nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./images/configuration.nix ];
+        }).config;
+        format = "qcow2";
+        diskSize = 2048;
+        name = "base-image";
+      };
+
     } //
 
     # All packages in the ./packages subfolder are also added to the flake.
