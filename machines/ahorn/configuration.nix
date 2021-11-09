@@ -1,7 +1,15 @@
 # Configuration file for ahorn
-{ self, ... }: {
+{ self, ... }:
+{ pkgs, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
+
+  # services.vault.enable = true;
+  # services.vault.extraConfig = ''
+  # ui = true
+  # '';
+
+  # services.vault.package = pkgs.vault-bin;
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
