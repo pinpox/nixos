@@ -38,7 +38,7 @@ Finally, use `krops` to deploy the machine's configuration from a host that has
 the secrets in it's store.
 
 ```bash
-nix-build ./krop.nix -A <machine name> && ./result
+nix-build ./krops.nix -A <machine name> && ./result
 ```
 
 It is also possible to build on the system itself when logged in, e.g. to get
