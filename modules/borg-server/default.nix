@@ -36,7 +36,7 @@ in {
         "backup-reports" = {
 
           # Allow listing directory contents. Not strictly necessary, but easier
-          # to debugn
+          # to debug
           extraConfig = "autoindex on;";
 
           # TODO create this directory if it does not exist

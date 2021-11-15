@@ -48,6 +48,10 @@
     };
 
     services = {
+
+      # No backup from our side for this host.
+      borg-backup.enable = false;
+
       binary-cache.enable = true;
       droneci.enable = true;
       droneci.runner-exec.enable = true;

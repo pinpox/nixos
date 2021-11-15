@@ -15,6 +15,7 @@
     };
 
     services = {
+      borg-backup.enable = true;
       go-karma-bot.enable = false;
       hedgedoc.enable = true;
       mattermost.enable = true;
