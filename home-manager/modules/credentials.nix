@@ -2,6 +2,18 @@
 let vars = import ./vars.nix;
 in {
   # Email
+
+  accounts.email.maildirBasePath = "Mail";
+
+  programs.neomutt = {
+    enable = true;
+    sidebar = { enable = true; };
+    extraConfig = ''
+      set imap_user = "pablo1@mailbox.org"
+      set imap_pass = "`pass mailbox.org/pablo1@mailbox.org`"
+    '';
+  };
+
   accounts.email.accounts = {
     pablo_tools = {
       address = "mail@pablo.tools";
@@ -14,11 +26,19 @@ in {
       mbsync.enable = false;
       msmtp.enable = false;
       notmuch.enable = false;
-
-      folders = {
-        # TODO
-        drafts = "";
+      neomutt = {
+        enable = true;
+        mailboxName = "pablo_tools";
+        # extraConfig = '''';
       };
+
+      maildir = { path = "pablo_tools"; };
+      # himalaya.enable = true;
+
+      # folders = {
+      #   # TODO
+      #   drafts = "";
+      # };
 
       signature = {
         text = ''
@@ -33,7 +53,10 @@ in {
 
       userName = "pablo1@mailbox.org";
       passwordCommand = "pass mailbox.org/pablo1@mailbox.org";
-      imap = { host = "imap.mailbox.org"; };
+      imap = {
+        host = "imap.mailbox.org";
+        tls.enbale = true;
+      };
       smtp = {
         host = "smtp.mailbox.org";
         port = 465;
