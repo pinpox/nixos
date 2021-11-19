@@ -15,6 +15,8 @@ services.udev.packages = [pkgs.qmk-udev-rules];
     bootDevice = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
   };
 
+  age.secrets.secret1.file = "${self.inputs.secrets}/agenix-cli/hosts/kartoffel/some-secret";
+
   # Video driver for nvidia graphics card
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];

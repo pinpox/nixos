@@ -3,6 +3,12 @@
 
   inputs = {
 
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    secrets.url = "git+ssh://git@git.lounge.rocks/pinpox/nixos-secrets";
+    secrets.flake = false;
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -109,6 +115,8 @@
                   home-manager.useUserPackages = true;
                 }
                 baseCfg
+
+                agenix.nixosModules.age
                 home-manager.nixosModules.home-manager
               ];
 
