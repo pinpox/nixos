@@ -1,4 +1,13 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+with lib;
+let cfg = config.pinpox.services.borg-backup;
+in {
+  options.pinpox.services.borg-backup = {
+    enable = mkEnableOption "daily backup with borg";
+  };
+
+  config = mkIf cfg.enable {
+
   # Backup with borgbackup to remote server. The connection key and repository
   # encryption passphrase is read from /secrets. This directory has to be
   # copied ther *manually* (so this config can be shared publicly)!
@@ -70,10 +79,10 @@
 
     postCreate = ''
       ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup created: $archiveName"
-        '';
+    '';
     postHook = ''
       ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup finished with status $exitStatus"
-        '';
+    '';
     #   borg info --json --last 1 borg@birne.wireguard:. > /var/log/borgbackup-last-info
     #   echo $exitStatus > /var/log/borgbackup-last-status
     #   '';
@@ -85,5 +94,5 @@
       monthly = 3;
     };
   };
-
+  };
 }

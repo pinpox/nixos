@@ -33,6 +33,9 @@
 
     services = {
 
+      # Backup up this host itself
+      borg-backup.enable = true;
+
       # Set up borg repositories for all hosts
       borg-server.enable = true;
 

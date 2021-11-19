@@ -80,6 +80,7 @@ in {
       services = {
         xserver.enable = true;
         openssh.enable = true;
+        borg-backup.enable = true;
       };
 
       metrics.node.enable = true;

@@ -138,6 +138,8 @@
       envFile = "/var/src/secrets/ha-relay/envfile";
     };
 
+    services.borg-backup.enable = true;
+
     # Enable nextcloud configuration
     services.nextcloud.enable = true;
 
