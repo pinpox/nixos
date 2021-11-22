@@ -30,11 +30,10 @@ in {
 
     services.prometheus = {
       enable = true;
-      webExternalUrl = "vpn.prometheus.pablo.tools";
-
+      webExternalUrl = "https://vpn.prometheus.pablo.tools";
       extraFlags = [ "--log.level=debug" ];
-      ruleFiles = [ ./alert-rules.json ];
-      # ruleFiles = [ ./alert-rules.yml ];
+      # ruleFiles = [ ./alert-rules.json ];
+      ruleFiles = [ ./alert-rules.yml ];
       # ruleFiles = [
       #   (pkgs.writeText "prometheus-rules.yml" (builtins.toJSON {
       #     groups = [{

@@ -1,9 +1,7 @@
 { self, ... }: {
 
-  imports = [ 
-    ./hardware-configuration.nix 
-    self.inputs.ha-relay.nixosModules.ha-relay
-  ];
+  imports =
+    [ ./hardware-configuration.nix self.inputs.ha-relay.nixosModules.ha-relay ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -77,7 +75,9 @@
       "status.pablo.tools" = {
         forceSSL = true;
         enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:9005"; };
+        locations."/" = {
+        proxyWebsockets = true;
+          proxyPass = "http://127.0.0.1:9005"; };
       };
 
       # Alertmanager
