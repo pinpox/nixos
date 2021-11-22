@@ -159,8 +159,10 @@
 
     services.monitoring-server = {
 
+
       dashboard.enable = true;
       loki.enable = true;
+      alertmanager-irc-relay.enable = true;
 
       enable = true;
       nodeTargets = [

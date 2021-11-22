@@ -258,8 +258,8 @@ groups:
     labels: {}
   - alert: uptime
     annotations:
-      description: 'Uptime monster: {{$labels.host}} has been up for more than 30
+      description: 'Uptime monster: {{$labels.instance}} has been up for more than 30
         days.'
-    expr: system_uptime > 2592000
+    expr: (time() - node_boot_time_seconds ) / (60*60*24) > 10
     for: 2m
     labels: {}

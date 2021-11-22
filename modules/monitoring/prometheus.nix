@@ -100,29 +100,27 @@ in {
         webExternalUrl = "https://vpn.alerts.pablo.tools";
         environmentFile = /var/src/secrets/alertmanager/envfile;
         configuration = {
-          global = {
-            # The smarthost and SMTP sender used for mail notifications.
-            # smtp_smarthost = "mail.thalheim.io:587";
-            # smtp_from = "alertmanager@thalheim.io";
-            # smtp_auth_username = "alertmanager@thalheim.io";
-            # smtp_auth_password = "$SMTP_PASSWORD";
-          };
+
+          # global = {
+          # The smarthost and SMTP sender used for mail notifications.
+          # smtp_smarthost = "mail.thalheim.io:587";
+          # smtp_from = "alertmanager@thalheim.io";
+          # smtp_auth_username = "alertmanager@thalheim.io";
+          # smtp_auth_password = "$SMTP_PASSWORD";
+          # };
 
           route = {
             receiver = "all";
-            routes = [{
-              group_by = [ "instance" ];
-              group_wait = "30s";
-              group_interval = "2m";
-              repeat_interval = "2h";
-              receiver = "all";
-            }];
+            group_by = [ "instance" ];
+            group_wait = "30s";
+            group_interval = "2m";
+            repeat_interval = "2h";
           };
+
           receivers = [{
             name = "all";
             webhook_configs = [{
-              url = "http://127.0.0.1:8989/webhook";
-              # max_alerts = 5;
+              url = "http://127.0.0.1:8667/lounge-rocks-log";
             }];
           }];
         };
