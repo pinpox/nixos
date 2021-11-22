@@ -102,6 +102,15 @@
         };
       };
 
+      "seafile.pablo.tools" = {
+        addSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://birne.wireguard:8123";
+          proxyWebsockets = true;
+        };
+      };
+
       # Filebrowser
       # "vpn.files.pablo.tools" = {
       #   listen = [{
