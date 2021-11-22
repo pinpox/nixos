@@ -1,0 +1,342 @@
+{
+  "groups": [
+    {
+      "name": "alerting-rules",
+      "rules": [
+        {
+          "alert": "alert_manager_config_not_synced",
+          "annotations": {
+            "description": "Configurations of AlertManager cluster instances are out of sync."
+          },
+          "expr": "count(count_values(\"config_hash\", alertmanager_config_hash)) > 1",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "alerts_silences_changed",
+          "annotations": {
+            "description": "alertmanager: number of active silences has changed: {{$value}}"
+          },
+          "expr": "abs(delta(alertmanager_silences{state=\"active\"}[1h])) >= 1",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "cert_expiry",
+          "annotations": {
+            "description": "{{$labels.instance}}: The TLS certificate from {{$labels.source}} will expire in less than 7 days: {{$value}}s"
+          },
+          "expr": "x509_cert_expiry < 7*24*3600",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "connection_failed",
+          "annotations": {
+            "description": "{{$labels.server}}: connection to {{$labels.port}}({{$labels.protocol}}) failed from {{$labels.instance}}"
+          },
+          "expr": "net_response_result_code != 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "daily_task_failed",
+          "annotations": {
+            "description": "{{$labels.host}}: {{$labels.name}} failed to run"
+          },
+          "expr": "task_last_run{state=\"fail\"}",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "daily_task_not_run",
+          "annotations": {
+            "description": "{{$labels.host}}: {{$labels.name}} was not run in the last 24h"
+          },
+          "expr": "time() - task_last_run{state=\"ok\",frequency=\"daily\"} > (24 + 6) * 60 * 60",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "dns_query",
+          "annotations": {
+            "description": "{{$labels.domain}} : could retrieve A record {{$labels.instance}} from server {{$labels.server}}: {{$labels.result}}!"
+          },
+          "expr": "dns_query_result_code != 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "ext4_errors",
+          "annotations": {
+            "description": "{{$labels.instance}}: ext4 has reported {{$value}} I/O errors: check /sys/fs/ext4/*/errors_count"
+          },
+          "expr": "ext4_errors_value > 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "filesystem_full_80percent",
+          "annotations": {
+            "description": "{{$labels.instance}} device {{$labels.device}} on {{$labels.path}} got less than 20% space left on its filesystem."
+          },
+          "expr": "disk_used_percent{mode!=\"ro\"} >= 80",
+          "for": "10m",
+          "labels": {}
+        },
+        {
+          "alert": "filesystem_inodes_full",
+          "annotations": {
+            "description": "{{$labels.instance}} device {{$labels.device}} on {{$labels.path}} got less than 10% inodes left on its filesystem."
+          },
+          "expr": "disk_inodes_free / disk_inodes_total < 0.10",
+          "for": "10m",
+          "labels": {}
+        },
+        {
+          "alert": "healthchecks",
+          "annotations": {
+            "description": "{{$labels.instance}}: healtcheck {{$labels.job}} fails!"
+          },
+          "expr": "hc_check_up == 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "homeassistant",
+          "annotations": {
+            "description": "homeassistant notification {{$labels.entity}} ({{$labels.friendly_name}}): {{$value}}"
+          },
+          "expr": "homeassistant_entity_available{domain=\"persistent_notification\", entity!=\"persistent_notification.http_login\"} >= 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "host_memory_under_memory_pressure",
+          "annotations": {
+            "description": "{{$labels.instance}}: The node is under heavy memory pressure. High rate of major page faults: {{$value}}"
+          },
+          "expr": "rate(node_vmstat_pgmajfault[1m]) > 1000",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "http",
+          "annotations": {
+            "description": "{{$labels.server}} : http request failed from {{$labels.instance}}: {{$labels.result}}!"
+          },
+          "expr": "http_response_result_code != 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "http_match_failed",
+          "annotations": {
+            "description": "{{$labels.server}} : http body not as expected; status code: {{$labels.status_code}}!"
+          },
+          "expr": "http_response_response_string_match == 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "internal_runner_action_online",
+          "annotations": {
+            "description": "{{$labels.instance}}: There are no interal github action runner registerd with github (see https://github.com/organizations/ls1-sys-prog-course-internal/settings/actions)"
+          },
+          "expr": "count(http_busy{name=~\"internal-runner.*\", status=\"online\"}) < 1",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "load15",
+          "annotations": {
+            "description": "{{$labels.host}} is running with load15 > 1 for at least 5 minutes: {{$value}}"
+          },
+          "expr": "system_load15 / system_n_cpus{org!=\"nix-community\"} >= 2.0",
+          "for": "10m",
+          "labels": {}
+        },
+        {
+          "alert": "oom_kills",
+          "annotations": {
+            "description": "{{$labels.instance}}: OOM kill detected"
+          },
+          "expr": "increase(kernel_vmstat_oom_kill[5m]) > 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "ping",
+          "annotations": {
+            "description": "{{$labels.url}}: ping from {{$labels.instance}} has failed!"
+          },
+          "expr": "ping_result_code{type!='mobile'} != 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "ping_high_latency",
+          "annotations": {
+            "description": "{{$labels.instance}}: ping probe from {{$labels.source}} is encountering high latency!"
+          },
+          "expr": "ping_average_response_ms{type!='mobile'} > 5000",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "postfix_queue_length",
+          "annotations": {
+            "description": "{{$labels.instance}}: postfix mail queue has undelivered {{$value}} items"
+          },
+          "expr": "avg_over_time(postfix_queue_length[1h]) > 10",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "prometheus_not_connected_to_alertmanager",
+          "annotations": {
+            "description": "Prometheus cannot connect the alertmanager\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          },
+          "expr": "prometheus_notifications_alertmanagers_discovered < 1",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "prometheus_rule_evaluation_failures",
+          "annotations": {
+            "description": "Prometheus encountered {{ $value }} rule evaluation failures, leading to potentially ignored alerts.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          },
+          "expr": "increase(prometheus_rule_evaluation_failures_total[3m]) > 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "prometheus_template_expansion_failures",
+          "annotations": {
+            "description": "Prometheus encountered {{ $value }} template text expansion failures\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          },
+          "expr": "increase(prometheus_template_text_expansion_failures_total[3m]) > 0",
+          "for": "0m",
+          "labels": {}
+        },
+        {
+          "alert": "prometheus_too_many_restarts",
+          "annotations": {
+            "description": "Prometheus has restarted more than twice in the last 15 minutes. It might be crashlooping."
+          },
+          "expr": "changes(process_start_time_seconds{job=~\"prometheus|alertmanager\"}[15m]) > 2",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "promtail_file_lagging",
+          "annotations": {
+            "description": "{{ $labels.instance }} {{ $labels.job }} {{ $labels.path }} has been lagging by more than 1MB for more than 15m."
+          },
+          "expr": "abs(promtail_file_bytes_total - promtail_read_bytes_total) > 1e6",
+          "for": "15m",
+          "labels": {}
+        },
+        {
+          "alert": "promtail_request_errors",
+          "annotations": {
+            "description": "{{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}% errors."
+          },
+          "expr": "100 * sum(rate(promtail_request_duration_seconds_count{status_code=~\"5..|failed\"}[1m])) by (namespace, job, route, instance) / sum(rate(promtail_request_duration_seconds_count[1m])) by (namespace, job, route, instance) > 10",
+          "for": "15m",
+          "labels": {}
+        },
+        {
+          "alert": "public_runner_action_online",
+          "annotations": {
+            "description": "{{$labels.instance}}: There are no public github action runner registerd with github (see https://github.com/organizations/ls1-sys-prog-course/settings/actions)"
+          },
+          "expr": "count(http_busy{name=~\"runner.*\", status=\"online\"}) < 2",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "ram_using_90percent",
+          "annotations": {
+            "description": "{{$labels.host}} is using at least 90% of its RAM for at least 1 hour."
+          },
+          "expr": "mem_buffered + mem_free + mem_cached < mem_total * 0.1",
+          "for": "1h",
+          "labels": {}
+        },
+        {
+          "alert": "reboot",
+          "annotations": {
+            "description": "{{$labels.host}} just rebooted."
+          },
+          "expr": "system_uptime < 300",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "secure_dns_query",
+          "annotations": {
+            "description": "{{$labels.domain}} : could retrieve A record {{$labels.instance}} from server {{$labels.server}}: {{$labels.result}} for protocol {{$labels.protocol}}!"
+          },
+          "expr": "secure_dns_state != 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "smart_errors",
+          "annotations": {
+            "description": "{{$labels.instance}}: S.M.A.R.T reports: {{$labels.device}} ({{$labels.model}}) has errors."
+          },
+          "expr": "smart_device_health_ok{enabled!=\"Disabled\"} != 1",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "swap_using_30percent",
+          "annotations": {
+            "description": "{{$labels.host}} is using 30% of its swap space for at least 30 minutes."
+          },
+          "expr": "mem_swap_total - (mem_swap_cached + mem_swap_free) > mem_swap_total * 0.3",
+          "for": "30m",
+          "labels": {}
+        },
+        {
+          "alert": "systemd_service_failed",
+          "annotations": {
+            "description": "{{$labels.host}} failed to (re)start service {{$labels.name}}."
+          },
+          "expr": "systemd_units_active_code{name!~\"nixpkgs-update-.*.service\"} == 3",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "unusual_disk_read_latency",
+          "annotations": {
+            "description": "{{$labels.instance}}: Disk latency is growing (read operations > 100ms)\n"
+          },
+          "expr": "rate(diskio_read_time[1m]) / rate(diskio_reads[1m]) > 0.1 and rate(diskio_reads[1m]) > 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "unusual_disk_write_latency",
+          "annotations": {
+            "description": "{{$labels.instance}}: Disk latency is growing (write operations > 100ms)\n"
+          },
+          "expr": "rate(diskio_write_time[1m]) / rate(diskio_write[1m]) > 0.1 and rate(diskio_write[1m]) > 0",
+          "for": "2m",
+          "labels": {}
+        },
+        {
+          "alert": "uptime",
+          "annotations": {
+            "description": "Uptime monster: {{$instance}} has been up for more than 30 days."
+          },
+          "expr": "time() - node_boot_time_seconds > 1000",
+          "for": "2m",
+          "labels": {}
+        }
+      ]
+    }
+  ]
+}

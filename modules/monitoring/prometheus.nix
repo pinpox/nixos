@@ -3,6 +3,8 @@ with lib;
 let cfg = config.pinpox.services.monitoring-server;
 in {
 
+  # https://github.com/NixOS/nixpkgs/issues/126083
+  # https://github.com/NixOS/nixpkgs/pull/144984
   options.pinpox.services.monitoring-server = {
     enable = mkEnableOption "monitoring-server setup";
 
@@ -23,10 +25,24 @@ in {
 
   config = mkIf cfg.enable {
 
+    systemd.services.prometheus.serviceConfig.EnvironmentFile =
+      [ "/var/src/secrets/prometheus/envfile" ];
+
     services.prometheus = {
       enable = true;
+      webExternalUrl = "vpn.prometheus.pablo.tools";
+
       extraFlags = [ "--log.level=debug" ];
-      environmentFile = /var/src/secrets/prometheus/envfile;
+      ruleFiles = [ ./alert-rules.json ];
+      # ruleFiles = [ ./alert-rules.yml ];
+      # ruleFiles = [
+      #   (pkgs.writeText "prometheus-rules.yml" (builtins.toJSON {
+      #     groups = [{
+      #       name = "alerting-rules";
+      #       rules = import ./alert-rules.nix { inherit lib; };
+      #     }];
+      #   }))
+      # ];
       alertmanagers =
         [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
 
@@ -49,7 +65,7 @@ in {
         #   bearer_token = "$HASS_TOKEN";
         #   scheme = "https";
         #   static_configs = [{
-        #     targets = [ "hass.thalheim.io:443" ];
+        #     targets = [ "home.pablo.tools:443" ];
         #   }];
         # }
         {

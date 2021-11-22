@@ -92,6 +92,17 @@
         locations."/" = { proxyPass = "http://127.0.0.1:9093"; };
       };
 
+      "vpn.prometheus.pablo.tools" = {
+        listen = [{
+          addr = "192.168.7.1";
+          port = 443;
+          ssl = true;
+        }];
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
+      };
+
       "home.pablo.tools" = {
         addSSL = true;
         enableACME = true;

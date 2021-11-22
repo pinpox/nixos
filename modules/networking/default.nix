@@ -49,6 +49,7 @@ in {
 
         # VPN protected services
         192.168.7.1 vpn.alerts.pablo.tools
+        192.168.7.1 vpn.prometheus.pablo.tools
         # 192.168.7.4 files.pablo.tools
       '';
     };
