@@ -36,6 +36,10 @@ in {
       ];
     };
 
+
+    # Limit log size for journal
+    services.journald.extraConfig = "SystemMaxUse=1G";
+
     environment.systemPackages = with pkgs; [
       universal-ctags
       git
