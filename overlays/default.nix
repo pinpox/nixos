@@ -13,6 +13,7 @@ in self: super: {
   wezterm-bin = super.callPackage ../packages/wezterm-bin { };
   wezterm-nightly = super.callPackage ../packages/wezterm-nightly { };
   filebrowser = super.callPackage ../packages/filebrowser { };
+  smartmon-script = super.callPackage ../packages/smartmon-script { };
 
   # Vim plugins, added inside existing pkgs.vimPlugins
   vimPlugins = super.vimPlugins // {
