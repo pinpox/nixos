@@ -91,6 +91,9 @@ in {
       };
     };
 
+    # Don' backup docker stuff on desktops
+    services.borgbackup.jobs.box-backup.exclude = [ "/var/lib/docker" ];
+
     # here goes the configuration, reference values with cfg.varname
     # e.g. networking.wireguard.interfaces = { };
 
