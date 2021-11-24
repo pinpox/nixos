@@ -77,6 +77,9 @@
     nix-apple-fonts.inputs.flake-utils.follows = "flake-utils";
     nix-apple-fonts.inputs.nixpkgs.follows = "nixpkgs";
 
+    # nix-bitcoin
+    nix-bitcoin.url = "github:fort-nix/nix-bitcoin";
+
   };
   outputs = { self, ... }@inputs:
     with inputs;

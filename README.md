@@ -99,6 +99,12 @@ krops deployment.
 sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
  ```
 
+## New host TODO
+
+[root@my-nixos-host:~]# mkdir /var/src/
+[root@my-nixos-host:~]# touch /var/src/.populate
+[root@my-nixos-host:~]# hostname mega
+
 # Contributing?
 
 While contributions don't make much sense for a personal configuration repository,

@@ -38,14 +38,14 @@ in {
         192.168.7.3 kartoffel.wireguard
         192.168.7.4 birne.wireguard
         192.168.7.5 kfbox.wireguard
-        192.168.7.6 mega.wireguard
+        # 192.168.7.6 mega.wireguard
 
         # Public
         94.16.114.42 porree-old.public
         94.16.108.229 porree.public
         46.38.242.17 kfbox.public
         93.177.66.52 kfbox-old
-        5.181.48.121 mega.public
+        202.61.230.192 mega.public
 
         # VPN protected services
         192.168.7.1 vpn.alerts.pablo.tools
