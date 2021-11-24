@@ -33,15 +33,15 @@ in {
       webExternalUrl = "https://vpn.prometheus.pablo.tools";
       extraFlags = [ "--log.level=debug" ];
       # ruleFiles = [ ./alert-rules.json ];
-      ruleFiles = [ ./alert-rules.yml ];
-      # ruleFiles = [
-      #   (pkgs.writeText "prometheus-rules.yml" (builtins.toJSON {
-      #     groups = [{
-      #       name = "alerting-rules";
-      #       rules = import ./alert-rules.nix { inherit lib; };
-      #     }];
-      #   }))
-      # ];
+      # ruleFiles = [ ./alert-rules.yml ];
+      ruleFiles = [
+        (pkgs.writeText "prometheus-rules.yml" (builtins.toJSON {
+          groups = [{
+            name = "alerting-rules";
+            rules = import ./alert-rules.nix { inherit lib; };
+          }];
+        }))
+      ];
       alertmanagers =
         [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
 
