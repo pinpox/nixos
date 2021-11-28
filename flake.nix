@@ -52,7 +52,6 @@
     nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
     nvim-fzf.flake = false;
 
-
     fzf-lua.url = "github:ibhagwan/fzf-lua";
     fzf-lua.flake = false;
 
@@ -150,11 +149,11 @@
 
       /* # Hydra build jobs. Builds all configs in the CI to verify integrity
          hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
-           nixpkgs.lib.nameValuePair "nixos-${name}"
-           config.config.system.build.toplevel) self.nixosConfigurations);
-         # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-         # "home-manager-${name}" config.activation-script)
-         # self.hmConfigurations);
+         nixpkgs.lib.nameValuePair "nixos-${name}"
+         config.config.system.build.toplevel) self.nixosConfigurations);
+            # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+            # "home-manager-${name}" config.activation-script)
+            # self.hmConfigurations);
       */
 
       # nix build '.#base-image'
@@ -189,6 +188,11 @@
           filebrowser = pkgs.filebrowser;
           darktile = pkgs.darktile;
           xscreensaver = pkgs.xscreensaver;
+          smartmon-script = pkgs.smartmon-script;
+
+          # rules = pkgs.writeText "secret-rules" ''
+          #     ${self.nixosConfigurations.kartoffel.config.networking.hostName}
+          #   '';
         };
 
         apps = {
