@@ -74,6 +74,8 @@
     # Enable arm emulation capabilities
     binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+    growPartition = true;
+
     loader = {
       grub = {
         enable = true;
