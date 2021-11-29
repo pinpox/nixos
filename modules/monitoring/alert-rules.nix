@@ -49,7 +49,8 @@ in lib.mapAttrsToList (name: opts: {
   # };
 
   filesystem_full_80percent = {
-    condition = ''100 - ((node_filesystem_avail_bytes{fstype!="rootfs",mountpoint="/"} * 100) / node_filesystem_size_bytes{fstype!="rootfs",mountpoint="/"}) > 80'';
+    condition = ''
+      100 - ((node_filesystem_avail_bytes{fstype!="rootfs",mountpoint="/"} * 100) / node_filesystem_size_bytes{fstype!="rootfs",mountpoint="/"}) > 80'';
     time = "10m";
     description =
       "{{$labels.instance}} device {{$labels.device}} on {{$labels.mountpoint}} got less than 20% space left on its filesystem.";
@@ -146,6 +147,12 @@ in lib.mapAttrsToList (name: opts: {
       "Uptime monster: {{$labels.instance}} has been up for more than 30 days.";
   };
 
+  flake_nixpkgs_outdated = {
+    condition = ''(time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 7'';
+    description =
+      "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 7 days";
+  };
+
   /* ping = {
        condition = "ping_result_code{type!='mobile'} != 0";
        description = "{{$labels.url}}: ping from {{$labels.instance}} has failed!";
@@ -157,7 +164,8 @@ in lib.mapAttrsToList (name: opts: {
      };
   */
   http_status = {
-    condition = ''probe_http_status_code{instance!~"https://drone.lounge.rocks|https://megaclan3000.de"} != 200'';
+    condition = ''
+      probe_http_status_code{instance!~"https://drone.lounge.rocks|https://megaclan3000.de"} != 200'';
     description =
       "http request failed from {{$labels.instance}}: {{$labels.result}}!";
   };
