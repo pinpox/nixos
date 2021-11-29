@@ -19,6 +19,8 @@ in {
         # Listen on 0.0.0.0, bet we only open the firewall for wg0
         openFirewall = false;
         enabledCollectors = [ "systemd" ];
+
+        extraFlags = [ "--collector.textfile.directory=/etc/nix" ];
       };
       blackbox = mkIf cfg.blackbox.enable {
         enable = true;
