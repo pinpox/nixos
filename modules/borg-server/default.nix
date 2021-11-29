@@ -65,6 +65,8 @@ in {
         name = "borgbackup-monitor-${hostname}";
         value = {
           serviceConfig.Type = "oneshot";
+          serviceConfig.Environment =
+            [ "BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes" ];
           script = ''
             export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
             ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
