@@ -1,4 +1,6 @@
-{ self, ... }: {
+{ self, ... }:  
+{ pkgs, ... }: {
+
 
   imports = [
     ./hardware-configuration.nix
@@ -144,11 +146,6 @@
       clientIp = "192.168.7.1";
     };
 
-
-
-
-
-
     services.matrix-hook = {
       enable = true;
       httpAddress = "localhost";
@@ -156,6 +153,7 @@
       matrixUser = "@alertus-maximus:matrix.org";
       matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
       envFile = "/var/src/secrets/matrix-hook/envfile";
+      msgTemplatePath = "${self.inputs.matrix-hook.packages."x86_64-linux".matrix-hook}/bin/message.html.tmpl";
     };
 
     services.borg-backup.enable = true;
