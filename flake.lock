@@ -188,11 +188,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1638384950,
-        "narHash": "sha256-rNTirJEwg1Ex5PGrkbV3k1XTZZb2e3Gacg1yWi7ulFk=",
+        "lastModified": 1638387209,
+        "narHash": "sha256-hNbNBmUhQMCn75jqY9Xj+W6zw9TpuqnWc8P1iXgXVWA=",
         "owner": "pinpox",
         "repo": "matrix-hook",
-        "rev": "e5cf48432332c284e279920d1243987a887ebf52",
+        "rev": "8c319dc8ae90141d4b1cfeb7c69d476e4b79c05f",
         "type": "github"
       },
       "original": {
