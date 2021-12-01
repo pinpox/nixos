@@ -1,7 +1,9 @@
 { self, ... }: {
 
-  imports =
-    [ ./hardware-configuration.nix self.inputs.ha-relay.nixosModules.ha-relay ];
+  imports = [
+    ./hardware-configuration.nix
+    self.inputs.matrix-hook.nixosModules.matrix-hook
+  ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -76,8 +78,9 @@
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-        proxyWebsockets = true;
-          proxyPass = "http://127.0.0.1:9005"; };
+          proxyWebsockets = true;
+          proxyPass = "http://127.0.0.1:9005";
+        };
       };
 
       # Alertmanager
@@ -141,12 +144,18 @@
       clientIp = "192.168.7.1";
     };
 
-    services.home-assistant-grafana-relay = {
+
+
+
+
+
+    services.matrix-hook = {
       enable = true;
-      listenHost = "localhost";
-      haUri = "http://home.pablo.tools/api/services/notify/notify";
-      listenPort = "12000";
-      envFile = "/var/src/secrets/ha-relay/envfile";
+      httpAddress = "localhost";
+      matrixHomeserver = "https://matrix.org";
+      matrixUser = "@alertus-maximus:matrix.org";
+      matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
+      envFile = "/var/src/secrets/matrix-hook/envfile";
     };
 
     services.borg-backup.enable = true;
@@ -158,7 +167,6 @@
     metrics.blackbox.enable = true;
 
     services.monitoring-server = {
-
 
       dashboard.enable = true;
       loki.enable = true;

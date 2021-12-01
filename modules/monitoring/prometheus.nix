@@ -120,7 +120,7 @@ in {
           receivers = [{
             name = "all";
             webhook_configs = [{
-              url = "http://127.0.0.1:8667/lounge-rocks-log";
+              url = "http://127.0.0.1:11000/alert";
             }];
           }];
         };

@@ -29,8 +29,8 @@
       flake-compat.follows = "flake-compat";
     };
 
-    ha-relay.url = "github:pinpox/home-assistant-grafana-relay";
-    ha-relay.inputs = {
+    matrix-hook.url = "github:pinpox/matrix-hook";
+    matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-utils.follows = "flake-utils";
       flake-compat.follows = "flake-compat";
