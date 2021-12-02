@@ -33,6 +33,8 @@ in {
 
       environment.BORG_RSH = "ssh -i /var/src/secrets/ssh/borg/private";
 
+      environment.BORG_RELOCATED_REPO_ACCESS_IS_OK="yes";
+
       # Print more infomation to log and set intervals at which resumable
       # checkpoints are created
       extraCreateArgs = "--verbose --list --checkpoint-interval 600";
@@ -84,10 +86,17 @@ in {
       #   ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup created: $archiveName"
       # '';
       postHook = ''
-        ${pkgs.curl}/bin/curl -X POST \
-          -d"<p>💾 <strong><font color='#0000ff'>BACKUP</font> </strong><code>[${config.networking.hostName}]</code> >> Created successfully</br>\
-          <blockquote>Archive: $archiveName</br>Status: $exitStatus</blockquote>" \
-          https://vpn.notify.pablo.tools/plain
+        if [ $exitStatus -ne 0 ]; then
+          ${pkgs.curl}/bin/curl -X POST \
+            -d"<p>💾 <strong><font color='#ff0000'>BACKUP</font> </strong><code>[${config.networking.hostName}]</code> >> FAILED!</br>\
+            <blockquote>Archive: $archiveName</br>Status: $exitStatus</blockquote>" \
+            https://vpn.notify.pablo.tools/plain
+        else
+          ${pkgs.curl}/bin/curl -X POST \
+            -d"<p>💾 <strong><font color='#0000ff'>BACKUP</font> </strong><code>[${config.networking.hostName}]</code> >> Created successfully</br>\
+            <blockquote>Archive: $archiveName</br>Status: $exitStatus</blockquote>" \
+            https://vpn.notify.pablo.tools/plain
+        fi
       '';
       #   borg info --json --last 1 borg@birne.wireguard:. > /var/log/borgbackup-last-info
       #   echo $exitStatus > /var/log/borgbackup-last-status
