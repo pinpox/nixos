@@ -15,6 +15,15 @@ in {
   };
 
   config = mkIf cfg.enable {
+
+    # TODO remove when https://github.com/edolstra/nix-serve/issues/28 is fixed
+    # This is a workaround, since nix-serve has problems with newer nix versions
+    nixpkgs.overlays = [
+      (self: super: {
+        nix-serve = super.nix-serve.override { nix = pkgs.nix_2_3; };
+      })
+    ];
+
     services.nix-serve = {
       enable = true;
       secretKeyFile = "/var/lib/cache-priv-key.pem";
