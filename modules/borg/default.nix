@@ -42,6 +42,7 @@ in {
       "*.pyc"
       "*/cache2"
       "/*/.cache"
+      "/*/.go/pkg"
       "/*/.config/Signal"
       "/*/.local/share/Steam"
       "/*/.config/chromium"
@@ -50,8 +51,7 @@ in {
       "/*/.container-diff"
       "/*/.gvfs/"
       "/*/.local/share/Trash"
-      "/*/.mozilla/firefox/*.default/Cache"
-      "/*/.mozilla/firefox/*.default/OfflineCache"
+      "/*/.mozilla/firefox"
       "/*/.npm/_cacache"
       "/*/.thumbnails"
       "/*/.ts3client"
@@ -77,11 +77,17 @@ in {
     # Write information for last snapshot to be retrieved by the monitoring
     # readWritePaths = [ "/dev/stderr" "/proc/self/fd/2" ];
 
-    postCreate = ''
-      ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup created: $archiveName"
-    '';
+    # postCreate = ''
+    #   ${pkgs.curl}/bin/curl -X POST \
+    #     -d"<p>💾 <strong><font color='#0000ff'>BACKUP</font> </strong><code>[${config.networking.hostName}]</code> >> Created successfully</br><blockquote>$archiveName $exitStatus</blockquote>" \
+    #     https://vpn.notify.pablo.tools/plain
+    #   ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup created: $archiveName"
+    # '';
     postHook = ''
-      ${pkgs.nur.repos.mic92.irc-announce}/bin/irc-announce irc.hackint.org 6697 backup-reporter '#lounge-rocks-log' 1 "💾 [${config.networking.hostName}] Backup finished with status $exitStatus"
+      ${pkgs.curl}/bin/curl -X POST \
+        -d"<p>💾 <strong><font color='#0000ff'>BACKUP</font> </strong><code>[${config.networking.hostName}]</code> >> Created successfully</br>\
+        <blockquote>Archive: $archiveName</br>Status: $exitStatus</blockquote>" \
+        https://vpn.notify.pablo.tools/plain
     '';
     #   borg info --json --last 1 borg@birne.wireguard:. > /var/log/borgbackup-last-info
     #   echo $exitStatus > /var/log/borgbackup-last-status
