@@ -13,6 +13,8 @@
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
+  age.secrets.secret1.file = "${self.inputs.secrets}/agenix-cli/hosts/kartoffel/some-secret";
+
   pinpox.desktop = {
     enable = true;
     wireguardIp = "192.168.7.2";
