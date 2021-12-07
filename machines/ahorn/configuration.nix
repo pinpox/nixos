@@ -13,7 +13,7 @@
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
-  age.secrets.secret1.file = "${self.inputs.secrets}/agenix-cli/hosts/kartoffel/some-secret";
+  age.secrets.secret1.file = "${self.inputs.secrets}/agenix-cli/hosts/ahorn/some-secret";
 
   pinpox.desktop = {
     enable = true;
