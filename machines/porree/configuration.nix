@@ -1,6 +1,5 @@
-{ self, ... }:  
+{ self, ... }:
 { pkgs, ... }: {
-
 
   imports = [
     ./hardware-configuration.nix
@@ -108,6 +107,13 @@
         locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
       };
 
+      "notify.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:11000"; };
+        basicAuthFile = "/run/keys/alerts_htpasswd";
+      };
+
       "vpn.notify.pablo.tools" = {
         listen = [{
           addr = "192.168.7.1";
@@ -118,7 +124,6 @@
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:11000"; };
       };
-
 
       "home.pablo.tools" = {
         addSSL = true;
@@ -147,6 +152,17 @@
   # Enable ip forwarding, so wireguard peers can reach eachother
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
+  # Deploy htpaswd file for external alerts
+  # Generate with: mkpasswd -m sha-512 (save as username:$6$E7UzqcDh3$Xi...)
+  # Test with: curl -X POST -d'test' https://user:password@notify.pablo.tools/plain
+  users.users.nginx = { extraGroups = [ "keys" ]; };
+  krops.secrets.files = {
+    alerts_htpasswd = {
+      owner = "nginx";
+      source-path = "/var/src/secrets/matrix-hook/alerts.passwd";
+    };
+  };
+
   pinpox = {
     server = {
       enable = true;
@@ -165,7 +181,9 @@
       matrixUser = "@alertus-maximus:matrix.org";
       matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
       envFile = "/var/src/secrets/matrix-hook/envfile";
-      msgTemplatePath = "${self.inputs.matrix-hook.packages."x86_64-linux".matrix-hook}/bin/message.html.tmpl";
+      msgTemplatePath = "${
+          self.inputs.matrix-hook.packages."x86_64-linux".matrix-hook
+        }/bin/message.html.tmpl";
     };
 
     services.borg-backup.enable = true;
