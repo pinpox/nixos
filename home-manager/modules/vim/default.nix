@@ -97,7 +97,8 @@ omnisharp-roslyn # Csharp LSP
       require('config.devicons')
       require('config.compe')
       require('config.which-key')
-      require('config.bufferline')
+      -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+      require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
       require('config.lualine')
       require('config.gitsigns')
       -- require('config.zk')
@@ -114,6 +115,7 @@ omnisharp-roslyn # Csharp LSP
 
       #      nvim-treesitter
       # zk-nvim
+      nvim-cokeline
       nvim-fzf
       fzf-lua
       indent-blankline-nvim-lua
