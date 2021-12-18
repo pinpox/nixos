@@ -6,22 +6,27 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules =
-    [ "ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ata_piix" "vmw_pvscsi" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/92f9e2c7-9d6c-4cb1-890b-ea638de88be1";
+    device = "/dev/disk/by-label/nixos";
+    autoResize = true;
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0BB9-70CF";
+    device = "/dev/disk/by-label/ESP";
     fsType = "vfat";
   };
 
+  boot.growPartition = true;
+
   swapDevices = [ ];
+
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }

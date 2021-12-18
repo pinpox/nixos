@@ -82,8 +82,8 @@
         version = 2;
         device = "nodev";
         efiSupport = true;
+        efiInstallAsRemovable = true;
       };
-      efi.canTouchEfiVariables = true;
     };
     cleanTmpDir = true;
   };
