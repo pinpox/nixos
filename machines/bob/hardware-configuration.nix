@@ -6,10 +6,9 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules =
-    [ "ata_piix" "vmw_pvscsi" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ata_piix" "vmw_pvscsi" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
@@ -26,5 +25,8 @@
   boot.growPartition = true;
 
   swapDevices = [ ];
+
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }
