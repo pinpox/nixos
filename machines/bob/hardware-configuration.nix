@@ -24,7 +24,10 @@
 
   boot.growPartition = true;
 
-  swapDevices = [ ];
+  swapDevices = [{
+    device = "/var/swapfile";
+    size = (1024 * 32);
+  }];
 
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
