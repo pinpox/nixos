@@ -198,6 +198,11 @@
           #   '';
         };
 
+        # Run with: nix develop '.#test-shell'
+        devShells = flake-utils.lib.flattenTree {
+          test-shell = import ./shells/test-shell.nix { inherit pkgs; };
+        };
+
         apps = {
           # Allow custom packages to be run using `nix run`
           hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
