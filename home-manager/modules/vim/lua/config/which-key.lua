@@ -134,13 +134,12 @@ wk.register({
 --
 -- nvim_set_keymap('c', '',   'print(1)',   { noremap = true, expr = true })
 
-wk.register({
-
+-- wk.register({
 	-- Completion
-	['<C-Space>'] = { "compe#complete()",      'Trigger completion', expr=true },
-	['<CR>']      = { "compe#confirm('<CR>')", 'Confirm completion', expr=true },
+	-- ['<C-Space>'] = { "compe#complete()",      'Trigger completion', expr=true },
+	-- ['<CR>']      = { "compe#confirm('<CR>')", 'Confirm completion', expr=true },
 	-- ['<C-e>'] = { "<C-o>:call compe#close('C-e')<CR>", 'Close completion'},
-}, {mode = 'i'})
+-- }, {mode = 'i'})
 
 
 

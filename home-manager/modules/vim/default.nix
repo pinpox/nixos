@@ -93,7 +93,7 @@ in {
       -- require('config.treesitter')
       require('config.lsp')
       require('config.devicons')
-      require('config.compe')
+      require('config.cmp')
       require('config.which-key')
       -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
       require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
@@ -125,7 +125,6 @@ in {
       indent-blankline-nvim-lua
       colorbuddy-nvim
       BufOnly-vim
-      friendly-snippets
       ansible-vim
       base16-vim
       committia-vim
@@ -133,9 +132,22 @@ in {
       gotests-vim
       haskell-vim
       lualine-nvim
-      nvim-compe
-      nvim-colorizer-lua
       nvim-lspconfig
+
+      cmp-nvim-lsp
+      cmp-buffer
+      cmp-path
+      cmp-calc
+      cmp-emoji
+      cmp-nvim-lua
+      cmp-spell
+      # cmp-cmdline -- use wilder-nvim instead
+      nvim-cmp
+      luasnip
+      cmp_luasnip
+      friendly-snippets
+
+      nvim-colorizer-lua
       nvim-web-devicons
       plenary-nvim
       tabular
@@ -155,9 +167,9 @@ in {
       vim-table-mode
       vim-terraform
       vim-textobj-user
-      vim-vsnip
       vim-gnupg
-      vim-vsnip-integ
+      # vim-vsnip
+      # vim-vsnip-integ
       wilder-nvim
       diffview-nvim
     ];
