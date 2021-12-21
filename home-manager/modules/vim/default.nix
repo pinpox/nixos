@@ -27,9 +27,7 @@ in {
     terraform # TODO add options to enable/disable large packages like terraform
     libgccjit # Needed for treesitter
     sumneko-lua-language-server # Lua language server
-
-omnisharp-roslyn # Csharp LSP
-
+    omnisharp-roslyn # Csharp LSP
     cargo
     rustc
     rustfmt
@@ -113,8 +111,14 @@ omnisharp-roslyn # Csharp LSP
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
 
-      #      nvim-treesitter
+      # nvim-treesitter
       # zk-nvim
+      # vim-visual-increment
+      # vim-indent-object
+      # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
+      # vim-vinegar
+      # bufferline-nvim
+      # i3config-vim
       nvim-cokeline
       nvim-fzf
       fzf-lua
@@ -128,9 +132,7 @@ omnisharp-roslyn # Csharp LSP
       gitsigns-nvim
       gotests-vim
       haskell-vim
-      i3config-vim
       lualine-nvim
-      bufferline-nvim
       nvim-compe
       nvim-colorizer-lua
       nvim-lspconfig
@@ -146,8 +148,6 @@ omnisharp-roslyn # Csharp LSP
       vim-go
       vim-gutentags
       vim-illuminate
-      # vim-indent-object
-      # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
       which-key-nvim
       vim-nix
       vim-repeat
@@ -155,12 +155,9 @@ omnisharp-roslyn # Csharp LSP
       vim-table-mode
       vim-terraform
       vim-textobj-user
-      vim-vinegar
-      # vim-visual-increment
       vim-vsnip
       vim-gnupg
       vim-vsnip-integ
-
       wilder-nvim
       diffview-nvim
     ];
