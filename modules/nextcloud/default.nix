@@ -13,7 +13,7 @@ in {
 
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud22;
+      package = pkgs.nextcloud23;
 
       # Use HTTPS for links
       https = true;
