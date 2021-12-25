@@ -4,6 +4,9 @@
 
   imports = [ ./hardware-configuration.nix ];
 
+  # Force non-default keyboard layout since this is a shared host
+  console.keyMap = pkgs.lib.mkForce "de";
+
   services.nginx = {
     enable = true;
     virtualHosts = {
