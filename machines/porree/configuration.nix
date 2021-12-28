@@ -217,6 +217,7 @@
         "https://pass.pablo.tools"
         # "https://vpn.pablo.tools"
         "https://pinpox.github.io/nixos/"
+        "https://cache.lounge.rocks/nix-cache-info"
         "https://pads.0cx.de"
         "https://news.0cx.de"
         "https://mm.0cx.de"
