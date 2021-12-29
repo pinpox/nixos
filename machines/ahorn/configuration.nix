@@ -2,8 +2,15 @@
 { self, ... }:
 { pkgs, ... }: {
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./retiolum.nix ];
 
+  networking.retiolum.ipv4 = "10.243.100.100";
+  networking.retiolum.ipv6 = "42:0:3c46:1819:729a:3f14:2d39:1f81";
+
+  services.tinc.networks.retiolum = {
+    rsaPrivateKeyFile = "/var/src/secrets/retiolum/rsa_priv";
+    ed25519PrivateKeyFile = "/var/src/secrets/retiolum/ed25519_priv";
+  };
   # services.vault.enable = true;
   # services.vault.extraConfig = ''
   # ui = true
