@@ -71,6 +71,9 @@
     forgit.url = "github:wfxr/forgit";
     forgit.flake = false;
 
+    tfenv.url = "github:tfutils/tfenv";
+    tfenv.flake = false;
+
     nix-apple-fonts.url = "github:pinpox/nix-apple-fonts";
 
     nix-apple-fonts.inputs.flake-compat.follows = "flake-compat";
@@ -192,6 +195,7 @@
           darktile = pkgs.darktile;
           xscreensaver = pkgs.xscreensaver;
           smartmon-script = pkgs.smartmon-script;
+          tfenv = pkgs.tfenv;
 
           # rules = pkgs.writeText "secret-rules" ''
           #     ${self.nixosConfigurations.kartoffel.config.networking.hostName}

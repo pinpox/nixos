@@ -37,6 +37,8 @@ in self: super: {
 
   forgit =
     super.callPackage ../packages/forgit { inputs = inputs; };
+  tfenv =
+    super.callPackage ../packages/tfenv { inputs = inputs; };
 
   xscreensaver =
     super.callPackage ../packages/xscreensaver {  };
