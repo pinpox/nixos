@@ -93,6 +93,7 @@ in {
     signal-desktop
     spotify
     tealdeer
+    tfenv
     thunderbird-bin
     timewarrior
     sqlite
