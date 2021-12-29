@@ -1,4 +1,5 @@
-{ config, pkgs, lib, nur, awesome-config, wallpaper-generator, flake-inputs, ... }:
+{ config, pkgs, lib, nur, awesome-config, wallpaper-generator, flake-inputs, ...
+}:
 let
   vars = import ./vars.nix;
   splitString = str:
@@ -101,9 +102,9 @@ in {
     viewnior
     vlc
     xarchiver
+    gnome.file-roller
     xclip
     xfce.exo # thunar "open terminal here"
-    xfce.thunar
     xfce.thunar-archive-plugin
     xfce.thunar-volman
     xfce.tumbler # thunar thumbnails
@@ -111,7 +112,41 @@ in {
     xfce.xfconf # thunar save settings
     xorg.xrandr
     yubioath-desktop
+    # xfce.thunar
+    (xfce.thunar.override {
+      thunarPlugins = with pkgs; [
+        xfce.thunar-volman
+        xfce.thunar-archive-plugin
+        xfce.thunar-media-tags-plugin
+      ];
+    })
   ];
+
+
+
+  xdg = {
+    enable = true;
+    configFile = {
+      thunar_actions = {
+        target = "Thunar/uca.xml";
+        text = ''
+          <?xml version="1.0" encoding="UTF-8"?>
+          <actions>
+            <action>
+              <icon>utilities-terminal</icon>
+              <name>Open Terminal Here</name>
+              <unique-id>1604472351415438-1</unique-id>
+              <command>wezterm start --cwd %f</command>
+              <description>Example for a custom action</description>
+              <patterns>*</patterns>
+              <startup-notify/>
+              <directories/>
+            </action>
+          </actions>
+        '';
+      };
+    };
+  };
 
   # Include man-pages
   manual.manpages.enable = true;
