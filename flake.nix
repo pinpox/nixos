@@ -3,6 +3,9 @@
 
   inputs = {
 
+    retiolum.url = "github:krebs/retiolum";
+    retiolum.flake = false;
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
