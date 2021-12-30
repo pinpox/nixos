@@ -5,7 +5,7 @@
   imports = [ ./hardware-configuration.nix ./retiolum.nix ];
 
   networking.retiolum.ipv4 = "10.243.100.100";
-  networking.retiolum.ipv6 = "42:0:3c46:1819:729a:3f14:2d39:1f81";
+  networking.retiolum.ipv6 = "42:0:3c46:519d:1696:f464:9756:8727" ;
 
   services.tinc.networks.retiolum = {
     rsaPrivateKeyFile = "/var/src/secrets/retiolum/rsa_priv";
