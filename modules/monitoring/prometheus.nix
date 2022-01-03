@@ -25,13 +25,24 @@ in {
 
   config = mkIf cfg.enable {
 
-    systemd.services.prometheus.serviceConfig.EnvironmentFile =
-      [ "/var/src/secrets/prometheus/envfile" ];
+    users.users.prometheus = { extraGroups = [ "keys" ]; };
+    krops.secrets.files = {
+      prometheus-home-assistant-token = {
+        owner = "prometheus";
+        source-path = "/var/src/secrets/prometheus/home-assistant-token";
+      };
+
+      prometheus-drone-token = {
+        owner = "prometheus";
+        source-path = "/var/src/secrets/prometheus/drone-token";
+      };
+    };
 
     services.prometheus = {
       enable = true;
       webExternalUrl = "https://vpn.prometheus.pablo.tools";
-      extraFlags = [ "--log.level=debug" ];
+      extraFlags =
+        [ "--log.level=debug" "--storage.tsdb.retention.size='6GB'" ];
       # ruleFiles = [ ./alert-rules.json ];
       # ruleFiles = [ ./alert-rules.yml ];
       ruleFiles = [
@@ -49,24 +60,20 @@ in {
 
         {
           job_name = "drone";
-          bearer_token = "$DRONE_TOKEN";
+          bearer_token_file = "/run/keys/prometheus-drone-token";
           static_configs = [{ targets = [ "drone.lounge.rocks" ]; }];
         }
-        # {
-        #   job_name = "homeassistant";
-        #   scrape_interval = "120s";
-        #   metrics_path = "/api/prometheus";
 
-        #   # Legacy api password
-        #   params.api_password = [ "PASSWORD" ];
+        {
+          job_name = "homeassistant";
+          scrape_interval = "60s";
+          metrics_path = "/api/prometheus";
 
-        #   # Long-Lived Access Token
-        #   bearer_token = "$HASS_TOKEN";
-        #   scheme = "https";
-        #   static_configs = [{
-        #     targets = [ "home.pablo.tools:443" ];
-        #   }];
-        # }
+          bearer_token_file = "/run/keys/prometheus-home-assistant-token";
+
+          scheme = "http";
+          static_configs = [{ targets = [ "birne.wireguard:8123" ]; }];
+        }
         {
           job_name = "blackbox";
           metrics_path = "/probe";
@@ -119,9 +126,7 @@ in {
 
           receivers = [{
             name = "all";
-            webhook_configs = [{
-              url = "http://127.0.0.1:11000/alert";
-            }];
+            webhook_configs = [{ url = "http://127.0.0.1:11000/alert"; }];
           }];
         };
       };
