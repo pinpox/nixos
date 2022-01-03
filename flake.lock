@@ -214,11 +214,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1641198127,
-        "narHash": "sha256-V5beyGlEIPoA5tGRHR8HKgUNOfq2Pk/pMRJsTDe5aH0=",
+        "lastModified": 1640790673,
+        "narHash": "sha256-iQQLiMKZue8N1c/7YT4fszlQ8gMUCis2CsZOfFfGoAA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f3540de5479a029dbf289232611800e3a83c6913",
+        "rev": "ded848fecc73e6bd59d66eac38739f62274dd597",
         "type": "github"
       },
       "original": {
@@ -259,6 +259,22 @@
         "type": "github"
       }
     },
+    "retiolum": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1640791306,
+        "narHash": "sha256-qplHzXbpzx3drdSyRkXLfTAqWPlXO7UsHknOiNpZIl4=",
+        "owner": "krebs",
+        "repo": "retiolum",
+        "rev": "f1be75011ac833807d6cdcd436887705935577eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "krebs",
+        "repo": "retiolum",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "dotfiles-awesome": "dotfiles-awesome",
@@ -275,6 +291,7 @@
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",
         "nvim-fzf": "nvim-fzf",
+        "retiolum": "retiolum",
         "tfenv": "tfenv",
         "wallpaper-generator": "wallpaper-generator",
         "zk-nvim": "zk-nvim",
