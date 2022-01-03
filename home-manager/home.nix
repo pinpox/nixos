@@ -122,8 +122,6 @@ in {
     })
   ];
 
-
-
   xdg = {
     enable = true;
     configFile = {
