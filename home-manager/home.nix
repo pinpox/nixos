@@ -111,7 +111,7 @@ in {
     xfce.xfce4-volumed-pulse
     xfce.xfconf # thunar save settings
     xorg.xrandr
-    yubioath-desktop
+    # yubioath-desktop
     # xfce.thunar
     (xfce.thunar.override {
       thunarPlugins = with pkgs; [

@@ -59,10 +59,13 @@
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
-      yotp = ''
-          ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
-        	  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
-        			'';
+
+      # Until ykman is fixed https://github.com/NixOS/nixpkgs/pull/154675
+      # yotp = ''
+      #     ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
+      #		  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
+      #				'';
+
       zzz = "systemctl suspend";
 
       serve =
