@@ -25,7 +25,7 @@ in {
       };
       mbsync.enable = false;
       msmtp.enable = false;
-      notmuch.enable = false;
+      # notmuch.enable = false;
       neomutt = {
         enable = true;
         mailboxName = "pablo_tools";
