@@ -198,6 +198,7 @@
           hello-custom = pkgs.hello-custom;
           filebrowser = pkgs.filebrowser;
           darktile = pkgs.darktile;
+          fritzbox_exporter = pkgs.fritzbox_exporter;
           xscreensaver = pkgs.xscreensaver;
           smartmon-script = pkgs.smartmon-script;
           tfenv = pkgs.tfenv;
