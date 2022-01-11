@@ -54,7 +54,7 @@
   boot.loader.timeout = 0;
 
   security.acme.acceptTerms = true;
-  security.acme.email = "letsencrypt@pablo.tools";
+  security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   # Block anything that is not HTTP(s) or SSH.
   networking.firewall = {

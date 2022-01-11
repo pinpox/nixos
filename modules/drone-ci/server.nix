@@ -74,7 +74,7 @@ in {
     };
 
     security.acme.acceptTerms = true;
-    security.acme.email = "letsencrypt@pablo.tools";
+    security.acme.defaults.email = "letsencrypt@pablo.tools";
 
     services.nginx = {
       enable = true;
