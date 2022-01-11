@@ -39,9 +39,9 @@
       flake-compat.follows = "flake-compat";
     };
 
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
-    neovim-nightly.inputs.flake-utils.follows = "flake-utils";
+    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    # neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
+    # neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
     # Krops
     krops.url = "git+https://cgit.krebsco.de/krops";
@@ -110,7 +110,9 @@
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
                   nixpkgs.overlays =
-                    [ self.overlay nur.overlay neovim-nightly.overlay ];
+                    [ self.overlay nur.overlay 
+                    # neovim-nightly.overlay 
+                  ];
 
                   # DON'T set useGlobalPackages! It's not necessary in newer
                   # home-manager versions and does not work with configs using

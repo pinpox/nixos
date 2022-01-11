@@ -60,6 +60,7 @@ in {
 
         {
           job_name = "drone";
+          scheme = "https";
           bearer_token_file = "/run/keys/prometheus-drone-token";
           static_configs = [{ targets = [ "drone.lounge.rocks" ]; }];
         }
