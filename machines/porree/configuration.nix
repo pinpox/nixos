@@ -6,6 +6,10 @@
     self.inputs.matrix-hook.nixosModules.matrix-hook
   ];
 
+  services.influxdb2.enable = true;
+
+  # services.influxdb2.settings = { };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -30,7 +34,10 @@
     allowedTCPPorts = [ 80 443 22 ];
     allowedUDPPorts = [ 51820 ];
 
-    interfaces.wg0.allowedTCPPorts = [ 2812 ];
+    interfaces.wg0.allowedTCPPorts = [
+      2812
+      8086 # InfluxDB
+    ];
   };
 
   boot.growPartition = true;
@@ -41,7 +48,7 @@
   programs.ssh.startAgent = false;
 
   security.acme.acceptTerms = true;
-  security.acme.email = "letsencrypt@pablo.tools";
+  security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   services.nginx = {
     enable = true;
@@ -82,6 +89,18 @@
           proxyWebsockets = true;
           proxyPass = "http://127.0.0.1:9005";
         };
+      };
+
+      # InfluxDB
+      "vpn.influx.pablo.tools" = {
+        listen = [{
+          addr = "192.168.7.1";
+          port = 443;
+          ssl = true;
+        }];
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:8086"; };
       };
 
       # Alertmanager

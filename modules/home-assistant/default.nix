@@ -5,13 +5,7 @@ let
   # home-assistant-package = pkgs.home-assistant.override {
   #   extraComponents = [
   #     # Fritzbox network statistics
-  #     # "fritzbox_netmonitor"
-
-  #     # Wifi led strip controller
-  #     # "flux_led"
-
-  #     # Not sure if needed with default_config?
-  #     "lovelace"
+  #     "fritzbox_netmonitor"
   #   ];
   # };
 in {
@@ -21,13 +15,21 @@ in {
   };
   config = mkIf cfg.enable {
 
+    krops.secrets.files = {
+      home-assistant-secrets = {
+        owner = "hass";
+        source-path = "/var/src/secrets/home-assistant/secrets.yaml";
+        path = "/var/lib/hass/secrets.yaml";
+      };
+    };
+
     # List extraComponents here to be installed. The names can be found here:
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
     # Components listed here will be possible to add via the webUI if not
     # automatically picked up.
 
     # Needed for some integrations
-    users.users.hass.extraGroups = [ "dialout" ];
+    users.users.hass.extraGroups = [ "dialout" "keys" ];
 
     # Open port for mqtt
     networking.firewall = {
@@ -76,7 +78,9 @@ in {
 
         shelly = { };
 
-        zeroconf = { default_interface = true; };
+        zeroconf = { 
+          # default_interface = true; 
+        };
         # Basic settings for home-assistant
         homeassistant = {
           name = "Villa Kunterbunt";
@@ -96,7 +100,6 @@ in {
         frontend = { };
         "map" = { };
         shopping_list = { };
-        logger.default = "info";
         sun = { };
         config = { };
         mobile_app = { };
@@ -121,7 +124,7 @@ in {
         # }];
 
         # Fritzbox network traffic stats
-        sensor = [{ platform = "fritzbox_netmonitor"; }];
+        # sensor = [{ platform = "fritzbox_netmonitor"; }];
 
         # Metrics for prometheus
         prometheus = { namespace = "hass"; };
@@ -132,6 +135,21 @@ in {
           port = "1883";
           username = "mosquitto";
           password = "mosquitto";
+        };
+
+        # logger.default = "info";
+        logger.default = "debug";
+
+        influxdb = {
+          api_version = 2;
+          host = "vpn.influx.pablo.tools";
+          port = "8086";
+          max_retries = 10;
+          ssl = false;
+          verify_ssl = false;
+          token = "!secret influx-token";
+          organization = "pinpox";
+          bucket = "home_assistant";
         };
 
         # Enables a map showing the location of tracked devies
