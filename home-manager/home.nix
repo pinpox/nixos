@@ -24,7 +24,7 @@ in {
     ./modules/git.nix
     ./modules/go.nix
     ./modules/gtk.nix
-    ./modules/neomutt.nix
+    # ./modules/neomutt.nix
     ./modules/picom.nix
     ./modules/shell
     ./modules/tmux
