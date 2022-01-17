@@ -12,7 +12,7 @@ in {
 
       enable = true;
       port = 9090; # Default port
-      private = true;
+      public = false;
       extraConfig = {
         host = "127.0.0.1";
         reverseProxy = true;
