@@ -22,36 +22,39 @@ in {
 
       fontconfig = {
         defaultFonts = {
-          serif = [ "Recursive Sans Casual Static Medium" ];
-          sansSerif = [ "Recursive Sans Linear Static Medium" ];
-          monospace = [ "Recursive Mono Linear Static" ];
+          serif =
+            [ "Recursive Sans Casual Static" "Inconsolata Nerd Font Mono" ];
+          sansSerif =
+            [ "Recursive Sans Linear Static" "Inconsolata Nerd Font Mono" ];
+          monospace =
+            [ "Recursive Mono Linear Static" "Inconsolata Nerd Font Mono" ];
           emoji = [ "Noto Color Emoji" ];
         };
 
-        localConf = ''
-          <?xml version="1.0"?>
-          <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-          <fontconfig>
-            <alias binding="weak">
-              <family>monospace</family>
-              <prefer>
-                <family>emoji</family>
-              </prefer>
-            </alias>
-            <alias binding="weak">
-              <family>sans-serif</family>
-              <prefer>
-                <family>emoji</family>
-              </prefer>
-            </alias>
-            <alias binding="weak">
-              <family>serif</family>
-              <prefer>
-                <family>emoji</family>
-              </prefer>
-            </alias>
-          </fontconfig>
-        '';
+        # localConf = ''
+        #   <?xml version="1.0"?>
+        #   <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+        #   <fontconfig>
+        #     <alias binding="weak">
+        #       <family>monospace</family>
+        #       <prefer>
+        #         <family>emoji</family>
+        #       </prefer>
+        #     </alias>
+        #     <alias binding="weak">
+        #       <family>sans-serif</family>
+        #       <prefer>
+        #         <family>emoji</family>
+        #       </prefer>
+        #     </alias>
+        #     <alias binding="weak">
+        #       <family>serif</family>
+        #       <prefer>
+        #         <family>emoji</family>
+        #       </prefer>
+        #     </alias>
+        #   </fontconfig>
+        # '';
       };
     };
   };
