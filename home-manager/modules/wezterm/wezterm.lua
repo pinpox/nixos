@@ -20,9 +20,6 @@ end)
 
 return {
 
-		--# Fix for https://github.com/wez/wezterm/issues/1563
--- experimental_shape_post_processing = true,
-
   window_padding = {
     left = 0,
     right = 0,
