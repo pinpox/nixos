@@ -31,8 +31,8 @@ in rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "wez";
     repo = "wezterm";
-    rev = "24875004f66640e220bb1e4369afc93e5417e0c0";
-    sha256 = "sha256-cjCX7OyJyYAVG3XA9IdsuFvwYFeYXn6RcV8Cwk8xQqM=";
+    rev = "2deba1ece49a52a26188f70a86b375695281962a"; # 2022-01-20
+    sha256 = "sha256-EYzn7lFBrRHPqHmeOYzbHGnOMEnI/6DdqB6SR7G0YdI=";
     fetchSubmodules = true;
   };
 
@@ -40,7 +40,7 @@ in rustPlatform.buildRustPackage rec {
     echo ${version} > .tag
   '';
 
-  cargoSha256 = "sha256-OfNIniNuRvTQp1apnWcPXGKZfA29J8kKBjks6FUBKlg=";
+  cargoSha256 = "sha256-lg85PejKyp2fJulZgkOeuws4nPmSAIyHZrtHeK8Fedg=";
 
         doCheck = false;
 
