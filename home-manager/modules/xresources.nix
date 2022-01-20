@@ -21,28 +21,34 @@ in {
 
     "foreground" = "#${vars.colors.White}";
     "background" = "#${vars.colors.Black}";
-    "xterm*cursorColor" = "#${vars.colors.White}";
-    "xterm*color0" = "#${vars.colors.Black}";
-    "xterm*color1" = "#${vars.colors.Red}";
-    "xterm*color2" = "#${vars.colors.Green}";
-    "xterm*color3" = "#${vars.colors.Yellow}";
-    "xterm*color4" = "#${vars.colors.Blue}";
-    "xterm*color5" = "#${vars.colors.Magenta}";
-    "xterm*color6" = "#${vars.colors.Cyan}";
-    "xterm*color7" = "#${vars.colors.White}";
-    "xterm*color8" = "#${vars.colors.BrightGrey}";
-    "xterm*color9" = "#${vars.colors.Red}";
-    "xterm*color10" = "#${vars.colors.Green}";
-    "xterm*color11" = "#${vars.colors.Yellow}";
-    "xterm*color12" = "#${vars.colors.Blue}";
-    "xterm*color13" = "#${vars.colors.Magenta}";
-    "xterm*color14" = "#${vars.colors.Cyan}";
-    "xterm*color15" = "#${vars.colors.DarkGreen}";
-    "xterm*color16" = "#${vars.colors.DarkYellow}";
-    "xterm*color17" = "#${vars.colors.BrightRed}";
-    "xterm*color18" = "#${vars.colors.DarkGrey}";
-    "xterm*color19" = "#${vars.colors.Grey}";
-    "xterm*color20" = "#${vars.colors.DarkWhite}";
-    "xterm*color21" = "#${vars.colors.BrightWhite}";
+
+
+    "XTerm*faceName" = "monospace:style=medium";
+    "XTerm*Background" = "#${vars.colors.Black}";
+    "XTerm*cursorColor" = "#${vars.colors.Blue}";
+    "XTerm*Foreground" = "#${vars.colors.White}";
+
+    "XTerm*color0" = "#${vars.colors.Black}";
+    "XTerm*color1" = "#${vars.colors.Red}";
+    "XTerm*color2" = "#${vars.colors.Green}";
+    "XTerm*color3" = "#${vars.colors.Yellow}";
+    "XTerm*color4" = "#${vars.colors.Blue}";
+    "XTerm*color5" = "#${vars.colors.Magenta}";
+    "XTerm*color6" = "#${vars.colors.Cyan}";
+    "XTerm*color7" = "#${vars.colors.White}";
+    "XTerm*color8" = "#${vars.colors.BrightGrey}";
+    "XTerm*color9" = "#${vars.colors.Red}";
+    "XTerm*color10" = "#${vars.colors.Green}";
+    "XTerm*color11" = "#${vars.colors.Yellow}";
+    "XTerm*color12" = "#${vars.colors.Blue}";
+    "XTerm*color13" = "#${vars.colors.Magenta}";
+    "XTerm*color14" = "#${vars.colors.Cyan}";
+    "XTerm*color15" = "#${vars.colors.DarkGreen}";
+    "XTerm*color16" = "#${vars.colors.DarkYellow}";
+    "XTerm*color17" = "#${vars.colors.BrightRed}";
+    "XTerm*color18" = "#${vars.colors.DarkGrey}";
+    "XTerm*color19" = "#${vars.colors.Grey}";
+    "XTerm*color20" = "#${vars.colors.DarkWhite}";
+    "XTerm*color21" = "#${vars.colors.BrightWhite}";
   };
 }
