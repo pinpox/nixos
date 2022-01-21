@@ -212,6 +212,7 @@
 
     metrics.node.enable = true;
     metrics.blackbox.enable = true;
+    metrics.json.enable = true;
 
     services.monitoring-server = {
 

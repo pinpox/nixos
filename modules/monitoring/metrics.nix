@@ -7,6 +7,10 @@ in {
     enable = mkEnableOption "prometheus node-exporter metrics collection";
   };
 
+  options.pinpox.metrics.json = {
+    enable = mkEnableOption "prometheus json metrics collection";
+  };
+
   options.pinpox.metrics.blackbox = {
     enable = mkEnableOption "prometheus blackbox-exporter metrics collection";
   };
@@ -22,6 +26,33 @@ in {
 
         extraFlags = [ "--collector.textfile.directory=/etc/nix" ];
       };
+
+      json = mkIf cfg.json.enable {
+        enable = true;
+        # listenAddress = "${config.pinpox.wg-client.clientIp}";
+        listenAddress = "127.0.0.1";
+
+        configFile = pkgs.writeTextFile {
+          name = "json-exporter-config";
+          text = ''
+            ---
+            metrics:
+            - name: borg_last_snapshot
+              type: object
+              help: Last snapshot stats
+              path: "{.archives[0]}"
+              labels:
+                hostname: "{.hostname}"
+              values:
+                duration: "{.duration}"
+                nfiles: "{.stats.nfiles}"
+                compressed_size: "{.stats.compressed_size}"
+                deduplicated_size: "{.stats.deduplicated_size}"
+                original_size: "{.stats.original_size}"
+          '';
+        };
+      };
+
       blackbox = mkIf cfg.blackbox.enable {
         enable = true;
         # Default port is 9115
