@@ -15,6 +15,14 @@ in {
       description = "Targets to monitor with the blackbox-exporter";
     };
 
+
+    jsonTargets = mkOption {
+      type = types.listOf types.str;
+      # default = [ "https://pablo.tools" ];
+      example = [ "http://birne.wireguard/borg-ahorn.json" ];
+      description = "Targets to probe with the json-exporter";
+    };
+
     nodeTargets = mkOption {
       type = types.listOf types.str;
       default = [ "porree.wireguard:9100" ];
@@ -74,6 +82,28 @@ in {
 
           scheme = "http";
           static_configs = [{ targets = [ "birne.wireguard:8123" ]; }];
+        }
+        {
+          job_name = "backup-reports";
+          scrape_interval = "60m";
+          metrics_path = "/probe";
+          static_configs = [{ targets = cfg.jsonTargets; }];
+
+          relabel_configs = [
+            {
+              source_labels = [ "__address__" ];
+              target_label = "__param_target";
+            }
+            {
+              source_labels = [ "__param_target" ];
+              target_label = "instance";
+            }
+            {
+              target_label = "__address__";
+              replacement =
+                "127.0.0.1:7979"; # The blackbox exporter's real hostname:port.
+            }
+          ];
         }
         {
           job_name = "blackbox";
