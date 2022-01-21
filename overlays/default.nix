@@ -16,6 +16,9 @@ in self: super: {
   filebrowser = super.callPackage ../packages/filebrowser { };
   smartmon-script = super.callPackage ../packages/smartmon-script { };
 
+  github-exporter =
+    super.callPackage ../packages/github-exporter { inputs = inputs; };
+
   # Vim plugins, added inside existing pkgs.vimPlugins
   vimPlugins = super.vimPlugins // {
     indent-blankline-nvim-lua =
@@ -27,8 +30,6 @@ in self: super: {
     nvim-cokeline= super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
     fzf-lua = super.callPackage ../packages/fzf-lua { inputs = inputs; };
   };
-
-
 
   # ZSH plugins
   zsh-abbrev-alias =

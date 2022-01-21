@@ -92,6 +92,22 @@
         "type": "github"
       }
     },
+    "github-exporter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1627920075,
+        "narHash": "sha256-gcDCQIva9QRdzNZmf6J9FhnQ9q5cmWYqBVlySn5h3uQ=",
+        "owner": "infinityworks",
+        "repo": "github-exporter",
+        "rev": "284088c21e7d796e9b04674c1e2f00e73d9372e3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "infinityworks",
+        "repo": "github-exporter",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -282,6 +298,7 @@
         "flake-utils": "flake-utils",
         "forgit": "forgit",
         "fzf-lua": "fzf-lua",
+        "github-exporter": "github-exporter",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
         "krops": "krops",

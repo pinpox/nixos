@@ -58,6 +58,9 @@
     nvim-cokeline.url = "github:noib3/nvim-cokeline";
     nvim-cokeline.flake = false;
 
+    github-exporter.url = "github:infinityworks/github-exporter";
+    github-exporter.flake = false;
+
     fzf-lua.url = "github:ibhagwan/fzf-lua";
     fzf-lua.flake = false;
 
@@ -202,6 +205,7 @@
           xscreensaver = pkgs.xscreensaver;
           smartmon-script = pkgs.smartmon-script;
           tfenv = pkgs.tfenv;
+          github-exporter = pkgs.github-exporter;
 
           # rules = pkgs.writeText "secret-rules" ''
           #     ${self.nixosConfigurations.kartoffel.config.networking.hostName}
