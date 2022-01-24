@@ -7,6 +7,8 @@
   # Force non-default keyboard layout since this is a shared host
   console.keyMap = pkgs.lib.mkForce "de";
 
+  /*
+
   services.nginx = {
     enable = true;
     virtualHosts = {
@@ -43,6 +45,9 @@
 
   # nix.allowedUsers = [ "hydra" ];
   nix.allowedUsers = [ "hydra" "hydra-queue-runner" "hydra-www" ];
+
+
+  */
 
   pinpox = {
     server = {
