@@ -6,8 +6,7 @@
     self.inputs.matrix-hook.nixosModules.matrix-hook
   ];
 
-  services.influxdb2.enable = true;
-
+  # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
 
   programs.gnupg.agent = {
@@ -92,16 +91,16 @@
       };
 
       # InfluxDB
-      "vpn.influx.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:8086"; };
-      };
+      # "vpn.influx.pablo.tools" = {
+      #   listen = [{
+      #     addr = "192.168.7.1";
+      #     port = 443;
+      #     ssl = true;
+      #   }];
+      #   forceSSL = true;
+      #   enableACME = true;
+      #   locations."/" = { proxyPass = "http://127.0.0.1:8086"; };
+      # };
 
       # Alertmanager
       "vpn.alerts.pablo.tools" = {
