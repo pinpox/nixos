@@ -109,9 +109,11 @@
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                  nixpkgs.overlays =
-                    [ self.overlay nur.overlay 
-                    # neovim-nightly.overlay 
+                  nixpkgs.overlays = [
+                    self.overlay
+                    nur.overlay
+                    self.pwnkit-workaround
+                    # neovim-nightly.overlay
                   ];
 
                   # DON'T set useGlobalPackages! It's not necessary in newer
@@ -139,6 +141,12 @@
       # it can use the sources pinned in flake.lock
       overlay = final: prev: (import ./overlays inputs) final prev;
 
+      pwnkit-workaround = self: super: rec {
+        polkit = super.polkit.overrideAttrs (old: rec {
+          patches = (old.patches or [ ]) ++ [ ./polkit-cve-2021-4034.patch ];
+        });
+      };
+
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (map (x: {
@@ -162,9 +170,9 @@
          hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
          nixpkgs.lib.nameValuePair "nixos-${name}"
          config.config.system.build.toplevel) self.nixosConfigurations);
-            # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-            # "home-manager-${name}" config.activation-script)
-            # self.hmConfigurations);
+               # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+               # "home-manager-${name}" config.activation-script)
+               # self.hmConfigurations);
       */
 
       # nix build '.#base-image'
