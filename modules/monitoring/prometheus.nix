@@ -65,21 +65,24 @@ in {
         [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
 
       scrapeConfigs = [
-
         {
           job_name = "drone";
           scheme = "https";
           bearer_token_file = "/run/keys/prometheus-drone-token";
           static_configs = [{ targets = [ "drone.lounge.rocks" ]; }];
         }
-
+        {
+          job_name = "homeassistant_influx";
+          scrape_interval = "60s";
+          metrics_path = "/metrics";
+          scheme = "http";
+          static_configs = [{ targets = [ "birne.wireguard:9273" ]; }];
+        }
         {
           job_name = "homeassistant";
           scrape_interval = "60s";
           metrics_path = "/api/prometheus";
-
           bearer_token_file = "/run/keys/prometheus-home-assistant-token";
-
           scheme = "http";
           static_configs = [{ targets = [ "birne.wireguard:8123" ]; }];
         }
