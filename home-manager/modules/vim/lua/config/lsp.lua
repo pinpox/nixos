@@ -3,7 +3,9 @@ require'lspconfig'.gopls.setup{}
 require'lspconfig'.terraformls.setup{}
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.yamlls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
+-- require'lspconfig'.rust_analyzer.setup{}
+
+require'lspconfig'.rls.setup{}
 
 
 require'lspconfig'.sumneko_lua.setup {
