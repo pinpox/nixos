@@ -37,7 +37,10 @@ in {
       allowedTCPPorts = [ 1883 ];
 
       # Expose home-assitant over wireguard
-      interfaces.wg0.allowedTCPPorts = [ 8123 ];
+      interfaces.wg0.allowedTCPPorts = [
+        8123
+        9273 # Telegraf
+      ];
     };
 
     # Enable mosquitto MQTT broker
@@ -60,6 +63,42 @@ in {
       }];
     };
 
+    # The prometheus integration of home-assistant is incomplete (e.g. missing
+    # GPS lon/lat data), but the influx integration is fine. To have the
+    # home-assistant states in prometheus to be able to create alerts and
+    # graphs, telegraf is used to listen for influx formatted data form
+    # home-assistant and export it as prometheus metrics.
+
+    services.telegraf = {
+      enable = true;
+      extraConfig = {
+
+        agent = {
+          interval = "60s";
+          ## Log at debug level.
+          debug = true;
+          ## Log only error level messages.
+          quiet = false;
+        };
+        inputs = {
+          influxdb_v2_listener = {
+            # Start influxdb V2 listener on localhost only as we are running on
+            # the same host as home-assistant.
+            service_address = ":8086";
+          };
+        };
+
+        outputs = {
+          prometheus_client = {
+            # Listen on the wireguard VPN IP. Localhost is not enough here, as
+            # prometheus is hosted on a different machine.
+            listen = "${config.pinpox.wg-client.clientIp}:9273";
+            metric_version = 2;
+          };
+        };
+      };
+    };
+
     # Enable home-assistant service
     services.home-assistant = {
       enable = true;
@@ -73,19 +112,91 @@ in {
 
       # Configuration generated to /var/lib/hass/configuration.yaml
       config = {
+
+        ios = {
+          actions = [
+            # Toggle RGB strip
+            {
+              name = "Toggle RGB";
+              background_color = "#24283B";
+              label = {
+                text = "RGB-Kette";
+                color = "#E5E9F0";
+              };
+              icon = {
+                icon = "lightbulb-on";
+                color = "#FF5370";
+              };
+            }
+            # Toggle Deckenlicht
+            {
+              name = "Toggle Deckenlicht";
+              background_color = "#24283B";
+              label = {
+                text = "Deckenlicht";
+                color = "#E5E9F0";
+              };
+              icon = {
+                icon = "lightbulb-on";
+                color = "#E5E9F0";
+              };
+            }
+          ];
+        };
+
+        automation = [
+          {
+            alias = "Deckenlicht Toggle";
+            trigger = [{
+              platform = "event";
+              event_type = "ios.action_fired";
+              event_data.actionName = "Toggle Deckenlicht";
+            }];
+
+            action = [{
+              type = "toggle";
+              device_id = "d71e3f9c22a777149793e6b126f27550";
+              entity_id = "switch.deckenlicht";
+              domain = "switch";
+            }];
+          }
+          {
+            alias = "RGB-Kette Toggle";
+            trigger = [
+              {
+                platform = "event";
+                event_type = "state_changed";
+                event_data.entity_id = "switch.lichterkette";
+              }
+              {
+                platform = "event";
+                event_type = "ios.action_fired";
+                event_data.actionName = "Toggle RGB";
+              }
+            ];
+
+            action = [{
+              type = "toggle";
+              device_id = "d97c93bff99173ae0b3b20d640050508";
+              entity_id = "light.rgb_strip_1";
+              domain = "light";
+            }];
+          }
+        ];
+
         # Provides some sane defaults and minimal dependencies
         default_config = { };
 
         shelly = { };
 
-        zeroconf = { 
-          # default_interface = true; 
+        zeroconf = {
+          # default_interface = true;
         };
         # Basic settings for home-assistant
         homeassistant = {
           name = "Villa Kunterbunt";
-          latitude = "50.9571707";
-          longitude = "6.7635205";
+          latitude = "!secret home-latitude";
+          longitude = "!secret home-longitude";
           elevation = 86;
           unit_system = "metric";
           time_zone = "Europe/Berlin";
@@ -137,16 +248,19 @@ in {
           password = "mosquitto";
         };
 
-        # logger.default = "info";
-        logger.default = "debug";
+        logger.default = "info";
+        # logger.default = "debug";
 
         influxdb = {
           api_version = 2;
-          host = "vpn.influx.pablo.tools";
+          # host = "vpn.influx.pablo.tools";
+          host = "localhost";
           port = "8086";
           max_retries = 10;
           ssl = false;
           verify_ssl = false;
+          # Authorization is not used for telegraf, but home-assistant requires
+          # passing these parameters
           token = "!secret influx-token";
           organization = "pinpox";
           bucket = "home_assistant";

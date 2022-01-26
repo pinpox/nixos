@@ -207,6 +207,7 @@
           filebrowser = pkgs.filebrowser;
           darktile = pkgs.darktile;
           fritzbox_exporter = pkgs.fritzbox_exporter;
+          mqtt2prometheus = pkgs.mqtt2prometheus;
           xscreensaver = pkgs.xscreensaver;
           smartmon-script = pkgs.smartmon-script;
           tfenv = pkgs.tfenv;

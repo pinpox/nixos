@@ -48,7 +48,7 @@ in {
         5.181.48.121 mega.public
 
         # VPN protected services
-        192.168.7.1 vpn.influx.pablo.tools
+        # 192.168.7.1 vpn.influx.pablo.tools
         192.168.7.1 vpn.alerts.pablo.tools
         192.168.7.1 vpn.prometheus.pablo.tools
         192.168.7.1 vpn.notify.pablo.tools
