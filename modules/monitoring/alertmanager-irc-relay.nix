@@ -16,16 +16,15 @@ let
     irc_nickname_password = "mynickserv_key";
     irc_realname = "myrealname";
 
-    irc_channels = [
-      { name = "#lounge-rocks-log"; }
-    ];
+    irc_channels = [{ name = "#lounge-rocks-log"; }];
 
     msg_once_per_alert_group = false;
     # Use PRIVMSG instead of NOTICE (default) to send messages.
     use_privmsg = true;
 
     # Define how IRC messages should be formatted.
-    msg_template = "⚠ ⚠ ⚠ [{{.Labels.instance}}] - {{ .Labels.alertname }} is {{.Status}} ⚠ ⚠ ⚠ {{.Annotations.description}} (@pinpox act accordingly)";
+    msg_template =
+      "⚠ ⚠ ⚠ [{{.Labels.instance}}] - {{ .Labels.alertname }} is {{.Status}} ⚠ ⚠ ⚠ {{.Annotations.description}} (@pinpox act accordingly)";
     # Note: When sending only one message per alert group the default
     # msg_template is set to
     # "Alert {{ .GroupLabels.alertname }} for {{ .GroupLabels.job }} is {{ .Status }}"

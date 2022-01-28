@@ -112,7 +112,7 @@ in {
     };
     gtk3.extraConfig = {
       gtk-cursor-theme-name = "breeze";
-      gtk-application-prefer-dark-theme=1;
+      gtk-application-prefer-dark-theme = 1;
     };
   };
 

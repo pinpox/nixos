@@ -7,7 +7,7 @@ let
   netname = "retiolum";
   cfg = config.networking.retiolum;
 
-  retiolum =  inputs.retiolum;
+  retiolum = inputs.retiolum;
 
   # pkgs.fetchgit {
   #   url = "https://github.com/krebs/retiolum.git";
@@ -53,9 +53,11 @@ in {
       '';
     };
 
-    networking.extraHosts = builtins.readFile (toString "${retiolum}/etc.hosts");
+    networking.extraHosts =
+      builtins.readFile (toString "${retiolum}/etc.hosts");
 
-    environment.systemPackages = [ config.services.tinc.networks.${netname}.package ];
+    environment.systemPackages =
+      [ config.services.tinc.networks.${netname}.package ];
 
     networking.firewall.allowedTCPPorts = [ 655 ];
     networking.firewall.allowedUDPPorts = [ 655 ];

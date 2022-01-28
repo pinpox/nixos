@@ -30,14 +30,14 @@ in {
         ../../home-manager/home-server.nix
         inputs.dotfiles-awesome.nixosModules.dotfiles
         {
-          nixpkgs.overlays =
-            [ self-overlay inputs.nur.overlay 
+          nixpkgs.overlays = [
+            self-overlay
+            inputs.nur.overlay
             # inputs.neovim-nightly.overlay 
           ];
         }
       ];
     };
-
 
     # Limit log size for journal
     services.journald.extraConfig = "SystemMaxUse=1G";

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   renderMustache = name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON
     pkgs.stdenv.mkDerivation {
@@ -23,4 +22,4 @@
         cp rendered_file $out
       '';
     };
-  }
+}

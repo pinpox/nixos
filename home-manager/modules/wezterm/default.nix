@@ -1,7 +1,8 @@
 { lib, pkgs, config, utils, ... }:
 with lib;
-let cfg = config.pinpox.programs.wezterm;
-vars = import ../vars.nix;
+let
+  cfg = config.pinpox.programs.wezterm;
+  vars = import ../vars.nix;
 in {
   options.pinpox.programs.wezterm.enable =
     mkEnableOption "wezterm terminal emulator";
@@ -20,7 +21,8 @@ in {
 
         colors_lua = {
           target = "wezterm/colors.lua";
-          source = utils.renderMustache "colors.lua" ./colors.lua.mustache vars.colors;
+          source =
+            utils.renderMustache "colors.lua" ./colors.lua.mustache vars.colors;
         };
 
         wezterm_lua = {

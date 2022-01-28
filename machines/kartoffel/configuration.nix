@@ -1,12 +1,12 @@
 # Configuration for kartoffel
-{ self, ... }: 
+{ self, ... }:
 { pkgs, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
 
   # environment.systemPackages = [self.wezterm];
 
-services.udev.packages = [pkgs.qmk-udev-rules];
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
 
   pinpox.desktop = {
     enable = true;
@@ -19,9 +19,8 @@ services.udev.packages = [pkgs.qmk-udev-rules];
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
 
-
   hardware.sane.enable = true;
-    users.users.pinpox.extraGroups = [ "scanner" "lp" ];
+  users.users.pinpox.extraGroups = [ "scanner" "lp" ];
 
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

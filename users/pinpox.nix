@@ -22,7 +22,7 @@
         (pkgs.fetchurl {
           url = "https://github.com/pinpox.keys";
           # sha256 = "0si2xncbqjrxn42hvwj98in83mk2cl4rlanf32rlc8lxa2d79q5v";
-        sha256 = "sha256-Cf/PSZemROU/Y0EEnr6A+FXE0M3+Kso5VqJgomGST/U=";
+          sha256 = "sha256-Cf/PSZemROU/Y0EEnr6A+FXE0M3+Kso5VqJgomGST/U=";
         })
       ];
     };

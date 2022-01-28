@@ -8,7 +8,7 @@ in self: super: {
   hello-custom = super.callPackage ../packages/hello-custom { };
   darktile = super.callPackage ../packages/darktile { };
   fritzbox_exporter = super.callPackage ../packages/fritzbox_exporter { };
-  mqtt2prometheus = super.callPackage ../packages/mqtt2prometheus {};
+  mqtt2prometheus = super.callPackage ../packages/mqtt2prometheus { };
 
   # Custom packages. Will be made available on all machines and used where
   # needed.
@@ -25,11 +25,10 @@ in self: super: {
       };
     zk-nvim = super.callPackage ../packages/zk-nvim { inputs = inputs; };
     nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
-    nvim-cokeline= super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
+    nvim-cokeline =
+      super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
     fzf-lua = super.callPackage ../packages/fzf-lua { inputs = inputs; };
   };
-
-
 
   # ZSH plugins
   zsh-abbrev-alias =
@@ -37,12 +36,9 @@ in self: super: {
   zsh-colored-man-pages =
     super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };
 
-  forgit =
-    super.callPackage ../packages/forgit { inputs = inputs; };
-  tfenv =
-    super.callPackage ../packages/tfenv { inputs = inputs; };
+  forgit = super.callPackage ../packages/forgit { inputs = inputs; };
+  tfenv = super.callPackage ../packages/tfenv { inputs = inputs; };
 
-  xscreensaver =
-    super.callPackage ../packages/xscreensaver {  };
+  xscreensaver = super.callPackage ../packages/xscreensaver { };
 }
 

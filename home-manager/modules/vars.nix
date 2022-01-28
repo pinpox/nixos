@@ -1,8 +1,7 @@
 {
   colors = rec {
 
-    DarkBlack = "181a27"; #181a27
-
+    DarkBlack = "181a27"; # #181a27
 
     Black = "24283B"; # #24283B
 

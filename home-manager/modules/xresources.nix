@@ -22,7 +22,6 @@ in {
     "foreground" = "#${vars.colors.White}";
     "background" = "#${vars.colors.Black}";
 
-
     "XTerm*faceName" = "monospace:style=medium";
     "XTerm*Background" = "#${vars.colors.Black}";
     "XTerm*cursorColor" = "#${vars.colors.Blue}";

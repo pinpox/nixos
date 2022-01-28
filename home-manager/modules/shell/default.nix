@@ -2,10 +2,7 @@
 let vars = import ../vars.nix;
 in {
 
-  imports = [
-    ./starship.nix
-    ./zsh.nix
-  ];
+  imports = [ ./starship.nix ./zsh.nix ];
 
   programs.fzf = {
     enable = true;

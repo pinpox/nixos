@@ -148,7 +148,8 @@ in lib.mapAttrsToList (name: opts: {
   };
 
   flake_nixpkgs_outdated = {
-    condition = ''(time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 30'';
+    condition = ''
+      (time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 30'';
     description =
       "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 30 days";
   };

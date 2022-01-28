@@ -42,7 +42,7 @@ in rustPlatform.buildRustPackage rec {
 
   cargoSha256 = "sha256-lg85PejKyp2fJulZgkOeuws4nPmSAIyHZrtHeK8Fedg=";
 
-        doCheck = false;
+  doCheck = false;
 
   nativeBuildInputs = [ pkg-config python3 perl ];
 

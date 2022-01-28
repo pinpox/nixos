@@ -9,18 +9,14 @@
   networking.useDHCP = false;
   networking.interfaces.eno1.useDHCP = true;
 
-
-    users.groups.nextcloud= { name = "nextcloud"; };
+  users.groups.nextcloud = { name = "nextcloud"; };
 
   users = {
     users.nextcloud = {
       isNormalUser = true;
-      openssh.authorizedKeys.keyFiles = [
-        ./nextcloud-key-public
-      ];
+      openssh.authorizedKeys.keyFiles = [ ./nextcloud-key-public ];
     };
   };
-
 
   # Host forwards incoming wg connections to the local network so we can reach LAN devices via wireguard. E.g. for retrieving stats directly from smart-home devices
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -37,16 +33,12 @@
     '';
   };
 
-
   pinpox = {
 
     server = {
       enable = true;
       hostname = "birne";
     };
-
-
-
 
     services = {
 

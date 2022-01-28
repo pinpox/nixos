@@ -20,7 +20,6 @@ in {
     ./modules/xdg.nix
   ];
 
-
   _module.args.utils = import ../utils { inherit pkgs; };
 
   # Include man-pages

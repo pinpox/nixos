@@ -16,9 +16,8 @@ stdenvNoCC.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description =
-      "A utility tool powered by fzf for using git interactively.";
-      homepage = "https://github.com/wfxr/forgit";
+    description = "A utility tool powered by fzf for using git interactively.";
+    homepage = "https://github.com/wfxr/forgit";
     license = licenses.mit;
     platforms = platforms.unix;
   };

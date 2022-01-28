@@ -33,7 +33,7 @@ in {
 
       environment.BORG_RSH = "ssh -i /var/src/secrets/ssh/borg/private";
 
-      environment.BORG_RELOCATED_REPO_ACCESS_IS_OK="yes";
+      environment.BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
 
       # Print more infomation to log and set intervals at which resumable
       # checkpoints are created

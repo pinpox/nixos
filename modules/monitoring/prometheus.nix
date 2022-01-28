@@ -15,7 +15,6 @@ in {
       description = "Targets to monitor with the blackbox-exporter";
     };
 
-
     jsonTargets = mkOption {
       type = types.listOf types.str;
       # default = [ "https://pablo.tools" ];
