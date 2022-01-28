@@ -288,7 +288,11 @@
         # birne
         {
           publicKey = "feDKNR4ZAeEiAsLFJM9FdNi6LHMjnvDj9ap/GRdLKF0=";
-          allowedIPs = [ "192.168.7.4" ];
+          allowedIPs = [
+            "192.168.7.4"
+            # Also allow local IP's from the home network (e.g. shelly plugs)
+            "192.168.2.0/24"
+          ];
         }
         # mega
         {

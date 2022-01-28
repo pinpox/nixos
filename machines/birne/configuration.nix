@@ -21,6 +21,23 @@
     };
   };
 
+
+  # Host forwards incoming wg connections to the local network so we can reach LAN devices via wireguard. E.g. for retrieving stats directly from smart-home devices
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  networking.wireguard.interfaces.wg0 = let
+    iptables =
+      "${self.inputs.nixpkgs.legacyPackages.x86_64-linux.iptables}/bin/iptables";
+  in {
+    postSetup = ''
+      ${iptables} -t nat -A POSTROUTING -s 192.168.7.0/24 -o eno1 -j MASQUERADE; ${iptables} -A FORWARD -i wg0 -j ACCEPT
+    '';
+
+    postShutdown = ''
+      ${iptables} -t nat -D POSTROUTING -s 192.168.7.0/24 -o eno1 -j MASQUERADE; ${iptables} -D FORWARD -i wg0 -j ACCEPT
+    '';
+  };
+
+
   pinpox = {
 
     server = {
