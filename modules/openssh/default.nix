@@ -14,7 +14,7 @@ in {
       enable = true;
       passwordAuthentication = false;
       startWhenNeeded = true;
-      challengeResponseAuthentication = false;
+      kbdInteractiveAuthentication = false;
     };
 
     # Block anything that is not HTTP(s) or SSH.

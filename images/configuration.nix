@@ -34,7 +34,7 @@ with lib; {
       enable = true;
       passwordAuthentication = false;
       startWhenNeeded = true;
-      challengeResponseAuthentication = false;
+      kbdInteractiveAuthentication = false;
       permitRootLogin = "yes";
     };
 
