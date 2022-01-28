@@ -112,7 +112,6 @@
                   nixpkgs.overlays = [
                     self.overlay
                     nur.overlay
-                    self.pwnkit-workaround
                     # neovim-nightly.overlay
                   ];
 
@@ -140,12 +139,6 @@
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
       overlay = final: prev: (import ./overlays inputs) final prev;
-
-      pwnkit-workaround = self: super: rec {
-        polkit = super.polkit.overrideAttrs (old: rec {
-          patches = (old.patches or [ ]) ++ [ ./polkit-cve-2021-4034.patch ];
-        });
-      };
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
