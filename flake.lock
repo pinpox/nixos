@@ -79,11 +79,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1642787209,
-        "narHash": "sha256-zM/YKOS24InhO520SagEjgcJ6cnyeRX0V0Ag0atN6eo=",
+        "lastModified": 1643699203,
+        "narHash": "sha256-NK7sEhAQHMo37OwhcGIUfZoHlIoNk7LxN6grg2Lnavo=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "0f4ca97bb7063c73897b8c55204456bb88cddc3b",
+        "rev": "30f4c0cb37460a82a42e1956eea136bbe10c4417",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1643567433,
-        "narHash": "sha256-tyFgodcZRlt0ZshbgyLf4m/Sd/ys9p0AHfeVZQ50WKU=",
+        "lastModified": 1643579427,
+        "narHash": "sha256-tV4M4+Aqd/3ZjEz1Q07j89KIlkt1oFH34RzpBkUeO/0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "95d39e13a4a7a818c87f2701b59820d3ac0e674c",
+        "rev": "a52aed72c84a2a10102a92397339fa01fc0fe9cf",
         "type": "github"
       },
       "original": {
@@ -198,11 +198,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1643347846,
-        "narHash": "sha256-O0tyXF//ppRpe9yT1Uu5n34yI2MWDyY6ZiJ4Qn5zIkE=",
+        "lastModified": 1643524588,
+        "narHash": "sha256-Qh5AazxdOQRORbGkkvpKoovDl6ej/4PhDabFsqnueqw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5bb20f9dc70e9ee16e21cc404b6508654931ce41",
+        "rev": "efeefb2af1469a5d1f0ae7ca8f0dfd9bb87d5cfb",
         "type": "github"
       },
       "original": {
@@ -214,11 +214,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1643614245,
-        "narHash": "sha256-00MTz0EBEkXFrDpjCa53J6D7Wvwf2BVH8lWfu4npcWE=",
+        "lastModified": 1643729771,
+        "narHash": "sha256-z8RWoKB4+2hJgOcYH7bfC6UCFurikM3xen+qetl9PD8=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "7965c24bcd5bbf8ce063dbf470cf31d82ce125a2",
+        "rev": "dfef00db1637f160dd34a46d8d0a2f3f0d8c6ba7",
         "type": "github"
       },
       "original": {
@@ -262,11 +262,11 @@
     "retiolum": {
       "flake": false,
       "locked": {
-        "lastModified": 1643369411,
-        "narHash": "sha256-FRfEQdRJxVF6w41jgjQXDtK5YxIjDh5S4acA0FbwPyE=",
+        "lastModified": 1643625579,
+        "narHash": "sha256-74KgsPDABDb2xWxdTnxmSbEb5DaIo32416zZ+xSzXl8=",
         "owner": "krebs",
         "repo": "retiolum",
-        "rev": "23e04565a0360d31605a6c6cdc1becb5b9f76f32",
+        "rev": "de1e4f1046cb9256fbbc96e661bb8e72ea6208b9",
         "type": "github"
       },
       "original": {
