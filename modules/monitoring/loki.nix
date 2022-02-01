@@ -118,11 +118,21 @@ in {
 
     # Bind nginx_json.log to a path where promtail is allowed to read it.
     # Default nginx log permissions don't allow reading the log folder
-    systemd.services.promtail= {
+    systemd.services.promtail = {
       serviceConfig = {
-        BindReadOnlyPaths = [
-          "/var/log/nginx/json_access.log:/var/lib/promtail/nginx_json.log"
-        ];
+        BindReadOnlyPaths =
+          [ "/var/log/nginx/json_access.log:/var/lib/promtail/nginx_json.log" ];
+      };
+    };
+
+    services.nginx.additionalModules = [ pkgs.nginxModules.geoip2 ];
+
+    services.geoipupdate = {
+      enable = true;
+      settings = {
+        LicenseKey = "/var/src/secrets/geoipupdate/maxmind-license";
+        AccountID = 670100;
+        EditionIDs = [ "GeoLite2-ASN" "GeoLite2-City" "GeoLite2-Country" ];
       };
     };
 
@@ -154,7 +164,7 @@ in {
               };
             }];
             static_configs = [{
-              targets = ["localhost"];
+              targets = [ "localhost" ];
               labels = {
                 job = "nginx-access-log";
                 host = "${config.networking.hostName}";
