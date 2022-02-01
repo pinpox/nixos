@@ -131,21 +131,55 @@ in {
           url = "http://localhost:${toString port-loki}/loki/api/v1/push";
         }];
 
-        scrape_configs = [{
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "${config.networking.hostName}";
-            };
-          };
-          relabel_configs = [{
+        scrape_configs = [
+          {
+            #  - job_name: system
+            #      pipeline_stages:
+            #      - replace:
+            #          expression: '(?:[0-9]{1,3}\.){3}([0-9]{1,3})'
+            #          replace: '***'
+            #      static_configs:
+            #      - targets:
+            #         - localhost
+            #        labels:
+            #         job: nginx_access_log
+            #         host: appfelstrudel
+            #         agent: promtail
+            #         __path__: /var/log/nginx/*access.log
 
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
-        }];
+            job_name = "nginx";
+            pipeline_stages = [{
+              replace = {
+                expression = "(?:[0-9]{1,3}\\.){3}([0-9]{1,3})";
+                replace = "***";
+              };
+            }];
+            static_configs = [{
+              targets = ["localhost"];
+              labels = {
+                job = "nginx_access_log";
+                host = "${config.networking.hostName}";
+                agent = "promtail";
+                __path__ = "/var/log/nginx/json_access.log";
+              };
+            }];
+          }
+
+          {
+            job_name = "journal";
+            journal = {
+              max_age = "12h";
+              labels = {
+                job = "systemd-journal";
+                host = "${config.networking.hostName}";
+              };
+            };
+            relabel_configs = [{
+              source_labels = [ "__journal__systemd_unit" ];
+              target_label = "unit";
+            }];
+          }
+        ];
       };
     };
   };
