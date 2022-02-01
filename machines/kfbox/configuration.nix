@@ -27,8 +27,6 @@
     metrics.node.enable = true;
   };
 
-  nix.autoOptimiseStore = true;
-
   programs.ssh.startAgent = false;
 
   services.qemuGuest.enable = true;
