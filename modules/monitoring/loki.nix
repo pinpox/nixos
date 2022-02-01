@@ -116,6 +116,19 @@ in {
     #       store: inmemory
     #   enable_api: true
 
+    # Bind nginx_json.log to a path where promtail is allowed to read it.
+    # Default nginx log permissions don't allow reading the log folder
+    systemd.services.promtail= {
+      serviceConfig = {
+        BindReadOnlyPaths = [
+          "/var/log/nginx/json_access.log:/var/lib/promtail/nginx_json.log"
+        ];
+      };
+    };
+
+    # For debugging promtail
+    # services.promtail.extraFlags = [ "-log.level=debug" ];
+
     services.promtail = {
       enable = true;
       configuration = {
@@ -133,20 +146,6 @@ in {
 
         scrape_configs = [
           {
-            #  - job_name: system
-            #      pipeline_stages:
-            #      - replace:
-            #          expression: '(?:[0-9]{1,3}\.){3}([0-9]{1,3})'
-            #          replace: '***'
-            #      static_configs:
-            #      - targets:
-            #         - localhost
-            #        labels:
-            #         job: nginx_access_log
-            #         host: appfelstrudel
-            #         agent: promtail
-            #         __path__: /var/log/nginx/*access.log
-
             job_name = "nginx";
             pipeline_stages = [{
               replace = {
@@ -157,10 +156,10 @@ in {
             static_configs = [{
               targets = ["localhost"];
               labels = {
-                job = "nginx_access_log";
+                job = "nginx-access-log";
                 host = "${config.networking.hostName}";
                 agent = "promtail";
-                __path__ = "/var/log/nginx/json_access.log";
+                __path__ = "/var/lib/promtail/nginx_json.log";
               };
             }];
           }
