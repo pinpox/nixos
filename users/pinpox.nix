@@ -29,5 +29,5 @@
   };
 
   # Allow to run nix
-  nix.allowedUsers = [ "pinpox" ];
+  nix.settings.allowed-users = [ "pinpox" ];
 }

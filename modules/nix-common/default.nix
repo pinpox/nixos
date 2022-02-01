@@ -28,21 +28,31 @@ in {
     # Enable flakes
     nix = {
 
-      # Save space by hardlinking store files
-      autoOptimiseStore = true;
-
       # Enable flakes
       package = pkgs.nixFlakes;
       extraOptions = ''
         experimental-features = nix-command flakes
       '';
 
-      binaryCachePublicKeys =
-        [ "cache.lounge.rocks:uXa8UuAEQoKFtU8Om/hq6d7U+HgcrduTVr8Cfl6JuaY=" ];
-      binaryCaches =
-        [ "https://cache.nixos.org" "https://cache.lounge.rocks?priority=50" ];
-      trustedBinaryCaches =
-        [ "https://cache.nixos.org" "https://cache.lounge.rocks" ];
+      settings = {
+
+        trusted-public-keys =
+          [ "cache.lounge.rocks:uXa8UuAEQoKFtU8Om/hq6d7U+HgcrduTVr8Cfl6JuaY=" ];
+
+        substituters = [
+          "https://cache.nixos.org"
+          "https://cache.lounge.rocks?priority=50"
+        ];
+
+        trusted-substituters =
+          [ "https://cache.nixos.org" "https://cache.lounge.rocks" ];
+
+        # Save space by hardlinking store files
+        auto-optimise-store = true;
+
+        # Users allowed to run nix
+        allowed-users = [ "root" ];
+      };
 
       # Clean up old generations after 30 days
       gc = {
@@ -50,9 +60,6 @@ in {
         dates = "weekly";
         options = "--delete-older-than 30d";
       };
-
-      # Users allowed to run nix
-      allowedUsers = [ "root" ];
     };
   };
 }
