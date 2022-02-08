@@ -10,12 +10,15 @@ require('gitsigns').setup {
 	},
 	numhl = false,
 	linehl = false,
-	watch_index = {
+	watch_gitdir = {
 		interval = 1000
 	},
 	current_line_blame = false,
 	sign_priority = 6,
 	update_debounce = 100,
 	status_formatter = nil, -- Use default
-	use_internal_diff = true,  -- If luajit is present
+	-- use_internal_diff = true,  -- If luajit is present
+	diff_opts = {
+		internal = true,
+	},
 }

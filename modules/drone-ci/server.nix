@@ -95,7 +95,7 @@ in {
       };
     };
 
-    nix.allowedUsers = [ cfg.drone-user ];
+    nix.settings.allowed-users = [ cfg.drone-user ];
 
     users.groups."${cfg.drone-user}" = { };
 
