@@ -73,18 +73,18 @@
 
     virtualHosts = {
 
-      # "0cx.de" = {
-      #   forceSSL = true;
-      #   enableACME = true;
-      #   root = "/var/www/";
-      # };
-
       # The Lounge IRC
       "irc.0cx.de" = {
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
       };
+
+      # "chat.0cx.de" = {
+      #   forceSSL = true;
+      #   enableACME = true;
+      #   root = self.inputs.nixpkgs.legacyPackages.x86_64-linux.cinny;
+      # };
 
       # Pads
       "pads.0cx.de" = {
