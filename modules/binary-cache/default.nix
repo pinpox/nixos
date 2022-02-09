@@ -1,13 +1,6 @@
 { lib, pkgs, config, ... }:
 with lib;
-let
-  cfg = config.pinpox.services.binary-cache;
-  init-script = pkgs.writeScriptBin "write-key" ''
-    #!${pkgs.stdenv.shell}
-    cat /var/src/secrets/binary-cache/cache-priv-key.pem > /var/lib/cache-priv-key.pem
-    chown nix-serve /var/lib/cache-priv-key.pem
-    chmod 600 /var/lib/cache-priv-key.pem
-  '';
+let cfg = config.pinpox.services.binary-cache;
 in {
 
   options.pinpox.services.binary-cache = {
@@ -24,27 +17,43 @@ in {
     #   })
     # ];
 
+    users = {
+      users = {
+
+        # User for nix-serve
+        nix-serve = {
+          group = "nix-serve";
+          extraGroups = [ "keys" ];
+          isSystemUser = true;
+        };
+
+        # User to push to the cache
+        push-cache = {
+          isNormalUser = true;
+          description = "System user to push to the store";
+          openssh.authorizedKeys.keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrA5uESLJgMkrFU8MLDSjA2x792iizCet6/H7Z0j8Xn nix-serve@ssh"
+          ];
+        };
+      };
+
+      groups.nix-serve = { };
+    };
+
+    nix.settings.allowed-users = [ "nix-serve" "push-cache" ];
+
+    # Write-key secret file
+    krops.secrets.files = {
+      cache-priv-key = {
+        owner = "nix-serve";
+        source-path = "/var/src/secrets/binary-cache/cache-priv-key.pem";
+      };
+    };
+
     services.nix-serve = {
       enable = true;
-      secretKeyFile = "/var/lib/cache-priv-key.pem";
+      secretKeyFile = "/run/keys/cache-priv-key";
     };
-
-    # TODO fix this, currently broken, ispreStart is not a valid key
-    users.users.push-cache = {
-      isNormalUser = true;
-      description = "System user to push to the store";
-      extraGroups = [ ];
-
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrA5uESLJgMkrFU8MLDSjA2x792iizCet6/H7Z0j8Xn nix-serve@ssh"
-      ];
-    };
-
-    systemd.services.nix-serve = {
-      serviceConfig = { preStart = "+${init-script}/bin/write-key"; };
-    };
-
-    nix.allowedUsers = [ "nix-serve" "push-cache" ];
 
     services.nginx = {
       enable = true;
