@@ -135,6 +135,90 @@
 
     in {
 
+      colmena = {
+        meta = { nixpkgs = import nixpkgs { system = "x86_64-linux"; }; };
+
+        # This module will be imported by all hosts
+        defaults = { name, nodes, pkgs, ... }: {
+
+          # Make inputs and overlay accessible as module parameters
+          _module.args.inputs = inputs;
+          _module.args.self-overlay = self.overlay;
+
+          # Let 'nixos-version --json' know the Git revision of this flake.
+          system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+          nix.registry.nixpkgs.flake = nixpkgs;
+          nix.registry.pinpox.flake = self;
+
+          nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+          nixpkgs.overlays = [
+            self.overlay
+            nur.overlay
+            # neovim-nightly.overlay
+          ];
+
+          home-manager.useUserPackages = true;
+
+          imports = builtins.attrValues self.nixosModules
+            ++ [ home-manager.nixosModules.home-manager ];
+
+        };
+
+        kfbox = {
+          deployment = {
+            targetHost = "kfbox.public";
+            buildOnTarget = true;
+
+            # TODO Clear /var/src/colmena-secrets before copying configured
+            # secrets to a clean state to make sure old secrets are removed
+
+            keys."test-secret2" = {
+              # Alternatively, `text` (string) or `keyFile` (path to file)
+              # may be specified.
+              keyCommand = [ "hostname"];
+
+              destDir = "/var/src/colmena-keys"; # Default: /run/keys
+              user = "pinpox"; # Default: root
+              group = "root"; # Default: root
+              permissions = "0640"; # Default: 0600
+
+              uploadAt =
+                "pre-activation"; # Default: pre-activation, Alternative: post-activation
+            };
+          };
+
+          imports =
+            [ (import (./machines/ahorn/configuration.nix) { inherit self; }) ];
+        };
+
+        ahorn = {
+          deployment = {
+            targetHost = "localhost";
+            buildOnTarget = true;
+
+            # TODO Clear /var/src/colmena-secrets before copying configured
+            # secrets to a clean state to make sure old secrets are removed
+
+            keys."test-secret2" = {
+              # Alternatively, `text` (string) or `keyFile` (path to file)
+              # may be specified.
+              keyCommand = [ "pass" "show" "nixos-secrets/ahorn/borg/passphrase" ];
+
+              destDir = "/var/src/colmena-keys"; # Default: /run/keys
+              user = "pinpox"; # Default: root
+              group = "root"; # Default: root
+              permissions = "0640"; # Default: 0600
+
+              uploadAt =
+                "pre-activation"; # Default: pre-activation, Alternative: post-activation
+            };
+          };
+
+          imports =
+            [ (import (./machines/ahorn/configuration.nix) { inherit self; }) ];
+        };
+      };
+
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
@@ -163,9 +247,9 @@
          hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
          nixpkgs.lib.nameValuePair "nixos-${name}"
          config.config.system.build.toplevel) self.nixosConfigurations);
-               # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-               # "home-manager-${name}" config.activation-script)
-               # self.hmConfigurations);
+                  # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+                  # "home-manager-${name}" config.activation-script)
+                  # self.hmConfigurations);
       */
 
       # nix build '.#base-image'

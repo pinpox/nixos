@@ -53,6 +53,9 @@ in {
   # Install these packages for my user
   home.packages = with pkgs; [
 
+    fira
+    fira-code
+
     # From nixpkgs
     inetutils
     nmap
