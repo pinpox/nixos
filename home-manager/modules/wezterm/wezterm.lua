@@ -45,11 +45,13 @@ return {
 		{ key = "|",   mods="LEADER",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
 		{ key = "\\",  mods="LEADER",     action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
 		{ key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentPane={confirm=true}}},
+		-- { key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentTab={confirm=true}}
 		{ key = "h",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Left"}},
 		{ key = "l",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Right"}},
 		{ key = "k",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Up"}},
 		{ key = "j",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Down"}},
 		-- Tabs
+		{ key = "t",   mods="CTRL|SHIFT", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
 		{ key = "Tab", mods="CTRL",       action=wezterm.action{ActivateTabRelative=-1}},
 		{ key = "Tab", mods="CTRL|SHIFT", action=wezterm.action{ActivateTabRelative=1}},
 		{ key = "1",   mods="CTRL",       action=wezterm.action{ActivateTab=(1-1)}},
