@@ -162,6 +162,8 @@
           imports = builtins.attrValues self.nixosModules
             ++ [ home-manager.nixosModules.home-manager ];
 
+          # pkgs.writeText "secrets-list" (builtins.toJSON keys)
+
         };
 
         kfbox = {
@@ -175,7 +177,7 @@
             keys."test-secret2" = {
               # Alternatively, `text` (string) or `keyFile` (path to file)
               # may be specified.
-              keyCommand = [ "hostname"];
+              keyCommand = [ "hostname" ];
 
               destDir = "/var/src/colmena-keys"; # Default: /run/keys
               user = "pinpox"; # Default: root
@@ -191,7 +193,7 @@
             [ (import (./machines/ahorn/configuration.nix) { inherit self; }) ];
         };
 
-        ahorn = {
+        ahorn = rec {
           deployment = {
             targetHost = "localhost";
             buildOnTarget = true;
@@ -202,7 +204,8 @@
             keys."test-secret2" = {
               # Alternatively, `text` (string) or `keyFile` (path to file)
               # may be specified.
-              keyCommand = [ "pass" "show" "nixos-secrets/ahorn/borg/passphrase" ];
+              keyCommand =
+                [ "pass" "show" "nixos-secrets/ahorn/borg/passphrase" ];
 
               destDir = "/var/src/colmena-keys"; # Default: /run/keys
               user = "pinpox"; # Default: root
@@ -212,6 +215,11 @@
               uploadAt =
                 "pre-activation"; # Default: pre-activation, Alternative: post-activation
             };
+          };
+
+          environment.etc."sec-whitelist" = {
+            mode = "0555";
+            text =builtins.concatStringsSep "\n"  (builtins.attrNames deployment.keys);
           };
 
           imports =
@@ -247,9 +255,9 @@
          hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
          nixpkgs.lib.nameValuePair "nixos-${name}"
          config.config.system.build.toplevel) self.nixosConfigurations);
-                  # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-                  # "home-manager-${name}" config.activation-script)
-                  # self.hmConfigurations);
+                     # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+                     # "home-manager-${name}" config.activation-script)
+                     # self.hmConfigurations);
       */
 
       # nix build '.#base-image'
