@@ -193,33 +193,45 @@
             [ (import (./machines/ahorn/configuration.nix) { inherit self; }) ];
         };
 
-        ahorn = rec {
+        ahorn = { pkgs, ... }: rec {
           deployment = {
             targetHost = "localhost";
             buildOnTarget = true;
 
-            # TODO Clear /var/src/colmena-secrets before copying configured
-            # secrets to a clean state to make sure old secrets are removed
+            keys."test-secret1" = {
+              # keyCommand = [ "echo test-secret1" ];
+              text = "test1";
+              destDir = "/var/src/colmena-keys";
+              user = "pinpox";
+            };
 
             keys."test-secret2" = {
-              # Alternatively, `text` (string) or `keyFile` (path to file)
-              # may be specified.
-              keyCommand =
-                [ "pass" "show" "nixos-secrets/ahorn/borg/passphrase" ];
-
-              destDir = "/var/src/colmena-keys"; # Default: /run/keys
-              user = "pinpox"; # Default: root
-              group = "root"; # Default: root
-              permissions = "0640"; # Default: 0600
-
-              uploadAt =
-                "pre-activation"; # Default: pre-activation, Alternative: post-activation
+              # keyCommand = [ "echo test-secret2" ];
+              text = "test2";
+              destDir = "/var/src/colmena-keys";
+              user = "pinpox";
             };
+
+            # keys."test-secret3" = {
+            #   # keyCommand = [ "echo test-secret3" ];
+            #   text = "test3";
+            #   destDir = "/var/src/colmena-keys";
+            #   user = "pinpox";
+            # };
           };
 
-          environment.etc."sec-whitelist" = {
-            mode = "0555";
-            text =builtins.concatStringsSep "\n"  (builtins.attrNames deployment.keys);
+          # find . ! -path . -print | grep -vf files.txt | xargs rm -f
+          system.activationScripts = let
+
+            whitelist = builtins.concatStringsSep "\n"
+              (builtins.attrNames deployment.keys);
+            keysDir = "/var/src/colmena-keys";
+          in {
+            clear-secs.text = ''
+              find ${keysDir} ! -path ${keysDir} -print | grep -vf ${
+                pkgs.writeText "whitelist" whitelist
+              } | xargs -t rm -f
+            '';
           };
 
           imports =
@@ -255,9 +267,9 @@
          hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
          nixpkgs.lib.nameValuePair "nixos-${name}"
          config.config.system.build.toplevel) self.nixosConfigurations);
-                     # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-                     # "home-manager-${name}" config.activation-script)
-                     # self.hmConfigurations);
+                        # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+                        # "home-manager-${name}" config.activation-script)
+                        # self.hmConfigurations);
       */
 
       # nix build '.#base-image'
