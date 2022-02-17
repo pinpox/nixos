@@ -4,6 +4,9 @@
 
   imports = [ ./hardware-configuration.nix ./retiolum.nix ];
 
+  # To build raspi images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   networking.retiolum.ipv4 = "10.243.100.100";
   networking.retiolum.ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
 
