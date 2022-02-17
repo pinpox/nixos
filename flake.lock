@@ -63,11 +63,11 @@
     "forgit": {
       "flake": false,
       "locked": {
-        "lastModified": 1638746453,
-        "narHash": "sha256-S/alL3CiyedJ8aGhC2Vg9fmLJYcLxDe4EjQns5dZkKM=",
+        "lastModified": 1644892053,
+        "narHash": "sha256-Tooqv/3jKwU7v49nqoI/TkGLm7CjvL2TjhShlWUV5PE=",
         "owner": "wfxr",
         "repo": "forgit",
-        "rev": "7b26cd46ac768af51b8dd4b84b6567c4e1c19642",
+        "rev": "e0d3552d4597f42c5c965daa5abd79845990f63a",
         "type": "github"
       },
       "original": {
@@ -79,11 +79,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1644563123,
-        "narHash": "sha256-s+xz/tdtNv5fdEViqyUqAaogRzPTxBOmEnLlxkvTMlo=",
+        "lastModified": 1645041421,
+        "narHash": "sha256-XkDGV4KDHCZGUGqiy8GopCe1V8w/4t+/+pIMFEwM610=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "da2a04d0529421e1d59ec9329226e05cccb20944",
+        "rev": "f3857a98a7cd230448b6f3ec6117a699a39f1164",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1644534280,
-        "narHash": "sha256-Gzf/Jq/F1vvTp6XkzPU+pBCj3OSAFLiR7f0ptwRseiI=",
+        "lastModified": 1645089656,
+        "narHash": "sha256-+2eah/jPWwbjTqKmpO0hogM1OHYbHuoSvy3zTJcL0Ik=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6d9d9294d09b5e88df65f8c6651efb8a4d7d2476",
+        "rev": "2116fe6b50a5118d56f1f443cccf024abee9de40",
         "type": "github"
       },
       "original": {
@@ -131,11 +131,11 @@
     "krops": {
       "flake": false,
       "locked": {
-        "lastModified": 1637419569,
-        "narHash": "sha256-0hxKZQIoByRDoPsfQq5qzFJioyWRX/fbpvMO2EYQ9lc=",
+        "lastModified": 1644656837,
+        "narHash": "sha256-IHX/I74uY8SCD3NLhuXY6cQ6512om+tlKyZyzEUgvT8=",
         "ref": "master",
-        "rev": "13ae434b140035e7e2664bd5a8ef4c475413b2e0",
-        "revCount": 115,
+        "rev": "89e5e67659bbbf0da53cc2cc5dea644b9a2301f6",
+        "revCount": 117,
         "type": "git",
         "url": "https://cgit.krebsco.de/krops"
       },
@@ -198,11 +198,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1644420267,
-        "narHash": "sha256-rFJuctggkjM412OC6OGPdXogFp7czGDW05ueWqpJbj8=",
+        "lastModified": 1644525281,
+        "narHash": "sha256-D3VuWLdnLmAXIkooWAtbTGSQI9Fc1lkvAr94wTxhnTU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "98bb5b77c8c6666824a4c13d23befa1e07210ef1",
+        "rev": "48d63e924a2666baf37f4f14a18f19347fbd54a2",
         "type": "github"
       },
       "original": {
@@ -214,11 +214,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1644552462,
-        "narHash": "sha256-C/lkvQYYLkZA5cZgoz0ZqucgjKzdcGfNzXRvNH3MaUA=",
+        "lastModified": 1645090179,
+        "narHash": "sha256-Z0qd2mT8UgT0+O5qjsxcQ40RKIRVkhC0ZxC3eQIvZH0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "38b164c496af243c33b6599fccd07316738baa11",
+        "rev": "d26bc9f03bbdcc7e3a5c9ee7496a5fcb623f5d04",
         "type": "github"
       },
       "original": {
@@ -262,11 +262,11 @@
     "retiolum": {
       "flake": false,
       "locked": {
-        "lastModified": 1644448208,
-        "narHash": "sha256-QBtJqkg9m/o6uTrD6cFhp6WsbEUdwx0+AkOn5qlm1bs=",
+        "lastModified": 1644961046,
+        "narHash": "sha256-E3fjTilUUpkQHqlo/J59xT/r4sQ3pgY2c73cmzm/bW4=",
         "owner": "krebs",
         "repo": "retiolum",
-        "rev": "341cf0a8adcf21ffacd3ce84ee1d50259737f667",
+        "rev": "6d517879b84ee5041c31e9c3be5c2e4eeaf66619",
         "type": "github"
       },
       "original": {
