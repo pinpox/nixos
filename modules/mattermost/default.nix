@@ -46,7 +46,9 @@ in {
       after = [ "network.target" "postgresql.service" ];
 
       preStart = ''
-        mkdir -p /var/lib/mattermost/{data,config,logs,client-plugins,files}
+        mkdir -p /var/lib/mattermost/{data,config,logs,client-plugins,files,plugins}
+        mkdir -p /var/lib/mattermost/plugins/{client,server}
+        ln -sf ${pkgs.mattermost}/{bin,fonts,i18n,templates,client} "/var/lib/mattermost"
 
         # For mutable config
         if ! test -e "/var/lib/mattermost/config/.initial-created"; then
