@@ -67,8 +67,8 @@
 
       zzz = "systemctl suspend";
 
-      serve =
-        "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
+      serve = "${pkgs.dirserver}/bin/dirserver";
+        # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
     prezto = {
