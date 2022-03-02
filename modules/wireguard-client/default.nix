@@ -4,7 +4,7 @@ let cfg = config.pinpox.wg-client;
 in {
 
   options.pinpox.wg-client = {
-    enable = mkEnableOption "hello service";
+    enable = mkEnableOption "wireguard client configuration";
     clientIp = mkOption {
       type = types.str;
       default = "0.0.0.0";
