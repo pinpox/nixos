@@ -1,12 +1,12 @@
 # Create/Update flake info file with:
-#
 # nix flake show --json > info.json
 
 # Test configuration with:
 # nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
+local info = import 'info.json';
+
 local steps_hosts() =
-  #local info = import 'info.json';
   [
     {
       name: 'Build host: %s' % host,
@@ -14,12 +14,10 @@ local steps_hosts() =
         "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
       ],
     }
-    #for host in std.objectFields(info.nixosConfigurations)
-	for host in [ "ahorn", "kartoffel"]
+    for host in std.objectFields(info.nixosConfigurations)
   ];
 
 local steps_packages() =
-  #local info = import 'info.json';
   [
     {
       name: 'Build package: %s' % package,
@@ -27,8 +25,7 @@ local steps_packages() =
         "nix build -v -L '.#%s'" % package,
       ],
     }
-    #for package in std.objectFields(info.packages['x86_64-linux'])
-	for package in ["darktile"]
+    for package in std.objectFields(info.packages['x86_64-linux'])
   ];
 
 {
