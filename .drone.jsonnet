@@ -63,20 +63,20 @@
 			]
 		}
 
-	/*
-	 {
-		"name": "Notify",
-		commands: [
-		|||
-			nix run 'github:nixos/nixpkgs#curl' -- -X POST \
-			-d"<p>🛠<fe0f> <strong><font color='#0000ff'>BUILD</font> </strong><code>[$DRONE_REPO_NAME]</code>\
-			>> $DRONE_BUILD_STATUS ($DRONE_BUILD_EVENT)</br>\
-			<blockquote>$DRONE_COMMIT_MESSAGE</br>$DRONE_REPO_LINK</blockquote>" \
-			https://notify:$NOTIFY_TOKEN@notify.pablo.tools/plain
-		|||
-		],
-	 }
-	 */
+#	
+#	 {
+#		"name": "Notify",
+#		commands: [
+#		|||
+#			nix run 'github:nixos/nixpkgs#curl' -- -X POST \
+#			-d"<p>🛠<fe0f> <strong><font color='#0000ff'>BUILD</font> </strong><code>[$DRONE_REPO_NAME]</code>\
+#			>> $DRONE_BUILD_STATUS ($DRONE_BUILD_EVENT)</br>\
+#			<blockquote>$DRONE_COMMIT_MESSAGE</br>$DRONE_REPO_LINK</blockquote>" \
+#			https://notify:$NOTIFY_TOKEN@notify.pablo.tools/plain
+#		|||
+#		],
+#	 }
+#	 
 
 	],
 
