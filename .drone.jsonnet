@@ -6,7 +6,7 @@
 # nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
 local steps_hosts() =
-  local info = import 'info.json';
+  #local info = import 'info.json';
   [
     {
       name: 'Build host: %s' % host,
@@ -19,7 +19,7 @@ local steps_hosts() =
   ];
 
 local steps_packages() =
-  local info = import 'info.json';
+  #local info = import 'info.json';
   [
     {
       name: 'Build package: %s' % package,
@@ -27,7 +27,8 @@ local steps_packages() =
         "nix build -v -L '.#%s'" % package,
       ],
     }
-    for package in std.objectFields(info.packages['x86_64-linux'])
+    #for package in std.objectFields(info.packages['x86_64-linux'])
+	for package in ["darktile"]
   ];
 
 {
