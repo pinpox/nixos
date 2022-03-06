@@ -4,9 +4,10 @@
 # Test configuration with:
 # nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
-local info = import std.extVar("PWD") + '/info.json';
+local file =  std.extVar("PWD") + '/info.json';
 
 local steps_hosts() =
+  local info = file;
   [
     {
       name: 'Build host: %s' % host,
@@ -18,7 +19,7 @@ local steps_hosts() =
   ];
 
 local steps_packages() =
-  local info = import std.extVar("PWD") + '/info.json';
+  local info = file;
   [
     {
       name: 'Build package: %s' % package,
