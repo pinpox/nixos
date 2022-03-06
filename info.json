@@ -1,0 +1,365 @@
+{
+  "apps": {
+    "aarch64-linux": {
+      "hello-custom": {
+        "type": "app"
+      },
+      "wezterm-bin": {
+        "type": "app"
+      }
+    },
+    "i686-linux": {
+      "hello-custom": {
+        "type": "app"
+      },
+      "wezterm-bin": {
+        "type": "app"
+      }
+    },
+    "x86_64-linux": {
+      "hello-custom": {
+        "type": "app"
+      },
+      "wezterm-bin": {
+        "type": "app"
+      }
+    }
+  },
+  "base-image": {
+    "type": "unknown"
+  },
+  "checks": {
+    "aarch64-linux": {
+      "hello": {
+        "name": "vm-test-run-unnamed",
+        "type": "derivation"
+      }
+    },
+    "i686-linux": {
+      "hello": {
+        "name": "vm-test-run-unnamed",
+        "type": "derivation"
+      }
+    },
+    "x86_64-linux": {
+      "hello": {
+        "name": "vm-test-run-unnamed",
+        "type": "derivation"
+      }
+    }
+  },
+  "devShells": {
+    "aarch64-linux": {
+      "test-shell": {
+        "name": "nix-shell",
+        "type": "derivation"
+      }
+    },
+    "i686-linux": {
+      "test-shell": {
+        "name": "nix-shell",
+        "type": "derivation"
+      }
+    },
+    "x86_64-linux": {
+      "test-shell": {
+        "name": "nix-shell",
+        "type": "derivation"
+      }
+    }
+  },
+  "nixosConfigurations": {
+    "ahorn": {
+      "type": "nixos-configuration"
+    },
+    "birne": {
+      "type": "nixos-configuration"
+    },
+    "bob": {
+      "type": "nixos-configuration"
+    },
+    "kartoffel": {
+      "type": "nixos-configuration"
+    },
+    "kfbox": {
+      "type": "nixos-configuration"
+    },
+    "porree": {
+      "type": "nixos-configuration"
+    }
+  },
+  "nixosModules": {
+    "activation-secrets": {
+      "type": "nixos-module"
+    },
+    "bepasty": {
+      "type": "nixos-module"
+    },
+    "binary-cache": {
+      "type": "nixos-module"
+    },
+    "bluetooth": {
+      "type": "nixos-module"
+    },
+    "borg": {
+      "type": "nixos-module"
+    },
+    "borg-server": {
+      "type": "nixos-module"
+    },
+    "default-desktop": {
+      "type": "nixos-module"
+    },
+    "default-server": {
+      "type": "nixos-module"
+    },
+    "drone-ci": {
+      "type": "nixos-module"
+    },
+    "environment": {
+      "type": "nixos-module"
+    },
+    "filebrowser": {
+      "type": "nixos-module"
+    },
+    "fonts": {
+      "type": "nixos-module"
+    },
+    "hedgedoc": {
+      "type": "nixos-module"
+    },
+    "hello": {
+      "type": "nixos-module"
+    },
+    "home-assistant": {
+      "type": "nixos-module"
+    },
+    "http2irc": {
+      "type": "nixos-module"
+    },
+    "irc-bot": {
+      "type": "nixos-module"
+    },
+    "kf-homepage": {
+      "type": "nixos-module"
+    },
+    "locale": {
+      "type": "nixos-module"
+    },
+    "lvm-grub": {
+      "type": "nixos-module"
+    },
+    "mattermost": {
+      "type": "nixos-module"
+    },
+    "miniflux": {
+      "type": "nixos-module"
+    },
+    "monitoring": {
+      "type": "nixos-module"
+    },
+    "networking": {
+      "type": "nixos-module"
+    },
+    "nextcloud": {
+      "type": "nixos-module"
+    },
+    "nix-common": {
+      "type": "nixos-module"
+    },
+    "openssh": {
+      "type": "nixos-module"
+    },
+    "sound": {
+      "type": "nixos-module"
+    },
+    "thelounge": {
+      "type": "nixos-module"
+    },
+    "virtualisation": {
+      "type": "nixos-module"
+    },
+    "wireguard-client": {
+      "type": "nixos-module"
+    },
+    "xserver": {
+      "type": "nixos-module"
+    },
+    "yubikey": {
+      "type": "nixos-module"
+    },
+    "zsh": {
+      "type": "nixos-module"
+    }
+  },
+  "overlay": {
+    "type": "nixpkgs-overlay"
+  },
+  "packages": {
+    "aarch64-linux": {
+      "darktile": {
+        "description": "GPU rendered terminal emulator designed for tiling window managers.",
+        "name": "darktile-0.0.10",
+        "type": "derivation"
+      },
+      "dirserver": {
+        "description": "Serve a dir",
+        "name": "dirserver-1.0.0",
+        "type": "derivation"
+      },
+      "filebrowser": {
+        "name": "filebrowser",
+        "type": "derivation"
+      },
+      "fritzbox_exporter": {
+        "description": "Fritzbox exporter for prometheus",
+        "name": "fritzbox_exporter-latest",
+        "type": "derivation"
+      },
+      "hello-custom": {
+        "description": "A program that produces a familiar, friendly greeting",
+        "name": "hello-2.10",
+        "type": "derivation"
+      },
+      "mqtt2prometheus": {
+        "description": "TODO",
+        "name": "mqtt2prometheus-latest",
+        "type": "derivation"
+      },
+      "smartmon-script": {
+        "name": "smartmon-script",
+        "type": "derivation"
+      },
+      "tfenv": {
+        "description": "Terraform version manager",
+        "name": "tfenv-latest",
+        "type": "derivation"
+      },
+      "wezterm-bin": {
+        "description": "Wezterm terminal (pre-compiled binary version)",
+        "name": "wezterm-bin-nightly-2021",
+        "type": "derivation"
+      },
+      "wezterm-nightly": {
+        "description": "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust",
+        "name": "wezterm-nightly-20210818-nightly",
+        "type": "derivation"
+      },
+      "xscreensaver": {
+        "description": "A set of screensavers",
+        "name": "xscreensaver-6.01",
+        "type": "derivation"
+      }
+    },
+    "i686-linux": {
+      "darktile": {
+        "description": "GPU rendered terminal emulator designed for tiling window managers.",
+        "name": "darktile-0.0.10",
+        "type": "derivation"
+      },
+      "dirserver": {
+        "description": "Serve a dir",
+        "name": "dirserver-1.0.0",
+        "type": "derivation"
+      },
+      "filebrowser": {
+        "name": "filebrowser",
+        "type": "derivation"
+      },
+      "fritzbox_exporter": {
+        "description": "Fritzbox exporter for prometheus",
+        "name": "fritzbox_exporter-latest",
+        "type": "derivation"
+      },
+      "hello-custom": {
+        "description": "A program that produces a familiar, friendly greeting",
+        "name": "hello-2.10",
+        "type": "derivation"
+      },
+      "mqtt2prometheus": {
+        "description": "TODO",
+        "name": "mqtt2prometheus-latest",
+        "type": "derivation"
+      },
+      "smartmon-script": {
+        "name": "smartmon-script",
+        "type": "derivation"
+      },
+      "tfenv": {
+        "description": "Terraform version manager",
+        "name": "tfenv-latest",
+        "type": "derivation"
+      },
+      "wezterm-bin": {
+        "description": "Wezterm terminal (pre-compiled binary version)",
+        "name": "wezterm-bin-nightly-2021",
+        "type": "derivation"
+      },
+      "wezterm-nightly": {
+        "description": "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust",
+        "name": "wezterm-nightly-20210818-nightly",
+        "type": "derivation"
+      },
+      "xscreensaver": {
+        "description": "A set of screensavers",
+        "name": "xscreensaver-6.01",
+        "type": "derivation"
+      }
+    },
+    "x86_64-linux": {
+      "darktile": {
+        "description": "GPU rendered terminal emulator designed for tiling window managers.",
+        "name": "darktile-0.0.10",
+        "type": "derivation"
+      },
+      "dirserver": {
+        "description": "Serve a dir",
+        "name": "dirserver-1.0.0",
+        "type": "derivation"
+      },
+      "filebrowser": {
+        "name": "filebrowser",
+        "type": "derivation"
+      },
+      "fritzbox_exporter": {
+        "description": "Fritzbox exporter for prometheus",
+        "name": "fritzbox_exporter-latest",
+        "type": "derivation"
+      },
+      "hello-custom": {
+        "description": "A program that produces a familiar, friendly greeting",
+        "name": "hello-2.10",
+        "type": "derivation"
+      },
+      "mqtt2prometheus": {
+        "description": "TODO",
+        "name": "mqtt2prometheus-latest",
+        "type": "derivation"
+      },
+      "smartmon-script": {
+        "name": "smartmon-script",
+        "type": "derivation"
+      },
+      "tfenv": {
+        "description": "Terraform version manager",
+        "name": "tfenv-latest",
+        "type": "derivation"
+      },
+      "wezterm-bin": {
+        "description": "Wezterm terminal (pre-compiled binary version)",
+        "name": "wezterm-bin-nightly-2021",
+        "type": "derivation"
+      },
+      "wezterm-nightly": {
+        "description": "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust",
+        "name": "wezterm-nightly-20210818-nightly",
+        "type": "derivation"
+      },
+      "xscreensaver": {
+        "description": "A set of screensavers",
+        "name": "xscreensaver-6.01",
+        "type": "derivation"
+      }
+    }
+  }
+}

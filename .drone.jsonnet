@@ -1,4 +1,5 @@
 {
+
 	"kind": "pipeline",
 		"type": "exec",
 		"name": "Build all hosts",
@@ -12,11 +13,22 @@
 
 
 		"steps": [
+
+
 		{
 			"name": "Show flake info",
 			"commands": [
 				"nix --experimental-features 'nix-command flakes' flake show",
 			"nix --experimental-features 'nix-command flakes' flake metadata"
+			]
+		},
+
+
+		{
+			"name": "test jhsonnet",
+			"commands": [
+			local tost = import info.json;
+				"echo " + tost,
 			]
 		},
 
