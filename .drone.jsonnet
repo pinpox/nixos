@@ -4,8 +4,8 @@
 # Test configuration with:
 # nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
-local get_steps_hosts() =
-  local info = import 'info.json';
+local steps_hosts() =
+  local info = import './info.json';
   [
     {
       name: 'Build host: %s' % host,
@@ -16,9 +16,8 @@ local get_steps_hosts() =
     for host in std.objectFields(info.nixosConfigurations)
   ];
 
-
-local get_steps_packages() =
-  local info = import 'info.json';
+local steps_packages() =
+  local info = import './info.json';
   [
     {
       name: 'Build package: %s' % package,
@@ -44,8 +43,6 @@ local get_steps_packages() =
 
 
   steps: [
-
-
     {
       name: 'Show flake info',
       commands: [
@@ -53,14 +50,13 @@ local get_steps_packages() =
         "nix --experimental-features 'nix-command flakes' flake metadata",
       ],
     },
-
     {
       name: 'Run flake checks',
       commands: [
         "nix --experimental-features 'nix-command flakes' flake check --show-trace",
       ],
     },
-  ] + get_steps_hosts() + get_steps_packages(),
+  ] + steps_hosts() + steps_packages(),
 
   //
   //	 {
