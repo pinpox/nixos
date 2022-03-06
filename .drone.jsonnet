@@ -14,7 +14,8 @@ local steps_hosts() =
         "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
       ],
     }
-    for host in std.objectFields(info.nixosConfigurations)
+    #for host in std.objectFields(info.nixosConfigurations)
+	for host in [ "ahorn", "kartoffel"]
   ];
 
 local steps_packages() =
