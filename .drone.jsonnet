@@ -5,7 +5,7 @@
 # nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
 local steps_hosts() =
-  local info = import '$PWD/info.json';
+  local info = import std.extVar("PWD") + '/info.json';
   [
     {
       name: 'Build host: %s' % host,
@@ -17,7 +17,7 @@ local steps_hosts() =
   ];
 
 local steps_packages() =
-  local info = import '$PWD/info.json';
+  local info = import std.extVar("PWD") + '/info.json';
   [
     {
       name: 'Build package: %s' % package,
