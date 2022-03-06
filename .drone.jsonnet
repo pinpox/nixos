@@ -1,4 +1,10 @@
-local get_steps() =
+# Create/Update flake info file with:
+# nix flake show --json > info.json
+
+# Test configuration with:
+# nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
+
+local get_steps_hosts() =
   local info = import 'info.json';
   [
     {
@@ -8,6 +14,19 @@ local get_steps() =
       ],
     }
     for host in std.objectFields(info.nixosConfigurations)
+  ];
+
+
+local get_steps_packages() =
+  local info = import 'info.json';
+  [
+    {
+      name: 'Build package: %s' % package,
+      commands: [
+        "nix build -v -L '.#%s'" % package,
+      ],
+    }
+    for package in std.objectFields(info.packages['x86_64-linux'])
   ];
 
 {
@@ -41,13 +60,7 @@ local get_steps() =
         "nix --experimental-features 'nix-command flakes' flake check --show-trace",
       ],
     },
-    {
-      name: 'Build info.json',
-      commands: [
-        'nix flake show --json > info.json',
-      ],
-    },
-  ] + get_steps(),
+  ] + get_steps_hosts() + get_steps_packages(),
 
   //
   //	 {
