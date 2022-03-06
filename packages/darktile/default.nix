@@ -8,8 +8,8 @@ buildGoModule rec {
 
   buildInputs = with pkgs; [
     libglvnd.dev
-    xlibs.libXext.dev
-    xlibs.libXi.dev
+    xorg.libXext.dev
+    xorg.libXi.dev
     xorg.libX11
     xorg.libX11.dev
     xorg.libXcursor
