@@ -27,7 +27,7 @@
 		{
 			"name": "test jhsonnet",
 			"commands": [
-			local tost = import info.json;
+			tost = import info.json;
 				"echo " + tost,
 			]
 		},
