@@ -5,7 +5,8 @@
 # nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
 local env= std.extVar("build.environment");
-local info = import env;
+env
+local info = import 'info.json';
 
 local steps_hosts() =
   [
