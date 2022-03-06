@@ -1,4 +1,5 @@
 # Create/Update flake info file with:
+#
 # nix flake show --json > info.json
 
 # Test configuration with:
