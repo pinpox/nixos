@@ -1,23 +1,39 @@
-# Create/Update flake info file with:
-# nix flake show --json > info.json
+// Create/Update flake info file with:
+// nix flake show --json > info.json
 
-# Test configuration with:
-# nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
+// Test configuration with:
+// nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
-local env= std.extVar("build.environment");
-env
-local info = import 'info.json';
+// https://community.harness.io/t/can-you-import-your-own-jsonnet-libraries/9372/9
+// local info = import 'info.json';
+// local hosts = std.objectFields(info.nixosConfigurations);
+// local packages = std.objectFields(info.packages['x86_64-linux']);
 
-local steps_hosts() =
-  [
-    {
-      name: 'Build host: %s' % host,
-      commands: [
-        "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
-      ],
-    }
-    for host in std.objectFields(info.nixosConfigurations)
-  ];
+local hosts = ['ahorn', 'birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
+
+local packages = [
+  'darktile',
+  'dirserver',
+  'filebrowser',
+  'fritzbox_exporter',
+  'hello-custom',
+  'mqtt2prometheus',
+  'smartmon-script',
+  'tfenv',
+  'wezterm-bin',
+  'wezterm-nightly',
+  'xscreensaver',
+];
+
+local steps_hosts() = [
+  {
+    name: 'Build host: %s' % host,
+    commands: [
+      "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
+    ],
+  }
+  for host in hosts
+];
 
 local steps_packages() =
   [
@@ -27,7 +43,7 @@ local steps_packages() =
         "nix build -v -L '.#%s'" % package,
       ],
     }
-    for package in std.objectFields(info.packages['x86_64-linux'])
+    for package in packages
   ];
 
 {
@@ -42,7 +58,6 @@ local steps_packages() =
   },
 
   clone: { depth: 1 },
-
 
   steps: [
     {
