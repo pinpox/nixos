@@ -2,9 +2,9 @@
 
 buildGoModule rec {
   pname = "drone.io";
-  version = "2.4.0";
+  version = "2.10.0";
 
-  vendorSha256 = "sha256-42+40NdzMQV8ZriydthrbYhxLohQWpupNivTc9IRApk=";
+  vendorSha256 = "sha256-JWZCEKC4JMFhoZ8SsItNjkCrzSNfW6EyLEbtpThDxN0=";
 
   doCheck = false;
 
@@ -12,7 +12,7 @@ buildGoModule rec {
     owner = "drone";
     repo = "drone";
     rev = "v${version}";
-    sha256 = "sha256-YU0MEfiAC2/aCtjK59vo8AHkR68d8uv56yEu1PsAOUc=";
+    sha256 = "sha256-oGubP7e5pq6DOPOD22Tce2bYXMaVqHdveTrk9bvazek=";
   };
 
   tags = [ "nolimit" ];
