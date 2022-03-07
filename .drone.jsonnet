@@ -5,11 +5,11 @@
 // nix-shell -p jsonnet --run 'jsonnet .drone.jsonnet'
 
 // https://community.harness.io/t/can-you-import-your-own-jsonnet-libraries/9372/9
-local info = import 'info.json';
-local hosts = std.objectFields(info.nixosConfigurations);
+// local info = import 'info.json';
+// local hosts = std.objectFields(info.nixosConfigurations);
 // local packages = std.objectFields(info.packages['x86_64-linux']);
 
-// local hosts = ['ahorn', 'birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
+local hosts = ['ahorn', 'birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
 
 local packages = [
   'darktile',
