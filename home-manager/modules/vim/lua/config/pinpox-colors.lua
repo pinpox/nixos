@@ -376,7 +376,7 @@ Group.new('javascriptVariable',            c.Magenta, c.none,   no)
 -- JSON
 Group.new('jsonCommentError',              c.White, c.none,   no)
 Group.new('jsonKeyword',                   c.Red, c.none,   no)
-Group.new('jsonQuote',                     c.Grey, c.none,   no)
+Group.new('jsonQuote',                     c.Blue, c.none,   no)
 Group.new('jsonTrailingCommaError',        c.Red, c.none,   r)
 Group.new('jsonMissingCommaError',         c.Red, c.none,   r)
 Group.new('jsonNoQuotesError',             c.Red, c.none,   r)

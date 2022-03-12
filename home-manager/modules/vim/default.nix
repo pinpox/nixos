@@ -133,6 +133,7 @@ in {
       haskell-vim
       lualine-nvim
       nvim-lspconfig
+      vim-jsonnet
 
       cmp-nvim-lsp
       cmp-buffer
