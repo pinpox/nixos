@@ -54,6 +54,27 @@ in {
       enable = true;
       secretKeyFile = "/run/keys/cache-priv-key";
     };
+    /*
+
+    nix.extraOptions = let
+      upload-script = pkgs.writeShellScript "upload-to-cache" ''
+
+        #!/bin/sh
+
+        set -eu
+        set -f # disable globbing
+        export IFS=' '
+
+        echo "Signing paths" $OUT_PATHS
+        nix store sign --key-file /run/keys/cache-priv-key $OUT_PATHS
+        echo "Uploading paths" $OUT_PATHS
+        exec nix copy --to 's3://example-nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $OUT_PATHS
+      '';
+    in ''
+      post-build-hook = ${upload-script}
+    '';
+
+    /*
 
     services.nginx = {
       enable = true;
