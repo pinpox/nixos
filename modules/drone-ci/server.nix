@@ -49,6 +49,9 @@ in {
           "DRONE_SERVER_PORT=:3030"
           "DRONE_USER_FILTER=lounge-rocks"
           "DRONE_USER_CREATE=username:${cfg.drone-admin},admin:true"
+          "DRONE_JSONNET_ENABLED=true"
+          # "DRONE_CONVERT_PLUGIN_ENDPOINT=https://eo2xuqni4b4wewx.m.pipedream.net"
+          "DRONE_STARLARK_ENABLED=true"
         ];
 
         # TODO remove when https://github.com/NixOS/nixpkgs/pull/124014 is
