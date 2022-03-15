@@ -20,7 +20,7 @@ in {
     ./modules/credentials.nix
     ./modules/dunst.nix
     ./modules/fonts.nix
-    ./modules/games.nix
+    # ./modules/games.nix
     ./modules/git.nix
     ./modules/go.nix
     ./modules/gtk.nix
