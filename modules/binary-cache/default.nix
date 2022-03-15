@@ -74,7 +74,7 @@ in {
       post-build-hook = ${upload-script}
     '';
 
-    /*
+    */
 
     services.nginx = {
       enable = true;
