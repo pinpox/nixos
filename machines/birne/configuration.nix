@@ -1,26 +1,7 @@
 # Configuration for birne
-
-{ self, ... }: 
-{config, pkgs, ... }: {
+{ self, ... }:
+{ config, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
-
-  services.minio = {
-    enable = true;
-    listenAddress = "${config.pinpox.wg-client.clientIp}:9000";
-    consoleAddress = "${config.pinpox.wg-client.clientIp}:9001";
-    # listenAddress = "192.168.2.84:9000";
-    # consoleAddress = "192.168.2.84:9001";
-    region = "eu-central-1";
-    rootCredentialsFile = "/var/src/secrets/minio/env";
-  };
-
-  systemd.services.minio = {
-
-    environment = {
-      MINIO_SERVER_URL = "https://vpn.s3.pablo.tools";
-      MINIO_BROWSER_REDIRECT_URL = "https://vpn.minio.pablo.tools";
-    };
-  };
 
   /* services.navidrome = {
        enable = true;
@@ -137,6 +118,8 @@
 
     services = {
 
+      minio.enable = true;
+
       # Backup up this host itself
       borg-backup.enable = true;
 
@@ -219,7 +202,7 @@
   # };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 9000 9001 4533 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 4533 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

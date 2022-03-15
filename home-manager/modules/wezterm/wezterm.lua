@@ -28,7 +28,8 @@ return {
   },
 
 	set_environment_variables = {
-		EDITOR = "nvim"
+		EDITOR = "nvim",
+		VISUAL = "nvim"
 	},
 
 	-- Close pane/tab when shell exits (e.g. Ctrl-D)
