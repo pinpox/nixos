@@ -51,22 +51,17 @@
 
   services.nginx = {
 
-    resolver = {
-      addresses = [
-        "1.1.1.1"
-      ];
-
-
-    };
-
+    # resolver = {
+    #   addresses = [
+    #     "1.1.1.1"
+    #   ];
+    # };
 
     enable = true;
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
     clientMaxBodySize = "128m";
     recommendedProxySettings = true;
-
-logError = "stderr debug";
 
     # Needed for vaultwarden, it seems to have trouble serving scripts for
     # the frontend without it.

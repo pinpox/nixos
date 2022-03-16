@@ -15,6 +15,8 @@ in {
       consoleAddress = "${config.pinpox.wg-client.clientIp}:9001";
       region = "eu-central-1";
       rootCredentialsFile = "/var/src/secrets/minio/env";
+      dataDir = [ "/mnt/data/minio/data" ];
+      configDir = "/mnt/data/minio/config";
     };
 
     systemd.services.minio = {
