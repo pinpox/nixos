@@ -20,6 +20,7 @@ end)
 
 return {
 
+-- experimental_shape_post_processing = true,
   window_padding = {
     left = 0,
     right = 0,
@@ -28,43 +29,46 @@ return {
   },
 
 	set_environment_variables = {
-		EDITOR = "nvim"
+		EDITOR = "nvim",
+		VISUAL = "nvim"
 	},
 
-	-- Close pane/tab when shell exits (e.g. Ctrl-D)
-    exit_behavior = "Close",
+		-- Close pane/tab when shell exits (e.g. Ctrl-D)
+		exit_behavior = "Close",
 
-	-- Uses $SHELL by default. Only needed when using the appimage build
-	-- default_prog = {"zsh", "-l"},
+		-- Uses $SHELL by default. Only needed when using the appimage build
+		-- default_prog = {"zsh", "-l"},
 
-	-- Leader key, use with mods="LEADER"
-	leader = { key="\\", mods="CTRL" },
+		-- Leader key, use with mods="LEADER"
+		leader = { key="\\", mods="CTRL" },
 
-	keys = {
-		-- Panes
-		{ key = "|",   mods="LEADER",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-		{ key = "\\",  mods="LEADER",     action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
-		{ key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentPane={confirm=true}}},
-		-- { key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentTab={confirm=true}}
-		{ key = "h",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Left"}},
-		{ key = "l",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Right"}},
-		{ key = "k",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Up"}},
-		{ key = "j",   mods="CTRL|SHIFT", action=wezterm.action{ActivatePaneDirection="Down"}},
-		-- Tabs
-		{ key = "t",   mods="CTRL|SHIFT", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
-		{ key = "Tab", mods="CTRL",       action=wezterm.action{ActivateTabRelative=-1}},
-		{ key = "Tab", mods="CTRL|SHIFT", action=wezterm.action{ActivateTabRelative=1}},
-		{ key = "1",   mods="CTRL",       action=wezterm.action{ActivateTab=(1-1)}},
-		{ key = "2",   mods="CTRL",       action=wezterm.action{ActivateTab=(2-1)}},
-		{ key = "3",   mods="CTRL",       action=wezterm.action{ActivateTab=(3-1)}},
-		{ key = "4",   mods="CTRL",       action=wezterm.action{ActivateTab=(4-1)}},
-		{ key = "5",   mods="CTRL",       action=wezterm.action{ActivateTab=(5-1)}},
-		{ key = "6",   mods="CTRL",       action=wezterm.action{ActivateTab=(6-1)}},
-		{ key = "7",   mods="CTRL",       action=wezterm.action{ActivateTab=(7-1)}},
-		{ key = "8",   mods="CTRL",       action=wezterm.action{ActivateTab=(8-1)}},
-		{ key = "9",   mods="CTRL",       action=wezterm.action{ActivateTab=(9-1)}},
-	},
+		disable_default_key_bindings = true,
+		-- debug_key_events = true,
 
+		keys = {
+				-- Panes
+				{ key = "\\",         mods="LEADER|SHIFT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+				{ key = "\\",         mods="LEADER",       action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+				{ key = "mapped:w",   mods="CTRL|SHIFT",   action=wezterm.action{CloseCurrentPane={confirm=true}}},
+				-- { key = "w",   mods="CTRL|SHIFT", action=wezterm.action{CloseCurrentTab={confirm=true}}
+				{ key = "mapped:h",   mods="CTRL|SHIFT",   action=wezterm.action{ActivatePaneDirection="Left"}},
+				{ key = "mapped:l",   mods="CTRL|SHIFT",   action=wezterm.action{ActivatePaneDirection="Right"}},
+				{ key = "mapped:k",   mods="CTRL|SHIFT",   action=wezterm.action{ActivatePaneDirection="Up"}},
+				{ key = "mapped:j",   mods="CTRL|SHIFT",   action=wezterm.action{ActivatePaneDirection="Down"}},
+				-- Tabs
+				{ key = "mapped:t",   mods="CTRL|SHIFT",   action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
+				{ key = "Tab",        mods="CTRL",         action=wezterm.action{ActivateTabRelative=-1}},
+				{ key = "Tab",        mods="CTRL|SHIFT",   action=wezterm.action{ActivateTabRelative=1}},
+				{ key = "1",          mods="CTRL",         action=wezterm.action{ActivateTab=(1-1)}},
+				{ key = "2",          mods="CTRL",         action=wezterm.action{ActivateTab=(2-1)}},
+				{ key = "3",          mods="CTRL",         action=wezterm.action{ActivateTab=(3-1)}},
+				{ key = "4",          mods="CTRL",         action=wezterm.action{ActivateTab=(4-1)}},
+				{ key = "5",          mods="CTRL",         action=wezterm.action{ActivateTab=(5-1)}},
+				{ key = "6",          mods="CTRL",         action=wezterm.action{ActivateTab=(6-1)}},
+				{ key = "7",          mods="CTRL",         action=wezterm.action{ActivateTab=(7-1)}},
+				{ key = "8",          mods="CTRL",         action=wezterm.action{ActivateTab=(8-1)}},
+				{ key = "9",          mods="CTRL",         action=wezterm.action{ActivateTab=(9-1)}},
+		},
 
 	-- Default font
 	font = wezterm.font_with_fallback( {
