@@ -20,6 +20,7 @@ end)
 
 return {
 
+-- experimental_shape_post_processing = true,
   window_padding = {
     left = 0,
     right = 0,
