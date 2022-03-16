@@ -61,14 +61,14 @@
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
 
       yotp = ''
-          ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
-     		  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
-     				'';
+             ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
+        		  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
+        				'';
 
       zzz = "systemctl suspend";
 
       serve = "${pkgs.dirserver}/bin/dirserver";
-        # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
+      # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
     prezto = {
