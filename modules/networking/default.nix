@@ -53,6 +53,8 @@ in {
         192.168.7.1 vpn.prometheus.pablo.tools
         192.168.7.1 vpn.notify.pablo.tools
         # 192.168.7.4 files.pablo.tools
+        192.168.7.1 vpn.s3.pablo.tools
+        192.168.7.1 vpn.minio.pablo.tools
       '';
     };
   };

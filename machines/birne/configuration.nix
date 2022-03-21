@@ -1,91 +1,82 @@
 # Configuration for birne
-
-{ self, ... }: {
+{ self, ... }:
+{ config, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
-  /*
+  /* services.navidrome = {
+       enable = true;
 
-  services.navidrome = {
-    enable = true;
+       settings = {
+         Address = "192.168.2.84";
+         Port = 4533;
+         MusicFolder = "/mnt/data/admin/ARCHIVE/Musik/Alphabetisch/";
+       };
+     };
 
-    settings = {
-      Address = "192.168.2.84";
-      Port = 4533;
-      MusicFolder = "/mnt/data/admin/ARCHIVE/Musik/Alphabetisch/";
-    };
-  };
+     services.seafile = {
 
-  services.minio = {
-    enable = true;
-    listenAddress = "192.168.2.84:9000";
-    consoleAddress = "192.168.2.84:9001";
-  };
+       enable = false;
 
-  services.seafile = {
+       # Configuration for seafile-server, see https://manual.seafile.com/config/seafile-conf/
+       seafileSettings = {
+         fileserver = {
+           port = 8082;
+           host = "192.168.2.84";
+         };
 
-    enable = false;
+       };
 
-    # Configuration for seafile-server, see https://manual.seafile.com/config/seafile-conf/
-    seafileSettings = {
-      fileserver = {
-        port = 8082;
-        host = "192.168.2.84";
-      };
+       initialAdminPassword = "test";
+       # Configuration for ccnet, see https://manual.seafile.com/config/ccnet-conf/
+       ccnetSettings = { General = { SERVICE_URL = "https://seafile.pablo"; }; };
 
-    };
+       adminEmail = "mail@pablo.tools";
 
-    initialAdminPassword = "test";
-    # Configuration for ccnet, see https://manual.seafile.com/config/ccnet-conf/
-    ccnetSettings = { General = { SERVICE_URL = "https://seafile.pablo"; }; };
+       # Extra config to append to `seahub_settings.py` file. Refer to https://manual.seafile.com/config/seahub_settings_py/
+       seahubExtraConf = "";
 
-    adminEmail = "mail@pablo.tools";
+     };
 
-    # Extra config to append to `seahub_settings.py` file. Refer to https://manual.seafile.com/config/seahub_settings_py/
-    seahubExtraConf = "";
+     services.nginx = {
+       enable = true;
+       virtualHosts."seafile.pablo.tools" = {
+         locations."/" = {
+           proxyPass = "http://unix:/run/seahub/gunicorn.sock";
+           # extraConfig = ''
+           #   proxy_set_header X-Forwarded-Proto https;
+           # '';
+         };
+         locations."/seafhttp" = {
+           proxyPass = "http://127.0.0.1:8082";
+           # extraConfig = ''
+           #   rewrite ^/seafhttp(.*)$ $1 break;
+           #   client_max_body_size 0;
+           #   proxy_connect_timeout  36000s;
+           #   proxy_set_header X-Forwarded-Proto https;
+           #   proxy_set_header Host $host:$server_port;
+           #   proxy_read_timeout  36000s;
+           #   proxy_send_timeout  36000s;
+           #   send_timeout  36000s;
+           #   proxy_http_version 1.1;
+           # '';
+         };
+       };
+     };
 
-  };
+     # "seafile.example.com" = {
+     #   forceSSL = true;
+     #   enableACME = true;
+     #   locations."/" = {
+     #     proxyPass =
+     #       "http://unix:/var/run/seahub/gunicorn.sock";
+     #   };
 
-  services.nginx = {
-    enable = true;
-    virtualHosts."seafile.pablo.tools" = {
-      locations."/" = {
-        proxyPass = "http://unix:/run/seahub/gunicorn.sock";
-        # extraConfig = ''
-        #   proxy_set_header X-Forwarded-Proto https;
-        # '';
-      };
-      locations."/seafhttp" = {
-        proxyPass = "http://127.0.0.1:8082";
-        # extraConfig = ''
-        #   rewrite ^/seafhttp(.*)$ $1 break;
-        #   client_max_body_size 0;
-        #   proxy_connect_timeout  36000s;
-        #   proxy_set_header X-Forwarded-Proto https;
-        #   proxy_set_header Host $host:$server_port;
-        #   proxy_read_timeout  36000s;
-        #   proxy_send_timeout  36000s;
-        #   send_timeout  36000s;
-        #   proxy_http_version 1.1;
-        # '';
-      };
-    };
-  };
-
-  # "seafile.example.com" = {
-  #   forceSSL = true;      
-  #   enableACME = true;   
-  #   locations."/" = {
-  #     proxyPass =
-  #       "http://unix:/var/run/seahub/gunicorn.sock";
-  #   };
-
-  # locations."/seafhttp" = {
-  #   proxyPass =                                             
-  #     "http://127.0.0.1:${toString config.services.seafile.seafileSettings.fileserver.port}";
-  # };        
-  # }; 
-  # ```
-
+     # locations."/seafhttp" = {
+     #   proxyPass =
+     #     "http://127.0.0.1:${toString config.services.seafile.seafileSettings.fileserver.port}";
+     # };
+     # };
+     # ```
   */
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -126,6 +117,8 @@
     };
 
     services = {
+
+      minio.enable = true;
 
       # Backup up this host itself
       borg-backup.enable = true;
@@ -209,7 +202,7 @@
   # };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 9000 9001 4533 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 4533 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

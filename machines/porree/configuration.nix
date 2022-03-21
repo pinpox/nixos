@@ -50,6 +50,13 @@
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   services.nginx = {
+
+    # resolver = {
+    #   addresses = [
+    #     "1.1.1.1"
+    #   ];
+    # };
+
     enable = true;
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
@@ -60,6 +67,8 @@
     # the frontend without it.
     commonHttpConfig = ''
       server_names_hash_bucket_size 128;
+      proxy_headers_hash_max_size 1024;
+      proxy_headers_hash_bucket_size 256;
     '';
 
     # No need to support plain HTTP, forcing TLS for all vhosts. Certificates
@@ -150,6 +159,95 @@
         locations."/" = {
           proxyPass = "http://birne.wireguard:8123";
           proxyWebsockets = true;
+        };
+      };
+
+      # Minio admin console
+      "vpn.minio.pablo.tools" = {
+
+        listen = [{
+          addr = "192.168.7.1";
+          port = 443;
+          ssl = true;
+        }];
+
+        addSSL = true;
+        enableACME = true;
+
+        extraConfig = ''
+          # To allow special characters in headers
+          ignore_invalid_headers off;
+          # Allow any size file to be uploaded.
+          # Set to a value such as 1000m; to restrict file size to a specific value
+          client_max_body_size 0;
+          # To disable buffering
+          proxy_buffering off;
+        '';
+
+        locations = {
+          "/" = {
+            proxyPass = "http://birne.wireguard:9001";
+            extraConfig = ''
+
+
+
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+              proxy_set_header X-Forwarded-Proto $scheme;
+
+              # proxy_set_header Host $host;
+
+
+
+
+              proxy_connect_timeout 300;
+              # Default is HTTP/1, keepalive is only enabled in HTTP/1.1
+              proxy_http_version 1.1;
+              proxy_set_header Connection "";
+              chunked_transfer_encoding off;
+            '';
+          };
+        };
+      };
+
+      # Minio s3 backend
+      "vpn.s3.pablo.tools" = {
+
+        listen = [{
+          addr = "192.168.7.1";
+          port = 443;
+          ssl = true;
+        }];
+
+        addSSL = true;
+        enableACME = true;
+
+        extraConfig = ''
+          # To allow special characters in headers
+          ignore_invalid_headers off;
+          # Allow any size file to be uploaded.
+          # Set to a value such as 1000m; to restrict file size to a specific value
+          client_max_body_size 0;
+          # To disable buffering
+          proxy_buffering off;
+        '';
+
+        locations = {
+          "/" = {
+            proxyPass = "http://birne.wireguard:9000";
+            extraConfig = ''
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              # proxy_set_header Host $host;
+              proxy_connect_timeout 300;
+              # Default is HTTP/1, keepalive is only enabled in HTTP/1.1
+              proxy_http_version 1.1;
+              proxy_set_header Connection "";
+              chunked_transfer_encoding off;
+            '';
+          };
         };
       };
 

@@ -26,13 +26,13 @@ let
 
 in rustPlatform.buildRustPackage rec {
   pname = "wezterm-nightly";
-  version = "20210818-nightly";
+  version = "a0b8d2196a260726eca28b32fecaeb87420851ec";
 
   src = fetchFromGitHub {
     owner = "wez";
     repo = "wezterm";
-    rev = "4a1c4b55662e6f6217f84137baa5ed0776753e56"; # 2022-02-14
-    sha256 = "sha256-tIbNFZUiGorOrmVxC9OJ5y0R2P6Ruc5xSo/D+JuToBk=";
+    rev = "a0b8d2196a260726eca28b32fecaeb87420851ec"; # 2022-03-16
+    sha256 = "sha256-XLp9RhgLGgqs+iu7purxIVn+FsISUD3NoBLydSY7lyY=";
     fetchSubmodules = true;
   };
 
@@ -40,7 +40,7 @@ in rustPlatform.buildRustPackage rec {
     echo ${version} > .tag
   '';
 
-  cargoSha256 = "sha256-+e/hbiXPC9RpHvXeNBBhdjcbXVntOU7e1xx3beEbPSw=";
+  cargoSha256 = "sha256-ygNwvQdY1S6QBJbksU/anUSbRLajiesh2XxBk6uRnl8=";
 
   doCheck = false;
 

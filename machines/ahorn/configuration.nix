@@ -23,6 +23,7 @@
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
+  pinpox.services.restic-client.enable = true;
   pinpox.desktop = {
     enable = true;
     wireguardIp = "192.168.7.2";
@@ -33,13 +34,12 @@
   # TODO remove when no longer needed
   networking.firewall.allowedTCPPorts = [ 8080 ];
 
-  /*
-  networking.interfaces.enp0s20f0u4u1u1.ipv4.routes = [{
-  address = "10.88.88.0";
-  prefixLength = 24;
-  via = "192.168.2.1";
-  options = { metric = "0"; };
-  }];
+  /* networking.interfaces.enp0s20f0u4u1u1.ipv4.routes = [{
+     address = "10.88.88.0";
+     prefixLength = 24;
+     via = "192.168.2.1";
+     options = { metric = "0"; };
+     }];
   */
 
-  }
+}
