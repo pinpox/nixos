@@ -42,6 +42,10 @@ in {
 
     nix.settings.allowed-users = [ "nix-serve" "push-cache" ];
 
+    nix.extraOptions = ''
+      secret-key-files = /run/keys/cache-priv-key;
+    '';
+
     # Write-key secret file
     krops.secrets.files = {
       cache-priv-key = {
