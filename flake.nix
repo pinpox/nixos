@@ -215,10 +215,10 @@
         apps = {
           # Allow custom packages to be run using `nix run`
           hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-          wezterm-bin = flake-utils.lib.mkApp {
-            drv = packages.wezterm-bin;
-            exePath = "/bin/wezterm";
-          };
+          # wezterm-bin = flake-utils.lib.mkApp {
+          #   drv = packages.wezterm-bin;
+          #   exePath = "/bin/wezterm";
+          # };
         };
 
         # Checks to run with `nix flake check -L`, will run in a QEMU VM.
