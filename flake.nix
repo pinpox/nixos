@@ -191,7 +191,7 @@
     (system:
       let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlay;
       in rec {
-        # Custom packages added via the overlay are selectively added here, to
+        # Custom packages added via the overlay are selectively exposed here, to
         # allow using them from other flakes that import this one.
         packages = flake-utils.lib.flattenTree {
           # wezterm-bin = pkgs.wezterm-bin;
@@ -205,10 +205,6 @@
           xscreensaver = pkgs.xscreensaver;
           smartmon-script = pkgs.smartmon-script;
           tfenv = pkgs.tfenv;
-
-          # rules = pkgs.writeText "secret-rules" ''
-          #     ${self.nixosConfigurations.kartoffel.config.networking.hostName}
-          #   '';
         };
 
         # Run with: nix develop '.#test-shell'
