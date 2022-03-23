@@ -194,7 +194,7 @@
         # Custom packages added via the overlay are selectively added here, to
         # allow using them from other flakes that import this one.
         packages = flake-utils.lib.flattenTree {
-          wezterm-bin = pkgs.wezterm-bin;
+          # wezterm-bin = pkgs.wezterm-bin;
           wezterm-nightly = pkgs.wezterm-nightly;
           hello-custom = pkgs.hello-custom;
           filebrowser = pkgs.filebrowser;
