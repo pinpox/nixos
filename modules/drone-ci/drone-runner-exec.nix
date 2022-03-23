@@ -72,7 +72,7 @@ in {
     };
     users.groups.drone-runner-exec = { };
 
-    nix.allowedUsers = [ "drone-runner-exec" ];
+    nix.settings.allowed-users = [ "drone-runner-exec" ];
 
   };
 }

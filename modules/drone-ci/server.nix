@@ -50,6 +50,7 @@ in {
           "DRONE_USER_FILTER=lounge-rocks"
           "DRONE_USER_CREATE=username:${cfg.drone-admin},admin:true"
           "DRONE_JSONNET_ENABLED=true"
+          "DRONE_JSONNET_IMPORT_LIMIT=5"
           # "DRONE_CONVERT_PLUGIN_ENDPOINT=https://eo2xuqni4b4wewx.m.pipedream.net"
           "DRONE_STARLARK_ENABLED=true"
         ];
