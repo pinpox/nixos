@@ -86,59 +86,12 @@
   };
   outputs = { self, ... }@inputs:
     with inputs;
-    let
-      # Function to create default (common) system config options
-      defFlakeSystem = baseCfg:
-        nixpkgs.lib.nixosSystem {
-
-          system = "x86_64-linux";
-          modules = [
-
-            # Make inputs and overlay accessible as module parameters
-            { _module.args.inputs = inputs; }
-            { _module.args.self-overlay = self.overlay; }
-
-            ({ ... }: {
-              imports = builtins.attrValues self.nixosModules ++ [
-                {
-                  # Set the $NIX_PATH entry for nixpkgs. This is necessary in
-                  # this setup with flakes, otherwise commands like `nix-shell
-                  # -p pkgs.htop` will keep using an old version of nixpkgs.
-                  # With this entry in $NIX_PATH it is possible (and
-                  # recommended) to remove the `nixos` channel for both users
-                  # and root e.g. `nix-channel --remove nixos`. `nix-channel
-                  # --list` should be empty for all users afterwards
-                  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                  nixpkgs.overlays = [
-                    self.overlay
-                    nur.overlay
-                    # neovim-nightly.overlay
-                  ];
-
-                  # DON'T set useGlobalPackages! It's not necessary in newer
-                  # home-manager versions and does not work with configs using
-                  # nixpkgs.config`
-                  home-manager.useUserPackages = true;
-                }
-                baseCfg
-                home-manager.nixosModules.home-manager
-              ];
-
-              # Let 'nixos-version --json' know the Git revision of this flake.
-              system.configurationRevision =
-                nixpkgs.lib.mkIf (self ? rev) self.rev;
-              nix.registry.nixpkgs.flake = nixpkgs;
-              nix.registry.pinpox.flake = self;
-            })
-          ];
-        };
-
-    in {
+    {
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
-      overlay = final: prev: (import ./overlays inputs) final prev;
+      overlays.default = final: prev: (import ./overlays inputs) final prev;
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
@@ -152,9 +105,19 @@
       # configuration.nix that will be read first
       nixosConfigurations = builtins.listToAttrs (map (x: {
         name = x;
-        value = defFlakeSystem {
-          imports = [
-            (import (./machines + "/${x}/configuration.nix") { inherit self; })
+        value = nixpkgs.lib.nixosSystem {
+
+          # Make inputs and the flake itself accessible as module parameters.
+          # Technically, adding the inputs is redundant as they can be also
+          # accessed with flake-self.inputs.X, but adding them individually
+          # allows to only pass what is needed to each module.
+          specialArgs = { flake-self = self; } // inputs;
+
+          system = "x86_64-linux";
+
+          modules = [
+            (./machines + "/${x}/configuration.nix")
+            { imports = builtins.attrValues self.nixosModules; }
           ];
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
@@ -189,7 +152,7 @@
     # system. This works as all packages are compatible with all architectures
     (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
     (system:
-      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlay;
+      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         # Custom packages added via the overlay are selectively exposed here, to
         # allow using them from other flakes that import this one.

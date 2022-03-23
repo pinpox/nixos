@@ -1,9 +1,9 @@
-{ lib, pkgs, config, inputs, self-overlay, ... }:
+{ lib, nur, dotfiles-awesome, pkgs, config, flake-self, home-manager, ... }:
 with lib;
 let cfg = config.pinpox.desktop;
 in {
 
-  imports = [ ../../users/pinpox.nix ];
+  imports = [ ../../users/pinpox.nix home-manager.nixosModules.home-manager ];
 
   options.pinpox.desktop = {
 
@@ -43,18 +43,22 @@ in {
 
   config = mkIf cfg.enable {
 
-    home-manager.users.pinpox = {
+    # DON'T set useGlobalPackages! It's not necessary in newer
+    # home-manager versions and does not work with configs using
+    # nixpkgs.config`
+    home-manager.useUserPackages = true;
 
-      # Pass inputs to home-manager modules
-      _module.args.flake-inputs = inputs;
+    nixpkgs.overlays = [ nur.overlay ];
+
+    home-manager.users.pinpox = {
 
       imports = [
         ../../home-manager/home.nix
-        inputs.dotfiles-awesome.nixosModules.dotfiles
+        dotfiles-awesome.nixosModules.dotfiles
         {
           nixpkgs.overlays = [
-            self-overlay
-            inputs.nur.overlay
+            flake-self.overlays.default
+            nur.overlay
             # inputs.neovim-nightly.overlay 
           ];
         }
@@ -105,7 +109,7 @@ in {
     environment.systemPackages = with pkgs; [
 
       # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
-      nur.repos.mic92.irc-announce
+      pkgs.nur.repos.mic92.irc-announce
 
       # borgbackup
       # wezterm-nightly

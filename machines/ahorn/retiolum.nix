@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, retiolum, ... }:
 
 with lib;
 
@@ -6,8 +6,6 @@ let
 
   netname = "retiolum";
   cfg = config.networking.retiolum;
-
-  retiolum = inputs.retiolum;
 
   # pkgs.fetchgit {
   #   url = "https://github.com/krebs/retiolum.git";
