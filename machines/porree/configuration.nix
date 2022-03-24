@@ -1,10 +1,7 @@
-{ self, ... }:
-{ pkgs, ... }: {
+{ matrix-hook, ... }: {
 
-  imports = [
-    ./hardware-configuration.nix
-    self.inputs.matrix-hook.nixosModules.matrix-hook
-  ];
+  imports =
+    [ ./hardware-configuration.nix matrix-hook.nixosModules.matrix-hook ];
 
   # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
@@ -298,7 +295,7 @@
       matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
       envFile = "/var/src/secrets/matrix-hook/envfile";
       msgTemplatePath = "${
-          self.inputs.matrix-hook.packages."x86_64-linux".matrix-hook
+          matrix-hook.packages."x86_64-linux".matrix-hook
         }/bin/message.html.tmpl";
     };
 

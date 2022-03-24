@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, flake-self, nixpkgs, ... }:
 with lib;
 let cfg = config.pinpox.defaults.nix;
 in {
@@ -17,10 +17,27 @@ in {
             flake_input_last_modified{input="${i}",${
               concatStringsSep "," (mapAttrsToList (n: v: ''${n}="${v}"'')
                 (filterAttrs (n: v: (builtins.typeOf v) == "string")
-                  inputs."${i}"))
-            }} ${toString inputs."${i}".lastModified}'') (attrNames inputs))}
+                  flake-self.inputs."${i}"))
+            }} ${toString flake-self.inputs."${i}".lastModified}'')
+          (attrNames flake-self.inputs))}
       '';
     };
+
+    # Set the $NIX_PATH entry for nixpkgs. This is necessary in
+    # this setup with flakes, otherwise commands like `nix-shell
+    # -p pkgs.htop` will keep using an old version of nixpkgs.
+    # With this entry in $NIX_PATH it is possible (and
+    # recommended) to remove the `nixos` channel for both users
+    # and root e.g. `nix-channel --remove nixos`. `nix-channel
+    # --list` should be empty for all users afterwards
+    nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    nixpkgs.overlays = [ flake-self.overlays.default ];
+
+    # Let 'nixos-version --json' know the Git revision of this flake.
+    system.configurationRevision =
+      nixpkgs.lib.mkIf (flake-self ? rev) flake-self.rev;
+    nix.registry.nixpkgs.flake = nixpkgs;
+    nix.registry.pinpox.flake = flake-self;
 
     # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;

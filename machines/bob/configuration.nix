@@ -1,5 +1,4 @@
 # Configuration for bob
-{ self, ... }:
 { pkgs, ... }: {
 
   imports = [ ./hardware-configuration.nix ];

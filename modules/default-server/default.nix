@@ -1,4 +1,4 @@
-{ lib, pkgs, config, inputs, self-overlay, ... }:
+{ lib, pkgs, dotfiles-awesome, nur, config, flake-self, ... }:
 with lib;
 let cfg = config.pinpox.server;
 in {
@@ -23,17 +23,14 @@ in {
     # Server-specific home-manager config
     home-manager.users.pinpox = {
 
-      # Pass inputs to home-manager modules
-      _module.args.flake-inputs = inputs;
-
       imports = [
         ../../home-manager/home-server.nix
-        inputs.dotfiles-awesome.nixosModules.dotfiles
+        dotfiles-awesome.nixosModules.dotfiles
         {
           nixpkgs.overlays = [
-            self-overlay
-            inputs.nur.overlay
-            # inputs.neovim-nightly.overlay 
+            flake-self.overlays.default
+            nur.overlay
+            # neovim-nightly.overlay 
           ];
         }
       ];
