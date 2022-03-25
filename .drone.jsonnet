@@ -43,10 +43,6 @@ local steps_packages() =
       name: 'Build package: %s' % package,
       commands: [
         "nix build -v -L '.#%s'" % package,
-      ],
-
-	  name: 'upload %s to binary cache via s3' % package,
-	  commands: [
 	    "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
       ],
 
