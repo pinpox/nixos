@@ -71,21 +71,23 @@
       # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
-    prezto = {
-      enable = true;
+    /* # Disabled because of https://github.com/sorin-ionescu/prezto/pull/1992
+       prezto = {
+         enable = true;
 
-      # Case insensitive completion
-      caseSensitive = false;
+         # Case insensitive completion
+         caseSensitive = false;
 
-      # Autoconvert .... to ../..
-      editor.dotExpansion = true;
+         # Autoconvert .... to ../..
+         editor.dotExpansion = true;
 
-      # Prezto modules to load
-      # pmodules = [ "utility" "editor" "directory" "completion"];
-      pmodules = [ "utility" "editor" "directory" ];
+         # Prezto modules to load
+         # pmodules = [ "utility" "editor" "directory" "completion"];
+         pmodules = [ "utility" "editor" "directory" ];
 
-      terminal.autoTitle = true;
-    };
+         terminal.autoTitle = true;
+       };
+    */
 
     plugins = [
       {
