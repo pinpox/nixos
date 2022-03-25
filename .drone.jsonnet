@@ -47,8 +47,8 @@ local steps_packages() =
       ],
 
 	  environment: {
-        AWS_ACCESS_KEY_ID: { from_secret: s3_access_key },
-        AWS_SECRET_ACCESS_KEY: { from_secret: s3_secret_key },
+        AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
+        AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
 	  },
     }
     for package in packages
