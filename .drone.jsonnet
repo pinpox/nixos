@@ -44,6 +44,16 @@ local steps_packages() =
       commands: [
         "nix build -v -L '.#%s'" % package,
       ],
+
+	  name: 'upload %s to binary cache via s3' % package,
+	  commands: [
+	    "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
+      ],
+
+	  environment: {
+        AWS_ACCESS_KEY_ID: { from_secret: s3_access_key },
+        AWS_SECRET_ACCESS_KEY: { from_secret: s3_secret_key },
+	  },
     }
     for package in packages
   ];
