@@ -32,7 +32,13 @@ local steps_hosts() = [
     name: 'Build host: %s' % host,
     commands: [
       "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
+	  "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
     ],
+
+	  environment: {
+        AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
+        AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
+	  },
   }
   for host in hosts
 ];
