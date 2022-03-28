@@ -13,32 +13,25 @@ local packages = std.objectFields(info.packages['x86_64-linux']);
 // local hosts = ['ahorn', 'birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
 // local packages = [ 'filebrowser', 'fritzbox_exporter', 'hello-custom', ];
 
-local build_hosts() = [
+local steps_hosts() = std.flatMap(function(host) [
   {
     name: 'Build host: %s' % host,
     commands: [
-      "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel' --out-link result-host-%s" % host,
+      "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
     ],
-  }
-  for host in hosts
-];
-
-local upload_hosts() = [
+  },
   {
     name: 'Upload host: %s' % host,
     commands: [
-	  "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result-host-%s) -L" % host,
+	  "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
     ],
 
-	environment: {
+    environment: {
       AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
       AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
-	},
-
-	depends_on: [ 'Build host: %s' % host ],
+    },
   }
-  for host in hosts
-];
+], hosts);
 
 local steps_packages() = std.flatMap(function(package) [
     {
@@ -50,15 +43,15 @@ local steps_packages() = std.flatMap(function(package) [
     {
       name: 'Upload package: %s' % package,
       commands: [
-	    // "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
-		"nix run 'github:lounge-rocks/the-lounge#s3uploader' result"
+	    "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
       ],
 
 	  environment: {
         AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
         AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
 	  },
-    }], packages);
+    }
+], packages);
 
 {
 
@@ -87,7 +80,7 @@ local steps_packages() = std.flatMap(function(package) [
         "nix --experimental-features 'nix-command flakes' flake check --show-trace",
       ],
     },
-  ] + build_hosts() + upload_hosts() + steps_packages(),
+  ] + steps_hosts() + steps_packages(),
 
   //
   //	 {
