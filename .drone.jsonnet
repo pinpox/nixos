@@ -43,7 +43,8 @@ local steps_packages() = std.flatMap(function(package) [
     {
       name: 'Upload package: %s' % package,
       commands: [
-	    "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
+		"nix run 'github:lounge-rocks/the-lounge#s3uploader' result"
+	    // "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
       ],
 
 	  environment: {
