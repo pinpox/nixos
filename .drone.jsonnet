@@ -23,8 +23,12 @@ local steps_hosts() = std.flatMap(function(host) [
   {
     name: 'Upload host: %s' % host,
     commands: [
-	  "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
+		"nix run 'github:lounge-rocks/the-lounge#s3uploader' result"
     ],
+
+	depends_on: [
+		'Build host: %s' % host,
+	],
 
     environment: {
       AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
@@ -44,7 +48,6 @@ local steps_packages() = std.flatMap(function(package) [
       name: 'Upload package: %s' % package,
       commands: [
 		"nix run 'github:lounge-rocks/the-lounge#s3uploader' result"
-	    // "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
       ],
 
 	  environment: {
