@@ -13,25 +13,32 @@ local packages = std.objectFields(info.packages['x86_64-linux']);
 // local hosts = ['ahorn', 'birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
 // local packages = [ 'filebrowser', 'fritzbox_exporter', 'hello-custom', ];
 
-local steps_hosts() = std.flatMap(function(host) [
+local build_hosts() = [
   {
     name: 'Build host: %s' % host,
     commands: [
-      "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
+      "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel' --out-link result-host-%s" % host,
     ],
-  },
+  }
+  for host in hosts
+];
+
+local upload_hosts() = [
   {
     name: 'Upload host: %s' % host,
     commands: [
-	  "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result/) -L"
+	  "nix copy --to 's3://nix-cache?scheme=https&region=eu-central-1&endpoint=s3.lounge.rocks' $(nix-store -qR result-host-%s) -L" % host,
     ],
 
-    environment: {
+	environment: {
       AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
       AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
-    },
+	},
+
+	depends_on: [ 'Build host: %s' % host ],
   }
-], hosts);
+  for host in hosts
+];
 
 local steps_packages() = std.flatMap(function(package) [
     {
@@ -50,8 +57,7 @@ local steps_packages() = std.flatMap(function(package) [
         AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
         AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
 	  },
-    }
-], packages);
+    }], packages);
 
 {
 
@@ -80,7 +86,7 @@ local steps_packages() = std.flatMap(function(package) [
         "nix --experimental-features 'nix-command flakes' flake check --show-trace",
       ],
     },
-  ] + steps_hosts() + steps_packages(),
+  ] + build_hosts() + upload_hosts() + steps_packages(),
 
   //
   //	 {
