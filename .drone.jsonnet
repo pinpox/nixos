@@ -26,9 +26,7 @@ local steps_hosts() = std.flatMap(function(host) [
 		"nix run 'github:lounge-rocks/the-lounge#s3uploader' result"
     ],
 
-	depends_on: [
-		'Build host: %s' % host,
-	],
+	depends_on: [ 'Build host: %s' % host ],
 
     environment: {
       AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
@@ -49,6 +47,8 @@ local steps_packages() = std.flatMap(function(package) [
       commands: [
 		"nix run 'github:lounge-rocks/the-lounge#s3uploader' result"
       ],
+
+	  depends_on: [ 'Upload package: %s' % package ],
 
 	  environment: {
         AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
