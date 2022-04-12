@@ -71,9 +71,9 @@
       # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
-    /* # Disabled because of https://github.com/sorin-ionescu/prezto/pull/1992
        prezto = {
          enable = true;
+		 prompt.theme = "pure";
 
          # Case insensitive completion
          caseSensitive = false;
@@ -83,11 +83,10 @@
 
          # Prezto modules to load
          # pmodules = [ "utility" "editor" "directory" "completion"];
-         pmodules = [ "utility" "editor" "directory" ];
+         pmodules = [ "utility" "editor" "directory" "prompt" ];
 
          terminal.autoTitle = true;
        };
-    */
 
     plugins = [
       {

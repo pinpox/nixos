@@ -1,2 +1,5 @@
 # Initialize prompt
-eval "$(starship init zsh)"
+#
+# Show nix-shell in right prompt
+local snowflake='❄'
+[[ ! -z "$IN_NIX_SHELL" ]] && RPROMPT="%F{blue}$IN_NIX_SHELL $snowflake $NIX_SHELL_PACKAGES"
