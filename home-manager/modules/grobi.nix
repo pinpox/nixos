@@ -2,7 +2,8 @@
   services = {
 
     grobi = {
-      enable = true;
+      # enable = true;
+      enable = false;
       # executeAfter = [ " " ];
       rules = [{
         name = "kartoffel";
