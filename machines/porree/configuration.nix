@@ -1,7 +1,7 @@
 { matrix-hook, ... }: {
 
   imports =
-    [ ./hardware-configuration.nix matrix-hook.nixosModules.matrix-hook ];
+    [ ./hardware-configuration.nix matrix-hook.nixosModule ];
 
   # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
