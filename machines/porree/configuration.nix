@@ -1,7 +1,6 @@
-{ matrix-hook, ... }: {
+{ matrix-hook,... }: {
 
-  imports =
-    [ ./hardware-configuration.nix matrix-hook.nixosModule ];
+  imports = [ ./hardware-configuration.nix matrix-hook.nixosModule ];
 
   # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
@@ -84,6 +83,13 @@
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
+      };
+
+      # Photo gallery
+      "photos.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://192.168.7.5:7788"; };
       };
 
       # Graphana
@@ -261,6 +267,7 @@
       # };
     };
   };
+
 
   # Enable ip forwarding, so wireguard peers can reach eachother
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;

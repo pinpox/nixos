@@ -1,6 +1,6 @@
-{ self, ... }: {
+{ self, s3photoalbum, ... }: {
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix s3photoalbum.nixosModule ];
 
   pinpox = {
 
@@ -28,6 +28,8 @@
   };
 
   programs.ssh.startAgent = false;
+
+  services.s3photoalbum.enable = true;
 
   services.qemuGuest.enable = true;
 
@@ -59,6 +61,8 @@
     enable = true;
     allowPing = true;
     allowedTCPPorts = [ 80 443 22 ];
+    # Allow port for photoalbum on wg interface
+    interfaces.wg0.allowedTCPPorts = [ 7788 ];
   };
 
   services.nginx = {
