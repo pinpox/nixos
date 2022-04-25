@@ -3,6 +3,13 @@
 
   inputs = {
 
+
+    s3photoalbum.url = "github:pinpox/s3photoalbum";
+    s3photoalbum.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      flake-utils.follows = "flake-utils";
+    };
+
     retiolum.url = "github:krebs/retiolum";
     retiolum.flake = false;
 
