@@ -26,7 +26,7 @@ in {
     terraform-ls # LSP terraform
     # terraform # TODO add options to enable/disable large packages like terraform
     libgccjit # Needed for treesitter
-    sumneko-lua-language-server # Lua language server
+    # sumneko-lua-language-server # Lua language server
     omnisharp-roslyn # Csharp LSP
     cargo
     rustc
