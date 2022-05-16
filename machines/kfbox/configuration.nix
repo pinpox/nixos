@@ -1,6 +1,10 @@
 { self, s3photoalbum, ... }: {
 
-  imports = [ ./hardware-configuration.nix s3photoalbum.nixosModule ];
+  imports = [
+    ./hardware-configuration.nix
+    s3photoalbum.nixosModules.s3photoalbum
+    s3photoalbum.nixosModules.s3photoalbum-thumbnailer
+  ];
 
   pinpox = {
 
@@ -30,6 +34,7 @@
   programs.ssh.startAgent = false;
 
   services.s3photoalbum.enable = true;
+  services.s3photoalbum-thumbnailer.enable = true;
 
   services.qemuGuest.enable = true;
 
