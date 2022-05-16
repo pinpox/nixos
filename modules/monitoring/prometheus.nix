@@ -47,6 +47,12 @@ in {
 
     services.prometheus = {
       enable = true;
+
+      # Disable config checks. They will fail because they run sandboxed and
+      # can't access external files, e.g. the secrets stored in /run/keys
+      # https://github.com/NixOS/nixpkgs/blob/d89d7af1ba23bd8a5341d00bdd862e8e9a808f56/nixos/modules/services/monitoring/prometheus/default.nix#L1732-L1738
+      checkConfig = false;
+
       webExternalUrl = "https://vpn.prometheus.pablo.tools";
       extraFlags =
         [ "--log.level=debug" "--storage.tsdb.retention.size='6GB'" ];
