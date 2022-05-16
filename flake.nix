@@ -102,55 +102,61 @@
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
-      nixosModules = builtins.listToAttrs (map (x: {
-        name = x;
-        value = import (./modules + "/${x}");
-      }) (builtins.attrNames (builtins.readDir ./modules)));
+      nixosModules = builtins.listToAttrs (map
+        (x: {
+          name = x;
+          value = import (./modules + "/${x}");
+        })
+        (builtins.attrNames (builtins.readDir ./modules)));
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs (map (x: {
-        name = x;
-        value = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = builtins.listToAttrs (map
+        (x: {
+          name = x;
+          value = nixpkgs.lib.nixosSystem {
 
-          # Make inputs and the flake itself accessible as module parameters.
-          # Technically, adding the inputs is redundant as they can be also
-          # accessed with flake-self.inputs.X, but adding them individually
-          # allows to only pass what is needed to each module.
-          specialArgs = { flake-self = self; } // inputs;
+            # Make inputs and the flake itself accessible as module parameters.
+            # Technically, adding the inputs is redundant as they can be also
+            # accessed with flake-self.inputs.X, but adding them individually
+            # allows to only pass what is needed to each module.
+            specialArgs = { flake-self = self; } // inputs;
 
-          system = "x86_64-linux";
+            system = "x86_64-linux";
 
-          modules = [
-            (./machines + "/${x}/configuration.nix")
-            { imports = builtins.attrValues self.nixosModules; }
-          ];
-        };
-      }) (builtins.attrNames (builtins.readDir ./machines)));
+            modules = [
+              (./machines + "/${x}/configuration.nix")
+              { imports = builtins.attrValues self.nixosModules; }
+            ];
+          };
+        })
+        (builtins.attrNames (builtins.readDir ./machines)));
 
       /* # Hydra build jobs. Builds all configs in the CI to verify integrity
-         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
-         nixpkgs.lib.nameValuePair "nixos-${name}"
-         config.config.system.build.toplevel) self.nixosConfigurations);
-               # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-               # "home-manager-${name}" config.activation-script)
-               # self.hmConfigurations);
+        hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
+        nixpkgs.lib.nameValuePair "nixos-${name}"
+        config.config.system.build.toplevel) self.nixosConfigurations);
+        # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
+        # "home-manager-${name}" config.activation-script)
+        # self.hmConfigurations);
       */
 
       # nix build '.#base-image'
-      base-image = let system = "x86_64-linux";
-      in import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
-        pkgs = nixpkgs.legacyPackages."${system}";
-        lib = nixpkgs.lib;
-        config = (nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [ ./images/configuration.nix ];
-        }).config;
-        format = "qcow2";
-        diskSize = 2048;
-        name = "base-image";
-      };
+      base-image =
+        let system = "x86_64-linux";
+        in
+        import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+          pkgs = nixpkgs.legacyPackages."${system}";
+          lib = nixpkgs.lib;
+          config = (nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [ ./images/configuration.nix ];
+          }).config;
+          format = "qcow2";
+          diskSize = 2048;
+          name = "base-image";
+        };
 
     } //
 
@@ -158,58 +164,61 @@
     # flake-utils is used for this part to make each package available for each
     # system. This works as all packages are compatible with all architectures
     (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
-    (system:
-      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
-      in rec {
-        # Custom packages added via the overlay are selectively exposed here, to
-        # allow using them from other flakes that import this one.
-        packages = flake-utils.lib.flattenTree {
-          # wezterm-bin = pkgs.wezterm-bin;
-          wezterm-nightly = pkgs.wezterm-nightly;
-          hello-custom = pkgs.hello-custom;
-          filebrowser = pkgs.filebrowser;
-          darktile = pkgs.darktile;
-          dirserver = pkgs.dirserver;
-          fritzbox_exporter = pkgs.fritzbox_exporter;
-          mqtt2prometheus = pkgs.mqtt2prometheus;
-          xscreensaver = pkgs.xscreensaver;
-          smartmon-script = pkgs.smartmon-script;
-          tfenv = pkgs.tfenv;
-        };
-
-        # Run with: nix develop '.#test-shell'
-        devShells = flake-utils.lib.flattenTree {
-          test-shell = import ./shells/test-shell.nix { inherit pkgs; };
-        };
-
-        apps = {
-          # Allow custom packages to be run using `nix run`
-          hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-          # wezterm-bin = flake-utils.lib.mkApp {
-          #   drv = packages.wezterm-bin;
-          #   exePath = "/bin/wezterm";
-          # };
-        };
-
-        # Checks to run with `nix flake check -L`, will run in a QEMU VM.
-        # Looks for all ./modules/<module name>/test.nix files and adds them to
-        # the flake's checks output. The test.nix file is optional and may be
-        # added to any module.
-        checks = builtins.listToAttrs (map (x: {
-          name = x;
-          value = (import (./modules + "/${x}/test.nix")) {
-            pkgs = nixpkgs;
-            inherit system self;
+      (system:
+        let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+        in
+        rec {
+          # Custom packages added via the overlay are selectively exposed here, to
+          # allow using them from other flakes that import this one.
+          packages = flake-utils.lib.flattenTree {
+            # wezterm-bin = pkgs.wezterm-bin;
+            wezterm-nightly = pkgs.wezterm-nightly;
+            hello-custom = pkgs.hello-custom;
+            filebrowser = pkgs.filebrowser;
+            darktile = pkgs.darktile;
+            dirserver = pkgs.dirserver;
+            fritzbox_exporter = pkgs.fritzbox_exporter;
+            mqtt2prometheus = pkgs.mqtt2prometheus;
+            xscreensaver = pkgs.xscreensaver;
+            smartmon-script = pkgs.smartmon-script;
+            tfenv = pkgs.tfenv;
           };
-        }) (
-          # Filter list of modules, leaving only modules which contain a
-          # `test.nix` file
-          builtins.filter
-          (p: builtins.pathExists (./modules + "/${p}/test.nix"))
-          (builtins.attrNames (builtins.readDir ./modules))));
 
-        # TODO we probably should set some default app and/or package
-        # defaultPackage = packages.hello;
-        # defaultApp = apps.hello;
-      });
+          # Run with: nix develop '.#test-shell'
+          devShells = flake-utils.lib.flattenTree {
+            test-shell = import ./shells/test-shell.nix { inherit pkgs; };
+          };
+
+          apps = {
+            # Allow custom packages to be run using `nix run`
+            hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
+            # wezterm-bin = flake-utils.lib.mkApp {
+            #   drv = packages.wezterm-bin;
+            #   exePath = "/bin/wezterm";
+            # };
+          };
+
+          # Checks to run with `nix flake check -L`, will run in a QEMU VM.
+          # Looks for all ./modules/<module name>/test.nix files and adds them to
+          # the flake's checks output. The test.nix file is optional and may be
+          # added to any module.
+          checks = builtins.listToAttrs (map
+            (x: {
+              name = x;
+              value = (import (./modules + "/${x}/test.nix")) {
+                pkgs = nixpkgs;
+                inherit system self;
+              };
+            })
+            (
+              # Filter list of modules, leaving only modules which contain a
+              # `test.nix` file
+              builtins.filter
+                (p: builtins.pathExists (./modules + "/${p}/test.nix"))
+                (builtins.attrNames (builtins.readDir ./modules))));
+
+          # TODO we probably should set some default app and/or package
+          # defaultPackage = packages.hello;
+          # defaultApp = apps.hello;
+        });
 }
