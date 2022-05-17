@@ -1,4 +1,10 @@
-{ pkgs, stdenv, fetchFromGitHub, lib, inputs, ... }:
+{ pkgs
+, stdenv
+, fetchFromGitHub
+, lib
+, inputs
+, ...
+}:
 pkgs.vimUtils.buildVimPluginFrom2Nix {
   pname = "fzf-lua";
   version = "latest";
@@ -11,4 +17,3 @@ pkgs.vimUtils.buildVimPluginFrom2Nix {
     platforms = platforms.unix;
   };
 }
-

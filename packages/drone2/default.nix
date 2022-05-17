@@ -1,5 +1,9 @@
-{ lib, fetchFromGitHub, buildGoModule, enableUnfree ? true }:
-
+{ lib
+, fetchFromGitHub
+, buildGoModule
+, enableUnfree ? true
+,
+}:
 buildGoModule rec {
   pname = "drone.io";
   version = "2.10.0";
@@ -20,8 +24,9 @@ buildGoModule rec {
   meta = with lib; {
     maintainers = with maintainers; [ elohmeier vdemeester ];
     license = with licenses;
-      if enableUnfree then unfreeRedistributable else asl20;
-    description =
-      "Continuous Integration platform built on container technology";
+      if enableUnfree
+      then unfreeRedistributable
+      else asl20;
+    description = "Continuous Integration platform built on container technology";
   };
 }

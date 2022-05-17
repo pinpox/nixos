@@ -1,7 +1,10 @@
-{ lib, fetchFromGitHub, buildGoModule, pkgs }:
-
+{ lib
+, fetchFromGitHub
+, buildGoModule
+, pkgs
+,
+}:
 # https://github.com/hikhvar/mqtt2prometheus
-
 buildGoModule rec {
   pname = "mqtt2prometheus";
   version = "latest";

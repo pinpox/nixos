@@ -95,6 +95,7 @@
     with inputs;
     {
 
+      # Add a formatter for nix code, so we can run `nix fmt`
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       # Expose overlay to flake outputs, to allow using it from other flakes.

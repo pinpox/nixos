@@ -1,8 +1,31 @@
-{ stdenv, rustPlatform, lib, fetchFromGitHub, pkg-config, fontconfig, python3
-, openssl, perl, dbus, libX11, xcbutil, libxcb, xcbutilimage, xcbutilkeysyms
-, xcbutilwm # contains xcb-ewmh among others
-, libxkbcommon, libglvnd # libEGL.so.1
-, egl-wayland, wayland, libGLU, libGL, freetype, zlib }:
+{ stdenv
+, rustPlatform
+, lib
+, fetchFromGitHub
+, pkg-config
+, fontconfig
+, python3
+, openssl
+, perl
+, dbus
+, libX11
+, xcbutil
+, libxcb
+, xcbutilimage
+, xcbutilkeysyms
+, xcbutilwm
+, # contains xcb-ewmh among others
+  libxkbcommon
+, libglvnd
+, # libEGL.so.1
+  egl-wayland
+, wayland
+, libGLU
+, libGL
+, freetype
+, zlib
+,
+}:
 let
   runtimeDeps = [
     zlib
@@ -23,8 +46,8 @@ let
     libGL
     openssl
   ];
-
-in rustPlatform.buildRustPackage rec {
+in
+rustPlatform.buildRustPackage rec {
   pname = "wezterm-nightly";
   version = "a0b8d2196a260726eca28b32fecaeb87420851ec";
 
@@ -51,8 +74,8 @@ in rustPlatform.buildRustPackage rec {
   preFixup = lib.optionalString stdenv.isLinux ''
     for artifact in wezterm wezterm-gui wezterm-mux-server strip-ansi-escapes; do
       patchelf --set-rpath "${
-        lib.makeLibraryPath runtimeDeps
-      }" $out/bin/$artifact
+      lib.makeLibraryPath runtimeDeps
+    }" $out/bin/$artifact
     done
   '';
 
@@ -60,8 +83,7 @@ in rustPlatform.buildRustPackage rec {
   dontPatchELF = true;
 
   meta = with lib; {
-    description =
-      "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
+    description = "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
     homepage = "https://wezfurlong.org/wezterm";
     license = licenses.mit;
     maintainers = with maintainers; [ steveej SuperSandro2000 ];

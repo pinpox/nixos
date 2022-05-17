@@ -1,4 +1,8 @@
-{ stdenv, smartmontools, python3, ... }:
+{ stdenv
+, smartmontools
+, python3
+, ...
+}:
 stdenv.mkDerivation {
   name = "smartmon-script";
   buildInputs = [ python3 smartmontools ];

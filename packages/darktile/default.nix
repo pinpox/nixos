@@ -1,5 +1,9 @@
-{ lib, fetchFromGitHub, buildGoModule, pkgs }:
-
+{ lib
+, fetchFromGitHub
+, buildGoModule
+, pkgs
+,
+}:
 buildGoModule rec {
   pname = "darktile";
   version = "0.0.10";
@@ -32,7 +36,6 @@ buildGoModule rec {
   meta = with lib; {
     maintainers = with maintainers; [ pinpox ];
     license = licenses.mit;
-    description =
-      "GPU rendered terminal emulator designed for tiling window managers.";
+    description = "GPU rendered terminal emulator designed for tiling window managers.";
   };
 }

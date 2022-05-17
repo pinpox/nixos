@@ -1,12 +1,34 @@
-{ fetchurl, pkgs, dbus, egl-wayland, fetchFromGitHub, fontconfig, freetype, lib
-, libGL, libGLU, libX11, libglvnd # libEGL.so.1
-, libiconv, libxcb, libxkbcommon, openssl, perl, pkg-config, python3
-, rustPlatform, stdenv, wayland, xcbutil, xcbutilimage, xcbutilkeysyms
-, xcbutilwm # contains xcb-ewmh among others
-, zlib
-
+{ fetchurl
+, pkgs
+, dbus
+, egl-wayland
+, fetchFromGitHub
+, fontconfig
+, freetype
+, lib
+, libGL
+, libGLU
+, libX11
+, libglvnd
+, # libEGL.so.1
+  libiconv
+, libxcb
+, libxkbcommon
+, openssl
+, perl
+, pkg-config
+, python3
+, rustPlatform
+, stdenv
+, wayland
+, xcbutil
+, xcbutilimage
+, xcbutilkeysyms
+, xcbutilwm
+, # contains xcb-ewmh among others
+  zlib
+,
 }:
-
 let
   rpath = lib.makeLibraryPath [
     dbus
@@ -27,16 +49,14 @@ let
     xcbutilkeysyms
     xcbutilwm
     zlib
-
   ];
-
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "wezterm-bin";
   version = "nightly-2021";
 
   src = fetchurl {
-    url =
-      "https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu16.04.tar.xz";
+    url = "https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu16.04.tar.xz";
     sha256 = "0y91l5383j5havb0kn0vgxjvbg6rzw62vzqpyvyfw4z7a05h4gnb";
   };
 

@@ -1,13 +1,14 @@
-{ lib, stdenv, fetchurl, ... }:
-
+{ lib
+, stdenv
+, fetchurl
+, ...
+}:
 stdenv.mkDerivation rec {
   name = "filebrowser";
   version = "v2.15.0";
   src = fetchurl {
-
     # TODO use flake inputs
-    url =
-      "https://github.com/filebrowser/filebrowser/releases/download/${version}/linux-amd64-filebrowser.tar.gz";
+    url = "https://github.com/filebrowser/filebrowser/releases/download/${version}/linux-amd64-filebrowser.tar.gz";
     sha256 = "0ryh35n0z241sfhcnwac0qa1vpxdn8bnlpw4kqhz686mvnr1p1x4";
   };
 

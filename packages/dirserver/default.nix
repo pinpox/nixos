@@ -1,5 +1,7 @@
-{ lib, buildGoModule }:
-
+{ lib
+, buildGoModule
+,
+}:
 buildGoModule rec {
   pname = "dirserver";
   version = "1.0.0";
