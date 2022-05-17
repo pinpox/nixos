@@ -1,8 +1,10 @@
-{ config, pkgs, lib, ... }: {
-
+{ config
+, pkgs
+, lib
+, ...
+}: {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-
     # For Virtualbox
     extraGroups = { vboxusers.members = [ "pinpox" ]; };
 
@@ -13,8 +15,7 @@
       isNormalUser = true;
       home = "/home/pinpox";
       description = "Pablo Ovelleiro Corral";
-      extraGroups =
-        [ "docker" "wheel" "networkmanager" "audio" "libvirtd" "dialout" ];
+      extraGroups = [ "docker" "wheel" "networkmanager" "audio" "libvirtd" "dialout" ];
       shell = pkgs.zsh;
 
       # Public ssh-keys that are authorized for the user. Fetched from github
