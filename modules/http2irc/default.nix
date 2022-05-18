@@ -1,10 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.monitoring-server.http-irc;
 
   http2irc = pkgs.buildGoModule rec {
-
     pname = "http2irc";
     version = "1.0";
 
@@ -36,14 +38,13 @@ let
     ];
   };
   # port-loki = 3100;
-in {
-
+in
+{
   options.pinpox.services.monitoring-server.http-irc = {
     enable = mkEnableOption "http2irc webhook relay";
   };
 
   config = mkIf cfg.enable {
-
     # User and group
     users.users.http2irc = {
       isSystemUser = true;
@@ -79,6 +80,5 @@ in {
     };
 
     # Reverse proxy
-
   };
 }

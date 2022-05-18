@@ -1,8 +1,15 @@
-{ lib, pkgs, dotfiles-awesome, nur, config, flake-self, ... }:
-with lib;
-let cfg = config.pinpox.server;
-in {
-
+{ lib
+, pkgs
+, dotfiles-awesome
+, nur
+, config
+, flake-self
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.server;
+in
+{
   imports = [ ../../users/pinpox.nix ];
 
   options.pinpox.server = {
@@ -17,12 +24,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     networking.hostName = cfg.hostname;
 
     # Server-specific home-manager config
     home-manager.users.pinpox = {
-
       imports = [
         ../../home-manager/home-server.nix
         dotfiles-awesome.nixosModules.dotfiles
@@ -30,7 +35,7 @@ in {
           nixpkgs.overlays = [
             flake-self.overlays.default
             nur.overlay
-            # neovim-nightly.overlay 
+            # neovim-nightly.overlay
           ];
         }
       ];

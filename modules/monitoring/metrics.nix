@@ -1,8 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.metrics;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.metrics;
+in
+{
   options.pinpox.metrics.node = {
     enable = mkEnableOption "prometheus node-exporter metrics collection";
   };

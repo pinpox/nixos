@@ -1,8 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.monitoring-server;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.monitoring-server;
+in
+{
   # https://github.com/NixOS/nixpkgs/issues/126083
   # https://github.com/NixOS/nixpkgs/pull/144984
   options.pinpox.services.monitoring-server = {
@@ -31,7 +35,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     users.users.prometheus = { extraGroups = [ "keys" ]; };
     krops.secrets.files = {
       prometheus-home-assistant-token = {
@@ -54,20 +57,20 @@ in {
       checkConfig = false;
 
       webExternalUrl = "https://vpn.prometheus.pablo.tools";
-      extraFlags =
-        [ "--log.level=debug" "--storage.tsdb.retention.size='6GB'" ];
+      extraFlags = [ "--log.level=debug" "--storage.tsdb.retention.size='6GB'" ];
       # ruleFiles = [ ./alert-rules.json ];
       # ruleFiles = [ ./alert-rules.yml ];
       ruleFiles = [
         (pkgs.writeText "prometheus-rules.yml" (builtins.toJSON {
-          groups = [{
-            name = "alerting-rules";
-            rules = import ./alert-rules.nix { inherit lib; };
-          }];
+          groups = [
+            {
+              name = "alerting-rules";
+              rules = import ./alert-rules.nix { inherit lib; };
+            }
+          ];
         }))
       ];
-      alertmanagers =
-        [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
+      alertmanagers = [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
 
       scrapeConfigs = [
         {
@@ -108,8 +111,7 @@ in {
             }
             {
               target_label = "__address__";
-              replacement =
-                "127.0.0.1:7979"; # The blackbox exporter's real hostname:port.
+              replacement = "127.0.0.1:7979"; # The blackbox exporter's real hostname:port.
             }
           ];
         }
@@ -130,8 +132,7 @@ in {
             }
             {
               target_label = "__address__";
-              replacement =
-                "127.0.0.1:9115"; # The blackbox exporter's real hostname:port.
+              replacement = "127.0.0.1:9115"; # The blackbox exporter's real hostname:port.
             }
           ];
         }
@@ -146,7 +147,6 @@ in {
         webExternalUrl = "https://vpn.alerts.pablo.tools";
         environmentFile = /var/src/secrets/alertmanager/envfile;
         configuration = {
-
           # global = {
           # The smarthost and SMTP sender used for mail notifications.
           # smtp_smarthost = "mail.thalheim.io:587";
@@ -163,10 +163,12 @@ in {
             repeat_interval = "2h";
           };
 
-          receivers = [{
-            name = "all";
-            webhook_configs = [{ url = "http://127.0.0.1:11000/alert"; }];
-          }];
+          receivers = [
+            {
+              name = "all";
+              webhook_configs = [{ url = "http://127.0.0.1:11000/alert"; }];
+            }
+          ];
         };
       };
     };

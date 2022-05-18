@@ -1,15 +1,17 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.filebrowser;
-
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.filebrowser;
+in
+{
   options.pinpox.services.filebrowser = {
     enable = mkEnableOption "filebrowser webUI";
   };
 
   config = mkIf cfg.enable {
-
     # User and group
     users.users.filebrowser = {
       isSystemUser = true;

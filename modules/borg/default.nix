@@ -1,18 +1,21 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.services.borg-backup;
-in {
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.borg-backup;
+in
+{
   options.pinpox.services.borg-backup = {
     enable = mkEnableOption "daily backup with borg";
   };
 
   config = mkIf cfg.enable {
-
     # Backup with borgbackup to remote server. The connection key and repository
     # encryption passphrase is read from /secrets. This directory has to be
     # copied ther *manually* (so this config can be shared publicly)!
     services.borgbackup.jobs.box-backup = {
-
       # Paths to backup
       paths = [ "/home" "/root" "/var/lib" ];
 

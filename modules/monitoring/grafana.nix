@@ -1,8 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.monitoring-server.dashboard;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.monitoring-server.dashboard;
+in
+{
   options.pinpox.services.monitoring-server.dashboard = {
     enable = mkEnableOption "Grafana dashboard";
 
@@ -15,7 +19,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     # SMTP password file
     users.users.grafana = { extraGroups = [ "keys" ]; };
     krops.secrets.files = {

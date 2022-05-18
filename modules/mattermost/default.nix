@@ -1,14 +1,17 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.services.mattermost;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.mattermost;
+in
+{
   options.pinpox.services.mattermost = {
     enable = mkEnableOption "Mattermost server";
   };
 
   config = mkIf cfg.enable {
-
     services.mattermost = {
       enable = true;
 
@@ -40,13 +43,10 @@ in {
     services.postgresql.package = pkgs.postgresql_11;
 
     systemd.services.mattermost = {
-
       serviceConfig = {
-
         EnvironmentFile = "/var/src/secrets/mattermost/envfile";
 
         Environment = [
-
           # TODO Check syntax for header
 
           # Secret envfile contains:

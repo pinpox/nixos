@@ -2,13 +2,16 @@
 # https://github.com/NixOS/nixpkgs/issues/116326
 # https://github.com/bepasty/bepasty-server/issues/258
 # ./modules/bepasty/default.nix
-{ config, pkgs, lib, ... }:
-with lib;
-let
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.bepasty;
   bepasty-host = "paste.lounge.rocks";
-in {
-
+in
+{
   options.pinpox.services.bepasty = {
     enable = mkEnableOption "bepasty server";
   };

@@ -1,12 +1,15 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.services.xserver;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.xserver;
+in
+{
   options.pinpox.services.xserver = { enable = mkEnableOption "X server"; };
 
   config = mkIf cfg.enable {
-
     services.xserver = {
       enable = true;
       autorun = true;
@@ -34,13 +37,15 @@ in {
 
       desktopManager = {
         xterm.enable = false;
-        session = [{
-          name = "home-manager";
-          start = ''
-             ${pkgs.runtimeShell} $HOME/.hm-xsession &
-            waitPID=$!
-          '';
-        }];
+        session = [
+          {
+            name = "home-manager";
+            start = ''
+               ${pkgs.runtimeShell} $HOME/.hm-xsession &
+              waitPID=$!
+            '';
+          }
+        ];
       };
     };
   };

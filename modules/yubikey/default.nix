@@ -1,8 +1,12 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.defaults.yubikey;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.defaults.yubikey;
+in
+{
   options.pinpox.defaults.yubikey = {
     enable = mkEnableOption "yubikey defaults";
   };

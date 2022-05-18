@@ -1,13 +1,15 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.nextcloud;
-
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.nextcloud;
+in
+{
   options.pinpox.services.nextcloud = { enable = mkEnableOption "Nextcloud"; };
 
   config = mkIf cfg.enable {
-
     services.nextcloud = {
       enable = true;
 
@@ -37,7 +39,6 @@ in {
       };
 
       config = {
-
         # Database
         dbtype = "pgsql";
         dbuser = "nextcloud";
@@ -79,10 +80,12 @@ in {
     services.postgresql = {
       enable = true;
       ensureDatabases = [ "nextcloud" ];
-      ensureUsers = [{
-        name = "nextcloud";
-        ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
-      }];
+      ensureUsers = [
+        {
+          name = "nextcloud";
+          ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
+        }
+      ];
     };
 
     # Ensure that postgres is running *before* running the setup

@@ -1,16 +1,18 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.defaults.lvm-grub;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.defaults.lvm-grub;
+in
+{
   options.pinpox.defaults.lvm-grub = {
     enable = mkEnableOption "LVM/Grub defaults";
   };
   config = mkIf cfg.enable {
-
     # Use the grub2 boot loader.
     boot = {
-
       loader = {
         grub.enable = true;
 

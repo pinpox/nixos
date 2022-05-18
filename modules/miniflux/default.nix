@@ -1,20 +1,21 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.services.miniflux;
-
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.miniflux;
+in
+{
   options.pinpox.services.miniflux = {
     enable = mkEnableOption "miniflux RSS reader";
   };
 
   config = mkIf cfg.enable {
-
     services.nginx = {
       enable = true;
 
       virtualHosts = {
-
         # The Lounge IRC
         "news.0cx.de" = {
           forceSSL = true;
@@ -31,7 +32,6 @@ in {
         LISTEN_ADDR = "127.0.0.1:8787";
       };
       adminCredentialsFile = "/var/src/secrets/miniflux/credentials";
-
     };
   };
 }

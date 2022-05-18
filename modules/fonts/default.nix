@@ -1,12 +1,15 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.defaults.fonts;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.defaults.fonts;
+in
+{
   options.pinpox.defaults.fonts = { enable = mkEnableOption "Fonts defaults"; };
 
   config = mkIf cfg.enable {
-
     # Install some fonts system-wide, especially "Source Code Pro" in the
     # Nerd-Fonts pached version with extra glyphs.
 
@@ -22,12 +25,9 @@ in {
 
       fontconfig = {
         defaultFonts = {
-          serif =
-            [ "Recursive Sans Casual Static" "Inconsolata Nerd Font Mono" ];
-          sansSerif =
-            [ "Recursive Sans Linear Static" "Inconsolata Nerd Font Mono" ];
-          monospace =
-            [ "Recursive Mono Linear Static" "Inconsolata Nerd Font Mono" ];
+          serif = [ "Recursive Sans Casual Static" "Inconsolata Nerd Font Mono" ];
+          sansSerif = [ "Recursive Sans Linear Static" "Inconsolata Nerd Font Mono" ];
+          monospace = [ "Recursive Mono Linear Static" "Inconsolata Nerd Font Mono" ];
           emoji = [ "Noto Color Emoji" ];
         };
 

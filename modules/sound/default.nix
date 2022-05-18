@@ -1,11 +1,14 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.defaults.sound;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.defaults.sound;
+in
+{
   options.pinpox.defaults.sound = { enable = mkEnableOption "sound defaults"; };
   config = mkIf cfg.enable {
-
     # Enable sound.
     sound.enable = true;
     hardware.pulseaudio = {

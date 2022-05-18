@@ -1,16 +1,17 @@
 { lib }:
-
 let
   # docker's filesystems disappear quickly, leading to false positives
   deviceFilter = ''path!~"^(/var/lib/docker|/nix/store).*"'';
-in lib.mapAttrsToList (name: opts: {
-  alert = name;
-  expr = opts.condition;
-  for = opts.time or "2m";
-  labels = { };
-  annotations.description = opts.description;
-}) ({
-
+in
+lib.mapAttrsToList
+  (name: opts: {
+    alert = name;
+    expr = opts.condition;
+    for = opts.time or "2m";
+    labels = { };
+    annotations.description = opts.description;
+  })
+{
   # prometheus_too_many_restarts = {
   #   condition = ''changes(process_start_time_seconds{job=~"prometheus|alertmanager"}[15m]) > 2'';
   #   description = "Prometheus has restarted more than twice in the last 15 minutes. It might be crashlooping.";
@@ -52,8 +53,7 @@ in lib.mapAttrsToList (name: opts: {
     condition = ''
       100 - ((node_filesystem_avail_bytes{fstype!="rootfs",mountpoint="/"} * 100) / node_filesystem_size_bytes{fstype!="rootfs",mountpoint="/"}) > 80'';
     time = "10m";
-    description =
-      "{{$labels.instance}} device {{$labels.device}} on {{$labels.mountpoint}} got less than 20% space left on its filesystem.";
+    description = "{{$labels.instance}} device {{$labels.device}} on {{$labels.mountpoint}} got less than 20% space left on its filesystem.";
   };
 
   # filesystem_inodes_full = {
@@ -102,17 +102,14 @@ in lib.mapAttrsToList (name: opts: {
   # };
 
   swap_using_20percent = {
-    condition =
-      "node_memory_SwapTotal_bytes - (node_memory_SwapCached_bytes + node_memory_SwapFree_bytes) > node_memory_SwapTotal_bytes * 0.2";
+    condition = "node_memory_SwapTotal_bytes - (node_memory_SwapCached_bytes + node_memory_SwapFree_bytes) > node_memory_SwapTotal_bytes * 0.2";
     time = "30m";
-    description =
-      "{{$labels.instance}} is using 20% of its swap space for at least 30 minutes.";
+    description = "{{$labels.instance}} is using 20% of its swap space for at least 30 minutes.";
   };
 
   systemd_service_failed = {
     condition = ''node_systemd_unit_state{state="failed"} == 1'';
-    description =
-      "{{$labels.instance}} failed to (re)start service {{$labels.name}}.";
+    description = "{{$labels.instance}} failed to (re)start service {{$labels.name}}.";
   };
 
   # service_not_running = {
@@ -121,19 +118,16 @@ in lib.mapAttrsToList (name: opts: {
   # };
 
   ram_using_90percent = {
-    condition =
-      "node_memory_Buffers_bytes + node_memory_MemFree_bytes + node_memory_Cached_bytes < node_memory_MemTotal_bytes * 0.1";
+    condition = "node_memory_Buffers_bytes + node_memory_MemFree_bytes + node_memory_Cached_bytes < node_memory_MemTotal_bytes * 0.1";
     time = "1h";
-    description =
-      "{{$labels.instance}} is using at least 90% of its RAM for at least 1 hour.";
+    description = "{{$labels.instance}} is using at least 90% of its RAM for at least 1 hour.";
   };
 
   cpu_using_90percent = {
     condition = ''
       100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) >= 90'';
     time = "10m";
-    description =
-      "{{$labels.instance}} is running with cpu usage > 90% for at least 10 minutes: {{$value}}";
+    description = "{{$labels.instance}} is running with cpu usage > 90% for at least 10 minutes: {{$value}}";
   };
 
   reboot = {
@@ -143,58 +137,56 @@ in lib.mapAttrsToList (name: opts: {
 
   uptime = {
     condition = "(time() - node_boot_time_seconds ) / (60*60*24) > 30";
-    description =
-      "Uptime monster: {{$labels.instance}} has been up for more than 30 days.";
+    description = "Uptime monster: {{$labels.instance}} has been up for more than 30 days.";
   };
 
   flake_nixpkgs_outdated = {
     condition = ''
       (time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 30'';
-    description =
-      "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 30 days";
+    description = "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 30 days";
   };
 
-  /* ping = {
-       condition = "ping_result_code{type!='mobile'} != 0";
-       description = "{{$labels.url}}: ping from {{$labels.instance}} has failed!";
-     };
-
-     ping_high_latency = {
-       condition = "ping_average_response_ms{type!='mobile'} > 5000";
-       description = "{{$labels.instance}}: ping probe from {{$labels.source}} is encountering high latency!";
-     };
+  /*
+    ping = {
+    condition = "ping_result_code{type!='mobile'} != 0";
+    description = "{{$labels.url}}: ping from {{$labels.instance}} has failed!";
+    };
+     
+    ping_high_latency = {
+    condition = "ping_average_response_ms{type!='mobile'} > 5000";
+    description = "{{$labels.instance}}: ping probe from {{$labels.source}} is encountering high latency!";
+    };
   */
   http_status = {
     condition = ''
       probe_http_status_code{instance!~"https://drone.lounge.rocks|https://megaclan3000.de"} != 200'';
-    description =
-      "http request failed from {{$labels.instance}}: {{$labels.result}}!";
+    description = "http request failed from {{$labels.instance}}: {{$labels.result}}!";
   };
-  /* http_match_failed = {
-       condition = "http_response_response_string_match == 0";
-       description = "{{$labels.server}} : http body not as expected; status code: {{$labels.status_code}}!";
-     };
-     dns_query = {
-       condition = "dns_query_result_code != 0";
-       description = "{{$labels.domain}} : could retrieve A record {{$labels.instance}} from server {{$labels.server}}: {{$labels.result}}!";
-     };
-     secure_dns_query = {
-       condition = "secure_dns_state != 0";
-       description = "{{$labels.domain}} : could retrieve A record {{$labels.instance}} from server {{$labels.server}}: {{$labels.result}} for protocol {{$labels.protocol}}!";
-     };
-     connection_failed = {
-       condition = "net_response_result_code != 0";
-       description = "{{$labels.server}}: connection to {{$labels.port}}({{$labels.protocol}}) failed from {{$labels.instance}}";
-     };
-     healthchecks = {
-       condition = "hc_check_up == 0";
-       description = "{{$labels.instance}}: healtcheck {{$labels.job}} fails!";
-     };
+  /*
+    http_match_failed = {
+    condition = "http_response_response_string_match == 0";
+    description = "{{$labels.server}} : http body not as expected; status code: {{$labels.status_code}}!";
+    };
+    dns_query = {
+    condition = "dns_query_result_code != 0";
+    description = "{{$labels.domain}} : could retrieve A record {{$labels.instance}} from server {{$labels.server}}: {{$labels.result}}!";
+    };
+    secure_dns_query = {
+    condition = "secure_dns_state != 0";
+    description = "{{$labels.domain}} : could retrieve A record {{$labels.instance}} from server {{$labels.server}}: {{$labels.result}} for protocol {{$labels.protocol}}!";
+    };
+    connection_failed = {
+    condition = "net_response_result_code != 0";
+    description = "{{$labels.server}}: connection to {{$labels.port}}({{$labels.protocol}}) failed from {{$labels.instance}}";
+    };
+    healthchecks = {
+    condition = "hc_check_up == 0";
+    description = "{{$labels.instance}}: healtcheck {{$labels.job}} fails!";
+    };
   */
   cert_expiry = {
     condition = "(probe_ssl_earliest_cert_expiry - time())/(3600*24) < 30";
-    description =
-      "{{$labels.instance}}: The TLS certificate will expire in less than 30 days: {{$value}}s";
+    description = "{{$labels.instance}}: The TLS certificate will expire in less than 30 days: {{$value}}s";
   };
 
   # ignore devices that disabled S.M.A.R.T (example if attached via USB)
@@ -210,27 +202,27 @@ in lib.mapAttrsToList (name: opts: {
     description = "{{$labels.instance}}: OOM kill detected";
   };
 
-  /* unusual_disk_read_latency = {
-       condition =
-         "rate(diskio_read_time[1m]) / rate(diskio_reads[1m]) > 0.1 and rate(diskio_reads[1m]) > 0";
-       description = ''
-         {{$labels.instance}}: Disk latency is growing (read operations > 100ms)
-       '';
-     };
-
-     unusual_disk_write_latency = {
-       condition =
-         "rate(diskio_write_time[1m]) / rate(diskio_write[1m]) > 0.1 and rate(diskio_write[1m]) > 0";
-       description = ''
-         {{$labels.instance}}: Disk latency is growing (write operations > 100ms)
-       '';
-       };
+  /*
+    unusual_disk_read_latency = {
+    condition =
+    "rate(diskio_read_time[1m]) / rate(diskio_reads[1m]) > 0.1 and rate(diskio_reads[1m]) > 0";
+    description = ''
+    {{$labels.instance}}: Disk latency is growing (read operations > 100ms)
+    '';
+    };
+     
+    unusual_disk_write_latency = {
+    condition =
+    "rate(diskio_write_time[1m]) / rate(diskio_write[1m]) > 0.1 and rate(diskio_write[1m]) > 0";
+    description = ''
+    {{$labels.instance}}: Disk latency is growing (write operations > 100ms)
+    '';
+    };
   */
 
   host_memory_under_memory_pressure = {
     condition = "rate(node_vmstat_pgmajfault[1m]) > 1000";
-    description =
-      "{{$labels.instance}}: The node is under heavy memory pressure. High rate of major page faults: {{$value}}";
+    description = "{{$labels.instance}}: The node is under heavy memory pressure. High rate of major page faults: {{$value}}";
   };
 
   # ext4_errors = {
@@ -244,4 +236,4 @@ in lib.mapAttrsToList (name: opts: {
   #   description =
   #     "alertmanager: number of active silences has changed: {{$value}}";
   # };
-})
+}

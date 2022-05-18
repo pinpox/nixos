@@ -1,12 +1,15 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.droneci;
   # TODO remove when https://github.com/NixOS/nixpkgs/pull/124014 is merged in
   # unstable
   drone2 = pkgs.callPackage ../../packages/drone2 { };
-in {
-
+in
+{
   options.pinpox.services.droneci = {
     enable = mkEnableOption "DroneCI server";
     drone-admin = mkOption {
@@ -32,11 +35,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     systemd.services.drone-server = {
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-
         BindReadOnlyPaths = [ "/etc/hosts:/etc/hosts" ];
         EnvironmentFile = [ "/var/src/secrets/drone-ci/envfile" ];
         Environment = [
@@ -65,16 +66,17 @@ in {
     };
 
     services.postgresql = {
-
       package = pkgs.postgresql_11;
       enable = true;
       ensureDatabases = [ cfg.drone-user ];
-      ensureUsers = [{
-        name = cfg.drone-user;
-        ensurePermissions = {
-          "DATABASE ${cfg.drone-user}" = "ALL PRIVILEGES";
-        };
-      }];
+      ensureUsers = [
+        {
+          name = cfg.drone-user;
+          ensurePermissions = {
+            "DATABASE ${cfg.drone-user}" = "ALL PRIVILEGES";
+          };
+        }
+      ];
     };
 
     security.acme.acceptTerms = true;

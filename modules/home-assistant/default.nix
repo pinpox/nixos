@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.home-assistant;
   # home-assistant-package = pkgs.home-assistant.override {
   #   extraComponents = [
@@ -8,13 +11,12 @@ let
   #     "fritzbox_netmonitor"
   #   ];
   # };
-in {
-
+in
+{
   options.pinpox.services.home-assistant = {
     enable = mkEnableOption "Home-assitant server";
   };
   config = mkIf cfg.enable {
-
     krops.secrets.files = {
       home-assistant-secrets = {
         owner = "hass";
@@ -33,7 +35,6 @@ in {
 
     # Open port for mqtt
     networking.firewall = {
-
       allowedTCPPorts = [ 1883 ];
 
       # Expose home-assitant over wireguard
@@ -49,18 +50,20 @@ in {
 
       # Mosquitto is only listening on the local IP, traffic from outside is not
       # allowed.
-      listeners = [{
-        address = "192.168.2.84";
-        port = 1883;
-        users = {
-          # No real authentication needed here, since the local network is
-          # trusted.
-          mosquitto = {
-            acl = [ "readwrite #" ];
-            password = "mosquitto";
+      listeners = [
+        {
+          address = "192.168.2.84";
+          port = 1883;
+          users = {
+            # No real authentication needed here, since the local network is
+            # trusted.
+            mosquitto = {
+              acl = [ "readwrite #" ];
+              password = "mosquitto";
+            };
           };
-        };
-      }];
+        }
+      ];
     };
 
     # The prometheus integration of home-assistant is incomplete (e.g. missing
@@ -72,7 +75,6 @@ in {
     services.telegraf = {
       enable = true;
       extraConfig = {
-
         agent = {
           interval = "60s";
           ## Log at debug level.
@@ -112,7 +114,6 @@ in {
 
       # Configuration generated to /var/lib/hass/configuration.yaml
       config = {
-
         ios = {
           actions = [
             # Toggle RGB strip
@@ -147,18 +148,22 @@ in {
         automation = [
           {
             alias = "Deckenlicht Toggle";
-            trigger = [{
-              platform = "event";
-              event_type = "ios.action_fired";
-              event_data.actionName = "Toggle Deckenlicht";
-            }];
+            trigger = [
+              {
+                platform = "event";
+                event_type = "ios.action_fired";
+                event_data.actionName = "Toggle Deckenlicht";
+              }
+            ];
 
-            action = [{
-              type = "toggle";
-              device_id = "d71e3f9c22a777149793e6b126f27550";
-              entity_id = "switch.deckenlicht";
-              domain = "switch";
-            }];
+            action = [
+              {
+                type = "toggle";
+                device_id = "d71e3f9c22a777149793e6b126f27550";
+                entity_id = "switch.deckenlicht";
+                domain = "switch";
+              }
+            ];
           }
           {
             alias = "RGB-Kette Toggle";
@@ -175,12 +180,14 @@ in {
               }
             ];
 
-            action = [{
-              type = "toggle";
-              device_id = "d97c93bff99173ae0b3b20d640050508";
-              entity_id = "light.rgb_strip_1";
-              domain = "light";
-            }];
+            action = [
+              {
+                type = "toggle";
+                device_id = "d97c93bff99173ae0b3b20d640050508";
+                entity_id = "light.rgb_strip_1";
+                domain = "light";
+              }
+            ];
           }
         ];
 

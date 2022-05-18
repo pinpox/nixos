@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.monitoring-server.alertmanager-irc-relay;
 
   am-irc-conf = {
@@ -23,8 +26,7 @@ let
     use_privmsg = true;
 
     # Define how IRC messages should be formatted.
-    msg_template =
-      "⚠ ⚠ ⚠ [{{.Labels.instance}}] - {{ .Labels.alertname }} is {{.Status}} ⚠ ⚠ ⚠ {{.Annotations.description}} (@pinpox act accordingly)";
+    msg_template = "⚠ ⚠ ⚠ [{{.Labels.instance}}] - {{ .Labels.alertname }} is {{.Status}} ⚠ ⚠ ⚠ {{.Annotations.description}} (@pinpox act accordingly)";
     # Note: When sending only one message per alert group the default
     # msg_template is set to
     # "Alert {{ .GroupLabels.alertname }} for {{ .GroupLabels.job }} is {{ .Status }}"
@@ -44,14 +46,13 @@ let
   };
 
   confPath = pkgs.writeText "config.yml" (builtins.toJSON am-irc-conf);
-in {
-
+in
+{
   options.pinpox.services.monitoring-server.alertmanager-irc-relay = {
     enable = mkEnableOption "alertmanager-irc-relay";
   };
 
   config = mkIf cfg.enable {
-
     # User and group
     users.groups."alertmanager-irc-relay" = { };
     users.users."alertmanager-irc-relay" = {
@@ -64,12 +65,10 @@ in {
     systemd.services.alertmanager-irc-relay = {
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-
         # EnvironmentFile = [ "/var/src/secrets/alertmanager-irc-relay/envfile" ];
         # Environment = [ ];
 
-        ExecStart =
-          "${pkgs.alertmanager-irc-relay}/bin/alertmanager-irc-relay --config ${confPath}";
+        ExecStart = "${pkgs.alertmanager-irc-relay}/bin/alertmanager-irc-relay --config ${confPath}";
         User = config.users.users.alertmanager-irc-relay.name;
         Group = config.users.users.alertmanager-irc-relay.name;
       };

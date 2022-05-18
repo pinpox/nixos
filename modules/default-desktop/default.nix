@@ -1,12 +1,19 @@
-{ lib, nur, dotfiles-awesome, pkgs, config, flake-self, home-manager, ... }:
-with lib;
-let cfg = config.pinpox.desktop;
-in {
-
+{ lib
+, nur
+, dotfiles-awesome
+, pkgs
+, config
+, flake-self
+, home-manager
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.desktop;
+in
+{
   imports = [ ../../users/pinpox.nix home-manager.nixosModules.home-manager ];
 
   options.pinpox.desktop = {
-
     enable = mkEnableOption "the default desktop configuration";
 
     wireguardIp = mkOption {
@@ -42,7 +49,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
@@ -51,7 +57,6 @@ in {
     nixpkgs.overlays = [ nur.overlay ];
 
     home-manager.users.pinpox = {
-
       imports = [
         ../../home-manager/home.nix
         dotfiles-awesome.nixosModules.dotfiles
@@ -59,7 +64,7 @@ in {
           nixpkgs.overlays = [
             flake-self.overlays.default
             nur.overlay
-            # inputs.neovim-nightly.overlay 
+            # inputs.neovim-nightly.overlay
           ];
         }
       ];
@@ -107,7 +112,6 @@ in {
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
-
       # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
       pkgs.nur.repos.mic92.irc-announce
 

@@ -1,14 +1,17 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.restic-client;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.restic-client;
+in
+{
   options.pinpox.services.restic-client = {
     enable = mkEnableOption "restic backups";
   };
 
   config = mkIf cfg.enable {
-
     services.restic.backups = {
       s3-pinpox = {
         paths = [ "/home/pinpox/Notes/" ];

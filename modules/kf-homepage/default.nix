@@ -1,15 +1,17 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.kf-homepage;
-
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.kf-homepage;
+in
+{
   options.pinpox.services.kf-homepage = {
     enable = mkEnableOption "Krosse Flagge Homepage";
   };
 
   config = mkIf cfg.enable {
-
     services.nginx = {
       enable = true;
       recommendedOptimisation = true;

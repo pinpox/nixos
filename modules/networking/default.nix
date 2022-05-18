@@ -1,16 +1,18 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.defaults.networking;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.defaults.networking;
+in
+{
   options.pinpox.defaults.networking = {
     enable = mkEnableOption "Network defaults";
   };
 
   config = mkIf cfg.enable {
-
     networking = {
-
       # Define the DNS servers
       nameservers = [ "1.1.1.1" "8.8.8.8" "192.168.2.1" ];
 

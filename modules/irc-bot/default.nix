@@ -1,10 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.go-karma-bot;
 
   go-karma-bot = pkgs.buildGoModule rec {
-
     pname = "go-karma-bot";
     version = "1.1";
 
@@ -27,15 +29,13 @@ let
       platforms = platforms.linux;
     };
   };
-
-in {
-
+in
+{
   options.pinpox.services.go-karma-bot = {
     enable = mkEnableOption "the irc bot";
   };
 
   config = mkIf cfg.enable {
-
     # User and group
     users.users.go-karma-bot = {
       isSystemUser = true;

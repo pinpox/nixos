@@ -1,14 +1,17 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.droneci.runner-docker;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.droneci.runner-docker;
+in
+{
   options.pinpox.services.droneci.runner-docker = {
     enable = mkEnableOption "DroneCI docker runner";
   };
 
   config = mkIf cfg.enable {
-
     virtualisation.oci-containers.containers = {
       drone-runner = {
         autoStart = true;
@@ -21,8 +24,7 @@ in {
           DRONE_RUNNER_NAME = "drone-runner";
         };
 
-        extraOptions =
-          [ "--network=host" "--env-file=/var/src/secrets/drone-ci/envfile" ];
+        extraOptions = [ "--network=host" "--env-file=/var/src/secrets/drone-ci/envfile" ];
 
         ports = [ "3000:3000" ];
         volumes = [ "/var/run/docker.sock:/var/run/docker.sock" ];

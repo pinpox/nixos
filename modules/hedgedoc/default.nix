@@ -1,19 +1,21 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.services.hedgedoc;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.hedgedoc;
+in
+{
   options.pinpox.services.hedgedoc = {
     enable = mkEnableOption "Hedgedoc server";
   };
   config = mkIf cfg.enable {
-
     # Create system user and group
     services.hedgedoc = {
       enable = true;
       environmentFile = /var/src/secrets/hedgedoc/envfile;
       configuration = {
-
         protocolUseSSL = true; # Use https when loading assets
         allowEmailRegister = false; # Disable email registration
         email = false; # Disable email login

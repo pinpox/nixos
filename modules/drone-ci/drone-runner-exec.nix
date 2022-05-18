@@ -1,8 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.droneci.runner-exec;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.droneci.runner-exec;
+in
+{
   options.pinpox.services.droneci.runner-exec = {
     enable = mkEnableOption "DroneCI exec runner";
   };
@@ -13,8 +17,7 @@ in {
       # might break deployment
       restartIfChanged = false;
       confinement.enable = true;
-      confinement.packages =
-        [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixUnstable pkgs.gzip ];
+      confinement.packages = [ pkgs.git pkgs.gnutar pkgs.bash pkgs.nixUnstable pkgs.gzip ];
       path = [
         pkgs.bash
         pkgs.bind
@@ -73,6 +76,5 @@ in {
     users.groups.drone-runner-exec = { };
 
     nix.settings.allowed-users = [ "drone-runner-exec" ];
-
   };
 }

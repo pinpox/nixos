@@ -1,12 +1,15 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.services.minio;
-in {
-
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.minio;
+in
+{
   options.pinpox.services.minio = { enable = mkEnableOption "mino s3 config"; };
 
   config = mkIf cfg.enable {
-
     networking.firewall.allowedTCPPorts = [ 9000 9001 ];
 
     services.minio = {
@@ -20,7 +23,6 @@ in {
     };
 
     systemd.services.minio = {
-
       environment = {
         MINIO_SERVER_URL = "https://vpn.s3.pablo.tools";
         MINIO_BROWSER_REDIRECT_URL = "https://vpn.minio.pablo.tools";

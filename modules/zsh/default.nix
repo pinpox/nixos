@@ -1,11 +1,14 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.defaults.zsh;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.defaults.zsh;
+in
+{
   options.pinpox.defaults.zsh = { enable = mkEnableOption "ZSH defaults"; };
   config = mkIf cfg.enable {
-
     environment.systemPackages = with pkgs; [ zsh ];
 
     # Needed for yubikey to work

@@ -1,14 +1,17 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.services.openssh;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.services.openssh;
+in
+{
   options.pinpox.services.openssh = {
     enable = mkEnableOption "OpenSSH server";
   };
 
   config = mkIf cfg.enable {
-
     # Enable the OpenSSH daemon.
     services.openssh = {
       enable = true;

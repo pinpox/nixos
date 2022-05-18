@@ -1,8 +1,12 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let cfg = config.pinpox.virtualisation;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.virtualisation;
+in
+{
   options.pinpox.virtualisation.docker = {
     enable = mkEnableOption "Docker virtualisation";
   };
@@ -16,13 +20,11 @@ in {
   # nothhing
 
   config = mkIf cfg.virtualbox.enable {
-
     virtualisation.docker.enable = true;
     users.users.pinpox.extraGroups = [ "docker" ];
 
     virtualisation.virtualbox.host.enable = true;
     # virtualisation.virtualbox.host.enableExtensionPack = true;
     users.extraGroups.vboxusers.members = [ "pinpox" ];
-
   };
 }

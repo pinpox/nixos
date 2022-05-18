@@ -1,16 +1,18 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
   cfg = config.pinpox.services.monitoring-server.loki;
   port-loki = 3100;
-in {
-
+in
+{
   options.pinpox.services.monitoring-server.loki = {
     enable = mkEnableOption "Loki log collector";
   };
 
   config = mkIf cfg.enable {
-
     networking.firewall = {
       enable = true;
       interfaces.wg0.allowedTCPPorts = [ port-loki ];
@@ -51,20 +53,21 @@ in {
         };
 
         schema_config = {
-          configs = [{
-            from = "2020-10-24";
-            store = "boltdb-shipper";
-            object_store = "filesystem";
-            schema = "v11";
-            index = {
-              prefix = "index_";
-              period = "24h";
-            };
-          }];
+          configs = [
+            {
+              from = "2020-10-24";
+              store = "boltdb-shipper";
+              object_store = "filesystem";
+              schema = "v11";
+              index = {
+                prefix = "index_";
+                period = "24h";
+              };
+            }
+          ];
         };
 
         storage_config = {
-
           boltdb_shipper = {
             active_index_directory = "/var/lib/loki/boltdb-shipper-active";
             cache_location = "/var/lib/loki/boltdb-shipper-cache";
@@ -119,7 +122,6 @@ in {
     services.promtail = {
       enable = true;
       configuration = {
-
         server = {
           http_listen_port = 28183;
           grpc_listen_port = 0;
@@ -127,25 +129,30 @@ in {
 
         positions = { filename = "/tmp/positions.yml"; };
 
-        clients = [{
-          url = "http://localhost:${toString port-loki}/loki/api/v1/push";
-        }];
+        clients = [
+          {
+            url = "http://localhost:${toString port-loki}/loki/api/v1/push";
+          }
+        ];
 
-        scrape_configs = [{
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "${config.networking.hostName}";
+        scrape_configs = [
+          {
+            job_name = "journal";
+            journal = {
+              max_age = "12h";
+              labels = {
+                job = "systemd-journal";
+                host = "${config.networking.hostName}";
+              };
             };
-          };
-          relabel_configs = [{
-
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
-        }];
+            relabel_configs = [
+              {
+                source_labels = [ "__journal__systemd_unit" ];
+                target_label = "unit";
+              }
+            ];
+          }
+        ];
       };
     };
   };

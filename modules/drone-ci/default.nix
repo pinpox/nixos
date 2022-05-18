@@ -1,6 +1,7 @@
-{ pkgs, config, ... }:
-
-{
+{ pkgs
+, config
+, ...
+}: {
   imports = [
     ./server.nix
     ./drone-runner-docker.nix
