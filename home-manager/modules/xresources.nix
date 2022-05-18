@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
-let vars = import ./vars.nix;
-in {
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ./vars.nix;
+in
+{
   xresources.properties = {
     "color0" = "#${vars.colors.Black}";
     "color1" = "#${vars.colors.DarkGrey}";

@@ -1,10 +1,13 @@
-{ config, pkgs, lib, ... }: {
+{ config
+, pkgs
+, lib
+, ...
+}: {
   programs.starship = {
     enable = false;
     enableBashIntegration = true;
     enableZshIntegration = true;
     settings = {
-
       character = {
         success_symbol = "[»](bold green)";
         error_symbol = "[×](bold red) ";
@@ -17,7 +20,6 @@
       nix_shell = { symbol = "❄  "; };
 
       git_status = {
-
         ahead = "↑";
         behind = "↓";
         diverged = "↕";
@@ -32,11 +34,9 @@
 
         substitutions = {
           "~/code/github.com/pinpox/nixos" = "<pinpox/nixos>";
-          "~/code/github.com/pinpox/dotfiles-awesome" =
-            "<pinpox/dotfiles-awesome>";
+          "~/code/github.com/pinpox/dotfiles-awesome" = "<pinpox/dotfiles-awesome>";
         };
       };
-
     };
   };
 }

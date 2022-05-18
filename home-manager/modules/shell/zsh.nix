@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config
+, pkgs
+, lib
+, ...
+}: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -30,13 +34,11 @@
     };
 
     shellAliases = rec {
-
       # Exa ls replacement
       ls = "${pkgs.exa}/bin/exa --group-directories-first";
       l = "${ls} -lbF --git --icons";
       ll = "${l} -G";
-      la =
-        "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
+      la = "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
       lt = "${ls} --tree --level=2 --icons";
 
       # Git
@@ -53,17 +55,16 @@
       # Other
       lsblk = "lsblk -o name,mountpoint,label,size,type,uuid";
       c = "${pkgs.bat}/bin/bat -n --decorations never";
-      cc =
-        "${pkgs.clang}/bin/clang -Wall -Wextra -pedantic -std=c99 -Wshadow -Weverything";
+      cc = "${pkgs.clang}/bin/clang -Wall -Wextra -pedantic -std=c99 -Wshadow -Weverything";
       qr_gen = "${pkgs.qrencode}/bin/qrencode -t ansi -o-";
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
 
       yotp = ''
-             ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
-        		  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
-        				'';
+         ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
+        ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
+      '';
 
       zzz = "systemctl suspend";
 
@@ -71,22 +72,22 @@
       # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
-       prezto = {
-         enable = true;
-		 prompt.theme = "pure";
+    prezto = {
+      enable = true;
+      prompt.theme = "pure";
 
-         # Case insensitive completion
-         caseSensitive = false;
+      # Case insensitive completion
+      caseSensitive = false;
 
-         # Autoconvert .... to ../..
-         editor.dotExpansion = true;
+      # Autoconvert .... to ../..
+      editor.dotExpansion = true;
 
-         # Prezto modules to load
-         # pmodules = [ "utility" "editor" "directory" "completion"];
-         pmodules = [ "utility" "editor" "directory" "prompt" ];
+      # Prezto modules to load
+      # pmodules = [ "utility" "editor" "directory" "completion"];
+      pmodules = [ "utility" "editor" "directory" "prompt" ];
 
-         terminal.autoTitle = true;
-       };
+      terminal.autoTitle = true;
+    };
 
     plugins = [
       {

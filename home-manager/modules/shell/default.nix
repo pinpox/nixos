@@ -1,7 +1,12 @@
-{ config, pkgs, lib, ... }:
-let vars = import ../vars.nix;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ../vars.nix;
+in
+{
   imports = [ ./starship.nix ./zsh.nix ];
 
   programs.fzf = {

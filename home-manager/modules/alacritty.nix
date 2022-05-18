@@ -1,11 +1,16 @@
-{ config, pkgs, lib, ... }:
-let vars = import ./vars.nix;
-in {
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ./vars.nix;
+in
+{
   # Alacritty
   programs.alacritty = {
     enable = true;
     settings = {
-
       scrolling.history = 10000;
       env.TERM = "xterm-256color";
 

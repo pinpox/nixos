@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config
+, pkgs
+, lib
+, ...
+}: {
   programs = {
     go = {
       enable = true;

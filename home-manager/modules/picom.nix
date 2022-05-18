@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config
+, pkgs
+, lib
+, ...
+}: {
   # Picom X11 compositor
   services.picom = {
     backend = "glx";

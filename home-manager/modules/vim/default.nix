@@ -1,4 +1,10 @@
-{ self, config, pkgs, lib, utils, ... }:
+{ self
+, config
+, pkgs
+, lib
+, utils
+, ...
+}:
 let
   vars = import ../vars.nix;
 
@@ -14,9 +20,8 @@ let
         rev = sha256;
       };
     };
-
-in {
-
+in
+{
   home.packages = with pkgs; [
     nodePackages.pyright # LSP python
     nodePackages.yaml-language-server # LSP yaml
@@ -37,11 +42,11 @@ in {
   xdg = {
     enable = true;
     configFile = {
-
       nixcolors-lua = {
         target = "nvim/lua/nixcolors.lua";
-        source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache
-          vars.colors;
+        source =
+          utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache
+            vars.colors;
       };
 
       nvim_lua_config = {
@@ -110,7 +115,6 @@ in {
 
     # loaded on launch
     plugins = with pkgs.vimPlugins; [
-
       # nvim-treesitter
       # zk-nvim
       # vim-visual-increment
@@ -176,7 +180,6 @@ in {
     ];
   };
 }
-
 # TODO Missing plugins
 # TODO use flake inputs for this, if needed
 # autopairs
@@ -184,3 +187,4 @@ in {
 # nicwest/vim-camelsnek'
 # thinca/vim-textobj-between'           "Text objects for a range between a character
 # timakro/vim-searchant'                " Better highlighting of search
+

@@ -1,7 +1,12 @@
-{ config, pkgs, lib, ... }:
-let vars = import ./vars.nix;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ./vars.nix;
+in
+{
   xsession.scriptPath = ".hm-xsession";
   xsession.enable = true;
 
@@ -11,10 +16,12 @@ in {
     package = pkgs.i3-gaps;
     config = {
       menu = "rofi";
-      window.commands = [{
-        command = "border pixel 2";
-        criteria = { class = "^.*"; };
-      }];
+      window.commands = [
+        {
+          command = "border pixel 2";
+          criteria = { class = "^.*"; };
+        }
+      ];
       startup = [
         {
           command = "autorandr -c";
@@ -114,40 +121,32 @@ in {
       };
       modifier = "Mod4";
       keybindings =
-        let modifier = config.xsession.windowManager.i3.config.modifier;
-        in lib.mkOptionDefault {
-
+        let
+          modifier = config.xsession.windowManager.i3.config.modifier;
+        in
+        lib.mkOptionDefault {
           "${modifier}+Shift+Escape" = "exec xkill";
-          "${modifier}+p" =
-            "exec ${pkgs.rofi}/bin/rofi -show run -lines 7 -eh 1 -bw 0  -fullscreen -padding 200";
-          "${modifier}+Shift+p" =
-            "exec ${pkgs.rofi-pass} -show combi -lines 7 -eh 3 -bw 0 -matching fuzzy";
+          "${modifier}+p" = "exec ${pkgs.rofi}/bin/rofi -show run -lines 7 -eh 1 -bw 0  -fullscreen -padding 200";
+          "${modifier}+Shift+p" = "exec ${pkgs.rofi-pass} -show combi -lines 7 -eh 3 -bw 0 -matching fuzzy";
           "${modifier}+Shift+x" = "exec xscreensaver-command -lock";
           "${modifier}+Shift+Tab" = "workspace prev";
           "${modifier}+Tab" = "workspace next";
-          "XF86AudioLowerVolume" =
-            "exec --no-startup-id pactl set-sink-volume 0 -5%"; # decrease sound volume
-          "XF86AudioMute" =
-            "exec --no-startup-id pactl set-sink-mute 0 toggle"; # mute sound
+          "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume 0 -5%"; # decrease sound volume
+          "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute 0 toggle"; # mute sound
           "XF86AudioNext" = "exec playerctl next";
           "XF86AudioPlay" = "exec playerctl play-pause";
           "XF86AudioPrev" = "exec playerctl previous";
-          "XF86AudioRaiseVolume" =
-            "exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume";
+          "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume";
           "XF86AudioStop" = "exec playerctl stop";
-          "XF86MonBrightnessDown" =
-            "exec xbacklight -dec 20"; # decrease screen brightness
-          "XF86MonBrightnessUp" =
-            "exec xbacklight -inc 20"; # increase screen brightness
-          "Print" =
-            "exec import png:- | xclip -selection clipboard -t image/png";
+          "XF86MonBrightnessDown" = "exec xbacklight -dec 20"; # decrease screen brightness
+          "XF86MonBrightnessUp" = "exec xbacklight -inc 20"; # increase screen brightness
+          "Print" = "exec import png:- | xclip -selection clipboard -t image/png";
         };
 
       terminal = "alacritty";
 
       # window = "TODO"
       workspaceLayout = "tabbed";
-
     };
   };
 }

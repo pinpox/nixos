@@ -1,13 +1,18 @@
-{ config, pkgs, lib, nur, utils, ... }:
-with lib;
-let
+{ config
+, pkgs
+, lib
+, nur
+, utils
+, ...
+}:
+with lib; let
   vars = import ../vars.nix;
   cfg = config.pinpox.programs.firefox;
-in {
+in
+{
   options.pinpox.programs.firefox.enable = mkEnableOption "firefox browser";
 
   config = mkIf cfg.enable {
-
     # Browserpass
     programs.browserpass = {
       enable = true;
@@ -27,13 +32,11 @@ in {
 
       profiles = {
         pinpox = {
-
           # Extra preferences to add to user.js.
           # extraConfig = "";
 
           isDefault = true;
           settings = {
-
             # Set the homepage
             "browser.startup.homepage" = "https://nixos.org";
 
@@ -42,7 +45,7 @@ in {
 
             # Path where to export. Default is:
             # ~/.mozilla/firefox/pinpox/bookmarks.html
-            # "browser.bookmarks.file" = 
+            # "browser.bookmarks.file" =
 
             # "browser.display.background_color" = "#${vars.colors.Black}";
             # "browser.display.foreground_color" = "#${vars.colors.White}";
@@ -61,9 +64,10 @@ in {
             "devtools.theme" = "dark";
           };
 
-          userChrome = builtins.readFile
-            (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
-              vars);
+          userChrome =
+            builtins.readFile
+              (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
+                vars);
 
           # TODO
           userContent = ''

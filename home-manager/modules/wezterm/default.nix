@@ -1,9 +1,14 @@
-{ lib, pkgs, config, utils, ... }:
-with lib;
-let
+{ lib
+, pkgs
+, config
+, utils
+, ...
+}:
+with lib; let
   cfg = config.pinpox.programs.wezterm;
   vars = import ../vars.nix;
-in {
+in
+{
   options.pinpox.programs.wezterm.enable =
     mkEnableOption "wezterm terminal emulator";
 
@@ -18,7 +23,6 @@ in {
     xdg = {
       enable = true;
       configFile = {
-
         colors_lua = {
           target = "wezterm/colors.lua";
           source =

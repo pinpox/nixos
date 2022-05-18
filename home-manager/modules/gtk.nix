@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config
+, pkgs
+, lib
+, ...
+}:
 let
   vars = import ./vars.nix;
 
@@ -52,8 +56,8 @@ let
       MATERIA_STYLE_COMPACT=True
     '';
   };
-in {
-
+in
+{
   nixpkgs.overlays = [
     (self: super: {
       rendersvg = self.runCommandNoCC "rendersvg" { } ''
@@ -61,7 +65,6 @@ in {
         ln -s ${self.resvg}/bin/resvg $out/bin/rendersvg
       '';
       generated-gtk-theme = self.stdenv.mkDerivation rec {
-
         name = "generated-gtk-theme";
         src = materia-theme;
         buildInputs = with self; [
@@ -117,5 +120,4 @@ in {
   };
 
   home.sessionVariables.GTK_THEME = "Generated";
-
 }

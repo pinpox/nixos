@@ -1,10 +1,13 @@
-{ config, pkgs, lib, ... }:
-with lib;
-let
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
   cfg = config.pinpox.programs.rofi;
   vars = import ../vars.nix;
-in {
-
+in
+{
   options.pinpox.programs.rofi.enable = mkEnableOption "rofi launcher";
 
   config = mkIf cfg.enable {

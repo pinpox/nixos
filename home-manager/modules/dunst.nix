@@ -1,7 +1,12 @@
-{ config, pkgs, lib, ... }:
-let vars = import ./vars.nix;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ./vars.nix;
+in
+{
   services.dunst = {
     enable = true;
 
@@ -12,7 +17,6 @@ in {
     };
 
     settings = {
-
       global = {
         monitor = 0;
         follow = "mouse";
@@ -31,8 +35,7 @@ in {
         font = "${vars.font.normal.family} ${vars.font.normal.style} 8";
         line_height = 0;
         markup = "full";
-        format =
-          "<b><span foreground='#${vars.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
+        format = "<b><span foreground='#${vars.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
         alignment = "left";
         show_age_threshold = 60;
         word_wrap = "yes";

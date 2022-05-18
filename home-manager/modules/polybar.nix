@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
-let vars = import ./vars.nix;
-in {
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ./vars.nix;
+in
+{
   services.polybar = {
     enable = true;
     package = pkgs.polybar.override {
@@ -50,8 +56,7 @@ in {
         module-margin-left = 2;
         module-margin-right = 2;
 
-        font-0 =
-          "${vars.font.normal.family}:style=${vars.font.normal.style}:pixelsize=8";
+        font-0 = "${vars.font.normal.family}:style=${vars.font.normal.style}:pixelsize=8";
 
         modules-left = "i3";
         modules-center = "music";
@@ -64,7 +69,6 @@ in {
       };
 
       "module/filesystem" = {
-
         format-mounted-prefix-foreground = "#${vars.colors.Blue}";
         format-unmounted-prefix-foreground = "#${vars.colors.Blue}";
         label-unmounted-foreground = "#${vars.colors.White}";
@@ -84,7 +88,6 @@ in {
       };
 
       "module/i3" = {
-
         type = "internal/i3";
         format = "<label-state> <label-mode>";
         index-sort = true;
@@ -115,7 +118,6 @@ in {
         label-urgent = "%name%";
         label-urgent-background = "#${vars.colors.Red}";
         label-urgent-padding = 2;
-
       };
 
       "module/cpu" = {
@@ -178,7 +180,6 @@ in {
       };
 
       "module/date" = {
-
         format-prefix-foreground = "#${vars.colors.Black}";
         format-foreground = "#${vars.colors.Black}";
         format-background = "#${vars.colors.Blue}";

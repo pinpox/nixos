@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
-{
+{ config
+, pkgs
+, lib
+, ...
+}: {
   # nixpkgs.overlays = [
   #   (self: super: {
   #      dwm = super.dwm.overrideAttrs (oa: {

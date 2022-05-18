@@ -1,11 +1,18 @@
-{ config, pkgs, lib, nur, awesome-config, wallpaper-generator, flake-inputs, ...
+{ config
+, pkgs
+, lib
+, nur
+, awesome-config
+, wallpaper-generator
+, flake-inputs
+, ...
 }:
 let
   vars = import ./vars.nix;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
-in {
-
+in
+{
   # Imports
   imports = [
     # ./modules/autorandr.nix
@@ -52,7 +59,6 @@ in {
 
   # Install these packages for my user
   home.packages = with pkgs; [
-
     # From nixpkgs
     inetutils
     nmap
@@ -166,7 +172,6 @@ in {
   programs.home-manager.enable = true;
 
   services = {
-
     # Applets, shown in tray
     # Networking
     network-manager-applet.enable = true;
@@ -187,7 +192,6 @@ in {
     #   enable = true;
     #   tray.enable = true;
     # };
-
   };
 
   # This value determines the Home Manager release that your

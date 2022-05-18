@@ -1,7 +1,12 @@
-{ lib, pkgs, config, ... }:
-with lib;
-let cfg = config.pinpox.programs.tmux;
-in {
+{ lib
+, pkgs
+, config
+, ...
+}:
+with lib; let
+  cfg = config.pinpox.programs.tmux;
+in
+{
   options.pinpox.programs.tmux.enable =
     mkEnableOption "tmux terminal mutliplexer";
 
@@ -76,11 +81,11 @@ in {
         set -g status-left ""
         # Right status
         set -g status-right "\
-        	#[fg=colour231,bg=colour04]#{?client_prefix, ^A ,}#[default]\
-        	#[fg=colour231,bg=colour09]#{?pane_in_mode, Copy ,}#[default]\
-        	#[fg=colour002]#([ $(tmux show-option -qv key-table) = off ] && echo '(off) ')#[default]\
-        	#[default]#{?#(echo $IN_NIX_SHELL), (nix) ,}\
-        	#[default]#[fg=gray]$USER@#(hostname)"
+          #[fg=colour231,bg=colour04]#{?client_prefix, ^A ,}#[default]\
+          #[fg=colour231,bg=colour09]#{?pane_in_mode, Copy ,}#[default]\
+          #[fg=colour002]#([ $(tmux show-option -qv key-table) = off ] && echo '(off) ')#[default]\
+          #[default]#{?#(echo $IN_NIX_SHELL), (nix) ,}\
+          #[default]#[fg=gray]$USER@#(hostname)"
 
         # Enable mouse support
         set -g mouse on
@@ -142,8 +147,7 @@ in {
         #   set -u key-table \;\
         #   refresh-client -S
         #
-              '';
-
+      '';
     };
   };
 }

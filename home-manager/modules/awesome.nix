@@ -1,7 +1,12 @@
-{ config, pkgs, lib, ... }:
-let vars = import ./vars.nix;
-in {
-
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
+  vars = import ./vars.nix;
+in
+{
   # imports = [ dotfiles-awesome.dotfiles ];
 
   xsession.scriptPath = ".hm-xsession";
