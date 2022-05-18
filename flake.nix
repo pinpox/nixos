@@ -2,8 +2,6 @@
   description = "My machines";
 
   inputs = {
-
-
     s3photoalbum.url = "github:pinpox/s3photoalbum";
     s3photoalbum.inputs = {
       nixpkgs.follows = "nixpkgs";
@@ -55,8 +53,7 @@
     krops.flake = false;
 
     # Vim plugins
-    indent-blankline-nvim-lua.url =
-      "github:lukas-reineke/indent-blankline.nvim";
+    indent-blankline-nvim-lua.url = "github:lukas-reineke/indent-blankline.nvim";
     indent-blankline-nvim-lua.flake = false;
 
     nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
@@ -89,26 +86,24 @@
     nix-apple-fonts.inputs.flake-compat.follows = "flake-compat";
     nix-apple-fonts.inputs.flake-utils.follows = "flake-utils";
     nix-apple-fonts.inputs.nixpkgs.follows = "nixpkgs";
-
   };
-  outputs = { self, ... }@inputs:
+  outputs = { self, ... } @ inputs:
     with inputs;
     {
-
       # Add a formatter for nix code, so we can run `nix fmt`
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
-      overlays.default = final: prev: (import ./overlays inputs) final prev;
+      overlays.default = (import ./overlays inputs);
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (map
-        (x: {
-          name = x;
-          value = import (./modules + "/${x}");
+        (name: {
+          inherit name;
+          value = import (./modules + "/${name}");
         })
         (builtins.attrNames (builtins.readDir ./modules)));
 
@@ -116,10 +111,9 @@
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
       nixosConfigurations = builtins.listToAttrs (map
-        (x: {
-          name = x;
+        (name: {
+          inherit name;
           value = nixpkgs.lib.nixosSystem {
-
             # Make inputs and the flake itself accessible as module parameters.
             # Technically, adding the inputs is redundant as they can be also
             # accessed with flake-self.inputs.X, but adding them individually
@@ -129,14 +123,15 @@
             system = "x86_64-linux";
 
             modules = [
-              (./machines + "/${x}/configuration.nix")
+              (./machines + "/${name}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
             ];
           };
         })
         (builtins.attrNames (builtins.readDir ./machines)));
 
-      /* # Hydra build jobs. Builds all configs in the CI to verify integrity
+      /*
+        # Hydra build jobs. Builds all configs in the CI to verify integrity
         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
         nixpkgs.lib.nameValuePair "nixos-${name}"
         config.config.system.build.toplevel) self.nixosConfigurations);
@@ -147,28 +142,30 @@
 
       # nix build '.#base-image'
       base-image =
-        let system = "x86_64-linux";
+        let
+          system = "x86_64-linux";
         in
         import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
           pkgs = nixpkgs.legacyPackages."${system}";
           lib = nixpkgs.lib;
-          config = (nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [ ./images/configuration.nix ];
-          }).config;
+          config =
+            (nixpkgs.lib.nixosSystem {
+              inherit system;
+              modules = [ ./images/configuration.nix ];
+            }).config;
           format = "qcow2";
           diskSize = 2048;
           name = "base-image";
         };
-
-    } //
-
+    }
+    //
     # All packages in the ./packages subfolder are also added to the flake.
     # flake-utils is used for this part to make each package available for each
     # system. This works as all packages are compatible with all architectures
     (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
       (system:
-        let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+        let
+          pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
         in
         rec {
           # Custom packages added via the overlay are selectively exposed here, to
@@ -206,9 +203,9 @@
           # the flake's checks output. The test.nix file is optional and may be
           # added to any module.
           checks = builtins.listToAttrs (map
-            (x: {
-              name = x;
-              value = (import (./modules + "/${x}/test.nix")) {
+            (name: {
+              inherit name;
+              value = (import (./modules + "/${name}/test.nix")) {
                 pkgs = nixpkgs;
                 inherit system self;
               };
@@ -218,7 +215,8 @@
               # `test.nix` file
               builtins.filter
                 (p: builtins.pathExists (./modules + "/${p}/test.nix"))
-                (builtins.attrNames (builtins.readDir ./modules))));
+                (builtins.attrNames (builtins.readDir ./modules))
+            ));
 
           # TODO we probably should set some default app and/or package
           # defaultPackage = packages.hello;
