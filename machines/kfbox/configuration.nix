@@ -1,5 +1,7 @@
-{ self, s3photoalbum, ... }: {
-
+{ self
+, s3photoalbum
+, ...
+}: {
   imports = [
     ./hardware-configuration.nix
     s3photoalbum.nixosModules.s3photoalbum
@@ -7,7 +9,6 @@
   ];
 
   pinpox = {
-
     server = {
       enable = true;
       hostname = "kfbox";
@@ -81,7 +82,6 @@
     # '';
 
     virtualHosts = {
-
       # The Lounge IRC
       "irc.0cx.de" = {
         forceSSL = true;

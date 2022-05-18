@@ -1,19 +1,19 @@
-{ config, pkgs, lib, retiolum, ... }:
-
-with lib;
-
-let
-
+{ config
+, pkgs
+, lib
+, retiolum
+, ...
+}:
+with lib; let
   netname = "retiolum";
   cfg = config.networking.retiolum;
-
   # pkgs.fetchgit {
   #   url = "https://github.com/krebs/retiolum.git";
   #   rev = "8edeafb01411943eb483b5431bccce6702406f12";
   #   sha256 = "1vnmhr5qfxhndlnsk8c87qbbwmlph1inlj924vqymfm1lgsasdq0";
   # };
-
-in {
+in
+{
   options = {
     networking.retiolum.ipv4 = mkOption {
       type = types.str;
@@ -37,7 +37,6 @@ in {
   };
 
   config = {
-
     services.tinc.networks.${netname} = {
       name = cfg.nodename;
       extraConfig = ''
@@ -54,8 +53,7 @@ in {
     networking.extraHosts =
       builtins.readFile (toString "${retiolum}/etc.hosts");
 
-    environment.systemPackages =
-      [ config.services.tinc.networks.${netname}.package ];
+    environment.systemPackages = [ config.services.tinc.networks.${netname}.package ];
 
     networking.firewall.allowedTCPPorts = [ 655 ];
     networking.firewall.allowedUDPPorts = [ 655 ];

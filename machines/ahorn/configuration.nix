@@ -1,6 +1,5 @@
 # Configuration file for ahorn
 { ... }: {
-
   imports = [ ./hardware-configuration.nix ./retiolum.nix ];
 
   # To build raspi images

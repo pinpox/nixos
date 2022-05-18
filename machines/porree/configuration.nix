@@ -1,5 +1,4 @@
-{ matrix-hook,... }: {
-
+{ matrix-hook, ... }: {
   imports = [ ./hardware-configuration.nix matrix-hook.nixosModule ];
 
   # services.influxdb2.enable = true;
@@ -46,7 +45,6 @@
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   services.nginx = {
-
     # resolver = {
     #   addresses = [
     #     "1.1.1.1"
@@ -116,22 +114,26 @@
 
       # Alertmanager
       "vpn.alerts.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+        listen = [
+          {
+            addr = "192.168.7.1";
+            port = 443;
+            ssl = true;
+          }
+        ];
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:9093"; };
       };
 
       "vpn.prometheus.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+        listen = [
+          {
+            addr = "192.168.7.1";
+            port = 443;
+            ssl = true;
+          }
+        ];
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
@@ -145,11 +147,13 @@
       };
 
       "vpn.notify.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+        listen = [
+          {
+            addr = "192.168.7.1";
+            port = 443;
+            ssl = true;
+          }
+        ];
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:11000"; };
@@ -167,12 +171,13 @@
 
       # Minio admin console
       "vpn.minio.pablo.tools" = {
-
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+        listen = [
+          {
+            addr = "192.168.7.1";
+            port = 443;
+            ssl = true;
+          }
+        ];
 
         addSSL = true;
         enableACME = true;
@@ -216,12 +221,13 @@
 
       # Minio s3 backend
       "vpn.s3.pablo.tools" = {
-
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+        listen = [
+          {
+            addr = "192.168.7.1";
+            port = 443;
+            ssl = true;
+          }
+        ];
 
         addSSL = true;
         enableACME = true;
@@ -268,7 +274,6 @@
     };
   };
 
-
   # Enable ip forwarding, so wireguard peers can reach eachother
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
@@ -302,8 +307,8 @@
       matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
       envFile = "/var/src/secrets/matrix-hook/envfile";
       msgTemplatePath = "${
-          matrix-hook.packages."x86_64-linux".matrix-hook
-        }/bin/message.html.tmpl";
+        matrix-hook.packages."x86_64-linux".matrix-hook
+      }/bin/message.html.tmpl";
     };
 
     services.borg-backup.enable = true;
@@ -316,7 +321,6 @@
     metrics.json.enable = true;
 
     services.monitoring-server = {
-
       dashboard.enable = true;
       loki.enable = true;
       alertmanager-irc-relay.enable = true;
@@ -360,9 +364,7 @@
 
   # Enable Wireguard
   networking.wireguard.interfaces = {
-
     wg0 = {
-
       # Determines the IP address and subnet of the client's end of the
       # tunnel interface.
       ips = [ "192.168.7.1/24" ];
