@@ -2,7 +2,6 @@
   renderMustache = name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON
     pkgs.stdenv.mkDerivation {
-
       name = "${name}";
 
       # Disable phases which are not needed. In particular the unpackPhase will

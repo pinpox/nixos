@@ -1,5 +1,4 @@
 let
-
   # Basic krops setup
   krops = builtins.fetchGit { url = "https://cgit.krebsco.de/krops/"; };
   lib = import "${krops}/lib";
@@ -8,20 +7,21 @@ let
   # Source is a function that takes `name` as argument and returns the sources
   # for the machine (config and nixpkgs).
   source = name:
-    lib.evalSource [{
+    lib.evalSource [
+      {
+        # Secrets for the individual machines are copied from password-store.
+        # Each machine has a folder containing it's own secrets.
+        secrets.pass = {
+          dir = toString /home/pinpox/.local/share/password-store/nixos-secrets;
+          name = name;
+        };
 
-      # Secrets for the individual machines are copied from password-store.
-      # Each machine has a folder containing it's own secrets.
-      secrets.pass = {
-        dir = toString /home/pinpox/.local/share/password-store/nixos-secrets;
-        name = name;
-      };
-
-      # Copy over the whole repo. By default nixos-rebuild will use the
-      # currents system hostname to lookup the right nixos configuration in
-      # `nixosConfigurations` from flake.nix
-      machine-config.file = toString ./.;
-    }];
+        # Copy over the whole repo. By default nixos-rebuild will use the
+        # currents system hostname to lookup the right nixos configuration in
+        # `nixosConfigurations` from flake.nix
+        machine-config.file = toString ./.;
+      }
+    ];
 
   # In case the custom cache is down, systems can still be rebuild with:
   # nixos-rebuild switch --flake '.#hostname' --option substituters http://cache.nixos.org
@@ -40,9 +40,8 @@ let
       source = source name;
       target = target;
     };
-
-in rec {
-
+in
+rec {
   # Define deployments
 
   # Run with (e.g.):
@@ -58,9 +57,11 @@ in rec {
   porree = createHost "porree" "root@94.16.108.229";
 
   # Groups
-  all = pkgs.writeScript "deploy-all"
-    (lib.concatStringsSep "\n" [ ahorn birne bob kartoffel kfbox mega porree ]);
+  all =
+    pkgs.writeScript "deploy-all"
+      (lib.concatStringsSep "\n" [ ahorn birne bob kartoffel kfbox mega porree ]);
 
-  servers = pkgs.writeScript "deploy-servers"
-    (lib.concatStringsSep "\n" [ birne bob kfbox mega porree ]);
+  servers =
+    pkgs.writeScript "deploy-servers"
+      (lib.concatStringsSep "\n" [ birne bob kfbox mega porree ]);
 }

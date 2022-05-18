@@ -1,10 +1,13 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config
+, pkgs
+, lib
+, modulesPath
+, ...
+}:
 with lib; {
-
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   config = {
-
     # Filesystems
     fileSystems."/" = {
       device = "/dev/disk/by-label/nixos";
@@ -58,6 +61,5 @@ with lib; {
     # Let 'nixos-version --json' know about the Git revision
     # of this flake.
     # system.configurationRevision = pkgs.lib.mkIf (self ? rev) self.rev;
-
   };
 }
