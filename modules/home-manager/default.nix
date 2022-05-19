@@ -4,8 +4,6 @@
 , nur
 , flake-self
 , home-manager
-, dotfiles-awesome
-, wallpaper-generator
 , ...
 }:
 with lib;
@@ -40,14 +38,9 @@ in
     # nixpkgs.config`
     home-manager.useUserPackages = true;
 
-    # Pass all flake inputs that are neeeded in modules here after adding them
-    # to the arguments of this module in the first line of this file.
-    home-manager.extraSpecialArgs = {
-      inherit dotfiles-awesome wallpaper-generator;
-    };
-
-
-    # home-manager.extraSpecialArgs = config._module.args;
+    # Pass all flake inputs to home-manager modules aswell so we can use them
+    # there.
+    home-manager.extraSpecialArgs = flake-self.inputs;
 
     nixpkgs.overlays = [ nur.overlay ];
 
