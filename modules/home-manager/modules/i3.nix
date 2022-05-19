@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let vars = import ./vars.nix;
-in {
+in
+{
 
   xsession.scriptPath = ".hm-xsession";
   xsession.enable = true;
@@ -115,7 +116,8 @@ in {
       modifier = "Mod4";
       keybindings =
         let modifier = config.xsession.windowManager.i3.config.modifier;
-        in lib.mkOptionDefault {
+        in
+        lib.mkOptionDefault {
 
           "${modifier}+Shift+Escape" = "exec xkill";
           "${modifier}+p" =

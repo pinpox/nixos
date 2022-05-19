@@ -3,7 +3,8 @@ with lib;
 let
   vars = import ../vars.nix;
   cfg = config.pinpox.programs.firefox;
-in {
+in
+{
   options.pinpox.programs.firefox.enable = mkEnableOption "firefox browser";
 
   config = mkIf cfg.enable {

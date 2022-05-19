@@ -52,7 +52,8 @@ let
       MATERIA_STYLE_COMPACT=True
     '';
   };
-in {
+in
+{
 
   nixpkgs.overlays = [
     (self: super: {

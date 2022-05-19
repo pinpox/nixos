@@ -1,9 +1,10 @@
 { config, pkgs, lib, ... }:
 let
-  vars = import ./vars.nix;
+  vars = import ../vars.nix;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
-in {
+in
+{
 
   # Allow "unfree" licenced packages
   nixpkgs.config = { allowUnfree = true; };
@@ -13,14 +14,14 @@ in {
 
   # Imports
   imports = [
-    ./modules/credentials.nix
-    ./modules/git.nix
-    ./modules/shell
-    ./modules/vim
-    ./modules/xdg.nix
+    ../modules/credentials.nix
+    ../modules/git.nix
+    ../modules/shell
+    ../modules/vim
+    ../modules/xdg.nix
   ];
 
-  _module.args.utils = import ../utils { inherit pkgs; };
+  # _module.args.utils = import ../utils { inherit pkgs; };
 
   # Include man-pages
   manual.manpages.enable = true;

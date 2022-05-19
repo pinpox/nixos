@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let vars = import ./vars.nix;
-in {
+in
+{
   services.polybar = {
     enable = true;
     package = pkgs.polybar.override {

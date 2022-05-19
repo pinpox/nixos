@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.programs.zk;
-in {
+in
+{
   options.pinpox.programs.zk.enable = mkEnableOption "zk zettelkasten client";
 
   config = mkIf cfg.enable {

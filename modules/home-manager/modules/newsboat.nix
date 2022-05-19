@@ -2,7 +2,8 @@
 let
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
-in {
+in
+{
   programs.newsboat = {
     enable = true;
     autoReload = true;
@@ -23,20 +24,26 @@ in {
         tags = [ "nixos" "nix" ];
         url = "https://weekly.nixos.org/feeds/all.rss.xml";
       }
-    ] ++ (map (x: {
-      url = x;
-      tags = [ "rss" ];
-    }) (splitString (builtins.readFile ./newsboat/rss.txt)))
+    ] ++ (map
+      (x: {
+        url = x;
+        tags = [ "rss" ];
+      })
+      (splitString (builtins.readFile ./newsboat/rss.txt)))
 
-      ++ (map (x: {
+    ++ (map
+      (x: {
         url = x;
         tags = [ "podcast" ];
-      }) (splitString (builtins.readFile ./newsboat/podcast.txt)))
+      })
+      (splitString (builtins.readFile ./newsboat/podcast.txt)))
 
-      ++ (map (x: {
+    ++ (map
+      (x: {
         url = x;
         tags = [ "youtube" ];
-      }) (splitString (builtins.readFile ./newsboat/youtube.txt)));
+      })
+      (splitString (builtins.readFile ./newsboat/youtube.txt)));
   };
 
 }

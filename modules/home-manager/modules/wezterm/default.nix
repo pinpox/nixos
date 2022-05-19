@@ -3,7 +3,8 @@ with lib;
 let
   cfg = config.pinpox.programs.wezterm;
   vars = import ../vars.nix;
-in {
+in
+{
   options.pinpox.programs.wezterm.enable =
     mkEnableOption "wezterm terminal emulator";
 
