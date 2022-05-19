@@ -1,9 +1,10 @@
-{ lib, nur, dotfiles-awesome, pkgs, config, flake-self, home-manager, ... }:
+{ lib, nur, pkgs, config, flake-self, home-manager, ... }:
 with lib;
 let cfg = config.pinpox.desktop;
-in {
+in
+{
 
-  imports = [ ../../users/pinpox.nix home-manager.nixosModules.home-manager ];
+  imports = [ ../../users/pinpox.nix ];
 
   options.pinpox.desktop = {
 
@@ -43,28 +44,6 @@ in {
 
   config = mkIf cfg.enable {
 
-    # DON'T set useGlobalPackages! It's not necessary in newer
-    # home-manager versions and does not work with configs using
-    # nixpkgs.config`
-    home-manager.useUserPackages = true;
-
-    nixpkgs.overlays = [ nur.overlay ];
-
-    home-manager.users.pinpox = {
-
-      imports = [
-        ../../home-manager/home.nix
-        dotfiles-awesome.nixosModules.dotfiles
-        {
-          nixpkgs.overlays = [
-            flake-self.overlays.default
-            nur.overlay
-            # inputs.neovim-nightly.overlay 
-          ];
-        }
-      ];
-    };
-
     pinpox = {
       defaults = {
         bluetooth.enable = true;
@@ -77,6 +56,8 @@ in {
         zsh.enable = true;
         yubikey.enable = true;
         lvm-grub.enable = true;
+        home-manager.enable = true;
+        home-manager.profile = "desktop";
       };
 
       virtualisation = {
@@ -109,7 +90,7 @@ in {
     environment.systemPackages = with pkgs; [
 
       # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
-      pkgs.nur.repos.mic92.irc-announce
+      # pkgs.nur.repos.mic92.irc-announce
 
       # borgbackup
       # wezterm-nightly

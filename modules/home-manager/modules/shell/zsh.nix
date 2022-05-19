@@ -61,9 +61,9 @@
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
 
       yotp = ''
-             ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
-        		  ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
-        				'';
+        ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
+         ${pkgs.fzf}/bin/fzf | awk '{print $2}' | ${pkgs.xclip}/bin/xclip -sel clip
+      '';
 
       zzz = "systemctl suspend";
 
@@ -71,22 +71,22 @@
       # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
     };
 
-       prezto = {
-         enable = true;
-		 prompt.theme = "pure";
+    prezto = {
+      enable = true;
+      prompt.theme = "pure";
 
-         # Case insensitive completion
-         caseSensitive = false;
+      # Case insensitive completion
+      caseSensitive = false;
 
-         # Autoconvert .... to ../..
-         editor.dotExpansion = true;
+      # Autoconvert .... to ../..
+      editor.dotExpansion = true;
 
-         # Prezto modules to load
-         # pmodules = [ "utility" "editor" "directory" "completion"];
-         pmodules = [ "utility" "editor" "directory" "prompt" ];
+      # Prezto modules to load
+      # pmodules = [ "utility" "editor" "directory" "completion"];
+      pmodules = [ "utility" "editor" "directory" "prompt" ];
 
-         terminal.autoTitle = true;
-       };
+      terminal.autoTitle = true;
+    };
 
     plugins = [
       {

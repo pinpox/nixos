@@ -1,7 +1,8 @@
-{ lib, pkgs, dotfiles-awesome, nur, config, flake-self, ... }:
+{ lib, pkgs, nur, config, flake-self, ... }:
 with lib;
 let cfg = config.pinpox.server;
-in {
+in
+{
 
   imports = [ ../../users/pinpox.nix ];
 
@@ -19,22 +20,6 @@ in {
   config = mkIf cfg.enable {
 
     networking.hostName = cfg.hostname;
-
-    # Server-specific home-manager config
-    home-manager.users.pinpox = {
-
-      imports = [
-        ../../home-manager/home-server.nix
-        dotfiles-awesome.nixosModules.dotfiles
-        {
-          nixpkgs.overlays = [
-            flake-self.overlays.default
-            nur.overlay
-            # neovim-nightly.overlay 
-          ];
-        }
-      ];
-    };
 
     # Limit log size for journal
     services.journald.extraConfig = "SystemMaxUse=1G";

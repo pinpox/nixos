@@ -1,43 +1,59 @@
-{ config, pkgs, lib, nur, awesome-config, wallpaper-generator, flake-inputs, ...
+{ config
+, pkgs
+, lib
+, nur
+, wallpaper-generator
+, dotfiles-awesome
+, flake-inputs
+, ...
 }:
 let
-  vars = import ./vars.nix;
+  vars = import ../vars.nix;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
-in {
+in
+{
 
   # Imports
   imports = [
-    # ./modules/autorandr.nix
-    ./modules/grobi.nix
-    # ./modules/i3.nix
-    # ./modules/newsboat.nix
-    # ./modules/polybar.nix
-    ./modules/rofi
-    ./modules/alacritty.nix
-    ./modules/awesome.nix
-    ./modules/chromium.nix
-    ./modules/credentials.nix
-    ./modules/dunst.nix
-    ./modules/fonts.nix
-    # ./modules/games.nix
-    ./modules/git.nix
-    ./modules/go.nix
-    ./modules/gtk.nix
-    # ./modules/neomutt.nix
-    ./modules/picom.nix
-    ./modules/shell
-    ./modules/tmux
-    ./modules/vim
-    ./modules/xdg.nix
-    ./modules/xresources.nix
-    ./modules/xscreensaver.nix
-    ./modules/wezterm
-    ./modules/firefox
-    ./modules/zk
+
+    # dotfiles-awesome.nixosModules.dotfiles
+
+    # ../modules/autorandr.nix
+    ../modules/grobi.nix
+    # ../modules/i3.nix
+    # ../modules/newsboat.nix
+    # ../modules/polybar.nix
+    ../modules/rofi
+    ../modules/alacritty.nix
+    ../modules/awesome.nix
+    ../modules/chromium.nix
+    ../modules/credentials.nix
+    ../modules/dunst.nix
+    ../modules/fonts.nix
+    # ../modules/games.nix
+    ../modules/git.nix
+    ../modules/go.nix
+    ../modules/gtk.nix
+    # ../modules/neomutt.nix
+    ../modules/picom.nix
+    ../modules/shell
+    ../modules/tmux
+    ../modules/vim
+    ../modules/xdg.nix
+    ../modules/xresources.nix
+    ../modules/xscreensaver.nix
+    ../modules/wezterm
+    ../modules/firefox
+    ../modules/zk
   ];
 
-  _module.args.utils = import ../utils { inherit pkgs; };
+  home.file = {
+    ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
+    ".local/share/wallpaper-generator".source = wallpaper-generator;
+  };
+
+  _module.args.utils = import ../../../utils { inherit pkgs; };
 
   pinpox.programs = {
     firefox.enable = true;
