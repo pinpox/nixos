@@ -5,7 +5,7 @@
 , flake-self
 , wallpaper-generator
 , dotfiles-awesome
-, home-manager
+  # , home-manager
 , ...
 }:
 with lib;
