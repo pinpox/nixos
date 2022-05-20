@@ -19,7 +19,6 @@ in
 
     # dotfiles-awesome.nixosModules.dotfiles
 
-    # ../modules/autorandr.nix
     ../modules/grobi.nix
     # ../modules/i3.nix
     # ../modules/newsboat.nix

@@ -17,12 +17,6 @@ in
         criteria = { class = "^.*"; };
       }];
       startup = [
-        {
-          command = "autorandr -c";
-          always =
-            false; # Important, run only on first start (will loop otherwise)!
-          notification = false;
-        }
         # TODO: probably we can restart polybar like this
         # {
         # command = "systemctl --user restart polybar.service";

@@ -161,7 +161,6 @@
 
 
           alacritty = import ./home-manager/modules/alacritty.nix;
-          autorandr = import ./home-manager/modules/autorandr.nix;
           awesome = import ./home-manager/modules/awesome.nix;
           chromium = import ./home-manager/modules/chromium.nix;
           credentials = import ./home-manager/modules/credentials.nix;
