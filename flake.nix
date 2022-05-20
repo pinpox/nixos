@@ -3,11 +3,18 @@
 
   inputs = {
 
+    # mayniklas.url = "github:mayniklas/nixos";
+    # mayniklas.inputs = {
+
+    #   nixpkgs.follows = "nixpkgs";
+    #   flake-utils.follows = "flake-utils";
+    # };
 
     s3photoalbum.url = "github:pinpox/s3photoalbum";
     s3photoalbum.inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-utils.follows = "flake-utils";
+      # home-manager.follows = "home-manager";
     };
 
     retiolum.url = "github:krebs/retiolum";
