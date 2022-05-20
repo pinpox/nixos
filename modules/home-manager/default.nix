@@ -29,7 +29,7 @@ in
     };
   };
 
-  imports = [ home-manager.nixosModules.home-manager ];
+  imports = [ flake-self.inputs.home-manager.nixosModules.home-manager ];
 
   config = mkIf cfg.enable {
 
