@@ -2,10 +2,10 @@
 , pkgs
 , lib
 , nur
-  # , flake-self
+, flake-self
 , wallpaper-generator
 , dotfiles-awesome
-  # , home-manager
+, home-manager
 , ...
 }:
 with lib;
@@ -31,7 +31,7 @@ in
     };
   };
 
-  # imports = [ flake-self.inputs.home-manager.nixosModules.home-manager ];
+  imports = [ home-manager.nixosModules.home-manager ];
 
   config = mkIf cfg.enable {
 
