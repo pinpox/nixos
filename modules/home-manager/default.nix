@@ -3,6 +3,8 @@
 , lib
 , nur
 , flake-self
+, wallpaper-generator
+, dotfiles-awesome
 , home-manager
 , ...
 }:
@@ -40,7 +42,11 @@ in
 
     # Pass all flake inputs to home-manager modules aswell so we can use them
     # there.
-    home-manager.extraSpecialArgs = flake-self.inputs;
+    # home-manager.extraSpecialArgs = flake-self.inputs;
+    home-manager.extraSpecialArgs = {
+      inherit wallpaper-generator dotfiles-awesome;
+    };
+
 
     nixpkgs.overlays = [ nur.overlay ];
 
