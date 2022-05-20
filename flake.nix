@@ -141,8 +141,51 @@
         })
         (builtins.attrNames (builtins.readDir ./machines)));
 
-      hmModules =
+      homeConfigurations = {
+        # TODO https://git.sr.ht/~misterio/nix-config/tree/main/item/flake.nix
+      };
+
+      homeManagerModules =
         {
+
+
+          firefox = import ./home-manager/modules/firefox;
+          rofi = import ./home-manager/modules/rofi;
+          shell = import ./home-manager/modules/shell;
+          tmux = import ./home-manager/modules/tmux;
+          vim = import ./home-manager/modules/vim;
+          wezterm = import ./home-manager/modules/wezterm;
+          zk = import ./home-manager/modules/zk;
+
+
+
+
+          alacritty = import ./home-manager/modules/alacritty.nix;
+          autorandr = import ./home-manager/modules/autorandr.nix;
+          awesome = import ./home-manager/modules/awesome.nix;
+          chromium = import ./home-manager/modules/chromium.nix;
+          credentials = import ./home-manager/modules/credentials.nix;
+          dunst = import ./home-manager/modules/dunst.nix;
+          dwm = import ./home-manager/modules/dwm.nix;
+          fonts = import ./home-manager/modules/fonts.nix;
+          games = import ./home-manager/modules/games.nix;
+          git = import ./home-manager/modules/git.nix;
+          go = import ./home-manager/modules/go.nix;
+          grobi = import ./home-manager/modules/grobi.nix;
+          gtk = import ./home-manager/modules/gtk.nix;
+          i3 = import ./home-manager/modules/i3.nix;
+          neomutt = import ./home-manager/modules/neomutt.nix;
+          newsboat = import ./home-manager/modules/newsboat.nix;
+          picom = import ./home-manager/modules/picom.nix;
+          polybar = import ./home-manager/modules/polybar.nix;
+          xdg = import ./home-manager/modules/xdg.nix;
+          xresources = import ./home-manager/modules/xresources.nix;
+          xscreensaver = import ./home-manager/modules/xscreensaver.nix;
+
+          # vars.nix
+
+
+
           mod1 = {
             home.file = {
               "testfile1".text = "test1";

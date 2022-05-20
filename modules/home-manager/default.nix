@@ -31,7 +31,7 @@ in
     };
   };
 
-  imports = [ home-manager.nixosModules.home-manager ];
+  # imports = [ home-manager.nixosModules.home-manager ];
 
   config = mkIf cfg.enable {
 
