@@ -135,10 +135,25 @@
             modules = [
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
+              home-manager.nixosModules.home-manager
             ];
           };
         })
         (builtins.attrNames (builtins.readDir ./machines)));
+
+      hmModules =
+        {
+          mod1 = {
+            home.file = {
+              "testfile1".text = "test1";
+            };
+          };
+          mod2 = {
+            home.file = {
+              "testfile2".text = "test2";
+            };
+          };
+        };
 
       /* # Hydra build jobs. Builds all configs in the CI to verify integrity
         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
