@@ -25,7 +25,6 @@ in
     # ../modules/polybar.nix
     ../modules/rofi
     ../modules/alacritty.nix
-    ../modules/awesome.nix
     ../modules/chromium.nix
     ../modules/credentials.nix
     ../modules/dunst.nix
@@ -35,6 +34,7 @@ in
     ../modules/go.nix
     ../modules/gtk.nix
     # ../modules/neomutt.nix
+
     ../modules/picom.nix
     ../modules/shell
     ../modules/tmux
@@ -45,6 +45,7 @@ in
     ../modules/wezterm
     ../modules/firefox
     ../modules/zk
+    ../modules/awesome
   ];
 
   home.file = {
@@ -60,6 +61,7 @@ in
     wezterm.enable = true;
     zk.enable = true;
     rofi.enable = true;
+    awesome.enable = true;
   };
 
   # Allow "unfree" licenced packages
