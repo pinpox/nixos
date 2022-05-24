@@ -191,9 +191,6 @@
           xscreensaver = import ./home-manager/modules/xscreensaver;
           zk = import ./home-manager/modules/zk;
 
-          # vars.nix
-
-
 
           mod1 = {
             home.file = {
