@@ -1,8 +1,28 @@
-{ stdenv, rustPlatform, lib, fetchFromGitHub, pkg-config, fontconfig, python3
-, openssl, perl, dbus, libX11, xcbutil, libxcb, xcbutilimage, xcbutilkeysyms
+{ stdenv
+, rustPlatform
+, lib
+, fetchFromGitHub
+, pkg-config
+, fontconfig
+, python3
+, openssl
+, perl
+, dbus
+, libX11
+, xcbutil
+, libxcb
+, xcbutilimage
+, xcbutilkeysyms
 , xcbutilwm # contains xcb-ewmh among others
-, libxkbcommon, libglvnd # libEGL.so.1
-, egl-wayland, wayland, libGLU, libGL, freetype, zlib }:
+, libxkbcommon
+, libglvnd # libEGL.so.1
+, egl-wayland
+, wayland
+, libGLU
+, libGL
+, freetype
+, zlib
+}:
 let
   runtimeDeps = [
     zlib
@@ -24,7 +44,8 @@ let
     openssl
   ];
 
-in rustPlatform.buildRustPackage rec {
+in
+rustPlatform.buildRustPackage rec {
   pname = "wezterm-nightly";
   version = "a0b8d2196a260726eca28b32fecaeb87420851ec";
 

@@ -1,7 +1,28 @@
-{ fetchurl, pkgs, dbus, egl-wayland, fetchFromGitHub, fontconfig, freetype, lib
-, libGL, libGLU, libX11, libglvnd # libEGL.so.1
-, libiconv, libxcb, libxkbcommon, openssl, perl, pkg-config, python3
-, rustPlatform, stdenv, wayland, xcbutil, xcbutilimage, xcbutilkeysyms
+{ fetchurl
+, pkgs
+, dbus
+, egl-wayland
+, fetchFromGitHub
+, fontconfig
+, freetype
+, lib
+, libGL
+, libGLU
+, libX11
+, libglvnd # libEGL.so.1
+, libiconv
+, libxcb
+, libxkbcommon
+, openssl
+, perl
+, pkg-config
+, python3
+, rustPlatform
+, stdenv
+, wayland
+, xcbutil
+, xcbutilimage
+, xcbutilkeysyms
 , xcbutilwm # contains xcb-ewmh among others
 , zlib
 
@@ -30,7 +51,8 @@ let
 
   ];
 
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "wezterm-bin";
   version = "nightly-2021";
 

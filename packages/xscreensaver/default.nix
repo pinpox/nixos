@@ -1,7 +1,32 @@
-{ lib, stdenv, fetchurl, makeWrapper, pkg-config, intltool, perl, gettext
-, libX11, libXext, libXi, libXt, libXft, libXinerama, libXrandr, libXxf86vm
-, libGL, libGLU, gle, gtk2, gdk-pixbuf, gdk-pixbuf-xlib, libxml2, pam, systemd
-, coreutils, forceInstallAllHacks ? false, withSystemd ? stdenv.isLinux }:
+{ lib
+, stdenv
+, fetchurl
+, makeWrapper
+, pkg-config
+, intltool
+, perl
+, gettext
+, libX11
+, libXext
+, libXi
+, libXt
+, libXft
+, libXinerama
+, libXrandr
+, libXxf86vm
+, libGL
+, libGLU
+, gle
+, gtk2
+, gdk-pixbuf
+, gdk-pixbuf-xlib
+, libxml2
+, pam
+, systemd
+, coreutils
+, forceInstallAllHacks ? false
+, withSystemd ? stdenv.isLinux
+}:
 
 stdenv.mkDerivation rec {
   version = "6.01";
