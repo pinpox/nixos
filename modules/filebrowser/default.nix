@@ -2,7 +2,8 @@
 with lib;
 let cfg = config.pinpox.services.filebrowser;
 
-in {
+in
+{
 
   options.pinpox.services.filebrowser = {
     enable = mkEnableOption "filebrowser webUI";

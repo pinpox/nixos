@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.services.restic-client;
-in {
+in
+{
 
   options.pinpox.services.restic-client = {
     enable = mkEnableOption "restic backups";

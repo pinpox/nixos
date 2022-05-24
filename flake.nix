@@ -107,6 +107,9 @@
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs) final prev;
 
+      # Use nixpkgs-fmt for `nix fmt'
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (map
@@ -135,10 +138,39 @@
             modules = [
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
+              home-manager.nixosModules.home-manager
             ];
           };
         })
         (builtins.attrNames (builtins.readDir ./machines)));
+
+      homeConfigurations = {
+
+        # For servers (no gui)
+        server = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/server.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+
+        # For workstations (X11 + awesome)
+        desktop = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/desktop.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+      };
+
+      homeManagerModules = builtins.listToAttrs (map
+        (name: {
+          inherit name;
+          value = import (./home-manager/modules + "/${name}");
+        })
+        (builtins.attrNames (builtins.readDir ./home-manager/modules)));
 
       /* # Hydra build jobs. Builds all configs in the CI to verify integrity
         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:

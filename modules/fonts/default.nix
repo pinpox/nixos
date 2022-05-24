@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.fonts;
-in {
+in
+{
 
   options.pinpox.defaults.fonts = { enable = mkEnableOption "Fonts defaults"; };
 

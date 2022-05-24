@@ -2,7 +2,8 @@
 with lib;
 let cfg = config.pinpox.services.miniflux;
 
-in {
+in
+{
 
   options.pinpox.services.miniflux = {
     enable = mkEnableOption "miniflux RSS reader";

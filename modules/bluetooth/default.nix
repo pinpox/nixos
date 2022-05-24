@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.defaults.bluetooth;
-in {
+in
+{
 
   options.pinpox.defaults.bluetooth = {
     enable = mkEnableOption "default bluetooth configuration";

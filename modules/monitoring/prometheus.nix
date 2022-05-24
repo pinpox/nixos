@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.services.monitoring-server;
-in {
+in
+{
 
   # https://github.com/NixOS/nixpkgs/issues/126083
   # https://github.com/NixOS/nixpkgs/pull/144984

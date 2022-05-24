@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.services.hello;
-in {
+in
+{
   options.pinpox.services.hello = {
     enable = mkEnableOption "hello service";
     greeter = mkOption {

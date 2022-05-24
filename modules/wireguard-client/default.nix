@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.wg-client;
-in {
+in
+{
 
   options.pinpox.wg-client = {
     enable = mkEnableOption "wireguard client configuration";

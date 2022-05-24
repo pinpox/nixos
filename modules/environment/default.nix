@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.environment;
-in {
+in
+{
 
   options.pinpox.defaults.environment = {
     enable = mkEnableOption "Environment defaults";

@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.borg-backup;
-in {
+in
+{
   options.pinpox.services.borg-backup = {
     enable = mkEnableOption "daily backup with borg";
   };

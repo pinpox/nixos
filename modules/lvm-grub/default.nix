@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.lvm-grub;
-in {
+in
+{
 
   options.pinpox.defaults.lvm-grub = {
     enable = mkEnableOption "LVM/Grub defaults";

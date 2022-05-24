@@ -22,7 +22,8 @@ let
     text = builtins.readFile ./templates/html.mustache;
   };
 
-in rec {
+in
+rec {
 
   json = runCommandLocal "options.json" { inherit opts; } ''
     cat $opts/share/doc/nixos/options.json | \

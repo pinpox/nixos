@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.networking;
-in {
+in
+{
 
   options.pinpox.defaults.networking = {
     enable = mkEnableOption "Network defaults";

@@ -2,7 +2,8 @@
 with lib;
 let cfg = config.pinpox.services.nextcloud;
 
-in {
+in
+{
 
   options.pinpox.services.nextcloud = { enable = mkEnableOption "Nextcloud"; };
 

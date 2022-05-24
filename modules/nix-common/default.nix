@@ -1,7 +1,8 @@
 { config, pkgs, lib, flake-self, nixpkgs, ... }:
 with lib;
 let cfg = config.pinpox.defaults.nix;
-in {
+in
+{
 
   options.pinpox.defaults.nix = { enable = mkEnableOption "Nix defaults"; };
 

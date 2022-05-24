@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.zsh;
-in {
+in
+{
 
   options.pinpox.defaults.zsh = { enable = mkEnableOption "ZSH defaults"; };
   config = mkIf cfg.enable {

@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.mattermost;
-in {
+in
+{
 
   options.pinpox.services.mattermost = {
     enable = mkEnableOption "Mattermost server";

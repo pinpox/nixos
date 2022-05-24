@@ -36,7 +36,8 @@ let
     ];
   };
   # port-loki = 3100;
-in {
+in
+{
 
   options.pinpox.services.monitoring-server.http-irc = {
     enable = mkEnableOption "http2irc webhook relay";

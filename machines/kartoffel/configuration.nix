@@ -1,9 +1,9 @@
 # Configuration for kartoffel
-{ nixpkgs, pkgs,... }: {
+{ nixpkgs, pkgs, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
 
-  services.udev.packages = [pkgs.qmk-udev-rules ];
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
 
   pinpox.desktop = {
     enable = true;
