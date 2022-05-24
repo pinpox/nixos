@@ -145,12 +145,20 @@
         (builtins.attrNames (builtins.readDir ./machines)));
 
       homeConfigurations = {
-        # TODO https://git.sr.ht/~misterio/nix-config/tree/main/item/flake.nix
-        # server = {};
 
-        #  home-manager.lib.homeManagerConfiguration { };
+        # For servers (no gui)
+        server = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/server.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+
+        # For workstations (X11 + awesome)
         desktop = { pkgs, lib, username, ... }: {
           imports = [
+            ./home-manager/profiles/common.nix
             ./home-manager/profiles/desktop.nix
           ] ++
           (builtins.attrValues self.homeManagerModules);
