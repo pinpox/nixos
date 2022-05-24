@@ -13,7 +13,8 @@ let
   #   sha256 = "1vnmhr5qfxhndlnsk8c87qbbwmlph1inlj924vqymfm1lgsasdq0";
   # };
 
-in {
+in
+{
   options = {
     networking.retiolum.ipv4 = mkOption {
       type = types.str;
