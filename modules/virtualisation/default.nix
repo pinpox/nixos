@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.virtualisation;
-in {
+in
+{
 
   options.pinpox.virtualisation.docker = {
     enable = mkEnableOption "Docker virtualisation";

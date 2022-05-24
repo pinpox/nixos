@@ -3,7 +3,8 @@ with lib;
 let
   cfg = config.pinpox.services.monitoring-server.loki;
   port-loki = 3100;
-in {
+in
+{
 
   options.pinpox.services.monitoring-server.loki = {
     enable = mkEnableOption "Loki log collector";

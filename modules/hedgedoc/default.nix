@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.hedgedoc;
-in {
+in
+{
 
   options.pinpox.services.hedgedoc = {
     enable = mkEnableOption "Hedgedoc server";

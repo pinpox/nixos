@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.locale;
-in {
+in
+{
 
   options.pinpox.defaults.locale = {
     enable = mkEnableOption "Locale defaults";

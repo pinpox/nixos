@@ -28,7 +28,8 @@ let
     };
   };
 
-in {
+in
+{
 
   options.pinpox.services.go-karma-bot = {
     enable = mkEnableOption "the irc bot";

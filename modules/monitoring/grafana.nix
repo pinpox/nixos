@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.services.monitoring-server.dashboard;
-in {
+in
+{
 
   options.pinpox.services.monitoring-server.dashboard = {
     enable = mkEnableOption "Grafana dashboard";

@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.xserver;
-in {
+in
+{
 
   options.pinpox.services.xserver = { enable = mkEnableOption "X server"; };
 

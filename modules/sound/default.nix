@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.defaults.sound;
-in {
+in
+{
 
   options.pinpox.defaults.sound = { enable = mkEnableOption "sound defaults"; };
   config = mkIf cfg.enable {

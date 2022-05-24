@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.thelounge;
-in {
+in
+{
 
   options.pinpox.services.thelounge = {
     enable = mkEnableOption "The Lounge IRC client and bouncer";

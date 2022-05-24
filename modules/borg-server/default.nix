@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.services.borg-server;
-in {
+in
+{
 
   options.pinpox.services.borg-server = {
 
@@ -52,37 +53,43 @@ in {
     };
 
     # Create a repository for each of the hosts authorizing the provided keys
-    services.borgbackup.repos = builtins.mapAttrs (name: value: {
-      authorizedKeys = value.authorizedKeys;
-      path = /mnt/backup/borg-nix + "/${name}";
-    }) cfg.repositories;
+    services.borgbackup.repos = builtins.mapAttrs
+      (name: value: {
+        authorizedKeys = value.authorizedKeys;
+        path = /mnt/backup/borg-nix + "/${name}";
+      })
+      cfg.repositories;
 
     systemd = {
 
       # Create a service for each hosts that exports the information of the
       # last archive of the corresponding repository
-      services = builtins.listToAttrs (map (hostname: {
-        name = "borgbackup-monitor-${hostname}";
-        value = {
-          serviceConfig.Type = "oneshot";
-          serviceConfig.Environment =
-            [ "BORG_RELOCATED_REPO_ACCESS_IS_OK=yes" ];
-          script = ''
-            export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
-            ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
-          '';
-        };
-      }) (builtins.attrNames cfg.repositories));
+      services = builtins.listToAttrs (map
+        (hostname: {
+          name = "borgbackup-monitor-${hostname}";
+          value = {
+            serviceConfig.Type = "oneshot";
+            serviceConfig.Environment =
+              [ "BORG_RELOCATED_REPO_ACCESS_IS_OK=yes" ];
+            script = ''
+              export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
+              ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
+            '';
+          };
+        })
+        (builtins.attrNames cfg.repositories));
 
       # Create a timer for each host, that runs the service once every day
-      timers = builtins.listToAttrs (map (hostname: {
-        name = "borgbackup-monitor-${hostname}";
-        value = {
-          wantedBy = [ "timers.target" ];
-          partOf = [ "borgbackup-monitor-${hostname}.service" ];
-          timerConfig.OnCalendar = "daily";
-        };
-      }) (builtins.attrNames cfg.repositories));
+      timers = builtins.listToAttrs (map
+        (hostname: {
+          name = "borgbackup-monitor-${hostname}";
+          value = {
+            wantedBy = [ "timers.target" ];
+            partOf = [ "borgbackup-monitor-${hostname}.service" ];
+            timerConfig.OnCalendar = "daily";
+          };
+        })
+        (builtins.attrNames cfg.repositories));
     };
   };
 }

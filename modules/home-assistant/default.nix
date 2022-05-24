@@ -8,7 +8,8 @@ let
   #     "fritzbox_netmonitor"
   #   ];
   # };
-in {
+in
+{
 
   options.pinpox.services.home-assistant = {
     enable = mkEnableOption "Home-assitant server";

@@ -7,7 +7,8 @@ with lib;
 let
   cfg = config.pinpox.services.bepasty;
   bepasty-host = "paste.lounge.rocks";
-in {
+in
+{
 
   options.pinpox.services.bepasty = {
     enable = mkEnableOption "bepasty server";

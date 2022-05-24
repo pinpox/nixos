@@ -44,7 +44,8 @@ let
   };
 
   confPath = pkgs.writeText "config.yml" (builtins.toJSON am-irc-conf);
-in {
+in
+{
 
   options.pinpox.services.monitoring-server.alertmanager-irc-relay = {
     enable = mkEnableOption "alertmanager-irc-relay";

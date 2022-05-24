@@ -5,7 +5,8 @@ let
   # TODO remove when https://github.com/NixOS/nixpkgs/pull/124014 is merged in
   # unstable
   drone2 = pkgs.callPackage ../../packages/drone2 { };
-in {
+in
+{
 
   options.pinpox.services.droneci = {
     enable = mkEnableOption "DroneCI server";

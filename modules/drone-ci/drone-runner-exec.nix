@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.services.droneci.runner-exec;
-in {
+in
+{
 
   options.pinpox.services.droneci.runner-exec = {
     enable = mkEnableOption "DroneCI exec runner";

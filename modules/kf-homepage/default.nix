@@ -2,7 +2,8 @@
 with lib;
 let cfg = config.pinpox.services.kf-homepage;
 
-in {
+in
+{
 
   options.pinpox.services.kf-homepage = {
     enable = mkEnableOption "Krosse Flagge Homepage";
