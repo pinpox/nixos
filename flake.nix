@@ -161,48 +161,12 @@
         };
       };
 
-
-      homeManagerModules =
-        {
-          alacritty = import ./home-manager/modules/alacritty;
-          awesome = import ./home-manager/modules/awesome;
-          chromium = import ./home-manager/modules/chromium;
-          credentials = import ./home-manager/modules/credentials;
-          dunst = import ./home-manager/modules/dunst;
-          firefox = import ./home-manager/modules/firefox;
-          fonts = import ./home-manager/modules/fonts;
-          games = import ./home-manager/modules/games;
-          git = import ./home-manager/modules/git;
-          go = import ./home-manager/modules/go;
-          grobi = import ./home-manager/modules/grobi;
-          gtk = import ./home-manager/modules/gtk;
-          i3 = import ./home-manager/modules/i3;
-          neomutt = import ./home-manager/modules/neomutt;
-          newsboat = import ./home-manager/modules/newsboat;
-          picom = import ./home-manager/modules/picom;
-          polybar = import ./home-manager/modules/polybar;
-          rofi = import ./home-manager/modules/rofi;
-          shell = import ./home-manager/modules/shell;
-          tmux = import ./home-manager/modules/tmux;
-          nvim = import ./home-manager/modules/nvim;
-          wezterm = import ./home-manager/modules/wezterm;
-          xdg = import ./home-manager/modules/xdg;
-          xresources = import ./home-manager/modules/xresources;
-          xscreensaver = import ./home-manager/modules/xscreensaver;
-          zk = import ./home-manager/modules/zk;
-
-
-          mod1 = {
-            home.file = {
-              "testfile1".text = "test1";
-            };
-          };
-          mod2 = {
-            home.file = {
-              "testfile2".text = "test2";
-            };
-          };
-        };
+      homeManagerModules = builtins.listToAttrs (map
+        (name: {
+          inherit name;
+          value = import (./home-manager/modules + "/${name}");
+        })
+        (builtins.attrNames (builtins.readDir ./home-manager/modules)));
 
       /* # Hydra build jobs. Builds all configs in the CI to verify integrity
         hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:

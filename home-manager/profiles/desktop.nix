@@ -8,7 +8,7 @@
 , ...
 }:
 let
-  vars = import ../modules/vars.nix;
+  vars = import ../vars.nix;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
 in
