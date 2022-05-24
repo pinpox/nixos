@@ -44,11 +44,6 @@ in
 
   config = mkIf cfg.enable {
 
-
-
-
-
-
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
@@ -58,16 +53,17 @@ in
     # there.
     # home-manager.extraSpecialArgs = flake-self.inputs;
     home-manager.extraSpecialArgs = {
-      inherit wallpaper-generator dotfiles-awesome;
+      inherit wallpaper-generator dotfiles-awesome flake-self nur;
     };
 
+    nixpkgs.overlays = [
+      nur.overlay
+      flake-self.overlays.default
+      # inputs.neovim-nightly.overlay
+    ];
 
-    nixpkgs.overlays = [ nur.overlay ];
-
-    # TODO parametrizu the username
+    # TODO parametrize the username
     home-manager.users.pinpox = flake-self.homeConfigurations.desktop;
-
-
 
 
     pinpox = {

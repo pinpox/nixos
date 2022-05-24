@@ -148,13 +148,6 @@
         #  home-manager.lib.homeManagerConfiguration { };
         desktop = { pkgs, lib, username, ... }: {
           imports = [
-            {
-              nixpkgs.overlays = [
-                self.overlays.default
-                nur.overlay
-                # inputs.neovim-nightly.overlay
-              ];
-            }
             ./home-manager/profiles/desktop.nix
           ] ++
           (builtins.attrValues self.homeManagerModules);

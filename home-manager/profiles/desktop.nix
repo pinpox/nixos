@@ -5,6 +5,7 @@
 , wallpaper-generator
 , dotfiles-awesome
 , flake-inputs
+, flake-self
 , ...
 }:
 let
@@ -14,17 +15,20 @@ let
 in
 {
 
+  nixpkgs.overlays = [
+    flake-self.overlays.default
+    nur.overlay
+    # inputs.neovim-nightly.overlay
+  ];
 
   home.file = {
     ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
     ".local/share/wallpaper-generator".source = wallpaper-generator;
   };
 
-
   _module.args.utils = import ../../utils { inherit pkgs; };
   _module.args.colorscheme = vars.colors;
   _module.args.fonts = vars.font;
-
 
   pinpox = {
     defaults = {
