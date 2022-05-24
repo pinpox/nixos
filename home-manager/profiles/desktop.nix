@@ -42,10 +42,11 @@ in
     ../modules/xdg.nix
     ../modules/xresources.nix
     ../modules/xscreensaver.nix
+
     ../modules/wezterm
-    ../modules/firefox
     ../modules/zk
     ../modules/awesome
+    ../modules/firefox
   ];
 
   home.file = {
@@ -55,13 +56,33 @@ in
 
   _module.args.utils = import ../../../utils { inherit pkgs; };
 
-  pinpox.programs = {
-    firefox.enable = true;
-    tmux.enable = true;
-    wezterm.enable = true;
-    zk.enable = true;
-    rofi.enable = true;
-    awesome.enable = true;
+  pinpox = {
+    defaults = {
+      xresources.enable = true;
+      xdg.enable = true;
+      shell.enable = true;
+      gtk.enable = true;
+      fonts.enable = true;
+      credentials.enable = true;
+    };
+    programs = {
+
+      alacritty.enable = true;
+      chromium.enable = true;
+      dunst.enable = true;
+      git.enable = true;
+      picom.enable = true;
+      tmux.enable = true;
+      nvim.enable = true;
+      xscreensaver.enable = true;
+      firefox.enable = true;
+      tmux.enable = true;
+      wezterm.enable = true;
+      zk.enable = true;
+      rofi.enable = false;
+      go.enable = true;
+      awesome.enable = true;
+    };
   };
 
   # Allow "unfree" licenced packages
