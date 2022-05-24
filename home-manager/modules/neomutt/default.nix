@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nur, utils, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.neomutt;

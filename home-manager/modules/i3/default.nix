@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, fonts, colorscheme, ... }:
 with lib;
 let
-  vars = import ./vars.nix;
   cfg = config.pinpox.programs.i3;
 in
 {
@@ -52,37 +51,37 @@ in
           }
         ];
         colors = {
-          background = "#${vars.colors.Black}";
+          background = "#${colorscheme.Black}";
           focused = {
-            background = "#${vars.colors.Blue}";
-            border = "#${vars.colors.Blue}";
-            childBorder = "#${vars.colors.Blue}";
-            indicator = "#${vars.colors.Blue}";
-            text = "#${vars.colors.Black}";
+            background = "#${colorscheme.Blue}";
+            border = "#${colorscheme.Blue}";
+            childBorder = "#${colorscheme.Blue}";
+            indicator = "#${colorscheme.Blue}";
+            text = "#${colorscheme.Black}";
           };
 
           focusedInactive = {
-            background = "#${vars.colors.BrightGrey}";
-            border = "#${vars.colors.BrightGrey}";
-            childBorder = "#${vars.colors.BrightGrey}";
-            indicator = "#${vars.colors.Black}";
-            text = "#${vars.colors.Black}";
+            background = "#${colorscheme.BrightGrey}";
+            border = "#${colorscheme.BrightGrey}";
+            childBorder = "#${colorscheme.BrightGrey}";
+            indicator = "#${colorscheme.Black}";
+            text = "#${colorscheme.Black}";
           };
 
           unfocused = {
-            background = "#${vars.colors.Black}";
-            border = "#${vars.colors.BrightGrey}";
-            childBorder = "#${vars.colors.BrightGrey}";
-            indicator = "#${vars.colors.Black}";
-            text = "#${vars.colors.Blue}";
+            background = "#${colorscheme.Black}";
+            border = "#${colorscheme.BrightGrey}";
+            childBorder = "#${colorscheme.BrightGrey}";
+            indicator = "#${colorscheme.Black}";
+            text = "#${colorscheme.Blue}";
           };
 
           urgent = {
-            background = "#${vars.colors.Red}";
-            border = "#${vars.colors.Red}";
-            childBorder = "#${vars.colors.Red}";
-            indicator = "#${vars.colors.Red}";
-            text = "#${vars.colors.Black}";
+            background = "#${colorscheme.Red}";
+            border = "#${colorscheme.Red}";
+            childBorder = "#${colorscheme.Red}";
+            indicator = "#${colorscheme.Red}";
+            text = "#${colorscheme.Black}";
           };
         };
 
@@ -94,8 +93,8 @@ in
         };
 
         fonts = [
-          "${vars.font.normal.family} ${vars.font.normal.style} ${
-          toString vars.font.size
+          "${fonts.normal.family} ${fonts.normal.style} ${
+          toString fonts.size
         }px"
         ];
 

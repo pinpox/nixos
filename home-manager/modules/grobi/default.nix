@@ -1,7 +1,6 @@
-{ config, pkgs, lib, nur, utils, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
-  vars = import ../vars.nix;
   cfg = config.pinpox.defaults.grobi;
 in
 {

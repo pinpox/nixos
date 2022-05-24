@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
-  vars = import ../vars.nix;
   cfg = config.pinpox.programs.picom;
 in
 {

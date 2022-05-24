@@ -1,7 +1,6 @@
-{ config, pkgs, lib, nur, utils, ... }:
+{ config, lib, ... }:
 with lib;
 let
-  vars = import ../vars.nix;
   cfg = config.pinpox.programs.newsboat;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);

@@ -1,7 +1,7 @@
-{ config, pkgs, lib, nur, utils, ... }:
+{ colorscheme, config, lib, ... }:
 with lib;
 let
-  vars = import ../vars.nix;
+
   cfg = config.pinpox.defaults.xresources;
 in
 {
@@ -10,53 +10,53 @@ in
   config = mkIf cfg.enable {
 
     xresources.properties = {
-      "color0" = "#${vars.colors.Black}";
-      "color1" = "#${vars.colors.DarkGrey}";
-      "color2" = "#${vars.colors.Grey}";
-      "color3" = "#${vars.colors.BrightGrey}";
-      "color4" = "#${vars.colors.DarkWhite}";
-      "color5" = "#${vars.colors.White}";
-      "color6" = "#${vars.colors.BrightWhite}";
-      "color7" = "#${vars.colors.DarkGreen}";
-      "color8" = "#${vars.colors.Red}";
-      "color9" = "#${vars.colors.DarkYellow}";
-      "color10" = "#${vars.colors.Yellow}";
-      "color11" = "#${vars.colors.Green}";
-      "color12" = "#${vars.colors.Cyan}";
-      "color13" = "#${vars.colors.Blue}";
-      "color14" = "#${vars.colors.Magenta}";
-      "color15" = "#${vars.colors.BrightRed}";
+      "color0" = "#${colorscheme.Black}";
+      "color1" = "#${colorscheme.DarkGrey}";
+      "color2" = "#${colorscheme.Grey}";
+      "color3" = "#${colorscheme.BrightGrey}";
+      "color4" = "#${colorscheme.DarkWhite}";
+      "color5" = "#${colorscheme.White}";
+      "color6" = "#${colorscheme.BrightWhite}";
+      "color7" = "#${colorscheme.DarkGreen}";
+      "color8" = "#${colorscheme.Red}";
+      "color9" = "#${colorscheme.DarkYellow}";
+      "color10" = "#${colorscheme.Yellow}";
+      "color11" = "#${colorscheme.Green}";
+      "color12" = "#${colorscheme.Cyan}";
+      "color13" = "#${colorscheme.Blue}";
+      "color14" = "#${colorscheme.Magenta}";
+      "color15" = "#${colorscheme.BrightRed}";
 
-      "foreground" = "#${vars.colors.White}";
-      "background" = "#${vars.colors.Black}";
+      "foreground" = "#${colorscheme.White}";
+      "background" = "#${colorscheme.Black}";
 
       "XTerm*faceName" = "monospace:style=medium";
-      "XTerm*Background" = "#${vars.colors.Black}";
-      "XTerm*cursorColor" = "#${vars.colors.Blue}";
-      "XTerm*Foreground" = "#${vars.colors.White}";
+      "XTerm*Background" = "#${colorscheme.Black}";
+      "XTerm*cursorColor" = "#${colorscheme.Blue}";
+      "XTerm*Foreground" = "#${colorscheme.White}";
 
-      "XTerm*color0" = "#${vars.colors.Black}";
-      "XTerm*color1" = "#${vars.colors.Red}";
-      "XTerm*color2" = "#${vars.colors.Green}";
-      "XTerm*color3" = "#${vars.colors.Yellow}";
-      "XTerm*color4" = "#${vars.colors.Blue}";
-      "XTerm*color5" = "#${vars.colors.Magenta}";
-      "XTerm*color6" = "#${vars.colors.Cyan}";
-      "XTerm*color7" = "#${vars.colors.White}";
-      "XTerm*color8" = "#${vars.colors.BrightGrey}";
-      "XTerm*color9" = "#${vars.colors.Red}";
-      "XTerm*color10" = "#${vars.colors.Green}";
-      "XTerm*color11" = "#${vars.colors.Yellow}";
-      "XTerm*color12" = "#${vars.colors.Blue}";
-      "XTerm*color13" = "#${vars.colors.Magenta}";
-      "XTerm*color14" = "#${vars.colors.Cyan}";
-      "XTerm*color15" = "#${vars.colors.DarkGreen}";
-      "XTerm*color16" = "#${vars.colors.DarkYellow}";
-      "XTerm*color17" = "#${vars.colors.BrightRed}";
-      "XTerm*color18" = "#${vars.colors.DarkGrey}";
-      "XTerm*color19" = "#${vars.colors.Grey}";
-      "XTerm*color20" = "#${vars.colors.DarkWhite}";
-      "XTerm*color21" = "#${vars.colors.BrightWhite}";
+      "XTerm*color0" = "#${colorscheme.Black}";
+      "XTerm*color1" = "#${colorscheme.Red}";
+      "XTerm*color2" = "#${colorscheme.Green}";
+      "XTerm*color3" = "#${colorscheme.Yellow}";
+      "XTerm*color4" = "#${colorscheme.Blue}";
+      "XTerm*color5" = "#${colorscheme.Magenta}";
+      "XTerm*color6" = "#${colorscheme.Cyan}";
+      "XTerm*color7" = "#${colorscheme.White}";
+      "XTerm*color8" = "#${colorscheme.BrightGrey}";
+      "XTerm*color9" = "#${colorscheme.Red}";
+      "XTerm*color10" = "#${colorscheme.Green}";
+      "XTerm*color11" = "#${colorscheme.Yellow}";
+      "XTerm*color12" = "#${colorscheme.Blue}";
+      "XTerm*color13" = "#${colorscheme.Magenta}";
+      "XTerm*color14" = "#${colorscheme.Cyan}";
+      "XTerm*color15" = "#${colorscheme.DarkGreen}";
+      "XTerm*color16" = "#${colorscheme.DarkYellow}";
+      "XTerm*color17" = "#${colorscheme.BrightRed}";
+      "XTerm*color18" = "#${colorscheme.DarkGrey}";
+      "XTerm*color19" = "#${colorscheme.Grey}";
+      "XTerm*color20" = "#${colorscheme.DarkWhite}";
+      "XTerm*color21" = "#${colorscheme.BrightWhite}";
     };
   };
 }

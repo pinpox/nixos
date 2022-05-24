@@ -1,4 +1,4 @@
-{ lib, nur, pkgs, config, flake-self, home-manager, ... }:
+{ lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, dotfiles-awesome, ... }:
 with lib;
 let cfg = config.pinpox.desktop;
 in
@@ -44,6 +44,32 @@ in
 
   config = mkIf cfg.enable {
 
+
+
+
+
+
+    # DON'T set useGlobalPackages! It's not necessary in newer
+    # home-manager versions and does not work with configs using
+    # nixpkgs.config`
+    home-manager.useUserPackages = true;
+
+    # Pass all flake inputs to home-manager modules aswell so we can use them
+    # there.
+    # home-manager.extraSpecialArgs = flake-self.inputs;
+    home-manager.extraSpecialArgs = {
+      inherit wallpaper-generator dotfiles-awesome;
+    };
+
+
+    nixpkgs.overlays = [ nur.overlay ];
+
+    # TODO parametrizu the username
+    home-manager.users.pinpox = flake-self.homeConfigurations.desktop;
+
+
+
+
     pinpox = {
       defaults = {
         bluetooth.enable = true;
@@ -56,8 +82,8 @@ in
         zsh.enable = true;
         yubikey.enable = true;
         lvm-grub.enable = true;
-        home-manager.enable = true;
-        home-manager.profile = "desktop";
+        # home-manager.enable = true;
+        # home-manager.configuration = flake-self.homeConfigurations.desktop;
       };
 
       virtualisation = {

@@ -143,43 +143,53 @@
 
       homeConfigurations = {
         # TODO https://git.sr.ht/~misterio/nix-config/tree/main/item/flake.nix
+        # server = {};
+
+        #  home-manager.lib.homeManagerConfiguration { };
+        desktop = { pkgs, lib, username, ... }: {
+          imports = [
+            {
+              nixpkgs.overlays = [
+                self.overlays.default
+                nur.overlay
+                # inputs.neovim-nightly.overlay
+              ];
+            }
+            ./home-manager/profiles/desktop.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
       };
+
 
       homeManagerModules =
         {
-
-
+          alacritty = import ./home-manager/modules/alacritty;
+          awesome = import ./home-manager/modules/awesome;
+          chromium = import ./home-manager/modules/chromium;
+          credentials = import ./home-manager/modules/credentials;
+          dunst = import ./home-manager/modules/dunst;
           firefox = import ./home-manager/modules/firefox;
+          fonts = import ./home-manager/modules/fonts;
+          games = import ./home-manager/modules/games;
+          git = import ./home-manager/modules/git;
+          go = import ./home-manager/modules/go;
+          grobi = import ./home-manager/modules/grobi;
+          gtk = import ./home-manager/modules/gtk;
+          i3 = import ./home-manager/modules/i3;
+          neomutt = import ./home-manager/modules/neomutt;
+          newsboat = import ./home-manager/modules/newsboat;
+          picom = import ./home-manager/modules/picom;
+          polybar = import ./home-manager/modules/polybar;
           rofi = import ./home-manager/modules/rofi;
           shell = import ./home-manager/modules/shell;
           tmux = import ./home-manager/modules/tmux;
-          vim = import ./home-manager/modules/vim;
+          nvim = import ./home-manager/modules/nvim;
           wezterm = import ./home-manager/modules/wezterm;
+          xdg = import ./home-manager/modules/xdg;
+          xresources = import ./home-manager/modules/xresources;
+          xscreensaver = import ./home-manager/modules/xscreensaver;
           zk = import ./home-manager/modules/zk;
-
-
-
-
-          alacritty = import ./home-manager/modules/alacritty.nix;
-          awesome = import ./home-manager/modules/awesome.nix;
-          chromium = import ./home-manager/modules/chromium.nix;
-          credentials = import ./home-manager/modules/credentials.nix;
-          dunst = import ./home-manager/modules/dunst.nix;
-          dwm = import ./home-manager/modules/dwm.nix;
-          fonts = import ./home-manager/modules/fonts.nix;
-          games = import ./home-manager/modules/games.nix;
-          git = import ./home-manager/modules/git.nix;
-          go = import ./home-manager/modules/go.nix;
-          grobi = import ./home-manager/modules/grobi.nix;
-          gtk = import ./home-manager/modules/gtk.nix;
-          i3 = import ./home-manager/modules/i3.nix;
-          neomutt = import ./home-manager/modules/neomutt.nix;
-          newsboat = import ./home-manager/modules/newsboat.nix;
-          picom = import ./home-manager/modules/picom.nix;
-          polybar = import ./home-manager/modules/polybar.nix;
-          xdg = import ./home-manager/modules/xdg.nix;
-          xresources = import ./home-manager/modules/xresources.nix;
-          xscreensaver = import ./home-manager/modules/xscreensaver.nix;
 
           # vars.nix
 

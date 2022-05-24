@@ -1,9 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, colorscheme, ... }:
 with lib;
 let
 
   cfg = config.pinpox.defaults.gtk;
-  vars = import ./vars.nix;
 
   # TODO use flake inputs
   materia-theme = pkgs.fetchFromGitHub {
@@ -19,35 +18,35 @@ let
   materia_colors = pkgs.writeTextFile {
     name = "gtk-generated-colors";
     text = ''
-      BTN_BG=${vars.colors.Grey}
-      BTN_FG=${vars.colors.BrightWhite}
+      BTN_BG=${colorscheme.Grey}
+      BTN_FG=${colorscheme.BrightWhite}
 
-      FG=${vars.colors.White}
-      BG=${vars.colors.Black}
+      FG=${colorscheme.White}
+      BG=${colorscheme.Black}
 
-      HDR_BTN_BG=${vars.colors.DarkGrey}
-      HDR_BTN_FG=${vars.colors.White}
+      HDR_BTN_BG=${colorscheme.DarkGrey}
+      HDR_BTN_FG=${colorscheme.White}
 
-      ACCENT_BG=${vars.colors.Green}
-      ACCENT_FG=${vars.colors.Black}
+      ACCENT_BG=${colorscheme.Green}
+      ACCENT_FG=${colorscheme.Black}
 
-      HDR_FG=${vars.colors.White}
-      HDR_BG=${vars.colors.Grey}
+      HDR_FG=${colorscheme.White}
+      HDR_BG=${colorscheme.Grey}
 
-      MATERIA_SURFACE=${vars.colors.Grey}
-      MATERIA_VIEW=${vars.colors.DarkGrey}
+      MATERIA_SURFACE=${colorscheme.Grey}
+      MATERIA_VIEW=${colorscheme.DarkGrey}
 
-      MENU_BG=${vars.colors.Grey}
-      MENU_FG=${vars.colors.BrightWhite}
+      MENU_BG=${colorscheme.Grey}
+      MENU_FG=${colorscheme.BrightWhite}
 
-      SEL_BG=${vars.colors.Blue}
-      SEL_FG=${vars.colors.Magenta}
+      SEL_BG=${colorscheme.Blue}
+      SEL_FG=${colorscheme.Magenta}
 
-      TXT_BG=${vars.colors.Grey}
-      TXT_FG=${vars.colors.BrightWhite}
+      TXT_BG=${colorscheme.Grey}
+      TXT_FG=${colorscheme.BrightWhite}
 
-      WM_BORDER_FOCUS=${vars.colors.White}
-      WM_BORDER_UNFOCUS=${vars.colors.BrightGrey}
+      WM_BORDER_FOCUS=${colorscheme.White}
+      WM_BORDER_UNFOCUS=${colorscheme.BrightGrey}
 
       UNITY_DEFAULT_LAUNCHER_STYLE=False
       NAME=generated

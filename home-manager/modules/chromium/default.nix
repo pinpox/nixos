@@ -1,10 +1,9 @@
-{ config, pkgs, lib, ... }: {
-  with lib;
-  let
-  vars = import ../vars.nix;
+{ config, lib, ... }:
+with lib;
+let
   cfg = config.pinpox.programs.chromium;
-  in
-  {
+in
+{
   options.pinpox.programs.chromium.enable = mkEnableOption "chromium browser";
 
   config = mkIf cfg.enable {

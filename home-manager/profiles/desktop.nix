@@ -8,53 +8,23 @@
 , ...
 }:
 let
-  vars = import ../vars.nix;
+  vars = import ../modules/vars.nix;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
 in
 {
 
-  # Imports
-  imports = [
-
-    # dotfiles-awesome.nixosModules.dotfiles
-
-    ../modules/grobi.nix
-    # ../modules/i3.nix
-    # ../modules/newsboat.nix
-    # ../modules/polybar.nix
-    ../modules/rofi
-    ../modules/alacritty.nix
-    ../modules/chromium.nix
-    ../modules/credentials.nix
-    ../modules/dunst.nix
-    ../modules/fonts.nix
-    # ../modules/games.nix
-    ../modules/git.nix
-    ../modules/go.nix
-    ../modules/gtk.nix
-    # ../modules/neomutt.nix
-
-    ../modules/picom.nix
-    ../modules/shell
-    ../modules/tmux
-    ../modules/vim
-    ../modules/xdg.nix
-    ../modules/xresources.nix
-    ../modules/xscreensaver.nix
-
-    ../modules/wezterm
-    ../modules/zk
-    ../modules/awesome
-    ../modules/firefox
-  ];
 
   home.file = {
     ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
     ".local/share/wallpaper-generator".source = wallpaper-generator;
   };
 
-  _module.args.utils = import ../../../utils { inherit pkgs; };
+
+  _module.args.utils = import ../../utils { inherit pkgs; };
+  _module.args.colorscheme = vars.colors;
+  _module.args.fonts = vars.font;
+
 
   pinpox = {
     defaults = {
@@ -64,15 +34,14 @@ in
       gtk.enable = true;
       fonts.enable = true;
       credentials.enable = true;
+      git.enable = true;
     };
     programs = {
 
       alacritty.enable = true;
       chromium.enable = true;
       dunst.enable = true;
-      git.enable = true;
       picom.enable = true;
-      tmux.enable = true;
       nvim.enable = true;
       xscreensaver.enable = true;
       firefox.enable = true;

@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, fonts, colorscheme, ... }:
 with lib;
 let
-  vars = import ./vars.nix;
   cfg = config.pinpox.programs.alacritty;
 in
 {
@@ -32,47 +31,47 @@ in
         font = {
           normal = {
             family = "Recursive Mono Linear Static";
-            # style = vars.font.normal.style;
+            # style = fonts.normal.style;
           };
           bold = {
             family = "Recursive Mono Linear Static";
-            style = vars.font.bold.style;
+            style = fonts.bold.style;
           };
           italic = {
             family = "Recursive Mono Linear Static";
-            style = vars.font.italic.style;
+            style = fonts.italic.style;
           };
         };
 
         cursor = { style = "Beam"; };
         colors = {
           primary = {
-            background = "0x${vars.colors.Black}";
-            foreground = "0x${vars.colors.White}";
+            background = "0x${colorscheme.Black}";
+            foreground = "0x${colorscheme.White}";
           };
           cursor = {
-            text = "0x${vars.colors.Black}";
-            cursor = "0x${vars.colors.Blue}";
+            text = "0x${colorscheme.Black}";
+            cursor = "0x${colorscheme.Blue}";
           };
           normal = {
-            black = "0x${vars.colors.Black}";
-            red = "0x${vars.colors.Red}";
-            green = "0x${vars.colors.Green}";
-            yellow = "0x${vars.colors.Yellow}";
-            blue = "0x${vars.colors.Blue}";
-            magenta = "0x${vars.colors.Magenta}";
-            cyan = "0x${vars.colors.Cyan}";
-            white = "0x${vars.colors.White}";
+            black = "0x${colorscheme.Black}";
+            red = "0x${colorscheme.Red}";
+            green = "0x${colorscheme.Green}";
+            yellow = "0x${colorscheme.Yellow}";
+            blue = "0x${colorscheme.Blue}";
+            magenta = "0x${colorscheme.Magenta}";
+            cyan = "0x${colorscheme.Cyan}";
+            white = "0x${colorscheme.White}";
           };
           bright = {
-            black = "0x${vars.colors.BrightGrey}";
-            red = "0x${vars.colors.DarkYellow}";
-            green = "0x${vars.colors.DarkGrey}";
-            yellow = "0x${vars.colors.Grey}";
-            blue = "0x${vars.colors.DarkWhite}";
-            magenta = "0x${vars.colors.BrightWhite}";
-            cyan = "0x${vars.colors.BrightRed}";
-            white = "0x${vars.colors.DarkGreen}";
+            black = "0x${colorscheme.BrightGrey}";
+            red = "0x${colorscheme.DarkYellow}";
+            green = "0x${colorscheme.DarkGrey}";
+            yellow = "0x${colorscheme.Grey}";
+            blue = "0x${colorscheme.DarkWhite}";
+            magenta = "0x${colorscheme.BrightWhite}";
+            cyan = "0x${colorscheme.BrightRed}";
+            white = "0x${colorscheme.DarkGreen}";
           };
         };
 

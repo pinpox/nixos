@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, fonts, lib, colorscheme, ... }:
 with lib;
 let
-  vars = import ../vars.nix;
+
   cfg = config.pinpox.programs.dunst;
 in
 {
@@ -34,12 +34,12 @@ in
           frame_width = 0;
           separator_color = "frame";
           sort = "yes";
-          frame_color = "#${vars.colors.BrightGrey}";
-          font = "${vars.font.normal.family} ${vars.font.normal.style} 8";
+          frame_color = "#${colorscheme.BrightGrey}";
+          font = "${fonts.normal.family} ${fonts.normal.style} 8";
           line_height = 0;
           markup = "full";
           format =
-            "<b><span foreground='#${vars.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
+            "<b><span foreground='#${colorscheme.Blue}'>%s</span></b>\\n<span>%b</span>";
           alignment = "left";
           show_age_threshold = 60;
           word_wrap = "yes";
@@ -67,20 +67,20 @@ in
         };
 
         urgency_low = {
-          background = "#${vars.colors.DarkGrey}";
-          foreground = "#${vars.colors.BrightGrey}";
+          background = "#${colorscheme.DarkGrey}";
+          foreground = "#${colorscheme.BrightGrey}";
           timeout = 5;
         };
 
         urgency_normal = {
-          background = "#${vars.colors.DarkGrey}";
-          foreground = "#${vars.colors.White}";
+          background = "#${colorscheme.DarkGrey}";
+          foreground = "#${colorscheme.White}";
           timeout = 10;
         };
 
         urgency_critical = {
-          background = "#${vars.colors.Red}";
-          foreground = "#${vars.colors.Black}";
+          background = "#${colorscheme.Red}";
+          foreground = "#${colorscheme.Black}";
           timeout = 15;
         };
       };

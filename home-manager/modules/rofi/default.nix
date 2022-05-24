@@ -1,8 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, colorscheme, fonts, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.rofi;
-  vars = import ../vars.nix;
 in
 {
 
@@ -13,8 +12,8 @@ in
 
       # General
       enable = true;
-      font = "${vars.font.normal.family} ${vars.font.normal.style} ${
-          toString (vars.font.size * 2)
+      font = "${fonts.family} ${fonts.normal.style} ${
+          toString (fonts.size * 2)
         }px";
       cycle = true;
       # extraConfig = "";
@@ -29,38 +28,38 @@ in
       colors = {
 
         window = {
-          background = "#${vars.colors.Black}";
-          # foreground = "#${vars.colors.Black}";
-          separator = "#${vars.colors.Blue}";
-          border = "#${vars.colors.Black}";
+          background = "#${colorscheme.Black}";
+          # foreground = "#${colorscheme.Black}";
+          separator = "#${colorscheme.Blue}";
+          border = "#${colorscheme.Black}";
         };
 
         rows = {
           normal = {
-            background = "#${vars.colors.Black}";
-            foreground = "#${vars.colors.White}";
-            backgroundAlt = "#${vars.colors.Black}";
+            background = "#${colorscheme.Black}";
+            foreground = "#${colorscheme.White}";
+            backgroundAlt = "#${colorscheme.Black}";
             highlight = {
-              background = "#${vars.colors.Grey}";
-              foreground = "#${vars.colors.DarkGreen}";
+              background = "#${colorscheme.Grey}";
+              foreground = "#${colorscheme.DarkGreen}";
             };
           };
           active = {
-            background = "#${vars.colors.Black}";
-            foreground = "#${vars.colors.Blue}";
-            backgroundAlt = "#${vars.colors.Black}";
+            background = "#${colorscheme.Black}";
+            foreground = "#${colorscheme.Blue}";
+            backgroundAlt = "#${colorscheme.Black}";
             highlight = {
-              background = "#${vars.colors.Black}";
-              foreground = "#${vars.colors.Blue}";
+              background = "#${colorscheme.Black}";
+              foreground = "#${colorscheme.Blue}";
             };
           };
           urgent = {
-            background = "#${vars.colors.Black}";
-            foreground = "#${vars.colors.Red}";
-            backgroundAlt = "#${vars.colors.Black}";
+            background = "#${colorscheme.Black}";
+            foreground = "#${colorscheme.Red}";
+            backgroundAlt = "#${colorscheme.Black}";
             highlight = {
-              background = "#${vars.colors.Black}";
-              foreground = "#${vars.colors.Red}";
+              background = "#${colorscheme.Black}";
+              foreground = "#${colorscheme.Red}";
             };
           };
         };

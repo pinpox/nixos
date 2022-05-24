@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 let
-  vars = import ../vars.nix;
   splitString = str:
     builtins.filter builtins.isString (builtins.split "\n" str);
 in
