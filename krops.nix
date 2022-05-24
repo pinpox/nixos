@@ -41,7 +41,8 @@ let
       target = target;
     };
 
-in rec {
+in
+rec {
 
   # Define deployments
 
