@@ -47,13 +47,13 @@ let
 in
 rustPlatform.buildRustPackage rec {
   pname = "wezterm-nightly";
-  version = "a0b8d2196a260726eca28b32fecaeb87420851ec";
+  version = "a0b8d2196a260726eca28b32fecaeb87421851ec";
 
   src = fetchFromGitHub {
     owner = "wez";
     repo = "wezterm";
-    rev = "a0b8d2196a260726eca28b32fecaeb87420851ec"; # 2022-03-16
-    sha256 = "sha256-XLp9RhgLGgqs+iu7purxIVn+FsISUD3NoBLydSY7lyY=";
+    rev = "2725559fc0fe364366f5e2598b51cbdd570949cc"; # 2022-05-25
+    sha256 = "sha256-HPPJDAn7qYIGnuOajr/fix/q0JxoBPXa+4ihy2ObnQE=";
     fetchSubmodules = true;
   };
 
@@ -61,7 +61,7 @@ rustPlatform.buildRustPackage rec {
     echo ${version} > .tag
   '';
 
-  cargoSha256 = "sha256-ygNwvQdY1S6QBJbksU/anUSbRLajiesh2XxBk6uRnl8=";
+  cargoSha256 = "sha256-vO029OCF+nB+enrlpLKdpNpRYQGXrQPYdKtoJgRVNCM=";
 
   doCheck = false;
 
