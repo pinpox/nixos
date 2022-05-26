@@ -63,11 +63,11 @@
     "forgit": {
       "flake": false,
       "locked": {
-        "lastModified": 1652287281,
-        "narHash": "sha256-4VzkRkDqWx+pwhAIEnLkkEQ2U7lWpduKr/vQaGICVuM=",
+        "lastModified": 1653039891,
+        "narHash": "sha256-SjSdsbuXVnirrhdyfexDifd1E8unS1o2SqcEVFNfmi0=",
         "owner": "wfxr",
         "repo": "forgit",
-        "rev": "75e9d12bacaea12012c89facf80bf42a5ad9b769",
+        "rev": "544cf86bc4bfd58c49dd7b34c4abaa3798d848ca",
         "type": "github"
       },
       "original": {
@@ -79,11 +79,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1652844334,
-        "narHash": "sha256-Q2qJKEfXCwhs02pONzGbG29yklJAPCvBJUDUQEdak+Q=",
+        "lastModified": 1653439430,
+        "narHash": "sha256-ksXjGAADEYOXnujMxDtzcezox57N/9231ZebMfvzIig=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "eb3d2d121f480471a9571b6d9138b4c49a5ed3e0",
+        "rev": "5f744548674ae3aad388ec8adc29d383105ed30c",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1652996682,
-        "narHash": "sha256-7ZWyd5W2tM/uxXGn16AJUXenlGPUt/r6zitEcorz5j0=",
+        "lastModified": 1653340164,
+        "narHash": "sha256-t6BPApyasx6FOv2cEVyFBXvkEDrknyUe7bngMbNSBkA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "02b15de8ad714409358cffdc6ed518ade03402c4",
+        "rev": "e66f0ff69a6c0698b35034b842c4b68814440778",
         "type": "github"
       },
       "original": {
@@ -115,11 +115,11 @@
     "indent-blankline-nvim-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1652143999,
-        "narHash": "sha256-Wpf5kZTQDcdOSkizYkE4aeQou6IKCl7o4ySGAZB9bT0=",
+        "lastModified": 1653381642,
+        "narHash": "sha256-V020Sd2AcbEUvlnXffCDFBgVZnHCVUO16bfKJNn6Xq8=",
         "owner": "lukas-reineke",
         "repo": "indent-blankline.nvim",
-        "rev": "8567ac8ccd19ee41a6ec55bf044884799fa3f56b",
+        "rev": "6177a59552e35dfb69e1493fd68194e673dc3ee2",
         "type": "github"
       },
       "original": {
@@ -198,11 +198,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1652885393,
-        "narHash": "sha256-YIgvvlk4iQ1Hi7KD9o5gsojc+ApB+jiH1d5stK8uXiw=",
+        "lastModified": 1653060744,
+        "narHash": "sha256-kfRusllRumpt33J1hPV+CeCCylCXEU7e0gn2/cIM7cY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "48037fd90426e44e4bf03e6479e88a11453b9b66",
+        "rev": "dfd82985c273aac6eced03625f454b334daae2e8",
         "type": "github"
       },
       "original": {
@@ -214,11 +214,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1653029348,
-        "narHash": "sha256-0YAJnBLRdU6V5xnVXJ7XDEC6otHRV500GYNW4wgYif0=",
+        "lastModified": 1653474242,
+        "narHash": "sha256-9SguS1kKoCHVqj7bxXO5EGhu9zsxz6ZHTwEqh2qmrNg=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f4070d238f6ce4c55da6ff890dd495551cb80a52",
+        "rev": "6f139a70bb0e68233d922f6f53ad1e8874551f07",
         "type": "github"
       },
       "original": {
@@ -246,11 +246,11 @@
     "nvim-fzf": {
       "flake": false,
       "locked": {
-        "lastModified": 1652921414,
-        "narHash": "sha256-+63VJ2laIsKcIW3CVJL7JvceeG188CoZEbENLRQTMiA=",
+        "lastModified": 1653316020,
+        "narHash": "sha256-vVeY9R6hiFsuav+KfvApbLqAtddet9rpPRlsinnbXqI=",
         "owner": "vijaymarupudi",
         "repo": "nvim-fzf",
-        "rev": "5ca0732c3437d7ac3857823962910e5634799ca3",
+        "rev": "d0b4d60704f27eddaa96b921f10a4a2a20f1b20e",
         "type": "github"
       },
       "original": {
@@ -262,11 +262,11 @@
     "retiolum": {
       "flake": false,
       "locked": {
-        "lastModified": 1652811964,
-        "narHash": "sha256-U/0QXb/ZFE7cwesNPsGO0LTY2LHqUbq7DDkXpesDbmQ=",
+        "lastModified": 1653077783,
+        "narHash": "sha256-GiL82w4BVSZZV5gIQSoEf+KoJaIkUv+29vZmmWlKb6I=",
         "owner": "krebs",
         "repo": "retiolum",
-        "rev": "e81dba4698d48c303ac1aff34a2402b3a87e003d",
+        "rev": "1b5154c3ed9f3cb751afc3e306a1b20e3358ffe5",
         "type": "github"
       },
       "original": {
