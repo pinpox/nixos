@@ -39,7 +39,15 @@ in
   home = {
 
     # Install these packages for my user
-    packages = with pkgs; [ exa htop httpie pkg-config tealdeer unzip ];
+    packages = with pkgs; [
+      exa
+      htop
+      httpie
+      pkg-config
+      tealdeer
+      unzip
+      delta
+    ];
 
     sessionVariables = {
       # Workaround for alacritty (breaks wezterm and other apps!)

@@ -80,6 +80,7 @@
     pavucontrol
     pkg-config
     playerctl
+    pre-commit
     scrot
     signal-desktop
     spotify
