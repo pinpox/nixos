@@ -213,7 +213,6 @@
             # wezterm-bin = pkgs.wezterm-bin;
             wezterm-nightly = pkgs.wezterm-nightly;
             hello-custom = pkgs.hello-custom;
-            map = pkgs.map;
             filebrowser = pkgs.filebrowser;
             darktile = pkgs.darktile;
             dirserver = pkgs.dirserver;
