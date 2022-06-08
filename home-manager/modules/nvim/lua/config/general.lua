@@ -22,7 +22,10 @@ vim.o.scrolloff        = 5                  -- show lines above and below when s
 vim.o.showcmd          = true               -- display incomplete commands
 vim.o.smartcase        = true               -- Case sensitive then capital is typed
 vim.o.synmaxcol        = 200                -- Maximum length of syntax highlighting
-vim.o.title            = true               -- Show title in terminal window
+
+-- TODO Disabled title until this is fixed: https://github.com/neovim/neovim/issues/18573
+-- vim.o.title            = true               -- Show title in terminal window
+
 vim.o.wildmenu         = true               -- Complete commands
 vim.o.wrapscan         = true               -- Wrap when searching to beginning
 vim.o.conceallevel     = 0                  -- Don't ever hide stuff from me
