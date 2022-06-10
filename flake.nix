@@ -10,6 +10,12 @@
     #   flake-utils.follows = "flake-utils";
     # };
 
+    promterm.url = "github:pinpox/promterm";
+    promterm.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      utils.follows = "flake-utils";
+    };
+
     s3photoalbum.url = "github:pinpox/s3photoalbum";
     s3photoalbum.inputs = {
       nixpkgs.follows = "nixpkgs";

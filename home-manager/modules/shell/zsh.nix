@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, promterm, ... }: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -51,6 +51,7 @@
       cdnh = "cd ~/code/github.com/pinpox/nixos-home";
 
       # Other
+      pt = "${promterm.defaultPackage.x86_64-linux}/bin/promterm 'https://vpn.prometheus.pablo.tools/api/v1/alerts'";
       lsblk = "lsblk -o name,mountpoint,label,size,type,uuid";
       c = "${pkgs.bat}/bin/bat -n --decorations never";
       cc =

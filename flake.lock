@@ -190,6 +190,25 @@
         "type": "github"
       }
     },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1654608517,
+        "narHash": "sha256-KIxHjDDJYhoiLanLjpeAk5AuZsfip8M62JhkuloEGb0=",
+        "owner": "nix-community",
+        "repo": "naersk",
+        "rev": "14997a79cd78fe34ad6390f18a327ee0593e5eec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "master",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
     "nix-apple-fonts": {
       "inputs": {
         "flake-compat": [
@@ -230,6 +249,18 @@
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-c+SyXvj7THre87OyIdZfRVR+HhI/g1ZDrQ3VUtTuHkU=",
+        "path": "/nix/store/3n0g1dqcs1giajn005sjr1rldd5bi4d0-source",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
       }
     },
     "nmd": {
@@ -311,6 +342,30 @@
         "type": "github"
       }
     },
+    "promterm": {
+      "inputs": {
+        "naersk": "naersk",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "flake-utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1654870673,
+        "narHash": "sha256-tkC7XdFbM2Tlh7Db80MjMrSEZU/0TWK3MY1r/pA3mwQ=",
+        "owner": "pinpox",
+        "repo": "promterm",
+        "rev": "34d10acb130836f11a5a44c46444ab3a7155d6b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "promterm",
+        "type": "github"
+      }
+    },
     "retiolum": {
       "flake": false,
       "locked": {
@@ -343,6 +398,7 @@
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",
         "nvim-fzf": "nvim-fzf",
+        "promterm": "promterm",
         "retiolum": "retiolum",
         "s3photoalbum": "s3photoalbum",
         "tfenv": "tfenv",

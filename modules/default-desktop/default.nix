@@ -1,4 +1,4 @@
-{ lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, dotfiles-awesome, ... }:
+{ lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, dotfiles-awesome, promterm, ... }:
 with lib;
 let cfg = config.pinpox.desktop;
 in
@@ -53,7 +53,7 @@ in
     # there.
     # home-manager.extraSpecialArgs = flake-self.inputs;
     home-manager.extraSpecialArgs = {
-      inherit wallpaper-generator dotfiles-awesome flake-self nur;
+      inherit wallpaper-generator dotfiles-awesome flake-self nur promterm;
     };
 
     nixpkgs.overlays = [
