@@ -56,7 +56,7 @@
       c = "${pkgs.bat}/bin/bat -n --decorations never";
       cc =
         "${pkgs.clang}/bin/clang -Wall -Wextra -pedantic -std=c99 -Wshadow -Weverything";
-      qr_gen = "${pkgs.qrencode}/bin/qrencode -t ansi -o-";
+      qr = "${pkgs.qrencode}/bin/qrencode -t utf8 -o-";
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
       radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
