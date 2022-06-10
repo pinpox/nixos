@@ -9,12 +9,15 @@ in
 
   config = mkIf cfg.enable {
 
+
+    services.postgresql.package = pkgs.postgresql_13;
+
     services.nextcloud = {
       enable = true;
 
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud23;
+      package = pkgs.nextcloud24;
 
       # Use HTTPS for links
       https = true;
