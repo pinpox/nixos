@@ -1,5 +1,10 @@
 { self, s3photoalbum, ... }: {
 
+
+  services.logind.extraConfig = ''
+    RuntimeDirectorySize=20G
+  '';
+
   imports = [
     ./hardware-configuration.nix
     s3photoalbum.nixosModules.s3photoalbum
@@ -8,9 +13,11 @@
 
   pinpox = {
 
+
     server = {
       enable = true;
       hostname = "kfbox";
+      stateVersion = "22.05";
     };
 
     wg-client = {
