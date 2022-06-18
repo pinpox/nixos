@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, inputs, makeWrapper }:
+{ pkgs, stdenvNoCC, lib, inputs, makeWrapper }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "tfenv";
@@ -21,6 +21,7 @@ stdenvNoCC.mkDerivation rec {
   # expanding $HOME fails with --set-default.
   fixupPhase = ''
     wrapProgram $out/bin/tfenv \
+    --prefix PATH : "${lib.makeBinPath [ pkgs.unzip ]}" \
     --run 'export TFENV_CONFIG_DIR="''${TFENV_CONFIG_DIR:-$HOME/.local/tfenv}"' \
     --run 'mkdir -p $TFENV_CONFIG_DIR'
 
