@@ -19,7 +19,6 @@ in
 
       # Remote servers repository to use. Archives will be labeled with the
       # hostname and a timestamp
-      # repo = "borg@birne.wireguard:.";
       repo = "borg@birne.wireguard:.";
 
       # Don't create repo if it does not exist. Ensures the backup fails, if for
@@ -98,6 +97,9 @@ in
             <blockquote>Archive: $archiveName</br>Status: $exitStatus</blockquote>" \
             https://vpn.notify.pablo.tools/plain
         fi
+
+        echo $?
+        exit $exitStatus
       '';
       #   borg info --json --last 1 borg@birne.wireguard:. > /var/log/borgbackup-last-info
       #   echo $exitStatus > /var/log/borgbackup-last-status
