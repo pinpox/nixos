@@ -160,6 +160,7 @@
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               home-manager.nixosModules.home-manager
+              lollypops.nixosModule
             ];
           };
         })
@@ -272,7 +273,7 @@
 
             in
             {
-              default = lollypops.apps."${system}".default;
+              default = lollypops.apps."${system}".default { nixosConfigurations = self.nixosConfigurations; };
 
               #   let
 

@@ -1,13 +1,12 @@
 # Configuration file for ahorn
-{ options, pops, ... }: {
+{ options, ... }: {
 
   imports = [
     ./hardware-configuration.nix
     ./retiolum.nix
-    pops.nixosModule
   ];
 
-  pops.secrets.files = {
+  lollypops.secrets.files = {
     secret1 = {
       cmd = "pass test-password";
       path = "/tmp/testfile5";
