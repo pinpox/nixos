@@ -314,6 +314,7 @@
     metrics.node.enable = true;
     metrics.blackbox.enable = true;
     metrics.json.enable = true;
+    metrics.restic.enable = true;
 
     services.monitoring-server = {
 

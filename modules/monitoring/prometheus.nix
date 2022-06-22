@@ -114,6 +114,33 @@ in
             }
           ];
         }
+
+
+        {
+          job_name = "restic-exporter";
+          scrape_interval = "1h";
+          metrics_path = "/probe";
+          static_configs = [{ targets = [ "ahorn" ]; }];
+          relabel_configs = [
+            {
+              source_labels = [ "__address__" ];
+              target_label = "__param_target";
+            }
+            {
+              source_labels = [ "__param_target" ];
+              target_label = "instance";
+            }
+            {
+              target_label = "__address__";
+              replacement =
+                "127.0.0.1:8999";
+            }
+          ];
+        }
+
+
+
+
         {
           job_name = "blackbox";
           metrics_path = "/probe";

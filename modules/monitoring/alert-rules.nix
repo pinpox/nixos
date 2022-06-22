@@ -118,6 +118,11 @@ lib.mapAttrsToList
         "{{$labels.instance}} failed to (re)start service {{$labels.name}}.";
     };
 
+    restic_backup_too_old = {
+      condition = ''(time() - restic_snapshots_latest_time)/(60*60) > 10'';
+      description = "{{$labels.hostname}} not backed up for loganr than 10 hours.";
+    };
+
     # service_not_running = {
     #   condition = ''systemd_units_active_code{name=~"teamspeak3-server.service|tt-rss.service", sub!="running"}'';
     #   description = "{{$labels.instance}} should have a running {{$labels.name}}.";

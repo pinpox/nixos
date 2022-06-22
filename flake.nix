@@ -52,6 +52,13 @@
       flake-compat.follows = "flake-compat";
     };
 
+    restic-exporter.url = "github:pinpox/restic-exporter";
+    restic-exporter.inputs = {
+      nixpkgs.follows = "nixpkgs";
+      flake-utils.follows = "flake-utils";
+      flake-compat.follows = "flake-compat";
+    };
+
     matrix-hook.url = "github:pinpox/matrix-hook";
     matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";

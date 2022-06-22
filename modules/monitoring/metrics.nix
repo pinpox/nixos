@@ -1,8 +1,12 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, restic-exporter, ... }:
 with lib;
 let cfg = config.pinpox.metrics;
 in
 {
+
+  options.pinpox.metrics.restic = {
+    enable = mkEnableOption "prometheus restic-exporter metrics collection";
+  };
 
   options.pinpox.metrics.node = {
     enable = mkEnableOption "prometheus node-exporter metrics collection";
@@ -16,7 +20,16 @@ in
     enable = mkEnableOption "prometheus blackbox-exporter metrics collection";
   };
 
+  imports = [ restic-exporter.nixosModules.default ];
+
   config = {
+
+    services.restic-exporter = {
+      enable = cfg.restic.enable;
+      environmentFile = "/var/src/secrets/restic-exporter/envfile";
+      port = "8999";
+    };
+
     services.prometheus.exporters = {
       node = mkIf cfg.node.enable {
         enable = true;
