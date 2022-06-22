@@ -241,33 +241,112 @@
             test-shell = import ./shells/test-shell.nix { inherit pkgs; };
           };
 
+          # Allow custom packages to be run using `nix run`
           apps = {
-            # Allow custom packages to be run using `nix run`
-            hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-            # wezterm-bin = flake-utils.lib.mkApp {
-            #   drv = packages.wezterm-bin;
-            #   exePath = "/bin/wezterm";
-            # };
+            default =
+              let
+
+                commontasks = pkgs.writeText "CommonTasks.yml"
+                  (builtins.toJSON {
+                    version = "3";
+
+                    tasks = {
+
+                      greet = { cmds = [ "Hello {{.HOST}}" ]; };
+
+                      deploy-secrets = {
+                        cmds = [
+                          ''echo "Deploying secrets to: {{.HOST}} (not impletmented yet)!"''
+                        ];
+                      };
+
+                      rebuild = {
+                        dir = self;
+                        preconditions = [{
+                          sh = ''[ ! -z "{{.HOST}}" ]'';
+                          msg = "HOST not set: {{.HOST}}";
+                        }];
+                        cmds = [
+                          ''echo "Rebuilding: {{.HOST}}!"''
+                          ''nixos-rebuild switch --flake '.#{{.HOST}}' --target-host root@{{.HOST}} --build-host root@{{.HOST}}''
+                        ];
+                      };
+
+                      deploy-flake = {
+                        cmds = [
+                          ''echo "Deploying flake to: {{.HOST}} (not impletmented yet)!"''
+                        ];
+                      };
+                    };
+                  });
+
+                # Taskfile passed to go-task
+                taskfile = pkgs.writeText "Taskfile.yml"
+                  (builtins.toJSON {
+                    version = "3";
+                    # Import the takes once for each host, setting the HOST
+                    # variable. This allows running them as `host:task` for
+                    # each host individually. Available hostnames are take form
+                    # the ./machines directory
+                    includes = builtins.listToAttrs
+                      (map
+                        (name: {
+                          inherit name;
+                          value = {
+                            taskfile = commontasks;
+                            vars.HOST = name;
+                          };
+                        })
+                        (builtins.attrNames (builtins.readDir ./machines)));
+
+                    tasks = {
+
+                      # Define grouped tasks, e.g. running all tasks for one
+                      # host. E.g. to make a complete deployment with:
+                      # `nix run '.' -- provision-ahorn
+
+                      provision-ahorn = {
+                        cmds = [
+                          { task = "ahorn:greet"; }
+                          { task = "ahorn:deploy-flake"; }
+                          { task = "ahorn:deploy-flake"; }
+                          { task = "ahorn:rebuild"; }
+                        ];
+                      };
+                    };
+                  });
+              in
+              flake-utils.lib.mkApp
+                {
+                  drv = pkgs.writeShellScriptBin "go-task-runner" ''
+                    ${pkgs.go-task}/bin/task -t ${taskfile} $1
+                  '';
+                };
+
+            # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
           };
 
+
+          # defaultApp = apps.hello-custom;
           # Checks to run with `nix flake check -L`, will run in a QEMU VM.
           # Looks for all ./modules/<module name>/test.nix files and adds them to
           # the flake's checks output. The test.nix file is optional and may be
           # added to any module.
-          checks = builtins.listToAttrs (map
-            (x: {
-              name = x;
-              value = (import (./modules + "/${x}/test.nix")) {
-                pkgs = nixpkgs;
-                inherit system self;
-              };
-            })
-            (
-              # Filter list of modules, leaving only modules which contain a
-              # `test.nix` file
-              builtins.filter
-                (p: builtins.pathExists (./modules + "/${p}/test.nix"))
-                (builtins.attrNames (builtins.readDir ./modules))));
+          checks = builtins.listToAttrs
+            (map
+              (x: {
+                name = x;
+                value = (import (./modules + "/${x}/test.nix")) {
+                  pkgs = nixpkgs;
+                  inherit system self;
+                };
+              })
+              (
+                # Filter list of modules, leaving only modules which contain a
+                # `test.nix` file
+                builtins.filter
+                  (p: builtins.pathExists (./modules + "/${p}/test.nix"))
+                  (builtins.attrNames (builtins.readDir ./modules))));
 
           # TODO we probably should set some default app and/or package
           # defaultPackage = packages.hello;

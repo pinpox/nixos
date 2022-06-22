@@ -1,0 +1,23 @@
+version: '3'
+
+tasks:
+  deploy-secrets:
+    cmds:
+      - echo "Deploying secrets to: {{.HOST}}!"
+
+  rebuild:
+    vars:
+      HOST: '{{default "World" .HOST}}'
+    cmds:
+      - echo "Rebuilding: {{.HOST}}!"
+
+  build-kartoffel:
+    cmds:
+      - task: rebuild
+      - task: deploy-secrets
+        vars: {HOST: "kartoffel"}
+
+  build-ahorn:
+    cmds:
+      - task: rebuild
+        vars: {HOST: "ahorn"}
