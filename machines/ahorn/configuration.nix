@@ -1,9 +1,10 @@
 # Configuration file for ahorn
-{ options, ... }: {
+{ options, pops, ... }: {
 
   imports = [
     ./hardware-configuration.nix
     ./retiolum.nix
+    pops.nixosModule
   ];
 
   pops.secrets.files = {

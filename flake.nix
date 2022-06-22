@@ -10,6 +10,14 @@
     #   flake-utils.follows = "flake-utils";
     # };
 
+    lollypops = {
+      url = "github:pinpox/lollypops";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+      };
+    };
+
     promterm.url = "github:pinpox/promterm";
     promterm.inputs = {
       nixpkgs.follows = "nixpkgs";
@@ -244,119 +252,120 @@
           # Allow custom packages to be run using `nix run`
           apps =
             let
-              mkSeclist = config: pkgs.lib.lists.flatten (map
-                (x: [
-                  "echo 'Deploying ${x.name} to ${x.path}'"
-                  # Remove if already
-                  ''
-                    ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "rm -f ${x.path}"
-                  ''
-                  # Copy file
-                  ''
-                    ${x.cmd} | ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "umask 077; cat > ${x.path}"
-                  ''
-                  # Set group and owner
-                  ''
-                    ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "chown ${x.owner}:${x.group-name} ${x.path}"
-                  ''
-                ])
-                (builtins.attrValues config.pops.secrets.files));
+              # mkSeclist = config: pkgs.lib.lists.flatten (map
+              #   (x: [
+              #     "echo 'Deploying ${x.name} to ${x.path}'"
+              #     # Remove if already
+              #     ''
+              #       ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "rm -f ${x.path}"
+              #     ''
+              #     # Copy file
+              #     ''
+              #       ${x.cmd} | ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "umask 077; cat > ${x.path}"
+              #     ''
+              #     # Set group and owner
+              #     ''
+              #       ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "chown ${x.owner}:${x.group-name} ${x.path}"
+              #     ''
+              #   ])
+              #   (builtins.attrValues config.pops.secrets.files));
 
             in
             {
-              default =
-                let
+              default = lollypops.apps."${system}".default;
 
-                  mkTaskFileForHost = hostConfig: pkgs.writeText "CommonTasks.yml"
-                    (builtins.toJSON {
-                      version = "3";
+              #   let
 
-                      tasks = {
+              #     mkTaskFileForHost = hostConfig: pkgs.writeText "CommonTasks.yml"
+              #       (builtins.toJSON {
+              #         version = "3";
 
-                        greet.cmds = [ ''echo "Hello {{.HOST}}"'' ];
+              #         tasks = {
 
-                        check-vars.preconditions = [{
-                          sh = ''[ ! -z "{{.HOST}}" ]'';
-                          msg = "HOST not set: {{.HOST}}";
-                        }];
+              #           greet.cmds = [ ''echo "Hello {{.HOST}}"'' ];
 
-                        deploy-secrets = {
-                          deps = [ "check-vars" ];
+              #           check-vars.preconditions = [{
+              #             sh = ''[ ! -z "{{.HOST}}" ]'';
+              #             msg = "HOST not set: {{.HOST}}";
+              #           }];
 
-                          # silent = true;
+              #           deploy-secrets = {
+              #             deps = [ "check-vars" ];
 
-                          cmds = [
-                            ''echo "Deploying secrets to: {{.HOST}} (not impletmented yet)!"''
-                          ] ++ mkSeclist hostConfig.config;
+              #             # silent = true;
 
-                        };
+              #             cmds = [
+              #               ''echo "Deploying secrets to: {{.HOST}} (not impletmented yet)!"''
+              #             ] ++ mkSeclist hostConfig.config;
 
-                        rebuild = {
-                          dir = self;
-                          deps = [ "check-vars" ];
-                          cmds = [
-                            # TODO commented out for testing
-                            ''
-                              echo "Rebuilding: {{.HOST}}!"
-                              # nixos-rebuild switch --flake '.#{{.HOST}}' --target-host root@{{.HOST}} --build-host root@{{.HOST}}
-                            ''
-                          ];
-                        };
+              #           };
 
-                        deploy-flake = {
-                          deps = [ "check-vars" ];
-                          cmds = [
-                            ''echo "Deploying flake to: {{.HOST}} (not impletmented yet)!"''
-                          ];
-                        };
-                      };
-                    });
+              #           rebuild = {
+              #             dir = self;
+              #             deps = [ "check-vars" ];
+              #             cmds = [
+              #               # TODO commented out for testing
+              #               ''
+              #                 echo "Rebuilding: {{.HOST}}!"
+              #                 # nixos-rebuild switch --flake '.#{{.HOST}}' --target-host root@{{.HOST}} --build-host root@{{.HOST}}
+              #               ''
+              #             ];
+              #           };
 
-                  # Taskfile passed to go-task
-                  taskfile = pkgs.writeText
-                    "Taskfile.yml"
-                    (builtins.toJSON {
-                      version = "3";
-                      # Import the takes once for each host, setting the HOST
-                      # variable. This allows running them as `host:task` for
-                      # each host individually. Available hostnames are take form
-                      # the ./machines directory
+              #           deploy-flake = {
+              #             deps = [ "check-vars" ];
+              #             cmds = [
+              #               ''echo "Deploying flake to: {{.HOST}} (not impletmented yet)!"''
+              #             ];
+              #           };
+              #         };
+              #       });
 
-                      includes = builtins.mapAttrs
-                        (name: value:
-                          {
-                            taskfile = mkTaskFileForHost value;
-                            vars.HOST = name;
-                          })
-                        self.nixosConfigurations;
+              #     # Taskfile passed to go-task
+              #     taskfile = pkgs.writeText
+              #       "Taskfile.yml"
+              #       (builtins.toJSON {
+              #         version = "3";
+              #         # Import the takes once for each host, setting the HOST
+              #         # variable. This allows running them as `host:task` for
+              #         # each host individually. Available hostnames are take form
+              #         # the ./machines directory
 
-                      tasks = {
+              #         includes = builtins.mapAttrs
+              #           (name: value:
+              #             {
+              #               taskfile = mkTaskFileForHost value;
+              #               vars.HOST = name;
+              #             })
+              #           self.nixosConfigurations;
 
-                        # Define grouped tasks, e.g. running all tasks for one
-                        # host. E.g. to make a complete deployment with:
-                        # `nix run '.' -- provision-ahorn
+              #         tasks = {
 
-                        provision-ahorn = {
-                          cmds = [
-                            # { task = "ahorn:greet"; }
-                            { task = "ahorn:deploy-flake"; }
-                            {
-                              task = "ahorn:deploy-secrets";
-                            }
-                            { task = "ahorn:rebuild"; }
-                          ];
-                        };
-                      };
-                    });
-                in
-                flake-utils.lib.mkApp
-                  {
-                    drv = pkgs.writeShellScriptBin "go-task-runner" ''
-                      ${pkgs.go-task}/bin/task -t ${taskfile} "$@"
-                    '';
-                  };
+              #           # Define grouped tasks, e.g. running all tasks for one
+              #           # host. E.g. to make a complete deployment with:
+              #           # `nix run '.' -- provision-ahorn
 
-              # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
+              #           provision-ahorn = {
+              #             cmds = [
+              #               # { task = "ahorn:greet"; }
+              #               { task = "ahorn:deploy-flake"; }
+              #               {
+              #                 task = "ahorn:deploy-secrets";
+              #               }
+              #               { task = "ahorn:rebuild"; }
+              #             ];
+              #           };
+              #         };
+              #       });
+              #   in
+              #   flake-utils.lib.mkApp
+              #     {
+              #       drv = pkgs.writeShellScriptBin "go-task-runner" ''
+              #         ${pkgs.go-task}/bin/task -t ${taskfile} "$@"
+              #       '';
+              #     };
+
+              # # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
             };
 
 
