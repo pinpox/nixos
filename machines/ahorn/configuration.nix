@@ -1,7 +1,21 @@
 # Configuration file for ahorn
-{ ... }: {
+{ options, ... }: {
 
-  imports = [ ./hardware-configuration.nix ./retiolum.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./retiolum.nix
+  ];
+
+  pinpox-secrets.files = {
+    secret1 = {
+      source-path = "testsrc1";
+      path = "testdest1";
+    };
+    secret2 = {
+      source-path = "testsrc2";
+      path = "testdest2";
+    };
+  };
 
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
