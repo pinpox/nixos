@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.pinpox-secrets;
+  cfg = config.pops;
 
   secret-file = types.submodule ({ config, ... }: {
     options = {
@@ -12,6 +12,13 @@ let
         default = config._module.args.name;
         description = "Name of the secret";
       };
+
+      cmd = mkOption {
+        type = types.str;
+        default = "cat ${config.source-path}";
+        description = "TODO";
+      };
+
       path = mkOption {
         type = types.str;
         default = "/run/keys/${config.name}";
@@ -42,16 +49,28 @@ let
 in
 {
 
-  options.pinpox-secrets = {
-    files = mkOption {
-      type = with types; attrsOf secret-file;
-      default = { };
-      description = "Attribute set specifying secrets to be deployed";
+  options.pops = {
+    secrets = {
+      files = mkOption {
+        type = with types; attrsOf secret-file;
+        default = { };
+        description = "Attribute set specifying secrets to be deployed";
+      };
+    };
+
+
+    deployment = {
+      host = mkOption {
+        type = types.str;
+        default = "${config.networking.hostName}";
+        description = "Host to deploy to";
+      };
+      user = mkOption {
+        type = types.str;
+        default = "root";
+        description = "User to deploy as";
+      };
     };
   };
-
   # config = { };
 }
-
-
-

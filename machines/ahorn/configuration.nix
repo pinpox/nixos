@@ -6,14 +6,10 @@
     ./retiolum.nix
   ];
 
-  pinpox-secrets.files = {
+  pops.secrets.files = {
     secret1 = {
-      source-path = "testsrc1";
-      path = "testdest1";
-    };
-    secret2 = {
-      source-path = "testsrc2";
-      path = "testdest2";
+      cmd = "pass test-password";
+      path = "/tmp/testfile5";
     };
   };
 

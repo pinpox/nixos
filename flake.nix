@@ -244,8 +244,24 @@
           # Allow custom packages to be run using `nix run`
           apps =
             let
-              # TODO implement secrets-fetching commands
-              mkSeclist = sec: map (x: ''echo "copying secrets'' + builtins.toJSON x + ''"'') (builtins.attrValues sec.config.pinpox-secrets.files);
+              mkSeclist = config: pkgs.lib.lists.flatten (map
+                (x: [
+                  "echo 'Deploying ${x.name} to ${x.path}'"
+                  # Remove if already
+                  ''
+                    ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "rm -f ${x.path}"
+                  ''
+                  # Copy file
+                  ''
+                    ${x.cmd} | ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "umask 077; cat > ${x.path}"
+                  ''
+                  # Set group and owner
+                  ''
+                    ssh ${config.pops.deployment.user}@${config.pops.deployment.host} "chown ${x.owner}:${x.group-name} ${x.path}"
+                  ''
+                ])
+                (builtins.attrValues config.pops.secrets.files));
+
             in
             {
               default =
@@ -266,9 +282,12 @@
 
                         deploy-secrets = {
                           deps = [ "check-vars" ];
+
+                          # silent = true;
+
                           cmds = [
                             ''echo "Deploying secrets to: {{.HOST}} (not impletmented yet)!"''
-                          ] ++ mkSeclist hostConfig; #.pinpox-secrets;
+                          ] ++ mkSeclist hostConfig.config;
 
                         };
 
