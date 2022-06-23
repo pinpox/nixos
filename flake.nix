@@ -252,6 +252,8 @@
 
           # Allow custom packages to be run using `nix run`
           apps = {
+            # TODO for testing
+            # nix flake update --override-input lollypops ../lollypops
             default = lollypops.apps."${system}".default { nixosConfigurations = self.nixosConfigurations; };
             # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
           };

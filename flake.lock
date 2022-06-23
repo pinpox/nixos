@@ -187,10 +187,12 @@
         ]
       },
       "locked": {
-        "lastModified": 1655933676,
-        "narHash": "sha256-p4WaG88jY9BXrccYQtdf4MrfZhXV/A613H8iC/Xqi1E=",
-        "type": "git",
-        "url": "file:///home/pinpox/code/github.com/pinpox/lollypops"
+        "lastModified": 1655938652,
+        "narHash": "sha256-T/3WBJtayKXfQ55v1glP/vbvvMLQXGl2lIQOiM/vz34=",
+        "owner": "pinpox",
+        "repo": "lollypops",
+        "rev": "59ba779657edf50b70d9aba6f3a89c3bccf67399",
+        "type": "github"
       },
       "original": {
         "owner": "pinpox",
