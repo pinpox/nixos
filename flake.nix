@@ -165,7 +165,6 @@
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               home-manager.nixosModules.home-manager
-              lollypops.nixosModules.lollypops
             ];
           };
         })
