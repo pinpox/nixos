@@ -9,6 +9,11 @@ in
 
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files = {
+      "borg/passphrase" = { };
+      "ssh/borg/private" = { };
+    };
+
     # Backup with borgbackup to remote server. The connection key and repository
     # encryption passphrase is read from /secrets. This directory has to be
     # copied ther *manually* (so this config can be shared publicly)!
@@ -28,10 +33,10 @@ in
       # Encryption and connection keys are read from /secrets
       encryption = {
         mode = "repokey";
-        passCommand = "cat /var/src/secrets/borg/passphrase";
+        passCommand = "cat ${config.lollypops.secrets.files."borg/passphrase".path}";
       };
 
-      environment.BORG_RSH = "ssh -i /var/src/secrets/ssh/borg/private";
+      environment.BORG_RSH = "ssh -i ${config.lollypops.secrets.files."ssh/borg/private".path}";
 
       environment.BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
 
