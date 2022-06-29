@@ -160,7 +160,7 @@
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               home-manager.nixosModules.home-manager
-              lollypops.nixosModule
+              lollypops.nixosModules.lollypops
             ];
           };
         })
@@ -254,7 +254,7 @@
           apps = {
             # TODO for testing
             # nix flake update --override-input lollypops ../lollypops
-            default = lollypops.apps."${system}".default { nixosConfigurations = self.nixosConfigurations; };
+            default = lollypops.apps."${system}".default { configFlake = self; };
             # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
           };
 
