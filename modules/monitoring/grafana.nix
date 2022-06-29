@@ -18,12 +18,9 @@ in
   config = mkIf cfg.enable {
 
     # SMTP password file
-    users.users.grafana = { extraGroups = [ "keys" ]; };
-    krops.secrets.files = {
-      grafana-smtp-pass = {
-        owner = "grafana";
-        source-path = "/var/src/secrets/grafana/smtp-password";
-      };
+    lollypops.secrets.files."grafana/smtp-password" = {
+      owner = "grafana";
+      path = "/var/lib/grafana/smtp-password";
     };
 
     # Graphana fronend
@@ -39,7 +36,7 @@ in
         enable = true;
         host = "smtp.sendgrid.net:587";
         user = "apikey";
-        passwordFile = "/run/keys/grafana-smtp-pass";
+        passwordFile = "${config.lollypops.secrets.files."grafana/smtp-password".path}";
         fromAddress = "status@pablo.tools";
       };
 
