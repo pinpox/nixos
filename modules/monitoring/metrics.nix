@@ -24,9 +24,11 @@ in
 
   config = {
 
+    lollypops.secrets.files."restic-exporter/envfile" = { };
+
     services.restic-exporter = {
       enable = cfg.restic.enable;
-      environmentFile = "/var/src/secrets/restic-exporter/envfile";
+      environmentFile = "${config.lollypops.secrets.files."restic-exporter/envfile".path}";
       port = "8999";
     };
 
