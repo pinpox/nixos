@@ -3,6 +3,11 @@
 
   inputs = {
 
+    mayniklas-keys = {
+      url = "https://github.com/MayNiklas.keys";
+      flake = false;
+    };
+
     # mayniklas.url = "github:mayniklas/nixos";
     # mayniklas.inputs = {
 

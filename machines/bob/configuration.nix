@@ -1,5 +1,4 @@
-# Configuration for bob
-{ pkgs, ... }: {
+{ pkgs, mayniklas-keys, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
 
@@ -65,12 +64,7 @@
     metrics.node.enable = true;
   };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [
-    (pkgs.fetchurl {
-      url = "https://github.com/MayNiklas.keys";
-      sha256 = "sha256:174dbx0kkrfdfdjswdny25nf7phgcb9k8i6z3rqqcy9l24f8xcp3";
-    })
-  ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ mayniklas-keys ];
 
   boot = {
 
