@@ -19,15 +19,19 @@
   networking.retiolum.ipv4 = "10.243.100.100";
   networking.retiolum.ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
 
+  lollypops.secrets.files = {
+    "retiolum/rsa_priv" = { };
+    "retiolum/ed25519_priv" = { };
+  };
+
   services.tinc.networks.retiolum = {
-    rsaPrivateKeyFile = "/var/src/secrets/retiolum/rsa_priv";
-    ed25519PrivateKeyFile = "/var/src/secrets/retiolum/ed25519_priv";
+    rsaPrivateKeyFile = "${config.lollypops.secrets.files."retiolum/rsa_priv".path}";
+    ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
   };
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
   pinpox.services.restic-client.enable = true;
-
 
   pinpox.desktop = {
     enable = true;
