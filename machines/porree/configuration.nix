@@ -5,6 +5,16 @@
   # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
 
+  lollypops.secrets.files = {
+    "matrix-hook/envfile" = { };
+    "bitwarden_rs/envfile" = { };
+    "wireguard/private" = { };
+    "matrix-hook/alerts.passwd" = {
+      path = "/var/lib/matrix-hook/alerts.passwd";
+      owner = "nginx";
+    };
+  };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -141,7 +151,10 @@
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://127.0.0.1:11000"; };
-        basicAuthFile = "/run/keys/alerts_htpasswd";
+        # Deploy htpaswd file for external alerts
+        # Generate with: mkpasswd -m sha-512 (save as username:$6$E7UzqcDh3$Xi...)
+        # Test with: curl -X POST -d'test' https://user:password@notify.pablo.tools/plain
+        basicAuthFile = "${config.lollypops.secrets.files."matrix-hook/alerts.passwd".path}";
       };
 
       "vpn.notify.pablo.tools" = {
@@ -191,19 +204,10 @@
           "/" = {
             proxyPass = "http://birne.wireguard:9001";
             extraConfig = ''
-
-
-
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
               proxy_set_header X-Forwarded-Proto $scheme;
-
               # proxy_set_header Host $host;
-
-
-
-
               proxy_connect_timeout 300;
               # Default is HTTP/1, keepalive is only enabled in HTTP/1.1
               proxy_http_version 1.1;
@@ -272,17 +276,6 @@
   # Enable ip forwarding, so wireguard peers can reach eachother
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
-  # Deploy htpaswd file for external alerts
-  # Generate with: mkpasswd -m sha-512 (save as username:$6$E7UzqcDh3$Xi...)
-  # Test with: curl -X POST -d'test' https://user:password@notify.pablo.tools/plain
-  users.users.nginx = { extraGroups = [ "keys" ]; };
-  krops.secrets.files = {
-    alerts_htpasswd = {
-      owner = "nginx";
-      source-path = "/var/src/secrets/matrix-hook/alerts.passwd";
-    };
-  };
-
   pinpox = {
     server = {
       enable = true;
@@ -300,7 +293,7 @@
       matrixHomeserver = "https://matrix.org";
       matrixUser = "@alertus-maximus:matrix.org";
       matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
-      envFile = "/var/src/secrets/matrix-hook/envfile";
+      envFile = "${config.lollypops.secrets.files."matrix-hook/envfile".path}";
       msgTemplatePath = "${
           matrix-hook.packages."x86_64-linux".matrix-hook
         }/bin/message.html.tmpl";
@@ -371,7 +364,7 @@
       listenPort = 51820;
 
       # Path to the private key file
-      privateKeyFile = toString /var/src/secrets/wireguard/private;
+      privateKeyFile = "${config.lollypops.secrets.files."wireguard/private".path}";
       peers = [
         # kartoffel
         {
@@ -411,13 +404,13 @@
     enable = true;
     config = {
       domain = "https://pass.pablo.tools:443";
-      signupsAllowed = true;
+      signupsAllowed = false;
 
       # The rocketPort option should match the value of the port in the reverse-proxy
       rocketPort = 8222;
     };
 
     # The environment file contiains secrets and is stored in pass
-    environmentFile = /var/src/secrets/bitwarden_rs/envfile;
+    environmentFile = "${config.lollypops.secrets.files."bitwarden_rs/envfile".path}";
   };
 }
