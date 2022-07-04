@@ -42,9 +42,11 @@ in
 
     systemd.services.mattermost = {
 
+      lollypops.secrets.files."mattermost/envfile" = { };
+
       serviceConfig = {
 
-        EnvironmentFile = "/var/src/secrets/mattermost/envfile";
+        EnvironmentFile = config.lollypops.secrets.files."mattermost/envfile".path;
 
         Environment = [
 

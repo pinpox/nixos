@@ -11,6 +11,8 @@ in
 
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files."miniflux/credentials" = { };
+
     services.nginx = {
       enable = true;
 
@@ -31,7 +33,7 @@ in
         CLEANUP_FREQUENCY = "48";
         LISTEN_ADDR = "127.0.0.1:8787";
       };
-      adminCredentialsFile = "/var/src/secrets/miniflux/credentials";
+      adminCredentialsFile = config.lollypops.secrets.files."miniflux/credentials".path;
 
     };
   };

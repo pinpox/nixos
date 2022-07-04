@@ -60,6 +60,13 @@ in
       })
       cfg.repositories;
 
+    lollypops.secrets.files = builtins.listToAttrs (map
+      (hostname: {
+        name = "borg-server/passphrases/${hostname}";
+        value = { };
+      })
+      (builtins.attrNames cfg.repositories));
+
     systemd = {
 
       # Create a service for each hosts that exports the information of the
@@ -72,7 +79,7 @@ in
             serviceConfig.Environment =
               [ "BORG_RELOCATED_REPO_ACCESS_IS_OK=yes" ];
             script = ''
-              export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/${hostname}'
+              export BORG_PASSCOMMAND='cat ${config.lollypops.secrets.files."borg-server/passphrases/${hostname}".path}'
               ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/${hostname} --last=1 --json > /var/www/backup-reports/borg-${hostname}.json
             '';
           };

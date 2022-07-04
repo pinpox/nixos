@@ -7,7 +7,7 @@ shopt -s inherit_errexit
 hostname="$1"
 
 # Run `borg info` only once since it is quite slow
-export BORG_PASSPHRASE="$(cat /var/src/secrets/borg-server/$hostname)"
+export BORG_PASSPHRASE="$(cat /var/src/lollypops-secrets/borg-server/$hostname)"
 json_out="$(borg info --last 2 --json "/mnt/backup/borg-nix/$hostname")"
 
 # Helper function to extract values from borg's json

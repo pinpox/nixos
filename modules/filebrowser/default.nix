@@ -11,6 +11,8 @@ in
 
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files."filebrowser/envfile" = { };
+
     # User and group
     users.users.filebrowser = {
       isSystemUser = true;
@@ -28,7 +30,7 @@ in
       after = [ "network.target" ];
       description = "Start filebrowser";
       serviceConfig = {
-        EnvironmentFile = [ "/var/src/secrets/filebrowser/envfile" ];
+        EnvironmentFile = [ config.secrets.files."filebrowser/envfiles".path ];
         # Environment = [ ];
         WorkingDirectory = "/var/lib/filebrowser";
         User = "filebrowser";

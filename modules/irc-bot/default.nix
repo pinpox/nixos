@@ -37,6 +37,10 @@ in
 
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files = {
+      "go-karma-bot/envifle" = { };
+    };
+
     # User and group
     users.users.go-karma-bot = {
       isSystemUser = true;
@@ -54,7 +58,7 @@ in
       after = [ "network.target" ];
       description = "Start the IRC karma-bot";
       serviceConfig = {
-        EnvironmentFile = [ "/var/src/secrets/go-karma-bot/envfile" ];
+        EnvironmentFile = [ config.lollypops.secrets.files."go-karma-bot/envfile".path ];
         WorkingDirectory = "/var/lib/go-karma-bot";
         User = "go-karma-bot";
         ExecStart = "${go-karma-bot}/bin/go-karma-bot";
