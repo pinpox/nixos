@@ -1,4 +1,4 @@
-{ matrix-hook, ... }: {
+{ matrix-hook, config, ... }: {
 
   imports = [ ./hardware-configuration.nix matrix-hook.nixosModule ];
 
