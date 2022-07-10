@@ -206,6 +206,8 @@ in
           trusted_proxies = [ "192.168.7.1" ];
         };
 
+        esphome = { };
+
         frontend = { };
         "map" = { };
         shopping_list = { };
