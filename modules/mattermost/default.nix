@@ -40,9 +40,9 @@ in
     services.postgresql.enable = lib.mkForce true;
     services.postgresql.package = pkgs.postgresql_11;
 
-    systemd.services.mattermost = {
+    lollypops.secrets.files."mattermost/envfile" = { };
 
-      lollypops.secrets.files."mattermost/envfile" = { };
+    systemd.services.mattermost = {
 
       serviceConfig = {
 
