@@ -1,17 +1,44 @@
 # Configuration file for ahorn
-{ options, ... }: {
+{ options, config, ... }: {
 
   imports = [
     ./hardware-configuration.nix
     ./retiolum.nix
   ];
 
-  lollypops.secrets.files = {
-    secret1 = {
-      cmd = "pass test-password";
-      path = "/tmp/testfile5";
+  documentation.nixos.includeAllModules = true;
+  documentation.nixos.options.splitBuild = false;
+
+  lollypops = {
+
+    secrets = {
+
+      files = {
+
+        secret1 = {
+          cmd = "pass test-password";
+          # path = "/tmp/testfile5";
+        };
+
+
+        copy-of-secret-1 = {
+          cmd = "pass test-password";
+          path = "/home/pinpox/test-secret1";
+          owner = "pinpox";
+          group-name = "users";
+        };
+
+        # "nixos-secrets/ahorn/ssh/borg/public" = {
+        #   owner = "pinpox";
+        #   group-name = "users";
+        # };
+      };
     };
   };
+
+
+  hardware.sane.enable = true;
+  users.users.pinpox.extraGroups = [ "scanner" "lp" ];
 
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

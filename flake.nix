@@ -165,6 +165,7 @@
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               home-manager.nixosModules.home-manager
+              restic-exporter.nixosModules.default
             ];
           };
         })
@@ -255,12 +256,24 @@
           };
 
           # Allow custom packages to be run using `nix run`
-          apps = {
-            # TODO for testing
-            # nix flake update --override-input lollypops ../lollypops
-            default = lollypops.apps."${system}".default { configFlake = self; };
-            # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-          };
+          apps =
+            let
+              configFlake = self;
+              # {
+              # nixosConfigurations = {
+              #   host1 = nixpkgs.lib.nixosSystem {
+              #     system = "x86_64-linux";
+              #     modules = [ lollypops.nixosModules.lollypops ];
+              #   };
+              # };
+              # };
+            in
+            {
+              # TODO for testing
+              # nix flake update --override-input lollypops ../lollypops
+              default = lollypops.apps."${system}".default { inherit configFlake; };
+              # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
+            };
 
           # defaultApp = apps.hello-custom;
           # Checks to run with `nix flake check -L`, will run in a QEMU VM.

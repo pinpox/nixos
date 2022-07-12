@@ -1,4 +1,4 @@
-{ lib, pkgs, config, restic-exporter, ... }:
+{ lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.metrics;
 in
@@ -20,7 +20,7 @@ in
     enable = mkEnableOption "prometheus blackbox-exporter metrics collection";
   };
 
-  imports = [ restic-exporter.nixosModules.default ];
+  # imports = [ restic-exporter.nixosModules.default ];
 
   config = {
 
