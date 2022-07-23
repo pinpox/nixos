@@ -18,6 +18,11 @@ in
     #   })
     # ];
 
+    lollypops.secrets.files = {
+      "binary-cache/cache-priv-key.pem" = { };
+      "binary-cache/cache-priv-key.pem" = { };
+    };
+
     users = {
       users = {
 
