@@ -70,60 +70,94 @@ return {
 				{ key = "9",   mods="CTRL",       action=wezterm.action{ActivateTab=(9-1)}},
 		},
 
+	-- Default font
+	font = wezterm.font_with_fallback( {
+		{family="Iosevka Term", weight=600, stretch="Expanded"},
+		"Noto Color Emoji",
+	}),
 
-		-- Default font
-		font = wezterm.font_with_fallback( {
-				{family="Recursive Mono Linear Static", weight="Medium"},
-				"Inconsolata Nerd Font Mono",
+	font_rules={
+		--		{
+		--				-- Italic
+		--				italic=true,
+		--				font = wezterm.font_with_fallback( {
+		--						{family="Recursive Mono Casual Static", italic=true},
+		--						"Inconsolata Nerd Font Mono",
+		--						"Noto Color Emoji",
+		--				}),
+		--		},
+		--		{
+		--				-- Bold
+		--				intensity="Bold", italic=false,
+		--				font = wezterm.font_with_fallback( {
+		--						{family="Recursive Mono Linear Static", weight="Bold"},
+		--						"Inconsolata Nerd Font Mono",
+		--						"Noto Color Emoji",
+		--				}),
+		--		},
+		{
+			-- Bold Italic
+			intensity="Bold", italic=true,
+			font = wezterm.font_with_fallback( {
+				{family="Iosevka Term", weight=700, stretch="Expanded"},
 				"Noto Color Emoji",
-		}),
-
-		font_rules={
-				{
-						-- Italic
-						italic=true,
-						font = wezterm.font_with_fallback( {
-								{family="Recursive Mono Casual Static", italic=true},
-								"Inconsolata Nerd Font Mono",
-								"Noto Color Emoji",
-						}),
-				},
-				{
-						-- Bold
-						intensity="Bold", italic=false,
-						font = wezterm.font_with_fallback( {
-								{family="Recursive Mono Linear Static", weight="Bold"},
-								"Inconsolata Nerd Font Mono",
-								"Noto Color Emoji",
-						}),
-				},
-				{
-						-- Bold Italic
-						intensity="Bold", italic=true,
-						font = wezterm.font_with_fallback( {
-								{family="Recursive Mono Casual Static", weight="Bold", italic=true},
-								"Inconsolata Nerd Font Mono",
-								"Noto Color Emoji",
-						}),
-				},
+			}),
 		},
+	},
 
-		-- Font options
-		harfbuzz_features = {
-				"dlig", -- Ligatures
-				"ss01", -- Single-story a
-				"ss02", -- Single-story g
-				"ss03", -- Simplified f
-				"ss04", -- Simplified i
-				"ss05", -- Simplified l
-				"ss06", -- Simplified
-				-- "ss07", -- Simplified italic diagonals (kwxyz)
-				-- "ss08", -- No-serif L and Z
-				-- "ss09", -- Simplified 6 and 9
-				-- "ss10", -- Dotted 0
-				"ss11", -- Simplified 1
-				"ss12", -- Simplified @
-		},
+		-- -- Default font
+		-- font = wezterm.font_with_fallback( {
+		-- 		{family="Recursive Mono Linear Static", weight="Medium"},
+		-- 		"Inconsolata Nerd Font Mono",
+		-- 		"Noto Color Emoji",
+		-- }),
+
+		-- font_rules={
+		-- 		{
+		-- 				-- Italic
+		-- 				italic=true,
+		-- 				font = wezterm.font_with_fallback( {
+		-- 						{family="Recursive Mono Casual Static", italic=true},
+		-- 						"Inconsolata Nerd Font Mono",
+		-- 						"Noto Color Emoji",
+		-- 				}),
+		-- 		},
+		-- 		{
+		-- 				-- Bold
+		-- 				intensity="Bold", italic=false,
+		-- 				font = wezterm.font_with_fallback( {
+		-- 						{family="Recursive Mono Linear Static", weight="Bold"},
+		-- 						"Inconsolata Nerd Font Mono",
+		-- 						"Noto Color Emoji",
+		-- 				}),
+		-- 		},
+		-- 		{
+		-- 				-- Bold Italic
+		-- 				intensity="Bold", italic=true,
+		-- 				font = wezterm.font_with_fallback( {
+		-- 						{family="Recursive Mono Casual Static", weight="Bold", italic=true},
+		-- 						"Inconsolata Nerd Font Mono",
+		-- 						"Noto Color Emoji",
+		-- 				}),
+		-- 		},
+		-- },
+
+		-- -- Font options
+		-- harfbuzz_features = {
+		-- 		"dlig", -- Ligatures
+		-- 		"ss01", -- Single-story a
+		-- 		"ss02", -- Single-story g
+		-- 		"ss03", -- Simplified f
+		-- 		"ss04", -- Simplified i
+		-- 		"ss05", -- Simplified l
+		-- 		"ss06", -- Simplified
+		-- 		-- "ss07", -- Simplified italic diagonals (kwxyz)
+		-- 		-- "ss08", -- No-serif L and Z
+		-- 		-- "ss09", -- Simplified 6 and 9
+		-- 		-- "ss10", -- Dotted 0
+		-- 		"ss11", -- Simplified 1
+		-- 		"ss12", -- Simplified @
+		-- },
 
 		-- Font rendering
 		freetype_render_target = "Light",
