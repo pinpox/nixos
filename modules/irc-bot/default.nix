@@ -38,7 +38,7 @@ in
   config = mkIf cfg.enable {
 
     lollypops.secrets.files = {
-      "go-karma-bot/envifle" = { };
+      "go-karma-bot/envfile" = { };
     };
 
     # User and group
