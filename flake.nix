@@ -8,12 +8,11 @@
       flake = false;
     };
 
-    # mayniklas.url = "github:mayniklas/nixos";
-    # mayniklas.inputs = {
-
-    #   nixpkgs.follows = "nixpkgs";
-    #   flake-utils.follows = "flake-utils";
-    # };
+    # TODO remove workaround when merged
+    # https://github.com/NixOS/nixpkgs/issues/181009
+    # https://github.com/NixOS/nixpkgs/pull/181222
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:hercules-ci/nixpkgs/module-specialArgs";
 
     lollypops = {
       url = "github:pinpox/lollypops";
@@ -39,7 +38,6 @@
     retiolum.url = "github:krebs/retiolum";
     retiolum.flake = false;
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
