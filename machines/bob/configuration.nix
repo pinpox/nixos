@@ -5,6 +5,8 @@
   # Force non-default keyboard layout since this is a shared host
   console.keyMap = pkgs.lib.mkForce "de";
 
+  lollypops.deployment.host = "drone.lounge.rocks";
+
   /* services.nginx = {
     enable = true;
     virtualHosts = {
