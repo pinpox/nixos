@@ -24,7 +24,10 @@ in
 
   config = {
 
-    lollypops.secrets.files."restic-exporter/envfile" = { };
+    lollypops.secrets.files =
+      if cfg.restic.enable then
+        { "restic-exporter/envfile" = { }; }
+      else { };
 
     services.restic-exporter = {
       enable = cfg.restic.enable;

@@ -64,6 +64,17 @@ in
 
       scrapeConfigs = [
         {
+          job_name = "esphome";
+          scrape_interval = "30s";
+          scheme = "http";
+          static_configs = [{
+            targets = [
+              "http://192.168.2.145"
+              "http://192.168.2.146"
+            ];
+          }];
+        }
+        {
           job_name = "drone";
           scheme = "https";
           bearer_token_file = config.lollypops.secrets.files."prometheus-drone-token".path;
