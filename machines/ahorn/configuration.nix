@@ -6,8 +6,12 @@
     ./retiolum.nix
   ];
 
-  documentation.nixos.includeAllModules = true;
-  documentation.nixos.options.splitBuild = false;
+  # often hangs
+  systemd.services.systemd-networkd-wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  # documentation.nixos.includeAllModules = true;
+  # documentation.nixos.options.splitBuild = false;
 
   lollypops = {
 
