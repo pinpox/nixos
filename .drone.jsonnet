@@ -92,7 +92,7 @@ local steps_packages() = std.flatMap(function(package) [
   },
 
   trigger: {
-    branch: ['main'],
+    branch: ['main', 'go-task'],
     event: ['push'],
   },
 }
