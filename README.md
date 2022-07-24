@@ -35,13 +35,7 @@ cp /etc/nixos/hardware-configuration.nix \
 git commit -am"Add hardware-configuration for $(hostname)" && git push
 ```
 
-TODO: update
-> Finally, use `krops` to deploy the machine's configuration from a host that has
-> the secrets in it's store.
-> 
-> ```bash
-> nix-build ./krops.nix -A <machine name> && ./result
-> ```
+> TODO: update
 
 It is also possible to build on the system itself when logged in, e.g. to get
 additional debug information.
@@ -71,25 +65,7 @@ The services running on each host are documented in the host-specific
 
 Deployment is handled with [lollypops](https://github.com/pinpox/lollypops).
 
-TODO Update
-
->>>>>>Every machine's deployment is defined in `krops.nix`. Additionally, there are
->>>>>>groups to deploy to multiple hosts at once.
->>>>>>
->>>>>>To deploy to a single machine (e.g. `porree`):
->>>>>>
->>>>>>```bash
->>>>>>nix-build ./krops.nix -A porree --show-trace && ./result
->>>>>>```
->>>>>>
->>>>>>To deploy to a group (e.g. `servers`):
->>>>>>
->>>>>>```bash
->>>>>>nix-build ./krops.nix -A all --show-trace && ./result
->>>>>>```
->>>>>>
->>>>>>Ensure that the targets (`user@host` in krops.nix) are correct.
-
+TODO Update/document
 
 ## First Deployment
 
@@ -101,7 +77,7 @@ krops deployment.
 
 ```bash
 # bash, zsh doesn't always work correctly
-sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
+sudo nixos-rebuild --flake .#new-hostname --target-host <new-host-ip> --build-host localhost switch
  ```
 
 # Contributing?

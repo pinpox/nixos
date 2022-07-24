@@ -13,8 +13,8 @@ in
 
     lollypops.secrets.files = {
       "nextcloud/admin-pass" = {
-        name = "nextcloud-admin-pass";
-        path = "/var/lib/nextcloud";
+        # name = "nextcloud-admin-pass";
+        path = "/var/lib/nextcloud/admin-pass";
         owner = "nextcloud";
       };
     };

@@ -1,6 +1,8 @@
 { self, s3photoalbum, ... }: {
 
 
+  lollypops.deployment.host = "46.38.242.17";
+
   services.logind.extraConfig = ''
     RuntimeDirectorySize=20G
   '';

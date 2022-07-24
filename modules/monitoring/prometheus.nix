@@ -63,21 +63,22 @@ in
         [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
 
       scrapeConfigs = [
-        {
-          job_name = "esphome";
-          scrape_interval = "30s";
-          scheme = "http";
-          static_configs = [{
-            targets = [
-              "http://192.168.2.145"
-              "http://192.168.2.146"
-            ];
-          }];
-        }
+        # TODO fix esp config
+        # {
+        #   job_name = "esphome";
+        #   scrape_interval = "30s";
+        #   scheme = "http";
+        #   static_configs = [{
+        #     targets = [
+        #       "http://192.168.2.145"
+        #       "http://192.168.2.146"
+        #     ];
+        #   }];
+        # }
         {
           job_name = "drone";
           scheme = "https";
-          bearer_token_file = config.lollypops.secrets.files."prometheus-drone-token".path;
+          bearer_token_file = config.lollypops.secrets.files."prometheus/drone-token".path;
           static_configs = [{ targets = [ "drone.lounge.rocks" ]; }];
         }
         {
@@ -91,7 +92,7 @@ in
           job_name = "homeassistant";
           scrape_interval = "60s";
           metrics_path = "/api/prometheus";
-          bearer_token_file = lollypops.secrets.files."prometheus/home-assistant-token".path;
+          bearer_token_file = config.lollypops.secrets.files."prometheus/home-assistant-token".path;
           scheme = "http";
           static_configs = [{ targets = [ "birne.wireguard:8123" ]; }];
         }
