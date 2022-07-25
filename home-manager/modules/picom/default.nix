@@ -13,7 +13,7 @@ in
       enable = true;
       # package = ;
 
-      activeOpacity = "1.0";
+      activeOpacity = 1.0;
       shadow = true;
     };
   };

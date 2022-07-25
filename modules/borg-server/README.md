@@ -1,10 +1,8 @@
 # Backups
 
-
 Each host has it's own [borgbackup](https://www.borgbackup.org/) repository on
 the server, which is accessible over SSH via a dedicated key for he `borgbackup`
 user.
-
 
 ## Repositories
 To make adding and removing hosts simple, the repositorys to provision are
@@ -21,8 +19,6 @@ passed to the `borg-server` module as an attribute set following the form:
   ];
 }
 ```
-
-
 
 Repositorys are named according to the hostname and stored in
 `/mnt/backup/borg-nix` as individual subdirectories.
@@ -41,7 +37,7 @@ configuration for each of the provided hosts.
 systemd.services.monitor-borg-myHostname1 = {
   serviceConfig.Type = "oneshot";
   script = ''
-    export BORG_PASSCOMMAND='cat /var/src/secrets/borg-server/passphrases/myHostname1'
+    export BORG_PASSCOMMAND='cat /var/src/lollypos-secrets/borg-server/passphrases/myHostname1'
     ${pkgs.borgbackup}/bin/borg info /mnt/backup/borg-nix/myHostname1 --last=1 --json > /tmp/borg-myHostname1.json
   '';
 };

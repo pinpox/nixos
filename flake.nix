@@ -3,12 +3,24 @@
 
   inputs = {
 
-    # mayniklas.url = "github:mayniklas/nixos";
-    # mayniklas.inputs = {
+    mayniklas-keys = {
+      url = "https://github.com/MayNiklas.keys";
+      flake = false;
+    };
 
-    #   nixpkgs.follows = "nixpkgs";
-    #   flake-utils.follows = "flake-utils";
-    # };
+    # TODO remove workaround when merged
+    # https://github.com/NixOS/nixpkgs/issues/181009
+    # https://github.com/NixOS/nixpkgs/pull/181222
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:hercules-ci/nixpkgs/module-specialArgs";
+
+    lollypops = {
+      url = "github:pinpox/lollypops";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+      };
+    };
 
     promterm.url = "github:pinpox/promterm";
     promterm.inputs = {
@@ -26,7 +38,6 @@
     retiolum.url = "github:krebs/retiolum";
     retiolum.flake = false;
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -152,6 +163,7 @@
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               home-manager.nixosModules.home-manager
+              restic-exporter.nixosModules.default
             ];
           };
         })
@@ -241,33 +253,46 @@
             test-shell = import ./shells/test-shell.nix { inherit pkgs; };
           };
 
-          apps = {
-            # Allow custom packages to be run using `nix run`
-            hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-            # wezterm-bin = flake-utils.lib.mkApp {
-            #   drv = packages.wezterm-bin;
-            #   exePath = "/bin/wezterm";
-            # };
-          };
+          # Allow custom packages to be run using `nix run`
+          apps =
+            let
+              configFlake = self;
+              # {
+              # nixosConfigurations = {
+              #   host1 = nixpkgs.lib.nixosSystem {
+              #     system = "x86_64-linux";
+              #     modules = [ lollypops.nixosModules.lollypops ];
+              #   };
+              # };
+              # };
+            in
+            {
+              # TODO for testing
+              # nix flake update --override-input lollypops ../lollypops
+              default = lollypops.apps."${system}".default { inherit configFlake; };
+              # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
+            };
 
+          # defaultApp = apps.hello-custom;
           # Checks to run with `nix flake check -L`, will run in a QEMU VM.
           # Looks for all ./modules/<module name>/test.nix files and adds them to
           # the flake's checks output. The test.nix file is optional and may be
           # added to any module.
-          checks = builtins.listToAttrs (map
-            (x: {
-              name = x;
-              value = (import (./modules + "/${x}/test.nix")) {
-                pkgs = nixpkgs;
-                inherit system self;
-              };
-            })
-            (
-              # Filter list of modules, leaving only modules which contain a
-              # `test.nix` file
-              builtins.filter
-                (p: builtins.pathExists (./modules + "/${p}/test.nix"))
-                (builtins.attrNames (builtins.readDir ./modules))));
+          checks = builtins.listToAttrs
+            (map
+              (x: {
+                name = x;
+                value = (import (./modules + "/${x}/test.nix")) {
+                  pkgs = nixpkgs;
+                  inherit system self;
+                };
+              })
+              (
+                # Filter list of modules, leaving only modules which contain a
+                # `test.nix` file
+                builtins.filter
+                  (p: builtins.pathExists (./modules + "/${p}/test.nix"))
+                  (builtins.attrNames (builtins.readDir ./modules))));
 
           # TODO we probably should set some default app and/or package
           # defaultPackage = packages.hello;

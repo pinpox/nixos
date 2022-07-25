@@ -18,13 +18,17 @@ in
     #   })
     # ];
 
+    lollypops.secrets.files = {
+      "binary-cache/cache-priv-key.pem" = { };
+      "binary-cache/cache-priv-key.pem" = { };
+    };
+
     users = {
       users = {
 
         # User for nix-serve
         nix-serve = {
           group = "nix-serve";
-          extraGroups = [ "keys" ];
           isSystemUser = true;
         };
 
@@ -44,20 +48,12 @@ in
     nix.settings.allowed-users = [ "nix-serve" "push-cache" ];
 
     nix.extraOptions = ''
-      secret-key-files = /run/keys/cache-priv-key
+      secret-key-files = ${config.lollypops.secrets.files."binary-cache/cache-priv-key.pem".path}
     '';
-
-    # Write-key secret file
-    krops.secrets.files = {
-      cache-priv-key = {
-        owner = "nix-serve";
-        source-path = "/var/src/secrets/binary-cache/cache-priv-key.pem";
-      };
-    };
 
     services.nix-serve = {
       enable = true;
-      secretKeyFile = "/run/keys/cache-priv-key";
+      secretKeyFile = config.lollypops.secrets.files."binary-cache/cache-priv-key.pem".path;
     };
     /* nix.extraOptions = let
       upload-script = pkgs.writeShellScript "upload-to-cache" ''

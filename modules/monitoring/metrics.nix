@@ -1,4 +1,4 @@
-{ lib, pkgs, config, restic-exporter, ... }:
+{ lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.metrics;
 in
@@ -20,13 +20,18 @@ in
     enable = mkEnableOption "prometheus blackbox-exporter metrics collection";
   };
 
-  imports = [ restic-exporter.nixosModules.default ];
+  # imports = [ restic-exporter.nixosModules.default ];
 
   config = {
 
+    lollypops.secrets.files =
+      if cfg.restic.enable then
+        { "restic-exporter/envfile" = { }; }
+      else { };
+
     services.restic-exporter = {
       enable = cfg.restic.enable;
-      environmentFile = "/var/src/secrets/restic-exporter/envfile";
+      environmentFile = "${config.lollypops.secrets.files."restic-exporter/envfile".path}";
       port = "8999";
     };
 

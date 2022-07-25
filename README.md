@@ -14,7 +14,7 @@ The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
 parts of the configuration as needed.
 
-Deployment is managed with [krops](https://tech.ingolf-wagner.de/nixos/krops/).
+Deployment is managed with [lollypops](https://github.com/pinpox/lollypops)
 Secrets are stored in [pass](https://www.passwordstore.org/).
 
 **TL;DR** To use a host configuration on a fresh install, make sure that:
@@ -35,12 +35,7 @@ cp /etc/nixos/hardware-configuration.nix \
 git commit -am"Add hardware-configuration for $(hostname)" && git push
 ```
 
-Finally, use `krops` to deploy the machine's configuration from a host that has
-the secrets in it's store.
-
-```bash
-nix-build ./krops.nix -A <machine name> && ./result
-```
+> TODO: update
 
 It is also possible to build on the system itself when logged in, e.g. to get
 additional debug information.
@@ -68,24 +63,9 @@ The services running on each host are documented in the host-specific
 
 ## Default Deployment
 
-Deployment is handled with [krops](https://tech.ingolf-wagner.de/nixos/krops/).
-Every machine's deployment is defined in `krops.nix`. Additionally, there are
-groups to deploy to multiple hosts at once.
+Deployment is handled with [lollypops](https://github.com/pinpox/lollypops).
 
-To deploy to a single machine (e.g. `porree`):
-
-```bash
-nix-build ./krops.nix -A porree --show-trace && ./result
-```
-
-To deploy to a group (e.g. `servers`):
-
-```bash
-nix-build ./krops.nix -A all --show-trace && ./result
-```
-
-Ensure that the targets (`user@host` in krops.nix) are correct.
-
+TODO Update/document
 
 ## First Deployment
 
@@ -97,7 +77,7 @@ krops deployment.
 
 ```bash
 # bash, zsh doesn't always work correctly
-sudo nixos-rebuild --flake .#new-hostname --target-host new-host-ip> --build-host localhost switch
+sudo nixos-rebuild --flake .#new-hostname --target-host <new-host-ip> --build-host localhost switch
  ```
 
 # Contributing?

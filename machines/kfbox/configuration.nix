@@ -1,5 +1,12 @@
 { self, s3photoalbum, ... }: {
 
+  # often hangs
+  systemd.services.systemd-networkd-wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+
+
+  lollypops.deployment.host = "46.38.242.17";
 
   services.logind.extraConfig = ''
     RuntimeDirectorySize=20G
@@ -12,7 +19,6 @@
   ];
 
   pinpox = {
-
 
     server = {
       enable = true;

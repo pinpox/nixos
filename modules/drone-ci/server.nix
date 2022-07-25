@@ -34,12 +34,14 @@ in
 
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files."drone-ci/envfile" = { };
+
     systemd.services.drone-server = {
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
 
         BindReadOnlyPaths = [ "/etc/hosts:/etc/hosts" ];
-        EnvironmentFile = [ "/var/src/secrets/drone-ci/envfile" ];
+        EnvironmentFile = [ config.lollypops.secrets.files."drone-ci/envfile".path ];
         Environment = [
           "PLUGIN_CUSTOM_DNS=8.8.8.8"
           "/etc/resolv.conf:/etc/resolv.conf"

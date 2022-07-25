@@ -9,6 +9,9 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    lollypops.secrets.files."drone-ci/envfile" = { };
+
     systemd.services.drone-runner-exec = {
       wantedBy = [ "multi-user.target" ];
       # might break deployment
@@ -60,7 +63,7 @@ in
           # channels are dynamic paths in the nix store, therefore we need to bind mount the whole thing
           "/nix/"
         ];
-        EnvironmentFile = [ "/var/src/secrets/drone-ci/envfile" ];
+        EnvironmentFile = [ config.lollypops.secrets.files."drone-ci/envfile".path ];
         ExecStart = "${pkgs.drone-runner-exec}/bin/drone-runner-exec";
         User = "drone-runner-exec";
         Group = "drone-runner-exec";

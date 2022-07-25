@@ -19,7 +19,7 @@ in
               concatStringsSep "," (mapAttrsToList (n: v: ''${n}="${v}"'')
                 (filterAttrs (n: v: (builtins.typeOf v) == "string")
                   flake-self.inputs."${i}"))
-            }} ${toString flake-self.inputs."${i}".lastModified}'')
+                }} ${ toString flake-self.inputs."${i}".lastModified or 0 }'')
           (attrNames flake-self.inputs))}
       '';
     };

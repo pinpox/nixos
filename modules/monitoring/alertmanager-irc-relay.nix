@@ -66,7 +66,6 @@ in
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
 
-        # EnvironmentFile = [ "/var/src/secrets/alertmanager-irc-relay/envfile" ];
         # Environment = [ ];
 
         ExecStart =

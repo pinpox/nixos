@@ -43,6 +43,8 @@
   # Install these packages for my user
   home.packages = with pkgs; [
 
+    iosevka
+
     # From nixpkgs
     inetutils
     nmap

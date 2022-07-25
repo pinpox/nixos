@@ -56,13 +56,15 @@ in
 
     users.groups.http2irc = { name = "http2irc"; };
 
+    lollypops.secrets.files."http2irc/envfile" = { };
+
     # Service
     systemd.services.http2irc = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       description = "Start http2irc";
       serviceConfig = {
-        EnvironmentFile = [ "/var/src/secrets/http2irc/envfile" ];
+        EnvironmentFile = [ config.lollypops.secrets.files."http2irc/envfile".path ];
         Environment = [
           "IRC_TEMPLATE='${templateFile}'"
           "IRC_CHANNEL='#lounge-rocks'"

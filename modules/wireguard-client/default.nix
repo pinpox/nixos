@@ -19,6 +19,8 @@ in
 
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files."wireguard/private" = { };
+
     networking.wireguard.interfaces = {
 
       wg0 = {
@@ -26,7 +28,8 @@ in
         ips = [ "${cfg.clientIp}/24" ];
 
         # Path to the private key file
-        privateKeyFile = "/var/src/secrets/wireguard/private";
+        privateKeyFile = "${config.lollypops.secrets.files."wireguard/private".path}";
+
         peers = [{
           # Public key of the server (not a file path).
           publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";

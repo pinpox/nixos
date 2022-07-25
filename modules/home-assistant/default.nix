@@ -16,12 +16,9 @@ in
   };
   config = mkIf cfg.enable {
 
-    krops.secrets.files = {
-      home-assistant-secrets = {
-        owner = "hass";
-        source-path = "/var/src/secrets/home-assistant/secrets.yaml";
-        path = "/var/lib/hass/secrets.yaml";
-      };
+    lollypops.secrets.files."home-assistant/secrets.yaml" = {
+      owner = "hass";
+      path = "/var/lib/hass/secrets.yaml";
     };
 
     # List extraComponents here to be installed. The names can be found here:
@@ -208,6 +205,8 @@ in
           use_x_forwarded_for = true;
           trusted_proxies = [ "192.168.7.1" ];
         };
+
+        esphome = { };
 
         frontend = { };
         "map" = { };

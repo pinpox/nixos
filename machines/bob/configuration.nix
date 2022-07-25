@@ -1,10 +1,11 @@
-# Configuration for bob
-{ pkgs, ... }: {
+{ pkgs, mayniklas-keys, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
 
   # Force non-default keyboard layout since this is a shared host
   console.keyMap = pkgs.lib.mkForce "de";
+
+  lollypops.deployment.host = "drone.lounge.rocks";
 
   /* services.nginx = {
     enable = true;
@@ -65,12 +66,7 @@
     metrics.node.enable = true;
   };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [
-    (pkgs.fetchurl {
-      url = "https://github.com/MayNiklas.keys";
-      sha256 = "sha256:174dbx0kkrfdfdjswdny25nf7phgcb9k8i6z3rqqcy9l24f8xcp3";
-    })
-  ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ mayniklas-keys ];
 
   boot = {
 

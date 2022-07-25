@@ -9,10 +9,12 @@ in
   };
   config = mkIf cfg.enable {
 
+    lollypops.secrets.files."hedgedoc/envfile" = { };
+
     # Create system user and group
     services.hedgedoc = {
       enable = true;
-      environmentFile = /var/src/secrets/hedgedoc/envfile;
+      environmentFile = "${config.lollypops.secrets.files."hedgedoc/envfile".path}";
       configuration = {
 
         protocolUseSSL = true; # Use https when loading assets

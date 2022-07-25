@@ -9,8 +9,15 @@ in
 
   config = mkIf cfg.enable {
 
-
     services.postgresql.package = pkgs.postgresql_13;
+
+    lollypops.secrets.files = {
+      "nextcloud/admin-pass" = {
+        # name = "nextcloud-admin-pass";
+        path = "/var/lib/nextcloud/admin-pass";
+        owner = "nextcloud";
+      };
+    };
 
     services.nextcloud = {
       enable = true;
@@ -50,7 +57,7 @@ in
 
         # Admin user
         adminuser = "pinpox";
-        adminpassFile = "/run/keys/nextcloud-admin-pass";
+        adminpassFile = "${config.lollypops.secrets.files."nextcloud/admin-pass".path}";
 
         defaultPhoneRegion = "DE";
         extraTrustedDomains = [ "birne.wireguard" ];
@@ -67,15 +74,6 @@ in
           proxyPass = "http://127.0.0.2:9876";
           proxyWebsockets = true;
         };
-      };
-    };
-
-    # Deploy admin account credentials
-    users.users.nextcloud = { extraGroups = [ "keys" ]; };
-    krops.secrets.files = {
-      nextcloud-admin-pass = {
-        owner = "nextcloud";
-        source-path = "/var/src/secrets/nextcloud/admin-pass";
       };
     };
 

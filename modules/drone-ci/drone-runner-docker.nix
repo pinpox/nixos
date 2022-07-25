@@ -23,7 +23,7 @@ in
         };
 
         extraOptions =
-          [ "--network=host" "--env-file=/var/src/secrets/drone-ci/envfile" ];
+          [ "--network=host" "--env-file=${config.lollypops.secrets.files."drone-ci/envfile".path}" ];
 
         ports = [ "3000:3000" ];
         volumes = [ "/var/run/docker.sock:/var/run/docker.sock" ];

@@ -40,11 +40,13 @@ in
     services.postgresql.enable = lib.mkForce true;
     services.postgresql.package = pkgs.postgresql_11;
 
+    lollypops.secrets.files."mattermost/envfile" = { };
+
     systemd.services.mattermost = {
 
       serviceConfig = {
 
-        EnvironmentFile = "/var/src/secrets/mattermost/envfile";
+        EnvironmentFile = config.lollypops.secrets.files."mattermost/envfile".path;
 
         Environment = [
 
