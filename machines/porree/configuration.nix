@@ -15,6 +15,10 @@
     "matrix-hook/envfile" = { };
     "bitwarden_rs/envfile" = { };
     "wireguard/private" = { };
+    "nginx/blog.passwd" = {
+      path = "/var/www/blog.passwd";
+      owner = "nginx";
+    };
     "matrix-hook/alerts.passwd" = {
       path = "/var/lib/matrix-hook/alerts.passwd";
       owner = "nginx";
@@ -92,6 +96,13 @@
         forceSSL = true;
         enableACME = true;
         root = "/var/www/pablo-tools";
+      };
+
+      "beta.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        root = "/var/www/pablo-tools-beta";
+        basicAuthFile = "${config.lollypops.secrets.files."nginx/blog.passwd".path}";
       };
 
       # Password manager (vaultwarden) instance
