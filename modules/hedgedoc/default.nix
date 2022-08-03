@@ -9,13 +9,37 @@ in
   };
   config = mkIf cfg.enable {
 
+    # env file contains:
+    # CMD_SESSION_SECRET
+    # CMD_OAUTH2_CLIENT_ID
+    # CMD_OAUTH2_CLIENT_SECRET=
     lollypops.secrets.files."hedgedoc/envfile" = { };
+
+    systemd.services.hedgedoc.serviceConfig.Environment = [
+      # Allow creating on-the-fly by url
+      "CMD_ALLOW_FREEURL=true"
+
+      # Default permission of notes
+      "CMD_DEFAULT_PERMISSION=limited"
+
+      # Forbid anonymous usage
+      "CMD_ALLOW_ANONYMOUS=false"
+
+      # oauth2 with gitea
+      "CMD_OAUTH2_BASEURL=https://git.0cx.de"
+      "CMD_OAUTH2_TOKEN_URL=https://git.0cx.de/login/oauth/access_token"
+      "CMD_OAUTH2_AUTHORIZATION_URL=https://git.0cx.de/login/oauth/authorize"
+      "CMD_OAUTH2_USER_PROFILE_URL=https://git.0cx.de/login/oauth/userinfo"
+      "CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username"
+      "CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=preferred_username"
+      "CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email"
+    ];
 
     # Create system user and group
     services.hedgedoc = {
       enable = true;
       environmentFile = "${config.lollypops.secrets.files."hedgedoc/envfile".path}";
-      configuration = {
+      settings = {
 
         protocolUseSSL = true; # Use https when loading assets
         allowEmailRegister = false; # Disable email registration

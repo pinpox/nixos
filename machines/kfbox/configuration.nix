@@ -1,4 +1,4 @@
-{ self, s3photoalbum, ... }: {
+{ self, config, s3photoalbum, ... }: {
 
   # often hangs
   systemd.services.systemd-networkd-wait-online.enable = false;
@@ -35,7 +35,7 @@
       borg-backup.enable = true;
       go-karma-bot.enable = false;
       hedgedoc.enable = true;
-      mattermost.enable = true;
+      # mattermost.enable = true;
       miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
@@ -83,6 +83,33 @@
     interfaces.wg0.allowedTCPPorts = [ 7788 ];
   };
 
+  lollypops.secrets.files."gitea/mailer-pw" = {
+    owner = "gitea";
+    path = "/var/lib/gitea/mailer-pw";
+  };
+
+  services.gitea = {
+    enable = true;
+    domain = "git.0cx.de";
+    rootUrl = "https://git.0cx.de";
+    httpPort = 3333;
+    httpAddress = "127.0.0.1";
+    disableRegistration = true;
+
+    mailerPasswordFile = "${config.lollypops.secrets.files."gitea/mailer-pw".path}";
+
+    settings = {
+      mailer = {
+        ENABLED = true;
+        FROM = "git@0cx.de";
+        MAILER_TYPE = "smtp";
+        IS_TLS_ENABLED = false;
+        USER = "mail@0cx.de";
+        HOST = "r19.hallo.cloud:587";
+      };
+    };
+  };
+
   services.nginx = {
     enable = true;
     recommendedOptimisation = true;
@@ -94,6 +121,12 @@
     # '';
 
     virtualHosts = {
+
+      "git.0cx.de" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:3333"; };
+      };
 
       # The Lounge IRC
       "irc.0cx.de" = {
@@ -135,60 +168,60 @@
         };
       };
 
-      # Mattermost
-      "mm.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:8065";
-          proxyWebsockets = true;
+      # # Mattermost
+      # "mm.0cx.de" = {
+      #   forceSSL = true;
+      #   enableACME = true;
+      #   locations."/" = {
+      #     proxyPass = "http://127.0.0.1:8065";
+      #     proxyWebsockets = true;
 
-          extraConfig = ''
-            proxy_pass_request_headers on;
-            add_header Access-Control-Allow-Origin *;
-            client_max_body_size 50M;
-            proxy_set_header Connection "";
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Frame-Options SAMEORIGIN;
-            proxy_buffers 256 16k;
-            proxy_buffer_size 16k;
-            proxy_read_timeout 600s;
-            proxy_cache_revalidate on;
-            proxy_cache_min_uses 2;
-            proxy_cache_use_stale timeout;
-            proxy_cache_lock on;
-          '';
-        };
+      #     extraConfig = ''
+      #       proxy_pass_request_headers on;
+      #       add_header Access-Control-Allow-Origin *;
+      #       client_max_body_size 50M;
+      #       proxy_set_header Connection "";
+      #       proxy_set_header Host $host;
+      #       proxy_set_header X-Real-IP $remote_addr;
+      #       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      #       proxy_set_header X-Forwarded-Proto $scheme;
+      #       proxy_set_header X-Frame-Options SAMEORIGIN;
+      #       proxy_buffers 256 16k;
+      #       proxy_buffer_size 16k;
+      #       proxy_read_timeout 600s;
+      #       proxy_cache_revalidate on;
+      #       proxy_cache_min_uses 2;
+      #       proxy_cache_use_stale timeout;
+      #       proxy_cache_lock on;
+      #     '';
+      #   };
 
-        locations."~ /api/v[0-9]+/(users/)?websocket$" = {
-          extraConfig = ''
-            proxy_pass_request_headers on;
-            add_header Access-Control-Allow-Origin *;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            client_max_body_size 50M;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Frame-Options SAMEORIGIN;
-            proxy_buffers 256 16k;
-            proxy_buffer_size 16k;
-            client_body_timeout 60;
-            send_timeout 300;
-            lingering_timeout 5;
-            proxy_connect_timeout 90;
-            proxy_send_timeout 300;
-            proxy_read_timeout 90s;
-          '';
+      #   locations."~ /api/v[0-9]+/(users/)?websocket$" = {
+      #     extraConfig = ''
+      #       proxy_pass_request_headers on;
+      #       add_header Access-Control-Allow-Origin *;
+      #       proxy_set_header Upgrade $http_upgrade;
+      #       proxy_set_header Connection "upgrade";
+      #       client_max_body_size 50M;
+      #       proxy_set_header Host $host;
+      #       proxy_set_header X-Real-IP $remote_addr;
+      #       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      #       proxy_set_header X-Forwarded-Proto $scheme;
+      #       proxy_set_header X-Frame-Options SAMEORIGIN;
+      #       proxy_buffers 256 16k;
+      #       proxy_buffer_size 16k;
+      #       client_body_timeout 60;
+      #       send_timeout 300;
+      #       lingering_timeout 5;
+      #       proxy_connect_timeout 90;
+      #       proxy_send_timeout 300;
+      #       proxy_read_timeout 90s;
+      #     '';
 
-          proxyPass = "http://127.0.0.1:8065";
-          proxyWebsockets = true;
-        };
-      };
+      #     proxyPass = "http://127.0.0.1:8065";
+      #     proxyWebsockets = true;
+      #   };
+      # };
     };
   };
 }
