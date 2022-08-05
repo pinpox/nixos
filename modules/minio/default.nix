@@ -10,7 +10,10 @@ in
 
     lollypops.secrets.files."minio/env" = { };
 
-    networking.firewall.allowedTCPPorts = [ 9000 9001 ];
+    networking.firewall.interfaces.wg0.allowedTCPPorts = [
+      9000
+      9001
+    ];
 
     services.minio = {
       enable = true;
