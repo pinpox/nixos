@@ -96,6 +96,12 @@
         forceSSL = true;
         enableACME = true;
         root = "/var/www/pablo-tools";
+        locations."~*\.(css|gif|woff2|woff|png|jpeg)$" = {
+          extraConfig = ''
+            access_log off;
+            expires max;
+          '';
+        };
       };
 
       "beta.pablo.tools" = {
@@ -103,6 +109,12 @@
         enableACME = true;
         root = "/var/www/pablo-tools-beta";
         basicAuthFile = "${config.lollypops.secrets.files."nginx/blog.passwd".path}";
+        locations."~*\.(css|gif|woff2|woff|png|jpeg)$" = {
+          extraConfig = ''
+            access_log off;
+            expires max;
+          '';
+        };
       };
 
       # Password manager (vaultwarden) instance
