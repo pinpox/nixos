@@ -375,7 +375,7 @@
         "https://cache.lounge.rocks/nix-cache-info"
         "https://pads.0cx.de"
         "https://news.0cx.de"
-        "https://mm.0cx.de"
+        "https://git.0cx.de"
         "https://irc.0cx.de"
       ];
     };
