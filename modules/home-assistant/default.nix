@@ -109,184 +109,200 @@ in
       # }));
 
       # Configuration generated to /var/lib/hass/configuration.yaml
-      config = {
+      config =
+        {
 
-        ios = {
-          actions = [
-            # Toggle RGB strip
-            {
-              name = "Toggle RGB";
-              background_color = "#24283B";
-              label = {
-                text = "RGB-Kette";
-                color = "#E5E9F0";
-              };
-              icon = {
-                icon = "lightbulb-on";
-                color = "#FF5370";
-              };
-            }
-            # Toggle Deckenlicht
-            {
-              name = "Toggle Deckenlicht";
-              background_color = "#24283B";
-              label = {
-                text = "Deckenlicht";
-                color = "#E5E9F0";
-              };
-              icon = {
-                icon = "lightbulb-on";
-                color = "#E5E9F0";
-              };
-            }
-          ];
-        };
-
-        automation = [
-          {
-            alias = "Deckenlicht Toggle";
-            trigger = [{
-              platform = "event";
-              event_type = "ios.action_fired";
-              event_data.actionName = "Toggle Deckenlicht";
-            }];
-
-            action = [{
-              type = "toggle";
-              device_id = "d71e3f9c22a777149793e6b126f27550";
-              entity_id = "switch.deckenlicht";
-              domain = "switch";
-            }];
-          }
-          {
-            alias = "RGB-Kette Toggle";
-            trigger = [
+          ios = {
+            actions = [
+              # Toggle RGB strip
               {
-                platform = "event";
-                event_type = "state_changed";
-                event_data.entity_id = "switch.lichterkette";
+                name = "Toggle RGB";
+                background_color = "#24283B";
+                label = {
+                  text = "RGB-Kette";
+                  color = "#E5E9F0";
+                };
+                icon = {
+                  icon = "lightbulb-on";
+                  color = "#FF5370";
+                };
               }
+              # Toggle Deckenlicht
               {
-                platform = "event";
-                event_type = "ios.action_fired";
-                event_data.actionName = "Toggle RGB";
+                name = "Toggle Deckenlicht";
+                background_color = "#24283B";
+                label = {
+                  text = "Deckenlicht";
+                  color = "#E5E9F0";
+                };
+                icon = {
+                  icon = "lightbulb-on";
+                  color = "#E5E9F0";
+                };
               }
             ];
+          };
 
-            action = [{
-              type = "toggle";
-              device_id = "d97c93bff99173ae0b3b20d640050508";
-              entity_id = "light.rgb_strip_1";
-              domain = "light";
-            }];
-          }
-        ];
+          # https://home.pablo.tools/developer-tools/event
+          # https://home.pablo.tools/config/automation/dashboard
+          automation = [
+            {
+              id = "auto_deckenlicht_toggle";
+              alias = "Deckenlicht Toggle";
+              trigger = [{
+                platform = "event";
+                event_type = "ios.action_fired";
+                event_data.actionName = "Toggle Deckenlicht";
+              }];
 
-        # Provides some sane defaults and minimal dependencies
-        default_config = { };
+              action = [{
+                type = "toggle";
+                device_id = "d71e3f9c22a777149793e6b126f27550";
+                entity_id = "switch.deckenlicht";
+                domain = "switch";
+              }];
+            }
+            {
+              id = "auto_rgb_toggle";
+              alias = "RGB-Kette Toggle";
+              trigger = [
+                {
+                  platform = "event";
+                  event_type = "state_changed";
+                  event_data.entity_id = "switch.lichterkette";
+                }
+                {
+                  platform = "event";
+                  event_type = "ios.action_fired";
+                  event_data.actionName = "Toggle RGB";
+                }
+              ];
 
-        shelly = { };
+              condition = [
+                {
+                  condition = "template";
+                  value_template = "{{ trigger.event.data.old_state.state != 'unavailable' }}";
+                }
+                {
+                  condition = "template";
+                  value_template = "{{ trigger.event.data.new_state.state != 'unavailable' }}";
+                }
+              ];
 
-        zeroconf = {
-          # default_interface = true;
+              action = [{
+                type = "toggle";
+                device_id = "d97c93bff99173ae0b3b20d640050508";
+                entity_id = "light.rgb_strip_1";
+                domain = "light";
+              }];
+            }
+          ];
+
+          # Provides some sane defaults and minimal dependencies
+          default_config = { };
+
+          shelly = { };
+
+          zeroconf = {
+            # default_interface = true;
+          };
+          # Basic settings for home-assistant
+          homeassistant = {
+            name = "Villa Kunterbunt";
+            latitude = "!secret home-latitude";
+            longitude = "!secret home-longitude";
+            elevation = 86;
+            unit_system = "metric";
+            time_zone = "Europe/Berlin";
+            external_url = "https://home.pablo.tools";
+          };
+
+          http = {
+            use_x_forwarded_for = true;
+            trusted_proxies = [ "192.168.7.1" ];
+          };
+
+          esphome = { };
+
+          frontend = { };
+          "map" = { };
+          shopping_list = { };
+          sun = { };
+          config = { };
+          mobile_app = { };
+          cloud = { };
+          system_health = { };
+
+          # Discover some devices automatically
+          # discovery = { };
+
+          # Show some system health data
+          system_health = { };
+
+          # Enable support for tamota devices
+          tasmota = { };
+
+          # Led strip wifi controller, component needs to be listed explicitely in
+          # extraComponents above
+          # light = [{
+          #   platform = "flux_led";
+          #   automatic_add = true;
+          #   devices = { "192.168.2.106" = { name = "flux_led"; }; };
+          # }];
+
+          # Fritzbox network traffic stats
+          # sensor = [{ platform = "fritzbox_netmonitor"; }];
+
+          # Metrics for prometheus
+          prometheus = { namespace = "hass"; };
+
+          # Enable MQTT and configure it to use the mosquitto broker
+          mqtt = {
+            broker = "192.168.2.84";
+            port = "1883";
+            username = "mosquitto";
+            password = "mosquitto";
+          };
+
+          logger.default = "info";
+          # logger.default = "debug";
+
+          influxdb = {
+            api_version = 2;
+            # host = "vpn.influx.pablo.tools";
+            host = "localhost";
+            port = "8086";
+            max_retries = 10;
+            ssl = false;
+            verify_ssl = false;
+            # Authorization is not used for telegraf, but home-assistant requires
+            # passing these parameters
+            token = "!secret influx-token";
+            organization = "pinpox";
+            bucket = "home_assistant";
+          };
+
+          # Enables a map showing the location of tracked devies
+          map = { };
+
+          # Track the sun
+          sun = { };
+
+          # Enable mobile app
+          mobile_app = { };
+
+          # Enable configuration UI
+          # config = { };
+
+          # Enable support for tracking state changes over time
+          history = { };
+
+          # Purge tracked history after 10 days
+          recorder.purge_keep_days = 10;
+
+          # View all events in o logbook
+          logbook = { };
         };
-        # Basic settings for home-assistant
-        homeassistant = {
-          name = "Villa Kunterbunt";
-          latitude = "!secret home-latitude";
-          longitude = "!secret home-longitude";
-          elevation = 86;
-          unit_system = "metric";
-          time_zone = "Europe/Berlin";
-          external_url = "https://home.pablo.tools";
-        };
-
-        http = {
-          use_x_forwarded_for = true;
-          trusted_proxies = [ "192.168.7.1" ];
-        };
-
-        esphome = { };
-
-        frontend = { };
-        "map" = { };
-        shopping_list = { };
-        sun = { };
-        config = { };
-        mobile_app = { };
-        cloud = { };
-        system_health = { };
-
-        # Discover some devices automatically
-        # discovery = { };
-
-        # Show some system health data
-        system_health = { };
-
-        # Enable support for tamota devices
-        tasmota = { };
-
-        # Led strip wifi controller, component needs to be listed explicitely in
-        # extraComponents above
-        # light = [{
-        #   platform = "flux_led";
-        #   automatic_add = true;
-        #   devices = { "192.168.2.106" = { name = "flux_led"; }; };
-        # }];
-
-        # Fritzbox network traffic stats
-        # sensor = [{ platform = "fritzbox_netmonitor"; }];
-
-        # Metrics for prometheus
-        prometheus = { namespace = "hass"; };
-
-        # Enable MQTT and configure it to use the mosquitto broker
-        mqtt = {
-          broker = "192.168.2.84";
-          port = "1883";
-          username = "mosquitto";
-          password = "mosquitto";
-        };
-
-        logger.default = "info";
-        # logger.default = "debug";
-
-        influxdb = {
-          api_version = 2;
-          # host = "vpn.influx.pablo.tools";
-          host = "localhost";
-          port = "8086";
-          max_retries = 10;
-          ssl = false;
-          verify_ssl = false;
-          # Authorization is not used for telegraf, but home-assistant requires
-          # passing these parameters
-          token = "!secret influx-token";
-          organization = "pinpox";
-          bucket = "home_assistant";
-        };
-
-        # Enables a map showing the location of tracked devies
-        map = { };
-
-        # Track the sun
-        sun = { };
-
-        # Enable mobile app
-        mobile_app = { };
-
-        # Enable configuration UI
-        # config = { };
-
-        # Enable support for tracking state changes over time
-        history = { };
-
-        # Purge tracked history after 10 days
-        recorder.purge_keep_days = 10;
-
-        # View all events in o logbook
-        logbook = { };
-      };
     };
   };
 }
