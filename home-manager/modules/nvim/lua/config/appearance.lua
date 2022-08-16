@@ -12,7 +12,7 @@ vim.cmd "set list"
 -- vim.cmd 'colorscheme ansible-theme'
 -- vim.cmd 'highlight Comment cterm=italic gui=italic' -- Italic comments
 vim.cmd 'set noshowmode'                            -- Don't show current mode below the bar
-vim.cmd 'match CursorLine /\\%>100c/'               -- Color lines exceeding length of 100
+-- vim.cmd 'match CursorLine /\\%>100c/'               -- Color lines exceeding length of 100
 vim.cmd 'set signcolumn=yes'
 
 -- require('colorbuddy').colorscheme('pinpox-colors')
