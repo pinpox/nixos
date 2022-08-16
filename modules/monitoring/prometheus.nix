@@ -34,8 +34,14 @@ in
   config = mkIf cfg.enable {
 
     lollypops.secrets.files = {
-      "prometheus/home-assistant-token".owner = "prometheus";
-      "prometheus/drone-token".owner = "prometheus";
+      "prometheus/home-assistant-token" = {
+        owner = "prometheus";
+        path = "/var/lib/prometheus2/home-assistant-token";
+      };
+      "prometheus/drone-token" = {
+        owner = "prometheus";
+        path = "/var/lib/prometheus2/drone-token";
+      };
     };
 
     services.prometheus = {
@@ -74,6 +80,15 @@ in
         #       "http://192.168.2.146"
         #     ];
         #   }];
+        # }
+        # {
+        #   job_name = "esphome";
+        #   scheme = "http";
+        #   scrape_interval = "60s";
+        #   metrics_path = "/metrics";
+        #   static_configs = [{ targets = [ 
+        #     "192.168.2.147"
+        #   ]; }];
         # }
         {
           job_name = "drone";
