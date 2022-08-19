@@ -8,11 +8,7 @@
       flake = false;
     };
 
-    # TODO remove workaround when merged
-    # https://github.com/NixOS/nixpkgs/issues/181009
-    # https://github.com/NixOS/nixpkgs/pull/181222
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:hercules-ci/nixpkgs/module-specialArgs";
 
     lollypops = {
       url = "github:pinpox/lollypops";
@@ -115,11 +111,19 @@
     tfenv.url = "github:tfutils/tfenv";
     tfenv.flake = false;
 
-    nix-apple-fonts.url = "github:pinpox/nix-apple-fonts";
+    nix-apple-fonts = {
+      url = "github:pinpox/nix-apple-fonts";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nix-apple-fonts.inputs.flake-compat.follows = "flake-compat";
-    nix-apple-fonts.inputs.flake-utils.follows = "flake-utils";
-    nix-apple-fonts.inputs.nixpkgs.follows = "nixpkgs";
+    iosevka-custom = {
+      url = "github:pinpox/iosevka-custom";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
   outputs = { self, ... }@inputs:
