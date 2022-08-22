@@ -1,6 +1,7 @@
 # Configuration for birne
-{ nixpkgs, ... }: {
+{ nixpkgs, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
+
 
   /* services.navidrome = {
     enable = true;
@@ -174,36 +175,19 @@
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
-  # services.syncthing = {
-
-  #   enable = true;
-  #   guiAddress = "192.168.7.4:8384";
-
-  #   # TCP 22000 for transfers - UDP 21027
-  #   openDefaultPorts = true;
-
-  #   # relay = {};
-
-  #   declarative = {
-  #     folders = {
-  #       "/var/lib/syncthing/syncfolder" = {
-  #         id = "var-testfolder";
-  #         devices = [ "ahorn" ];
-
-  #       };
-  #     };
-  #     devices = {
-  #       "ahorn".id =
-  #         "JIWYVTJ-2ZQUGUY-LCUXHMW-SUN4R4L-BFQMDB2-SBNAIYG-FIDZMWD-PDB57A2";
-  #       "kartoffel".id =
-  #         "WIUZWCU-VTH3WOD-ZRHKCD4-CG2TKHY-NTN5A5B-IOXZ4DG-BIDHMFC-QW7C4QF";
-  #     };
-  #   };
-  # };
+  services.unifi.enable = true;
+  services.unifi.unifiPackage = pkgs.unifi6;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 4533 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+
+    allowedUDPPorts = [ 3478 ];
+    allowedTCPPorts = [
+      80
+      443
+      4533
+      8080
+      8443
+    ];
+  };
 }
