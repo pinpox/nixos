@@ -56,10 +56,10 @@
       # No backup from our side for this host.
       borg-backup.enable = false;
 
-      binary-cache.enable = true;
+      # binary-cache.enable = true;
       droneci.enable = true;
-      droneci.runner-exec.enable = true;
-      droneci.runner-docker.enable = true;
+      # droneci.runner-exec.enable = true;
+      # droneci.runner-docker.enable = true;
       monitoring-server.http-irc.enable = true;
     };
 
@@ -100,10 +100,6 @@
       9100 # Node exporter. Host is behind external firewall
     ];
 
-    # Make the host resolv the cache to itself
-    extraHosts = ''
-      127.0.0.1 cache.lounge.rocks
-    '';
   };
 
   virtualisation.vmware.guest.enable = true;
