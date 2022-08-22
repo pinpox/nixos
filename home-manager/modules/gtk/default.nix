@@ -104,8 +104,8 @@ in
       enable = true;
 
       font = {
-        name = "Recursive Sans Linear Static Medium";
-        package = pkgs.recursive;
+        name = "Iosevka Semi-Bold Expanded";
+        package = pkgs.iosevka;
       };
 
       iconTheme = {
@@ -117,9 +117,20 @@ in
         name = "Generated";
         package = pkgs.generated-gtk-theme;
       };
-      gtk3.extraConfig = {
-        gtk-cursor-theme-name = "breeze";
-        gtk-application-prefer-dark-theme = 1;
+
+      gtk3 = {
+
+        extraConfig = {
+          gtk-cursor-theme-name = "breeze";
+          gtk-application-prefer-dark-theme = 1;
+        };
+        # Set semibold and expanded version for iosevka
+        extraCss = ''
+          * {
+                  font-weight: 500;
+                  font-stretch: 'expanded';
+          }
+        '';
       };
     };
 
