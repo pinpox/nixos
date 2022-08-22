@@ -25,6 +25,7 @@
 
     programs = {
       alacritty.enable = true;
+      zellij.enable = true;
       chromium.enable = true;
       dunst.enable = true;
       picom.enable = true;
@@ -42,8 +43,6 @@
 
   # Install these packages for my user
   home.packages = with pkgs; [
-
-    iosevka
 
     # From nixpkgs
     inetutils
