@@ -60,27 +60,27 @@ in
       };
     };
 
-    systemd.services.hedgedoc-git-sync = {
-      serviceConfig = {
-        Type = "oneshot";
-        Environment = [
-          "GIT_SSH_COMMAND='ssh -i private_key_file'"
-        ];
-      };
-      path = with pkgs; [ bash ];
-      script = ''
-        echo "RUNNING IN "
-        pwd
-      '';
-    };
+    # systemd.services.hedgedoc-git-sync = {
+    #   serviceConfig = {
+    #     Type = "oneshot";
+    #     Environment = [
+    #       "GIT_SSH_COMMAND='ssh -i private_key_file'"
+    #     ];
+    #   };
+    #   path = with pkgs; [ bash ];
+    #   script = ''
+    #     echo "RUNNING IN "
+    #     pwd
+    #   '';
+    # };
 
-    systemd.timers.hedgedoc-git-sync = {
-      wantedBy = [ "timers.target" ];
-      partOf = [ "hedgedoc-git-sync.service" ];
-      timerConfig = {
-        OnCalendar = "*:0/1";
-        Unit = "hedgedoc-git-sync.service";
-      };
-    };
+    # systemd.timers.hedgedoc-git-sync = {
+    #   wantedBy = [ "timers.target" ];
+    #   partOf = [ "hedgedoc-git-sync.service" ];
+    #   timerConfig = {
+    #     OnCalendar = "*:0/1";
+    #     Unit = "hedgedoc-git-sync.service";
+    #   };
+    # };
   };
 }
