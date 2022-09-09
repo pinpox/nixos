@@ -68,41 +68,14 @@
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ mayniklas-keys ];
 
-  boot = {
-
-    # Enable arm emulation capabilities
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-    growPartition = true;
-
-    loader = {
-      grub = {
-        enable = true;
-        version = 2;
-        device = "nodev";
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-      };
-    };
-    cleanTmpDir = true;
-  };
-
   networking = {
-
-    # DHCP
-    useDHCP = false;
-    interfaces.ens192.useDHCP = true;
-
     # Open ports in the firewall.
     firewall.allowedTCPPorts = [
       80
       443
       9100 # Node exporter. Host is behind external firewall
     ];
-
   };
-
-  virtualisation.vmware.guest.enable = true;
 
   # Workaround for problems with the dockerized CI
   systemd.enableUnifiedCgroupHierarchy = false;

@@ -4,12 +4,21 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports =
+    [
+      (modulesPath + "/profiles/qemu-guest.nix")
+    ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "vmw_pvscsi" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+  # enable fstrim to reduce disk image size
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -22,12 +31,35 @@
     fsType = "vfat";
   };
 
-  boot.growPartition = true;
+  boot = {
+    # Enable arm emulation capabilities
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    growPartition = true;
+    loader = {
+      grub = {
+        enable = true;
+        version = 2;
+        device = "nodev";
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
+    };
+    cleanTmpDir = true;
+  };
 
   swapDevices = [{
     device = "/var/swapfile";
     size = (1024 * 32);
   }];
+
+  networking = {
+    # DHCP
+    useDHCP = false;
+    interfaces.enp6s18.useDHCP = true;
+  };
+
+  # enable the qemu guest agent
+  services.qemuGuest.enable = true;
 
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
