@@ -16,6 +16,10 @@ in
     fonts = {
       fontDir.enable = true;
       fonts = with pkgs; [
+
+        league-of-moveable-type
+        inter
+
         source-sans-pro
         source-serif-pro
         noto-fonts-emoji
