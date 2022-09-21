@@ -46,7 +46,7 @@ in
         email = false; # Disable email login
 
         domain = "pads.0cx.de";
-        # host = "127.0.0.1"; # Default
+        host = "127.0.0.1";
         # port = 3000; # Default
         # allowOrigin = [ "localhost" ]; # TODO not sure if neeeded
         debug = true;
