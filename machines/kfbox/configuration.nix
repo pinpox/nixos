@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, ... }: {
 
   # often hangs
   systemd.services.systemd-networkd-wait-online.enable = false;
@@ -16,7 +16,13 @@
     ./hardware-configuration.nix
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer
+    go-karma-bot.nixosModules.go-karma-bot
   ];
+
+  # Karmabot for IRC channel
+  lollypops.secrets.files."go-karma-bot/envfile" = { };
+  services.go-karma-bot.environmentFile = [ config.lollypops.secrets.files."go-karma-bot/envfile".path ];
+  services.go-karma-bot.enable = true;
 
   pinpox = {
 
@@ -33,7 +39,6 @@
 
     services = {
       borg-backup.enable = true;
-      go-karma-bot.enable = false;
       hedgedoc.enable = true;
       # mattermost.enable = true;
       miniflux.enable = true;
@@ -94,12 +99,12 @@
     rootUrl = "https://git.0cx.de";
     httpPort = 3333;
     httpAddress = "127.0.0.1";
-    disableRegistration = true;
 
     mailerPasswordFile = "${config.lollypops.secrets.files."gitea/mailer-pw".path}";
 
     settings = {
       mailer = {
+        DISABLE_REGISTRATION = true;
         ENABLED = true;
         FROM = "git@0cx.de";
         MAILER_TYPE = "smtp";
