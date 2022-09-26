@@ -70,6 +70,8 @@
 
       serve = "${pkgs.dirserver}/bin/dirserver";
       # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
+
+      za = "${pkgs.zellij}/bin/zellij attach";
     };
 
     prezto = {

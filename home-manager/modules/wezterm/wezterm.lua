@@ -171,6 +171,15 @@ return {
 		-- Transparency
 		window_background_opacity = 0.9,
 
+		skip_close_confirmation_for_processes_named = {
+		    'bash',
+		    'sh',
+		    'zsh',
+		    'fish',
+		    'tmux',
+		    'zellij',
+		},
+
 		colors = require("colors"),
 
 }
