@@ -50,7 +50,7 @@ with lib; {
     };
 
     # Enable flakes
-    nix.package = pkgs.nixFlakes;
+    nix.package = pkgs.nixVersions.stable;
 
     # Install some basic utilities
     environment.systemPackages = [ pkgs.git pkgs.ag pkgs.htop ];
