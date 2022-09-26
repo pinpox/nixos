@@ -104,19 +104,6 @@ in
       config.services.loki.configuration.storage_config.filesystem.directory
     ];
 
-    #TODO For Alertmanager?
-    # ruler:
-    #   storage:
-    #     type: local
-    #     local:
-    #       directory: /tmp/loki/rules
-    #   rule_path: /tmp/loki/rules-temp
-    #   alertmanager_url: http://localhost:9093
-    #   ring:
-    #     kvstore:
-    #       store: inmemory
-    #   enable_api: true
-
     services.promtail = {
       enable = true;
       configuration = {
