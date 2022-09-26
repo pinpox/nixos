@@ -14,7 +14,6 @@
       url = "github:pinpox/lollypops";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        utils.follows = "flake-utils";
       };
     };
 
@@ -22,6 +21,12 @@
     promterm.inputs = {
       nixpkgs.follows = "nixpkgs";
       utils.follows = "flake-utils";
+    };
+
+
+    go-karma-bot.url = "github:pinpox/go-karma-bot";
+    go-karma-bot.inputs = {
+      nixpkgs.follows = "nixpkgs";
     };
 
     s3photoalbum.url = "github:pinpox/s3photoalbum";
@@ -45,11 +50,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
 
     wallpaper-generator.url = "github:pinpox/wallpaper-generator";
     wallpaper-generator.flake = false;
-    wallpaper-generator.inputs.nixpkgs.follows = "nixpkgs";
 
     dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
     dotfiles-awesome.inputs = {
@@ -63,7 +66,6 @@
     restic-exporter.inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-utils.follows = "flake-utils";
-      flake-compat.follows = "flake-compat";
     };
 
     matrix-hook.url = "github:pinpox/matrix-hook";
@@ -124,6 +126,18 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # helix-editor = {
+    #   url = "github:helix-editor/helix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    # zellij = {
+    #   url = "github:zellij-org/zellij";
+    #   inputs.flake-compat.follows = "flake-compat";
+    #   inputs.flake-utils.follows = "flake-utils";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
   };
   outputs = { self, ... }@inputs:
