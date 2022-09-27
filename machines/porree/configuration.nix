@@ -1,6 +1,12 @@
 { matrix-hook, config, ... }: {
 
-  imports = [ ./hardware-configuration.nix matrix-hook.nixosModule ];
+  imports = [
+    ./hardware-configuration.nix
+    matrix-hook.nixosModule
+    ./retiolum.nix
+  ];
+
+
 
   lollypops.deployment.host = "94.16.108.229";
 
@@ -23,6 +29,20 @@
       path = "/var/lib/matrix-hook/alerts.passwd";
       owner = "nginx";
     };
+  };
+
+
+  networking.retiolum.ipv4 = "10.243.100.101";
+  networking.retiolum.ipv6 = "42:0:3c46:b51c:b34d:b7e1:3b02:8d24";
+
+  lollypops.secrets.files = {
+    "retiolum/rsa_priv" = { };
+    "retiolum/ed25519_priv" = { };
+  };
+
+  services.tinc.networks.retiolum = {
+    rsaPrivateKeyFile = "${config.lollypops.secrets.files."retiolum/rsa_priv".path}";
+    ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
   };
 
   programs.gnupg.agent = {

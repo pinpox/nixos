@@ -135,11 +135,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1664146938,
-        "narHash": "sha256-fIvsJ3qWiD6o3qH9iU66OsL8uG5C1FGXcuaNEctJv8M=",
+        "lastModified": 1664273942,
+        "narHash": "sha256-PFQR1UJQs7a7eaH5YoCZky5dmxR5cjaKRK+MpPbR7YE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9e7394523eb4f298528d457e316fc752bdf07151",
+        "rev": "1f5ef2bb419a327fae28a83b50fab50959132c24",
         "type": "github"
       },
       "original": {
@@ -340,11 +340,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1664179085,
-        "narHash": "sha256-qw7aqKbLJrQu+xZWdXohxaP9WEOl5q0b74ttj6xbFkY=",
+        "lastModified": 1664274628,
+        "narHash": "sha256-aOvFU2kQZQtbedTjFdMzFAxQkfDC9HGPK1bMDz7GZ/8=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "046cab87a6ee9a7f5191585f2c340a13323771f4",
+        "rev": "01694665bcaf0e8f89f3dbb112a4107c3df10233",
         "type": "github"
       },
       "original": {
@@ -435,11 +435,11 @@
     "retiolum": {
       "flake": false,
       "locked": {
-        "lastModified": 1664019034,
-        "narHash": "sha256-do31QxpQtmuWclx9yhM6UslVO7XdXofLbXZ4nr3fLJ0=",
+        "lastModified": 1664269038,
+        "narHash": "sha256-y+BBtaUnHgv6xSBfqG+dLtkXD7vAuwiDUijbOePr2QY=",
         "owner": "krebs",
         "repo": "retiolum",
-        "rev": "8d9b86a0ce503588bb34ae8676fdbcb0e4014119",
+        "rev": "3e4b4f3b9889ebcb57f8be85073b29fde823c9b6",
         "type": "github"
       },
       "original": {
