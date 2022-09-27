@@ -1,5 +1,20 @@
 { self, config, s3photoalbum, go-karma-bot, ... }: {
 
+
+  networking.retiolum.ipv4 = "10.243.100.102";
+  networking.retiolum.ipv6 = "42:0:3c46:3ae6:90a8:b220:e772:8a5c";
+
+  lollypops.secrets.files = {
+    "retiolum/rsa_priv" = { };
+    "retiolum/ed25519_priv" = { };
+  };
+
+  services.tinc.networks.retiolum = {
+    rsaPrivateKeyFile = "${config.lollypops.secrets.files."retiolum/rsa_priv".path}";
+    ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
+  };
+
+
   # often hangs
   systemd.services.systemd-networkd-wait-online.enable = false;
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -13,6 +28,7 @@
   '';
 
   imports = [
+    ./retiolum.nix
     ./hardware-configuration.nix
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer
