@@ -6,7 +6,12 @@
     ./retiolum.nix
   ];
 
-
+  networking.interfaces.ens3 = {
+    ipv6.addresses = [{
+      address = "2a03:4000:51:aa3::1";
+      prefixLength = 64;
+    }];
+  };
 
   lollypops.deployment.host = "94.16.108.229";
 
@@ -388,7 +393,7 @@
         "https://pablo.tools"
         "https://megaclan3000.de"
         "https://drone.lounge.rocks"
-        "https://lounge.rocks"
+        # "https://lounge.rocks"
         "https://pass.pablo.tools"
         # "https://vpn.pablo.tools"
         "https://pinpox.github.io/nixos/"

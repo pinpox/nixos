@@ -1,5 +1,11 @@
 { self, config, s3photoalbum, go-karma-bot, ... }: {
 
+  networking.interfaces.ens3 = {
+    ipv6.addresses = [{
+      address = "2a03:4000:7:4e0::";
+      prefixLength = 64;
+    }];
+  };
 
   networking.retiolum.ipv4 = "10.243.100.102";
   networking.retiolum.ipv6 = "42:0:3c46:3ae6:90a8:b220:e772:8a5c";
