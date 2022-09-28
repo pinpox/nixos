@@ -44,6 +44,9 @@ in
 
   config = mkIf cfg.enable {
 
+    # Enable networkmanager
+    networking.networkmanager.enable = true;
+
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
