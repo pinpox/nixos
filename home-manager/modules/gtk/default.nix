@@ -63,7 +63,7 @@ in
 
     nixpkgs.overlays = [
       (self: super: {
-        rendersvg = self.runCommandNoCC "rendersvg" { } ''
+        rendersvg = self.runCommand "rendersvg" { } ''
           mkdir -p $out/bin
           ln -s ${self.resvg}/bin/resvg $out/bin/rendersvg
         '';
