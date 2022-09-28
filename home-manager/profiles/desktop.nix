@@ -26,6 +26,7 @@
     programs = {
       alacritty.enable = true;
       zellij.enable = true;
+      # helix.enable = true;
       chromium.enable = true;
       dunst.enable = true;
       picom.enable = true;
