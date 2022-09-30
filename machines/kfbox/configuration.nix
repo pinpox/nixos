@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, go-karma-bot, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, retiolum, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -7,8 +7,10 @@
     }];
   };
 
-  networking.retiolum.ipv4 = "10.243.100.102";
-  networking.retiolum.ipv6 = "42:0:3c46:3ae6:90a8:b220:e772:8a5c";
+  networking.retiolum = {
+    ipv4 = "10.243.100.102";
+    ipv6 = "42:0:3c46:3ae6:90a8:b220:e772:8a5c";
+  };
 
   lollypops.secrets.files = {
     "retiolum/rsa_priv" = { };
@@ -34,7 +36,8 @@
   '';
 
   imports = [
-    ./retiolum.nix
+    retiolum.nixosModules.retiolum
+    #retiolum.nixosModules.ca
     ./hardware-configuration.nix
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer

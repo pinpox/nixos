@@ -1,17 +1,15 @@
 # Configuration file for ahorn
-{ options, config, ... }: {
+{ options, config, retiolum, ... }: {
 
   imports = [
     ./hardware-configuration.nix
-    ./retiolum.nix
+    retiolum.nixosModules.retiolum
+    #retiolum.nixosModules.ca
   ];
 
   # often hangs
   systemd.services.systemd-networkd-wait-online.enable = false;
   systemd.services.NetworkManager-wait-online.enable = false;
-
-  # documentation.nixos.includeAllModules = true;
-  # documentation.nixos.options.splitBuild = false;
 
   lollypops = {
 
@@ -47,8 +45,11 @@
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  networking.retiolum.ipv4 = "10.243.100.100";
-  networking.retiolum.ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
+  # Retiolum config
+  networking.retiolum = {
+    ipv4 = "10.243.100.100";
+    ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
+  };
 
   lollypops.secrets.files = {
     "retiolum/rsa_priv" = { };

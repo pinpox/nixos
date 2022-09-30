@@ -36,9 +36,10 @@
       # home-manager.follows = "home-manager";
     };
 
-    retiolum.url = "github:krebs/retiolum";
-    retiolum.flake = false;
+    # retiolum.url = "github:krebs/retiolum";
+    # retiolum.flake = false;
 
+    retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
 
     flake-utils.url = "github:numtide/flake-utils";
 
