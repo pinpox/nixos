@@ -94,11 +94,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1663870123,
-        "narHash": "sha256-mT8YcEiRx95vUFLEQBHphNuHR4NjezItSy2RvbEjY6w=",
+        "lastModified": 1664598942,
+        "narHash": "sha256-/7kY5n2AyKgw5AQRExst8Ij+81jfS27HazllmfJsc5U=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "316879662ff9c33ae4b1072f8238e4bba2999e0a",
+        "rev": "e7c610889ff954101c644cdb9cf68e499a3751ac",
         "type": "github"
       },
       "original": {
@@ -135,11 +135,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1664449551,
-        "narHash": "sha256-iTStJtZB1+MppkT+95Ckqy2NDaISb+QcUkOAa0DS0io=",
+        "lastModified": 1664783440,
+        "narHash": "sha256-KlMwR7mUf5h8MPnzV7nGFUAt6ih/euW5xgvZ5x+hwvI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "864ff685fe6443101a0a8f3950d21bcb4330e56a",
+        "rev": "e4e639dd4dc3e431aa5b5f95325f9a66ac7e0dd9",
         "type": "github"
       },
       "original": {
@@ -312,11 +312,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1664370076,
-        "narHash": "sha256-NDnIo0nxJozLwEw0VPM+RApMA90uTfbvaNNtC5eB7Os=",
+        "lastModified": 1664687381,
+        "narHash": "sha256-9czSuDzS+OGGwq2kC4KXBLXWfYaup+oLB+AA1Md25U4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "854fdc68881791812eddd33b2fed94b954979a8e",
+        "rev": "59d2991d4256cdca1c0cda45d876c80a0fe45c31",
         "type": "github"
       },
       "original": {
@@ -340,11 +340,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1664523234,
-        "narHash": "sha256-7hmouqMV2UUPUZQgK/fbfnHADdSBaa9MnKgzAU8uWGk=",
+        "lastModified": 1664812633,
+        "narHash": "sha256-vGkaD3lphklkxMqosM2J7/06Utyy8VbFUIGeqtdftRk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "b1f6b64ef0b26aa698087053b7e0086093564465",
+        "rev": "d80b276c550fe2301d2c179dba5a557cd0e50118",
         "type": "github"
       },
       "original": {
@@ -504,11 +504,11 @@
     "tfenv": {
       "flake": false,
       "locked": {
-        "lastModified": 1657892751,
-        "narHash": "sha256-2Fpaj/UQDE7PNFX9GNr4tygvKmm/X0yWVVerJ+Y6eks=",
+        "lastModified": 1664641260,
+        "narHash": "sha256-UNvLJQB47IRcNZpoUGXTW2g63ApijnIB3oUb7Zu4lUY=",
         "owner": "tfutils",
         "repo": "tfenv",
-        "rev": "c05c364a0565b0bee63d97b763def4521d620884",
+        "rev": "1ccfddb22005b34eacaf06a9c33f58f14e816ec9",
         "type": "github"
       },
       "original": {
