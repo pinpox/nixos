@@ -117,6 +117,8 @@ in
       # loaded on launch
       plugins = with pkgs.vimPlugins; [
 
+        ccc-nvim
+
         # nvim-treesitter
         # zk-nvim
         # vim-visual-increment
