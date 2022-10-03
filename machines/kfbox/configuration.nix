@@ -36,9 +36,9 @@
   '';
 
   imports = [
+    ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca
-    ./hardware-configuration.nix
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer
     go-karma-bot.nixosModules.go-karma-bot

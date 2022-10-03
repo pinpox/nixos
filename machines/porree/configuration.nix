@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, go-karma-bot, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, retiolum, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -38,6 +38,8 @@
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer
     go-karma-bot.nixosModules.go-karma-bot
+    retiolum.nixosModules.retiolum
+    #retiolum.nixosModules.ca
   ];
 
   # Karmabot for IRC channel
