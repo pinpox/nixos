@@ -62,9 +62,9 @@ in
             "devtools.theme" = "dark";
           };
 
-          userChrome = builtins.readFile
-            (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
-              { colors = colorscheme; font = fonts; });
+          # userChrome = builtins.readFile
+          #   (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
+          #     { colors = colorscheme; font = fonts; });
 
           # TODO
           userContent = ''

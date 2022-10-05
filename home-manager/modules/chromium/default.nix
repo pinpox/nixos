@@ -14,6 +14,7 @@ in
         { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # Ublock Origin
         { id = "gcbommkclmclpchllfjekcdonpmejbdp"; } # HTTPS everywhere
         { id = "mmpokgfcmbkfdeibafoafkiijdbfblfg"; } # Merge windows
+        { id = "agldajbhchobfgjcmmigehfdcjbmipne"; } # Blank Dark New Tab
       ];
     };
   };
