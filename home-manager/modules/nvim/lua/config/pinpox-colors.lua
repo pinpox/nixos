@@ -507,7 +507,7 @@ Group.new('rubyStringDelimiter',           c.Green, c.none,   no)
 Group.new('rubySymbol',                    c.Green, c.none,   no)
 
 -- Spelling
-Group.new('SpellBad',                      c.Grey, c.none,   uc)
+Group.new('SpellBad',                      c.Grey, c.Red,   uc)
 Group.new('SpellLocal',                    c.Grey, c.none,   uc)
 Group.new('SpellCap',                      c.Grey, c.none,   uc)
 Group.new('SpellRare',                     c.Grey, c.none,   uc)
