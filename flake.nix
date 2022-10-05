@@ -10,6 +10,12 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+
+    mc3000 = {
+      url = "github:pinpox/mc3000";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lollypops = {
       url = "github:pinpox/lollypops";
       inputs = {

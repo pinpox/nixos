@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, go-karma-bot, retiolum, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, retiolum, mc3000, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -151,6 +151,13 @@
     # '';
 
     virtualHosts = {
+
+      "megaclan3000.de" = {
+        forceSSL = true;
+        enableACME = true;
+        root = mc3000.packages.x86_64-linux.mc3000;
+      };
+
 
       "git.0cx.de" = {
         forceSSL = true;
