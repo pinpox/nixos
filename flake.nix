@@ -163,7 +163,7 @@
         (builtins.attrNames (builtins.readDir ./modules)));
 
       # Each subdirectory in ./machines is a host. Add them all to
-      # nixosConfiguratons. Host configurations need a file called
+      # nixosConfigurations. Host configurations need a file called
       # configuration.nix that will be read first
       nixosConfigurations = builtins.listToAttrs (map
         (x: {
