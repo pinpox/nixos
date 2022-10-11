@@ -302,21 +302,21 @@
           # Looks for all ./modules/<module name>/test.nix files and adds them to
           # the flake's checks output. The test.nix file is optional and may be
           # added to any module.
-          # checks = builtins.listToAttrs
-          #   (map
-          #     (x: {
-          #       name = x;
-          #       value = (import (./modules + "/${x}/test.nix")) {
-          #         pkgs = nixpkgs;
-          #         inherit system self;
-          #       };
-          #     })
-          #     (
-          #       # Filter list of modules, leaving only modules which contain a
-          #       # `test.nix` file
-          #       builtins.filter
-          #         (p: builtins.pathExists (./modules + "/${p}/test.nix"))
-          #         (builtins.attrNames (builtins.readDir ./modules))));
+          checks = builtins.listToAttrs
+            (map
+              (x: {
+                name = x;
+                value = (import (./modules + "/${x}/test.nix")) {
+                  pkgs = nixpkgs;
+                  inherit system self;
+                };
+              })
+              (
+                # Filter list of modules, leaving only modules which contain a
+                # `test.nix` file
+                builtins.filter
+                  (p: builtins.pathExists (./modules + "/${p}/test.nix"))
+                  (builtins.attrNames (builtins.readDir ./modules))));
 
           # TODO we probably should set some default app and/or package
           # defaultPackage = packages.hello;

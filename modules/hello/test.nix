@@ -2,7 +2,7 @@
 
 with import (pkgs + "/nixos/lib/testing-python.nix") { inherit system; };
 
-makeTest {
+(makeTest {
   nodes = {
     client = { ... }: {
       imports = [ self.nixosModules.hello ];
@@ -16,4 +16,4 @@ makeTest {
     print(client.succeed("uname"))
     print(client.succeed("hello"))
   '';
-}
+}).test
