@@ -94,11 +94,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1665267953,
-        "narHash": "sha256-lldJd3xafE/yztFvbJ1osxYd4Uo897rxe4fEm4kN0Mw=",
+        "lastModified": 1665517591,
+        "narHash": "sha256-mvvO4nQ+4FHqQt5MjASgddFIg+9Tq/qoREWB0/PiS1g=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "c81874db259eef85ae21794b2f29e953519c692c",
+        "rev": "0fca81a9a73fb65230dd10e379a87bb0e37be3a2",
         "type": "github"
       },
       "original": {
@@ -135,11 +135,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1665271265,
-        "narHash": "sha256-4Nn0T5YoR3bBLFnPy6Tkc8zzmzMTBjSGZq05c5hKhEI=",
+        "lastModified": 1665655007,
+        "narHash": "sha256-34ZMJlgqJb73RY/gJz8B4cjdM5ukas2crMYQpmyRGeQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e1f1160284198a68ea8c7fffbbb1436f99e46ef9",
+        "rev": "8cbc6500dfca22d907054f68c564019b3b6cf295",
         "type": "github"
       },
       "original": {
@@ -332,11 +332,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1665259268,
-        "narHash": "sha256-ONFhHBLv5nZKhwV/F2GOH16197PbvpyWhoO0AOyktkU=",
+        "lastModified": 1665580254,
+        "narHash": "sha256-hO61XPkp1Hphl4HGNzj1VvDH5URt7LI6LaY/385Eul4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c5924154f000e6306030300592f4282949b2db6c",
+        "rev": "f634d427b0224a5f531ea5aa10c3960ba6ec5f0f",
         "type": "github"
       },
       "original": {
@@ -360,11 +360,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1665387055,
-        "narHash": "sha256-sK6TP+IqBhLCPVAX9ZppDLxvSSyuvtqeHmaIn7p/ohA=",
+        "lastModified": 1665665158,
+        "narHash": "sha256-QgnaHinQezc/2fzoZ4BiFgkxUivgAV31rkjGtbZft+U=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d94d26e19415fe36e5c75bc36d838d67b913c840",
+        "rev": "31f4399bcbe771ef312d2e7b71a1696f799533bb",
         "type": "github"
       },
       "original": {
@@ -454,11 +454,11 @@
     },
     "retiolum": {
       "locked": {
-        "lastModified": 1664917224,
-        "narHash": "sha256-2I580Rop/MkrSWHQDuwtsnqD9Wj6qaNtlL7NRcEODD4=",
+        "lastModified": 1665574357,
+        "narHash": "sha256-4KETvacv6wKvuZOrF/56Ih+hVHyMHbUvxo3/kMs6ZGg=",
         "ref": "refs/heads/master",
-        "rev": "9689da184f26e6725d3211aaf9dce7d5ed6d99a9",
-        "revCount": 242,
+        "rev": "44799f76403f9312b72e6742472961eee61c18a9",
+        "revCount": 244,
         "type": "git",
         "url": "https://git.thalheim.io/Mic92/retiolum"
       },
@@ -493,6 +493,7 @@
         "retiolum": "retiolum",
         "s3photoalbum": "s3photoalbum",
         "tfenv": "tfenv",
+        "vpub-plus-plus": "vpub-plus-plus",
         "wallpaper-generator": "wallpaper-generator",
         "zk-nvim": "zk-nvim",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
@@ -550,6 +551,26 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "vpub-plus-plus": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1665669014,
+        "narHash": "sha256-jG6qVRjfsclzGM33htFniFhR53/jgGBRTj4hgMzsyno=",
+        "owner": "pinpox",
+        "repo": "vpub-plus-plus",
+        "rev": "a93fff9fac79828fe1f197cb6538eb3a7a991e05",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "vpub-plus-plus",
         "type": "github"
       }
     },

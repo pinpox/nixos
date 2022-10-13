@@ -134,6 +134,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vpub-plus-plus = {
+      url = "github:pinpox/vpub-plus-plus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # helix-editor = {
     #   url = "github:helix-editor/helix";
     #   inputs.nixpkgs.follows = "nixpkgs";
