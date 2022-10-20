@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, go-karma-bot, retiolum, mc3000, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -42,6 +42,7 @@
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer
     go-karma-bot.nixosModules.go-karma-bot
+    vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
 
   # Karmabot for IRC channel
@@ -140,6 +141,15 @@
     };
   };
 
+  lollypops.secrets.files."vpub-plus-plus/envfile" = { };
+
+  services.vpub-plus-plus = {
+    enable = true;
+    port = "6565";
+    title = "0cx Forum";
+    envFile = config.lollypops.secrets.files."vpub-plus-plus/envfile".path;
+  };
+
   services.nginx = {
     enable = true;
     recommendedOptimisation = true;
@@ -156,6 +166,13 @@
         forceSSL = true;
         enableACME = true;
         root = mc3000.packages.x86_64-linux.mc3000;
+      };
+
+
+      "forum.0cx.de" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://127.0.0.1:6565"; };
       };
 
 
