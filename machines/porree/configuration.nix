@@ -342,6 +342,8 @@
       clientIp = "192.168.7.1";
     };
 
+    services.ntfy-sh.enable = true;
+
     services.matrix-hook = {
       enable = true;
       httpAddress = "localhost";
