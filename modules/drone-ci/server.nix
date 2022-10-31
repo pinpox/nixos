@@ -2,9 +2,10 @@
 with lib;
 let
   cfg = config.pinpox.services.droneci;
-  # TODO remove when https://github.com/NixOS/nixpkgs/pull/124014 is merged in
-  # unstable
+  # TODO remove when this is fixed
+  # https://community.harness.io/t/drone-failes-to-start-with-pq-syntax-error-when-using-oss-tag/12721
   drone2 = pkgs.callPackage ../../packages/drone2 { };
+  # drone2 = pkgs.drone-oss;
 in
 {
 
