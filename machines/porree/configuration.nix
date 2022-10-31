@@ -1,25 +1,5 @@
 { matrix-hook, config, retiolum, ... }: {
 
-  # building '/nix/store/7hq3vrl14adyc1d5kw3v4m9b3055dwiv-nixos-rebuild.drv'...
-  # [porree:rebuild] building the system configuration...
-  # [porree:rebuild] trace: warning: The option `services.grafana.domain' defined in `/nix/store/rrxgvkplgqn32973zrcbv78w8h3k3p9c-source/modules/monitoring/grafana.nix' has been renamed to `services.grafana.settings.server.domain'.
-  # [porree:rebuild] trace: warning: The option `services.grafana.port' defined in `/nix/store/rrxgvkplgqn32973zrcbv78w8h3k3p9c-source/modules/monitoring/grafana.nix' has been renamed to `services.grafana.settings.server.http_port'.
-  # [porree:rebuild] trace: warning: The option `services.grafana.addr' defined in `/nix/store/rrxgvkplgqn32973zrcbv78w8h3k3p9c-source/modules/monitoring/grafana.nix' has been renamed to `services.grafana.settings.server.http_addr'.
-  # [porree:rebuild] trace: warning: A legacy Nextcloud install (from before NixOS 22.11) may be installed.
-  # [porree:rebuild]
-  # [porree:rebuild] After nextcloud24 is installed successfully, you can safely upgrade
-  # [porree:rebuild] to 25. The latest version available is nextcloud24.
-  # [porree:rebuild]
-  # [porree:rebuild] Please note that Nextcloud doesn't support upgrades across multiple major versions
-  # [porree:rebuild] (i.e. an upgrade from 16 is possible to 17, but not 16 to 18).
-  # [porree:rebuild]
-  # [porree:rebuild] The package can be upgraded by explicitly declaring the service-option
-  # [porree:rebuild] `services.nextcloud.package`.
-  # [porree:rebuild]
-  # [porree:rebuild] trace: warning: Provisioning Grafana datasources with options has been deprecated.
-  # [porree:rebuild] Use `services.grafana.provision.datasources.settings` or
-  # [porree:rebuild] `services.grafana.provision.datasources.path` instead.
-
   imports = [
     ./hardware-configuration.nix
     matrix-hook.nixosModule
