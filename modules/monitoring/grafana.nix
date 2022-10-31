@@ -32,8 +32,8 @@ in
       addr = "127.0.0.1";
 
       # Mail notifications
-      smtp = {
-        enable = true;
+      settings.smtp = {
+        enabled = true;
         host = "smtp.sendgrid.net:587";
         user = "apikey";
         passwordFile = "${config.lollypops.secrets.files."grafana/smtp-password".path}";
