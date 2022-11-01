@@ -1,6 +1,7 @@
 { self, config, pkgs, lib, utils, colorscheme, ... }:
 
 with lib;
+
 let
 
   cfg = config.pinpox.programs.nvim;
