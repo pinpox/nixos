@@ -72,11 +72,10 @@ local steps_packages() = std.flatMap(function(package) [
 
   steps: [
 	{
-      name: 'Notify',
+      name: 'Notify Test',
       commands: [
         "nix run nixpkgs#curl -- -u $ntfy-user:$ntfy-pass -H 'Title: $DRONE_REPO build: $DRONE_BUILD_STATUS' -H 'Priority: low' -H 'Tags: drone,build,nixos' -d '[$DRONE_REPO] $DRONE_COMMIT '$DRONE_COMMIT_MESSAGE': $DRONE_BUILD_STATUS' https://push.pablo.tools/drone_build ",
       ],
-
 	}
     {
       name: 'Show flake info',
