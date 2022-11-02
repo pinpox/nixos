@@ -24,6 +24,7 @@ in
           base-url = "https://${ntfy-host}";
           auth-file = "/var/lib/ntfy-sh/user.db";
           auth-default-access = "deny-all";
+          upstream-base-url = "https://ntfy.sh";
           # https://github.com/binwiederhier/ntfy/issues/459
           web-root = "disable"; # Set to "app" to enable
         };
