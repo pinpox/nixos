@@ -1,5 +1,31 @@
 {
   "nodes": {
+    "alertmanager-ntfy": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1667470476,
+        "narHash": "sha256-R1f4ObDjuFuKriziYsbR7p9KFgpW5P0gDkkQxLsmTeY=",
+        "owner": "pinpox",
+        "repo": "alertmanager-ntfy",
+        "rev": "911bf2fa92c10c51c786a7a6a22c3157f131bd2e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "alertmanager-ntfy",
+        "type": "github"
+      }
+    },
     "dotfiles-awesome": {
       "inputs": {
         "flake-compat": [
@@ -47,11 +73,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1667077288,
-        "narHash": "sha256-bdC8sFNDpT0HK74u9fUkpbf1MEzVYJ+ka7NXCdgBoaA=",
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "6ee9ebb6b1ee695d2cacc4faa053a7b9baa76817",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
         "type": "github"
       },
       "original": {
@@ -135,11 +161,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1667234164,
-        "narHash": "sha256-oPMAvHZBDgamjmIQly5+sw2LtfKwY7qcWZZwKiwKQy8=",
+        "lastModified": 1667468181,
+        "narHash": "sha256-806/nrDW6e7bl4/oJEdAykYz/NaBuTUi7EUYArw2oic=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "722e8d65d3aba6f527100cc2d1539e4ca04d066f",
+        "rev": "93335810751f0404fe424e61ad58bc8e94bf8e9d",
         "type": "github"
       },
       "original": {
@@ -360,11 +386,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1667311639,
-        "narHash": "sha256-dvwXGcIFSWmT1+XDadQXUS0XOea4KOrOBEQwS4E38bE=",
+        "lastModified": 1667469493,
+        "narHash": "sha256-/IZkwnY/ZawCciZY4NVIF6FioZ40Si3fTx4ica7FRcY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "603aa23b61b4cc6c4078bdafb6ac699dacf80c60",
+        "rev": "539dbd0f420d86d9ed790693ce26599b9d041aa2",
         "type": "github"
       },
       "original": {
@@ -469,6 +495,7 @@
     },
     "root": {
       "inputs": {
+        "alertmanager-ntfy": "alertmanager-ntfy",
         "dotfiles-awesome": "dotfiles-awesome",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",

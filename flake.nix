@@ -75,6 +75,15 @@
       flake-utils.follows = "flake-utils";
     };
 
+    alertmanager-ntfy = {
+      url = "github:pinpox/alertmanager-ntfy";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
+      };
+    };
+
     matrix-hook.url = "github:pinpox/matrix-hook";
     matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";

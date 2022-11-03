@@ -1,8 +1,9 @@
-{ matrix-hook, config, retiolum, ... }: {
+{ matrix-hook, config, retiolum, alertmanager-ntfy, ... }: {
 
   imports = [
     ./hardware-configuration.nix
     matrix-hook.nixosModule
+    alertmanager-ntfy.nixosModules.default
     retiolum.nixosModules.retiolum
     # ./retiolum.nix
   ];
@@ -25,6 +26,7 @@
 
   lollypops.secrets.files = {
     "matrix-hook/envfile" = { };
+    "alertmanager-ntfy/envfile" = { };
     "bitwarden_rs/envfile" = { };
     "wireguard/private" = { };
     "nginx/blog.passwd" = {
@@ -343,6 +345,15 @@
     };
 
     services.ntfy-sh.enable = true;
+
+    services.alertmanager-ntfy = {
+      enable = true;
+      httpAddress = "localhost";
+      httpPort = "9099";
+      ntfyTopic = "https://push.pablo.tools/pinpox_alertmanager";
+      ntfyPriority = "default";
+      envFile = "${config.lollypops.secrets.files."alertmanager-ntfy/envfile".path}";
+    };
 
     services.matrix-hook = {
       enable = true;

@@ -207,13 +207,22 @@ in
             group_by = [ "instance" ];
             group_wait = "30s";
             group_interval = "2m";
-            repeat_interval = "2h";
+            repeat_interval = "24h";
           };
 
-          receivers = [{
-            name = "all";
-            webhook_configs = [{ url = "http://127.0.0.1:11000/alert"; }];
-          }];
+
+          receivers = [
+            {
+              name = "all";
+              webhook_configs = [
+                { url = "http://127.0.0.1:11000/alert"; } # matrix-hook
+                {
+                  url = with config.pinpox.services.alertmanager-ntfy;
+                    "http://${httpAddress}:${httpPort}";
+                } # alertmanger-ntfy
+              ];
+            }
+          ];
         };
       };
     };
