@@ -179,6 +179,23 @@
             baseURL = config.services.gitea.rootUrl;
           };
         }
+        {
+          type = "github";
+          id = "github";
+          name = "GitHub";
+
+          config = {
+
+            clientID = "$GITHUB_CLIENT_ID";
+            clientSecret = "$GITHUB_CLIENT_SECRET";
+            redirectURI = "https://login.0cx.de/callback";
+
+            orgs = [
+              { name = "lounge-rocks"; }
+              # {name = "krosse-flagge";}
+            ];
+          };
+        }
       ];
 
       staticClients = [
