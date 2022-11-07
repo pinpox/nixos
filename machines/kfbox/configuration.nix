@@ -141,13 +141,62 @@
     };
   };
 
-  lollypops.secrets.files."vpub-plus-plus/envfile" = { };
 
-  services.vpub-plus-plus = {
+  lollypops.secrets.files = {
+    "dex/envfile" = { };
+  };
+
+  systemd.services.dex.serviceConfig.StateDirectory = "dex";
+
+  services.dex = {
     enable = true;
-    port = "6565";
-    title = "0cx Forum";
-    envFile = config.lollypops.secrets.files."vpub-plus-plus/envfile".path;
+    environmentFile = config.lollypops.secrets.files."dex/envfile".path;
+    settings = {
+
+      # External url
+      issuer = "https://login.0cx.de";
+      storage = {
+        type = "sqlite3";
+        config.file = "/var/lib/dex/dex.db";
+      };
+
+      web.http = "127.0.0.1:5556";
+
+      # enablePasswordDB = true;
+
+      connectors = [
+        {
+          type = "gitea";
+          # Required field for connector id.
+          id = "gitea";
+          # Required field for connector name.
+          name = "Gitea";
+          config = {
+            # Credentials can be string literals or pulled from the environment.
+            clientID = "$GITEA_CLIENT_ID";
+            clientSecret = "$GITEA_CLIENT_SECRET";
+            redirectURI = "https://login.0cx.de/callback";
+            baseURL = config.services.gitea.rootUrl;
+          };
+        }
+      ];
+
+      staticClients = [
+        {
+          id = "forum-app";
+          name = "forum-app";
+          redirectURIs = [ "http://localhost:8000/authenticate" ];
+          secretEnv = "CLIENT_SECRET_RUST_FORUM";
+        }
+        {
+          id = "hedgedoc";
+          name = "hedgedoc";
+          redirectURIs = [ "https://pads.0cx.de/auth/oauth2/callback" ];
+          secretEnv = "CLIENT_SECRET_HEDGEDOC";
+        }
+      ];
+
+    };
   };
 
   services.nginx = {
@@ -168,13 +217,11 @@
         root = mc3000.packages.x86_64-linux.mc3000;
       };
 
-
-      "forum.0cx.de" = {
+      "login.0cx.de" = {
         forceSSL = true;
         enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:6565"; };
+        locations."/" = { proxyPass = "http://127.0.0.1:5556"; };
       };
-
 
       "git.0cx.de" = {
         forceSSL = true;

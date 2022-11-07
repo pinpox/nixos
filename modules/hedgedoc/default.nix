@@ -25,14 +25,16 @@ in
       # Forbid anonymous usage
       "CMD_ALLOW_ANONYMOUS=false"
 
-      # oauth2 with gitea
-      "CMD_OAUTH2_BASEURL=https://git.0cx.de"
-      "CMD_OAUTH2_TOKEN_URL=https://git.0cx.de/login/oauth/access_token"
-      "CMD_OAUTH2_AUTHORIZATION_URL=https://git.0cx.de/login/oauth/authorize"
-      "CMD_OAUTH2_USER_PROFILE_URL=https://git.0cx.de/login/oauth/userinfo"
-      "CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username"
-      "CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=preferred_username"
-      "CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email"
+      # oauth2 with dex
+      "CMD_OAUTH2_BASEURL=https://login.0cx.de"
+      "CMD_OAUTH2_AUTHORIZATION_URL=https://login.0cx.de/auth"
+      "CMD_OAUTH2_TOKEN_URL=https://login.0cx.de/token"
+      "CMD_OAUTH2_USER_PROFILE_URL='https://login.0cx.de/userinfo'"
+      "CMD_OAUTH2_PROVIDERNAME=dex"
+      "CMD_OAUTH2_SCOPE='openid email profile'"
+      "CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR='preferred_username'"
+      "CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR='name'"
+      "CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR='email'"
     ];
 
     # Create system user and group
