@@ -163,13 +163,23 @@
       web.http = "127.0.0.1:5556";
 
       # enablePasswordDB = true;
+      # telemetry.http = "127.0.0.1:5558";
+
+      logger = {
+        #   level: "debug"
+        format = "json"; # can also be "text"
+      };
+
+      frontend = {
+        issuer = "https://login.0cx.de";
+        logoURL = "https://0cx.de/dance.gif";
+        theme = "dark";
+      };
 
       connectors = [
         {
           type = "gitea";
-          # Required field for connector id.
           id = "gitea";
-          # Required field for connector name.
           name = "Gitea";
           config = {
             # Credentials can be string literals or pulled from the environment.
@@ -183,13 +193,10 @@
           type = "github";
           id = "github";
           name = "GitHub";
-
           config = {
-
             clientID = "$GITHUB_CLIENT_ID";
             clientSecret = "$GITHUB_CLIENT_SECRET";
             redirectURI = "https://login.0cx.de/callback";
-
             orgs = [
               { name = "lounge-rocks"; }
               # {name = "krosse-flagge";}
@@ -212,7 +219,6 @@
           secretEnv = "CLIENT_SECRET_HEDGEDOC";
         }
       ];
-
     };
   };
 
