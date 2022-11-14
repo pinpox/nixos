@@ -1,5 +1,5 @@
 # Configuration file for ahorn
-{ options, config, retiolum, ... }: {
+{ options, config, retiolum, pkgs, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -38,6 +38,9 @@
     };
   };
 
+
+  # Support QMK/Via
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
 
   hardware.sane.enable = true;
   users.users.pinpox.extraGroups = [ "scanner" "lp" ];
