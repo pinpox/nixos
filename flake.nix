@@ -3,6 +3,11 @@
 
   inputs = {
 
+    pinpox-keys = {
+      url = "https://github.com/pinpox.keys";
+      flake = false;
+    };
+
     mayniklas-keys = {
       url = "https://github.com/MayNiklas.keys";
       flake = false;
@@ -330,9 +335,5 @@
           #       builtins.filter
           #         (p: builtins.pathExists (./modules + "/${p}/test.nix"))
           #         (builtins.attrNames (builtins.readDir ./modules))));
-
-          # TODO we probably should set some default app and/or package
-          # defaultPackage = packages.hello;
-          # defaultApp = apps.hello;
         });
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, pinpox-keys, ... }:
 with lib;
 let cfg = config.pinpox.services.openssh;
 in
@@ -26,10 +26,7 @@ in
     };
 
     users.users.root.openssh.authorizedKeys.keyFiles = [
-      (pkgs.fetchurl {
-        url = "https://github.com/pinpox.keys";
-        sha256 = "sha256-Cf/PSZemROU/Y0EEnr6A+FXE0M3+Kso5VqJgomGST/U=";
-      })
+      pinpox-keys
     ];
   };
 }
