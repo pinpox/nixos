@@ -266,7 +266,7 @@
     # All packages in the ./packages subfolder are also added to the flake.
     # flake-utils is used for this part to make each package available for each
     # system. This works as all packages are compatible with all architectures
-    (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
+    (flake-utils.lib.eachSystem [ "aarch64-linux" "x86_64-linux" ])
       (system:
         let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
         in
@@ -296,12 +296,12 @@
             let
               configFlake = self;
               # {
-              # nixosConfigurations = {
-              #   host1 = nixpkgs.lib.nixosSystem {
-              #     system = "x86_64-linux";
-              #     modules = [ lollypops.nixosModules.lollypops ];
+              #   nixosConfigurations = {
+              #     host1 = nixpkgs.lib.nixosSystem {
+              #       system = "x86_64-linux";
+              #       modules = [ lollypops.nixosModules.lollypops ];
+              #     };
               #   };
-              # };
               # };
             in
             {
@@ -311,7 +311,6 @@
               # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
             };
 
-          # defaultApp = apps.hello-custom;
           # Checks to run with `nix flake check -L`, will run in a QEMU VM.
           # Looks for all ./modules/<module name>/test.nix files and adds them to
           # the flake's checks output. The test.nix file is optional and may be
