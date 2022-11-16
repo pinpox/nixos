@@ -6,6 +6,8 @@ require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 
 -- require'lspconfig'.rls.setup{}
+--
+require'lspconfig'.nil_ls.setup{}
 
 
 require'lspconfig'.sumneko_lua.setup {
@@ -52,6 +54,7 @@ require'lspconfig'.sumneko_lua.setup {
     },
     -- on_attach = custom_attach,
 }
+
 
 require'lspconfig'.jsonls.setup {
 

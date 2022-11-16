@@ -26,6 +26,7 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
+      nil
       nodePackages.pyright # LSP python
       nodePackages.yaml-language-server # LSP yaml
       nodePackages.vscode-json-languageserver-bin # LSP json
