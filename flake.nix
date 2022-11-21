@@ -3,6 +3,8 @@
 
   inputs = {
 
+    smos.url = "github:NorfairKing/smos";
+
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
