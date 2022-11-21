@@ -231,6 +231,7 @@
           imports = [
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/desktop.nix
+            lollypops.hmModule
           ] ++
           (builtins.attrValues self.homeManagerModules);
         };

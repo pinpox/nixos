@@ -13,6 +13,9 @@ in
   config = mkIf cfg.enable {
 
 
+    services.lollypops-hm-test.enable = true;
+
+
     programs.fzf = {
       enable = true;
       enableZshIntegration = true;

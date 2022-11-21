@@ -1,4 +1,4 @@
-{ pkgs, nur, flake-self, lollypops, smos, ... }:
+{ pkgs, nur, flake-self, ... }:
 let
   vars = import ../vars.nix;
 in
@@ -18,6 +18,8 @@ in
       # inputs.neovim-nightly.overlay
     ];
   };
+
+
 
   # programs.neovim.package = pkgs.neovim-nightly;
 
@@ -39,11 +41,6 @@ in
   };
 
   home = {
-
-    imports = [
-      smos.homeManagerModules."x86_64-linux".default
-      # lollypops.hmModule 
-    ];
     # Install these packages for my user
     packages = with pkgs; [
       exa
