@@ -129,15 +129,22 @@
     mailerPasswordFile = "${config.lollypops.secrets.files."gitea/mailer-pw".path}";
 
     settings = {
-      mailer = {
+
+      service = {
         DISABLE_REGISTRATION = true;
+        REQUIRE_SIGNIN_VIEW = true;
+      };
+
+      mailer = {
         ENABLED = true;
         FROM = "git@0cx.de";
         MAILER_TYPE = "smtp";
         IS_TLS_ENABLED = false;
         USER = "mail@0cx.de";
         HOST = "r19.hallo.cloud:587";
+
       };
+      markdown.ENABLE_MATH = true;
     };
   };
 
