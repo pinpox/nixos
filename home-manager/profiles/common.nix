@@ -3,10 +3,6 @@ let
   vars = import ../vars.nix;
 in
 {
-  imports = [
-    smos.homeManagerModules."x86_64-linux".default
-    # lollypops.hmModule 
-  ];
 
   # lollypops-hm-test
 
@@ -44,6 +40,10 @@ in
 
   home = {
 
+    imports = [
+      smos.homeManagerModules."x86_64-linux".default
+      # lollypops.hmModule 
+    ];
     # Install these packages for my user
     packages = with pkgs; [
       exa
