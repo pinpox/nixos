@@ -1,8 +1,14 @@
-{ pkgs, nur, flake-self, ... }:
+{ pkgs, nur, flake-self, lollypops, smos, ... }:
 let
   vars = import ../vars.nix;
 in
 {
+  imports = [
+    smos.homeManagerModules."x86_64-linux".default
+    # lollypops.hmModule 
+  ];
+
+  # lollypops-hm-test
 
   # Home-manager nixpkgs config
   nixpkgs = {
