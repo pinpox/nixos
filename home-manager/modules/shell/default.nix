@@ -12,9 +12,7 @@ in
   imports = [ ./starship.nix ./zsh.nix ];
   config = mkIf cfg.enable {
 
-
-    services.lollypops-hm-test.enable = true;
-
+    lollypops.secrets.files."usertest" = { };
 
     programs.fzf = {
       enable = true;
