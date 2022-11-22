@@ -24,7 +24,7 @@
     };
 
     lollypops = {
-      url = "github:pinpox/lollypops";
+      url = "github:pinpox/lollypops/add-home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
