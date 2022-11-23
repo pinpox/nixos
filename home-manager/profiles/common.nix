@@ -1,4 +1,4 @@
-{ pkgs, nur, flake-self, ... }:
+{ pkgs, nur, flake-self, config, ... }:
 let
   vars = import ../vars.nix;
 in
@@ -19,7 +19,11 @@ in
     ];
   };
 
-
+  lollypops.secrets = {
+    cmd-name-prefix = "nixos-secrets/users/pinpox/";
+    default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
+    files."usertest" = { };
+  };
 
   # programs.neovim.package = pkgs.neovim-nightly;
 

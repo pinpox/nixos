@@ -24,10 +24,8 @@
     };
 
     lollypops = {
-      url = "github:pinpox/lollypops/add-home-manager";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      url = "github:pinpox/lollypops";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     promterm.url = "github:pinpox/promterm";
@@ -222,6 +220,7 @@
           imports = [
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/server.nix
+            lollypops.hmModule
           ] ++
           (builtins.attrValues self.homeManagerModules);
         };
