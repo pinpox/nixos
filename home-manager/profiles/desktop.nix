@@ -23,6 +23,8 @@
       git.enable = true;
     };
 
+    services.ntfy-notify.enable = true;
+
     programs = {
       alacritty.enable = true;
       zellij.enable = true;
@@ -113,35 +115,6 @@
       ];
     })
   ];
-
-
-  # lollypops.secrets.files."ntfy/users/pinpox" = { };
-
-
-  systemd.user.services = {
-    service-name = {
-      Unit = {
-        Description = "ntfy.sh desktop notifications";
-        After = "network.target";
-      };
-
-      Service = {
-        ExecStart = ''
-          ${pkgs.ntfy-sh}/bin/ntfy subscribe -u $NTFY_USER:$NTFY_PASS 'https://push.pablo.tools/pinpox_backups,pinpox_alertmanager' '${pkgs.libnotify}/bin/notify-send "$title" "$m"'
-          # ${pkgs.ntfy-sh}/bin/ntfy subscribe -u pinpox:pinpox 'https://push.pablo.tools/pinpox_backups,pinpox_alertmanager' '${pkgs.libnotify}/bin/notify-send "$title" "$m"'
-        '';
-
-        Environment = [ "PATH=${pkgs.bash}/bin:/run/wrappers/bin" "DISPLAY=:0" ];
-
-        # EnvironmentFile = [ config.lollypops.secrets.files."ntfy/users/pinpox".path ];
-        # ntfy subscribe -u pinpox:pinpox 'https://push.pablo.tools/pinpox_backups'  
-        Restart = "on-failure";
-      };
-      # Install = {
-      #   WantedBy = "multi-user.target";
-      # };
-    };
-  };
 
   xdg = {
     enable = true;
