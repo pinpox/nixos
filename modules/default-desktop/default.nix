@@ -94,6 +94,50 @@ in
         xserver.enable = true;
         openssh.enable = true;
         borg-backup.enable = true;
+        restic-client = {
+          backup-paths-onsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
+
+          backup-paths-exclude = [
+
+            "*.pyc"
+            "*/cache2"
+            "*/.go/pkg"
+            "*/.local/share/Steam"
+            "*/.config/chromium"
+            "*/.rustup"
+            "*/.config/discord"
+            "*/.container-diff"
+            "*/.gvfs/"
+            "*/.local/share/Trash"
+            "*/.mozilla/firefox"
+            "*/.npm/_cacache"
+            "*/.thumbnails"
+            "*/.ts3client"
+            "*/.vagrant.d"
+            "*/.vim"
+            "*/.vimtemp"
+            "*/Cache"
+            "*/Downloads"
+            "*/Seafile"
+            "*/.nextcloud"
+
+            "/home/pinpox/code"
+            # "*/code/nixpkgs"
+            # "/home/*/code/**/target/debug"
+            # "/home/*/code/github.com/pinpox/nixpkgs"
+            # "/home/*/code/github.com/NixOS/nixpkgs"
+
+            "*/VirtualBox VMs"
+            "discord/Cache"
+
+            "*/.BurpSuite"
+            "*/.cache"
+            "*/.cargo"
+            "*/.config/Signal"
+            "*/.arduino15/packages"
+            "*/.platformio"
+          ];
+        };
       };
 
       metrics.node.enable = true;
