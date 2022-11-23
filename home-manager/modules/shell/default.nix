@@ -8,11 +8,8 @@ in
 
   options.pinpox.defaults.shell = { enable = mkEnableOption "shell defaults"; };
 
-
   imports = [ ./starship.nix ./zsh.nix ];
   config = mkIf cfg.enable {
-
-    lollypops.secrets.files."usertest" = { };
 
     programs.fzf = {
       enable = true;
