@@ -4,8 +4,6 @@ let
 in
 {
 
-  # lollypops-hm-test
-
   # Home-manager nixpkgs config
   nixpkgs = {
 
@@ -19,10 +17,10 @@ in
     ];
   };
 
+  # Lollypops user secrets defaults
   lollypops.secrets = {
     cmd-name-prefix = "nixos-secrets/users/pinpox/";
     default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
-    files."usertest" = { };
   };
 
   # programs.neovim.package = pkgs.neovim-nightly;
