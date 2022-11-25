@@ -123,6 +123,11 @@ lib.mapAttrsToList
       description = "{{$labels.hostname}} not backed up for loganr than 10 hours.";
     };
 
+    host_down = {
+      condition = ''up{job="node-stats", instance!~"ahorn.wireguard:9100|kartoffel.wireguard:9100|mega.wireguard:9100"} == 0'';
+      description = "{{$labels.hostname}} is down!";
+    };
+
     # service_not_running = {
     #   condition = ''systemd_units_active_code{name=~"teamspeak3-server.service|tt-rss.service", sub!="running"}'';
     #   description = "{{$labels.instance}} should have a running {{$labels.name}}.";
