@@ -1,4 +1,4 @@
-{ lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, dotfiles-awesome, promterm, ... }:
+{ lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, promterm, ... }:
 with lib;
 let cfg = config.pinpox.desktop;
 in
@@ -43,6 +43,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    # programs.sway.enable = true;
 
     # Enable networkmanager
     networking.networkmanager.enable = true;
@@ -56,7 +57,7 @@ in
     # there.
     # home-manager.extraSpecialArgs = flake-self.inputs;
     home-manager.extraSpecialArgs = {
-      inherit wallpaper-generator dotfiles-awesome flake-self nur promterm;
+      inherit wallpaper-generator flake-self nur promterm;
     };
 
     nixpkgs.overlays = [
@@ -91,7 +92,7 @@ in
       };
 
       services = {
-        xserver.enable = true;
+        xserver.enable = false;
         openssh.enable = true;
         borg-backup.enable = true;
         restic-client = {

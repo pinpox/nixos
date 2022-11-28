@@ -3,14 +3,52 @@
 , lib
 , nur
 , wallpaper-generator
-, dotfiles-awesome
+  # , dotfiles-awesome
 , ...
 }: {
 
   home.file = {
-    ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
+    # ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
     ".local/share/wallpaper-generator".source = wallpaper-generator;
   };
+
+  home.keyboard = {
+    variant = "colemak";
+
+    layout = "us";
+    options = "caps:swapescape";
+  };
+
+  wayland.windowManager.sway = {
+    enable = true;
+    config = rec {
+      modifier = "Mod4";
+      # Use kitty as default terminal
+      terminal = "${pkgs.lxterminal}/bin/lxterminal";
+      startup = [
+        # Launch Firefox on start
+        # { command = "firefox"; }
+      ];
+      # input = {
+      #   "*" = {
+      #     xkb_keyboard = "us";
+      #     xkb_variant = "colemak";
+      #   };
+      # };
+
+      # output = {
+      ##Phillips
+      #DP-1 = {
+      #  mode = "2560x1440@60";
+      #};
+      ## NZXT
+      #DP-2 = {
+      #  mode = "2560x1440@60";
+      #};
+      #};
+    };
+  };
+
 
   pinpox = {
     defaults = {
@@ -39,7 +77,7 @@
       zk.enable = true;
       rofi.enable = false;
       go.enable = true;
-      awesome.enable = true;
+      awesome.enable = false;
     };
   };
 
