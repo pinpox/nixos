@@ -10,6 +10,8 @@ in
 
   config = mkIf cfg.enable {
 
+    _module.args.pinpox-keys = pinpox-keys;
+
     # Enable the OpenSSH daemon.
     services.openssh = {
       enable = true;
