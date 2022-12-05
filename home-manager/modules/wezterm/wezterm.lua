@@ -45,6 +45,10 @@ return {
 		-- disable_default_key_bindings = true,
 		debug_key_events = true,
 
+		-- for tiling window managers
+		adjust_window_size_when_changing_font_size = false,
+
+
 		keys = {
 				-- Panes
 				{ key = "\\",   mods="LEADER|SHIFT",     action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
