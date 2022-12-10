@@ -73,7 +73,7 @@
 
       za = "${./zellij-chooser}";
 
-      upterm = "${pkgs.upterm}/bin/upterm/upterm host --server ssh://upterm.thalheim.io:2323 --force-command 'zellij attach pair-programming' -- zellij attach --create pair-programming";
+      upterm = "${pkgs.upterm}/bin/upterm host --server ssh://upterm.thalheim.io:2323 --force-command 'zellij attach pair-programming' -- zellij attach --create pair-programming";
     };
 
     prezto = {
