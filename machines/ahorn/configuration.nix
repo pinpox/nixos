@@ -8,8 +8,8 @@
   ];
 
   # often hangs
-  systemd.services.systemd-networkd-wait-online.enable = false;
-  systemd.services.NetworkManager-wait-online.enable = false;
+  # systemd.services.systemd-networkd-wait-online.enable = false;
+  # systemd.services.NetworkManager-wait-online.enable = false;
 
   lollypops = {
 
