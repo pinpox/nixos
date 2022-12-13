@@ -110,6 +110,22 @@
       '';
     };
 
+  services.garage = {
+    enable = true;
+    # extraEnvironment = { RUST_BACKTRACE = "yes"; }
+
+    # https://garagehq.deuxfleurs.fr/reference_manual/configuration.html
+    settings = {
+
+      # https://garagehq.deuxfleurs.fr/reference_manual/configuration.html#replication_mode
+      # replication_mode = "none";
+
+      metadata_dir = "/var/lib/garage/meta";
+      data_dir = "/var/lib/garage/data";
+
+    };
+  };
+
   pinpox = {
 
     server = {
