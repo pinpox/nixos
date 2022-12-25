@@ -47,7 +47,6 @@ in
     packages = with pkgs; [
       exa
       htop
-      httpie
       pkg-config
       tealdeer
       unzip

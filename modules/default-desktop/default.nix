@@ -165,6 +165,7 @@ in
       # wezterm-nightly
       arandr
       binutils
+      file
       git
       gnumake
       go
