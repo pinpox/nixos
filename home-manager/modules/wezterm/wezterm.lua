@@ -76,7 +76,7 @@ return {
 
 	-- Default font
 	font = wezterm.font_with_fallback( {
-		{family="Iosevka Term", weight=600, stretch="Expanded"},
+		{family="Berkeley Mono" },
 		"Noto Color Emoji",
 	}),
 
@@ -99,14 +99,14 @@ return {
 		--						"Noto Color Emoji",
 		--				}),
 		--		},
-		{
-			-- Bold Italic
-			intensity="Bold", italic=true,
-			font = wezterm.font_with_fallback( {
-				{family="Iosevka Term", weight=700, stretch="Expanded"},
-				"Noto Color Emoji",
-			}),
-		},
+		-- {
+		-- 	-- Bold Italic
+		-- 	intensity="Bold", italic=true,
+		-- 	font = wezterm.font_with_fallback( {
+		-- 		{family="Iosevka Term", weight=700, stretch="Expanded"},
+		-- 		"Noto Color Emoji",
+		-- 	}),
+		-- },
 	},
 
 		-- -- Default font

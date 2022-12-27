@@ -30,17 +30,18 @@ in
 
         font = {
           normal = {
-            family = "Recursive Mono Linear Static";
+            family = "Berkeley Mono";
             # style = fonts.normal.style;
           };
           bold = {
-            family = "Recursive Mono Linear Static";
+            family = "Berkeley Mono";
             style = fonts.bold.style;
           };
           italic = {
-            family = "Recursive Mono Linear Static";
+            family = "Berkeley Mono";
             style = fonts.italic.style;
           };
+          size = 10;
         };
 
         cursor = { style = "Beam"; };
