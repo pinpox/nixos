@@ -61,17 +61,17 @@ in
           };
 
           focusedInactive = {
-            background = "#${colorscheme.BrightGrey}";
-            border = "#${colorscheme.BrightGrey}";
-            childBorder = "#${colorscheme.BrightGrey}";
+            background = "#${colorscheme.BrightBlack}";
+            border = "#${colorscheme.BrightBlack}";
+            childBorder = "#${colorscheme.BrightBlack}";
             indicator = "#${colorscheme.Black}";
             text = "#${colorscheme.Black}";
           };
 
           unfocused = {
             background = "#${colorscheme.Black}";
-            border = "#${colorscheme.BrightGrey}";
-            childBorder = "#${colorscheme.BrightGrey}";
+            border = "#${colorscheme.BrightBlack}";
+            childBorder = "#${colorscheme.BrightBlack}";
             indicator = "#${colorscheme.Black}";
             text = "#${colorscheme.Blue}";
           };

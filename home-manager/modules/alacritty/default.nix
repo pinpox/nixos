@@ -64,14 +64,14 @@ in
             white = "0x${colorscheme.White}";
           };
           bright = {
-            black = "0x${colorscheme.BrightGrey}";
-            red = "0x${colorscheme.DarkYellow}";
-            green = "0x${colorscheme.DarkGrey}";
-            yellow = "0x${colorscheme.Grey}";
-            blue = "0x${colorscheme.DarkWhite}";
-            magenta = "0x${colorscheme.BrightWhite}";
-            cyan = "0x${colorscheme.BrightRed}";
-            white = "0x${colorscheme.DarkGreen}";
+            black = "0x${colorscheme.BrightBlack}";
+            red = "0x${colorscheme.BrightRed}";
+            green = "0x${colorscheme.BrightGreen}";
+            yellow = "0x${colorscheme.BrightYellow}";
+            blue = "0x${colorscheme.BrightBlue}";
+            magenta = "0x${colorscheme.BrightMagenta}";
+            cyan = "0x${colorscheme.BrightCyan}";
+            white = "0x${colorscheme.BrightWhite}";
           };
         };
 

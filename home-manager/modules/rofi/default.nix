@@ -40,7 +40,7 @@ in
             foreground = "#${colorscheme.White}";
             backgroundAlt = "#${colorscheme.Black}";
             highlight = {
-              background = "#${colorscheme.Grey}";
+              background = "#${colorscheme.BrightBlack}";
               foreground = "#${colorscheme.DarkGreen}";
             };
           };

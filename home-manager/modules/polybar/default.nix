@@ -110,12 +110,12 @@ in
 
           # unfocused                  = Inactive workspace on any monitor
           label-unfocused = "%name%";
-          label-unfocused-background = "${colorscheme.DarkGrey}";
+          label-unfocused-background = "${colorscheme.BrightBlack}";
           label-unfocused-padding = 2;
 
           # visible                    = Active workspace on unfocused monitor
           label-visible = "%name%";
-          label-visible-background = "#${colorscheme.BrightGrey}";
+          label-visible-background = "#${colorscheme.BrightBlack}";
           label-visible-padding = 2;
 
           # urgent                     = Workspace with urgency hint set

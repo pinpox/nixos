@@ -25,8 +25,8 @@ in
         "--color 'preview-bg:#${colorscheme.Black}'" # Preview window background
         "--color 'hl:#${colorscheme.Yellow}'" # Highlighted substrings
         "--color 'fg+:#${colorscheme.Blue}'" # Text (current line)
-        "--color 'bg+:#${colorscheme.Grey}'" # Background (current line)
-        "--color 'gutter:#${colorscheme.Grey}'" # Gutter on the left (defaults to bg+)
+        "--color 'bg+:#${colorscheme.BrightBlack}'" # Background (current line)
+        "--color 'gutter:#${colorscheme.BrightBlack}'" # Gutter on the left (defaults to bg+)
         "--color 'hl+:#${colorscheme.Magenta}'" # Highlighted substrings (current line)
         "--color 'info:#${colorscheme.Magenta}'" # Info line (match counters)
         "--color 'border:#${colorscheme.Blue}'" # Border around the window (--border and --preview)

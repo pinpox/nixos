@@ -18,35 +18,35 @@ let
   materia_colors = pkgs.writeTextFile {
     name = "gtk-generated-colors";
     text = ''
-      BTN_BG=${colorscheme.Grey}
+      BTN_BG=${colorscheme.BrightBlack}
       BTN_FG=${colorscheme.BrightWhite}
 
       FG=${colorscheme.White}
       BG=${colorscheme.Black}
 
-      HDR_BTN_BG=${colorscheme.DarkGrey}
+      HDR_BTN_BG=${colorscheme.BrightBlack}
       HDR_BTN_FG=${colorscheme.White}
 
       ACCENT_BG=${colorscheme.Green}
       ACCENT_FG=${colorscheme.Black}
 
       HDR_FG=${colorscheme.White}
-      HDR_BG=${colorscheme.Grey}
+      HDR_BG=${colorscheme.BrightBlack}
 
-      MATERIA_SURFACE=${colorscheme.Grey}
-      MATERIA_VIEW=${colorscheme.DarkGrey}
+      MATERIA_SURFACE=${colorscheme.BrightBlack}
+      MATERIA_VIEW=${colorscheme.BrightBlack}
 
-      MENU_BG=${colorscheme.Grey}
+      MENU_BG=${colorscheme.BrightBlack}
       MENU_FG=${colorscheme.BrightWhite}
 
       SEL_BG=${colorscheme.Blue}
       SEL_FG=${colorscheme.Magenta}
 
-      TXT_BG=${colorscheme.Grey}
+      TXT_BG=${colorscheme.BrightBlack}
       TXT_FG=${colorscheme.BrightWhite}
 
       WM_BORDER_FOCUS=${colorscheme.White}
-      WM_BORDER_UNFOCUS=${colorscheme.BrightGrey}
+      WM_BORDER_UNFOCUS=${colorscheme.BrightBlack}
 
       UNITY_DEFAULT_LAUNCHER_STYLE=False
       NAME=generated
