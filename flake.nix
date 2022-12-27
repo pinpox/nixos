@@ -274,8 +274,7 @@
     (flake-utils.lib.eachSystem [ "aarch64-linux" "x86_64-linux" ])
       (system:
         let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
-        in
-        rec {
+        in {
           # Custom packages added via the overlay are selectively exposed here, to
           # allow using them from other flakes that import this one.
           packages = flake-utils.lib.flattenTree {
