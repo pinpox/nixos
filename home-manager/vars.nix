@@ -51,7 +51,8 @@
     Black = "000000"; # #000000
     BrightBlack = "2c2d3a"; # #2c2d3a
 
-    White = "FDF7CD"; # #FDF7CD
+    # White = "FDF7CD"; # #FDF7CD
+    White = "fefbe6"; # #fefbe6
     BrightWhite = "ECEFF4"; # #ECEFF4
 
     Yellow = "ff9900"; # #ff9900

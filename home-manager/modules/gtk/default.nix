@@ -104,8 +104,8 @@ in
       enable = true;
 
       font = {
-        name = "Iosevka Semi-Bold Expanded";
-        package = pkgs.iosevka;
+        name = "Berkeley Mono";
+        # package = pkgs.iosevka;
       };
 
       iconTheme = {
@@ -124,13 +124,6 @@ in
           gtk-cursor-theme-name = "breeze";
           gtk-application-prefer-dark-theme = 1;
         };
-        # Set semibold and expanded version for iosevka
-        extraCss = ''
-          * {
-                  font-weight: 500;
-                  font-stretch: 'expanded';
-          }
-        '';
       };
     };
 

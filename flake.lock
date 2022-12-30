@@ -190,32 +190,6 @@
         "type": "github"
       }
     },
-    "iosevka-custom": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1660903398,
-        "narHash": "sha256-Kdbw/RQjPCAwG2ZqxIGNswpfTu1NwUV8+Pl4hpfoX9A=",
-        "owner": "pinpox",
-        "repo": "iosevka-custom",
-        "rev": "400bd6d0063e2b9918c0af84b360b60eca3400d8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "iosevka-custom",
-        "type": "github"
-      }
-    },
     "krops": {
       "flake": false,
       "locked": {
@@ -516,7 +490,6 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
-        "iosevka-custom": "iosevka-custom",
         "krops": "krops",
         "lollypops": "lollypops",
         "matrix-hook": "matrix-hook",

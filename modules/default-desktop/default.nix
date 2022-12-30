@@ -178,7 +178,6 @@ in
       openvpn
       python
       recursive
-      # iosevka
       ripgrep
       ruby
       time
