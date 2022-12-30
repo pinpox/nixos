@@ -17,9 +17,6 @@
 
   lollypops.deployment.host = "94.16.108.229";
 
-  # often hangs
-  systemd.services.systemd-networkd-wait-online.enable = false;
-  systemd.services.NetworkManager-wait-online.enable = false;
 
   # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
