@@ -20,7 +20,14 @@ in
     };
 
     services.nextcloud = {
+
+
       enable = true;
+
+      # Disable broken RC4 cipher which is only necessary if you're using
+      # Nextcloud's server-side encryption.
+      # https://github.com/NixOS/nixpkgs/pull/198470
+      enableBrokenCiphersForSSE = false;
 
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
