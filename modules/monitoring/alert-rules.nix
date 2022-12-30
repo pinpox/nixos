@@ -120,12 +120,12 @@ lib.mapAttrsToList
 
     restic_backup_too_old = {
       condition = ''(time() - restic_snapshots_latest_time)/(60*60) > 10'';
-      description = "{{$labels.hostname}} not backed up for loganr than 10 hours.";
+      description = "{{$labels.instance}} not backed up for loganr than 10 hours.";
     };
 
     host_down = {
       condition = ''up{job="node-stats", instance!~"ahorn.wireguard:9100|kartoffel.wireguard:9100|mega.wireguard:9100"} == 0'';
-      description = "{{$labels.hostname}} is down!";
+      description = "{{$labels.instance}} is down!";
     };
 
     # service_not_running = {
