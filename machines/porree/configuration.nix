@@ -15,7 +15,7 @@
     }];
   };
 
-  lollypops.deployment.host = "94.16.108.229";
+  lollypops.deployment.ssh.host = "94.16.108.229";
 
 
   # services.influxdb2.enable = true;
@@ -125,6 +125,8 @@
           extraConfig = ''
             access_log off;
             expires max;
+            add_header Access-Control-Allow-Origin *;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
           '';
         };
       };

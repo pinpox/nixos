@@ -26,6 +26,7 @@
     services.ntfy-notify.enable = true;
 
     programs = {
+      pandoc.enable = true;
       alacritty.enable = true;
       zellij.enable = true;
       chromium.enable = true;
@@ -141,6 +142,38 @@
 
   services = {
 
+    # espanso = {
+    #   enable = true;
+    #   settings = {
+    #     matches = [
+    #       {
+    #         # Simple text replacement
+    #         trigger = ":espanso";
+    #         replace = "Hi there!";
+    #       }
+    #       {
+    #         # Dates
+    #         trigger = ":date";
+    #         replace = "{{mydate}}";
+    #         vars = [{
+    #           name = "mydate";
+    #           type = "date";
+    #           params = { format = "%Y-%m-%d"; };
+    #         }];
+    #       }
+    #       {
+    #         # Shell commands
+    #         trigger = ":shell";
+    #         replace = "{{output}}";
+    #         vars = [{
+    #           name = "output";
+    #           type = "shell";
+    #           params = { cmd = "echo 'Hello from your shell'"; };
+    #         }];
+    #       }
+    #     ];
+    #   };
+    # };
     # Applets, shown in tray
     # Networking
     network-manager-applet.enable = true;
