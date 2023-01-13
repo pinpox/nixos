@@ -166,7 +166,7 @@
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs) final prev;
 
-      # Use nixpkgs-fmt for `nix fmt'
+      # Use nixpkgs-fmt for 'nix fmt'
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       # Output all modules in ./modules to flake. Modules should be in
