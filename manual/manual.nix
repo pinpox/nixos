@@ -23,7 +23,7 @@ let
   };
 
 in
-rec {
+{
 
   json = runCommandLocal "options.json" { inherit opts; } ''
     cat $opts/share/doc/nixos/options.json | \
