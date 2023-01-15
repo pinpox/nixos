@@ -22,7 +22,6 @@ in
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         bitwarden
         darkreader
-        https-everywhere
         ublock-origin
       ];
 
@@ -60,6 +59,7 @@ in
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "extensions.activeThemeID" = "default-theme@mozilla.org";
             "devtools.theme" = "dark";
+            "dom.security.https_only_mode" = "true"; # HTTPS everywhere
           };
 
           # userChrome = builtins.readFile

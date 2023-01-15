@@ -176,7 +176,6 @@ in
       nixfmt
       nodejs
       openvpn
-      python
       recursive
       ripgrep
       ruby
