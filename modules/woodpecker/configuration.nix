@@ -1,4 +1,4 @@
-{ self, config, pkgs, s3photoalbum, lib, go-karma-bot, retiolum, mc3000, vpub-plus-plus, pinpox-woodpecker, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -41,7 +41,7 @@
 
   # Karmabot for IRC channel
   lollypops.secrets.files."go-karma-bot/envfile" = { };
-  services.go-karma-bot.environmentFile = config.lollypops.secrets.files."go-karma-bot/envfile".path;
+  services.go-karma-bot.environmentFile = [ config.lollypops.secrets.files."go-karma-bot/envfile".path ];
   services.go-karma-bot.enable = true;
 
   pinpox = {
@@ -223,33 +223,21 @@
     };
   };
 
-
-  lollypops.secrets.files = {
-    "woodpecker/server-envfile" = { };
-    "woodpecker/agent-secret" = { };
-  };
-
   services.woodpecker-server = {
-
-    package = pinpox-woodpecker.packages.x86_64-linux.woodpecker-server;
     enable = true;
-    rootUrl = "https://build.0cx.de";
+    rootUrl = "https://ci.tecosaur.net";
     httpPort = 3030;
-    admins = "pinpox";
+    admins = "tec";
     database = {
       type = "postgres";
     };
-    giteaClientIdFile = "${config.lollypops.secrets.files."woodpecker/gitea-client-id".path}";
-    giteaClientSecretFile = "${config.lollypops.secrets.files."woodpecker/gitea-client-secret".path}";
-    agentSecretFile = "${config.lollypops.secrets.files."woodpecker/agent-secret".path}";
+    giteaClientIdFile = config.age.secrets.woodpecker-client-id.path;
+    giteaClientSecretFile = config.age.secrets.woodpecker-client-secret.path;
+    agentSecretFile = config.age.secrets.woodpecker-agent-secret.path;
   };
 
   services.woodpecker-agent = {
-    enable = true;
-    backend = "local";
-    maxProcesses = 5;
-    agentSecretFile = "${config.lollypops.secrets.files."woodpecker/agent-secret".path}";
-    package = pinpox-woodpecker.packages.x86_64-linux.woodpecker-agent;
+    enable = false;
   };
 
   services.nginx = {
@@ -263,12 +251,6 @@
     # '';
 
     virtualHosts = {
-
-      "build.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:3030"; };
-      };
 
       "megaclan3000.de" = {
         forceSSL = true;
