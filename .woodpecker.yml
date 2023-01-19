@@ -1,6 +1,6 @@
-clone:
-  git:
-    image: bash
+# clone:
+#   git:
+#     image: bash
 
 platform: linux/amd64
 pipeline:
