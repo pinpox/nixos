@@ -8,6 +8,7 @@ pipeline:
     image: bash
     commands:
       - echo "HELLO WORLD3"
+      - ls
       - nix build -v -L '.#hello-custom'
       # - nix run 'github:lounge-rocks/the-lounge#s3uploader' result
       - nix build -v -L '.#dirserver'
