@@ -1,0 +1,19 @@
+clone:
+  git:
+    image: bash
+
+platform: linux/amd64
+pipeline:
+  build:
+    image: bash
+    commands:
+      - echo "HELLO WORLD3"
+      - nix build -v -L '.#hello-custom'
+      # - nix run 'github:lounge-rocks/the-lounge#s3uploader' result
+      - nix build -v -L '.#dirserver'
+      # - nix run 'github:lounge-rocks/the-lounge#s3uploader' result
+      # - nix build -v -L '.#nixosConfigurations.birne.config.system.build.toplevel'
+      # - nix run 'github:lounge-rocks/the-lounge#s3uploader' result
+      # environment: {
+      #   AWS_ACCESS_KEY_ID: { from_secret: 's3_access_key' },
+      #   AWS_SECRET_ACCESS_KEY: { from_secret: 's3_secret_key' },
