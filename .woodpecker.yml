@@ -13,6 +13,15 @@ clone:
       - git lfs fetch
 
 pipeline:
+  show-info:
+    image: bash
+    commands:
+      - nix flake show
+      - nix flake metadata
+  flake-checks:
+    image: bash
+    commands:
+      - nix flake check --show-trace
   build-hosts:
     image: bash
     commands:

@@ -3,16 +3,6 @@
 
   inputs = {
 
-    woodpecker-plugin-git = {
-      flake = false;
-      url = "github:woodpecker-ci/plugin-git";
-    };
-
-    pinpox-woodpecker = {
-      url = "github:pinpox/woodpecker/nix-runner";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
@@ -291,10 +281,6 @@
             mqtt2prometheus = pkgs.mqtt2prometheus;
             smartmon-script = pkgs.smartmon-script;
             tfenv = pkgs.tfenv;
-            woodpecker-frontend-next = pkgs.woodpecker-frontend-next;
-            woodpecker-agent-next = pkgs.woodpecker-agent-next;
-            woodpecker-server-next = pkgs.woodpecker-server-next;
-            woodpecker-plugin-git = pkgs.woodpecker-plugin-git;
           };
 
           # Run with: nix develop '.#test-shell'

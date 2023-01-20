@@ -140,11 +140,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1664190295,
-        "narHash": "sha256-FzDT2UsVS1IbQeHi0XgrTjClWMfmCvfp45QCjTP1NQk=",
+        "lastModified": 1674218202,
+        "narHash": "sha256-GBa3trAHF0/okauAARzDz+kNLMkacKT/b/3KvGSiDD0=",
         "owner": "pinpox",
         "repo": "go-karma-bot",
-        "rev": "a3e28e1437a5ad506697b7eb83c0b28e7bbd087f",
+        "rev": "29841d39c628a74e884a937505617b8954a13ef7",
         "type": "github"
       },
       "original": {
@@ -161,11 +161,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1674041176,
-        "narHash": "sha256-cMf1BQzI39nHQ0H/mOatthbbI3392qLmJ9gU0u520P4=",
+        "lastModified": 1674082145,
+        "narHash": "sha256-4IpEt5Jc6VrNcpIcrKMCZAyeJMLXaaHk+yOV9HusO/A=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2c29ae48f9a149151bdd82f429ac61d4412c312a",
+        "rev": "7026e1a934abfa02623c9870378dbcdac3cd7f80",
         "type": "github"
       },
       "original": {
@@ -360,11 +360,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1674049571,
-        "narHash": "sha256-ng1Fwe/3OLOFXVzXCgdocw1BxAJ7G/w5jBTbTok6gho=",
+        "lastModified": 1674210405,
+        "narHash": "sha256-edYWlWOR3IVoSzF4/Bb1UGbK6thpIsHWwiukFrAtSnE=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "9f12cc7c2886ccf3770739eaaf2fae5b8618ab76",
+        "rev": "04eaf102cbcb942fde8eff4505101d84b1964e17",
         "type": "github"
       },
       "original": {
@@ -408,34 +408,13 @@
     "pinpox-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-gcwC3WsifVF71JQNiLFSrU+sJtSdap27ozJs+39BmmM=",
+        "narHash": "sha256-X9E0ZRVGZWvLkcB247oKuHlZJmCU0bGFX08lfshEzf4=",
         "type": "file",
         "url": "https://github.com/pinpox.keys"
       },
       "original": {
         "type": "file",
         "url": "https://github.com/pinpox.keys"
-      }
-    },
-    "pinpox-woodpecker": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1674049904,
-        "narHash": "sha256-lmvPOaIjayRV51W5gDlySYWfFQe894RL4AHXypHSaWQ=",
-        "owner": "pinpox",
-        "repo": "woodpecker",
-        "rev": "5ef9c62e17395c9ea7e6eae7801b56826c3aca37",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "ref": "nix-runner",
-        "repo": "woodpecker",
-        "type": "github"
       }
     },
     "promterm": {
@@ -487,11 +466,11 @@
     },
     "retiolum": {
       "locked": {
-        "lastModified": 1673881291,
-        "narHash": "sha256-NqQKPFjdnGgeVHrVd8abDZL4jpPS8wnJentRjIGacU4=",
+        "lastModified": 1674140414,
+        "narHash": "sha256-NFidfghfVYKGHJa0WJEoeKedIgCihNYaN46nwcb3Dwo=",
         "ref": "refs/heads/master",
-        "rev": "7afa2c45ea0300130712620c625da319fa400587",
-        "revCount": 271,
+        "rev": "0d746caee9122e00752d69f13f22b35dfd1fd24e",
+        "revCount": 274,
         "type": "git",
         "url": "https://git.thalheim.io/Mic92/retiolum"
       },
@@ -522,7 +501,6 @@
         "nvim-cokeline": "nvim-cokeline",
         "nvim-fzf": "nvim-fzf",
         "pinpox-keys": "pinpox-keys",
-        "pinpox-woodpecker": "pinpox-woodpecker",
         "promterm": "promterm",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
@@ -530,7 +508,6 @@
         "tfenv": "tfenv",
         "vpub-plus-plus": "vpub-plus-plus",
         "wallpaper-generator": "wallpaper-generator",
-        "woodpecker-plugin-git": "woodpecker-plugin-git",
         "zk-nvim": "zk-nvim",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
@@ -623,22 +600,6 @@
       "original": {
         "owner": "pinpox",
         "repo": "wallpaper-generator",
-        "type": "github"
-      }
-    },
-    "woodpecker-plugin-git": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1672287000,
-        "narHash": "sha256-KU/A3V7KS8R1nAZoJJwkDc9C8y3t148kUzGnkeYtFjs=",
-        "owner": "woodpecker-ci",
-        "repo": "plugin-git",
-        "rev": "fef90451f78ec1363010cdad88ca4b36332591ff",
-        "type": "github"
-      },
-      "original": {
-        "owner": "woodpecker-ci",
-        "repo": "plugin-git",
         "type": "github"
       }
     },

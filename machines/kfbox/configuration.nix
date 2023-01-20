@@ -1,4 +1,4 @@
-{ self, config, pkgs, s3photoalbum, lib, go-karma-bot, retiolum, mc3000, vpub-plus-plus, pinpox-woodpecker, ... }: {
+{ self, config, s3photoalbum, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -223,35 +223,6 @@
     };
   };
 
-
-  lollypops.secrets.files = {
-    "woodpecker/server-envfile" = { };
-    "woodpecker/agent-secret" = { };
-  };
-
-  services.woodpecker-server = {
-
-    package = pinpox-woodpecker.packages.x86_64-linux.woodpecker-server;
-    enable = true;
-    rootUrl = "https://build.0cx.de";
-    httpPort = 3030;
-    admins = "pinpox";
-    database = {
-      type = "postgres";
-    };
-    giteaClientIdFile = "${config.lollypops.secrets.files."woodpecker/gitea-client-id".path}";
-    giteaClientSecretFile = "${config.lollypops.secrets.files."woodpecker/gitea-client-secret".path}";
-    agentSecretFile = "${config.lollypops.secrets.files."woodpecker/agent-secret".path}";
-  };
-
-  services.woodpecker-agent = {
-    enable = true;
-    backend = "local";
-    maxProcesses = 5;
-    agentSecretFile = "${config.lollypops.secrets.files."woodpecker/agent-secret".path}";
-    package = pinpox-woodpecker.packages.x86_64-linux.woodpecker-agent;
-  };
-
   services.nginx = {
     enable = true;
     recommendedOptimisation = true;
@@ -263,12 +234,6 @@
     # '';
 
     virtualHosts = {
-
-      "build.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:3030"; };
-      };
 
       "megaclan3000.de" = {
         forceSSL = true;

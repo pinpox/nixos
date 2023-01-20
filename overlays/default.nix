@@ -40,10 +40,5 @@ self: super: {
 
   forgit = super.callPackage ../packages/forgit { inputs = inputs; };
   tfenv = super.callPackage ../packages/tfenv { inputs = inputs; };
-
-  woodpecker-agent-next = super.callPackage ../packages/woodpecker-next { inputs = inputs; };
-  woodpecker-frontend-next = super.callPackage ../packages/woodpecker-next/frontend.nix { inputs = inputs; };
-  woodpecker-server-next = super.callPackage ../packages/woodpecker-next/server.nix { inputs = inputs; };
-  woodpecker-plugin-git = super.callPackage ../packages/woodpecker-next/plugin-git.nix { inputs = inputs; };
 }
 
