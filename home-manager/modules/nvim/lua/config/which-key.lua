@@ -20,21 +20,23 @@ wk.register({
 
 		-- FZF
 		F = { ':FzfLua git_files<CR>',  'Git files' },
-		f = { ':FzfLua files<CR>',   'Files' },
-		b = { ':FzfLua buffers<CR>', 'Buffers' },
+		f = { ':FzfLua files<CR>',      'Files' },
+		b = { ':FzfLua buffers<CR>',    'Buffers' },
+		q = { ':FzfLua quickfix<CR>',   'Quickfix' },
 
 		r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
 
-		h = {
-			name = "Help",
-			h = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
+		c = {
+			name = "Code (LSP)",
+			a = { ':lua vim.lsp.buf.code_action()<CR>',                  'Code actions' },
+			i = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
 			s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
-			l = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
-			g = { ':lua require"gitsigns".blame_line()<CR>',             'Git Blame line' },
+			d = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
 		},
 
 		g = {
 			name = "Git",
+			b = { ':lua require"gitsigns".blame_line()<CR>',      'Git Blame line' },
 			s = { ':lua require"gitsigns".stage_hunk()<CR>',      'Stage hunk' },
 			u = { ':lua require"gitsigns".undo_stage_hunk()<CR>', 'Undo stage hunk' },
 			r = { ':lua require"gitsigns".reset_hunk()<CR>',      'Reset hunk' },

@@ -4,6 +4,7 @@ require'lspconfig'.terraformls.setup{}
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.ltex.setup{}
 
 -- require'lspconfig'.rls.setup{}
 --
