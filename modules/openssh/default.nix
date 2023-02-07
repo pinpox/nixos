@@ -13,9 +13,11 @@ in
     # Enable the OpenSSH daemon.
     services.openssh = {
       enable = true;
-      passwordAuthentication = false;
       startWhenNeeded = true;
-      kbdInteractiveAuthentication = false;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+      };
     };
 
     # Block anything that is not HTTP(s) or SSH.
