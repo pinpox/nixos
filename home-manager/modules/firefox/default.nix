@@ -19,14 +19,15 @@ in
     programs.firefox = {
       enable = true;
       package = pkgs.firefox;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        bitwarden
-        darkreader
-        ublock-origin
-      ];
 
       profiles = {
         pinpox = {
+
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            bitwarden
+            darkreader
+            ublock-origin
+          ];
 
           # Extra preferences to add to user.js.
           # extraConfig = "";
