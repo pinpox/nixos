@@ -64,6 +64,9 @@
 
   pinpox.services.restic-client.enable = true;
 
+  # Install reaper
+  environment.systemPackages = [ pkgs.reaper ];
+
   pinpox.desktop = {
     enable = true;
     wireguardIp = "192.168.7.2";
