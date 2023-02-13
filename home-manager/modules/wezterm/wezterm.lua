@@ -28,6 +28,8 @@ return {
 		bottom = 0,
 	},
 
+	audible_bell = "Disabled",
+
 	set_environment_variables = {
 		EDITOR = "nvim",
 		VISUAL = "nvim"
