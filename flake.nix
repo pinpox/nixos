@@ -3,6 +3,13 @@
 
   inputs = {
 
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    aoe-taunt-discord-bot = {
+      url = "github:pinpox/aoe-taunt-discord-bot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
@@ -12,9 +19,6 @@
       url = "https://github.com/MayNiklas.keys";
       flake = false;
     };
-
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
 
     mc3000 = {
       url = "github:pinpox/mc3000";

@@ -13,16 +13,36 @@
         ]
       },
       "locked": {
-        "lastModified": 1667547146,
-        "narHash": "sha256-z2amRyMCRB1znFyymFw6BaMpfF3FSG6VYTByLkzNlQA=",
+        "lastModified": 1676387927,
+        "narHash": "sha256-GAxPI1PtpT7+UVO1oPWPnWFwrxnXtLLvW20muo6psgI=",
         "owner": "pinpox",
         "repo": "alertmanager-ntfy",
-        "rev": "c658a0fd33eb649cba0db96f1df84a86cd5856fb",
+        "rev": "220226f4685d5f24aad6decc7b9370933403478b",
         "type": "github"
       },
       "original": {
         "owner": "pinpox",
         "repo": "alertmanager-ntfy",
+        "type": "github"
+      }
+    },
+    "aoe-taunt-discord-bot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1676394766,
+        "narHash": "sha256-7TOVXAQUl7XJOt8/KgSvo979pmdWE1cUZKaRUZp0zbQ=",
+        "owner": "pinpox",
+        "repo": "aoe-taunt-discord-bot",
+        "rev": "ac170e564e6bf2588e3d55da5fbe20cbedd7a441",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "aoe-taunt-discord-bot",
         "type": "github"
       }
     },
@@ -73,11 +93,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "lastModified": 1676283394,
+        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
         "type": "github"
       },
       "original": {
@@ -104,11 +124,11 @@
     "forgit": {
       "flake": false,
       "locked": {
-        "lastModified": 1675097212,
-        "narHash": "sha256-PGFYw7JbuYHOVycPlYcRItElcyuKEg2cGv4wn6In5Mo=",
+        "lastModified": 1676021219,
+        "narHash": "sha256-/cqDhHilbMSrzwip+2CGJ9Il4wsx5skyMbqC98hewdc=",
         "owner": "wfxr",
         "repo": "forgit",
-        "rev": "aa85792ec465ceee254be0e8e70d8703c7029f66",
+        "rev": "065f7841f334b8707a49ac30d19370aa859db2ed",
         "type": "github"
       },
       "original": {
@@ -120,11 +140,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1675786431,
-        "narHash": "sha256-zPK8DTTI493NvZ1zioMvLwDe9LZRLwCQwwZ/Wu6nweQ=",
+        "lastModified": 1676346785,
+        "narHash": "sha256-I+0LLTzG8+3QcXqL6zzWFgLydutGUFhhrvBBYSNEwz8=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "cddb1c3b23bf6f3e56435410a28e43c2c954b350",
+        "rev": "7381cf04330e5afd96dee22ecd379892d553b5df",
         "type": "github"
       },
       "original": {
@@ -332,11 +352,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1675763311,
-        "narHash": "sha256-bz0Q2H3mxsF1CUfk26Sl9Uzi8/HFjGFD/moZHz1HebU=",
+        "lastModified": 1676300157,
+        "narHash": "sha256-1HjRzfp6LOLfcj/HJHdVKWAkX9QRAouoh6AjzJiIerU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fab09085df1b60d6a0870c8a89ce26d5a4a708c2",
+        "rev": "545c7a31e5dedea4a6d372712a18e00ce097d462",
         "type": "github"
       },
       "original": {
@@ -360,11 +380,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1676011760,
-        "narHash": "sha256-lIX7eGzysyUDn6UJAPKihBG2TBVu0L0cFETD1PMXYOo=",
+        "lastModified": 1676385929,
+        "narHash": "sha256-qaIM1TBKKQ+FTTuUpr2AfUP8NQ6q8QwL1BEaYHG9Gls=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "5b7978566c3e767c0b533290b7d3edfe630eaec8",
+        "rev": "32f2fc312516b3b2b47708105c8fc87cea1df5d2",
         "type": "github"
       },
       "original": {
@@ -466,11 +486,11 @@
     },
     "retiolum": {
       "locked": {
-        "lastModified": 1675931864,
-        "narHash": "sha256-3Dv9uaamq1wyXfc/kdozLzXygD7hMRypyJ/gI1fgeyc=",
+        "lastModified": 1676042562,
+        "narHash": "sha256-1H1RK24hJ1z2GDwUSf8Vt11fPRnbVJ8HghWHrGXSt2w=",
         "ref": "refs/heads/master",
-        "rev": "feaf28b6559f25666868c15c2de3638eea3ad481",
-        "revCount": 281,
+        "rev": "df5911a99e98218fb066014381f07ad3df76700d",
+        "revCount": 282,
         "type": "git",
         "url": "https://git.thalheim.io/Mic92/retiolum"
       },
@@ -482,6 +502,7 @@
     "root": {
       "inputs": {
         "alertmanager-ntfy": "alertmanager-ntfy",
+        "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
         "dotfiles-awesome": "dotfiles-awesome",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
