@@ -30,6 +30,11 @@
       path = "/var/www/blog.passwd";
       owner = "nginx";
     };
+
+    "nginx/3dprint.passwd" = {
+      path = "/var/www/3dprint.passwd";
+      owner = "nginx";
+    };
     "matrix-hook/alerts.passwd" = {
       path = "/var/lib/matrix-hook/alerts.passwd";
       owner = "nginx";
@@ -151,6 +156,40 @@
         locations."/" = { proxyPass = "http://127.0.0.1:8222"; };
       };
 
+      # Octoprint
+      # Set /etc/hosts of client
+      "vpn.octoprint.pablo.tools" = {
+        listen = [{
+          addr = "192.168.7.1";
+          port = 443;
+          ssl = true;
+        }];
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://192.168.2.121:5000"; };
+      };
+
+      # Motion camera admin interface
+      # Set /etc/hosts of client
+      "vpn.motion.pablo.tools" = {
+        listen = [{
+          addr = "192.168.7.1";
+          port = 443;
+          ssl = true;
+        }];
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://192.168.2.121:8082"; };
+      };
+
+      # Camera (read-only) stream
+      "3dprint.pablo.tools" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = { proxyPass = "http://192.168.2.121:8081"; };
+        basicAuthFile = "${config.lollypops.secrets.files."nginx/3dprint.passwd".path}";
+      };
+
       # Photo gallery
       "photos.pablo.tools" = {
         forceSSL = true;
@@ -181,6 +220,7 @@
       # };
 
       # Alertmanager
+      # Set /etc/hosts of client
       "vpn.alerts.pablo.tools" = {
         listen = [{
           addr = "192.168.7.1";
@@ -192,6 +232,7 @@
         locations."/" = { proxyPass = "http://127.0.0.1:9093"; };
       };
 
+      # Set /etc/hosts of client
       "vpn.prometheus.pablo.tools" = {
         listen = [{
           addr = "192.168.7.1";
@@ -213,6 +254,7 @@
         basicAuthFile = "${config.lollypops.secrets.files."matrix-hook/alerts.passwd".path}";
       };
 
+      # Set /etc/hosts of client
       "vpn.notify.pablo.tools" = {
         listen = [{
           addr = "192.168.7.1";
@@ -235,6 +277,7 @@
       };
 
       # Minio admin console
+      # Set /etc/hosts of client
       "vpn.minio.pablo.tools" = {
 
         listen = [{
@@ -275,6 +318,7 @@
       };
 
       # Minio s3 backend
+      # Set /etc/hosts of client
       "vpn.s3.pablo.tools" = {
 
         listen = [{
