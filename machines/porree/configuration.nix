@@ -159,24 +159,21 @@
       # Octoprint
       # Set /etc/hosts of client
       "vpn.octoprint.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+
+        listenAddresses = [ "192.168.7.1" ];
+
         forceSSL = true;
         enableACME = true;
-        locations."/" = { proxyPass = "http://192.168.2.121:5000"; };
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://192.168.2.121:5000";
+        };
       };
 
       # Motion camera admin interface
       # Set /etc/hosts of client
       "vpn.motion.pablo.tools" = {
-        listen = [{
-          addr = "192.168.7.1";
-          port = 443;
-          ssl = true;
-        }];
+        listenAddresses = [ "192.168.7.1" ];
         forceSSL = true;
         enableACME = true;
         locations."/" = { proxyPass = "http://192.168.2.121:8082"; };
