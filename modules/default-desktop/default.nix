@@ -1,6 +1,7 @@
 { lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, dotfiles-awesome, promterm, ... }:
 with lib;
-let cfg = config.pinpox.desktop;
+let
+  cfg = config.pinpox.desktop;
 in
 {
 
@@ -183,6 +184,8 @@ in
       universal-ctags
       wget
       zola
+      freecad
+      prusa-slicer
     ];
 
     services.logind.extraConfig = ''
