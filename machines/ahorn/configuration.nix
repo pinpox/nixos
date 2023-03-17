@@ -7,6 +7,12 @@
     #retiolum.nixosModules.ca
   ];
 
+  # Often hangs
+  systemd.services = {
+    NetworkManager-wait-online.enable = lib.mkForce false;
+    systemd-networkd-wait-online.enable = lib.mkForce false;
+  };
+
   lollypops = {
 
     secrets = {
