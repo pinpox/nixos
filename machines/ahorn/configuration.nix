@@ -1,5 +1,5 @@
 # Configuration file for ahorn
-{ options, config, retiolum, pkgs, ... }: {
+{ config, retiolum, pkgs, lib, ... }: {
 
   imports = [
     ./hardware-configuration.nix
