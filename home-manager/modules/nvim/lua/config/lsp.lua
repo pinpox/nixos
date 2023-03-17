@@ -10,51 +10,79 @@ require'lspconfig'.ltex.setup{}
 --
 require'lspconfig'.nil_ls.setup{}
 
+require'lspconfig'.lua_ls.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {
 
-require'lspconfig'.sumneko_lua.setup {
-    cmd = { 'lua-language-server' },
-    settings = {
-	Lua = {
-	    runtime = {
-		-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-		version = 'LuaJIT',
-		-- Setup your lua path
-		path = vim.split(package.path, ';'),
-	    },
-	    diagnostics = {
-		-- Get the language server to recognize the vim and awesomwm
-		-- globals
-		globals = {
+
 		    -- AwesomeWM
 		    "awesome", 
 		    "client",
 		    "screen",
 		    "root",
 		    -- Vim
-		    'vim'
-		}
-	    },
-	    -- Do not send telemetry data containing a randomized but unique identifier
-	    telemetry = {
-		enable = false,
-	    },
-	    workspace = {
+		    'vim' },
+		path = vim.split(package.path, ';'),
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        -- library = vim.api.nvim_get_runtime_file("", true),
+
+		-- adjust these two values if your performance is not optimal
+		maxPreload = 2000,
+		preloadFileSize = 1000
+
 		library = {
 		    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
 		    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
 
 		    -- TODO find a way to add the nix store path dynamically.
 		    -- This will break on update!
-		    [vim.fn.expand('/nix/store/3xx4k57zz8l3hvzqd4v3v0ffgspp3pan-awesome-4.3/share/awesome/lib')] = true
+		    [vim.fn.expand('/nix/store/3xx4k57zz8l3hvzqd4v3v0ffgspp3pan-awesome-4.3/share/awesome/lib')] = true,
 		},
-		-- adjust these two values if your performance is not optimal
-		maxPreload = 2000,
-		preloadFileSize = 1000
-	    }
-	}
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
     },
-    -- on_attach = custom_attach,
+  },
 }
+
+
+-- require'lspconfig'.sumneko_lua.setup {
+--     cmd = { 'lua-language-server' },
+--     settings = {
+-- 	Lua = {
+-- 	    runtime = {
+-- 		-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+-- 		version = 'LuaJIT',
+-- 		-- Setup your lua path
+-- 		path = vim.split(package.path, ';'),
+-- 	    },
+-- 	    diagnostics = {
+-- 		-- Get the language server to recognize the vim and awesomwm
+-- 		-- globals
+-- 		globals = {
+-- 		}
+-- 	    },
+-- 	    -- Do not send telemetry data containing a randomized but unique identifier
+-- 	    workspace = {
+-- 		-- adjust these two values if your performance is not optimal
+-- 		maxPreload = 2000,
+-- 		preloadFileSize = 1000
+-- 	    }
+-- 	}
+--     },
+--     -- on_attach = custom_attach,
+-- }
 
 
 require'lspconfig'.jsonls.setup {
