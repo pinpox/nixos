@@ -8,7 +8,12 @@ in
 
   options.pinpox.defaults.shell = { enable = mkEnableOption "shell defaults"; };
 
-  imports = [ ./starship.nix ./zsh.nix ];
+  imports = [
+    ./starship.nix
+    ./zsh.nix
+    # ./fish.nix
+  ];
+
   config = mkIf cfg.enable {
 
     programs.fzf = {
