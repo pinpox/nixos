@@ -17,7 +17,7 @@ local steps_hosts() = std.flatMap(function(host) [
   {
     name: 'Build host: %s' % host,
     commands: [
-      "nix build -v -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
+      "nix build -L '.#nixosConfigurations.%s.config.system.build.toplevel'" % host,
     ],
   },
   {
@@ -39,7 +39,7 @@ local steps_packages() = std.flatMap(function(package) [
     {
       name: 'Build package: %s' % package,
       commands: [
-        "nix build -v -L '.#%s'" % package,
+        "nix build -L '.#%s'" % package,
       ],
     },
     {
