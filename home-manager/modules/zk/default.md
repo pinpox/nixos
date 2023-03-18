@@ -1,6 +1,6 @@
 ---
 title: {{title}}
-created: {{date now}}
+created: {{format-date now}}
 visibility: private
 language: en
 tags:

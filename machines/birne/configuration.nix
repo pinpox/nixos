@@ -2,83 +2,6 @@
 { nixpkgs, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
-
-  /* services.navidrome = {
-    enable = true;
-
-    settings = {
-    Address = "192.168.2.84";
-    Port = 4533;
-    MusicFolder = "/mnt/data/admin/ARCHIVE/Musik/Alphabetisch/";
-    };
-    };
-
-    services.seafile = {
-
-    enable = false;
-
-    # Configuration for seafile-server, see https://manual.seafile.com/config/seafile-conf/
-    seafileSettings = {
-    fileserver = {
-    port = 8082;
-    host = "192.168.2.84";
-    };
-
-    };
-
-    initialAdminPassword = "test";
-    # Configuration for ccnet, see https://manual.seafile.com/config/ccnet-conf/
-    ccnetSettings = { General = { SERVICE_URL = "https://seafile.pablo"; }; };
-
-    adminEmail = "mail@pablo.tools";
-
-    # Extra config to append to `seahub_settings.py` file. Refer to https://manual.seafile.com/config/seahub_settings_py/
-    seahubExtraConf = "";
-
-    };
-
-    services.nginx = {
-    enable = true;
-    virtualHosts."seafile.pablo.tools" = {
-    locations."/" = {
-    proxyPass = "http://unix:/run/seahub/gunicorn.sock";
-    # extraConfig = ''
-    #   proxy_set_header X-Forwarded-Proto https;
-    # '';
-    };
-    locations."/seafhttp" = {
-    proxyPass = "http://127.0.0.1:8082";
-    # extraConfig = ''
-    #   rewrite ^/seafhttp(.*)$ $1 break;
-    #   client_max_body_size 0;
-    #   proxy_connect_timeout  36000s;
-    #   proxy_set_header X-Forwarded-Proto https;
-    #   proxy_set_header Host $host:$server_port;
-    #   proxy_read_timeout  36000s;
-    #   proxy_send_timeout  36000s;
-    #   send_timeout  36000s;
-    #   proxy_http_version 1.1;
-    # '';
-    };
-    };
-    };
-
-    # "seafile.example.com" = {
-    #   forceSSL = true;
-    #   enableACME = true;
-    #   locations."/" = {
-    #     proxyPass =
-    #       "http://unix:/var/run/seahub/gunicorn.sock";
-    #   };
-
-    # locations."/seafhttp" = {
-    #   proxyPass =
-    #     "http://127.0.0.1:${toString config.services.seafile.seafileSettings.fileserver.port}";
-    # };
-    # };
-    # ```
-  */
-
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
@@ -175,8 +98,25 @@
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
-  services.unifi.enable = true;
-  services.unifi.unifiPackage = pkgs.unifi6;
+  # Access locally via:
+  # https://birne:8443/manage/
+  services.unifi = {
+    enable = true;
+
+    # 6 is latest supported for my access points. Beware that this will build
+    # an older version of mongodb (from source), which may cause slow rebuilds
+    # if it's not cached.
+    unifiPackage = pkgs.unifi6;
+
+    # Open required ports
+    openFirewall = true;
+    # tcp/8080  # Port for UAP to inform controller.
+    # tcp/8880  # Port for HTTP portal redirect, if guest portal is enabled.
+    # tcp/8843  # Port for HTTPS portal redirect, ditto.
+    # tcp/6789  # Port for UniFi mobile speed test.
+    # udp/3478  # UDP port used for STUN.
+    # udp/10001 # UDP port used for device discovery.
+  };
 
   # Open ports in the firewall.
   networking.firewall = {
@@ -186,8 +126,6 @@
       80
       443
       4533
-      8080
-      8443
     ];
   };
 }

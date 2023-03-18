@@ -26,6 +26,26 @@
         "type": "github"
       }
     },
+    "aoe-taunt-discord-bot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1676395098,
+        "narHash": "sha256-38SY225E2DvaQq6bsElsF57oatT+n183LS6utYoG678=",
+        "owner": "pinpox",
+        "repo": "aoe-taunt-discord-bot",
+        "rev": "4caa3ea784d620b99a2d10079cdc696132e5af49",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "aoe-taunt-discord-bot",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -75,11 +95,11 @@
     "forgit": {
       "flake": false,
       "locked": {
-        "lastModified": 1679153718,
-        "narHash": "sha256-3lvYIuzuJw0CQlaAQG6hAyfUgSXM+3BOmKRVDNFUN/U=",
+        "lastModified": 1678985752,
+        "narHash": "sha256-fhRQuyheNqdu/YHOffmaa+J9il2kmwyM7QKXRXmbPrQ=",
         "owner": "wfxr",
         "repo": "forgit",
-        "rev": "3f00348d5c712e1a0013bf64a08dd2ce8c8539e3",
+        "rev": "9bb53dc455d09096cca066627adbf41eb7766f28",
         "type": "github"
       },
       "original": {
@@ -91,11 +111,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1679095732,
-        "narHash": "sha256-OFlGPOBXJY7+ROtwOreWvAa9UY/jKwB+QyFYbpwNDJM=",
+        "lastModified": 1678830524,
+        "narHash": "sha256-6FSf87jimfpUTc/aJKJIuHkN9oieULFdaqQE1aR4yCs=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "52820c5b352c3d1c4da26823de2deabcc323b914",
+        "rev": "d666abc60fff12af9e91812666d42ff7f2555934",
         "type": "github"
       },
       "original": {
@@ -132,11 +152,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1679067095,
-        "narHash": "sha256-G2dJQURL/CCi+8RP6jNJG8VqgtzEMCA+6mNodd3VR6E=",
+        "lastModified": 1678967335,
+        "narHash": "sha256-oFppZaAVRA0G/aVPvjtWaQI5EQ2dZ5LgbEKfsBmKQgA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3239e0b40f242f47bf6c0c37b2fd35ab3e76e370",
+        "rev": "b832390db376fbbf44115904cfab6680fb42e076",
         "type": "github"
       },
       "original": {
@@ -158,32 +178,6 @@
       "original": {
         "owner": "lukas-reineke",
         "repo": "indent-blankline.nvim",
-        "type": "github"
-      }
-    },
-    "iosevka-custom": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1660903398,
-        "narHash": "sha256-Kdbw/RQjPCAwG2ZqxIGNswpfTu1NwUV8+Pl4hpfoX9A=",
-        "owner": "pinpox",
-        "repo": "iosevka-custom",
-        "rev": "400bd6d0063e2b9918c0af84b360b60eca3400d8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "iosevka-custom",
         "type": "github"
       }
     },
@@ -357,11 +351,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1679152739,
-        "narHash": "sha256-95gKWTXDCvI3vJiENdYXGWUcGUwlqifmJ9khtGaS74c=",
+        "lastModified": 1679039592,
+        "narHash": "sha256-YCPrqC9PTNU6HOi/VLQRXGX5NjPidHnL+nqKdf1AB/8=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "23289b0eef35567ccd3d951d40440524a05dd0a7",
+        "rev": "eb7ad2ad2734e3849fd74fab626ef6ad06122960",
         "type": "github"
       },
       "original": {
@@ -479,6 +473,7 @@
     "root": {
       "inputs": {
         "alertmanager-ntfy": "alertmanager-ntfy",
+        "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "forgit": "forgit",
@@ -486,7 +481,6 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
-        "iosevka-custom": "iosevka-custom",
         "krops": "krops",
         "lollypops": "lollypops",
         "matrix-hook": "matrix-hook",

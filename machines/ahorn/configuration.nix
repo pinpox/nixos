@@ -1,5 +1,5 @@
 # Configuration file for ahorn
-{ options, config, retiolum, pkgs, ... }: {
+{ config, retiolum, pkgs, lib, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -7,9 +7,11 @@
     #retiolum.nixosModules.ca
   ];
 
-  # often hangs
-  systemd.services.systemd-networkd-wait-online.enable = false;
-  systemd.services.NetworkManager-wait-online.enable = false;
+  # Often hangs
+  systemd.services = {
+    NetworkManager-wait-online.enable = lib.mkForce false;
+    systemd-networkd-wait-online.enable = lib.mkForce false;
+  };
 
   lollypops = {
 
@@ -67,6 +69,9 @@
   boot.blacklistedKernelModules = [ "nouveau" ];
 
   pinpox.services.restic-client.enable = true;
+
+  # Install reaper
+  environment.systemPackages = [ pkgs.reaper ];
 
   pinpox.desktop = {
     enable = true;

@@ -1,6 +1,6 @@
 ---
 title: {{title}}
-created: {{date now}}
+created: {{format-date now}}
 visibility: private
 language: de
 tags:
@@ -8,7 +8,7 @@ tags:
 - journal
 ---
 
-# {{date now "long"}} - {{title}}
+# {{format-date now "long"}} - {{title}}
 
 What did I do today?
 {{content}}

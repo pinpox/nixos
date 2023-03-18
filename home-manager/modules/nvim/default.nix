@@ -40,6 +40,7 @@ in
       rustc
       rustfmt
       rust-analyzer
+      ltex-ls
     ];
 
     xdg = {

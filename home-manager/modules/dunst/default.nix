@@ -34,7 +34,7 @@ in
           frame_width = 0;
           separator_color = "frame";
           sort = "yes";
-          frame_color = "#${colorscheme.BrightGrey}";
+          frame_color = "#${colorscheme.BrightBlack}";
           font = "${fonts.normal.family} ${fonts.normal.style} 8";
           line_height = 0;
           markup = "full";
@@ -67,13 +67,13 @@ in
         };
 
         urgency_low = {
-          background = "#${colorscheme.DarkGrey}";
-          foreground = "#${colorscheme.BrightGrey}";
+          background = "#${colorscheme.BrightBlack}";
+          foreground = "#${colorscheme.BrightBlack}";
           timeout = 5;
         };
 
         urgency_normal = {
-          background = "#${colorscheme.DarkGrey}";
+          background = "#${colorscheme.BrightBlack}";
           foreground = "#${colorscheme.White}";
           timeout = 10;
         };

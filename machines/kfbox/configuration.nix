@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
+{ self, config, s3photoalbum, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -23,13 +23,7 @@
   };
 
 
-  # often hangs
-  systemd.services.systemd-networkd-wait-online.enable = false;
-  systemd.services.NetworkManager-wait-online.enable = false;
-
-
-
-  lollypops.deployment.host = "46.38.242.17";
+  lollypops.deployment.ssh.host = "46.38.242.17";
 
   services.logind.extraConfig = ''
     RuntimeDirectorySize=20G
@@ -42,13 +36,20 @@
     s3photoalbum.nixosModules.s3photoalbum
     s3photoalbum.nixosModules.s3photoalbum-thumbnailer
     go-karma-bot.nixosModules.go-karma-bot
+    aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
     vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
 
   # Karmabot for IRC channel
   lollypops.secrets.files."go-karma-bot/envfile" = { };
-  services.go-karma-bot.environmentFile = [ config.lollypops.secrets.files."go-karma-bot/envfile".path ];
+  services.go-karma-bot.environmentFile = config.lollypops.secrets.files."go-karma-bot/envfile".path;
   services.go-karma-bot.enable = true;
+
+  # Discord AoE2 taunt bot
+  lollypops.secrets.files."aoe-taunt-discord-bot/discord_token" = { };
+  services.aoe-taunt-discord-bot.discordTokenFile = config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
+  services.aoe-taunt-discord-bot.enable = true;
+
 
   pinpox = {
 

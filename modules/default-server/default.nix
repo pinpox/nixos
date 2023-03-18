@@ -40,7 +40,6 @@ in
       neovim
       nix-index
       nixfmt
-      python
       ripgrep
       wget
     ];

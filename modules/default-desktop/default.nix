@@ -1,6 +1,7 @@
 { lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, promterm, ... }:
 with lib;
-let cfg = config.pinpox.desktop;
+let
+  cfg = config.pinpox.desktop;
 in
 {
 
@@ -166,6 +167,7 @@ in
       # wezterm-nightly
       arandr
       binutils
+      file
       git
       gnumake
       go
@@ -176,15 +178,15 @@ in
       nixfmt
       nodejs
       openvpn
-      python
       recursive
-      # iosevka
       ripgrep
       ruby
       time
       universal-ctags
       wget
       zola
+      freecad
+      prusa-slicer
     ];
 
     services.logind.extraConfig = ''

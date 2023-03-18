@@ -19,15 +19,15 @@ in
     programs.firefox = {
       enable = true;
       package = pkgs.firefox;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        bitwarden
-        darkreader
-        https-everywhere
-        ublock-origin
-      ];
 
       profiles = {
         pinpox = {
+
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            bitwarden
+            darkreader
+            ublock-origin
+          ];
 
           # Extra preferences to add to user.js.
           # extraConfig = "";
@@ -60,6 +60,7 @@ in
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "extensions.activeThemeID" = "default-theme@mozilla.org";
             "devtools.theme" = "dark";
+            "dom.security.https_only_mode" = "true"; # HTTPS everywhere
           };
 
           # userChrome = builtins.readFile

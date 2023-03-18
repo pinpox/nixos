@@ -16,7 +16,7 @@ language = "en"
 default-title = "Untitled"
 
 # Template used to generate a note's filename, without extension.
-filename = "{{date now '%Y-%m-%d-%H%M%S' }}"
+filename = "{{format-date now '%Y-%m-%d-%H%M%S' }}"
 
 # The file extension used for the notes.
 extension = "md"
@@ -74,7 +74,7 @@ template = "default.md"
 paths = ["journal"]
 
 [group.journal.note]
-filename = "{{date now}}"
+filename = "{{format-date now}}"
 template = "journal.md"
 
 # MARKDOWN SETTINGS

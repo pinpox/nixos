@@ -9,13 +9,13 @@ in
 
     # Enable sound.
     sound.enable = true;
-    hardware.pulseaudio = {
+    environment.systemPackages = [ pkgs.qjackctl ];
+
+    # Use pipeware to emulate jack and pulseaudio
+    services.pipewire = {
       enable = true;
-      package = pkgs.pulseaudioFull;
-      # extraModules = [ pkgs.pulseaudio-modules-bt ];
-      extraConfig = ''
-        load-module module-switch-on-connect
-      '';
+      jack.enable = true;
+      pulse.enable = true;
     };
   };
 }

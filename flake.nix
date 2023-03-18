@@ -3,6 +3,13 @@
 
   inputs = {
 
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    aoe-taunt-discord-bot = {
+      url = "github:pinpox/aoe-taunt-discord-bot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
@@ -12,9 +19,6 @@
       url = "https://github.com/MayNiklas.keys";
       flake = false;
     };
-
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
 
     mc3000 = {
       url = "github:pinpox/mc3000";
@@ -139,13 +143,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    iosevka-custom = {
-      url = "github:pinpox/iosevka-custom";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     vpub-plus-plus = {
       url = "github:pinpox/vpub-plus-plus";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -173,7 +170,7 @@
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs) final prev;
 
-      # Use nixpkgs-fmt for `nix fmt'
+      # Use nixpkgs-fmt for 'nix fmt'
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       # Output all modules in ./modules to flake. Modules should be in
@@ -251,6 +248,21 @@
       */
 
       # nix build '.#base-image'
+      raspi-image =
+        let system = "aarch64-linux";
+        in
+        import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+          pkgs = nixpkgs.legacyPackages."${system}";
+          lib = nixpkgs.lib;
+          config = (nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [ ./images/raspi.nix ];
+          }).config;
+          format = "qcow2";
+          diskSize = 4096;
+          name = "raspi-image";
+        };
+
       base-image =
         let system = "x86_64-linux";
         in
@@ -274,8 +286,7 @@
     (flake-utils.lib.eachSystem [ "aarch64-linux" "x86_64-linux" ])
       (system:
         let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
-        in
-        rec {
+        in {
           # Custom packages added via the overlay are selectively exposed here, to
           # allow using them from other flakes that import this one.
           packages = flake-utils.lib.flattenTree {

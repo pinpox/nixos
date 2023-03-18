@@ -18,11 +18,41 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				flex-direction: column;
 			}
+
+			.button {
+				border: 5px solid #0f0;
+				box-shadow: 10px 10px #0f0;
+				color: #0f0;
+				padding: 10px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 20px;
+				cursor: crosshair;
+				margin: 20px 20px;
+			}
+
+			.button:hover {
+				color: red;
+			}
+
+			.button:active {
+				box-shadow: 0 0;
+				transform: translate(10px, 10px);
+			}
+
 		</style>
 
 		<div class="parent">
 			<img src="dance.gif">
+			<div>
+				<a href="https://pads.0cx.de" class="button">pads</a>
+				<a href="https://git.0cx.de" class="button">git</a>
+				<a href="https://irc.0cx.de" class="button">irc</a>
+				<a href="https://news.0cx.de" class="button">news</a>
+			</div>
 		</div>
 	</body>
 </html>

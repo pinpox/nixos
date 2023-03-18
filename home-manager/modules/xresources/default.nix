@@ -9,23 +9,51 @@ in
 
   config = mkIf cfg.enable {
 
+
+    # ANSI Colors
+    # Black
+    # Red
+    # Green
+    # Yellow
+    # Blue
+    # Purple
+    # Cyan
+    # White
+
+
+
     xresources.properties = {
+      # Black
       "color0" = "#${colorscheme.Black}";
-      "color1" = "#${colorscheme.DarkGrey}";
-      "color2" = "#${colorscheme.Grey}";
-      "color3" = "#${colorscheme.BrightGrey}";
-      "color4" = "#${colorscheme.DarkWhite}";
-      "color5" = "#${colorscheme.White}";
-      "color6" = "#${colorscheme.BrightWhite}";
-      "color7" = "#${colorscheme.DarkGreen}";
-      "color8" = "#${colorscheme.Red}";
-      "color9" = "#${colorscheme.DarkYellow}";
-      "color10" = "#${colorscheme.Yellow}";
-      "color11" = "#${colorscheme.Green}";
-      "color12" = "#${colorscheme.Cyan}";
-      "color13" = "#${colorscheme.Blue}";
-      "color14" = "#${colorscheme.Magenta}";
-      "color15" = "#${colorscheme.BrightRed}";
+      "color8" = "#${colorscheme.BrightBlack}";
+
+      # Red
+      "color1" = "#${colorscheme.Red}";
+      "color9" = "#${colorscheme.BrightRed}";
+
+      #Green
+      "color2" = "#${colorscheme.Green}";
+      "color10" = "#${colorscheme.BrightGreen}";
+
+      # Yellow
+      "color3" = "#${colorscheme.Yellow}";
+      "color11" = "#${colorscheme.BrightYellow}";
+
+      # Blue
+      "color4" = "#${colorscheme.Blue}";
+      "color12" = "#${colorscheme.BrightBlue}";
+
+      # Magenta
+      "color5" = "#${colorscheme.Magenta}";
+      "color13" = "#${colorscheme.BrightMagenta}";
+
+      # Cyan
+      "color6" = "#${colorscheme.Cyan}";
+      "color14" = "#${colorscheme.BrightCyan}";
+
+      # White
+      "color7" = "#${colorscheme.White}";
+      "color15" = "#${colorscheme.BrightWhite}";
 
       "foreground" = "#${colorscheme.White}";
       "background" = "#${colorscheme.Black}";
@@ -36,27 +64,28 @@ in
       "XTerm*Foreground" = "#${colorscheme.White}";
 
       "XTerm*color0" = "#${colorscheme.Black}";
+      "XTerm*color8" = "#${colorscheme.BrightBlack}";
+
       "XTerm*color1" = "#${colorscheme.Red}";
+      "XTerm*color9" = "#${colorscheme.BrightRed}";
+
       "XTerm*color2" = "#${colorscheme.Green}";
+      "XTerm*color10" = "#${colorscheme.BrightGreen}";
+
       "XTerm*color3" = "#${colorscheme.Yellow}";
+      "XTerm*color11" = "#${colorscheme.BrightYellow}";
+
       "XTerm*color4" = "#${colorscheme.Blue}";
+      "XTerm*color12" = "#${colorscheme.BrightBlue}";
+
       "XTerm*color5" = "#${colorscheme.Magenta}";
+      "XTerm*color13" = "#${colorscheme.BrightMagenta}";
+
       "XTerm*color6" = "#${colorscheme.Cyan}";
+      "XTerm*color14" = "#${colorscheme.BrightCyan}";
+
       "XTerm*color7" = "#${colorscheme.White}";
-      "XTerm*color8" = "#${colorscheme.BrightGrey}";
-      "XTerm*color9" = "#${colorscheme.Red}";
-      "XTerm*color10" = "#${colorscheme.Green}";
-      "XTerm*color11" = "#${colorscheme.Yellow}";
-      "XTerm*color12" = "#${colorscheme.Blue}";
-      "XTerm*color13" = "#${colorscheme.Magenta}";
-      "XTerm*color14" = "#${colorscheme.Cyan}";
-      "XTerm*color15" = "#${colorscheme.DarkGreen}";
-      "XTerm*color16" = "#${colorscheme.DarkYellow}";
-      "XTerm*color17" = "#${colorscheme.BrightRed}";
-      "XTerm*color18" = "#${colorscheme.DarkGrey}";
-      "XTerm*color19" = "#${colorscheme.Grey}";
-      "XTerm*color20" = "#${colorscheme.DarkWhite}";
-      "XTerm*color21" = "#${colorscheme.BrightWhite}";
+      "XTerm*color15" = "#${colorscheme.BrightWhite}";
     };
   };
 }
