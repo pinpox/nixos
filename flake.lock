@@ -321,6 +321,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1679224149,
+        "narHash": "sha256-TSY37Zv0icF/aijR3/KWGLVBlnKKHlG9QTj7vHbF/UU=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "a4bc66709604ab78abc575b60baa6d23ae027a59",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1678898370,
@@ -487,6 +503,7 @@
         "mayniklas-keys": "mayniklas-keys",
         "mc3000": "mc3000",
         "nix-apple-fonts": "nix-apple-fonts",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",

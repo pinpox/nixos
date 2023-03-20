@@ -1,7 +1,9 @@
 # Configuration file for ahorn
-{ config, retiolum, pkgs, lib, ... }: {
+{ config, retiolum, pkgs, lib, nixos-hardware, ... }: {
 
   imports = [
+
+    nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca
