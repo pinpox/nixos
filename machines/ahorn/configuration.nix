@@ -7,6 +7,39 @@
     #retiolum.nixosModules.ca
   ];
 
+
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
+
+  # nix.settings = {
+  #   substituters = [ "https://hyprland.cachix.org" ];
+  #   trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+  # };
+
+
+  # programs.hyprland.enable = true;
+
+
+
+  # services.xserver.desktopManager.enlightenment.enable = true;
+
+
+  programs.xwayland.enable = true;
+
+
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     enlightenment = super.enlightenment.overrideScope' (gself: gsuper: {
+  #       enlightenment = gsuper.enlightenment.override {
+  #         waylandSupport = true;
+  #       };
+  #     });
+  #   })
+  # ];
+
+  services.acpid.enable = true;
+
   # Often hangs
   systemd.services = {
     NetworkManager-wait-online.enable = lib.mkForce false;
