@@ -29,6 +29,8 @@
   programs.sway.enable = true;
   hardware.opengl.enable = true;
 
+  services.fwupd.enable = true;
+
 
 
   # nixpkgs.overlays = [
