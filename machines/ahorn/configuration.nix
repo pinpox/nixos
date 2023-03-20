@@ -25,7 +25,10 @@
   # services.xserver.desktopManager.enlightenment.enable = true;
 
 
-  programs.xwayland.enable = true;
+  # programs.xwayland.enable = true;
+  programs.sway.enable = true;
+  hardware.opengl.enable = true;
+
 
 
   # nixpkgs.overlays = [
