@@ -120,6 +120,8 @@ in
       # loaded on launch
       plugins = with pkgs.vimPlugins; [
 
+        zig-vim
+
         ccc-nvim
 
         # nvim-treesitter
