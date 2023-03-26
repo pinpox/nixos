@@ -31,6 +31,20 @@
   programs.sway.enable = true;
   hardware.opengl.enable = true;
 
+
+  # environment.sessionVariables = {
+  #     MOZ_ENABLE_WAYLAND = "1";
+  #   };
+
+  #   xdg.portal = {
+  #     enable = true;
+  #     gtkUsePortal = true;
+  #     extraPortals = [
+  #       pkgs.xdg-desktop-portal-gtk
+  #       pkgs.xdg-desktop-portal-wlr
+  #     ];
+  #   };
+
   services.fwupd.enable = true;
 
 
