@@ -1,4 +1,3 @@
-
 package.path = package.path .. ";/home/pinpox/.config/river-luatile/?.lua"
 json = require "json"
 
@@ -31,6 +30,10 @@ output_layouts["eDP-1"] = "rivertile"
 --  * Window height
 
 argumunts = {}
+
+function handle_metadata(output)
+	return "mylay"
+end
 
 -- We choose from one of the existing layouts defined in the table further down
 function handle_layout(args)
@@ -79,8 +82,16 @@ end
 function handle_layout_monocle(args)
 	local retval = {}
 
+	offset = 20
+	gap = 5
+
 	for i = 0, (args.count -1) do
-		table.insert(retval, { 0, 0, args.width, args.height })
+		table.insert(retval, {
+			gap + i*offset,
+			gap + i*offset,
+			(args.width - gap *2) -  (args.count -1) * offset,
+			(args.height - gap *2) - (args.count -1) * offset,
+		})
 	end
 	return retval
 end
