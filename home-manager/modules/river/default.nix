@@ -2,13 +2,13 @@
 with lib;
 let
   cfg = config.pinpox.programs.river;
-  start-river = writeShellScript "start-river"
+  start-river = pkgs.writeShellScriptBin "start-river"
     ''
       export WLR_DRM_NO_MODIFIERS=1
       ${pkgs.river}/bin/river
     '';
 
-  screenshot-region = writeShellScript "screenshot-region"
+  screenshot-region = pkgs.writeShellScriptBin "screenshot-region"
     ''
       ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png
     '';

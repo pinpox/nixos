@@ -25,6 +25,7 @@ riverctl map normal Super+Shift E exit
 
 # Focus should follow the mouse
 riverctl focus-follows-cursor normal
+# riverctl focus-follows-cursor disabled
 
 # Super+Tab and Super+Shift+Tab to focus the next/previous view in the layout
 # stack

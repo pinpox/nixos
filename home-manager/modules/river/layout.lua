@@ -31,8 +31,8 @@ output_layouts["eDP-1"] = "rivertile"
 
 argumunts = {}
 
-function handle_metadata(output)
-	return "mylay"
+function handle_metadata(args)
+	return { name = output_layouts[args.output] }
 end
 
 -- We choose from one of the existing layouts defined in the table further down
@@ -140,4 +140,5 @@ layouts = {
 	monocle = handle_layout_monocle,
 	-- grid = handle_layout_grid,
 }
+
 
