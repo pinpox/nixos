@@ -165,33 +165,39 @@ riverctl background-color 0x #002b36
 riverctl border-color-focused 0x418fdd
 riverctl border-color-unfocused 0x586e75
 
-
-
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
 
 # Warp cursor when changing focus with keyboard
 riverctl set-cursor-warp on-output-change
 
+# Use lswt to get IDs of windows
+
 # Make all views with an app-id that starts with "float" and title "foo" start floating.
 riverctl rule-add float -app-id 'float*' -title 'foo'
+
+# Float firefox screenshare indicator
+riverctl rule-add float -title 'Firefox — Sharing Indicator'
 
 # Make all views with app-id "bar" and any title use client-side decorations
 riverctl rule-add csd -app-id "bar"
 
-# Make firefox use server-side decorations
+# Make specific applications use server-side decorations
 riverctl rule-add ssd -app-id firefox
+riverctl rule-add ssd -app-id pavucontrol
+riverctl rule-add ssd -app-id thunderbird
 
-# Set the default layout generator to be rivertile and start it.
+
+# Needed to make xdg-desktop-portal-wlr work (screensharing)
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY WAYLAND_DESKTOP
+
+
+# Set the default layout generator to be river-luatile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout luatile
 # riverctl default-layout rivertile
 # rivertile -view-padding 6 -outer-padding 6 &
-# river-luatile &
-
-
-
-
+river-luatile &
 
 # Read nixos-generated config part
 /home/pinpox/.config/river/init_exta

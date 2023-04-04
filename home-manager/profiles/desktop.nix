@@ -156,6 +156,8 @@ in
       awesome.enable = false;
       sway.enable = true;
       river.enable = true;
+      waybar.enable = true;
+      mako.enable = true;
       kanshi.enable = true;
       hyprland.enable = false;
     };
