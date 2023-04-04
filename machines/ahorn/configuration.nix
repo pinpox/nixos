@@ -36,14 +36,33 @@
   #     MOZ_ENABLE_WAYLAND = "1";
   #   };
 
-  #   xdg.portal = {
-  #     enable = true;
-  #     gtkUsePortal = true;
-  #     extraPortals = [
-  #       pkgs.xdg-desktop-portal-gtk
-  #       pkgs.xdg-desktop-portal-wlr
-  #     ];
-  #   };
+  xdg.portal = {
+
+    enable = true;
+
+    wlr = {
+      enable = true;
+      # settings = {
+
+
+      #   # See xdg-desktop-portal-wlr(5) for supported values.
+      #   screencast = {
+      #     # output_name = "HDMI-A-1";
+      #     max_fps = 30;
+      #     # exec_before = "disable_notifications.sh";
+      #     # exec_after = "enable_notifications.sh";
+      #     chooser_type = "simple";
+      #     chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+      #   };
+
+      # };
+    };
+    # gtkUsePortal = true;
+    extraPortals = [
+      # pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+    ];
+  };
 
   services.fwupd.enable = true;
 
@@ -125,7 +144,17 @@
   pinpox.services.restic-client.enable = true;
 
   # Install reaper
-  environment.systemPackages = [ pkgs.reaper ];
+  environment.systemPackages = [
+
+
+    # pkgs.reaper 
+
+
+    pkgs.xdg-desktop-portal
+    pkgs.xdg-desktop-portal-wlr
+
+
+  ];
 
   pinpox.desktop = {
     enable = true;
