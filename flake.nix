@@ -204,7 +204,6 @@
               (./machines + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               home-manager.nixosModules.home-manager
-              # hyprland.nixosModules.default
               restic-exporter.nixosModules.default
             ];
           };
@@ -230,7 +229,6 @@
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/desktop.nix
             lollypops.hmModule
-            # hyprland.homeManagerModules.default
           ] ++
           (builtins.attrValues self.homeManagerModules);
         };

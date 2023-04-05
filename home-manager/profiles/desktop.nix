@@ -51,7 +51,6 @@
         waybar.enable = !inXserver;
         mako.enable = !inXserver;
         kanshi.enable = !inXserver;
-        # hyprland.enable = !inXserver;
       };
   };
 
