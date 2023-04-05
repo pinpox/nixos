@@ -25,10 +25,6 @@
   #       output DP-2 mode 2560x1440 position 3640,0
 
 
-  home.file = {
-    # ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
-    ".local/share/wallpaper-generator".source = wallpaper-generator;
-  };
 
   home.keyboard = {
     variant = "colemak";
