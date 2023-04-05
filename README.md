@@ -73,7 +73,7 @@ If the system has not been configured to use flakes (e.g. fresh install), the
 first deployment will have to be build on a machine that has. This can be done
 from any of the other hosts that have the repository. The configuration will the
 have the necessary options set, so that flakes works from now on with the normal
-krops deployment.
+lollypops deployment.
 
 ```bash
 # bash, zsh doesn't always work correctly
