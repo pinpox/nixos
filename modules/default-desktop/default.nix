@@ -59,6 +59,10 @@ in
     # home-manager.extraSpecialArgs = flake-self.inputs;
     home-manager.extraSpecialArgs = {
       inherit wallpaper-generator flake-self nur promterm;
+
+      # Pass system configuration (top-level "config") to home-manager modules,
+      # so we can access it's values for conditional statements
+      system-config = config;
     };
 
     nixpkgs.overlays = [

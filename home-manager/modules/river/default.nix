@@ -19,9 +19,18 @@ in
 
   config = mkIf cfg.enable {
 
+    # Sets --indicator for network-manager-applet, which makes it work in river
+    xsession.preferStatusNotifierItems = true;
+
     # Install these packages for my user
     home.packages = with pkgs; [
       river
+      river-luatile
+      # way-displays
+      waybar
+      wl-clipboard
+      wlr-randr
+      wofi
       start-river
       screenshot-region
     ];

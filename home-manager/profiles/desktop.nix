@@ -1,30 +1,5 @@
+{ system-config, pkgs, ... }:
 {
-  # config,
-  pkgs
-  # , lib
-  # , nur
-, wallpaper-generator
-, colorscheme
-  # , dotfiles-awesome
-, ...
-}:
-# let
-# # pointer = config.home.pointerCursor;
-# homeDir = config.home.homeDirectory;
-# emoji = "${pkgs.wofi-emoji}/bin/wofi-emoji";
-# in
-
-
-{
-
-  # Sets --indicator for network-manager-applet, which makes it work in river
-  xsession.preferStatusNotifierItems = true;
-
-  # output eDP-1 mode 1920x1080 position 0,0
-  #       output DP-1 mode 2560x1440 position 1080,0
-  #       output DP-2 mode 2560x1440 position 3640,0
-
-
 
   home.keyboard = {
     variant = "colemak";
@@ -46,48 +21,48 @@
 
     services.ntfy-notify.enable = true;
 
-    programs = {
-      pandoc.enable = true;
-      alacritty.enable = true;
-      foot.enable = true;
-      zellij.enable = true;
-      chromium.enable = true;
-      dunst.enable = false;
-      picom.enable = true;
-      nvim.enable = true;
-      xscreensaver.enable = true;
-      firefox.enable = true;
-      tmux.enable = true;
-      wezterm.enable = true;
-      zk.enable = true;
-      rofi.enable = false;
-      go.enable = true;
-      awesome.enable = false;
-      sway.enable = true;
-      river.enable = true;
-      waybar.enable = true;
-      mako.enable = true;
-      kanshi.enable = true;
-      hyprland.enable = false;
-    };
+    programs =
+      let
+        inXserver = system-config.pinpox.services.xserver.enable;
+      in
+      {
+        pandoc.enable = true;
+        alacritty.enable = true;
+        zellij.enable = true;
+        chromium.enable = true;
+        nvim.enable = true;
+        firefox.enable = true;
+        tmux.enable = true;
+        wezterm.enable = true;
+        zk.enable = true;
+        go.enable = true;
+
+        # XServer only
+        rofi.enable = inXserver;
+        awesome.enable = inXserver;
+        xscreensaver.enable = inXserver;
+        dunst.enable = inXserver;
+        picom.enable = inXserver;
+
+        # Wayland only
+        foot.enable = !inXserver;
+        sway.enable = !inXserver;
+        river.enable = !inXserver;
+        waybar.enable = !inXserver;
+        mako.enable = !inXserver;
+        kanshi.enable = !inXserver;
+        # hyprland.enable = !inXserver;
+      };
   };
+
 
   # Install these packages for my user
   home.packages = with pkgs; [
 
-    river-luatile
-
-    wofi
-    # way-displays
-    waybar
-    wl-clipboard
-    wlr-randr
-
     # From nixpkgs
     inetutils
     nmap
-    retroarch
-    arandr
+    # retroarch
     # arduino
     # arduino-cli
     asciinema
@@ -115,7 +90,6 @@
     nix-index
     openvpn
     papirus-icon-theme
-    recursive
     pavucontrol
     pkg-config
     playerctl
@@ -132,6 +106,7 @@
     viewnior
     vlc
     xarchiver
+    # recursive
     gnome.file-roller
     xfce.exo # thunar "open terminal here"
     xfce.thunar-archive-plugin
@@ -139,7 +114,6 @@
     xfce.tumbler # thunar thumbnails
     xfce.xfce4-volumed-pulse
     xfce.xfconf # thunar save settings
-    xorg.xrandr
     # yubioath-desktop
     # xfce.thunar
     (xfce.thunar.override {
@@ -149,12 +123,16 @@
         xfce.thunar-media-tags-plugin
       ];
     })
+  ] ++
+  # Packages only useful when using xserver
+  lib.optionals system-config.pinpox.services.xserver.enable [
+    arandr
+    xorg.xrandr
   ];
 
   xdg = {
     enable = true;
     configFile = {
-
       thunar_actions = {
         target = "Thunar/uca.xml";
         text = ''
@@ -176,42 +154,10 @@
     };
   };
 
-
   services = {
 
-    # espanso = {
-    #   enable = true;
-    #   settings = {
-    #     matches = [
-    #       {
-    #         # Simple text replacement
-    #         trigger = ":espanso";
-    #         replace = "Hi there!";
-    #       }
-    #       {
-    #         # Dates
-    #         trigger = ":date";
-    #         replace = "{{mydate}}";
-    #         vars = [{
-    #           name = "mydate";
-    #           type = "date";
-    #           params = { format = "%Y-%m-%d"; };
-    #         }];
-    #       }
-    #       {
-    #         # Shell commands
-    #         trigger = ":shell";
-    #         replace = "{{output}}";
-    #         vars = [{
-    #           name = "output";
-    #           type = "shell";
-    #           params = { cmd = "echo 'Hello from your shell'"; };
-    #         }];
-    #       }
-    #     ];
-    #   };
-    # };
     # Applets, shown in tray
+
     # Networking
     network-manager-applet.enable = true;
 
