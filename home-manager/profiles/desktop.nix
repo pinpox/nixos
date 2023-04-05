@@ -24,61 +24,6 @@
   #       output DP-1 mode 2560x1440 position 1080,0
   #       output DP-2 mode 2560x1440 position 3640,0
 
-  programs.foot = {
-    enable = true;
-    server.enable = true;
-    settings = {
-
-      main = {
-        term = "xterm-256color";
-
-        font = "Berkeley Mono:size=11";
-        # dpi-aware = "yes"; # Defaults to auto
-      };
-
-      scrollback = {
-        lines = 10000;
-      };
-
-      cursor = {
-        style = "beam";
-        blink = "yes";
-        # beam-thickness = 
-      };
-
-      colors = {
-
-        # alpha=1.0
-        background = "${colorscheme.Black}";
-        foreground = "${colorscheme.White}";
-
-        ## Normal/regular colors (color palette 0-7)
-        regular0 = "${colorscheme.Black}"; # black
-        regular1 = "${colorscheme.Red}"; # red
-        regular2 = "${colorscheme.Green}"; # green
-        regular3 = "${colorscheme.Yellow}"; # yellow
-        regular4 = "${colorscheme.Blue}"; # blue
-        regular5 = "${colorscheme.Magenta}"; # magenta
-        regular6 = "${colorscheme.Cyan}"; # cyan
-        regular7 = "${colorscheme.White}"; # white
-
-        ## Bright colors (color palette 8-15)
-        bright0 = "${colorscheme.BrightBlack}"; # black
-        bright1 = "${colorscheme.BrightRed}"; # red
-        bright2 = "${colorscheme.BrightGreen}"; # green
-        bright3 = "${colorscheme.BrightYellow}"; # yellow
-        bright4 = "${colorscheme.BrightBlue}"; # blue
-        bright5 = "${colorscheme.BrightMagenta}"; # magenta
-        bright6 = "${colorscheme.BrightCyan}"; # cyan
-        bright7 = "${colorscheme.BrightWhite}"; # white
-      };
-
-      # mouse = {
-      #   hide-when-typing = "yes";
-      # };
-
-    };
-  };
 
   home.file = {
     # ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
@@ -108,6 +53,7 @@
     programs = {
       pandoc.enable = true;
       alacritty.enable = true;
+      foot.enable = true;
       zellij.enable = true;
       chromium.enable = true;
       dunst.enable = false;
