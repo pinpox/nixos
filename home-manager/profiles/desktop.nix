@@ -267,6 +267,9 @@ in
     };
   };
 
+  # Sets --indicator for network-manager-applet, which makes it work in river
+  xsession.preferStatusNotifierItems = true;
+
   services = {
 
     # espanso = {
