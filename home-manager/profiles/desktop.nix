@@ -1,23 +1,24 @@
-{ config
-, pkgs
-, lib
-, nur
+{
+  # config,
+  pkgs
+  # , lib
+  # , nur
 , wallpaper-generator
 , colorscheme
   # , dotfiles-awesome
 , ...
 }:
-let
-
-  # pointer = config.home.pointerCursor;
-  homeDir = config.home.homeDirectory;
-  emoji = "${pkgs.wofi-emoji}/bin/wofi-emoji";
-
-
-in
+# let
+# # pointer = config.home.pointerCursor;
+# homeDir = config.home.homeDirectory;
+# emoji = "${pkgs.wofi-emoji}/bin/wofi-emoji";
+# in
 
 
 {
+
+  # Sets --indicator for network-manager-applet, which makes it work in river
+  xsession.preferStatusNotifierItems = true;
 
   # output eDP-1 mode 1920x1080 position 0,0
   #       output DP-1 mode 2560x1440 position 1080,0
@@ -76,40 +77,6 @@ in
       #   hide-when-typing = "yes";
       # };
 
-    };
-  };
-
-  services.kanshi = {
-    enable = true;
-    profiles = {
-
-      laptop-only = {
-        outputs = [
-          {
-            criteria = "eDP-1";
-            mode = "1920x1080@60Hz";
-          }
-        ];
-      };
-      triple-home = {
-        outputs = [
-          {
-            criteria = "eDP-1";
-            mode = "1920x1080@60Hz";
-            status = "enable";
-          }
-          {
-            criteria = "DP-1";
-            mode = "2560x1440@60Hz";
-            status = "enable";
-          }
-          {
-            criteria = "DP-2";
-            mode = "2560x1440@60Hz";
-            status = "enable";
-          }
-        ];
-      };
     };
   };
 
@@ -267,8 +234,6 @@ in
     };
   };
 
-  # Sets --indicator for network-manager-applet, which makes it work in river
-  xsession.preferStatusNotifierItems = true;
 
   services = {
 
