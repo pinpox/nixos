@@ -3,6 +3,8 @@
 
   inputs = {
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     aoe-taunt-discord-bot = {
@@ -68,13 +70,13 @@
     wallpaper-generator.url = "github:pinpox/wallpaper-generator";
     wallpaper-generator.flake = false;
 
-    dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
-    dotfiles-awesome.inputs = {
-      nixpkgs.follows = "nixpkgs";
-      wallpaper-generator.follows = "wallpaper-generator";
-      flake-utils.follows = "flake-utils";
-      flake-compat.follows = "flake-compat";
-    };
+    # dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
+    # dotfiles-awesome.inputs = {
+    #   nixpkgs.follows = "nixpkgs";
+    #   wallpaper-generator.follows = "wallpaper-generator";
+    #   flake-utils.follows = "flake-utils";
+    #   flake-compat.follows = "flake-compat";
+    # };
 
     restic-exporter.url = "github:pinpox/restic-exporter";
     restic-exporter.inputs = {
@@ -216,6 +218,7 @@
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/server.nix
             lollypops.hmModule
+
           ] ++
           (builtins.attrValues self.homeManagerModules);
         };

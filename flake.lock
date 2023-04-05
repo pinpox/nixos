@@ -46,35 +46,6 @@
         "type": "github"
       }
     },
-    "dotfiles-awesome": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "wallpaper-generator": [
-          "wallpaper-generator"
-        ]
-      },
-      "locked": {
-        "lastModified": 1672320779,
-        "narHash": "sha256-1zjKvcvkiNFtxmQB+dge3p0JJ8YIbw8cgcysAy0fIhM=",
-        "owner": "pinpox",
-        "repo": "dotfiles-awesome",
-        "rev": "04499a82eac8960bcf60add7c58152c41ccd9b52",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "dotfiles-awesome",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -350,6 +321,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1680070330,
+        "narHash": "sha256-aoT2YZCd9LEtiEULFLIF0ykKydgE72X8gw/k9/pRS5I=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "a6aa8174fa61e55bd7e62d35464d3092aefe0421",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1680487167,
@@ -380,6 +367,7 @@
     },
     "nur": {
       "locked": {
+
         "lastModified": 1680687985,
         "narHash": "sha256-09JE1Q7E6dzdqr1APLLjrxKjf53JY35UbE6JrmnYfgE=",
         "owner": "nix-community",
@@ -503,7 +491,6 @@
       "inputs": {
         "alertmanager-ntfy": "alertmanager-ntfy",
         "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
-        "dotfiles-awesome": "dotfiles-awesome",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "forgit": "forgit",
@@ -517,6 +504,7 @@
         "mayniklas-keys": "mayniklas-keys",
         "mc3000": "mc3000",
         "nix-apple-fonts": "nix-apple-fonts",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",

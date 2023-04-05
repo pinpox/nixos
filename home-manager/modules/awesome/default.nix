@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, wallpaper-generator, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.awesome;
@@ -9,6 +9,11 @@ in
   config = mkIf cfg.enable {
 
     # imports = [ dotfiles-awesome.dotfiles ];
+
+    home.file = {
+      # ".config/awesome".source = "${dotfiles-awesome}/dotfiles";
+      ".local/share/wallpaper-generator".source = wallpaper-generator;
+    };
 
     xsession.scriptPath = ".hm-xsession";
     xsession.enable = true;

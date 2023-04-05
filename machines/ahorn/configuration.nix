@@ -1,11 +1,74 @@
 # Configuration file for ahorn
-{ config, retiolum, pkgs, lib, ... }: {
+{ config, retiolum, pkgs, lib, nixos-hardware, ... }: {
 
   imports = [
+
+    nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca
   ];
+
+
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
+
+  # services.xserver.desktopManager.enlightenment.enable = true;
+
+
+  # programs.xwayland.enable = true;
+  programs.sway.enable = true;
+  hardware.opengl.enable = true;
+
+
+  # environment.sessionVariables = {
+  #     MOZ_ENABLE_WAYLAND = "1";
+  #   };
+
+  xdg.portal = {
+
+    enable = true;
+
+    wlr = {
+      enable = true;
+      # settings = {
+
+
+      #   # See xdg-desktop-portal-wlr(5) for supported values.
+      #   screencast = {
+      #     # output_name = "HDMI-A-1";
+      #     max_fps = 30;
+      #     # exec_before = "disable_notifications.sh";
+      #     # exec_after = "enable_notifications.sh";
+      #     chooser_type = "simple";
+      #     chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+      #   };
+
+      # };
+    };
+    # gtkUsePortal = true;
+    extraPortals = [
+      # pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+    ];
+  };
+
+  services.fwupd.enable = true;
+
+
+
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     enlightenment = super.enlightenment.overrideScope' (gself: gsuper: {
+  #       enlightenment = gsuper.enlightenment.override {
+  #         waylandSupport = true;
+  #       };
+  #     });
+  #   })
+  # ];
+
+  services.acpid.enable = true;
 
   # Often hangs
   systemd.services = {
@@ -71,7 +134,17 @@
   pinpox.services.restic-client.enable = true;
 
   # Install reaper
-  environment.systemPackages = [ pkgs.reaper ];
+  environment.systemPackages = [
+
+
+    # pkgs.reaper 
+
+
+    pkgs.xdg-desktop-portal
+    pkgs.xdg-desktop-portal-wlr
+
+
+  ];
 
   pinpox.desktop = {
     enable = true;
