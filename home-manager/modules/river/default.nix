@@ -5,7 +5,7 @@ let
   start-river = pkgs.writeShellScriptBin "start-river"
     ''
       export WLR_DRM_NO_MODIFIERS=1
-      ${pkgs.river}/bin/river
+      dbus-launch --sh-syntax --exit-with-session ${pkgs.river}/bin/river
     '';
 
   screenshot-region = pkgs.writeShellScriptBin "screenshot-region"
