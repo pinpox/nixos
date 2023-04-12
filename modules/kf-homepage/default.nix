@@ -1,7 +1,6 @@
-{ lib, pkgs, config, ... }:
+{ lib, config, ... }:
 with lib;
 let cfg = config.pinpox.services.kf-homepage;
-
 in
 {
 
@@ -11,17 +10,13 @@ in
 
   config = mkIf cfg.enable {
 
-    services.nginx = {
+    services.caddy = {
       enable = true;
-      recommendedOptimisation = true;
-      recommendedTlsSettings = true;
-
       virtualHosts = {
-        "0cx.de" = {
-          forceSSL = true;
-          enableACME = true;
-          root = ./page;
-        };
+        "0cx.de".extraConfig = ''
+          encode gzip
+          root * ${./page}
+        '';
       };
     };
   };
