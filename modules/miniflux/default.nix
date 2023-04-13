@@ -17,16 +17,9 @@ in
       "miniflux/oauth2_client_secret_file" = { };
     };
 
-    services.nginx = {
+    services.caddy = {
       enable = true;
-
-      virtualHosts = {
-        "news.0cx.de" = {
-          forceSSL = true;
-          enableACME = true;
-          locations."/" = { proxyPass = "http://127.0.0.1:8787"; };
-        };
-      };
+      virtualHosts."news.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8787";
     };
 
     systemd.services.miniflux = {

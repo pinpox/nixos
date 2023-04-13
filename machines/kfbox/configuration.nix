@@ -229,70 +229,21 @@
       ];
     };
   };
-
-  services.nginx = {
+  services.caddy = {
     enable = true;
-    recommendedOptimisation = true;
-    recommendedTlsSettings = true;
-    clientMaxBodySize = "128m";
-
-    # commonHttpConfig = ''
-    #   server_names_hash_bucket_size 128;
-    # '';
 
     virtualHosts = {
 
-      "megaclan3000.de" = {
-        forceSSL = true;
-        enableACME = true;
-        root = mc3000.packages.x86_64-linux.mc3000;
-      };
+      "megaclan3000.de".extraConfig = ''
+        encode gzip
+        root * ${mc3000.packages.x86_64-linux.mc3000}
+      '';
 
-      "login.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:5556"; };
-      };
+      "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
+      "login.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:5556";
+      "git.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3333";
+      "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
-      "git.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:3333"; };
-      };
-
-      # The Lounge IRC
-      "irc.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://127.0.0.1:9090"; };
-      };
-
-      # Pads
-      "pads.0cx.de" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:3000";
-          extraConfig = ''
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-          '';
-        };
-
-        locations."/socket.io/ " = {
-          proxyPass = "http://127.0.0.1:3000";
-          extraConfig = ''
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection $connection_upgrade;
-          '';
-        };
-      };
     };
   };
 }

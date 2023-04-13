@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, config, ... }:
 with lib;
 let cfg = config.pinpox.services.ntfy-sh;
 
@@ -40,18 +40,8 @@ in
       #   owner = "nginx";
       # };
 
-      services.nginx.virtualHosts."${ntfy-host}" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${ntfy-port}";
-          # extraConfig = ''
-          #   limit_except POST {
-          #     auth_basic 'Restricted';
-          #     auth_basic_user_file "${config.lollypops.secrets.files."nginx/ntfy-sh.passwd".path}";
-          #   }
-          # '';
-        };
-      };
+      services.caddy.virtualHosts."${ntfy-host}".extraConfig = ''
+        reverse_proxy 127.0.0.1:${ntfy-port}
+      '';
     };
 }
