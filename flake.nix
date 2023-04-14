@@ -294,7 +294,7 @@
           # allow using them from other flakes that import this one.
           packages = flake-utils.lib.flattenTree {
             # wezterm-bin = pkgs.wezterm-bin;
-            wezterm-nightly = pkgs.wezterm-nightly;
+            # wezterm-nightly = pkgs.wezterm-nightly;
             hello-custom = pkgs.hello-custom;
             filebrowser = pkgs.filebrowser;
             darktile = pkgs.darktile;
