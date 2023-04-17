@@ -31,19 +31,19 @@
     "caddy/basicauth_3dprint" = { };
     "caddy/basicauth_notify" = { };
 
-    "nginx/blog.passwd" = {
-      path = "/var/www/blog.passwd";
-      owner = "nginx";
-    };
+    # "nginx/blog.passwd" = {
+    #   path = "/var/www/blog.passwd";
+    #   owner = "nginx";
+    # };
 
-    "nginx/3dprint.passwd" = {
-      path = "/var/www/3dprint.passwd";
-      owner = "nginx";
-    };
-    "matrix-hook/alerts.passwd" = {
-      path = "/var/lib/matrix-hook/alerts.passwd";
-      owner = "nginx";
-    };
+    # "nginx/3dprint.passwd" = {
+    #   path = "/var/www/3dprint.passwd";
+    #   owner = "nginx";
+    # };
+    # "matrix-hook/alerts.passwd" = {
+    #   path = "/var/lib/matrix-hook/alerts.passwd";
+    #   owner = "nginx";
+    # };
   };
 
 
