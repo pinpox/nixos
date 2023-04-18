@@ -27,7 +27,7 @@ in
       };
 
       # /tmp is cleaned after each reboot
-      cleanTmpDir = true;
+      tmp.cleanOnBoot = true;
     };
   };
 }

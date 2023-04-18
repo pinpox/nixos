@@ -201,7 +201,8 @@ in
       # Use GRUB2 as EFI boot loader.
       loader.grub.useOSProber = true;
 
-      tmpOnTmpfs = false;
+      tmp.useTmpfs = false;
+
 
       # Encrypted drive to be mounted by the bootloader. Path of the device will
       # have to be changed for each install.
