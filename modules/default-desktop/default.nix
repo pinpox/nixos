@@ -44,6 +44,17 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    services.greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-river";
+          user = "greeter";
+        };
+      };
+    };
+
     # programs.sway.enable = true;
 
     # Enable networkmanager
@@ -169,6 +180,7 @@ in
 
       # borgbackup
       # wezterm-nightly
+      macchanger
       arandr
       binutils
       file
