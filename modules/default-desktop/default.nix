@@ -180,6 +180,7 @@ in
 
       # borgbackup
       # wezterm-nightly
+      acpi
       macchanger
       arandr
       binutils
