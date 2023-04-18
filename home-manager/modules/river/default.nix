@@ -49,6 +49,7 @@ in
         river-config-extra = {
           target = "river/init_exta";
           text = ''
+            riverctl map-switch normal lid close spawn ${pkgs.swaylock}/bin/swaylock
             # riverctl map normal Super F12 spawn '${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png'
             # riverctl map normal Super F12 spawn ${screenshot-region}
             riverctl map normal Super p spawn "${pkgs.wofi}/bin/wofi --show run"
@@ -58,6 +59,7 @@ in
             # --output DP-2 --mode 2560x1440@164.54 --pos 1920,0
 
             # wlr-randr --output eDP-1 --on --mode 1920x1080 --pos 0,0 --output DP-1  --on --mode 2560x1440 --pos 4480,0 --output DP-2  --on --mode 2560x1440  --pos 1920,0
+
           '';
           executable = true;
         };
