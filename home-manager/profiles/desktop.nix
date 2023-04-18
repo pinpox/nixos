@@ -3,7 +3,6 @@
 
   home.keyboard = {
     variant = "colemak";
-
     layout = "us";
     options = "caps:swapescape";
   };

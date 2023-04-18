@@ -10,7 +10,8 @@
 
 
 # Set keyboard layout
-riverctl keyboard-layout -variant colemak us
+# riverctl keyboard-layout -variant colemak us
+riverctl keyboard-layout -variant colemak -options "caps:swapescape" us
 
 # Super+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 # riverctl map normal Super Return spawn wezterm
