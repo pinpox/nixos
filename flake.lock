@@ -475,11 +475,11 @@
     },
     "retiolum": {
       "locked": {
-        "lastModified": 1681672417,
-        "narHash": "sha256-OtylBgnCkHKDTXIxmfX1rK/FyYBlIVFPQ9HY4oztBSs=",
+        "lastModified": 1681920009,
+        "narHash": "sha256-i0SCw1Q1EVQl3Wy9DEGAHEGaAwfHIHKpqF+IbD73jwc=",
         "ref": "refs/heads/master",
-        "rev": "bac05971f2bfa5b5179d04e088bf0740e9ea86a1",
-        "revCount": 297,
+        "rev": "925b238837a4b79b44281e4d9e652ce618fccc1e",
+        "revCount": 302,
         "type": "git",
         "url": "https://git.thalheim.io/Mic92/retiolum"
       },
