@@ -46,6 +46,7 @@
         # Wayland only
         foot.enable = !inXserver;
         sway.enable = !inXserver;
+        swaylock.enable = !inXserver;
         river.enable = !inXserver;
         waybar.enable = !inXserver;
         mako.enable = !inXserver;
