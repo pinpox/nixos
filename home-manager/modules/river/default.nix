@@ -2,13 +2,13 @@
 with lib;
 let
   cfg = config.pinpox.programs.river;
-  start-river = pkgs.writeShellScriptBin "start-river"
+  start-river = pkgs.writeShellScriptBin "start-river" /* sh */
     ''
       export WLR_DRM_NO_MODIFIERS=1
       dbus-launch --sh-syntax --exit-with-session ${pkgs.river}/bin/river
     '';
 
-  screenshot-region = pkgs.writeShellScriptBin "screenshot-region"
+  screenshot-region = pkgs.writeShellScriptBin "screenshot-region" /* sh */
     ''
       ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png
     '';
@@ -48,7 +48,7 @@ in
 
         river-config-extra = {
           target = "river/init_exta";
-          text = ''
+          text = /* sh */''
             riverctl map-switch normal lid close spawn ${pkgs.swaylock}/bin/swaylock
             # riverctl map normal Super F12 spawn '${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png'
             # riverctl map normal Super F12 spawn ${screenshot-region}
@@ -65,7 +65,6 @@ in
         };
 
         # river-luatile layouts
-
         luatile-layout = {
           target = "river-luatile/layout.lua";
           source = ./layout.lua;
