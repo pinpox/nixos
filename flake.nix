@@ -292,18 +292,114 @@
         in {
           # Custom packages added via the overlay are selectively exposed here, to
           # allow using them from other flakes that import this one.
-          packages = flake-utils.lib.flattenTree {
-            # wezterm-bin = pkgs.wezterm-bin;
-            # wezterm-nightly = pkgs.wezterm-nightly;
-            hello-custom = pkgs.hello-custom;
-            filebrowser = pkgs.filebrowser;
-            darktile = pkgs.darktile;
-            dirserver = pkgs.dirserver;
-            fritzbox_exporter = pkgs.fritzbox_exporter;
-            mqtt2prometheus = pkgs.mqtt2prometheus;
-            smartmon-script = pkgs.smartmon-script;
-            tfenv = pkgs.tfenv;
-          };
+          packages = flake-utils.lib.flattenTree
+            {
+              # wezterm-bin = pkgs.wezterm-bin;
+              # wezterm-nightly = pkgs.wezterm-nightly;
+              hello-custom = pkgs.hello-custom;
+              filebrowser = pkgs.filebrowser;
+              darktile = pkgs.darktile;
+              dirserver = pkgs.dirserver;
+              fritzbox_exporter = pkgs.fritzbox_exporter;
+              mqtt2prometheus = pkgs.mqtt2prometheus;
+              smartmon-script = pkgs.smartmon-script;
+              tfenv = pkgs.tfenv;
+
+              # BUILD/TEST WITH:
+              # nix build '.#flake-manual' --show-trace && cat result | jq
+              flake-manual =
+
+                let
+                  isValidOpt = a: (builtins.hasAttr "_type" a) && (a._type == "option")
+                  && (builtins.hasAttr "default" a)
+                  && (builtins.hasAttr "example" a)
+                  && (builtins.hasAttr "description" a)
+                  && (builtins.hasAttr "type" a)
+                  ;
+
+                  getOptionValues = opt:
+                    if builtins.typeOf opt == "set" then
+                    # if builtins.hasAttr "default" opt then
+                      if isValidOpt opt then
+                        {
+                          declaredIn = "TODO";
+                          example = opt.example;
+                          description = opt.description;
+                          default = opt.default;
+                          type = opt.type.description;
+                        }
+                      else
+                      # it is a set, but has no "default", recurse
+                        builtins.mapAttrs (name: value: getOptionValues value) opt
+                    else
+                    # it is no set
+                      { };
+                in
+                pkgs.writeTextFile
+
+                  {
+                    name = "my-file";
+                    text = builtins.toJSON
+
+                      (pkgs.lib.attrsets.mapAttrs
+                        (name: value:
+                          getOptionValues (value { lib = pkgs.lib; inherit pkgs; config = { }; }).options.pinpox
+                        )
+                        # self.nixosModules
+                        (pkgs.lib.attrsets.filterAttrsRecursive
+                          (n: v:
+                            # Filter some problematic modules out
+                            # TODO line remove after testing
+                            (
+                              (n == "borg")
+                              || (n == "restic")
+                              # || (n == "activation-secrets")
+                              # || (n == "monitoring")
+                              # || (n == "drone-ci")
+                              # || (n == "default-server")
+                              # || (n == "default-desktop")
+                              # || (n == "openssh")
+                              # || (n == "nix-common")
+                              # || (n == "lollypops-common")
+                              || (n == "binary-cache")
+                              || (n == "bluetooth")
+                              || (n == "borg")
+                              || (n == "borg-server")
+                              || (n == "caddy-portal")
+                              || (n == "environment")
+                              || (n == "filebrowser")
+                              || (n == "fonts")
+                              || (n == "hedgedoc")
+                              || (n == "hello")
+                              || (n == "home-assistant")
+                              || (n == "http2irc")
+                              || (n == "kf-homepage")
+                              || (n == "locale")
+                              || (n == "lvm-grub")
+                              || (n == "mattermost")
+                              || (n == "miniflux")
+                              || (n == "minio")
+                              || (n == "networking")
+                              || (n == "nextcloud")
+                              || (n == "ntfy-sh")
+                              || (n == "restic")
+                              || (n == "sound")
+                              || (n == "thelounge")
+                              || (n == "virtualisation")
+                              || (n == "wireguard-client")
+                              || (n == "xserver")
+                              || (n == "yubikey")
+                              || (n == "zsh")
+
+                            )
+                          )
+                          self.nixosModules)
+                      );
+
+                    # TODO loop modules
+                    # borg = getOptionValues (self.nixosModules.borg { lib = pkgs.lib; inherit pkgs; config = { }; }).options.pinpox;
+                  };
+            };
 
           # Run with: nix develop '.#test-shell'
           devShells = flake-utils.lib.flattenTree {
