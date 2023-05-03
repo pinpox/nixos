@@ -308,18 +308,15 @@
               # BUILD/TEST WITH:
               # nix build '.#flake-manual' --show-trace && cat result | jq
               flake-manual =
-
                 let
                   isValidOpt = a: (builtins.hasAttr "_type" a) && (a._type == "option")
                   && (builtins.hasAttr "default" a)
                   && (builtins.hasAttr "example" a)
                   && (builtins.hasAttr "description" a)
-                  && (builtins.hasAttr "type" a)
-                  ;
+                  && (builtins.hasAttr "type" a);
 
                   getOptionValues = opt:
                     if builtins.typeOf opt == "set" then
-                    # if builtins.hasAttr "default" opt then
                       if isValidOpt opt then
                         {
                           declaredIn = "TODO";
@@ -332,72 +329,35 @@
                       # it is a set, but has no "default", recurse
                         builtins.mapAttrs (name: value: getOptionValues value) opt
                     else
-                    # it is no set
-                      { };
+                      { }; # it is no set
                 in
                 pkgs.writeTextFile
-
                   {
-                    name = "my-file";
+                    name = "options.json";
                     text = builtins.toJSON
 
                       (pkgs.lib.attrsets.mapAttrs
                         (name: value:
-                          getOptionValues (value { lib = pkgs.lib; inherit pkgs; config = { }; }).options.pinpox
+                          let
+                            allopts = getOptionValues (value ({
+                              inherit (inputs) flake-self;
+                              inherit pkgs;
+                              lib = pkgs.lib;
+                              config = { };
+                            } // inputs)
+                            );
+                          in
+                          if
+                          # Filter out everything that has no ".options.pinpox"
+                            builtins.hasAttr "options" allopts then
+                            if builtins.hasAttr "pinpox" allopts.options then
+                              allopts.options.pinpox
+                            else null
+                          else
+                            null
                         )
-                        # self.nixosModules
-                        (pkgs.lib.attrsets.filterAttrsRecursive
-                          (n: v:
-                            # Filter some problematic modules out
-                            # TODO line remove after testing
-                            (
-                              (n == "borg")
-                              || (n == "restic")
-                              # || (n == "activation-secrets")
-                              # || (n == "monitoring")
-                              # || (n == "drone-ci")
-                              # || (n == "default-server")
-                              # || (n == "default-desktop")
-                              # || (n == "openssh")
-                              # || (n == "nix-common")
-                              # || (n == "lollypops-common")
-                              || (n == "binary-cache")
-                              || (n == "bluetooth")
-                              || (n == "borg")
-                              || (n == "borg-server")
-                              || (n == "caddy-portal")
-                              || (n == "environment")
-                              || (n == "filebrowser")
-                              || (n == "fonts")
-                              || (n == "hedgedoc")
-                              || (n == "hello")
-                              || (n == "home-assistant")
-                              || (n == "http2irc")
-                              || (n == "kf-homepage")
-                              || (n == "locale")
-                              || (n == "lvm-grub")
-                              || (n == "mattermost")
-                              || (n == "miniflux")
-                              || (n == "minio")
-                              || (n == "networking")
-                              || (n == "nextcloud")
-                              || (n == "ntfy-sh")
-                              || (n == "restic")
-                              || (n == "sound")
-                              || (n == "thelounge")
-                              || (n == "virtualisation")
-                              || (n == "wireguard-client")
-                              || (n == "xserver")
-                              || (n == "yubikey")
-                              || (n == "zsh")
-
-                            )
-                          )
-                          self.nixosModules)
+                        self.nixosModules
                       );
-
-                    # TODO loop modules
-                    # borg = getOptionValues (self.nixosModules.borg { lib = pkgs.lib; inherit pkgs; config = { }; }).options.pinpox;
                   };
             };
 
