@@ -1,50 +1,86 @@
-with import <nixpkgs> { };
-let
-  eval = import (pkgs.path + "/nixos/lib/eval-config.nix") {
-    modules = [
-      "${
-        builtins.fetchTarball
-        "https://github.com/rycee/home-manager/archive/master.tar.gz"
-      }/nixos"
-    ] ++ map (x: ../modules + "/${x}")
-      (builtins.attrNames (builtins.readDir ../modules));
-  };
+{ stdenvNoCC, pkgs, flake-self, inputs }:
 
-  opts = (nixosOptionsDoc { options = eval.options; }).optionsJSON;
+stdenvNoCC.mkDerivation rec {
+  pname = "flake-manual";
+  version = "latest";
+  src = ./.;
+  dontConfigure = true;
+  dontUnpack = true;
 
-  templateMarkdown = pkgs.writeTextFile {
-    name = "markdown";
-    text = builtins.readFile ./templates/markdown.mustache;
-  };
+  buildPhase =
 
-  templateHTML = pkgs.writeTextFile {
-    name = "html";
-    text = builtins.readFile ./templates/html.mustache;
-  };
+    let
+      options-json =
+        let
 
-in
-{
+          isValidOpt = a: (builtins.hasAttr "_type" a) && (a._type == "option")
+            && (builtins.hasAttr "default" a)
+            && (builtins.hasAttr "example" a)
+            && (builtins.hasAttr "description" a)
+            && (builtins.hasAttr "type" a);
 
-  json = runCommandLocal "options.json" { inherit opts; } ''
-    cat $opts/share/doc/nixos/options.json | \
-    ${pkgs.jq}/bin/jq '.| with_entries( select(.key|contains("pinpox") ) )' \
-    > $out
+          getOptionValues = opt: path:
+            if builtins.typeOf opt == "set" then
+              if isValidOpt opt then
+                {
+                  inherit path;
+                  name = builtins.concatStringsSep "." path;
+                  example = opt.example;
+                  description = opt.description;
+                  default = opt.default;
+                  type = opt.type.description;
+                  documentedOption = true;
+                }
+              else
+              # it is a set, but has no "default", recurse
+                builtins.mapAttrs (name: value: getOptionValues value (path ++ [ "${name}" ])) opt
+            else
+              { }; # it is no set
+        in
+        pkgs.writeTextFile
+          {
+            name = "options.json";
+            text = builtins.toJSON
+
+              {
+                options = pkgs.lib.attrsets.collect (o: o ? "documentedOption")
+                  (pkgs.lib.attrsets.mapAttrs
+                    (name: value:
+                      let
+                        allopts = getOptionValues
+                          (value ({
+                            inherit (inputs) flake-self;
+                            inherit pkgs;
+                            lib = pkgs.lib;
+                            config = { };
+                          } // inputs)
+                          ) [ ];
+                      in
+                      if
+                      # Filter out everything that has no ".options.pinpox"
+                        builtins.hasAttr "options" allopts then
+                        if builtins.hasAttr "pinpox" allopts.options then
+                          allopts.options.pinpox
+                        else null
+                      else
+                        null
+                    )
+                    flake-self.nixosModules
+                  );
+              };
+          };
+    in
+    ''
+      cat ${options-json} | ${pkgs.mustache-go}/bin/mustache --allow-missing-variables=false ${src}/template.html > index.html
+    '';
+
+  installPhase = ''
+    mkdir -p "$out"
+    cp index.html "$out"
   '';
 
-  markdown = runCommandLocal "options.md" { inherit opts; } ''
-    cat $opts/share/doc/nixos/options.json | \
-    ${pkgs.jq}/bin/jq '.| with_entries( select(.key|contains("pinpox") ) ) | [to_entries[]] | {options: .}' | \
-    ${pkgs.mustache-go}/bin/mustache ${templateMarkdown} \
-    > $out
-  '';
-
-  html = runCommandLocal "options.html" { inherit opts; } ''
-    cat $opts/share/doc/nixos/options.json | \
-    ${pkgs.jq}/bin/jq '.| with_entries( select(.key|contains("pinpox") ) ) | [to_entries[]] | {options: .}' | \
-    ${pkgs.mustache-go}/bin/mustache ${templateHTML} \
-    > $out
-  '';
-
+  meta = {
+    description = "Manual for this flake as package";
+    homepage = "https://github.com/pinpox/nixos";
+  };
 }
-
-# cat data.json| jq '[to_entries[]] | {options: .}' | ~/.go/bin/mustache html.mustache

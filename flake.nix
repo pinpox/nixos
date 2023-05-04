@@ -167,6 +167,8 @@
     with inputs;
     {
 
+
+
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
@@ -303,6 +305,9 @@
             mqtt2prometheus = pkgs.mqtt2prometheus;
             smartmon-script = pkgs.smartmon-script;
             tfenv = pkgs.tfenv;
+
+            # Manual for github pages (https://pinpox.github.io/nixos)
+            flake-manual = pkgs.callPackage ./manual/manual.nix { inputs = inputs; flake-self = self; };
           };
 
           # Run with: nix develop '.#test-shell'

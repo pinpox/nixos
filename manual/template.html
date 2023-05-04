@@ -27,35 +27,25 @@
 				</div>
 				<div class="results block" id=list>
 					{{#options}}
-					<div class="nixoption block" id="{{key}}">
+					<div class="nixoption block" id="{{name}}">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
-									<h3 class="title is-3"> <a href="#{{key}}"># </a> {{key}}  </h3>
+									<h3 class="title is-3"> <a href="#{{name}}"># </a> {{name}}  </h3>
 								</div>
 							</div>
 							<div class="level-right">
 								<div class="level-item">
-									<span class="tag is-medium is-info">{{value.type}}</span>
+									<span class="tag is-medium is-info">{{type}}</span>
 								</div>
 							</div>
 						</div>
 
-						<p class="subtitle"> {{value.description}} </p>
+						<p class="subtitle"> {{description}} </p>
 
 						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>{{value.default}}</code> </p>
-							<p class="block"><strong>Example:</strong> <code>{{value.example}}</code> </p>
-
-							<h4 class="title is-4">Declarations</h4>
-
-							<div class="block">
-								<ul>
-									{{#value.declarations}}
-									<li> <code> {{.}} </code> </li>
-									{{/value.declarations}}
-								</ul>
-							</div>
+							<p class="block"><strong>Default:</strong> <code>{{default}}</code> </p>
+							<p class="block"><strong>Example:</strong> <code>{{example}}</code> </p>
 						</div>
 					</div>
 					{{/options}}
