@@ -294,26 +294,21 @@
         in {
           # Custom packages added via the overlay are selectively exposed here, to
           # allow using them from other flakes that import this one.
-          packages = flake-utils.lib.flattenTree
-            {
-              # wezterm-bin = pkgs.wezterm-bin;
-              # wezterm-nightly = pkgs.wezterm-nightly;
-              hello-custom = pkgs.hello-custom;
-              filebrowser = pkgs.filebrowser;
-              darktile = pkgs.darktile;
-              dirserver = pkgs.dirserver;
-              fritzbox_exporter = pkgs.fritzbox_exporter;
-              mqtt2prometheus = pkgs.mqtt2prometheus;
-              smartmon-script = pkgs.smartmon-script;
-              tfenv = pkgs.tfenv;
+          packages = flake-utils.lib.flattenTree {
+            # wezterm-bin = pkgs.wezterm-bin;
+            # wezterm-nightly = pkgs.wezterm-nightly;
+            hello-custom = pkgs.hello-custom;
+            filebrowser = pkgs.filebrowser;
+            darktile = pkgs.darktile;
+            dirserver = pkgs.dirserver;
+            fritzbox_exporter = pkgs.fritzbox_exporter;
+            mqtt2prometheus = pkgs.mqtt2prometheus;
+            smartmon-script = pkgs.smartmon-script;
+            tfenv = pkgs.tfenv;
 
-              flake-manual = pkgs.callPackage ./manual/manual.nix { inputs = inputs; flake-self = self; };
-
-              # BUILD/TEST WITH:
-              # nix build '.#flake-manual' --show-trace && cat result | jq
-              # flake-manual = pkgs.flake-manual;
-
-            };
+            # Manual for github pages (https://pinpox.github.io/nixos)
+            flake-manual = pkgs.callPackage ./manual/manual.nix { inputs = inputs; flake-self = self; };
+          };
 
           # Run with: nix develop '.#test-shell'
           devShells = flake-utils.lib.flattenTree {
