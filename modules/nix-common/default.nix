@@ -52,8 +52,8 @@ in
       package = pkgs.nixVersions.stable;
       extraOptions = ''
         experimental-features = nix-command flakes
-        !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
       '';
+      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
       settings = {
 
