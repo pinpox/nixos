@@ -3,7 +3,7 @@
 -- vim.wo: window-local options
 
 -- global options
-vim.o.autochdir        = true               -- Automatically change the working dir to current file
+-- vim.o.autochdir        = true               -- Automatically change the working dir to current file
 vim.o.backspace        = "indent,eol,start" -- allow backspacing over everything in insert mode
 vim.o.clipboard        = "unnamedplus"      -- Set Clipboard to system's clipboard
 vim.o.completeopt      = "menuone,noselect" -- Use popup completion menu for single results aswell

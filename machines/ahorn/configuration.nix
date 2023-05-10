@@ -76,6 +76,11 @@
     systemd-networkd-wait-online.enable = lib.mkForce false;
   };
 
+  # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1537225778
+  # systemd.services.NetworkManager-wait-online = {
+  #   serviceConfig.ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+  # };
+
   lollypops = {
 
     secrets = {
