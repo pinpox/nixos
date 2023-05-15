@@ -235,8 +235,9 @@
     virtualHosts = {
 
       "megaclan3000.de".extraConfig = ''
-        encode gzip
         root * ${mc3000.packages.x86_64-linux.mc3000}
+        file_server
+        encode zstd gzip
       '';
 
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
