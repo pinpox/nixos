@@ -19,18 +19,20 @@ wk.register({
 	["<leader>"] = {
 
 		-- FZF
-		F = { ':FzfLua git_files<CR>',  'Git files' },
-		f = { ':FzfLua files<CR>',      'Files' },
-		b = { ':FzfLua buffers<CR>',    'Buffers' },
-		q = { ':FzfLua quickfix<CR>',   'Quickfix' },
+		F = { ':FzfLua git_files<CR>', 'Git files' },
+		f = { ':FzfLua files<CR>',     'Files' },
+		b = { ':FzfLua buffers<CR>',   'Buffers' },
+		q = { ':FzfLua quickfix<CR>',  'Quickfix' },
+		G = { ':FzfLua live_grep<CR>', 'Live Grep' },
 
 		r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
 
 		c = {
 			name = "Code (LSP)",
-			a = { ':lua vim.lsp.buf.code_action()<CR>',                  'Code actions' },
+			a = { ':FzfLua lsp_code_actions<CR>',                        'Code actions' },
 			i = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
 			s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
+			S = { ':FzfLua lsp_document_symbols<CR>',                    'Symbols' },
 			d = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
 		},
 
@@ -62,7 +64,7 @@ wk.register({
 		d = { ':lua vim.lsp.buf.definition()<CR>',       'Definition'},
 		t = { ':lua vim.lsp.buf.type_definition()<CR>',  'Type Definition'},
 		D = { ':lua vim.lsp.buf.declaration()<CR>',      'Declaration'},
-		r = { ':lua vim.lsp.buf.references()<CR>',       'References'},
+		r = { ':FzfLua lsp_references<CR>',              'References'},
 		i = { ':lua vim.lsp.buf.implementation()<CR>',   'Implementation'},
 		j = { ':lua vim.lsp.diagnostic.goto_next()<CR>', 'Next diagnostic' },
 		k = { ':lua vim.lsp.diagnostic.goto_prev()<CR>', 'Previuous diagnostic' },
