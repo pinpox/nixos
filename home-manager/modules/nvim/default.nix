@@ -97,7 +97,7 @@ in
       require('config.general') -- General options, should stay first!
       require('config.pinpox-colors')
       require('config.appearance')
-      -- require('config.treesitter')
+      require('config.treesitter')
       require('config.lsp')
       require('config.devicons')
       require('config.cmp')
@@ -124,7 +124,51 @@ in
 
         ccc-nvim
 
-        # nvim-treesitter
+
+        (nvim-treesitter.withPlugins (p: [
+          p.bash
+          p.c
+          p.comment # -- Comment tags like TODO FIXME(user).
+          # -- cooklang
+          p.css
+          p.diff
+          p.dockerfile
+          p.dot
+          p.fish
+          p.git_config
+          p.git_rebase
+          p.gitattributes
+          p.gitcommit
+          p.gitignore
+          p.go
+          # p.help
+          p.html
+          p.java
+          p.javascript
+          p.jq
+          p.json
+          p.json5
+          p.latex
+          p.lua
+          p.make
+          p.markdown
+          p.nix
+          p.php
+          p.python
+          p.regex
+          p.rust
+          p.scss
+          p.sql
+          p.terraform
+          p.toml
+          p.vim
+          p.vimdoc
+          p.yaml
+          p.zig
+        ]))
+
+
+
         # zk-nvim
         # vim-visual-increment
         # vim-indent-object
