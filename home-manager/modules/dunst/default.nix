@@ -1,4 +1,4 @@
-{ config, pkgs, fonts, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
 
@@ -35,7 +35,7 @@ in
           separator_color = "frame";
           sort = "yes";
           frame_color = "#${config.pinpox.colors.BrightBlack}";
-          font = "${fonts.normal.family} ${fonts.normal.style} 8";
+          font = "${config.pinpox.font.normal.family} ${config.pinpox.font.normal.style} 8";
           line_height = 0;
           markup = "full";
           format =

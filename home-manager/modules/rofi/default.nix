@@ -1,4 +1,4 @@
-{ config, lib, fonts, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.rofi;
@@ -12,8 +12,8 @@ in
 
       # General
       enable = true;
-      font = "${fonts.family} ${fonts.normal.style} ${
-          toString (fonts.size * 2)
+      font = "${config.pinpox.font.family} ${config.pinpox.font.normal.style} ${
+          toString (config.pinpox.font.size * 2)
         }px";
       cycle = true;
       # extraConfig = "";

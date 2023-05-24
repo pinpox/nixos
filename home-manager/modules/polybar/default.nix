@@ -1,4 +1,4 @@
-{ fonts, config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.polybar;
@@ -35,7 +35,7 @@ in
       '';
 
       # Lookup icons with:
-      # https://www.nerdfonts.com/cheat-sheet
+      # https://www.nerdconfig.pinpox.fonts.com/cheat-sheet
       # Then copy by hex code from:
       # https://mathew-kurian.github.io/CharacterMap/
 
@@ -58,7 +58,7 @@ in
           module-margin-right = 2;
 
           font-0 =
-            "${fonts.normal.family}:style=${fonts.normal.style}:pixelsize=8";
+            "${config.pinpox.font.normal.family}:style=${config.pinpox.font.normal.style}:pixelsize=8";
 
           modules-left = "i3";
           modules-center = "music";

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, fonts, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.i3;
@@ -92,9 +92,9 @@ in
           forceWrapping = true;
         };
 
-        fonts = [
-          "${fonts.normal.family} ${fonts.normal.style} ${
-          toString fonts.size
+        config.pinpox.font = [
+          "${config.pinpox.font.normal.family} ${config.pinpox.font.normal.style} ${
+          toString config.pinpox.font.size
         }px"
         ];
 

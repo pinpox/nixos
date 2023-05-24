@@ -1,4 +1,4 @@
-{ config, lib, fonts, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.alacritty;
@@ -31,15 +31,15 @@ in
         font = {
           normal = {
             family = "Berkeley Mono";
-            # style = fonts.normal.style;
+            # style = config.pinpox.font.normal.style;
           };
           bold = {
             family = "Berkeley Mono";
-            style = fonts.bold.style;
+            style = config.pinpox.font.bold.style;
           };
           italic = {
             family = "Berkeley Mono";
-            style = fonts.italic.style;
+            style = config.pinpox.font.italic.style;
           };
           size = 10;
         };

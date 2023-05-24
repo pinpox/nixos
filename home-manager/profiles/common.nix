@@ -1,81 +1,81 @@
-{ pkgs, nur, flake-self, config, ... }:
-let
-  vars = import ../vars.nix;
-in
+{ lib, pkgs, nur, flake-self, config, ... }:
+with lib;
 {
+  imports = [ ../colorscheme.nix ];
 
-  # # often hangs
-  # systemd.services.systemd-networkd-wait-online.enable = false;
-  # systemd.services.NetworkManager-wait-online.enable = false;
+  config = {
 
-  # Home-manager nixpkgs config
-  nixpkgs = {
+    # # often hangs
+    # systemd.services.systemd-networkd-wait-online.enable = false;
+    # systemd.services.NetworkManager-wait-online.enable = false;
 
-    # Allow "unfree" licenced packages
-    config = { allowUnfree = true; };
+    # Home-manager nixpkgs config
+    nixpkgs = {
 
-    overlays = [
-      flake-self.overlays.default
-      nur.overlay
-      # inputs.neovim-nightly.overlay
-    ];
-  };
+      # Allow "unfree" licenced packages
+      config = { allowUnfree = true; };
 
-  # Lollypops user secrets defaults
-  lollypops.secrets = {
-    cmd-name-prefix = "nixos-secrets/users/pinpox/";
-    default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
-  };
+      overlays = [
+        flake-self.overlays.default
+        nur.overlay
+        # inputs.neovim-nightly.overlay
+      ];
+    };
 
-  # programs.neovim.package = pkgs.neovim-nightly;
+    # Lollypops user secrets defaults
+    lollypops.secrets = {
+      cmd-name-prefix = "nixos-secrets/users/pinpox/";
+      default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
+    };
 
-  # Extra arguments to pass to modules
-  _module.args = {
-    utils = import ../../utils { inherit pkgs; };
-    colorscheme = vars.colors;
-    fonts = vars.font;
-  };
+    # programs.neovim.package = pkgs.neovim-nightly;
 
-  # Include man-pages
-  manual.manpages.enable = true;
+    # Extra arguments to pass to modules
+    _module.args = {
+      utils = import ../../utils { inherit pkgs; };
+    };
 
-  # Environment variables
-  systemd.user.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    ZDOTDIR = "/home/pinpox/.config/zsh";
-  };
+    # Include man-pages
+    manual.manpages.enable = true;
 
-  home = {
-    # Install these packages for my user
-    packages = with pkgs; [
-      exa
-      htop
-      pkg-config
-      tealdeer
-      unzip
-      delta
-    ];
-
-    sessionVariables = {
-      # Workaround for alacritty (breaks wezterm and other apps!)
-      # LIBGL_ALWAYS_SOFTWARE = "1";
+    # Environment variables
+    systemd.user.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
       ZDOTDIR = "/home/pinpox/.config/zsh";
     };
 
-    # This value determines the Home Manager release that your
-    # configuration is compatible with. This helps avoid breakage
-    # when a new Home Manager release introduces backwards
-    # incompatible changes.
-    #
-    # You can update Home Manager without changing this value. See
-    # the Home Manager release notes for a list of state version
-    # changes in each release.
-    stateVersion = "20.09";
-  };
+    home = {
+      # Install these packages for my user
+      packages = with pkgs; [
+        exa
+        htop
+        pkg-config
+        tealdeer
+        unzip
+        delta
+      ];
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+      sessionVariables = {
+        # Workaround for alacritty (breaks wezterm and other apps!)
+        # LIBGL_ALWAYS_SOFTWARE = "1";
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+        ZDOTDIR = "/home/pinpox/.config/zsh";
+      };
+
+      # This value determines the Home Manager release that your
+      # configuration is compatible with. This helps avoid breakage
+      # when a new Home Manager release introduces backwards
+      # incompatible changes.
+      #
+      # You can update Home Manager without changing this value. See
+      # the Home Manager release notes for a list of state version
+      # changes in each release.
+      stateVersion = "20.09";
+    };
+
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
+  };
 }
