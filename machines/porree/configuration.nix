@@ -1,4 +1,4 @@
-{ matrix-hook, config, retiolum, alertmanager-ntfy, ... }: {
+{ lib, matrix-hook, config, retiolum, alertmanager-ntfy, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -131,6 +131,18 @@
     #   remote_ip 192.168.0.0/16 172.168.7.0/16
     #   }
     # '';
+
+    # Handle errors for all pages
+    # respond "{err.status_code} {err.status_text}"
+    extraConfig = ''
+      :443, :80 {
+        handle_errors {
+         respond * "This page does not exist or is not for your eyes." {
+           close
+         }
+        }
+      }
+    '';
 
     virtualHosts = {
 
