@@ -383,11 +383,11 @@ matrix-hook.packages."x86_64-linux".matrix-hook
   services.vaultwarden = {
     enable = true;
     config = {
-      domain = "https://pass.pablo.tools:443";
-      signupsAllowed = false;
-
+      DOMAIN = "https://pass.pablo.tools";
+      SIGNUPS_ALLOWED = false;
+      INVITATIONS_ALLOWED = "true";
       # The rocketPort option should match the value of the port in the reverse-proxy
-      rocketPort = 8222;
+      ROCKET_PORT = 8222;
     };
 
     # The environment file contiains secrets and is stored in pass
