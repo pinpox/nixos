@@ -17,6 +17,11 @@
 
   lollypops.deployment.ssh.host = "94.16.108.229";
 
+  # Often hangs
+  systemd.services = {
+    NetworkManager-wait-online.enable = lib.mkForce false;
+    systemd-networkd-wait-online.enable = lib.mkForce false;
+  };
 
   # services.influxdb2.enable = true;
   # services.influxdb2.settings = { };
