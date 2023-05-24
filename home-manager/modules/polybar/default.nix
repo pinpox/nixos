@@ -1,4 +1,4 @@
-{ colorscheme, fonts, config, pkgs, lib, ... }:
+{ fonts, config, pkgs, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.polybar;
@@ -48,8 +48,8 @@ in
           height = 22;
           radius = 0;
 
-          background = "#${colorscheme.Black}";
-          foreground = "#${colorscheme.White}";
+          background = "#${config.pinpox.colors.Black}";
+          foreground = "#${config.pinpox.colors.White}";
 
           line-size = 0;
           border-size = 0;
@@ -67,14 +67,14 @@ in
 
           tray-position = "right";
           tray-padding = 2;
-          tray-background = "#${colorscheme.Blue}";
+          tray-background = "#${config.pinpox.colors.Blue}";
         };
 
         "module/filesystem" = {
 
-          format-mounted-prefix-foreground = "#${colorscheme.Blue}";
-          format-unmounted-prefix-foreground = "#${colorscheme.Blue}";
-          label-unmounted-foreground = "#${colorscheme.White}";
+          format-mounted-prefix-foreground = "#${config.pinpox.colors.Blue}";
+          format-unmounted-prefix-foreground = "#${config.pinpox.colors.Blue}";
+          label-unmounted-foreground = "#${config.pinpox.colors.White}";
 
           format-mounted-prefix-padding-right = 1;
           format-unmounted-prefix-padding-right = 1;
@@ -100,27 +100,27 @@ in
           # Only show workspaces on the same output as the bar
           pin-workspaces = true;
           # label-mode-padding           = 2;
-          label-mode-background = "#${colorscheme.White}";
+          label-mode-background = "#${config.pinpox.colors.White}";
 
           # focused                    = Active workspace on focused monitor
           label-focused = "%name%";
-          label-focused-background = "#${colorscheme.Blue}";
-          label-focused-foreground = "#${colorscheme.Black}";
+          label-focused-background = "#${config.pinpox.colors.Blue}";
+          label-focused-foreground = "#${config.pinpox.colors.Black}";
           label-focused-padding = 2;
 
           # unfocused                  = Inactive workspace on any monitor
           label-unfocused = "%name%";
-          label-unfocused-background = "${colorscheme.BrightBlack}";
+          label-unfocused-background = "${config.pinpox.colors.BrightBlack}";
           label-unfocused-padding = 2;
 
           # visible                    = Active workspace on unfocused monitor
           label-visible = "%name%";
-          label-visible-background = "#${colorscheme.BrightBlack}";
+          label-visible-background = "#${config.pinpox.colors.BrightBlack}";
           label-visible-padding = 2;
 
           # urgent                     = Workspace with urgency hint set
           label-urgent = "%name%";
-          label-urgent-background = "#${colorscheme.Red}";
+          label-urgent-background = "#${config.pinpox.colors.Red}";
           label-urgent-padding = 2;
 
         };
@@ -130,7 +130,7 @@ in
           interval = 2;
           format-prefix-padding-right = 1;
           format-prefix = "";
-          format-prefix-foreground = "#${colorscheme.Blue}";
+          format-prefix-foreground = "#${config.pinpox.colors.Blue}";
           label = "%percentage%%";
           # format-padding = 2;
         };
@@ -141,7 +141,7 @@ in
           format-prefix = "";
 
           format-prefix-padding-right = 1;
-          format-prefix-foreground = "#${colorscheme.Blue}";
+          format-prefix-foreground = "#${config.pinpox.colors.Blue}";
           label = "%percentage_used%%";
           # format-padding = 2;
         };
@@ -174,7 +174,7 @@ in
 
           format-connected-prefix-padding-right = 1;
           format-connected-prefix = "";
-          format-connected-prefix-foreground = "#${colorscheme.Blue}";
+          format-connected-prefix-foreground = "#${config.pinpox.colors.Blue}";
           label-connected = "%local_ip%";
           # format-connected-prefix-padding = 1;
 
@@ -186,9 +186,9 @@ in
 
         "module/date" = {
 
-          format-prefix-foreground = "#${colorscheme.Black}";
-          format-foreground = "#${colorscheme.Black}";
-          format-background = "#${colorscheme.Blue}";
+          format-prefix-foreground = "#${config.pinpox.colors.Black}";
+          format-foreground = "#${config.pinpox.colors.Black}";
+          format-background = "#${config.pinpox.colors.Blue}";
 
           type = "internal/date";
           interval = 5;
@@ -218,8 +218,8 @@ in
           interval = 5;
 
           # label-muted-foreground = #666
-          ramp-volume-foreground = "#${colorscheme.Blue}";
-          format-volume-prefix-foreground = "#${colorscheme.Blue}";
+          ramp-volume-foreground = "#${config.pinpox.colors.Blue}";
+          format-volume-prefix-foreground = "#${config.pinpox.colors.Blue}";
 
           label-muted = "  0%";
           ramp-volume-0 = "";

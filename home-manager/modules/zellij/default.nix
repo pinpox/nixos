@@ -1,4 +1,4 @@
-{ lib, config, pkgs, colorscheme, ... }:
+{ lib, config, ... }:
 with lib;
 let cfg = config.pinpox.programs.zellij;
 in
@@ -13,17 +13,17 @@ in
       settings = {
         theme = "custom";
         themes.custom = {
-          fg = "#${colorscheme.White}";
-          bg = "#${colorscheme.Black}";
-          black = "#${colorscheme.Black}";
-          red = "#${colorscheme.Red}";
-          green = "#${colorscheme.Green}";
-          yellow = "#${colorscheme.BrightYellow}";
-          blue = "#${colorscheme.Blue}";
-          magenta = "#${colorscheme.Magenta}";
-          cyan = "#${colorscheme.Cyan}";
-          white = "#${colorscheme.White}";
-          orange = "#${colorscheme.Yellow}";
+          fg = "#${config.pinpox.colors.White}";
+          bg = "#${config.pinpox.colors.Black}";
+          black = "#${config.pinpox.colors.Black}";
+          red = "#${config.pinpox.colors.Red}";
+          green = "#${config.pinpox.colors.Green}";
+          yellow = "#${config.pinpox.colors.BrightYellow}";
+          blue = "#${config.pinpox.colors.Blue}";
+          magenta = "#${config.pinpox.colors.Magenta}";
+          cyan = "#${config.pinpox.colors.Cyan}";
+          white = "#${config.pinpox.colors.White}";
+          orange = "#${config.pinpox.colors.Yellow}";
         };
       };
     };

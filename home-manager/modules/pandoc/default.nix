@@ -1,4 +1,4 @@
-{ config, pkgs, fonts, lib, colorscheme, ... }:
+{ config, lib, ... }:
 with lib;
 let
 

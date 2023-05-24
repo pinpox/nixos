@@ -1,4 +1,4 @@
-{ colorscheme, lib, pkgs, config, utils, ... }:
+{ lib, pkgs, config, utils, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.wezterm;
@@ -22,7 +22,7 @@ in
         colors_lua = {
           target = "wezterm/colors.lua";
           source =
-            utils.renderMustache "colors.lua" ./colors.lua.mustache colorscheme;
+            utils.renderMustache "colors.lua" ./colors.lua.mustache config.pinpox.colors;
         };
 
         wezterm_lua = {

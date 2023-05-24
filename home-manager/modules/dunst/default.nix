@@ -1,4 +1,4 @@
-{ config, pkgs, fonts, lib, colorscheme, ... }:
+{ config, pkgs, fonts, lib, ... }:
 with lib;
 let
 
@@ -34,12 +34,12 @@ in
           frame_width = 0;
           separator_color = "frame";
           sort = "yes";
-          frame_color = "#${colorscheme.BrightBlack}";
+          frame_color = "#${config.pinpox.colors.BrightBlack}";
           font = "${fonts.normal.family} ${fonts.normal.style} 8";
           line_height = 0;
           markup = "full";
           format =
-            "<b><span foreground='#${colorscheme.Blue}'>%s</span></b>\\n<span>%b</span>";
+            "<b><span foreground='#${config.pinpox.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
           alignment = "left";
           show_age_threshold = 60;
           word_wrap = "yes";
@@ -67,20 +67,20 @@ in
         };
 
         urgency_low = {
-          background = "#${colorscheme.BrightBlack}";
-          foreground = "#${colorscheme.BrightBlack}";
+          background = "#${config.pinpox.colors.BrightBlack}";
+          foreground = "#${config.pinpox.colors.BrightBlack}";
           timeout = 5;
         };
 
         urgency_normal = {
-          background = "#${colorscheme.BrightBlack}";
-          foreground = "#${colorscheme.White}";
+          background = "#${config.pinpox.colors.BrightBlack}";
+          foreground = "#${config.pinpox.colors.White}";
           timeout = 10;
         };
 
         urgency_critical = {
-          background = "#${colorscheme.Red}";
-          foreground = "#${colorscheme.Black}";
+          background = "#${config.pinpox.colors.Red}";
+          foreground = "#${config.pinpox.colors.Black}";
           timeout = 15;
         };
       };

@@ -1,4 +1,4 @@
-{ colorscheme, config, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
 
@@ -24,68 +24,68 @@ in
 
     xresources.properties = {
       # Black
-      "color0" = "#${colorscheme.Black}";
-      "color8" = "#${colorscheme.BrightBlack}";
+      "color0" = "#${config.pinpox.colors.Black}";
+      "color8" = "#${config.pinpox.colors.BrightBlack}";
 
       # Red
-      "color1" = "#${colorscheme.Red}";
-      "color9" = "#${colorscheme.BrightRed}";
+      "color1" = "#${config.pinpox.colors.Red}";
+      "color9" = "#${config.pinpox.colors.BrightRed}";
 
       #Green
-      "color2" = "#${colorscheme.Green}";
-      "color10" = "#${colorscheme.BrightGreen}";
+      "color2" = "#${config.pinpox.colors.Green}";
+      "color10" = "#${config.pinpox.colors.BrightGreen}";
 
       # Yellow
-      "color3" = "#${colorscheme.Yellow}";
-      "color11" = "#${colorscheme.BrightYellow}";
+      "color3" = "#${config.pinpox.colors.Yellow}";
+      "color11" = "#${config.pinpox.colors.BrightYellow}";
 
       # Blue
-      "color4" = "#${colorscheme.Blue}";
-      "color12" = "#${colorscheme.BrightBlue}";
+      "color4" = "#${config.pinpox.colors.Blue}";
+      "color12" = "#${config.pinpox.colors.BrightBlue}";
 
       # Magenta
-      "color5" = "#${colorscheme.Magenta}";
-      "color13" = "#${colorscheme.BrightMagenta}";
+      "color5" = "#${config.pinpox.colors.Magenta}";
+      "color13" = "#${config.pinpox.colors.BrightMagenta}";
 
       # Cyan
-      "color6" = "#${colorscheme.Cyan}";
-      "color14" = "#${colorscheme.BrightCyan}";
+      "color6" = "#${config.pinpox.colors.Cyan}";
+      "color14" = "#${config.pinpox.colors.BrightCyan}";
 
       # White
-      "color7" = "#${colorscheme.White}";
-      "color15" = "#${colorscheme.BrightWhite}";
+      "color7" = "#${config.pinpox.colors.White}";
+      "color15" = "#${config.pinpox.colors.BrightWhite}";
 
-      "foreground" = "#${colorscheme.White}";
-      "background" = "#${colorscheme.Black}";
+      "foreground" = "#${config.pinpox.colors.White}";
+      "background" = "#${config.pinpox.colors.Black}";
 
       "XTerm*faceName" = "monospace:style=medium";
-      "XTerm*Background" = "#${colorscheme.Black}";
-      "XTerm*cursorColor" = "#${colorscheme.Blue}";
-      "XTerm*Foreground" = "#${colorscheme.White}";
+      "XTerm*Background" = "#${config.pinpox.colors.Black}";
+      "XTerm*cursorColor" = "#${config.pinpox.colors.Blue}";
+      "XTerm*Foreground" = "#${config.pinpox.colors.White}";
 
-      "XTerm*color0" = "#${colorscheme.Black}";
-      "XTerm*color8" = "#${colorscheme.BrightBlack}";
+      "XTerm*color0" = "#${config.pinpox.colors.Black}";
+      "XTerm*color8" = "#${config.pinpox.colors.BrightBlack}";
 
-      "XTerm*color1" = "#${colorscheme.Red}";
-      "XTerm*color9" = "#${colorscheme.BrightRed}";
+      "XTerm*color1" = "#${config.pinpox.colors.Red}";
+      "XTerm*color9" = "#${config.pinpox.colors.BrightRed}";
 
-      "XTerm*color2" = "#${colorscheme.Green}";
-      "XTerm*color10" = "#${colorscheme.BrightGreen}";
+      "XTerm*color2" = "#${config.pinpox.colors.Green}";
+      "XTerm*color10" = "#${config.pinpox.colors.BrightGreen}";
 
-      "XTerm*color3" = "#${colorscheme.Yellow}";
-      "XTerm*color11" = "#${colorscheme.BrightYellow}";
+      "XTerm*color3" = "#${config.pinpox.colors.Yellow}";
+      "XTerm*color11" = "#${config.pinpox.colors.BrightYellow}";
 
-      "XTerm*color4" = "#${colorscheme.Blue}";
-      "XTerm*color12" = "#${colorscheme.BrightBlue}";
+      "XTerm*color4" = "#${config.pinpox.colors.Blue}";
+      "XTerm*color12" = "#${config.pinpox.colors.BrightBlue}";
 
-      "XTerm*color5" = "#${colorscheme.Magenta}";
-      "XTerm*color13" = "#${colorscheme.BrightMagenta}";
+      "XTerm*color5" = "#${config.pinpox.colors.Magenta}";
+      "XTerm*color13" = "#${config.pinpox.colors.BrightMagenta}";
 
-      "XTerm*color6" = "#${colorscheme.Cyan}";
-      "XTerm*color14" = "#${colorscheme.BrightCyan}";
+      "XTerm*color6" = "#${config.pinpox.colors.Cyan}";
+      "XTerm*color14" = "#${config.pinpox.colors.BrightCyan}";
 
-      "XTerm*color7" = "#${colorscheme.White}";
-      "XTerm*color15" = "#${colorscheme.BrightWhite}";
+      "XTerm*color7" = "#${config.pinpox.colors.White}";
+      "XTerm*color15" = "#${config.pinpox.colors.BrightWhite}";
     };
   };
 }

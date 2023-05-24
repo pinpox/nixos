@@ -1,4 +1,4 @@
-{ self, config, pkgs, lib, utils, colorscheme, ... }:
+{ config, pkgs, lib, utils, ... }:
 
 with lib;
 
@@ -49,7 +49,7 @@ in
 
         nixcolors-lua = {
           target = "nvim/lua/nixcolors.lua";
-          source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache colorscheme;
+          source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache config.pinpox.colors;
         };
 
         nvim_lua_config = {

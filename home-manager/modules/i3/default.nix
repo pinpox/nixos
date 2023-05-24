@@ -1,4 +1,4 @@
-{ config, pkgs, lib, fonts, colorscheme, ... }:
+{ config, pkgs, lib, fonts, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.i3;
@@ -51,37 +51,37 @@ in
           }
         ];
         colors = {
-          background = "#${colorscheme.Black}";
+          background = "#${config.pinpox.colors.Black}";
           focused = {
-            background = "#${colorscheme.Blue}";
-            border = "#${colorscheme.Blue}";
-            childBorder = "#${colorscheme.Blue}";
-            indicator = "#${colorscheme.Blue}";
-            text = "#${colorscheme.Black}";
+            background = "#${config.pinpox.colors.Blue}";
+            border = "#${config.pinpox.colors.Blue}";
+            childBorder = "#${config.pinpox.colors.Blue}";
+            indicator = "#${config.pinpox.colors.Blue}";
+            text = "#${config.pinpox.colors.Black}";
           };
 
           focusedInactive = {
-            background = "#${colorscheme.BrightBlack}";
-            border = "#${colorscheme.BrightBlack}";
-            childBorder = "#${colorscheme.BrightBlack}";
-            indicator = "#${colorscheme.Black}";
-            text = "#${colorscheme.Black}";
+            background = "#${config.pinpox.colors.BrightBlack}";
+            border = "#${config.pinpox.colors.BrightBlack}";
+            childBorder = "#${config.pinpox.colors.BrightBlack}";
+            indicator = "#${config.pinpox.colors.Black}";
+            text = "#${config.pinpox.colors.Black}";
           };
 
           unfocused = {
-            background = "#${colorscheme.Black}";
-            border = "#${colorscheme.BrightBlack}";
-            childBorder = "#${colorscheme.BrightBlack}";
-            indicator = "#${colorscheme.Black}";
-            text = "#${colorscheme.Blue}";
+            background = "#${config.pinpox.colors.Black}";
+            border = "#${config.pinpox.colors.BrightBlack}";
+            childBorder = "#${config.pinpox.colors.BrightBlack}";
+            indicator = "#${config.pinpox.colors.Black}";
+            text = "#${config.pinpox.colors.Blue}";
           };
 
           urgent = {
-            background = "#${colorscheme.Red}";
-            border = "#${colorscheme.Red}";
-            childBorder = "#${colorscheme.Red}";
-            indicator = "#${colorscheme.Red}";
-            text = "#${colorscheme.Black}";
+            background = "#${config.pinpox.colors.Red}";
+            border = "#${config.pinpox.colors.Red}";
+            childBorder = "#${config.pinpox.colors.Red}";
+            indicator = "#${config.pinpox.colors.Red}";
+            text = "#${config.pinpox.colors.Black}";
           };
         };
 

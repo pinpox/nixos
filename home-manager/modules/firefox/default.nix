@@ -1,4 +1,4 @@
-{ fonts, colorscheme, config, pkgs, lib, utils, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
 
@@ -45,11 +45,11 @@ in
             # ~/.mozilla/firefox/pinpox/bookmarks.html
             # "browser.bookmarks.file" = 
 
-            # "browser.display.background_color" = "#${colorscheme.Black}";
-            # "browser.display.foreground_color" = "#${colorscheme.White}";
+            # "browser.display.background_color" = "#${config.pinpox.colors.Black}";
+            # "browser.display.foreground_color" = "#${config.pinpox.colors.White}";
             "browser.display.use_system_colors" = "true";
-            "browser.anchor_color" = "#${colorscheme.Yellow}";
-            # "browser.display.use_document_colors" = "false";
+            "browser.anchor_color" = "#${config.pinpox.colors.Yellow}";
+            "browser.display.use_document_colors" = "false";
             # "browser.search.region" = "GB";
             # "browser.search.isUS" = false;
             # "distribution.searchplugins.defaultLocale" = "en-GB";
@@ -65,7 +65,7 @@ in
 
           # userChrome = builtins.readFile
           #   (utils.renderMustache "userChrome.css" ./userchrome.css.mustache
-          #     { colors = colorscheme; font = fonts; });
+          #     { colors = config.pinpox.colors; font = fonts; });
 
           # TODO
           userContent = ''
