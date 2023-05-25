@@ -26,6 +26,7 @@ in
           extensions = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
+            web-search-navigator
             ublock-origin
           ];
 
