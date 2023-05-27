@@ -53,8 +53,12 @@ riverctl map normal Super Period focus-output right
 riverctl map normal Super Comma focus-output left
 
 # Super+Shift+{Period,Comma} to send the focused view to the next/previous output
-riverctl map normal Super+Shift Period send-to-output left
-riverctl map normal Super+Shift Comma send-to-output previous
+# TODO use -current-tags once PR has reached release
+# https://github.com/riverwm/river/commit/b3698150708bec276454c0ff7c707d9dab446b1e
+# riverctl map normal Super+Shift Period send-to-output -current-tags right
+# riverctl map normal Super+Shift Comma send-to-output -current-tags left
+riverctl map normal Super+Shift Period send-to-output right
+riverctl map normal Super+Shift Comma send-to-output left
 
 # Super+Return to bump the focused view to the top of the layout stack
 riverctl map normal Super+Shift Return zoom

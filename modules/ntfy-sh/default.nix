@@ -26,7 +26,7 @@ in
           auth-default-access = "deny-all";
           upstream-base-url = "https://ntfy.sh";
           # https://github.com/binwiederhier/ntfy/issues/459
-          web-root = "disable"; # Set to "app" to enable
+          web-root = "disable"; # Set to "app" to enable web UI
         };
       };
 
