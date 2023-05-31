@@ -11,14 +11,18 @@ in
 
     wayland.windowManager.sway = {
       enable = true;
-      config = rec {
+      config = rec{
+        keybindings = {
+          "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
+          "${modifier}+p" = "exec ${pkgs.wofi}/bin/wofi --show run";
+        };
+
         modifier = "Mod4";
-        # Use kitty as default terminal
-        terminal = "${pkgs.lxterminal}/bin/lxterminal";
-        startup = [
-          # Launch Firefox on start
-          # { command = "firefox"; }
-        ];
+        terminal = "${pkgs.foot}/bin/foot";
+        # startup = [
+        # Launch Firefox on start
+        # { command = "firefox"; }
+        # ];
         input = {
           "*" = {
             xkb_layout = "us";
