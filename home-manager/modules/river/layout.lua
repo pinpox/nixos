@@ -8,11 +8,7 @@ gaps = 10
 smart_gaps = false
 current_layout = "rivertile"
 
--- TODO fill this dynamically on first access
 output_layouts = { }
-output_layouts["DP-1"] = "rivertile"
-output_layouts["DP-2"] = "rivertile"
-output_layouts["eDP-1"] = "rivertile"
 
 -- The most important function - the actual layout generator
 --
@@ -39,6 +35,11 @@ end
 function handle_layout(args)
 	-- print(args.output)
 	arguments = args
+
+	-- Default to rivertile as layout for all outputs
+	if output_layouts[args.output] == nil then
+		output_layouts[args.output] = "rivertile"
+	end
 	return layouts[output_layouts[args.output]](args)
 end
 
