@@ -167,6 +167,7 @@ in
           p.zig
         ]))
 
+        playground # Treesitter playground
 
 
         # zk-nvim
