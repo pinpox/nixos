@@ -6,8 +6,25 @@ require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.ltex.setup{}
 -- require'lspconfig'.rls.setup{}
+--
+require'lspconfig'.nil_ls.setup{
 
-require'lspconfig'.nil_ls.setup{}
+
+  on_attach = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+
+
+}
+
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+});
 
 require'lspconfig'.lua_ls.setup {
   settings = {
