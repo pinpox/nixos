@@ -38,7 +38,6 @@
       utils.follows = "flake-utils";
     };
 
-
     go-karma-bot.url = "github:pinpox/go-karma-bot";
     go-karma-bot.inputs = {
       nixpkgs.follows = "nixpkgs";

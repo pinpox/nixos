@@ -14,8 +14,9 @@ in
       enable = true;
       virtualHosts = {
         "0cx.de".extraConfig = ''
-          encode gzip
           root * ${./page}
+          encode zstd gzip
+          file_server
         '';
       };
     };
