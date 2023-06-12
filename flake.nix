@@ -310,9 +310,9 @@
           };
 
           # Run with: nix develop '.#test-shell'
-          devShells = flake-utils.lib.flattenTree {
-            test-shell = import ./shells/test-shell.nix { inherit pkgs; };
-          };
+          # devShells = flake-utils.lib.flattenTree {
+          #   test-shell = import ./shells/test-shell.nix { inherit pkgs; };
+          # };
 
           # Allow custom packages to be run using `nix run`
           apps =
