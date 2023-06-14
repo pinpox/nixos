@@ -31,6 +31,7 @@ in
       nodePackages.yaml-language-server # LSP yaml
       nodePackages.vscode-json-languageserver-bin # LSP json
       vscode-extensions.golang.go # Golang snippets
+      nodePackages.bash-language-server
       gopls # LSP go
       terraform-ls # LSP terraform
       # terraform # TODO add options to enable/disable large packages like terraform
