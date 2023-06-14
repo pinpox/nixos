@@ -1,13 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.pinpox.services.home-assistant;
-  # home-assistant-package = pkgs.home-assistant.override {
-  #   extraComponents = [
-  #     # Fritzbox network statistics
-  #     "fritzbox_netmonitor"
-  #   ];
-  # };
 in
 {
 
@@ -20,11 +14,6 @@ in
       owner = "hass";
       path = "/var/lib/hass/secrets.yaml";
     };
-
-    # List extraComponents here to be installed. The names can be found here:
-    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
-    # Components listed here will be possible to add via the webUI if not
-    # automatically picked up.
 
     # Needed for some integrations
     users.users.hass.extraGroups = [ "dialout" "keys" ];
@@ -101,6 +90,15 @@ in
     services.home-assistant = {
       enable = true;
 
+      # List extraComponents here to be installed. The names can be found here:
+      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
+      # Components listed here will be possible to add via the webUI if not
+      # automatically picked up.
+      extraComponents = [
+        "esphome"
+        "openweathermap"
+      ];
+
       # Disable the python checks, they take for ever when building the
       # configuration
       # package = (home-assistant-package.overrideAttrs (old: {
@@ -111,6 +109,11 @@ in
       # Configuration generated to /var/lib/hass/configuration.yaml
       config =
         {
+
+          weather = { };
+          sun = { };
+
+          icloud = { };
 
           ios = {
             actions = [
@@ -221,8 +224,6 @@ in
             use_x_forwarded_for = true;
             trusted_proxies = [ "192.168.7.1" ];
           };
-
-          esphome = { };
 
           frontend = { };
           "map" = { };
