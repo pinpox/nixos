@@ -9,12 +9,28 @@ local sto = s.standout
 local no  = s.NONE
 local v   = vim
 
-
 -- TODO Think of a better colorscheme name
 v.g.colors_name = 'generated'
 
-
 local nixcolors = require('nixcolors')
+
+-- Overrides for testing:
+-- nixcolors.Black         = '#080c10'
+-- nixcolors.BrightBlack   = '#697077'
+-- nixcolors.White         = '#e0e0e0'
+-- nixcolors.BrightWhite   = '#b5bdc5'
+-- nixcolors.Red           = '#fa4d56'
+-- nixcolors.BrightRed     = '#ff8389'
+-- nixcolors.Yellow        = "#ff9900"
+-- nixcolors.BrightYellow  = "#e5e041"
+-- nixcolors.Green         = '#42be65'
+-- nixcolors.BrightGreen = "#68f288"
+-- nixcolors.Cyan          = "#22c5b7"
+-- nixcolors.BrightCyan = "#A1E4FF"
+-- nixcolors.Blue          = '#5080ff'
+-- nixcolors.BrightBlue    = '#a6c8ff'
+-- nixcolors.Magenta       = '#a56eff'
+-- nixcolors.BrightMagenta = '#d4bbff'
 
 -------------------------
 -- Vim Primary Colors --
@@ -48,12 +64,10 @@ Color.new('BrightMagenta', nixcolors.BrightMagenta)
 Color.new('TODO', "#00ff00")
 
 
-Group.new('@text.todo.comment',               c.BrightYellow,        c.none, b)
 
 -------------------------------
 ---- TreeSitter Highlighting --
 -------------------------------
---
 
 Group.new('@annotation',                         c.Yellow,       c.none, no)
 Group.new('@attribute',                          c.Green,        c.none, no)
@@ -64,7 +78,7 @@ Group.new('@comment',                            c.Blue,         c.none, no)
 Group.new('@conditional',                        c.Magenta,      c.none, i)
 Group.new('@const.macro',                        c.Green,        c.none, no)
 Group.new('@constant',                           c.Cyan,         c.none, no)
-Group.new('@constant.builtin',                   c.BrightYellow, c.none, no)
+Group.new('@constant.builtin',                   c.BrightYellow, c.none, b)
 Group.new('@constant.comment',                   c.TODO,         c.none, no)
 Group.new('@constant.html',                      c.BrightYellow, c.none, b)
 Group.new('@constant.macro',                     c.TODO,         c.none, no)
@@ -158,6 +172,7 @@ Group.new('@text.diff.delete',                   c.TODO,         c.none, no)
 Group.new('@text.emphasis',                      c.TODO,         c.none, no)
 Group.new('@text.environment',                   c.TODO,         c.none, no)
 Group.new('@text.environment.name',              c.TODO,         c.none, no)
+Group.new('@text.todo.comment',               c.BrightYellow,        c.none, b)
 Group.new('@text.literal',                       c.Yellow,       c.none, no)
 Group.new('@text.math',                          c.TODO,         c.none, no)
 Group.new('@text.note',                          c.TODO,         c.none, no)

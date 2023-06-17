@@ -31,27 +31,50 @@ in
 
   config.pinpox.colors = {
 
-    # catppucchin macchiato
-
-    White = "cad3f5"; #cad3f5
-    BrightWhite = "a5adcb"; #a5adcb
+    # catppucchin macchiato (modified)
     Black = "24273a"; #24273a
     BrightBlack = "5b6078"; #5b6078
-    # BrightBlack = "#494d64";   # Surface 1
-    # BrightWhite = "#b8c0e0";   # Subtext 1
-
-    Red = "ed8796"; #ed8796"
-    BrightRed = "ed8796"; #ed8796"
-    Green = "a6da95"; #a6da95"
-    BrightGreen = "a6da95"; #a6da95"
-    Yellow = "eed49f"; #eed49f"
+    White = "cad3f5"; #cad3f5
+    BrightWhite = "747c9e"; #747c9e
+    Red = "ed8796"; #ed8796
+    BrightRed = "ff5370"; #FF5370
+    Green = "a6da95"; #a6da95
+    BrightGreen = "68f288"; #68f288
+    Yellow = "eed49f"; #eed49f
     BrightYellow = "fab387"; #fab387
-    Blue = "8aadf4"; #8aadf4"
+    Blue = "8aadf4"; #8aadf4
     BrightBlue = "74c7ec"; #74c7ec
-    Magenta = "cba6f7"; #cba6f7"
-    BrightMagenta = "f5bde6"; #f5bde6"
-    Cyan = "8bd5ca"; #8bd5ca"
-    BrightCyan = "8bd5ca"; #8bd5ca"
+    Magenta = "cba6f7"; #cba6f7
+    BrightMagenta = "f5bde6"; #f5bde6
+    Cyan = "8bd5ca"; #8bd5ca
+    BrightCyan = "aee2da"; #aee2da
+
+    # Rose-Piné
+    #26233a
+    #6e6a86
+    #908caa
+    #e0def4
+
+    #eb6f92
+    #31748f
+    #f6c177
+    #9ccfd8
+    #c4a7e7
+    #ebbcba
+
+
+    #################
+    #191724
+    #1f1d2e
+    #21202e
+
+    #403d52
+    #524f67
+
+    #333c48
+    #43293a
+    #433842
+    #################
 
     /*
       # pinpox-contrast
@@ -72,6 +95,5 @@ in
       Red = "e92741"; #e92741
       BrightRed = "FF5370"; #FF5370
     */
-
   };
 }
