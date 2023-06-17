@@ -88,10 +88,7 @@ in
 
       source ~/.config/nvim/vimscript/wilder.vim
 
-
       lua << EOF
-
-
 
       local utils = require('utils')
 
@@ -125,52 +122,7 @@ in
 
         ccc-nvim
         nvim-treesitter.withAllGrammars
-
-
-        # (nvim-treesitter.withPlugins (p: [
-        #   p.bash
-        #   p.c
-        #   p.comment # -- Comment tags like TODO FIXME(user).
-        #   # -- cooklang
-        #   p.css
-        #   p.diff
-        #   p.dockerfile
-        #   p.dot
-        #   p.fish
-        #   p.git_config
-        #   p.git_rebase
-        #   p.gitattributes
-        #   p.gitcommit
-        #   p.gitignore
-        #   p.go
-        #   # p.help
-        #   p.html
-        #   p.java
-        #   p.javascript
-        #   p.jq
-        #   p.json
-        #   p.json5
-        #   p.latex
-        #   p.lua
-        #   p.make
-        #   p.markdown
-        #   p.nix
-        #   p.php
-        #   p.python
-        #   p.regex
-        #   p.rust
-        #   p.scss
-        #   p.sql
-        #   p.terraform
-        #   p.toml
-        #   p.vim
-        #   p.vimdoc
-        #   p.yaml
-        #   p.zig
-        # ]))
-
         playground # Treesitter playground
-
 
         # zk-nvim
         # vim-visual-increment
