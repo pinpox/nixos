@@ -9,7 +9,6 @@ self: super: {
   hello-custom = super.callPackage ../packages/hello-custom { };
   darktile = super.callPackage ../packages/darktile { };
   # river-luatile = super.callPackage ../packages/river-luatile { };
-  dirserver = super.callPackage ../packages/dirserver { };
   fritzbox_exporter = super.callPackage ../packages/fritzbox_exporter { };
   mqtt2prometheus = super.callPackage ../packages/mqtt2prometheus { };
 

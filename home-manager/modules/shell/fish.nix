@@ -79,7 +79,7 @@
 
       zzz = "systemctl suspend";
 
-      serve = "${pkgs.dirserver}/bin/dirserver";
+      serve = "${pkgs.miniserve}/bin/miniserve";
       # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
 
       za = "${./zellij-chooser}";

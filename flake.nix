@@ -299,7 +299,6 @@
             hello-custom = pkgs.hello-custom;
             filebrowser = pkgs.filebrowser;
             darktile = pkgs.darktile;
-            dirserver = pkgs.dirserver;
             fritzbox_exporter = pkgs.fritzbox_exporter;
             mqtt2prometheus = pkgs.mqtt2prometheus;
             smartmon-script = pkgs.smartmon-script;
