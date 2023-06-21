@@ -97,27 +97,27 @@
   # Install these packages for my user
   home.packages = with pkgs; [
 
-    helix
     # From nixpkgs
-    inetutils
-    nmap
-    # retroarch
     # arduino
     # arduino-cli
-    asciinema
     # calibre
+    # recursive
+    # retroarch
+    asciinema
     cbatticon
     darktile
     evince
     exa
+    fd
     gcc
     gimp
     gtk_engines
     h # https://github.com/zimbatm/h
+    helix
     htop
-    fd
     hugo
     imagemagick
+    inetutils
     libnotify
     lxappearance
     manix
@@ -127,6 +127,7 @@
     networkmanagerapplet
     nitrogen
     nix-index
+    nmap
     openvpn
     papirus-icon-theme
     pavucontrol
@@ -136,16 +137,16 @@
     scrot
     signal-desktop
     spotify
+    sqlite
     tealdeer
     tfenv
     thunderbird-bin
     timewarrior
-    sqlite
     unzip
     viewnior
     vlc
     xarchiver
-    # recursive
+    youtube-dl
     gnome.file-roller
     xfce.exo # thunar "open terminal here"
     xfce.thunar-archive-plugin
