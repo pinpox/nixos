@@ -191,10 +191,8 @@ riverctl rule-add ssd -app-id firefox
 riverctl rule-add ssd -app-id pavucontrol
 riverctl rule-add ssd -app-id thunderbird
 
-
 # Needed to make xdg-desktop-portal-wlr work (screensharing)
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY WAYLAND_DESKTOP
-
 
 # Set the default layout generator to be river-luatile and start it.
 # River will send the process group of the init executable SIGTERM on exit.

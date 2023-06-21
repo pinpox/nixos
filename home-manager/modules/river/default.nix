@@ -53,6 +53,8 @@ in
             # riverctl map normal Super F12 spawn '${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png'
             # riverctl map normal Super F12 spawn ${screenshot-region}
             riverctl map normal Super p spawn "${pkgs.wofi}/bin/wofi --show run"
+
+            ${pkgs.mako}/bin/mako &
             ${pkgs.waybar}/bin/waybar
             # ${pkgs.wlr-randr}/bin/wlr-randr --output eDP-1 --mode 1920x1080 --pos 0,0 \
             # --output DP-1 --mode 2560x1440 --pos 4480,0 \
