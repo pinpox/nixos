@@ -31,6 +31,7 @@ wk.register({
 			name = "Code (LSP)",
 			a = { ':FzfLua lsp_code_actions<CR>',                        'Code actions' },
 			i = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
+			f = { ':lua vim.lsp.buf.format()<CR>',                       'Autoformat' },
 			s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
 			S = { ':FzfLua lsp_document_symbols<CR>',                    'Symbols' },
 			d = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
