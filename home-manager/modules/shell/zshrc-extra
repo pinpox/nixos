@@ -32,6 +32,6 @@ bindkey -s "^T" 'pazi_cd --pipe="fzf"^M'
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Start x on first login
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-	startx
-fi
+# if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+# 	startx
+# fi
