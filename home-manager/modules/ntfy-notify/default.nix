@@ -32,7 +32,7 @@ in
       in
 
       {
-        service-name = {
+        ntfy-notify-send = {
           Unit = {
             Description = "ntfy.sh desktop notifications";
             After = "network.target";
@@ -40,7 +40,7 @@ in
 
           Service = {
             ExecStart = ''
-              ${pkgs.ntfy-sh}/bin/ntfy subscribe -u $NTFY_USER:$NTFY_PASS --config=${ntfy-config} --from-config
+              ${pkgs.ntfy-sh}/bin/ntfy subscribe -u "''${NTFY_USER}:''${NTFY_PASS}" --config=${ntfy-config} --from-config
             '';
 
             Environment = [
