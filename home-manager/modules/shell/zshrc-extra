@@ -33,5 +33,44 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Start x on first login
 # if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-# 	startx
+#	startx
 # fi
+
+# Self-hosted transfer.sh sharing. Expects ~/.netrc with crendentials in this format:
+# machine transfer.0cx.de login my-super-user password super-secret-password
+
+# command | paste
+paste () {
+	cat | curl -n --upload-file - https://transfer.0cx.de/paste.txt
+}
+
+# transfer file.txt
+transfer () {
+	if [ $# -eq 0 ]
+	then
+		echo "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>" >&2
+		return 1
+	fi
+	if tty -s
+	then
+		file="$1"
+		file_name=$(basename "$file")
+		if [ ! -e "$file" ]
+		then
+			echo "$file: No such file or directory" >&2
+			return 1
+		fi
+		if [ -d "$file" ]
+		then
+			file_name="$file_name.zip" ,
+			(
+			cd "$file" && zip -r -q - .
+			) | curl -n --progress-bar --upload-file "-" "https://transfer.0cx.de/$file_name" | tee /dev/null,
+		else
+			cat "$file" | curl -n --progress-bar --upload-file "-" "https://transfer.0cx.de/$file_name" | tee /dev/null
+		fi
+	else
+		file_name=$1
+		curl -n --progress-bar --upload-file "-" "https://transfer.0cx.de/$file_name" | tee /dev/null
+	fi
+}
