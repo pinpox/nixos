@@ -50,6 +50,13 @@
   services.aoe-taunt-discord-bot.discordTokenFile = config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
   services.aoe-taunt-discord-bot.enable = true;
 
+  lollypops.secrets.files."transfer-sh/envfile" = { };
+  services.transfer-sh = {
+    enable = true;
+    LISTENER = 6767;
+    environmentFile = config.lollypops.secrets.files."transfer-sh/envfile".path;
+    # HTTP_AUTH_PASS and HTTP_AUTH_USER set in envfile and in ~/.netrc
+  };
 
   pinpox = {
 
@@ -67,7 +74,6 @@
     services = {
       borg-backup.enable = true;
       hedgedoc.enable = true;
-      # mattermost.enable = true;
       miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
@@ -120,20 +126,23 @@
     path = "/var/lib/gitea/mailer-pw";
   };
 
-  services.gitea = {
-    enable = true;
-    domain = "git.0cx.de";
-    rootUrl = "https://git.0cx.de";
-    httpPort = 3333;
-    httpAddress = "127.0.0.1";
+  # TODO PUT into module
 
+  services.gitea = {
+
+    enable = true;
     mailerPasswordFile = "${config.lollypops.secrets.files."gitea/mailer-pw".path}";
 
     settings = {
-
+      server = {
+        ROOT_URL = "https://git.0cx.de";
+        HTTP_PORT = 3333;
+        HTTP_ADDR = "127.0.0.1";
+      };
       service = {
         DISABLE_REGISTRATION = true;
         REQUIRE_SIGNIN_VIEW = true;
+        DOMAIN = "git.0cx.de";
       };
 
       mailer = {
@@ -194,7 +203,7 @@
             clientID = "$GITEA_CLIENT_ID";
             clientSecret = "$GITEA_CLIENT_SECRET";
             redirectURI = "https://login.0cx.de/callback";
-            baseURL = config.services.gitea.rootUrl;
+            baseURL = config.services.gitea.settings.server.ROOT_URL;
           };
         }
         {
@@ -241,6 +250,7 @@
       '';
 
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
+      "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
       "login.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:5556";
       "git.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3333";
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
