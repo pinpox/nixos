@@ -55,6 +55,13 @@
     enable = true;
     LISTENER = 6767;
     environmentFile = config.lollypops.secrets.files."transfer-sh/envfile".path;
+    provider = "s3";
+
+    BUCKET = "transfer-0cx";
+    S3_ENDPOINT = "https://s3.lounge.rocks";
+    S3_PATH_STYLE = true;
+    S3_REGION = "eu-central-1";
+
     # HTTP_AUTH_PASS and HTTP_AUTH_USER set in envfile and in ~/.netrc
   };
 
