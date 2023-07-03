@@ -3,6 +3,30 @@ with lib;
 let
   cfg = config.services.transfer-sh;
 
+  # Create bucket (transfer-0cx)
+  # Identity > Service accounts > create
+  # Click on account > Service account policy
+  #
+  # {
+  #   "Version": "2012-10-17",
+  #   "Statement": [
+  #     {
+  #       "Effect": "Allow",
+  #       "Action": ["s3:ListBucket"],
+  #       "Resource": ["arn:aws:s3:::transfer-0cx"]
+  #     },
+  #     {
+  #       "Effect": "Allow",
+  #       "Action": [
+  #         "s3:PutObject",
+  #         "s3:GetObject",
+  #         "s3:DeleteObject"
+  #       ],
+  #       "Resource": ["arn:aws:s3:::transfer-0cx/*"]
+  #     }
+  #   ]
+  # }
+
   transfer-sh-package = pkgs.buildGoModule
     rec {
       pname = "transfer-sh";
