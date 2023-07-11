@@ -7,8 +7,6 @@
 vim.o.backspace        = "indent,eol,start" -- allow backspacing over everything in insert mode
 vim.o.clipboard        = "unnamedplus"      -- Set Clipboard to system's clipboard
 vim.o.completeopt      = "menuone,noselect" -- Use popup completion menu for single results aswell
-vim.o.foldlevelstart   = 20                 -- start with open folds
-vim.o.foldmethod       = "syntax"           -- set folding based on syntax
 vim.o.hidden           = true               -- Don't unload buffers when abandoned
 vim.o.history          = 50                 -- keep 50 lines of command line history
 vim.o.hlsearch         = true               -- highlight matches
@@ -57,6 +55,11 @@ vim.o.expandtab        = false              -- Don't expand tabs to spaces
 vim.o.softtabstop      = 4                  -- Size of a tab
 vim.o.tabstop          = 4                  -- A tab is displayed 4 collumns wide
 
+-- Folding
+vim.o.foldmethod       = "expr"                       -- set folding to expression/treesitter folder
+vim.o.foldexpr         = "nvim_treesitter#foldexpr()"
+vim.o.foldlevelstart   = 20                           -- start with open folds
+
 -- Language specific
 vim.g["go_auto_type_info"]     = 1          -- Go:        Show Go type info of variables
 vim.g["vim_markdown_conceal"]  = 0          -- Markdown:  Disable concellevel for markdown
@@ -65,6 +68,9 @@ vim.g["terraform_fmt_on_save"] = 1          -- Terraform: Format on saving
 
 -- Wrap markdown files to 80 chars per line
 vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')
+
+-- Comment nix files with '#'
+vim.cmd('autocmd FileType nix setlocal commentstring=#\ %s')
 
 -- TODO translate to lua
 -- " Cursor to last know position
