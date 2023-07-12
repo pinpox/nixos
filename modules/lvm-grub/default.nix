@@ -15,9 +15,6 @@ in
       loader = {
         grub.enable = true;
 
-        # Use Grub2
-        grub.version = 2;
-
         # Required for LVM
         grub.device = "nodev";
 
