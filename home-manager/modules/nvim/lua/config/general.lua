@@ -70,7 +70,7 @@ vim.g["terraform_fmt_on_save"] = 1          -- Terraform: Format on saving
 vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')
 
 -- Comment nix files with '#'
-vim.cmd('autocmd FileType nix setlocal commentstring=#\ %s')
+-- vim.cmd('autocmd FileType nix setlocal commentstring=#\ %s')
 
 -- TODO translate to lua
 -- " Cursor to last know position

@@ -174,7 +174,7 @@ in
         vim-gutentags
         vim-illuminate
         which-key-nvim
-        # vim-nix
+        vim-nix
         vim-repeat
         vim-sandwich
         vim-table-mode
