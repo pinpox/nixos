@@ -134,6 +134,7 @@
     manix
     matcha-gtk-theme
     meld
+    ncdu
     networkmanager-openvpn
     networkmanagerapplet
     nitrogen
