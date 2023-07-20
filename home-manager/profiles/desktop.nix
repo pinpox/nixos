@@ -1,5 +1,16 @@
 { system-config, pkgs, ... }: {
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-vintage-filter
+      obs-teleport
+      obs-backgroundremoval
+      input-overlay
+    ];
+  };
+
   programs.helix = {
     enable = true;
 
