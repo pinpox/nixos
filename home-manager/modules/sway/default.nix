@@ -33,19 +33,28 @@ in
             "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
             "${modifier}+p" = "exec ${pkgs.wofi}/bin/wofi --show run";
 
-
+            # Cycle in tabbed with win+tab
             "${modifier}+Shift+Tab" = "focus prev";
             "${modifier}+Tab" = "focus next";
           };
 
-
-
-        # Mod1: Alt, Mod4: Win
-        modifier = "Mod4";
+        modifier = "Mod4"; # Win key
         terminal = "${pkgs.foot}/bin/foot";
 
         startup = [
-          { command = "${pkgs.waybar}/bin/waybar"; }
+          { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
+        ];
+
+
+
+        # Application/window specific rules
+        window.commands = [
+          {
+            command = "floating enable";
+            criteria = {
+              title = "Firefox — Sharing Indicator";
+            };
+          }
         ];
 
         input = {
@@ -55,9 +64,7 @@ in
           };
         };
 
-        focus = {
-          wrapping = "workspace";
-        };
+        focus.wrapping = "workspace";
 
         colors =
           let
@@ -98,15 +105,17 @@ in
             };
 
           };
-        # bars = { };
+
+        bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
+
         fonts = {
           names = [ "Berkeley Mono" ];
-          # style = "Bold Semi-Condensed";
           size = 11.0;
-
         };
 
         workspaceAutoBackAndForth = true;
+
+        # Default to tabbed layout
         workspaceLayout = "tabbed";
 
         gaps = {
