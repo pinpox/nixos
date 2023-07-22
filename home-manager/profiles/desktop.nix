@@ -108,6 +108,9 @@
   # Install these packages for my user
   home.packages = with pkgs; [
 
+
+    swaynotificationcenter
+
     # From nixpkgs
     # arduino
     # arduino-cli

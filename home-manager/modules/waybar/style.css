@@ -36,8 +36,8 @@ window#waybar {
 #mpd,
 #language,
 #idle_inhibitor {
-	padding: 5px 10px;
-	margin: 3px 3px;
+	/* padding: 5px 10px; */
+	/* margin: 3px 3px; */
 	color: @White;
 	border-radius: 3;
 	background-color: @Black;
@@ -46,7 +46,7 @@ window#waybar {
 #window {
 	background-color: @Black;
 	color: @White;
-	margin: 0 4px;
+	/* margin: 0 4px; */
 }
 
 /*********************

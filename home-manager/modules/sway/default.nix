@@ -25,6 +25,27 @@ in
       start-sway
     ];
 
+
+
+
+    # xdg = {
+    #   enable = true;
+    #   configFile = {
+    #     swaync-config = {
+    #       source = ./swaync/config.json;
+    #       target = "swaync/config.json";
+    #     };
+    #   };
+    # };
+
+
+    # home.file."swaync-config".source = ./config.json;
+    # home.file."swaync-config".target = ".config/swaync/config.json";
+    # home.file."swaync-style".source = ./style.css;
+    # home.file."swaync-style".target = ".config/swaync/style.css";
+    # home.file."swaync-schema".source = ./configSchema.json;
+    # home.file."swaync-schema".target = ".config/swaync/configSchema.json";
+
     wayland.windowManager.sway = {
       enable = true;
       config = rec{
@@ -36,12 +57,17 @@ in
             # Cycle in tabbed with win+tab
             "${modifier}+Shift+Tab" = "focus prev";
             "${modifier}+Tab" = "focus next";
+
+            # SwayNotificationCenter
+            "${modifier}+n" = "exec swaync-client -t -sw";
+
           };
 
         modifier = "Mod4"; # Win key
         terminal = "${pkgs.foot}/bin/foot";
 
         startup = [
+          { command = "swaync"; always = true; }
           { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         ];
 
