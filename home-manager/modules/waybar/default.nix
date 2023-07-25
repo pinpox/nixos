@@ -13,6 +13,7 @@ in
     programs.waybar = {
 
       enable = true;
+
       style =
         let
           c = config.pinpox.colors;
