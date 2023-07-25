@@ -28,19 +28,43 @@ in
         };
         triple-home = {
           outputs = [
+
+
+            # generate with wlay
+            #output "eDP-1" {
+            #mode 1920x1080@60Hz
+            #pos 0 0
+            #transform normal
+            #}
+            #output "DP-1" {
+            #mode 2560x1440@59Hz
+            #pos 4480 0
+            #transform normal
+            #}
+            #output "DP-2" {
+            #mode 2560x1440@59Hz
+            #pos 1920 0
+            #transform normal
+            #}
+
+
+
             {
               criteria = "eDP-1";
               mode = "1920x1080@60Hz";
+              position = "0,0";
               status = "enable";
             }
             {
               criteria = "DP-1";
               mode = "2560x1440@60Hz";
+              position = "4480,0";
               status = "enable";
             }
             {
               criteria = "DP-2";
               mode = "2560x1440@60Hz";
+              position = "1920,0";
               status = "enable";
             }
           ];

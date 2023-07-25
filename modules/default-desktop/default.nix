@@ -52,6 +52,11 @@ in
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-river";
           user = "greeter";
         };
+
+        sway_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-sway";
+          user = "greeter";
+        };
       };
     };
 

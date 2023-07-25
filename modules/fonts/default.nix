@@ -20,6 +20,8 @@ in
         corefonts
         recursive
         iosevka-bin
+        font-awesome
+        line-awesome
       ];
 
       fontconfig = {
