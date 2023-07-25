@@ -23,6 +23,8 @@ in
       wlr-randr
       wofi
       start-sway
+      font-awesome
+      line-awesome
     ];
 
 
@@ -132,7 +134,10 @@ in
 
           };
 
-        bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
+        bars = [
+          # { command = "${pkgs.waybar}/bin/waybar"; }
+          { command = "waybar"; }
+        ];
 
         fonts = {
           names = [ "Berkeley Mono" ];
