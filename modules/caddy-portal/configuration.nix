@@ -187,13 +187,6 @@
         basicAuthFile = "${config.lollypops.secrets.files."nginx/3dprint.passwd".path}";
       };
 
-      # Photo gallery
-      "photos.pablo.tools" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = { proxyPass = "http://192.168.7.5:7788"; };
-      };
-
       # Graphana
       "status.pablo.tools" = {
         forceSSL = true;

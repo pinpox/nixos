@@ -1,4 +1,4 @@
-{ self, config, s3photoalbum, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
+{ self, config, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -33,8 +33,6 @@
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca
-    s3photoalbum.nixosModules.s3photoalbum
-    s3photoalbum.nixosModules.s3photoalbum-thumbnailer
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
     vpub-plus-plus.nixosModules.vpub-plus-plus
@@ -90,10 +88,6 @@
   };
 
   programs.ssh.startAgent = false;
-
-  services.s3photoalbum.enable = true;
-  services.s3photoalbum-thumbnailer.enable = true;
-
   services.qemuGuest.enable = true;
 
   # Setup Yubikey SSH and GPG
@@ -124,8 +118,6 @@
     enable = true;
     allowPing = true;
     allowedTCPPorts = [ 80 443 22 ];
-    # Allow port for photoalbum on wg interface
-    interfaces.wg0.allowedTCPPorts = [ 7788 ];
   };
 
   lollypops.secrets.files."gitea/mailer-pw" = {

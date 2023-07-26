@@ -182,9 +182,6 @@
       # Password manager (vaultwarden) instance
       "pass.pablo.tools".extraConfig = "reverse_proxy 127.0.0.1:8222";
 
-      # Photo gallery
-      "photos.pablo.tools".extraConfig = "reverse_proxy 127.0.0.1:7788";
-
       # Grafana
       "status.pablo.tools".extraConfig = "reverse_proxy 127.0.0.1:9005";
 

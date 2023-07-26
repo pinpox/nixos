@@ -514,36 +514,12 @@
         "promterm": "promterm",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
-        "s3photoalbum": "s3photoalbum",
         "tfenv": "tfenv",
         "vpub-plus-plus": "vpub-plus-plus",
         "wallpaper-generator": "wallpaper-generator",
         "zk-nvim": "zk-nvim",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
-      }
-    },
-    "s3photoalbum": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1655108482,
-        "narHash": "sha256-llO3LYDSC/gpbodhVC2XBvRGd9H/vRJMmuiB4QDxaZQ=",
-        "owner": "pinpox",
-        "repo": "s3photoalbum",
-        "rev": "54fb8f8127a7d354910dfd6e8adc8c4c8eb89a25",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "s3photoalbum",
-        "type": "github"
       }
     },
     "systems": {
