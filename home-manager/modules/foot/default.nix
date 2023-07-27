@@ -22,7 +22,7 @@ in
         main = {
           term = "xterm-256color";
 
-          font = "Berkeley Mono:size=11";
+          font = "Berkeley Mono:size=13";
           # dpi-aware = "yes"; # Defaults to auto
         };
 
