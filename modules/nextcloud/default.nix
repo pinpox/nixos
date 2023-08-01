@@ -39,7 +39,7 @@ in
 
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud26;
+      package = pkgs.nextcloud27;
 
       # Use HTTPS for links
       https = true;
