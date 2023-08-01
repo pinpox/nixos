@@ -142,7 +142,9 @@ in
           outer = 3;
         };
 
-
+        # Set wallpaper for all screens
+        # TODO: generated based on coloscheme
+        output."*".bg = "~/Pictures/Wallpaper/nixos-wallpaper.png fill #000000";
 
         # output = {
         ##Phillips
