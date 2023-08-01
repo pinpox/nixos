@@ -76,7 +76,7 @@
       in
       {
         pandoc.enable = true;
-        alacritty.enable = true;
+        k9s.enable = true;
         zellij.enable = true;
         chromium.enable = true;
         nvim.enable = true;
@@ -87,6 +87,7 @@
         go.enable = true;
 
         # XServer only
+        alacritty.enable = inXserver;
         rofi.enable = inXserver;
         awesome.enable = inXserver;
         xscreensaver.enable = inXserver;
@@ -108,7 +109,6 @@
   # Install these packages for my user
   home.packages = with pkgs; [
 
-
     swaynotificationcenter
 
     # From nixpkgs
@@ -125,6 +125,7 @@
     fd
     gcc
     gimp
+    gnome.file-roller
     gtk_engines
     h # https://github.com/zimbatm/h
     helix
@@ -153,6 +154,7 @@
     signal-desktop
     spotify
     sqlite
+    taskwarrior
     tealdeer
     tfenv
     thunderbird-bin
@@ -161,8 +163,6 @@
     viewnior
     vlc
     xarchiver
-    youtube-dl
-    gnome.file-roller
     xfce.exo # thunar "open terminal here"
     xfce.thunar-archive-plugin
     xfce.thunar-volman
