@@ -33,6 +33,8 @@ window#waybar {
 #tray,
 #mode,
 #idle_inhibitor,
+#custom-notification,
+#workspaces button,
 #mpd,
 #language,
 #idle_inhibitor {
@@ -79,10 +81,10 @@ window#waybar {
 	text-shadow: inherit;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #tags {
-	margin-left: 9px;
-}
+/* /1* If workspaces is the leftmost module, omit left margin *1/ */
+/* .modules-left > widget:first-child > #tags { */
+/* 	margin-left: 9px; */
+/* } */
 
 /* .modules-right > widget:last-child > #tags { */
 /*	margin-right: 0; */
