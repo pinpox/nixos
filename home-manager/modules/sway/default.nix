@@ -45,6 +45,8 @@ in
             # SwayNotificationCenter
             "${modifier}+n" = "exec swaync-client -t -sw";
 
+            "${modifier}+u" = ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] move position center'';
+
           };
 
         modifier = "Mod4"; # Win key
@@ -52,10 +54,9 @@ in
 
         startup = [
           { command = "swaync"; always = true; }
+          { command = "foot --app-id=dropdown"; always = true; }
           { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
         ];
-
-
 
         # Application/window specific rules
         window.commands = [
@@ -65,6 +66,11 @@ in
               title = "Firefox — Sharing Indicator";
             };
           }
+
+          { command = "floating enable"; criteria.app_id = "dropdown"; }
+          { command = "resize set 98ppt 98ppt"; criteria.app_id = "dropdown"; }
+          { command = "move scratchpad"; criteria.app_id = "dropdown"; }
+          { command = "border pixel 10"; criteria.app_id = "dropdown"; }
         ];
 
         input = {
