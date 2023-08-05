@@ -45,7 +45,7 @@ in
             # SwayNotificationCenter
             "${modifier}+n" = "exec swaync-client -t -sw";
 
-            "${modifier}+u" = ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] move position center'';
+            "${modifier}+u" = ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 98ppt 98ppt; [app_id="dropdown"] move position center'';
 
           };
 
