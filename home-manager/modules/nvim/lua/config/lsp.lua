@@ -4,6 +4,7 @@ require'lspconfig'.terraformls.setup{}
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.zls.setup{}
 
 
 -- Spell/Grammar checking, e.g for markdown files

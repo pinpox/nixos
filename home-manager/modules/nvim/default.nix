@@ -26,6 +26,8 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
+      zig
+      zls
       nil
       nodePackages.pyright # LSP python
       nodePackages.yaml-language-server # LSP yaml
