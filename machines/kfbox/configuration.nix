@@ -1,4 +1,4 @@
-{ self, config, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
+{ config, lib, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -30,6 +30,7 @@
   '';
 
   imports = [
+    ./woodpecker.nix
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca
@@ -37,6 +38,11 @@
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
     vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
+
+
+  # Often hangs
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
   # Karmabot for IRC channel
   lollypops.secrets.files."go-karma-bot/envfile" = { };

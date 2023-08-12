@@ -10,7 +10,7 @@ in
 
     # Hosts to backup with keys
     repositories = mkOption {
-      type = with types; attrsOf (types.attrsOf (types.listOf types.string));
+      type = with types; attrsOf (types.attrsOf (types.listOf types.str));
       default = { };
       example = {
         myHostname.authorizedKeys = [
