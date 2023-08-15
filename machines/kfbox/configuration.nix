@@ -30,7 +30,6 @@
   '';
 
   imports = [
-    ./woodpecker.nix
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca

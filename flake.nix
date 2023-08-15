@@ -15,11 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-pipeliner = {
-      url = "github:pinpox/woodpecker-flake-pipeliner";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
