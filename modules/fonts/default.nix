@@ -10,7 +10,7 @@ in
 
     fonts = {
       fontDir.enable = true;
-      fonts = with pkgs; [
+      packages = with pkgs; [
 
         league-of-moveable-type
         inter
