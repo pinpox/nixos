@@ -20,7 +20,7 @@ in
             {
               default-host = "https://push.pablo.tools";
               default-command = ''
-                echo $raw | tee /dev/tty | ${pkgs.libnotify}/bin/notify-send "$title" "$m"
+                echo $raw | ${pkgs.libnotify}/bin/notify-send "$title" "$m"
               '';
               subscribe = [
                 { topic = "pinpox_backups"; }
