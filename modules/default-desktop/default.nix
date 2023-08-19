@@ -1,4 +1,4 @@
-{ lib, nur, pkgs, config, flake-self, home-manager, wallpaper-generator, promterm, ... }:
+{ lib, nur, pkgs, config, flake-self, wallpaper-generator, promterm, ... }:
 with lib;
 let
   cfg = config.pinpox.desktop;
@@ -49,12 +49,12 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-river";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-sway";
           user = "greeter";
         };
 
-        sway_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-sway";
+        river_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-river";
           user = "greeter";
         };
       };
