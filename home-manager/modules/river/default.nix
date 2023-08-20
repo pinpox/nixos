@@ -13,6 +13,13 @@ let
       ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png
     '';
 
+
+  screenshot-region-file = pkgs.writeShellScriptBin "screenshot-region" /* sh */
+    ''
+      ${pkgs.grim}/bin/grim -g "$(''${pkgs.slurp}/bin/slurp)" $(date +'%s_grim.png')
+    '';
+
+
 in
 {
   options.pinpox.programs.river.enable = mkEnableOption "river window manager";
@@ -33,6 +40,7 @@ in
       wofi
       start-river
       screenshot-region
+      screenshot-region-file
     ];
 
     xdg = {
