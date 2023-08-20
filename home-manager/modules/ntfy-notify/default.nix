@@ -25,6 +25,7 @@ in
               subscribe = [
                 { topic = "pinpox_backups"; }
                 { topic = "pinpox_alertmanager"; }
+                { topic = "woodpecker_ci"; }
               ];
             };
         };
@@ -45,6 +46,7 @@ in
             Environment = [
               "PATH=${pkgs.bash}/bin:/run/wrappers/bin"
               "DISPLAY=:0"
+              "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus'"
             ];
 
             EnvironmentFile = [ config.lollypops.secrets.files."ntfy-envfile".path ];
