@@ -299,6 +299,12 @@
 
             # Manual for github pages (https://pinpox.github.io/nixos)
             flake-manual = pkgs.callPackage ./manual/manual.nix { inputs = inputs; flake-self = self; };
+
+
+            woodpecker-pipeline = pkgs.callPackage ./woodpecker-pipeline.nix { inputs = inputs; flake-self = self; };
+
+
+
           };
 
           # Run with: nix develop '.#test-shell'
