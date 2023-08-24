@@ -2,6 +2,22 @@
 { nixpkgs, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
+
+
+
+  services.restic.server = {
+
+    enable = true;
+    prometheus = true;
+    listenAddress = "192.168.7.4:7766";
+    dataDir = "/tmp/";
+
+  };
+
+
+
+
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.

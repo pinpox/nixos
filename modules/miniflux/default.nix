@@ -53,7 +53,6 @@ in
         OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://git.0cx.de/";
       };
       adminCredentialsFile = config.lollypops.secrets.files."miniflux/credentials".path;
-
     };
   };
 }

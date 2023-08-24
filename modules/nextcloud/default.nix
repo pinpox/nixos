@@ -9,6 +9,14 @@ in
 
   config = mkIf cfg.enable {
 
+
+    pinpox.services.restic-client.backup-paths-offsite = [
+      # TODO Plan on how to backup nextcloud data
+      # "${config.services.nextcloud.home}/data"
+      "${config.services.nextcloud.home}/config"
+      # "${config.services.nextcloud.home}/store-apps"
+    ];
+
     services.postgresql.package = pkgs.postgresql_13;
 
     lollypops.secrets.files = {
@@ -19,16 +27,12 @@ in
       };
     };
 
-
     services.phpfpm.pools.nextcloud.settings = {
       "listen.owner" = config.services.caddy.user;
       "listen.group" = config.services.caddy.group;
     };
 
-
-
     services.nextcloud = {
-
 
       enable = true;
 

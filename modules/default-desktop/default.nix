@@ -118,6 +118,7 @@ in
         borg-backup.enable = true;
         restic-client = {
           backup-paths-onsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
+          backup-paths-offsite = [ "/home/pinpox/Notes" ];
 
           backup-paths-exclude = [
 

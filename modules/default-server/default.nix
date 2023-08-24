@@ -6,6 +6,13 @@ in
 
   imports = [ ../../users/pinpox.nix ];
 
+
+  # TODO backup postgres using postgresqlBackup
+  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/backup/postgresql-backup.nix
+  # pinpox.services.restic-client.backup-paths-offsite = [ config.services.hedgedoc.settings.db.storage ];
+
+
+
   options.pinpox.server = {
     enable = mkEnableOption "the default server configuration";
 
