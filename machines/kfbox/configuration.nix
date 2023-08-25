@@ -1,4 +1,4 @@
-{ config, lib, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
+{ config, lib, pepsy-bot, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -35,6 +35,7 @@
     #retiolum.nixosModules.ca
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
+    pepsy-bot.nixosModules.pepsy-bot
     vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
 
@@ -52,6 +53,11 @@
   lollypops.secrets.files."aoe-taunt-discord-bot/discord_token" = { };
   services.aoe-taunt-discord-bot.discordTokenFile = config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
   services.aoe-taunt-discord-bot.enable = true;
+
+  # Discord trackmania bot
+  lollypops.secrets.files."pepsy-bot/discord_token" = { };
+  services.pepsy-bot.discordTokenFile = config.lollypops.secrets.files."pepsy-bot/discord_token".path;
+  services.pepsy-bot.enable = true;
 
   lollypops.secrets.files."transfer-sh/envfile" = { };
   services.transfer-sh = {
