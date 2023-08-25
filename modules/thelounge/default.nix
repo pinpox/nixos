@@ -24,17 +24,17 @@ in
         theme = "morning";
       };
     };
-  };
 
-  pinpox.services.restic-client.backup-paths-offsite = [
-    "/var/lib/thelounge/certificates"
-    "/var/lib/thelounge/config.js"
-    # Don't backup logs for now - too big.
-    # "/var/lib/thelounge/logs"
-    # "/var/lib/thelounge/packages"
-    "/var/lib/thelounge/sts-policies.json"
-    "/var/lib/thelounge/users"
-    "/var/lib/thelounge/vapid.json"
-  ];
+    pinpox.services.restic-client.backup-paths-offsite = [
+      "/var/lib/thelounge/certificates"
+      "/var/lib/thelounge/config.js"
+      # Don't backup logs for now - too big.
+      # "/var/lib/thelounge/logs"
+      # "/var/lib/thelounge/packages"
+      "/var/lib/thelounge/sts-policies.json"
+      "/var/lib/thelounge/users"
+      "/var/lib/thelounge/vapid.json"
+    ];
+  };
 
 }
