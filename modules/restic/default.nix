@@ -23,37 +23,7 @@ in
 
     backup-paths-exclude = mkOption {
       type = types.listOf types.str;
-      default = [
-        # "*.pyc"
-        # "*/cache2"
-        # "/*/.cache"
-        # "/*/.go/pkg"
-        # "/*/.config/Signal"
-        # "/*/.local/share/Steam"
-        # "/*/.config/chromium"
-        # "/*/.rustup"
-        # "/*/.config/discord"
-        # "/*/.container-diff"
-        # "/*/.gvfs/"
-        # "/*/.local/share/Trash"
-        # "/*/.mozilla/firefox"
-        # "/*/.npm/_cacache"
-        # "/*/.thumbnails"
-        # "/*/.ts3client"
-        # "/*/.vagrant.d"
-        # "/*/.vim"
-        # "/*/Cache"
-        # "/*/Downloads"
-        # "/*/Seafile"
-        # "/*/.nextcloud"
-        # "/*/code/nixpkgs"
-        # "/*/code/vaultwarden"
-        # "/*/code/github.com/pinpox/nixpkgs"
-        # "/*/code/github.com/NixOS/nixpkgs"
-        # "/*/VirtualBox VMs"
-        # "discord/Cache"
-
-      ];
+      default = [ ];
       example = [ "/home/pinpox/cache" ];
       description = "Paths to exclude from backup";
     };
@@ -92,7 +62,7 @@ in
       {
         # TODO add contabo
         s3-offsite = {
-          paths = [ "/home/pinpox/Notes/" ];
+          paths = cfg.backup-paths-offsite;
           repository = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic";
           environmentFile = "${config.lollypops.secrets.files."restic/backblaze-credentials".path}";
           passwordFile = "${config.lollypops.secrets.files."restic/repo-pw".path}";
