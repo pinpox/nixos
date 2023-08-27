@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    pepsy-bot = {
+      url = "github:pinpox/pepsy-bot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;

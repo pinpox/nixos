@@ -341,11 +341,6 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1693003285,
-        "narHash": "sha256-5nm4yrEHKupjn62MibENtfqlP6pWcRTuSKrMiH9bLkc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "5690c4271f2998c304a45c91a0aeb8fb69feaea7",
         "type": "github"
       },
       "original": {
@@ -369,11 +364,7 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1693133146,
-        "narHash": "sha256-bZ9zC0GS3PQ91batGx0F6qPkFXHCuBPFhltD2SZejsM=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "17d36c83e208873232bfd5f5d78b37d90ff1958a",
+
         "type": "github"
       },
       "original": {
@@ -411,6 +402,26 @@
       "original": {
         "owner": "vijaymarupudi",
         "repo": "nvim-fzf",
+        "type": "github"
+      }
+    },
+    "pepsy-bot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1692891974,
+        "narHash": "sha256-/d9s2X+XNgzDQlWwRvVXxuETsR1ts2DV8JZQFTE9NOI=",
+        "owner": "pinpox",
+        "repo": "pepsy-bot",
+        "rev": "0ba223e2bd6c52725f021494ff92f25908bb039a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "pepsy-bot",
         "type": "github"
       }
     },
@@ -510,6 +521,7 @@
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",
         "nvim-fzf": "nvim-fzf",
+        "pepsy-bot": "pepsy-bot",
         "pinpox-keys": "pinpox-keys",
         "promterm": "promterm",
         "restic-exporter": "restic-exporter",
