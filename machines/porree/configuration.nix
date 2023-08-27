@@ -5,7 +5,6 @@
     matrix-hook.nixosModule
     alertmanager-ntfy.nixosModules.default
     retiolum.nixosModules.retiolum
-    # ./retiolum.nix
   ];
 
   networking.interfaces.ens3 = {
@@ -29,7 +28,6 @@
   lollypops.secrets.files = {
     "matrix-hook/envfile" = { };
     "alertmanager-ntfy/envfile" = { };
-    "bitwarden_rs/envfile" = { };
     "wireguard/private" = { };
 
     "caddy/basicauth_beta" = { };
@@ -179,9 +177,6 @@
         }
       '';
 
-      # Password manager (vaultwarden) instance
-      "pass.pablo.tools".extraConfig = "reverse_proxy 127.0.0.1:8222";
-
       # Grafana
       "status.pablo.tools".extraConfig = "reverse_proxy 127.0.0.1:9005";
 
@@ -253,79 +248,83 @@
       clientIp = "192.168.7.1";
     };
 
-    services.ntfy-sh.enable = true;
+    services = {
+      vaultwarden.enable = true;
+      ntfy-sh.enable = true;
 
-    services.alertmanager-ntfy = {
-      enable = true;
-      httpAddress = "localhost";
-      httpPort = "9099";
-      ntfyTopic = "https://push.pablo.tools/pinpox_alertmanager";
-      ntfyPriority = "default";
-      envFile = "${config.lollypops.secrets.files."alertmanager-ntfy/envfile".path}";
+      alertmanager-ntfy = {
+        enable = true;
+        httpAddress = "localhost";
+        httpPort = "9099";
+        ntfyTopic = "https://push.pablo.tools/pinpox_alertmanager";
+        ntfyPriority = "default";
+        envFile = "${config.lollypops.secrets.files."alertmanager-ntfy/envfile".path}";
+      };
+
+      matrix-hook = {
+        enable = true;
+        httpAddress = "localhost";
+        matrixHomeserver = "https://matrix.org";
+        matrixUser = "@alertus-maximus:matrix.org";
+        matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
+        envFile = "${config.lollypops.secrets.files."matrix-hook/envfile".path}";
+        msgTemplatePath = "${matrix-hook.packages."x86_64-linux".matrix-hook }/bin/message.html.tmpl";
+      };
+
+
+      borg-backup.enable = true;
+
+      # Enable nextcloud configuration
+      nextcloud.enable = true;
+
+      monitoring-server = {
+
+        dashboard.enable = true;
+        loki.enable = true;
+        alertmanager-irc-relay.enable = true;
+
+        enable = true;
+
+        jsonTargets = [
+          "http://birne.wireguard/borg-ahorn.json"
+          "http://birne.wireguard/borg-birne.json"
+          "http://birne.wireguard/borg-kartoffel.json"
+          "http://birne.wireguard/borg-kfbox.json"
+          "http://birne.wireguard/borg-mega.json"
+          "http://birne.wireguard/borg-porree.json"
+        ];
+
+        nodeTargets = [
+          "ahorn.wireguard:9100"
+          "birne.wireguard:9100"
+          "kartoffel.wireguard:9100"
+          "kfbox.wireguard:9100"
+          "mega.wireguard:9100"
+          "porree.wireguard:9100"
+        ];
+
+        blackboxTargets = [
+          "https://pablo.tools"
+          "https://megaclan3000.de"
+          "https://builds.lounge.rocks"
+          # "https://lounge.rocks"
+          # "https://vpn.pablo.tools"
+          "https://${config.pinpox.services.vaultwarden.host}" # Vaultwarden
+          "https://pinpox.github.io/nixos/"
+          "https://cache.lounge.rocks/nix-cache-info"
+          "https://pads.0cx.de"
+          "https://news.0cx.de"
+          "https://git.0cx.de"
+          "https://irc.0cx.de"
+        ];
+      };
     };
 
-    services.matrix-hook = {
-      enable = true;
-      httpAddress = "localhost";
-      matrixHomeserver = "https://matrix.org";
-      matrixUser = "@alertus-maximus:matrix.org";
-      matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
-      envFile = "${config.lollypops.secrets.files."matrix-hook/envfile".path}";
-      msgTemplatePath = "${
-matrix-hook.packages."x86_64-linux".matrix-hook
-}/bin/message.html.tmpl";
-    };
-
-    services.borg-backup.enable = true;
-
-    # Enable nextcloud configuration
-    services.nextcloud.enable = true;
-
-    metrics.node.enable = true;
-    metrics.blackbox.enable = true;
-    metrics.json.enable = true;
-    metrics.restic.enable = true;
-
-    services.monitoring-server = {
-
-      dashboard.enable = true;
-      loki.enable = true;
-      alertmanager-irc-relay.enable = true;
-
-      enable = true;
-
-      jsonTargets = [
-        "http://birne.wireguard/borg-ahorn.json"
-        "http://birne.wireguard/borg-birne.json"
-        "http://birne.wireguard/borg-kartoffel.json"
-        "http://birne.wireguard/borg-kfbox.json"
-        "http://birne.wireguard/borg-mega.json"
-        "http://birne.wireguard/borg-porree.json"
-      ];
-
-      nodeTargets = [
-        "ahorn.wireguard:9100"
-        "birne.wireguard:9100"
-        "kartoffel.wireguard:9100"
-        "kfbox.wireguard:9100"
-        "mega.wireguard:9100"
-        "porree.wireguard:9100"
-      ];
-
-      blackboxTargets = [
-        "https://pablo.tools"
-        "https://megaclan3000.de"
-        "https://drone.lounge.rocks"
-        # "https://lounge.rocks"
-        "https://pass.pablo.tools"
-        # "https://vpn.pablo.tools"
-        "https://pinpox.github.io/nixos/"
-        "https://cache.lounge.rocks/nix-cache-info"
-        "https://pads.0cx.de"
-        "https://news.0cx.de"
-        "https://git.0cx.de"
-        "https://irc.0cx.de"
-      ];
+    metrics = {
+      node.enable = true;
+      blackbox.enable = true;
+      json.enable = true;
+      restic.enable = true;
     };
   };
 
@@ -374,20 +373,5 @@ matrix-hook.packages."x86_64-linux".matrix-hook
         }
       ];
     };
-  };
-
-  # Vaultwarden installed via nixpkgs.
-  services.vaultwarden = {
-    enable = true;
-    config = {
-      DOMAIN = "https://pass.pablo.tools";
-      SIGNUPS_ALLOWED = false;
-      INVITATIONS_ALLOWED = "true";
-      # The rocketPort option should match the value of the port in the reverse-proxy
-      ROCKET_PORT = 8222;
-    };
-
-    # The environment file contiains secrets and is stored in pass
-    environmentFile = "${config.lollypops.secrets.files."bitwarden_rs/envfile".path}";
   };
 }
