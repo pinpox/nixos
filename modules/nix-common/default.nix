@@ -52,12 +52,12 @@ in
       package = pkgs.nixVersions.stable;
       # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
-      settings = {
+      extraOptions = ''
+        fallback = true
+        timeout = 10
+      '';
 
-        extraConfig = ''
-          fallback = true
-          timeout = 10
-        '';
+      settings = {
 
         experimental-features = [ "nix-command" "flakes" ];
 

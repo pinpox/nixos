@@ -36,9 +36,11 @@ in
       };
 
       # The environment file contains secrets and is stored in pass
-      lollypops.secrets.files."bitwarden_rs/envfile" = { };
+      # YUBICO_CLIENT_ID, YUBICO_SECRET_KEY, ADMIN_TOKEN
       environmentFile = "${config.lollypops.secrets.files."bitwarden_rs/envfile".path}";
     };
+
+    lollypops.secrets.files."bitwarden_rs/envfile" = { };
 
     # Backup DB and persistent data (e.g. attachments)
     pinpox.services.restic-client.backup-paths-offsite = [
