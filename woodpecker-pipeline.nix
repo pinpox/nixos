@@ -38,8 +38,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
               name = "Build configuration for ${host}";
               image = "bash";
               commands = [
-                # "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
-                "nix build 'nixpkgs#hello'" # TODO Replace with real command above
+                "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
               ];
             }
             atticPushStep
@@ -76,8 +75,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
                   name = "Build package ${package}";
                   image = "bash";
                   commands = [
-                    # "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
-                    "nix build 'nixpkgs#hello'" # TODO replace with real command
+                    "nix build 'nixpkgs#${package}'"
                     "attic push lounge-rocks:nix-cache result"
                   ];
                 }
