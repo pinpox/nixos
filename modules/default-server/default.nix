@@ -1,16 +1,10 @@
-{ lib, pkgs, nur, config, flake-self, ... }:
+{ lib, pkgs, config, ... }:
 with lib;
 let cfg = config.pinpox.server;
 in
 {
 
   imports = [ ../../users/pinpox.nix ];
-
-
-  # TODO backup postgres using postgresqlBackup
-  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/services/backup/postgresql-backup.nix
-  # pinpox.services.restic-client.backup-paths-offsite = [ config.services.hedgedoc.settings.db.storage ];
-
 
 
   options.pinpox.server = {
@@ -60,6 +54,37 @@ in
       networking.enable = true;
     };
     pinpox.services = { openssh.enable = true; };
+
+    # Backups
+    pinpox.services = {
+      restic-client = {
+        enable = true;
+        backup-paths-exclude = [
+          "*.pyc"
+          "*/.cache"
+          "*/.cargo"
+          "*/.container-diff"
+          "*/.go/pkg"
+          "*/.gvfs/"
+          "*/.local/share/Steam"
+          "*/.local/share/Trash"
+          "*/.local/share/virtualenv"
+          "*/.mozilla/firefox"
+          "*/.rustup"
+          "*/.vim"
+          "*/.vimtemp"
+        ];
+        backup-paths-offsite = [ config.services.postgresqlBackup.location ];
+      };
+    };
+
+    # Backup Postgres, if it is running
+    services.postgresqlBackup = {
+      enable = config.services.postgresql.enable;
+      startAt = "*-*-* 01:15:00";
+      location = "/var/backup/postgresql";
+      backupAll = true;
+    };
 
 
     # This value determines the NixOS release from which the default

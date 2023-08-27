@@ -136,8 +136,6 @@
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
-  pinpox.services.restic-client.enable = true;
-
   # Install reaper
   environment.systemPackages = [
 

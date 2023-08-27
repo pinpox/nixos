@@ -113,7 +113,9 @@ in
         xserver.enable = false;
         openssh.enable = true;
         borg-backup.enable = true;
+
         restic-client = {
+          enable = true;
           backup-paths-onsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
           backup-paths-offsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
 

@@ -60,7 +60,6 @@ in
         };
       in
       {
-        # TODO add contabo
         s3-offsite = {
           paths = cfg.backup-paths-offsite;
           repository = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic";

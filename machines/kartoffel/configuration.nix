@@ -1,5 +1,5 @@
 # Configuration for kartoffel
-{ nixpkgs, pkgs, ... }: {
+{ pkgs, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
 
