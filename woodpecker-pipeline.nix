@@ -13,6 +13,14 @@ with pkgs; writeText "pipeline" (builtins.toJSON
         ];
         secrets = [ "attic_key" ];
       };
+      atticPushStep = {
+        name = "Push to Attic";
+        image = "bash";
+        commands = [
+          "attic push lounge-rocks:nix-cache result"
+        ];
+        secrets = [ "attic_key" ];
+      };
     in
     [
       # TODO Show flake info
@@ -32,9 +40,9 @@ with pkgs; writeText "pipeline" (builtins.toJSON
               commands = [
                 # "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
                 "nix build 'nixpkgs#hello'" # TODO Replace with real command above
-                "attic push lounge-rocks:lounge-rocks result"
               ];
             }
+            atticPushStep
           ];
         });
       })
@@ -70,7 +78,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
                   commands = [
                     # "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
                     "nix build 'nixpkgs#hello'" # TODO replace with real command
-                    "attic push lounge-rocks:lounge-rocks result"
+                    "attic push lounge-rocks:nix-cache result"
                   ];
                 }
               ];
