@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, flake-self, ... }:
 with lib;
 let cfg = config.pinpox.services.monitoring-server;
 in
@@ -21,13 +21,6 @@ in
       # default = [ "https://pablo.tools" ];
       example = [ "http://birne.wireguard/borg-ahorn.json" ];
       description = "Targets to probe with the json-exporter";
-    };
-
-    nodeTargets = mkOption {
-      type = types.listOf types.str;
-      default = [ "porree.wireguard:9100" ];
-      example = [ "hostname.wireguard:9100" ];
-      description = "Targets to monitor with the node-exporter";
     };
   };
 
@@ -133,13 +126,17 @@ in
             }
           ];
         }
-
-
         {
           job_name = "restic-exporter";
           scrape_interval = "1h";
           metrics_path = "/probe";
-          static_configs = [{ targets = [ "ahorn" ]; }];
+          static_configs = [{
+            # Build list of all hosts that have restic-client.enable set to "true"
+            targets = (builtins.attrNames
+              (lib.filterAttrs
+                (n: v: v.config.pinpox.services.restic-client.enable)
+                flake-self.nixosConfigurations));
+          }];
           relabel_configs = [
             {
               source_labels = [ "__address__" ];
@@ -152,14 +149,10 @@ in
             {
               target_label = "__address__";
               replacement =
-                "127.0.0.1:8999";
+                "127.0.0.1:${builtins.toString config.services.restic-exporter.port}";
             }
           ];
         }
-
-
-
-
         {
           job_name = "blackbox";
           metrics_path = "/probe";
@@ -184,7 +177,16 @@ in
         }
         {
           job_name = "node-stats";
-          static_configs = [{ targets = cfg.nodeTargets; }];
+          static_configs = [{
+            # Build list of all hosts that have pinpox.metrics.node.enable set to
+            # "true", adding ".wireguard:9100"
+            targets = (map (x: x + ".wireguard:9100")
+              (builtins.attrNames
+                (lib.filterAttrs
+                  (n: v: v.config.pinpox.metrics.node.enable)
+                  flake-self.nixosConfigurations))
+            );
+          }];
         }
       ];
       alertmanager = {

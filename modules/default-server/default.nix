@@ -45,7 +45,6 @@ in
       wget
     ];
 
-    # pinpox.metrics.node.enable = true;
     pinpox.defaults = {
       environment.enable = true;
       locale.enable = true;

@@ -20,14 +20,9 @@ in
     enable = mkEnableOption "prometheus blackbox-exporter metrics collection";
   };
 
-  # imports = [ restic-exporter.nixosModules.default ];
-
   config = {
 
-    lollypops.secrets.files =
-      if cfg.restic.enable then
-        { "restic-exporter/envfile" = { }; }
-      else { };
+    lollypops.secrets.files."restic-exporter/envfile" = { };
 
     services.restic-exporter = {
       enable = cfg.restic.enable;

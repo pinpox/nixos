@@ -369,11 +369,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1693136796,
-        "narHash": "sha256-JXSewQ7qKBN4D8MMpnAarASnSAravfbETEwxDDi8on8=",
+        "lastModified": 1693140791,
+        "narHash": "sha256-m6wtYw53Xey7STzhxh1J8mN5lnJqLZr3xad9RB8n3Kk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "33b4841fe111b93d6a67e0585f6d60b4621e0ae7",
+        "rev": "eb8125b81a94fb211af0e508d1de6c5ac285a8c7",
         "type": "github"
       },
       "original": {
@@ -480,11 +480,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1656942326,
-        "narHash": "sha256-X/3P1tbBtx9e0EwGHExgAuWH6cn5qyE2/ckV/R4faAE=",
+        "lastModified": 1693143921,
+        "narHash": "sha256-CCGXnd0rKsJcpaB38Xou/pUfHUC+J1z+DlBxCJQWMtU=",
         "owner": "pinpox",
         "repo": "restic-exporter",
-        "rev": "c46427d239a16dffbe606519b7e29ab74eaa755c",
+        "rev": "698fb901927f18c6d66576ac284f54b03742d9e8",
         "type": "github"
       },
       "original": {

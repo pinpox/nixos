@@ -285,6 +285,7 @@
 
         enable = true;
 
+        # TODO remove with borg
         jsonTargets = [
           "http://birne.wireguard/borg-ahorn.json"
           "http://birne.wireguard/borg-birne.json"
@@ -292,15 +293,6 @@
           "http://birne.wireguard/borg-kfbox.json"
           "http://birne.wireguard/borg-mega.json"
           "http://birne.wireguard/borg-porree.json"
-        ];
-
-        nodeTargets = [
-          "ahorn.wireguard:9100"
-          "birne.wireguard:9100"
-          "kartoffel.wireguard:9100"
-          "kfbox.wireguard:9100"
-          "mega.wireguard:9100"
-          "porree.wireguard:9100"
         ];
 
         blackboxTargets = [
