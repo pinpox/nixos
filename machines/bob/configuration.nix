@@ -1,6 +1,8 @@
-{ pkgs, mayniklas-keys, ... }: {
+{ pkgs, mayniklas-keys, lib, ... }: {
 
   imports = [ ./hardware-configuration.nix ];
+
+
 
   # Force non-default keyboard layout since this is a shared host
   console.keyMap = pkgs.lib.mkForce "de";
@@ -52,6 +54,8 @@
     };
 
     services = {
+
+      restic-client.enable = lib.mkForce false;
 
       # No backup from our side for this host.
       borg-backup.enable = false;
