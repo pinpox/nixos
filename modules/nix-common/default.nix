@@ -54,7 +54,8 @@ in
 
       extraOptions = ''
         fallback = true
-        timeout = 10
+        connect-timeout = 10
+        stalled-download-timeout = 10
       '';
 
       settings = {
