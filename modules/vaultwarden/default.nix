@@ -21,13 +21,15 @@ in
     services.caddy = {
       enable = true;
       virtualHosts."${cfg.host}".extraConfig =
-        "reverse_proxy 127.0.0.1:${config.services.vaultwarden.config.ROCKET_PORT}";
+        "reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}";
     };
+
+    systemd.services.backup-vaultwarden.serviceConfig.StateDirectory = "vaultwarden-backups";
 
     services.vaultwarden = {
       enable = true;
       dbBackend = "sqlite"; # Still in /var/lib/bitwarde_rs
-      backupDir = "/var/backup/vaultwarden"; # backup its persistent data
+      backupDir = "/var/lib/vaultwarden-backups"; # backup its persistent data
       config = {
         DOMAIN = "https://${cfg.host}";
         SIGNUPS_ALLOWED = false;
