@@ -314,7 +314,8 @@
           "https://cache.lounge.rocks/nix-cache-info"
           "https://pads.0cx.de"
           "https://news.0cx.de"
-          "https://git.0cx.de"
+          # Gitea (on kfbox with host set to default vaulue)
+          "https://${config.pinpox.services.gitea.host}"
           "https://irc.0cx.de"
         ];
       };

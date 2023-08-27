@@ -9,22 +9,8 @@
     #retiolum.nixosModules.ca
   ];
 
-
-  # services.xserver.enable = true;
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
-
-  # services.xserver.desktopManager.enlightenment.enable = true;
-
-
-  # programs.xwayland.enable = true;
   programs.sway.enable = true;
   hardware.opengl.enable = true;
-
-
-  # environment.sessionVariables = {
-  #     MOZ_ENABLE_WAYLAND = "1";
-  #   };
 
   xdg.portal = {
 
@@ -33,7 +19,6 @@
     wlr = {
       enable = true;
       # settings = {
-
 
       #   # See xdg-desktop-portal-wlr(5) for supported values.
       #   screencast = {
@@ -55,19 +40,6 @@
   };
 
   services.fwupd.enable = true;
-
-
-
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     enlightenment = super.enlightenment.overrideScope' (gself: gsuper: {
-  #       enlightenment = gsuper.enlightenment.override {
-  #         waylandSupport = true;
-  #       };
-  #     });
-  #   })
-  # ];
-
   services.acpid.enable = true;
 
   # Often hangs
@@ -75,39 +47,6 @@
     NetworkManager-wait-online.enable = lib.mkForce false;
     systemd-networkd-wait-online.enable = lib.mkForce false;
   };
-
-  # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1537225778
-  # systemd.services.NetworkManager-wait-online = {
-  #   serviceConfig.ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
-  # };
-
-  lollypops = {
-
-    secrets = {
-
-      files = {
-
-        secret1 = {
-          cmd = "pass test-password";
-          # path = "/tmp/testfile5";
-        };
-
-
-        copy-of-secret-1 = {
-          cmd = "pass test-password";
-          path = "/home/pinpox/test-secret1";
-          owner = "pinpox";
-          group-name = "users";
-        };
-
-        # "nixos-secrets/ahorn/ssh/borg/public" = {
-        #   owner = "pinpox";
-        #   group-name = "users";
-        # };
-      };
-    };
-  };
-
 
   # Support QMK/Via
   services.udev.packages = [ pkgs.qmk-udev-rules ];
@@ -138,15 +77,8 @@
 
   # Install reaper
   environment.systemPackages = [
-
-
-    # pkgs.reaper 
-
-
     pkgs.xdg-desktop-portal
     pkgs.xdg-desktop-portal-wlr
-
-
   ];
 
   pinpox.desktop = {

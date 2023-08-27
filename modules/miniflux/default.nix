@@ -19,7 +19,7 @@ in
 
     services.caddy = {
       enable = true;
-      virtualHosts."news.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8787";
+      virtualHosts."news.0cx.de".extraConfig = "reverse_proxy ${config.services.miniflux.config.LISTEN_ADDR}";
     };
 
     systemd.services.miniflux = {

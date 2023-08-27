@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.vaultwarden;
 
