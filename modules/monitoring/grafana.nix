@@ -1,10 +1,9 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.pinpox.services.monitoring-server.dashboard;
+let
+  cfg = config.pinpox.services.monitoring-server.dashboard;
 in
 {
-
-
 
   # [porree:rebuild] trace: warning: Provisioning Grafana datasources with options has been deprecated.
   # [porree:rebuild] Use `services.grafana.provision.datasources.settings` or
@@ -34,6 +33,16 @@ in
 
     # Graphana fronend
     services.grafana = {
+
+      # TODO remove when this is fixed: https://github.com/NixOS/nixpkgs/issues/251713
+      package = (pkgs.grafana.override {
+        buildGoModule = args: pkgs.buildGoModule (args // {
+          srcStatic = pkgs.fetchurl {
+            url = "https://dl.grafana.com/oss/release/grafana-10.1.0.linux-amd64.tar.gz";
+            hash = "sha256-QFRahjDyL7BNikK2cCsFLfu4/odDbkCxplf6f7yCezE=";
+          };
+        });
+      });
       enable = true;
 
       settings = {
