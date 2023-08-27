@@ -15,6 +15,9 @@ in
       path = "/var/lib/hass/secrets.yaml";
     };
 
+    # Backup configuration dir - Config done via UI stateful
+    pinpox.services.restic-client.backup-paths-offsite = [ config.services.home-assistant.configDir ];
+
     # Needed for some integrations
     users.users.hass.extraGroups = [ "dialout" "keys" ];
 

@@ -22,7 +22,6 @@
     ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
   };
 
-
   lollypops.deployment.ssh.host = "46.38.242.17";
 
   services.logind.extraConfig = ''
@@ -93,6 +92,8 @@
       miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
+      gitea.enable = true;
+      dex.enable = true;
     };
 
     metrics.node.enable = true;
@@ -131,123 +132,6 @@
     allowedTCPPorts = [ 80 443 22 ];
   };
 
-  lollypops.secrets.files."gitea/mailer-pw" = {
-    owner = "gitea";
-    path = "/var/lib/gitea/mailer-pw";
-  };
-
-  # TODO PUT into module
-
-  services.gitea = {
-
-    enable = true;
-    mailerPasswordFile = "${config.lollypops.secrets.files."gitea/mailer-pw".path}";
-
-    settings = {
-      server = {
-        ROOT_URL = "https://git.0cx.de";
-        HTTP_PORT = 3333;
-        HTTP_ADDR = "127.0.0.1";
-      };
-      service = {
-        DISABLE_REGISTRATION = true;
-        REQUIRE_SIGNIN_VIEW = true;
-        DOMAIN = "git.0cx.de";
-      };
-
-      mailer = {
-        ENABLED = true;
-        FROM = "git@0cx.de";
-        MAILER_TYPE = "smtp";
-        IS_TLS_ENABLED = false;
-        USER = "mail@0cx.de";
-        HOST = "r19.hallo.cloud:587";
-
-      };
-      markdown.ENABLE_MATH = true;
-    };
-  };
-
-
-  lollypops.secrets.files = {
-    "dex/envfile" = { };
-  };
-
-  systemd.services.dex.serviceConfig.StateDirectory = "dex";
-
-  services.dex = {
-    enable = true;
-    environmentFile = config.lollypops.secrets.files."dex/envfile".path;
-    settings = {
-
-      # External url
-      issuer = "https://login.0cx.de";
-      storage = {
-        type = "sqlite3";
-        config.file = "/var/lib/dex/dex.db";
-      };
-
-      web.http = "127.0.0.1:5556";
-
-      # enablePasswordDB = true;
-      # telemetry.http = "127.0.0.1:5558";
-
-      logger = {
-        #   level: "debug"
-        format = "json"; # can also be "text"
-      };
-
-      frontend = {
-        issuer = "https://login.0cx.de";
-        logoURL = "https://0cx.de/dance.gif";
-        theme = "dark";
-      };
-
-      connectors = [
-        {
-          type = "gitea";
-          id = "gitea";
-          name = "Gitea";
-          config = {
-            # Credentials can be string literals or pulled from the environment.
-            clientID = "$GITEA_CLIENT_ID";
-            clientSecret = "$GITEA_CLIENT_SECRET";
-            redirectURI = "https://login.0cx.de/callback";
-            baseURL = config.services.gitea.settings.server.ROOT_URL;
-          };
-        }
-        {
-          type = "github";
-          id = "github";
-          name = "GitHub";
-          config = {
-            clientID = "$GITHUB_CLIENT_ID";
-            clientSecret = "$GITHUB_CLIENT_SECRET";
-            redirectURI = "https://login.0cx.de/callback";
-            orgs = [
-              { name = "lounge-rocks"; }
-              # {name = "krosse-flagge";}
-            ];
-          };
-        }
-      ];
-
-      staticClients = [
-        {
-          id = "forum-app";
-          name = "forum-app";
-          redirectURIs = [ "http://localhost:8000/authenticate" ];
-          secretEnv = "CLIENT_SECRET_RUST_FORUM";
-        }
-        {
-          id = "hedgedoc";
-          name = "hedgedoc";
-          redirectURIs = [ "https://pads.0cx.de/auth/oauth2/callback" ];
-          secretEnv = "CLIENT_SECRET_HEDGEDOC";
-        }
-      ];
-    };
-  };
   services.caddy = {
     enable = true;
 
@@ -261,8 +145,6 @@
 
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
       "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
-      "login.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:5556";
-      "git.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3333";
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
     };

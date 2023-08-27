@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let cfg = config.pinpox.services.hedgedoc;
 in
@@ -26,10 +26,10 @@ in
       "CMD_ALLOW_ANONYMOUS=false"
 
       # oauth2 with dex
-      "CMD_OAUTH2_BASEURL=https://login.0cx.de"
-      "CMD_OAUTH2_AUTHORIZATION_URL=https://login.0cx.de/auth"
-      "CMD_OAUTH2_TOKEN_URL=https://login.0cx.de/token"
-      "CMD_OAUTH2_USER_PROFILE_URL='https://login.0cx.de/userinfo'"
+      "CMD_OAUTH2_BASEURL=https://${config.pinpox.services.dex.host}"
+      "CMD_OAUTH2_AUTHORIZATION_URL=https://${config.pinpox.services.dex.host}/auth"
+      "CMD_OAUTH2_TOKEN_URL=https://${config.pinpox.services.dex.host}/token"
+      "CMD_OAUTH2_USER_PROFILE_URL='https://${config.pinpox.services.dex.host}/userinfo'"
       "CMD_OAUTH2_PROVIDERNAME=dex"
       "CMD_OAUTH2_SCOPE='openid email profile'"
       "CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR='preferred_username'"
@@ -61,6 +61,9 @@ in
         useCDN = true;
       };
     };
+
+    # Backup SQLite databse
+    pinpox.services.restic-client.backup-paths-offsite = [ config.services.hedgedoc.settings.db.storage ];
 
     # systemd.services.hedgedoc-git-sync = {
     #   serviceConfig = {

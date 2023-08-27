@@ -60,8 +60,6 @@ in
       };
     };
 
-    # programs.sway.enable = true;
-
     # Enable networkmanager
     networking.networkmanager.enable = true;
 
@@ -90,7 +88,6 @@ in
     # TODO parametrize the username
     home-manager.users.pinpox = flake-self.homeConfigurations.desktop;
 
-
     pinpox = {
       defaults = {
         bluetooth.enable = true;
@@ -116,23 +113,32 @@ in
         xserver.enable = false;
         openssh.enable = true;
         borg-backup.enable = true;
+
         restic-client = {
+          enable = true;
           backup-paths-onsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
+          backup-paths-offsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
 
           backup-paths-exclude = [
-
             "*.pyc"
-            "*/cache2"
-            "*/.go/pkg"
-            "*/.local/share/Steam"
+            "*/.BurpSuite"
+            "*/.arduino15/packages"
+            "*/.cache"
+            "*/.cargo"
+            "*/.config/Signal"
             "*/.config/chromium"
-            "*/.rustup"
             "*/.config/discord"
             "*/.container-diff"
+            "*/.go/pkg"
             "*/.gvfs/"
+            "*/.local/share/Steam"
             "*/.local/share/Trash"
+            "*/.local/share/virtualenv"
             "*/.mozilla/firefox"
+            "*/.nextcloud"
             "*/.npm/_cacache"
+            "*/.platformio"
+            "*/.rustup"
             "*/.thumbnails"
             "*/.ts3client"
             "*/.vagrant.d"
@@ -141,23 +147,15 @@ in
             "*/Cache"
             "*/Downloads"
             "*/Seafile"
-            "*/.nextcloud"
-
-            "/home/pinpox/code"
-            # "*/code/nixpkgs"
-            # "/home/*/code/**/target/debug"
-            # "/home/*/code/github.com/pinpox/nixpkgs"
-            # "/home/*/code/github.com/NixOS/nixpkgs"
-
             "*/VirtualBox VMs"
+            "*/cache2"
+            "/home/*/.local/share/tor-browser"
+            "/home/*/.local/share/typeracer"
+            "/home/*/.local/state/NvChad/"
+            "/home/*/.npm"
+            "/home/*/code"
+            "/home/pinpox/.local/share/typeracer"
             "discord/Cache"
-
-            "*/.BurpSuite"
-            "*/.cache"
-            "*/.cargo"
-            "*/.config/Signal"
-            "*/.arduino15/packages"
-            "*/.platformio"
           ];
         };
       };

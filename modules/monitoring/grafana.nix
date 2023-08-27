@@ -29,6 +29,9 @@ in
       path = "/var/lib/grafana/smtp-password";
     };
 
+    # Backup Graphana dir, contains stateful config
+    pinpox.services.restic-client.backup-paths-offsite = [ "/var/lib/grafana" ];
+
     # Graphana fronend
     services.grafana = {
       enable = true;

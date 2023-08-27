@@ -14,7 +14,6 @@ in
       description = "Paths to backup to onsite storage";
     };
 
-    # TODO add contabo
     backup-paths-offsite = mkOption {
       type = types.listOf types.str;
       default = [ ];
@@ -24,37 +23,7 @@ in
 
     backup-paths-exclude = mkOption {
       type = types.listOf types.str;
-      default = [
-        # "*.pyc"
-        # "*/cache2"
-        # "/*/.cache"
-        # "/*/.go/pkg"
-        # "/*/.config/Signal"
-        # "/*/.local/share/Steam"
-        # "/*/.config/chromium"
-        # "/*/.rustup"
-        # "/*/.config/discord"
-        # "/*/.container-diff"
-        # "/*/.gvfs/"
-        # "/*/.local/share/Trash"
-        # "/*/.mozilla/firefox"
-        # "/*/.npm/_cacache"
-        # "/*/.thumbnails"
-        # "/*/.ts3client"
-        # "/*/.vagrant.d"
-        # "/*/.vim"
-        # "/*/Cache"
-        # "/*/Downloads"
-        # "/*/Seafile"
-        # "/*/.nextcloud"
-        # "/*/code/nixpkgs"
-        # "/*/code/vaultwarden"
-        # "/*/code/github.com/pinpox/nixpkgs"
-        # "/*/code/github.com/NixOS/nixpkgs"
-        # "/*/VirtualBox VMs"
-        # "discord/Cache"
-
-      ];
+      default = [ ];
       example = [ "/home/pinpox/cache" ];
       description = "Paths to exclude from backup";
     };
@@ -63,24 +32,25 @@ in
   config = mkIf cfg.enable {
 
     lollypops.secrets.files = {
+      "restic/backblaze-credentials" = { };
       "restic/credentials" = { };
       "restic/repo-pw" = { };
     };
 
     services.restic.backups =
       let
-        host = config.networking.hostName;
-        script-post = ''
+        # host = config.networking.hostName;
+        script-post = host: site: ''
           if [ $EXIT_STATUS -ne 0 ]; then
             ${pkgs.curl}/bin/curl -u $NTFY_USER:$NTFY_PASS \
-            -H 'Title: Backup on ${host} failed!' \
-            -H 'Tags: backup,borg,${host}' \
-            -d "Restic backup error on ${host}!" 'https://push.pablo.tools/pinpox_backups'
+            -H 'Title: Backup (${site}) on ${host} failed!' \
+            -H 'Tags: backup,borg,${host},${site}' \
+            -d "Restic (${site}) backup error on ${host}!" 'https://push.pablo.tools/pinpox_backups'
           else
             ${pkgs.curl}/bin/curl -u $NTFY_USER:$NTFY_PASS \
-            -H 'Title: Backup on ${host} successful!' \
-            -H 'Tags: backup,borg,${host}' \
-            -d "Restic backup success on ${host}!" 'https://push.pablo.tools/pinpox_backups'
+            -H 'Title: Backup (${site}) on ${host} successful!' \
+            -H 'Tags: backup,borg,${host},${site}' \
+            -d "Restic (${site}) backup success on ${host}!" 'https://push.pablo.tools/pinpox_backups'
           fi
         '';
 
@@ -90,28 +60,31 @@ in
         };
       in
       {
+        s3-offsite = {
+          paths = cfg.backup-paths-offsite;
+          repository = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic";
+          environmentFile = "${config.lollypops.secrets.files."restic/backblaze-credentials".path}";
+          passwordFile = "${config.lollypops.secrets.files."restic/repo-pw".path}";
+          backupCleanupCommand = script-post config.networking.hostName "backblaze";
 
-        # TODO add contabo
-        # s3-offsite = {
-        #   paths = [ "/home/pinpox/Notes/" ];
-        #   repository = "s3:https://vpn.s3.pablo.tools/restic";
-        #   environmentFile = "${config.lollypops.secrets.files."restic/credentials".path}";
-        #   passwordFile = "${config.lollypops.secrets.files."restic/repo-pw".path}";
-        #   backupCleanupCommand = script-post;
-        # };
+          extraBackupArgs = [
+            "--exclude-file=${restic-ignore-file}"
+            "--one-file-system"
+            # "--dry-run"
+            "-vv"
+          ];
+        };
 
         s3-onsite = {
           paths = cfg.backup-paths-onsite;
           repository = "s3:https://vpn.s3.pablo.tools/restic";
           environmentFile = "${config.lollypops.secrets.files."restic/credentials".path}";
           passwordFile = "${config.lollypops.secrets.files."restic/repo-pw".path}";
-          backupCleanupCommand = script-post;
+          backupCleanupCommand = script-post config.networking.hostName "NAS";
 
           extraBackupArgs = [
             "--exclude-file=${restic-ignore-file}"
             "--one-file-system"
-
-            # TODO remove these after testing
             # "--dry-run"
             "-vv"
           ];

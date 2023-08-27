@@ -14,7 +14,7 @@ let
     '';
 
 
-  screenshot-region-file = pkgs.writeShellScriptBin "screenshot-region" /* sh */
+  screenshot-region-file = pkgs.writeShellScriptBin "screenshot-region-file" /* sh */
     ''
       ${pkgs.grim}/bin/grim -g "$(''${pkgs.slurp}/bin/slurp)" $(date +'%s_grim.png')
     '';

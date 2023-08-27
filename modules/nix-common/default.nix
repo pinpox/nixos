@@ -52,16 +52,21 @@ in
       package = pkgs.nixVersions.stable;
       # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
+      extraOptions = ''
+        fallback = true
+        timeout = 10
+      '';
+
       settings = {
 
         experimental-features = [ "nix-command" "flakes" ];
 
         trusted-public-keys =
-          [ "cache.lounge.rocks:uXa8UuAEQoKFtU8Om/hq6d7U+HgcrduTVr8Cfl6JuaY=" ];
+          [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
 
         substituters = [
           "https://cache.nixos.org"
-          "https://cache.lounge.rocks?priority=50"
+          "https://cache.lounge.rocks/nix-cache"
         ];
 
         trusted-substituters =
