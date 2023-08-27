@@ -9,7 +9,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
         name = "Setup Attic";
         image = "bash";
         commands = [
-          "attic login lounge-rocks https://attic.lounge.rocks $ATTIC_KEY --set-default"
+          "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
         ];
         secrets = [ "attic_key" ];
       };
