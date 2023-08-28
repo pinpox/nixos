@@ -18,11 +18,11 @@ with pkgs; writeText "pipeline" (builtins.toJSON
         ];
         secrets = [ "attic_key" ];
       };
-      atticPushStep = {
+      mkAtticPushStep = output: {
         name = "Push to Attic";
         image = "bash";
         commands = [
-          "attic push lounge-rocks:nix-cache result"
+          "attic push lounge-rocks:nix-cache '${output}'"
         ];
         secrets = [ "attic_key" ];
       };
@@ -32,27 +32,47 @@ with pkgs; writeText "pipeline" (builtins.toJSON
     ] ++
 
     # Hosts
-    map
-      (host: {
-        name = "Host: ${host}";
-        data = (builtins.toJSON {
-          labels.backend = "local";
-          # platform = woodpecker-platforms."${flake-self.nixosConfigurations.${host}.config.nixpkgs.system}";
-          pipeline = [
-            atticSetupStep
-            {
-              name = "Build configuration for ${host}";
-              image = "bash";
-              group = host;
-              commands = [
-                "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
-              ];
-            }
-            atticPushStep
-          ];
-        });
-      })
-      (builtins.attrNames flake-self.nixosConfigurations) ++
+    [
+      (map
+        (arch: {
+          name = "Hosts with arch: ${arch}";
+          data = (builtins.toJSON {
+
+            labels.backend = "local";
+            # platform = woodpecker-platforms."${flake-self.nixosConfigurations.${host}.config.nixpkgs.system}";
+            pipeline = pkgs.lib.lists.flatten (
+              [ atticSetupStep ] ++ (map
+                (host: [{
+                  name = "Build configuration for ${host}";
+                  image = "bash";
+                  commands = [
+                    "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
+                  ];
+                }
+                  (mkAtticPushStep "result-${host}")])
+                (builtins.attrNames flake-self.nixosConfigurations))
+            );
+          });
+        }) [ "aarch64-linux" "x86_64-linux" ])
+    ] ++
+
+
+
+
+    # map
+    #   (arch: {
+    #     data =
+    #       (builtins.toJSON {
+    #         labels.backend = "local";
+    #         # platform = woodpecker-platforms."${flake-self.nixosConfigurations.${host}.config.nixpkgs.system}";
+    #         pipeline = [ atticSetupStep ] ++
+
+
+    #         (map
+    #           (host:
+    #           )
+    #         );
+    #       })   }) ++
 
     # Packages
     # Map over architectures. Could optionally be done with woodpecker's
@@ -81,7 +101,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
                     "nix build '.#${package}'"
                   ];
                 }
-                atticPushStep
+                (mkAtticPushStep "result")
               ];
             });
           })
