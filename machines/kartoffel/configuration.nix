@@ -15,6 +15,8 @@
     bootDevice = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
   };
 
+  pinpox.defaults.CISkip = true;
+
   # Video driver for nvidia graphics card
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
