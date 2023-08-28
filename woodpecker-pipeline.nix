@@ -84,12 +84,9 @@ with pkgs; writeText "pipeline" (builtins.toJSON
           })
           packages))
       # TODO Re-Enable all architectures when we have runners for them
-      [ "x86_64-linux] # (builtins.attrNames flake-self.packages)
-          ) ++
+      [ "x86_64-linux" ] # (builtins.attrNames flake-self.packages)
+    ) ++
     [
       # TODO Send notification
     ];
 })
-
-
-
