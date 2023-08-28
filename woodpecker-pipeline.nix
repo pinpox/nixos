@@ -1,4 +1,7 @@
-{ pkgs, flake-self, inputs }:
+{ pkgs
+, flake-self
+  # ,inputs
+}:
 
 
 with pkgs; writeText "pipeline" (builtins.toJSON
@@ -6,10 +9,10 @@ with pkgs; writeText "pipeline" (builtins.toJSON
   configs =
     let
       # Map platform names between woodpecker and nix
-      woodpecker-platforms = {
-        "aarch64-linux" = "linux/arm64";
-        "x86_64-linux" = "linux/amd64";
-      };
+      # woodpecker-platforms = {
+      #   "aarch64-linux" = "linux/arm64";
+      #   "x86_64-linux" = "linux/amd64";
+      # };
       atticSetupStep = {
         name = "Setup Attic";
         image = "bash";
@@ -43,18 +46,18 @@ with pkgs; writeText "pipeline" (builtins.toJSON
             pipeline = pkgs.lib.lists.flatten (
               [ atticSetupStep ] ++ (map
                 (host:
-                  if
-                  # Skip hosts with this option set
-                    flake-self.nixosConfigurations.${host}.config.pinpox.defaults.CISkip
-                  then [ ] else
-                    [{
-                      name = "Build configuration for ${host}";
-                      image = "bash";
-                      commands = [
-                        "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
-                      ];
-                    }
-                      (mkAtticPushStep "result-${host}")]
+                  # if
+                  # # Skip hosts with this option set
+                  #   flake-self.nixosConfigurations.${host}.config.pinpox.defaults.CISkip
+                  # then [ ] else
+                  [{
+                    name = "Build configuration for ${host}";
+                    image = "bash";
+                    commands = [
+                      "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
+                    ];
+                  }
+                    (mkAtticPushStep "result-${host}")]
                 )
                 (builtins.attrNames flake-self.nixosConfigurations))
             );
