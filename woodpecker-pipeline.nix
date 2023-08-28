@@ -32,7 +32,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
     ] ++
 
     # Hosts
-    [
+    pkgs.lib.lists.flatten ([
       (map
         (arch: {
           name = "Hosts with arch: ${arch}";
@@ -54,7 +54,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
             );
           });
         }) [ "aarch64-linux" "x86_64-linux" ])
-    ] ++
+    ]) ++
 
 
 
