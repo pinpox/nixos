@@ -75,7 +75,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
                   name = "Build package ${package}";
                   image = "bash";
                   commands = [
-                    "nix build 'nixpkgs#${package}'"
+                    "nix build '.#${package}'"
                   ];
                 }
                 atticPushStep
