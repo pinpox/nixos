@@ -88,7 +88,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON {
                   image = "bash";
                   group = "packages";
                   commands = [
-                    "nix build '.#${package}' -o 'result-${package}"
+                    "nix build '.#${package}' -o 'result-${package}'"
                   ];
                 }
                 (mkAtticPushStep "result-${package}")
