@@ -90,7 +90,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
             name = "Package: ${package} on ${arch}";
             data = (builtins.toJSON {
               labels.backend = "local";
-              platform = woodpecker-platforms."${arch}";
+              # platform = woodpecker-platforms."${arch}";
               pipeline = [
                 atticSetupStep
                 {
