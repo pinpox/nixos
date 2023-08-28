@@ -76,15 +76,20 @@ with pkgs; writeText "pipeline" (builtins.toJSON
                   image = "bash";
                   commands = [
                     "nix build 'nixpkgs#${package}'"
-                    "attic push lounge-rocks:nix-cache result"
                   ];
                 }
+                atticPushStep
               ];
             });
           })
           packages))
-      (builtins.attrNames flake-self.packages)) ++
+      # TODO Re-Enable all architectures when we have runners for them
+      [ "x86_64-linux] # (builtins.attrNames flake-self.packages)
+          ) ++
     [
       # TODO Send notification
     ];
 })
+
+
+
