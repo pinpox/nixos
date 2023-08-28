@@ -1,11 +1,8 @@
 { pkgs
 , flake-self
-  # ,inputs
+, inputs
 }:
-
-
-with pkgs; writeText "pipeline" (builtins.toJSON
-{
+with pkgs; writeText "pipeline" (builtins.toJSON {
   configs =
     let
       # Map platform names between woodpecker and nix
@@ -43,26 +40,29 @@ with pkgs; writeText "pipeline" (builtins.toJSON
 
             labels.backend = "local";
             # platform = woodpecker-platforms."${flake-self.nixosConfigurations.${host}.config.nixpkgs.system}";
-            pipeline = pkgs.lib.lists.flatten (
+            steps = pkgs.lib.lists.flatten (
               [ atticSetupStep ] ++ (map
                 (host:
-                  # if
-                  # # Skip hosts with this option set
-                  #   flake-self.nixosConfigurations.${host}.config.pinpox.defaults.CISkip
-                  # then [ ] else
-                  [{
-                    name = "Build configuration for ${host}";
-                    image = "bash";
-                    commands = [
-                      "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
-                    ];
-                  }
-                    (mkAtticPushStep "result-${host}")]
+                  if
+                  # Skip hosts with this option set
+                    flake-self.nixosConfigurations.${host}.config.pinpox.defaults.CISkip
+                  then [ ] else
+                    [{
+                      name = "Build configuration for ${host}";
+                      image = "bash";
+                      commands = [
+                        "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
+                      ];
+                    }
+                      (mkAtticPushStep "result-${host}")]
                 )
                 (builtins.attrNames flake-self.nixosConfigurations))
             );
           });
-        }) [ "aarch64-linux" "x86_64-linux" ])
+        }) [
+        # "aarch64-linux"
+        "x86_64-linux"
+      ])
     ]) ++
 
     # Packages
@@ -81,7 +81,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
             data = (builtins.toJSON {
               labels.backend = "local";
               # platform = woodpecker-platforms."${arch}";
-              pipeline = [
+              steps = [
                 atticSetupStep
                 {
                   name = "Build package ${package}";
