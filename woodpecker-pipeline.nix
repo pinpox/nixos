@@ -19,7 +19,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON {
         secrets = [ "attic_key" ];
       };
       mkAtticPushStep = output: {
-        name = "Push to Attic";
+        name = "Push ${output} to Attic";
         image = "bash";
         commands = [
           "attic push lounge-rocks:nix-cache '${output}'"
@@ -88,10 +88,10 @@ with pkgs; writeText "pipeline" (builtins.toJSON {
                   image = "bash";
                   group = "packages";
                   commands = [
-                    "nix build '.#${package}'"
+                    "nix build '.#${package}' -o 'result-${package}"
                   ];
                 }
-                (mkAtticPushStep "result")
+                (mkAtticPushStep "result-${package}")
               ];
             });
           })
