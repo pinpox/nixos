@@ -43,6 +43,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
             {
               name = "Build configuration for ${host}";
               image = "bash";
+              group = host;
               commands = [
                 "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel'"
               ];
@@ -75,6 +76,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
                 {
                   name = "Build package ${package}";
                   image = "bash";
+                  group = "packages";
                   commands = [
                     "nix build '.#${package}'"
                   ];
