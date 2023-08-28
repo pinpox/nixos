@@ -5,6 +5,11 @@ with pkgs; writeText "pipeline" (builtins.toJSON
 {
   configs =
     let
+      # Map platform names between woodpecker and nix
+      woodpecker-platforms = {
+        "aarch64-linux" = "linux/arm64";
+        "x86_64-linux" = "linux/amd64";
+      };
       atticSetupStep = {
         name = "Setup Attic";
         image = "bash";
@@ -32,6 +37,7 @@ with pkgs; writeText "pipeline" (builtins.toJSON
         name = "Host: ${host}";
         data = (builtins.toJSON {
           labels.backend = "local";
+          platform = woodpecker-platforms."${flake-self.nixosConfigurations.${host}.config.nixpkgs.system}";
           pipeline = [
             atticSetupStep
             {
@@ -55,11 +61,6 @@ with pkgs; writeText "pipeline" (builtins.toJSON
         let
           packages = (builtins.attrNames flake-self.packages."${arch}");
 
-          # Map platform names between woodpecker and nix
-          woodpecker-platforms = {
-            "aarch64-linux" = "linux/arm64";
-            "x86_64-linux" = "linux/amd64";
-          };
         in
 
         # Map over all packages of the current architecture.
