@@ -155,6 +155,7 @@ in
         }
         {
           job_name = "blackbox";
+          scrape_interval = "2m";
           metrics_path = "/probe";
           params = { module = [ "http_2xx" ]; };
           static_configs = [{ targets = cfg.blackboxTargets; }];
