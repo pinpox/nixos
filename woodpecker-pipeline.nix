@@ -1,3 +1,5 @@
+# To get a valid pipeline as .yml run:
+# cat result | jq '.configs[].data' -r | jq
 { pkgs
 , flake-self
 , inputs
