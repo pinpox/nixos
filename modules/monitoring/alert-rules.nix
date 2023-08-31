@@ -119,8 +119,8 @@ lib.mapAttrsToList
     };
 
     restic_backup_too_old = {
-      condition = ''(time() - restic_snapshots_latest_time)/(60*60) > 10'';
-      description = "{{$labels.instance}} not backed up for more than 10 hours.";
+      condition = ''(time() - restic_snapshots_latest_time)/(60*60) > 24'';
+      description = "{{$labels.instance}} not backed up for more than 24 hours. ({{$value}})";
     };
 
     host_down = {
