@@ -298,12 +298,12 @@
         blackboxTargets = [
           "https://pablo.tools"
           "https://megaclan3000.de"
-          "https://builds.lounge.rocks"
+          "https://build.lounge.rocks"
           # "https://lounge.rocks"
           # "https://vpn.pablo.tools"
           "https://${config.pinpox.services.vaultwarden.host}" # Vaultwarden
           "https://pinpox.github.io/nixos/"
-          "https://cache.lounge.rocks/nix-cache-info"
+          "https://cache.lounge.rocks/nix-cache/nix-cache-info"
           "https://pads.0cx.de"
           "https://news.0cx.de"
           # Gitea (on kfbox with host set to default vaulue)
