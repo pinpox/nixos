@@ -19,22 +19,21 @@ wk.register({
 	["<leader>"] = {
 
 		-- FZF
-		F = { ':FzfLua git_files<CR>', 'Git files' },
-		f = { ':FzfLua files<CR>',     'Files' },
-		b = { ':FzfLua buffers<CR>',   'Buffers' },
-		q = { ':FzfLua quickfix<CR>',  'Quickfix' },
-		G = { ':FzfLua live_grep<CR>', 'Live Grep' },
-
-		r = { ':lua vim.lsp.buf.rename()<CR>', "Rename" },
+		F = { ':FzfLua git_files<CR>',         'Git files' },
+		f = { ':FzfLua files<CR>',             'Files' },
+		b = { ':FzfLua buffers<CR>',           'Buffers' },
+		q = { ':FzfLua quickfix<CR>',          'Quickfix' },
+		G = { ':FzfLua live_grep<CR>',         'Live Grep' },
+		r = { ':lua vim.lsp.buf.rename()<CR>', 'Rename' },
 
 		c = {
 			name = "Code (LSP)",
-			a = { ':FzfLua lsp_code_actions<CR>',                        'Code actions' },
-			i = { ':lua vim.lsp.buf.hover()<CR>',                        'Hover information' },
-			f = { ':lua vim.lsp.buf.format()<CR>',                       'Autoformat' },
-			s = { ':lua vim.lsp.buf.signature_help()<CR>',               'Signature' },
-			S = { ':FzfLua lsp_document_symbols<CR>',                    'Symbols' },
-			d = { ':lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', 'Line diagnostics' },
+			a = { ':FzfLua lsp_code_actions<CR>',          'Code actions' },
+			i = { ':lua vim.lsp.buf.hover()<CR>',          'Hover information' },
+			f = { ':lua vim.lsp.buf.format()<CR>',         'Autoformat' },
+			s = { ':lua vim.lsp.buf.signature_help()<CR>', 'Signature' },
+			S = { ':FzfLua lsp_document_symbols<CR>',      'Symbols' },
+			d = { ':lua vim.diagnostic.open_float() <CR>', 'Line diagnostics' },
 		},
 
 		g = {
