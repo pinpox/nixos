@@ -93,6 +93,7 @@
       thelounge.enable = true;
       kf-homepage.enable = true;
       gitea.enable = true;
+      vikunja.enable = true;
       dex.enable = true;
     };
 

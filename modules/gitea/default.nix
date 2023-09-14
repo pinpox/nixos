@@ -47,7 +47,7 @@ in
         mailer = {
           ENABLED = true;
           FROM = "git@0cx.de";
-          MAILER_TYPE = "smtp";
+          PROTOCOL = "smtp";
           IS_TLS_ENABLED = false;
           USER = "mail@0cx.de";
           HOST = "r19.hallo.cloud:587";
