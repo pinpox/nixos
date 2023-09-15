@@ -86,20 +86,33 @@ in
               ];
             };
           }
+          {
+            type = "oidc";
+            id = "authelia";
+            name = "Authelia";
+            config = {
+              issuer = "https://auth.0cx.de";
+              clientID = "dex";
+              clientSecret = "$AUTHELIA_CLIENT_SECRET";
+              redirectURI = "https://${cfg.host}/callback";
+            };
+          }
         ];
 
         staticClients = [
-          {
-            id = "forum-app";
-            name = "forum-app";
-            redirectURIs = [ "http://localhost:8000/authenticate" ];
-            secretEnv = "CLIENT_SECRET_RUST_FORUM";
-          }
           {
             id = "hedgedoc";
             name = "hedgedoc";
             redirectURIs = [ "https://${config.services.hedgedoc.settings.domain}/auth/oauth2/callback" ];
             secretEnv = "CLIENT_SECRET_HEDGEDOC";
+          }
+          {
+            id = "vikunja";
+            name = "vikunja";
+            redirectURIs = [
+              "${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_FRONTENDURL}auth/openid/dex"
+            ];
+            secretEnv = "CLIENT_SECRET_VIKUNJA";
           }
         ];
       };
