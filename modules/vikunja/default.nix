@@ -71,7 +71,7 @@ in
 
       environment = {
 
-        VIKUNJA_LOG_LEVEL = "debug";
+        # VIKUNJA_LOG_LEVEL = "debug";
 
         # General
         VIKUNJA_SERVICE_FRONTENDURL = "https://${cfg.host}/";

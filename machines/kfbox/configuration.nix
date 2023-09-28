@@ -1,4 +1,13 @@
-{ config, lib, pepsy-bot, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
+{ config
+, pkgs
+, pepsy-bot
+, aoe-taunt-discord-bot
+, go-karma-bot
+, retiolum
+, mc3000
+, vpub-plus-plus
+, ...
+}: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -38,18 +47,17 @@
     vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
 
-  # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
-  # systemd.services.NetworkManager-wait-online = {
-  #   serviceConfig = {
-  #     ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
-  #   };
-  # };
-
   # Often hangs
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce
-    false;
-  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce
-    false;
+  # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
+  # systemd.services.NetworkManager-wait-online.enable = lib.mkForce
+  #   false;
+  # systemd.services.systemd-networkd-wait-online.enable = lib.mkForce
+  #   false;
+  systemd.services.NetworkManager-wait-online = {
+    serviceConfig = {
+      ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+    };
+  };
 
   # Karmabot for IRC channel
   lollypops.secrets.files."go-karma-bot/envfile" = { };
@@ -95,21 +103,19 @@
     };
 
     services = {
+
+      # Authenticaiton portal
       sso = {
         enable = true;
-
         ldapAutheliaUser = {
           username = "authelia";
           email = "authelia@pablo.tools";
           password = "{ARGON2}$argon2id$v=19$m=65536,t=2,p=1$GFc0teEPQooaHoIfXns1aA$TtMhKTYecVLBlGdrPoae68SAYsVY9aDJPkHG5Z/Bl6Q";
           groups = [ ];
         };
-
         ldapUsers = import ./ldap-users.nix;
-
         ldapRootPW = "{ARGON2}$argon2id$v=19$m=19456,t=2,p=1$9f0la0d9OExDRgAbL1ZMtw$TqGFU6ORzVXpUWK9FDNwLERdSwFFnxdTU6+A385UIeA";
       };
-
 
       borg-backup.enable = true;
       hedgedoc.enable = true;
