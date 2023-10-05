@@ -77,6 +77,7 @@ in
             id = "github";
             name = "GitHub";
             config = {
+              useLoginAsID = true;
               clientID = "$GITHUB_CLIENT_ID";
               clientSecret = "$GITHUB_CLIENT_SECRET";
               redirectURI = "https://${cfg.host}/callback";
@@ -86,20 +87,19 @@ in
               ];
             };
           }
-          {
-            type = "oidc";
-            id = "authelia";
-            name = "Authelia";
-            config = {
-              issuer = "https://auth.0cx.de";
-              clientID = "dex";
-              clientSecret = "$AUTHELIA_CLIENT_SECRET";
-              redirectURI = "https://${cfg.host}/callback";
-            };
-          }
         ];
 
+        # TODO extract to option
         staticClients = [
+          {
+            id = "caddy";
+            name = "caddy";
+            redirectURIs = [
+              "https://auth.0cx.de/oauth2/generic"
+              "https://auth.0cx.de/oauth2/generic/authorization-code-callback"
+            ];
+            secretEnv = "CLIENT_SECRET_CADDY";
+          }
           {
             id = "hedgedoc";
             name = "hedgedoc";
@@ -117,6 +117,5 @@ in
         ];
       };
     };
-
   };
 }

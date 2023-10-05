@@ -121,7 +121,7 @@
     cbatticon
     darktile
     evince
-    exa
+    eza
     fd
     gcc
     gimp

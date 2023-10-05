@@ -1,13 +1,13 @@
 vim.g.indentLine_char = '│'
 vim.g.buftabline_indicators = 1
-vim.g.indent_blankline_use_treesitter_scope = true
+--vim.g.indent_blankline_use_treesitter_scope = true
 
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 -- vim.opt.listchars:append "eol:↴"
 
-require("indent_blankline").setup {
-    space_char_blankline = " ",
+require("ibl").setup {
+    space_char_blanklin = " ",
     show_current_context = true,
     show_current_context_start = false,
 }

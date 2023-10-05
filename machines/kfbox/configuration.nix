@@ -1,10 +1,10 @@
-{ config
-, pkgs
-, pepsy-bot
-, aoe-taunt-discord-bot
+{ aoe-taunt-discord-bot
+, config
 , go-karma-bot
-, retiolum
 , mc3000
+, pepsy-bot
+, pkgs
+, retiolum
 , vpub-plus-plus
 , ...
 }: {
@@ -103,18 +103,18 @@
     };
 
     services = {
+      # TODO Add miniflux and vikunja to dex
+      # TODO Remove gitea apps
+      dex.enable = true;
+      dex.host = "login.0cx.de";
 
-      # Authenticaiton portal
-      sso = {
+      caddy-security = {
         enable = true;
-        ldapAutheliaUser = {
-          username = "authelia";
-          email = "authelia@pablo.tools";
-          password = "{ARGON2}$argon2id$v=19$m=65536,t=2,p=1$GFc0teEPQooaHoIfXns1aA$TtMhKTYecVLBlGdrPoae68SAYsVY9aDJPkHG5Z/Bl6Q";
-          groups = [ ];
+        domain = "0cx.de";
+        openID = {
+          name = "Dex";
+          host = "login.0cx.de";
         };
-        ldapUsers = import ./ldap-users.nix;
-        ldapRootPW = "{ARGON2}$argon2id$v=19$m=19456,t=2,p=1$9f0la0d9OExDRgAbL1ZMtw$TqGFU6ORzVXpUWK9FDNwLERdSwFFnxdTU6+A385UIeA";
       };
 
       borg-backup.enable = true;
@@ -124,7 +124,6 @@
       kf-homepage.enable = true;
       gitea.enable = true;
       vikunja.enable = true;
-      dex.enable = true;
     };
 
     metrics.node.enable = true;
@@ -164,6 +163,7 @@
   };
 
   services.caddy = {
+
     enable = true;
 
     virtualHosts = {
@@ -173,6 +173,7 @@
         file_server
         encode zstd gzip
       '';
+
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
       "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";

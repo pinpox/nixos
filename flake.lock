@@ -46,6 +46,26 @@
         "type": "github"
       }
     },
+    "caddy-patched": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1696417969,
+        "narHash": "sha256-oIfeJkczeL1uPd4qbTjUFJ+ZhG6ZBex6GVy8L7FhAK4=",
+        "owner": "pinpox",
+        "repo": "nixos-caddy-patched",
+        "rev": "23aad1e9af8d41ae13b6f7303cfd602674a34126",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "nixos-caddy-patched",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -513,6 +533,7 @@
       "inputs": {
         "alertmanager-ntfy": "alertmanager-ntfy",
         "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
+        "caddy-patched": "caddy-patched",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "forgit": "forgit",
