@@ -3,6 +3,12 @@
 
   inputs = {
 
+
+    caddy-patched = {
+      url = "github:pinpox/nixos-caddy-patched";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

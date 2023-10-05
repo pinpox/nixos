@@ -1,6 +1,20 @@
 # Configuration file for ahorn
 { config, retiolum, pkgs, lib, nixos-hardware, ... }: {
 
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.v4l2loopback
+    config.boot.kernelPackages.v4l2loopback.out
+  ];
+
+  # Register a v4l2loopback device at boot
+  boot.kernelModules = [
+    "v4l2loopback"
+  ];
+
+  # boot.extraModprobeConfig = ''
+  #   options v4l2loopback exclusive_caps=1 video_nr=9 card_label=a7III
+  # '';
+
   imports = [
 
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
@@ -18,23 +32,22 @@
 
     wlr = {
       enable = true;
-      # settings = {
+      settings = {
 
-      #   # See xdg-desktop-portal-wlr(5) for supported values.
-      #   screencast = {
-      #     # output_name = "HDMI-A-1";
-      #     max_fps = 30;
-      #     # exec_before = "disable_notifications.sh";
-      #     # exec_after = "enable_notifications.sh";
-      #     chooser_type = "simple";
-      #     chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-      #   };
+        # See xdg-desktop-portal-wlr(5) for supported values.
+        screencast = {
+          # output_name = "HDMI-A-1";
+          max_fps = 30;
+          # exec_before = "disable_notifications.sh";
+          # exec_after = "enable_notifications.sh";
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+        };
 
-      # };
+      };
     };
-    # gtkUsePortal = true;
     extraPortals = [
-      # pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-wlr
     ];
   };

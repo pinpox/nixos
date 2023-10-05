@@ -48,7 +48,7 @@ with lib;
     home = {
       # Install these packages for my user
       packages = with pkgs; [
-        exa
+        eza
         htop
         pkg-config
         tealdeer

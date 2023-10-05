@@ -31,8 +31,8 @@
 
     shellAliases = rec {
 
-      # Exa ls replacement
-      ls = "${pkgs.exa}/bin/exa --group-directories-first";
+      # eza ls replacement
+      ls = "${pkgs.eza}/bin/eza --group-directories-first";
       l = "${ls} -lbF --git --icons";
       ll = "${l} -G";
       la =

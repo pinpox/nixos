@@ -19,11 +19,13 @@ in
     # Reverse proxy
     services.caddy.virtualHosts."${cfg.host}".extraConfig = ''
       @paths {
-        path /api/* /.well-known/* /dav/* /auth/*
+        path /api/* /.well-known/* /dav/*
       }
+
       handle @paths {
-        reverse_proxy 127.0.0.1:${toString config.services.vikunja.port}
+        reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE }
       }
+
       handle {
         encode zstd gzip
         root * ${config.services.vikunja.package-frontend}
@@ -67,6 +69,44 @@ in
         config.lollypops.secrets.files."vikunja/envfile".path
       ];
 
+      environment = {
+
+        # VIKUNJA_LOG_LEVEL = "debug";
+
+        # General
+        VIKUNJA_SERVICE_FRONTENDURL = "https://${cfg.host}/";
+        VIKUNJA_SERVICE_INTERFACE = "127.0.0.1:3456";
+        VIKUNJA_SERVICE_TIMEZONE = "Europe/Berlin";
+        VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME = "true";
+        VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_EMAIL = "true";
+        VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED = "true";
+        VIKUNJA_DEFAULTSETTINGS_OVERDUE_TASKS_REMINDERS_enabled = "true";
+        VIKUNJA_DEFAULTSETTINGS_OVERDUE_TASKS_REMINDERS_TIME = "10:00";
+        VIKUNJA_DEFAULTSETTINGS_WEEK_START = "1";
+        VIKUNJA_FILES_BASEPATH = "/var/lib/vikunja/files";
+
+        # Database
+        VIKUNJA_DATABASE_DATABASE = "vikunja";
+        VIKUNJA_DATABASE_HOST = "localhost";
+        VIKUNJA_DATABASE_PATH = "/var/lib/vikunja/vikunja.db";
+        VIKUNJA_DATABASE_TYPE = "sqlite";
+        VIKUNJA_DATABASE_USER = "vikunja";
+
+        # Mailer
+        VIKUNJA_MAILER_ENABLED = "true";
+        VIKUNJA_MAILER_HOST = "smtp.sendgrid.net";
+        VIKUNJA_MAILER_USERNAME = "apikey";
+        VIKUNJA_MAILER_FROMMAIL = "todo@0cx.de";
+        VIKUNJA_MAILER_PORT = "587";
+        VIKUNJA_MAILER_AUTHTYPE = "plain";
+        VIKUNJA_MAILER_SKIPTLSVERIFY = "false";
+        VIKUNJA_MAILER_FORCESSL = "true";
+
+        # Monitoring Metrics
+        VIKUNJA_METRICS_ENABLED = "true";
+        VIKUNJA_METRICS_USERNAME = "prometheus";
+      };
+
       serviceConfig = {
 
         Type = "simple";
@@ -78,43 +118,6 @@ in
         EnvironmentFile = [ config.lollypops.secrets.files."vikunja/envfile".path ];
         BindReadOnlyPaths = [ "${config.lollypops.secrets.files."vikunja/config".path}:/etc/vikunja/config.yaml" ];
 
-        Environment = [
-
-          # General
-          "VIKUNJA_SERVICE_FRONTENDURL=https://${cfg.host}/"
-          "VIKUNJA_SERVICE_INTERFACE=127.0.0.1:3456"
-          "VIKUNJA_SERVICE_TIMEZONE=Europe/Berlin"
-          "VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME=true"
-          "VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_EMAIL=true"
-          "VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED=true"
-          "VIKUNJA_DEFAULTSETTINGS_OVERDUE_TASKS_REMINDERS_enabled=true"
-          "VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED=true"
-          "VIKUNJA_DEFAULTSETTINGS_OVERDUE_TASKS_REMINDERS_TIME=10:00"
-          "VIKUNJA_DEFAULTSETTINGS_WEEK_START=1"
-          "VIKUNJA_FILES_BASEPATH=/var/lib/vikunja/files"
-
-          # Database
-          "VIKUNJA_DATABASE_DATABASE=vikunja"
-          "VIKUNJA_DATABASE_HOST=localhost"
-          "VIKUNJA_DATABASE_PATH=/var/lib/vikunja/vikunja.db"
-          "VIKUNJA_DATABASE_TYPE=sqlite"
-          "VIKUNJA_DATABASE_USER=vikunja"
-
-          # Mailer
-          "VIKUNJA_MAILER_ENABLED=true"
-          "VIKUNJA_MAILER_HOST=smtp.sendgrid.net"
-          "VIKUNJA_MAILER_USERNAME=apikey"
-          "VIKUNJA_MAILER_FROMMAIL=todo@0cx.de"
-          # "VIKUNJA_MAILER_PORT=587"
-          # "VIKUNJA_MAILER_AUTHTYPE=plain"
-          # "VIKUNJA_MAILER_SKIPTLSVERIFY=false"
-          # "VIKUNJA_MAILER_FORCESSL=true"
-
-          # Monitoring Metrics
-          "VIKUNJA_METRICS_ENABLED=true"
-          "VIKUNJA_METRICS_USERNAME=prometheus"
-
-        ];
       };
     };
   };

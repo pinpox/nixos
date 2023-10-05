@@ -1,4 +1,13 @@
-{ config, lib, pepsy-bot, aoe-taunt-discord-bot, go-karma-bot, retiolum, mc3000, vpub-plus-plus, ... }: {
+{ aoe-taunt-discord-bot
+, config
+, go-karma-bot
+, mc3000
+, pepsy-bot
+, pkgs
+, retiolum
+, vpub-plus-plus
+, ...
+}: {
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [{
@@ -38,10 +47,17 @@
     vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
 
-
   # Often hangs
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
-  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
+  # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
+  # systemd.services.NetworkManager-wait-online.enable = lib.mkForce
+  #   false;
+  # systemd.services.systemd-networkd-wait-online.enable = lib.mkForce
+  #   false;
+  systemd.services.NetworkManager-wait-online = {
+    serviceConfig = {
+      ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+    };
+  };
 
   # Karmabot for IRC channel
   lollypops.secrets.files."go-karma-bot/envfile" = { };
@@ -87,6 +103,20 @@
     };
 
     services = {
+      # TODO Add miniflux and vikunja to dex
+      # TODO Remove gitea apps
+      dex.enable = true;
+      dex.host = "login.0cx.de";
+
+      caddy-security = {
+        enable = true;
+        domain = "0cx.de";
+        openID = {
+          name = "Dex";
+          host = "login.0cx.de";
+        };
+      };
+
       borg-backup.enable = true;
       hedgedoc.enable = true;
       miniflux.enable = true;
@@ -94,7 +124,6 @@
       kf-homepage.enable = true;
       gitea.enable = true;
       vikunja.enable = true;
-      dex.enable = true;
     };
 
     metrics.node.enable = true;
@@ -134,6 +163,7 @@
   };
 
   services.caddy = {
+
     enable = true;
 
     virtualHosts = {
