@@ -17,5 +17,14 @@ in
       jack.enable = true;
       pulse.enable = true;
     };
+
+    # services.pipewire.wireplumber.enable = true;
+
+    # environment.etc."wireplumber/main.lua.d/90-suspend-timeout.lua" = {
+    #   text = ''
+    #     session.suspend-timeout-seconds = 0
+    #   '';
+    # };
+
   };
 }
