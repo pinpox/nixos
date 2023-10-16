@@ -31,7 +31,6 @@ let
   templateFile = pkgs.writeTextFile {
     name = "template.mustache";
     text = concatStrings [
-      "{{#drone}}{{drone}}{{/drone}}"
       "{{#plain}}{{plain}}{{/plain}}"
     ];
   };

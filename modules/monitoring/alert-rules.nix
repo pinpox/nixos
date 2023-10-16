@@ -179,7 +179,7 @@ lib.mapAttrsToList
     */
     http_status = {
       condition = ''
-        probe_http_status_code{instance!~"https://drone.lounge.rocks|https://megaclan3000.de"} != 200'';
+        probe_http_status_code{instance!~"https://megaclan3000.de"} != 200'';
       description =
         "http request failed from {{$labels.instance}}: {{$labels.result}}!";
     };

@@ -28,11 +28,6 @@
       flake = false;
     };
 
-    mayniklas-keys = {
-      url = "https://github.com/MayNiklas.keys";
-      flake = false;
-    };
-
     mc3000 = {
       url = "github:pinpox/mc3000";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -1,7 +1,6 @@
 ![nixos](https://socialify.git.ci/pinpox/nixos/image?description=1&font=Source%20Code%20Pro&forks=1&issues=1&logo=https%3A%2F%2Fpablo.tools%2Fnixoscolorful.svg&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
 
-
-**Configuration checks:** [![Build Status](https://drone.lounge.rocks/api/badges/pinpox/nixos/status.svg)](https://drone.lounge.rocks/pinpox/nixos)
+**Configuration checks:** [![Build Status](https://build.lounge.rocks/api/badges/9/status.svg)](https://build.lounge.rocks/repos/9)
 
 This repository includes all configurations for my NixOS machines. Feel free to
 use parts of it as you please, but keep it mind it is intended mostly for

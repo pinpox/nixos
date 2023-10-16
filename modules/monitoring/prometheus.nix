@@ -31,10 +31,6 @@ in
         owner = "prometheus";
         path = "/var/lib/prometheus2/home-assistant-token";
       };
-      "prometheus/drone-token" = {
-        owner = "prometheus";
-        path = "/var/lib/prometheus2/drone-token";
-      };
     };
 
     services.prometheus = {
@@ -83,12 +79,6 @@ in
         #     "192.168.2.147"
         #   ]; }];
         # }
-        {
-          job_name = "drone";
-          scheme = "https";
-          bearer_token_file = config.lollypops.secrets.files."prometheus/drone-token".path;
-          static_configs = [{ targets = [ "drone.lounge.rocks" ]; }];
-        }
         {
           job_name = "homeassistant_influx";
           scrape_interval = "60s";
