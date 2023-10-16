@@ -339,16 +339,19 @@
         {
           publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
           allowedIPs = [ "192.168.7.3" ];
+          persistentKeepalive = 25;
         }
         # ahorn
         {
           publicKey = "ny2G9iJPBRLSn48fEmcfoIdYi3uHLbJZe3pH1F0/XVg=";
           allowedIPs = [ "192.168.7.2" ];
+          persistentKeepalive = 25;
         }
         # kfbox
         {
           publicKey = "Cykozj24IkXEJ/6ktXxaqqIsxx8xjRMHKmR76lindCc=";
           allowedIPs = [ "192.168.7.5" ];
+          persistentKeepalive = 25;
         }
         # birne
         {
@@ -358,11 +361,13 @@
             # Also allow local IP's from the home network (e.g. shelly plugs)
             "192.168.2.0/24"
           ];
+          persistentKeepalive = 25;
         }
         # mega
         {
           publicKey = "0IjZ/3dTvz0zaWPhJ9vIAINYG+W0MjbwePUDvhQNCXo=";
           allowedIPs = [ "192.168.7.6" ];
+          persistentKeepalive = 25;
         }
       ];
     };
