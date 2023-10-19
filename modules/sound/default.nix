@@ -16,6 +16,7 @@ in
       enable = true;
       jack.enable = true;
       pulse.enable = true;
+      alsa.enable = true;
     };
 
     # services.pipewire.wireplumber.enable = true;
