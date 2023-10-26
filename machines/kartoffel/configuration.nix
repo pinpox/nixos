@@ -5,8 +5,8 @@
 
   services.udev.packages = [ pkgs.qmk-udev-rules ];
 
-  documentation.nixos.includeAllModules = true;
-  documentation.nixos.options.splitBuild = false;
+  # documentation.nixos.includeAllModules = true;
+  # documentation.nixos.options.splitBuild = false;
 
   pinpox.desktop = {
     enable = true;
