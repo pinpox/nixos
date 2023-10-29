@@ -1,5 +1,5 @@
 { pkgs, stdenv, fetchFromGitHub, lib, inputs, ... }:
-pkgs.vimUtils.buildVimPluginFrom2Nix {
+pkgs.vimUtils.buildVimPlugin {
   pname = "indent-blankline-nvim-lua";
   version = "latest";
   src = inputs.indent-blankline-nvim-lua;

@@ -1,5 +1,5 @@
 { pkgs, stdenv, fetchFromGitHub, lib, inputs, ... }:
-pkgs.vimUtils.buildVimPluginFrom2Nix {
+pkgs.vimUtils.buildVimPlugin {
   pname = "nvim-fzf";
   version = "latest";
   src = inputs.nvim-fzf;

@@ -9,7 +9,7 @@ let
   # Helper function to add plugins directly from GitHub if they are not
   # packaged in nixpkgs yet
   plugin = name: repo: branch: sha256:
-    pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pkgs.vimUtils.buildVimPlugin {
       pname = "vim-plugin-${name}";
       version = "git";
       src = builtins.fetchGit {

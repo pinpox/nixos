@@ -1,5 +1,5 @@
 { pkgs, stdenv, fetchFromGitHub, lib, inputs, ... }:
-pkgs.vimUtils.buildVimPluginFrom2Nix {
+pkgs.vimUtils.buildVimPlugin {
   pname = "nvim-cokeline";
   version = "latest";
   src = inputs.nvim-cokeline;
