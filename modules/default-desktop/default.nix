@@ -205,7 +205,12 @@ in
       universal-ctags
       wget
       zola
-      freecad
+
+      # TODO: fix freecad
+      # https://github.com/NixOS/nixpkgs/issues/263452
+      # "pyside2 not supported for interpreter python3.11"
+      # freecad
+
       prusa-slicer
     ];
 

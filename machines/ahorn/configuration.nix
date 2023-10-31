@@ -1,6 +1,7 @@
 # Configuration file for ahorn
 { config, retiolum, pkgs, lib, nixos-hardware, ... }: {
 
+
   boot.extraModulePackages = [
     config.boot.kernelPackages.v4l2loopback
     config.boot.kernelPackages.v4l2loopback.out
@@ -67,6 +68,9 @@
   hardware.sane.enable = true;
   users.users.pinpox.extraGroups = [ "scanner" "lp" ];
 
+  # Enable audio producion for pinpox
+  home-manager.users.pinpox.pinpox.defaults.audio-recording.enable = true;
+
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -93,6 +97,7 @@
     pkgs.xdg-desktop-portal
     pkgs.xdg-desktop-portal-wlr
   ];
+
 
   pinpox.desktop = {
     enable = true;

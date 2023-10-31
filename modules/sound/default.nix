@@ -19,6 +19,9 @@ in
       alsa.enable = true;
     };
 
+    # Use noisetorch (RNnoise) to create a virtual source with noise removal
+    programs.noisetorch.enable = true;
+
     # services.pipewire.wireplumber.enable = true;
 
     # environment.etc."wireplumber/main.lua.d/90-suspend-timeout.lua" = {
