@@ -2,10 +2,8 @@
 , config
 , go-karma-bot
 , mc3000
-, pepsy-bot
 , pkgs
 , retiolum
-, vpub-plus-plus
 , ...
 }: {
 
@@ -43,8 +41,6 @@
     #retiolum.nixosModules.ca
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
-    pepsy-bot.nixosModules.pepsy-bot
-    vpub-plus-plus.nixosModules.vpub-plus-plus
   ];
 
   # Often hangs
@@ -69,25 +65,20 @@
   services.aoe-taunt-discord-bot.discordTokenFile = config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
   services.aoe-taunt-discord-bot.enable = true;
 
-  # Discord trackmania bot
-  lollypops.secrets.files."pepsy-bot/discord_token" = { };
-  services.pepsy-bot.discordTokenFile = config.lollypops.secrets.files."pepsy-bot/discord_token".path;
-  services.pepsy-bot.enable = true;
+  # lollypops.secrets.files."transfer-sh/envfile" = { };
+  # services.transfer-sh = {
+  #   enable = true;
+  #   LISTENER = 6767;
+  #   environmentFile = config.lollypops.secrets.files."transfer-sh/envfile".path;
+  #   provider = "s3";
 
-  lollypops.secrets.files."transfer-sh/envfile" = { };
-  services.transfer-sh = {
-    enable = true;
-    LISTENER = 6767;
-    environmentFile = config.lollypops.secrets.files."transfer-sh/envfile".path;
-    provider = "s3";
+  #   BUCKET = "transfer-0cx";
+  #   S3_ENDPOINT = "https://s3.lounge.rocks";
+  #   S3_PATH_STYLE = true;
+  #   S3_REGION = "eu-central-1";
 
-    BUCKET = "transfer-0cx";
-    S3_ENDPOINT = "https://s3.lounge.rocks";
-    S3_PATH_STYLE = true;
-    S3_REGION = "eu-central-1";
-
-    # HTTP_AUTH_PASS and HTTP_AUTH_USER set in envfile and in ~/.netrc
-  };
+  #   # HTTP_AUTH_PASS and HTTP_AUTH_USER set in envfile and in ~/.netrc
+  # };
 
   pinpox = {
 
@@ -175,7 +166,7 @@
       '';
 
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
-      "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
+      # "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
     };

@@ -18,11 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pepsy-bot = {
-      url = "github:pinpox/pepsy-bot";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
@@ -140,11 +135,6 @@
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";
       inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    vpub-plus-plus = {
-      url = "github:pinpox/vpub-plus-plus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
