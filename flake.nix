@@ -3,7 +3,6 @@
 
   inputs = {
 
-
     caddy-patched = {
       url = "github:pinpox/nixos-caddy-patched";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,9 +32,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    naersk.url = "github:nix-community/naersk/master";
+    naersk.inputs.nixpkgs.follows = "nixpkgs";
+
     promterm.url = "github:pinpox/promterm";
     promterm.inputs = {
       nixpkgs.follows = "nixpkgs";
+      naersk.follows = "naersk";
       utils.follows = "flake-utils";
     };
 

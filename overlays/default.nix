@@ -5,6 +5,12 @@ let
   inherit inputs;
 in
 self: super: {
+
+  rsync = super.rsync.overrideAttrs (_: _: {
+    hardeningDisable = [ "fortify" ];
+  });
+
+
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
   darktile = super.callPackage ../packages/darktile { };
@@ -41,4 +47,3 @@ self: super: {
   forgit = super.callPackage ../packages/forgit { inputs = inputs; };
   tfenv = super.callPackage ../packages/tfenv { inputs = inputs; };
 }
-
