@@ -10,7 +10,6 @@ self: super: {
     hardeningDisable = [ "fortify" ];
   });
 
-
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
   darktile = super.callPackage ../packages/darktile { };
