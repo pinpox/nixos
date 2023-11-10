@@ -153,19 +153,14 @@ in
         # TODO: generated based on coloscheme
         output."*".bg = "~/Pictures/Wallpaper/nixos-wallpaper.png fill #000000";
 
-        # output = {
-        ##Phillips
-        #DP-1 = {
-        #  mode = "2560x1440@60";
-        #};
-        ## NZXT
-        #DP-2 = {
-        #  mode = "2560x1440@60";
-        #};
-        #};
+        # swaymsg 'output DP-2 mode 2560x1440@165Hz'
+
+        # Lenovo (Left USB-C port)
+        output.DP-2.mode = "2560x1440@165Hz";
+
+        # Phillips (Right USB-C port)
+        # output.DP-1.mode = "2560x1440@60";
       };
     };
-
-
   };
 }
