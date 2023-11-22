@@ -369,6 +369,13 @@
           allowedIPs = [ "192.168.7.6" ];
           persistentKeepalive = 25;
         }
+        # mayniklas GPU
+        {
+          publicKey = "gAZho29rXjjGAjXy6ImBgW+Ei0XGADQUuiI/r0s+bR8=";
+
+          allowedIPs = [ "192.168.7.7" ];
+          persistentKeepalive = 25;
+        }
       ];
     };
   };
