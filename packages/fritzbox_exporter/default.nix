@@ -4,8 +4,8 @@ buildGoModule rec {
   pname = "fritzbox_exporter";
   version = "latest";
 
-  # vendorSha256 = null;
-  vendorSha256 = "sha256-jcHJNTdiYRQcjJr9VcABY5Ark4bmzqsJcn1iMW09Xl0=";
+  # vendorHash = null;
+  vendorHash = "sha256-jcHJNTdiYRQcjJr9VcABY5Ark4bmzqsJcn1iMW09Xl0=";
 
   nativeBuildInputs = with pkgs; [ pkg-config ];
 

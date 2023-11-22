@@ -6,8 +6,8 @@ buildGoModule rec {
   pname = "mqtt2prometheus";
   version = "latest";
 
-  # vendorSha256 = null;
-  vendorSha256 = "sha256-5DIU1NUEVI7Fz6UHhC6trva9qd47DwdFNw1OxY6M37s=";
+  # vendorHash = null;
+  vendorHash = "sha256-5DIU1NUEVI7Fz6UHhC6trva9qd47DwdFNw1OxY6M37s=";
 
   nativeBuildInputs = with pkgs; [ pkg-config ];
 

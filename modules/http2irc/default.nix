@@ -16,7 +16,7 @@ let
       sha256 = "sha256-5aHQ3Y0Md0qrJlFju8Nx6S5Ul+SVZOtFrcx90oiVvWo=";
     };
 
-    vendorSha256 = "sha256-k45e6RSIl3AQdOFQysIwJP9nlYsSFeaUznVIXfbYwLA=";
+    vendorHash = "sha256-k45e6RSIl3AQdOFQysIwJP9nlYsSFeaUznVIXfbYwLA=";
     subPackages = [ "." ];
 
     meta = with lib; {

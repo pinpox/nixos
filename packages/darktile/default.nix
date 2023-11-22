@@ -4,7 +4,7 @@ buildGoModule rec {
   pname = "darktile";
   version = "0.0.10";
 
-  vendorSha256 = null;
+  vendorHash = null;
 
   buildInputs = with pkgs; [
     libglvnd.dev
