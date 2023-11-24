@@ -137,11 +137,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1700644654,
-        "narHash": "sha256-p9xk3M/U+yJs/xCPl/zHCTFD2DId3Opzx5VIaIsoLpg=",
+        "lastModified": 1700708776,
+        "narHash": "sha256-x7UHNnoN+ugC6kCPS8voFqcGUWdgPBwNFn0keX4Qz8k=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "c9ed5be563e07ef8d4ca1e650f3c091e19f4c5b2",
+        "rev": "1e3308669ce77c86242d3ba5d75df0027a15391c",
         "type": "github"
       },
       "original": {
@@ -177,11 +177,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1700553346,
-        "narHash": "sha256-kW7uWsCv/lxuA824Ng6EYD9hlVYRyjuFn0xBbYltAeQ=",
+        "lastModified": 1700695018,
+        "narHash": "sha256-MAiPLgBF4GLzSOlhnPCDWkWW5CDx4i7ApIYaR+TwTVg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1aabb0a31b25ad83cfaa37c3fe29053417cd9a0f",
+        "rev": "134deb46abd5d0889d913b8509413f6f38b0811e",
         "type": "github"
       },
       "original": {
@@ -354,11 +354,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1700390070,
-        "narHash": "sha256-de9KYi8rSJpqvBfNwscWdalIJXPo8NjdIZcEJum1mH0=",
+        "lastModified": 1700612854,
+        "narHash": "sha256-yrQ8osMD+vDLGFX7pcwsY/Qr5PUd6OmDMYJZzZi0+zc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e4ad989506ec7d71f7302cc3067abd82730a4beb",
+        "rev": "19cbff58383a4ae384dea4d1d0c823d72b49d614",
         "type": "github"
       },
       "original": {
@@ -370,11 +370,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1700649906,
-        "narHash": "sha256-xckq5YgckXTgToEn5biO/Rl167OOknG4ndturr1iUaY=",
+        "lastModified": 1700812816,
+        "narHash": "sha256-H9m1tW6UB3fb6jJE/g6705NF6s7iYvZp32MebkNMT3I=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "9ee4563cf0b4c9b6dd78bce8c45fa32103be97d4",
+        "rev": "77a1523886994d58eca71572e994f4cda7b3457a",
         "type": "github"
       },
       "original": {
@@ -463,11 +463,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1693143921,
-        "narHash": "sha256-CCGXnd0rKsJcpaB38Xou/pUfHUC+J1z+DlBxCJQWMtU=",
+        "lastModified": 1700814317,
+        "narHash": "sha256-NSaW8dVzZpdcjdUWtAV+cx6offl0LePhI4FQNhLRL0A=",
         "owner": "pinpox",
         "repo": "restic-exporter",
-        "rev": "698fb901927f18c6d66576ac284f54b03742d9e8",
+        "rev": "37e357ff008a4f248fd762bf073b351b56fd0dd7",
         "type": "github"
       },
       "original": {
