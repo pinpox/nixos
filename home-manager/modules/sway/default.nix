@@ -150,8 +150,8 @@ in
         };
 
         # swaymsg 'output eDP-1 pos 0 0'
-        # swaymsg 'output DP-2 pos 1920 0'
-        # swaymsg 'output eDP-1 pos 0 0'
+        # swaymsg 'output DP-1 pos 1920 0'
+        # swaymsg 'output DP-2 pos 4480 0'
 
         # Set wallpaper for all screens
         # TODO: generated based on coloscheme
