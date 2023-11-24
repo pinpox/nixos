@@ -21,6 +21,7 @@ in
         distrho
         zam-plugins
         talentedhack
+        gxplugins-lv2
       ];
 
     in

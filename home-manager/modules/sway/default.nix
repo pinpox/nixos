@@ -63,9 +63,7 @@ in
         window.commands = [
           {
             command = "floating enable";
-            criteria = {
-              title = "Firefox — Sharing Indicator";
-            };
+            criteria.title = "Firefox — Sharing Indicator";
           }
 
           { command = "floating enable"; criteria.app_id = "dropdown"; }
