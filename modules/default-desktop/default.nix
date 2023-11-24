@@ -184,20 +184,22 @@ in
       # borgbackup
       # wezterm-nightly
       acpi
-      macchanger
       arandr
       binutils
       file
+      freecad
       git
       gnumake
       go
       jetbrains-mono
       killall
       lm_sensors
+      macchanger
       neovim
       nixfmt
       nodejs
       openvpn
+      prusa-slicer
       recursive
       ripgrep
       ruby
@@ -205,13 +207,6 @@ in
       universal-ctags
       wget
       zola
-
-      # TODO: fix freecad
-      # https://github.com/NixOS/nixpkgs/issues/263452
-      # "pyside2 not supported for interpreter python3.11"
-      # freecad
-
-      prusa-slicer
     ];
 
     services.logind.extraConfig = ''
