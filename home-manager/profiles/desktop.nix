@@ -125,12 +125,12 @@
     fd
     gcc
     gimp
+    gnome.adwaita-icon-theme
     gnome.file-roller
     gtk_engines
     h # https://github.com/zimbatm/h
     helix
     htop
-    hugo
     imagemagick
     inetutils
     libnotify
@@ -141,6 +141,7 @@
     ncdu
     networkmanager-openvpn
     networkmanagerapplet
+    nextcloud-client
     nitrogen
     nix-index
     nmap
