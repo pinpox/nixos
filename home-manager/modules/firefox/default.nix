@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-
   cfg = config.pinpox.programs.firefox;
 in
 {
@@ -23,6 +22,49 @@ in
       profiles = {
         pinpox = {
 
+          containers = {
+
+            # dangerous = {
+            #   color = "red";
+            #   icon = "fruit";
+            #   id = 2;
+            # };
+
+            work = {
+              color = "blue";
+              icon = "cart";
+              id = 1;
+            };
+          };
+
+          search = {
+            force = true;
+            engines = {
+              "Nix Options" = {
+                urls = [{
+                  template = "https://search.nixos.org/options";
+                  params = [
+                    { name = "channel"; value = "unstable"; }
+                    { name = "query"; value = "{searchTerms}"; }
+                  ];
+                }];
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@no" ];
+              };
+              "Nix Packages" = {
+                urls = [{
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    { name = "type"; value = "packages"; }
+                    { name = "query"; value = "{searchTerms}"; }
+                  ];
+                }];
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@np" ];
+              };
+            };
+          };
+
           extensions = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
@@ -36,6 +78,12 @@ in
           isDefault = true;
           settings = {
 
+            # 0 => blank page
+            # 1 => your home page(s) {default}
+            # 2 => the last page viewed in Firefox
+            # 3 => previous session windows and tabs
+            "browser.startup.page" = "3";
+
             # Set the homepage
             "browser.startup.homepage" = "https://nixos.org";
 
@@ -44,7 +92,7 @@ in
 
             # Path where to export. Default is:
             # ~/.mozilla/firefox/pinpox/bookmarks.html
-            # "browser.bookmarks.file" = 
+            # "browser.bookmarks.file" =
 
             # "browser.display.background_color" = "#${config.pinpox.colors.Black}";
             # "browser.display.foreground_color" = "#${config.pinpox.colors.White}";
