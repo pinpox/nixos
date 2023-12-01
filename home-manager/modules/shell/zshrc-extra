@@ -1,14 +1,3 @@
-# Aliases expanded only at beginning of lines
-abbrev-alias m="neomutt"
-abbrev-alias o="xdg-open"
-abbrev-alias q="exit"
-abbrev-alias snvim="sudo -E nvim"
-abbrev-alias v="nvim"
-
-# Global aliases, get expanded everywhere
-abbrev-alias -g G="| rg -i"
-abbrev-alias -g P="| tb"
-
 # Create and change to a directory
 take () { mkdir -p -- "$1" && cd -- "$1"; }
 

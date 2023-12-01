@@ -1,4 +1,4 @@
-{ pkgs, promterm, ... }: {
+{ pkgs, promterm, lib, config, ... }: {
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -14,7 +14,20 @@
     };
 
     initExtraBeforeCompInit = builtins.readFile ./zshrc;
-    initExtra = builtins.readFile ./zshrc-extra;
+
+    initExtra =
+      let
+        abbrevs = lib.concatStrings (map
+          (a:
+            let
+              opt = lib.strings.optionalString;
+            in
+            ''
+              abbrev-alias ${opt a.global "-g "}${opt a.eval"-e "}${opt a.recursive"-r "}${a.alias}="${a.command}"
+            '')
+          config.pinpox.defaults.shell.abbrev-aliases);
+      in
+      abbrevs + builtins.readFile ./zshrc-extra;
 
     history = {
       expireDuplicatesFirst = true;
@@ -27,6 +40,7 @@
       # Allows addressing directorys by shortname, e.g. `cd ~notes`
       docs = "$HOME/Documents";
       notes = "$HOME/Notes";
+      ma = "$HOME/Documents/Info-Master-Hagen/masterarbeit";
     };
 
     shellAliases = rec {
@@ -69,7 +83,6 @@
       zzz = "systemctl suspend";
 
       serve = "${pkgs.miniserve}/bin/miniserve";
-      # "nix-shell -p python38Packages.httpcore --run 'python -m http.server 8080'";
 
       za = "${./zellij-chooser}";
 
@@ -81,7 +94,7 @@
       prompt.theme = "pure";
 
       # Case insensitive completion
-      caseSensitive = false;
+      caseSensitive = true;
 
       # Autoconvert .... to ../..
       editor.dotExpansion = true;
