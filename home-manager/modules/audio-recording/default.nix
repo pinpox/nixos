@@ -26,10 +26,13 @@ in
 
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs; [ reaper ]
+    home.packages = with pkgs; [
+      reaper
+      alsa-scarlett-gui
+    ]
 
-      # Some plugins also have a binary, so we also add them to PATH
-      ++ plugins;
+    # Some plugins also have a binary, so we also add them to PATH
+    ++ plugins;
 
     # Place vst, vst3, clap, lv2 and ladspa plugins in the according
     # directories where reaper will look for them
