@@ -164,6 +164,7 @@
     viewnior
     vlc
     xarchiver
+    xdg-utils
     xfce.exo # thunar "open terminal here"
     xfce.thunar-archive-plugin
     xfce.thunar-volman

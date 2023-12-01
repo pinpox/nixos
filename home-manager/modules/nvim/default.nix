@@ -119,6 +119,7 @@ in
 
       # loaded on launch
       plugins = with pkgs.vimPlugins; [
+        rose-pine
 
         zig-vim
 
