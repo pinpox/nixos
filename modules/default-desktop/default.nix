@@ -205,6 +205,7 @@ in
       ruby
       time
       universal-ctags
+      usbutils
       wget
       zola
     ];
