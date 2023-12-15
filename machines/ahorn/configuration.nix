@@ -1,13 +1,17 @@
 # Configuration file for ahorn
 { config, retiolum, pkgs, lib, nixos-hardware, ... }: {
 
+  boot.initrd.services.udev.rules =
+    ''
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8037", MODE:="0666"
+    '';
+
   # Enable driver for Focusrite Scarlett 2i2 Gen3.
   # This can be removed when we reach Linux Kernel 6.7, as it includes the driver by default
   # See: https://github.com/geoffreybennett/alsa-scarlett-gui/blob/master/INSTALL.md#enabling-the-driver
   boot.extraModprobeConfig = ''
     options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1
   '';
-
 
   boot.extraModulePackages = [
     config.boot.kernelPackages.v4l2loopback
