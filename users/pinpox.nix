@@ -14,7 +14,7 @@
       home = "/home/pinpox";
       description = "Pablo Ovelleiro Corral";
       extraGroups =
-        [ "docker" "wheel" "networkmanager" "audio" "libvirtd" "dialout" ];
+        [ "docker" "wheel" "networkmanager" "audio" "libvirtd" "tty" "dialout" ];
       shell = pkgs.zsh;
 
       # Public ssh-keys that are authorized for the user. Fetched from github
