@@ -70,6 +70,7 @@ in
             darkreader
             web-search-navigator
             ublock-origin
+            tree-style-tab
           ];
 
           # Extra preferences to add to user.js.
