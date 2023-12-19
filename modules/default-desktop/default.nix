@@ -196,6 +196,8 @@ in
       lm_sensors
       macchanger
       neovim
+      nix-init
+      nix-update
       nixfmt
       nodejs
       openvpn

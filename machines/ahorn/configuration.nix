@@ -36,7 +36,12 @@
   ];
 
   programs.sway.enable = true;
-  hardware.opengl.enable = true;
+
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 
   xdg.portal = {
 
@@ -103,12 +108,10 @@
 
   boot.blacklistedKernelModules = [ "nouveau" ];
 
-  # Install reaper
   environment.systemPackages = [
     pkgs.xdg-desktop-portal
     pkgs.xdg-desktop-portal-wlr
   ];
-
 
   pinpox.desktop = {
     enable = true;
