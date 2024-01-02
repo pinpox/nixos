@@ -110,6 +110,8 @@
   home.packages = with pkgs; [
     swaynotificationcenter
 
+    zotero
+
     # From nixpkgs
     # arduino
     # arduino-cli
