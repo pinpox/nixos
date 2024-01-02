@@ -11,6 +11,9 @@ in
       enable = true;
 
       settings = {
+
+        session_serialization = false;
+
         theme = "custom";
         themes.custom = {
           fg = "#${config.pinpox.colors.White}";

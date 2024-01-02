@@ -10,6 +10,7 @@ in
     programs = {
       git = {
         enable = true;
+        lfs.enable = true;
 
         ignores = [ "tags" "*.swp" ];
 
