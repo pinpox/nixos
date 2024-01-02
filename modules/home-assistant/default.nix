@@ -11,10 +11,15 @@ in
 
   config = mkIf cfg.enable {
 
+    # TODO workaround for https://github.com/NixOS/nixpkgs/pull/272576
+    nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
+
+    networking.firewall.trustedInterfaces = [ "wg0" ];
+
     /*
+
       services.wyoming = {
       faster-whisper = {
-        # package = 
         servers."name" = {
           enable = true;
           # beamSize
@@ -22,7 +27,7 @@ in
           # extraArgs
           language = "de";
           model = "tiny"; # one of "tiny", "tiny-int8", "base", "base-int8", "small", "small-int8", "medium-int8"
-          uri = "tcp://127.0.0.1:10300";
+          uri = "tcp://192.168.7.7:10300";
         };
       };
       openwakeword = {
@@ -231,7 +236,7 @@ in
 
         weather = { };
         sun = { };
-        icloud = { };
+        # icloud = { };
 
         intent_script.FindIphone = {
           # speech.text = "Notified pinpox";
@@ -300,6 +305,7 @@ in
             }];
             action = [{
               service = "notify.notify";
+              data.tag = "3d_printer_state";
               data.message = ''
                 {% if is_state('binary_sensor.octoprint_printing_error', 'off') %}
                 3D-Printer finished successfully!
