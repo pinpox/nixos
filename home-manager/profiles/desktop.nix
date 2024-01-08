@@ -1,8 +1,11 @@
 { system-config, pkgs, ... }: {
 
+  # TODO: uxplay - AirPlay Unix mirroring server
+
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
+      obs-ndi
       wlrobs
       obs-vintage-filter
       obs-teleport
@@ -14,7 +17,7 @@
   programs.helix = {
     enable = true;
 
-    # https://docs.helix-editor.com/languages.html 
+    # https://docs.helix-editor.com/languages.html
     languages = {
       language = [{
         name = "nix";

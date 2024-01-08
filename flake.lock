@@ -310,6 +310,19 @@
         "type": "github"
       }
     },
+    "ndi-linux": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1700246128,
+        "narHash": "sha256-38h+Rmb+juxfMHZXhdbRQzCUCUBxhsb1fKoEEPVtSJU=",
+        "type": "tarball",
+        "url": "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz"
+      }
+    },
     "nix-apple-fonts": {
       "inputs": {
         "flake-compat": [
@@ -508,6 +521,7 @@
         "matrix-hook": "matrix-hook",
         "mc3000": "mc3000",
         "naersk": "naersk",
+        "ndi-linux": "ndi-linux",
         "nix-apple-fonts": "nix-apple-fonts",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
