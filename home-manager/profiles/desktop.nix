@@ -2,6 +2,64 @@
 
   # TODO: uxplay - AirPlay Unix mirroring server
 
+
+  /*
+    networking.firewall.allowedTCPPorts = [
+    7000
+    7001
+    7100
+
+    554
+    5990
+    5353
+    5961
+
+    5960
+
+    ];
+    networking.firewall.allowedUDPPorts = [
+    5353
+    6000
+    6001
+    7071
+    7011
+
+    554
+    5990
+    5353
+    5961
+    5960
+    ];
+
+
+    networking.firewall.allowedTCPPortRanges = [
+    { from = 6500; to = 8000; }
+    { from = 49152; to = 65535; }
+    ];
+    networking.firewall.allowedUDPPortRanges = [
+    { from = 6500; to = 8000; }
+    { from = 49152; to = 65535; }
+    ];
+
+    services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    nssmdns6 = true;
+    openFirewall = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+      userServices = true;
+      domain = true;
+    };
+    };
+
+    pkgs.uxplay
+
+  */
+
+
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [

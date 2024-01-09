@@ -28,7 +28,6 @@
   # '';
 
   imports = [
-
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
