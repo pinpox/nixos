@@ -110,6 +110,9 @@ in
       };
 
       services = {
+
+        unbound-desktop.enable = true;
+
         xserver.enable = false;
         openssh.enable = true;
         borg-backup.enable = true;
