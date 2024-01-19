@@ -292,8 +292,8 @@
             # wezterm-bin = pkgs.wezterm-bin;
             # wezterm-nightly = pkgs.wezterm-nightly;
             hello-custom = pkgs.hello-custom;
+            # onnxruntime-patched = pkgs.onnxrunetime;
             filebrowser = pkgs.filebrowser;
-            darktile = pkgs.darktile;
             fritzbox_exporter = pkgs.fritzbox_exporter;
             mqtt2prometheus = pkgs.mqtt2prometheus;
             smartmon-script = pkgs.smartmon-script;
