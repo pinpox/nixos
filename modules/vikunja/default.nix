@@ -97,7 +97,7 @@ in
         VIKUNJA_MAILER_HOST = "smtp.sendgrid.net";
         VIKUNJA_MAILER_USERNAME = "apikey";
         VIKUNJA_MAILER_FROMMAIL = "todo@0cx.de";
-        VIKUNJA_MAILER_PORT = "587";
+        VIKUNJA_MAILER_PORT = "465";
         VIKUNJA_MAILER_AUTHTYPE = "plain";
         VIKUNJA_MAILER_SKIPTLSVERIFY = "false";
         VIKUNJA_MAILER_FORCESSL = "true";
