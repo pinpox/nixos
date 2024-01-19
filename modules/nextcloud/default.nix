@@ -9,7 +9,6 @@ in
 
   config = mkIf cfg.enable {
 
-
     pinpox.services.restic-client.backup-paths-offsite = [
       # TODO Plan on how to backup nextcloud data
       # "${config.services.nextcloud.home}/data"
@@ -37,7 +36,7 @@ in
       enable = true;
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud27;
+      package = pkgs.nextcloud28;
 
       # Use HTTPS for links
       https = true;
@@ -72,13 +71,13 @@ in
         adminuser = "pinpox";
         adminpassFile = "${config.lollypops.secrets.files."nextcloud/admin-pass".path}";
 
-        defaultPhoneRegion = "DE";
-        extraTrustedDomains = [ "birne.wireguard" ];
-        trustedProxies = [ "192.168.7.1" "94.16.108.229" "birne.wireguard" ];
       };
 
-      nginx.recommendedHttpHeaders = true;
+      extraOptions.trusted_proxies = [ "192.168.7.1" "94.16.108.229" "birne.wireguard" ];
+      extraOptions.trusted_domains = [ "birne.wireguard" ];
+      extraOptions.default_phone_region = "DE";
 
+      nginx.recommendedHttpHeaders = true;
 
       extraOptions.enabledPreviewProviders = [
         "OC\\Preview\\BMP"
@@ -92,12 +91,14 @@ in
         "OC\\Preview\\TXT"
         "OC\\Preview\\XBitmap"
         "OC\\Preview\\HEIC"
+        "OC\\Preview\\Movie"
       ];
-
-
     };
 
-
+    environment.systemPackages = with pkgs; [
+      exiftool
+      ffmpeg
+    ];
 
     # redis.servers.nextcloud = {
     #   enable = true;
@@ -165,6 +166,19 @@ in
         ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
       }];
     };
+
+
+
+    # `services.postgresql.ensureUsers.*.ensurePermissions` is used in your expressions
+    # │      this option is known to be broken with newer PostgreSQL versions,
+    # │      consider migrating to `services.postgresql.ensureUsers.*.ensureDBOwnership` or
+    # │      consult the release notes or manual for more migration guidelines.
+    # │      This option will be removed in NixOS 24.05 unless it sees significant
+    # │      maintenance improvements.
+
+
+
+
 
     # Ensure that postgres is running *before* running the setup
     systemd.services."nextcloud-setup" = {
