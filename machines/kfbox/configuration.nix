@@ -114,6 +114,7 @@
       thelounge.enable = true;
       kf-homepage.enable = true;
       gitea.enable = true;
+      owncast.enable = true;
       vikunja.enable = true;
     };
 
