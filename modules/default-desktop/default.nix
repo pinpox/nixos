@@ -75,7 +75,7 @@ in
       inherit wallpaper-generator flake-self nur promterm;
 
       # Pass system configuration (top-level "config") to home-manager modules,
-      # so we can access it's values for conditional statements
+      # so we can access it's values for conditional statements. Writing is NOT possible!
       system-config = config;
     };
 
@@ -87,6 +87,9 @@ in
 
     # TODO parametrize the username
     home-manager.users.pinpox = flake-self.homeConfigurations.desktop;
+
+    # Firewall ports required by home-manager modules
+    networking.firewall.allowedTCPPorts = [ 5201 ]; # droidcam
 
     pinpox = {
       defaults = {
