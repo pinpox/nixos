@@ -292,7 +292,6 @@
             # wezterm-bin = pkgs.wezterm-bin;
             # wezterm-nightly = pkgs.wezterm-nightly;
             hello-custom = pkgs.hello-custom;
-            # onnxruntime-patched = pkgs.onnxrunetime;
             filebrowser = pkgs.filebrowser;
             fritzbox_exporter = pkgs.fritzbox_exporter;
             mqtt2prometheus = pkgs.mqtt2prometheus;
@@ -302,11 +301,7 @@
             # Manual for github pages (https://pinpox.github.io/nixos)
             flake-manual = pkgs.callPackage ./manual/manual.nix { inputs = inputs; flake-self = self; };
 
-
             woodpecker-pipeline = pkgs.callPackage ./woodpecker-pipeline.nix { inputs = inputs; flake-self = self; };
-
-
-
           };
 
           # Run with: nix develop '.#test-shell'

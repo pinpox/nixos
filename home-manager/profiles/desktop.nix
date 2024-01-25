@@ -63,11 +63,14 @@
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
+      obs-pipewire-audio-capture
+      droidcam-obs
       obs-ndi
+      # pkgs.my-obs-ndi
       wlrobs
-      obs-vintage-filter
-      obs-teleport
-      obs-backgroundremoval
+      # obs-vintage-filter
+      # obs-teleport
+      # obs-backgroundremoval
       input-overlay
     ];
   };

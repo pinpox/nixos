@@ -4,53 +4,27 @@ let
   # instead of having to keep sha256 hashes in each package for src
   inherit inputs;
 in
-self: super: {
+self: super:
+{
 
+  # Override unfree src with flake input
   ndi = super.ndi.overrideAttrs (old: {
-
-    # Override unfree src with flake input and adapt unpackPhase
-    # accordingly
     src = inputs.ndi-linux;
     unpackPhase = ''
       echo y | $src;
       sourceRoot="NDI SDK for Linux";
     '';
+  });
 
-    # TODO Currently ndi is broken/outdated in nixpkgs.
-    # Remove this installPhase when
-    # https://github.com/NixOS/nixpkgs/pull/272073 is merged
-    installPhase = with super;
-      let
-        ndiPlatform = "x86_64-linux-gnu";
-        pname = "ndi";
-        version = "5.6.0";
-      in
-
-      ''
-        mkdir $out
-        mv bin/${ndiPlatform} $out/bin
-        for i in $out/bin/*; do
-          if [ -L "$i" ]; then continue; fi
-          patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$i"
-        done
-        patchelf --set-rpath "${avahi}/lib:${stdenv.cc.libc}/lib" $out/bin/ndi-record
-        mv lib/${ndiPlatform} $out/lib
-        for i in $out/lib/*; do
-          if [ -L "$i" ]; then continue; fi
-          patchelf --set-rpath "${avahi}/lib:${stdenv.cc.libc}/lib" "$i"
-        done
-        mv include examples $out/
-        mkdir -p $out/share/doc/${pname}-${version}
-        mv licenses $out/share/doc/${pname}-${version}/licenses
-        mv documentation/* $out/share/doc/${pname}-${version}/
-      '';
+  zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {
+    CXXFLAGS = [
+      # GCC 13: error: 'uint8_t' does not name a type
+      "-include cstdint"
+    ];
   });
 
   # Example package, used only for tests
-  hello-custom =
-    super.callPackage ../packages/hello-custom
-      { };
-  darktile = super.callPackage ../packages/darktile { };
+  hello-custom = super.callPackage ../packages/hello-custom { };
   # river-luatile = super.callPackage ../packages/river-luatile { };
   fritzbox_exporter = super.callPackage ../packages/fritzbox_exporter { };
   mqtt2prometheus = super.callPackage ../packages/mqtt2prometheus { };
