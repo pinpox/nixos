@@ -103,7 +103,7 @@
   # Access locally via:
   # https://birne:8443/manage/
   services.unifi = {
-    enable = true;
+    enable = false;
 
     # 6 is latest supported for my access points. Beware that this will build
     # an older version of mongodb (from source), which may cause slow rebuilds
