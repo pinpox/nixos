@@ -151,7 +151,8 @@ in
         # "piper"
         # "whisper"
         # "wyoming"
-        "octoprint"
+        "bthome"
+        # "octoprint"
         "nextcloud"
         "unifi_direct"
         "unifi"
@@ -294,27 +295,27 @@ in
         # https://home.pablo.tools/developer-tools/event
         # https://home.pablo.tools/config/automation/dashboard
         automation = [
-          {
-            id = "3dprint_notify_done";
-            alias = "3D-Printer notification";
-            description = "Send a notification when the 3D-printer is done";
-            trigger = [{
-              platform = "state";
-              entity_id = "binary_sensor.octoprint_printing";
-              to = "off";
-            }];
-            action = [{
-              service = "notify.notify";
-              data.tag = "3d_printer_state";
-              data.message = ''
-                {% if is_state('binary_sensor.octoprint_printing_error', 'off') %}
-                3D-Printer finished successfully!
-                {% else %}
-                3D-Printer finished with an ERROR!
-                {% endif %}
-              '';
-            }];
-          }
+          # {
+          #   id = "3dprint_notify_done";
+          #   alias = "3D-Printer notification";
+          #   description = "Send a notification when the 3D-printer is done";
+          #   trigger = [{
+          #     platform = "state";
+          #     entity_id = "binary_sensor.octoprint_printing";
+          #     to = "off";
+          #   }];
+          #   action = [{
+          #     service = "notify.notify";
+          #     data.tag = "3d_printer_state";
+          #     data.message = ''
+          #       {% if is_state('binary_sensor.octoprint_printing_error', 'off') %}
+          #       3D-Printer finished successfully!
+          #       {% else %}
+          #       3D-Printer finished with an ERROR!
+          #       {% endif %}
+          #     '';
+          #   }];
+          # }
           {
             id = "rackmount_button1";
             mode = "single";
