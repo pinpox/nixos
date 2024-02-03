@@ -187,6 +187,9 @@ in
       # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
       # pkgs.nur.repos.mic92.irc-announce
 
+      orca-slicer
+      discord
+
       # borgbackup
       # wezterm-nightly
       acpi
@@ -227,7 +230,6 @@ in
       loader.grub.useOSProber = true;
 
       tmp.useTmpfs = false;
-
 
       # Encrypted drive to be mounted by the bootloader. Path of the device will
       # have to be changed for each install.
