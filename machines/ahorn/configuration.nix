@@ -77,8 +77,10 @@
     systemd-networkd-wait-online.enable = lib.mkForce false;
   };
 
-  # Support QMK/Via
-  services.udev.packages = [ pkgs.qmk-udev-rules ];
+  services.udev.packages = [
+    pkgs.qmk-udev-rules # For QMK/Via
+    pkgs.libsigrok # For pulseview
+  ];
 
   hardware.sane.enable = true;
   users.users.pinpox.extraGroups = [ "scanner" "lp" ];
