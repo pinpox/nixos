@@ -16,6 +16,7 @@ self: super:
     '';
   });
 
+  # TODO remove when fixed upsteam
   zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {
     CXXFLAGS = [
       # GCC 13: error: 'uint8_t' does not name a type

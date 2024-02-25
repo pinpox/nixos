@@ -205,6 +205,8 @@ in
       lm_sensors
       macchanger
       neovim
+      nixpkgs-review
+      kicad
       nix-init
       nix-update
       nixfmt
