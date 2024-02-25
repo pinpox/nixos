@@ -237,6 +237,16 @@
   # Enable ip forwarding, so wireguard peers can reach eachother
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
+
+  services.alertmanager-ntfy = {
+    enable = true;
+    httpAddress = "localhost";
+    httpPort = "9099";
+    ntfyTopic = "https://push.pablo.tools/pinpox_alertmanager";
+    ntfyPriority = "default";
+    envFile = "${config.lollypops.secrets.files."alertmanager-ntfy/envfile".path}";
+  };
+
   pinpox = {
     server = {
       enable = true;
@@ -252,14 +262,6 @@
       vaultwarden.enable = true;
       ntfy-sh.enable = true;
 
-      alertmanager-ntfy = {
-        enable = true;
-        httpAddress = "localhost";
-        httpPort = "9099";
-        ntfyTopic = "https://push.pablo.tools/pinpox_alertmanager";
-        ntfyPriority = "default";
-        envFile = "${config.lollypops.secrets.files."alertmanager-ntfy/envfile".path}";
-      };
 
       matrix-hook = {
         enable = true;
@@ -371,8 +373,7 @@
         }
         # mayniklas GPU
         {
-          publicKey = "gAZho29rXjjGAjXy6ImBgW+Ei0XGADQUuiI/r0s+bR8=";
-
+          publicKey = "aD6SXOOB3JJnRXUvB09yXlf/2kyFe1TZ5HEx2TIJKTQ=";
           allowedIPs = [ "192.168.7.7" ];
           persistentKeepalive = 25;
         }

@@ -210,7 +210,7 @@ in
               webhook_configs = [
                 { url = "http://127.0.0.1:11000/alert"; } # matrix-hook
                 {
-                  url = with config.pinpox.services.alertmanager-ntfy;
+                  url = with config.services.alertmanager-ntfy;
                     "http://${httpAddress}:${httpPort}";
                 } # alertmanger-ntfy
               ];
