@@ -61,7 +61,7 @@ in
         passwordCommand = "pass mailbox.org/pablo1@mailbox.org";
         imap = {
           host = "imap.mailbox.org";
-          tls.enbale = true;
+          tls.enable = true;
         };
         smtp = {
           host = "smtp.mailbox.org";
