@@ -17,7 +17,7 @@ in
         source-sans-pro
         source-serif-pro
         noto-fonts-emoji
-        corefonts
+        # corefonts
         recursive
         iosevka-bin
         font-awesome
