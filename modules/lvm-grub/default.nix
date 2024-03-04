@@ -20,7 +20,10 @@ in
 
         # Use UEFI support
         grub.efiSupport = true;
-        efi.canTouchEfiVariables = true;
+        grub.efiInstallAsRemovable = true;
+        # efi.canTouchEfiVariables = true;
+        # useOSProber = true;
+
       };
 
       # /tmp is cleaned after each reboot
