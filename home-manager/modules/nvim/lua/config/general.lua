@@ -22,7 +22,7 @@ vim.o.smartcase        = true               -- Case sensitive then capital is ty
 vim.o.synmaxcol        = 200                -- Maximum length of syntax highlighting
 
 -- TODO Disabled title until this is fixed: https://github.com/neovim/neovim/issues/18573
--- vim.o.title            = true               -- Show title in terminal window
+vim.o.title            = true               -- Show title in terminal window
 
 vim.o.wildmenu         = true               -- Complete commands
 vim.o.wrapscan         = true               -- Wrap when searching to beginning
@@ -65,6 +65,13 @@ vim.g["go_auto_type_info"]     = 1          -- Go:        Show Go type info of v
 vim.g["vim_markdown_conceal"]  = 0          -- Markdown:  Disable concellevel for markdown
 vim.g["terraform_align"]       = 1          -- Terraform: Auto-align
 vim.g["terraform_fmt_on_save"] = 1          -- Terraform: Format on saving
+
+-- TODO This variable should be used instead, but is supported on neovim >0.10.0
+-- https://neovim.io/doc/user/filetype.html#filetype-overrule
+-- vim.g.filetype_typ = "typst"
+--
+-- Recognize *.typ files as typst filetype instead of sql.
+vim.filetype.add({ extension = { typ = 'typst' } })
 
 -- Wrap markdown files to 80 chars per line
 vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')

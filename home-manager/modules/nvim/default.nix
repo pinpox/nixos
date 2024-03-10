@@ -26,6 +26,12 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
+
+      typst
+      typstfmt
+      typst-lsp
+
+
       zig
       zls
       nil
@@ -114,6 +120,9 @@ in
       let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.go}/share/vscode/extensions/golang.Go/snippets/']
       let g:formatdef_nixpkgs_fmt = '"${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"'
       let g:formatters_nix = ['nixpkgs_fmt']
+
+      let g:formatdef_typst = '"${pkgs.typstfmt}/bin/typstfmt"'
+      let g:formatters_typst = ['typst']
 
     '';
 

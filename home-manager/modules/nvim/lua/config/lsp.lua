@@ -5,6 +5,7 @@ require'lspconfig'.bashls.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.zls.setup{}
+require'lspconfig'.typst_lsp.setup{}
 
 
 -- Spell/Grammar checking, e.g for markdown files
