@@ -1,4 +1,19 @@
-local Color, c, Group, g, s = require("colorbuddy").setup()
+-- local Color, c, Group, g, s = require("colorbuddy").setup()
+
+
+local colorbuddy = require('colorbuddy')
+
+-- Set up your custom colorscheme if you want
+-- colorbuddy.colorscheme("my-colorscheme-name")
+
+-- And then modify as you like
+local Color = colorbuddy.Color
+local c = colorbuddy.colors
+local Group = colorbuddy.Group
+local g = colorbuddy.groups
+local s = colorbuddy.styles
+
+
 local b   = s.bold
 local i   = s.italic
 local n   = s.inverse
@@ -8,6 +23,9 @@ local r   = s.reverse
 local sto = s.standout
 local no  = s.NONE
 local v   = vim
+
+
+
 
 -- TODO Think of a better colorscheme name
 v.g.colors_name = 'generated'

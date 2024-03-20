@@ -108,8 +108,8 @@ in
       require('config.devicons')
       require('config.cmp')
       require('config.which-key')
-      -- require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-      require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+      require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+      -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
       require('config.lualine')
       require('config.gitsigns')
       -- require('config.zk')
@@ -141,9 +141,9 @@ in
         # vim-indent-object
         # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
         # vim-vinegar
-        # bufferline-nvim
+        bufferline-nvim
         # i3config-vim
-        nvim-cokeline
+        # nvim-cokeline
         nvim-fzf
         fzf-lua
         indent-blankline-nvim-lua

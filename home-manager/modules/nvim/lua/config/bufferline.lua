@@ -3,7 +3,7 @@ require'bufferline'.setup{
 		numbers = function(opts)
 			return string.format('%s', opts.ordinal)
 		end,
-		buffer_close_icon= '',
+		-- buffer_close_icon= '',
 		modified_icon = '●',
 		close_icon = '',
 		left_trunc_marker = '',
