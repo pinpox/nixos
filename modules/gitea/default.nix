@@ -50,7 +50,7 @@ in
           PROTOCOL = "smtp";
           IS_TLS_ENABLED = false;
           USER = "mail@0cx.de";
-          HOST = "r19.hallo.cloud:587";
+          SMTP_ADDR = "r19.hallo.cloud:587";
         };
         markdown.ENABLE_MATH = true;
       };
