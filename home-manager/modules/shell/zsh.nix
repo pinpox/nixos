@@ -1,7 +1,7 @@
 { pkgs, promterm, lib, config, ... }: {
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     autocd = true;
     dotDir = ".config/zsh";

@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.pinpox.programs.waybar;
@@ -11,6 +11,8 @@ in
     # home.packages = with pkgs; [ waybar];
 
     programs.waybar = {
+
+      package = pkgs.waybar.override { wireplumberSupport = false; };
 
       enable = true;
 

@@ -34,7 +34,7 @@ in
       river
       river-luatile
       # way-displays
-      waybar
+      (waybar.override { wireplumberSupport = false; })
       wl-clipboard
       wlr-randr
       wofi
@@ -63,7 +63,7 @@ in
             riverctl map normal Super p spawn "${pkgs.wofi}/bin/wofi --show run"
 
             ${pkgs.mako}/bin/mako &
-            ${pkgs.waybar}/bin/waybar
+            waybar
             # ${pkgs.wlr-randr}/bin/wlr-randr --output eDP-1 --mode 1920x1080 --pos 0,0 \
             # --output DP-1 --mode 2560x1440 --pos 4480,0 \
             # --output DP-2 --mode 2560x1440@164.54 --pos 1920,0
