@@ -5,7 +5,7 @@ with lib;
 
   config = {
 
-    services.gpg-agent.pinentryFlavor = "qt";
+    services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
 
     # # often hangs
     # systemd.services.systemd-networkd-wait-online.enable = false;

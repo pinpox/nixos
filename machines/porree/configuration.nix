@@ -1,4 +1,4 @@
-{ lib, matrix-hook, config, retiolum, alertmanager-ntfy, ... }: {
+{ lib, matrix-hook, config, retiolum, alertmanager-ntfy, pkgs, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -66,7 +66,7 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryFlavor = "qt";
+    pinentryPackage = pkgs.pinentry-qt;
   };
 
   services.qemuGuest.enable = true;
