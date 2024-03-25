@@ -16,23 +16,8 @@ in
 
   config = mkIf cfg.enable {
 
-    # Reverse proxy
-    services.caddy.virtualHosts."${cfg.host}".extraConfig = ''
-      @paths {
-        path /api/* /.well-known/* /dav/*
-      }
-
-      handle @paths {
-        reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE }
-      }
-
-      handle {
-        encode zstd gzip
-        root * ${config.services.vikunja.package-frontend}
-        try_files {path} index.html
-        file_server
-      }
-    '';
+    services.caddy.virtualHosts."${cfg.host}".extraConfig =
+      "reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE }";
 
     # Vikunja doesn't allow setting openid configuration parameters (e.g.
     # openid_secret) via environment variables, so we have to treat the
@@ -63,7 +48,7 @@ in
       description = "vikunja-api";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.vikunja-api ];
+      path = [ pkgs.vikunja ];
       restartTriggers = [
         config.lollypops.secrets.files."vikunja/config".path
         config.lollypops.secrets.files."vikunja/envfile".path
@@ -97,7 +82,7 @@ in
         VIKUNJA_MAILER_HOST = "smtp.sendgrid.net";
         VIKUNJA_MAILER_USERNAME = "apikey";
         VIKUNJA_MAILER_FROMMAIL = "todo@0cx.de";
-        VIKUNJA_MAILER_PORT = "465";
+        VIKUNJA_MAILER_PORT = "587";
         VIKUNJA_MAILER_AUTHTYPE = "plain";
         VIKUNJA_MAILER_SKIPTLSVERIFY = "false";
         VIKUNJA_MAILER_FORCESSL = "true";
@@ -113,7 +98,7 @@ in
         User = "vikunja";
         Group = "vikunja";
         StateDirectory = "vikunja";
-        ExecStart = "${pkgs.vikunja-api}/bin/vikunja";
+        ExecStart = "${pkgs.vikunja}/bin/vikunja";
         Restart = "always";
         EnvironmentFile = [ config.lollypops.secrets.files."vikunja/envfile".path ];
         BindReadOnlyPaths = [ "${config.lollypops.secrets.files."vikunja/config".path}:/etc/vikunja/config.yaml" ];
