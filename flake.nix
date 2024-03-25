@@ -115,9 +115,6 @@
     nvim-cokeline.url = "github:noib3/nvim-cokeline";
     nvim-cokeline.flake = false;
 
-    fzf-lua.url = "github:ibhagwan/fzf-lua";
-    fzf-lua.flake = false;
-
     zk-nvim.url = "github:megalithic/zk.nvim";
     zk-nvim.flake = false;
 

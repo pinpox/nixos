@@ -47,7 +47,6 @@ self: super:
     nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
     nvim-cokeline =
       super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
-    fzf-lua = super.callPackage ../packages/fzf-lua { inputs = inputs; };
   };
 
   # ZSH plugins

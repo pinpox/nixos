@@ -134,22 +134,6 @@
         "type": "github"
       }
     },
-    "fzf-lua": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711323625,
-        "narHash": "sha256-StSm7zQoi/SvJuqHI3Pksf0XrFDDGgqrL/pLzI/tWXA=",
-        "owner": "ibhagwan",
-        "repo": "fzf-lua",
-        "rev": "618c4de7d36b6c2a2f46794845e631fa6007bbfc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ibhagwan",
-        "repo": "fzf-lua",
-        "type": "github"
-      }
-    },
     "go-karma-bot": {
       "inputs": {
         "nixpkgs": [
@@ -383,11 +367,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1711355249,
-        "narHash": "sha256-7KdwA8JtfoGlxf5w7/XOxjjlOM7OirJPwyjvlzN8u9U=",
+        "lastModified": 1711360026,
+        "narHash": "sha256-1MyDu65b7hECwOtvgWTDZ+NodGdPdpYkFqGT22TB6yk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "2796d4664e8da2e094738766c36d81896ca85fed",
+        "rev": "1fe0820e8caaa45a2d686141c72c44c0a14e71cc",
         "type": "github"
       },
       "original": {
@@ -512,7 +496,6 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "forgit": "forgit",
-        "fzf-lua": "fzf-lua",
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
