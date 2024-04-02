@@ -160,20 +160,7 @@ in
     # Database configuration
     services.postgresql = {
       enable = true;
-      ensureDatabases = [ "nextcloud" ];
-      ensureUsers = [{
-        name = "nextcloud";
-        ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
-      }];
     };
-
-    # `services.postgresql.ensureUsers.*.ensurePermissions` is used in your expressions
-    # │      this option is known to be broken with newer PostgreSQL versions,
-    # │      consider migrating to `services.postgresql.ensureUsers.*.ensureDBOwnership` or
-    # │      consult the release notes or manual for more migration guidelines.
-    # │      This option will be removed in NixOS 24.05 unless it sees significant
-    # │      maintenance improvements.
-
 
     # Ensure that postgres is running *before* running the setup
     systemd.services."nextcloud-setup" = {
