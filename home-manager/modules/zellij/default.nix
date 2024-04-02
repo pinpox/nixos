@@ -17,7 +17,7 @@ in
         theme = "custom";
         themes.custom = {
           fg = "#${config.pinpox.colors.White}";
-          bg = "#${config.pinpox.colors.Black}";
+          bg = "#${config.pinpox.colors.BrightBlack}";
           black = "#${config.pinpox.colors.Black}";
           red = "#${config.pinpox.colors.Red}";
           green = "#${config.pinpox.colors.Green}";

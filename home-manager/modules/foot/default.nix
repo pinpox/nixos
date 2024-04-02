@@ -38,7 +38,7 @@ in
 
         colors = {
 
-          # alpha=1.0
+          alpha = "0.9";
           background = "${config.pinpox.colors.Black}";
           foreground = "${config.pinpox.colors.White}";
 
