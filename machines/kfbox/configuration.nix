@@ -101,6 +101,7 @@
       gitea.enable = true;
       owncast.enable = true;
       vikunja.enable = true;
+      wastebin.enable = true;
     };
 
     metrics.node.enable = true;

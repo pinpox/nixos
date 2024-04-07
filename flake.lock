@@ -105,11 +105,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
         "type": "github"
       },
       "original": {
@@ -214,15 +214,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1712238433,
-        "narHash": "sha256-CPQEHdCYtB5jtPsCYW0ED5A4SzqGRvePIftdPw+jzCs=",
+        "lastModified": 1712506597,
+        "narHash": "sha256-0nDbNpKJL3GmGgLowQmTcdvy/bykyZovYx40WIf/mgs=",
         "owner": "pinpox",
         "repo": "lollypops",
-        "rev": "23e8069b81125b26c54d6d28e15b28013e985142",
+        "rev": "203d20a218661a414f6b2cdc9bf3ca0ea94d0845",
         "type": "github"
       },
       "original": {
         "owner": "pinpox",
+        "ref": "nix-flake-archive-fixes",
         "repo": "lollypops",
         "type": "github"
       }
@@ -367,11 +368,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1712497482,
-        "narHash": "sha256-6h0PpUYPKBJevyxZIag7sa+sWOFNp0ry/eRoAT9JDxA=",
+        "lastModified": 1712501617,
+        "narHash": "sha256-ipzJlgEAURIUIIDvpSDWtF4DiS0ANvkmQodB9BZ5BDA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "e2def9c59d2b959b7c86caccd060e5aa0cbb78b1",
+        "rev": "ed45405982bdd65ce2eb7341a42ea18fb5958d76",
         "type": "github"
       },
       "original": {

@@ -28,7 +28,8 @@
     };
 
     lollypops = {
-      url = "github:pinpox/lollypops";
+      # url = "github:GeoffreyFrogeye/lollypops/use-nix-flake-archive";
+      url = "github:pinpox/lollypops/nix-flake-archive-fixes";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
