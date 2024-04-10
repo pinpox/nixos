@@ -1,6 +1,10 @@
 # Configuration file for ahorn
 { config, retiolum, pkgs, lib, nixos-hardware, ... }: {
 
+  # RTL-SDR
+  # hardware.rtl-sdr.enable = true;
+  # users.users.pinpox.extraGroups = [ "plugdev" ];
+
   boot.initrd.services.udev.rules =
     ''
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8037", MODE:="0666"
