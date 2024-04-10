@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.pinpox.services.wastebin;
+let
+  cfg = config.pinpox.services.wastebin;
 in
 {
 
@@ -29,7 +30,13 @@ in
         RUST_LOG = "warning";
       };
     };
-    # TODO Reverse proxy
-    # TODO Backup?
+
+    # Reverse proxy
+    services.caddy = {
+      enable = true;
+      virtualHosts = {
+        "paste.0cx.de".extraConfig = "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
+      };
+    };
   };
 }
