@@ -1,4 +1,11 @@
-{ pkgs, promterm, lib, config, ... }: {
+{
+  pkgs,
+  promterm,
+  lib,
+  config,
+  ...
+}:
+{
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -17,15 +24,17 @@
 
     initExtra =
       let
-        abbrevs = lib.concatStrings (map
-          (a:
+        abbrevs = lib.concatStrings (
+          map (
+            a:
             let
               opt = lib.strings.optionalString;
             in
             ''
-              abbrev-alias ${opt a.global "-g "}${opt a.eval"-e "}${opt a.recursive"-r "}${a.alias}="${a.command}"
-            '')
-          config.pinpox.defaults.shell.abbrev-aliases);
+              abbrev-alias ${opt a.global "-g "}${opt a.eval "-e "}${opt a.recursive "-r "}${a.alias}="${a.command}"
+            ''
+          ) config.pinpox.defaults.shell.abbrev-aliases
+        );
       in
       abbrevs + builtins.readFile ./zshrc-extra;
 
@@ -45,12 +54,13 @@
 
     shellAliases = rec {
 
+      remote-review = ''nixpkgs-review pr --build-args="--builders 'ssh://pinpox@build-box.nix-community.org'"'';
+
       # eza ls replacement
       ls = "${pkgs.eza}/bin/eza --group-directories-first";
       l = "${ls} -lbF --git --icons";
       ll = "${l} -G";
-      la =
-        "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
+      la = "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
       lt = "${ls} --tree --level=2 --icons";
 
       # Git
@@ -68,8 +78,7 @@
       # pt = "${promterm.defaultPackage.x86_64-linux}/bin/promterm 'https://vpn.prometheus.pablo.tools/api/v1/alerts'";
       lsblk = "lsblk -o name,mountpoint,label,size,type,uuid";
       c = "${pkgs.bat}/bin/bat -n --decorations never";
-      cc =
-        "${pkgs.clang}/bin/clang -Wall -Wextra -pedantic -std=c99 -Wshadow -Weverything";
+      cc = "${pkgs.clang}/bin/clang -Wall -Wextra -pedantic -std=c99 -Wshadow -Weverything";
       qr = "${pkgs.qrencode}/bin/qrencode -t utf8 -o-";
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
@@ -101,7 +110,12 @@
 
       # Prezto modules to load
       # pmodules = [ "utility" "editor" "directory" "completion"];
-      pmodules = [ "utility" "editor" "directory" "prompt" ];
+      pmodules = [
+        "utility"
+        "editor"
+        "directory"
+        "prompt"
+      ];
 
       terminal.autoTitle = true;
     };
