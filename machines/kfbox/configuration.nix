@@ -1,17 +1,21 @@
-{ aoe-taunt-discord-bot
-, config
-, go-karma-bot
-, mc3000
-, pkgs
-, retiolum
-, ...
-}: {
+{
+  aoe-taunt-discord-bot,
+  config,
+  go-karma-bot,
+  mc3000,
+  pkgs,
+  retiolum,
+  ...
+}:
+{
 
   networking.interfaces.ens3 = {
-    ipv6.addresses = [{
-      address = "2a03:4000:7:4e0::";
-      prefixLength = 64;
-    }];
+    ipv6.addresses = [
+      {
+        address = "2a03:4000:7:4e0::";
+        prefixLength = 64;
+      }
+    ];
   };
 
   networking.retiolum = {
@@ -51,7 +55,10 @@
   #   false;
   systemd.services.NetworkManager-wait-online = {
     serviceConfig = {
-      ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+      ExecStart = [
+        ""
+        "${pkgs.networkmanager}/bin/nm-online -q"
+      ];
     };
   };
 
@@ -62,7 +69,8 @@
 
   # Discord AoE2 taunt bot
   lollypops.secrets.files."aoe-taunt-discord-bot/discord_token" = { };
-  services.aoe-taunt-discord-bot.discordTokenFile = config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
+  services.aoe-taunt-discord-bot.discordTokenFile =
+    config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
   services.aoe-taunt-discord-bot.enable = true;
 
   pinpox = {
@@ -122,7 +130,12 @@
   fileSystems."/tmp" = {
     fsType = "tmpfs";
     device = "tmpfs";
-    options = [ "nosuid" "nodev" "relatime" "size=14G" ];
+    options = [
+      "nosuid"
+      "nodev"
+      "relatime"
+      "size=14G"
+    ];
   };
 
   boot.growPartition = true;
@@ -137,7 +150,11 @@
   networking.firewall = {
     enable = true;
     allowPing = true;
-    allowedTCPPorts = [ 80 443 22 ];
+    allowedTCPPorts = [
+      80
+      443
+      22
+    ];
   };
 
   services.caddy = {
@@ -156,6 +173,7 @@
       # "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
+      "paste.0cx.de".extraConfig = "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
     };
   };
 }
