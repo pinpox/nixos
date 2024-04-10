@@ -1,4 +1,13 @@
-{ lib, nur, pkgs, config, flake-self, wallpaper-generator, promterm, ... }:
+{
+  lib,
+  nur,
+  pkgs,
+  config,
+  flake-self,
+  wallpaper-generator,
+  promterm,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.desktop;
@@ -72,7 +81,12 @@ in
     # there.
     # home-manager.extraSpecialArgs = flake-self.inputs;
     home-manager.extraSpecialArgs = {
-      inherit wallpaper-generator flake-self nur promterm;
+      inherit
+        wallpaper-generator
+        flake-self
+        nur
+        promterm
+        ;
 
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements. Writing is NOT possible!
@@ -122,8 +136,14 @@ in
 
         restic-client = {
           enable = true;
-          backup-paths-onsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
-          backup-paths-offsite = [ "/home/pinpox/Notes" "/home/pinpox" ];
+          backup-paths-onsite = [
+            "/home/pinpox/Notes"
+            "/home/pinpox"
+          ];
+          backup-paths-offsite = [
+            "/home/pinpox/Notes"
+            "/home/pinpox"
+          ];
 
           backup-paths-exclude = [
             "*.pyc"
@@ -209,7 +229,7 @@ in
       kicad
       nix-init
       nix-update
-      nixfmt
+      nixfmt-rfc-style
       nodejs
       openvpn
       prusa-slicer
