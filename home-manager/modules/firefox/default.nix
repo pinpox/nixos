@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.firefox;
@@ -22,43 +27,59 @@ in
       profiles = {
         pinpox = {
 
-          containers = {
+          # containers = {
 
-            # dangerous = {
-            #   color = "red";
-            #   icon = "fruit";
-            #   id = 2;
-            # };
+          #   # dangerous = {
+          #   #   color = "red";
+          #   #   icon = "fruit";
+          #   #   id = 2;
+          #   # };
 
-            work = {
-              color = "blue";
-              icon = "cart";
-              id = 1;
-            };
-          };
+          #   work = {
+          #     color = "blue";
+          #     icon = "cart";
+          #     id = 1;
+          #   };
+          # };
 
           search = {
             force = true;
             engines = {
               "Nix Options" = {
-                urls = [{
-                  template = "https://search.nixos.org/options";
-                  params = [
-                    { name = "channel"; value = "unstable"; }
-                    { name = "query"; value = "{searchTerms}"; }
-                  ];
-                }];
+                urls = [
+                  {
+                    template = "https://search.nixos.org/options";
+                    params = [
+                      {
+                        name = "channel";
+                        value = "unstable";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
                 icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@no" ];
               };
               "Nix Packages" = {
-                urls = [{
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    { name = "type"; value = "packages"; }
-                    { name = "query"; value = "{searchTerms}"; }
-                  ];
-                }];
+                urls = [
+                  {
+                    template = "https://search.nixos.org/packages";
+                    params = [
+                      {
+                        name = "type";
+                        value = "packages";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
                 icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@np" ];
               };
