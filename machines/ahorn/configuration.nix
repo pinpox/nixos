@@ -1,14 +1,25 @@
 # Configuration file for ahorn
-{ config, retiolum, pkgs, lib, nixos-hardware, ... }: {
+{
+  config,
+  retiolum,
+  pkgs,
+  lib,
+  nixos-hardware,
+  ...
+}:
+{
+
+  hardware.keyboard.qmk.enable = true;
+
+  services.usbmuxd.enable = true;
 
   # RTL-SDR
   # hardware.rtl-sdr.enable = true;
   # users.users.pinpox.extraGroups = [ "plugdev" ];
 
-  boot.initrd.services.udev.rules =
-    ''
-      SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8037", MODE:="0666"
-    '';
+  boot.initrd.services.udev.rules = ''
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8037", MODE:="0666"
+  '';
 
   # Enable driver for Focusrite Scarlett 2i2 Gen3.
   # This can be removed when we reach Linux Kernel 6.7, as it includes the driver by default
@@ -23,9 +34,7 @@
   ];
 
   # Register a v4l2loopback device at boot
-  boot.kernelModules = [
-    "v4l2loopback"
-  ];
+  boot.kernelModules = [ "v4l2loopback" ];
 
   # boot.extraModprobeConfig = ''
   #   options v4l2loopback exclusive_caps=1 video_nr=9 card_label=a7III
@@ -63,7 +72,6 @@
           chooser_type = "simple";
           chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
         };
-
       };
     };
     extraPortals = [
@@ -82,12 +90,17 @@
   };
 
   services.udev.packages = [
+
+    pkgs.via
     pkgs.qmk-udev-rules # For QMK/Via
     pkgs.libsigrok # For pulseview
   ];
 
   hardware.sane.enable = true;
-  users.users.pinpox.extraGroups = [ "scanner" "lp" ];
+  users.users.pinpox.extraGroups = [
+    "scanner"
+    "lp"
+  ];
 
   # Enable audio producion for pinpox
   home-manager.users.pinpox.pinpox.defaults.audio-recording.enable = true;
@@ -99,6 +112,18 @@
   networking.retiolum = {
     ipv4 = "10.243.100.100";
     ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
+  };
+
+  lollypops.extraTasks = {
+
+    rebuild-nosecrets = {
+      desc = "Rebuild without deloying secrets";
+      cmds = [ ];
+      deps = [
+        "deploy-flake"
+        "rebuild"
+      ];
+    };
   };
 
   lollypops.secrets.files = {
@@ -114,6 +139,10 @@
   boot.blacklistedKernelModules = [ "nouveau" ];
 
   environment.systemPackages = [
+    pkgs.via
+
+    pkgs.libimobiledevice
+    pkgs.ifuse # optional, to mount using 'ifuse'
     pkgs.xdg-desktop-portal
     pkgs.xdg-desktop-portal-wlr
   ];
