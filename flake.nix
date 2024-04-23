@@ -130,8 +130,8 @@
     tfenv.url = "github:tfutils/tfenv";
     tfenv.flake = false;
 
-    ndi-linux.url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
-    ndi-linux.flake = false;
+    # ndi-linux.url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
+    # ndi-linux.flake = false;
 
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
