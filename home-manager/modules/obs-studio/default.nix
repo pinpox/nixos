@@ -1,20 +1,26 @@
-{ lib, pkgs, config, system-config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  system-config,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.obs-studio;
   droidcam-port = 5201;
 in
 {
-  options.pinpox.programs.obs-studio.enable =
-    mkEnableOption "obs-studio";
+  options.pinpox.programs.obs-studio.enable = mkEnableOption "obs-studio";
 
   config = mkIf cfg.enable {
 
-    assertions =
-      [{
+    assertions = [
+      {
         assertion = (builtins.elem droidcam-port system-config.networking.firewall.allowedTCPPorts);
         message = "Port ${toString droidcam-port}/tcp is not open in the firewall, but required by droidcam";
-      }];
+      }
+    ];
 
     home.packages = [
       pkgs.uxplay # AirPlay Unix mirroring server
@@ -25,8 +31,6 @@ in
       plugins = with pkgs.obs-studio-plugins; [
         obs-pipewire-audio-capture
         droidcam-obs
-        obs-ndi
-        # pkgs.my-obs-ndi
         wlrobs
         # obs-vintage-filter
         # obs-teleport
