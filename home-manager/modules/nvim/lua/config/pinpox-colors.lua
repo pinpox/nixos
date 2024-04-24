@@ -23,6 +23,7 @@ local r   = s.reverse
 local sto = s.standout
 local no  = s.NONE
 local v   = vim
+local st  = s.strikethrough
 
 
 
@@ -193,7 +194,7 @@ Group.new('@text.diff.delete',                   c.TODO,         c.none, no)
 Group.new('@text.emphasis',                      c.TODO,         c.none, no)
 Group.new('@text.environment',                   c.TODO,         c.none, no)
 Group.new('@text.environment.name',              c.TODO,         c.none, no)
-Group.new('@text.todo.comment',               c.BrightYellow,        c.none, b)
+Group.new('@text.todo.comment',                  c.BrightYellow, c.none, b)
 Group.new('@text.literal',                       c.Yellow,       c.none, no)
 Group.new('@text.math',                          c.TODO,         c.none, no)
 Group.new('@text.note',                          c.TODO,         c.none, no)
@@ -238,6 +239,32 @@ Group.new('@variable.java',                      c.TODO,         c.none, no)
 Group.new('@variable.javascript',                c.White,        c.none, no)
 Group.new('@variable.scss',                      c.TODO,         c.none, no)
 Group.new('@warning',                            c.TODO,         c.none, no)
+
+Group.new('@markup.link',             c.BrightBlue,   c.none, no)
+Group.new('@markup.link.label',       c.Blue,         c.none, ul)
+Group.new('@markup.link.url',         c.BrightBlack,  c.none, i)
+Group.new('@markup.strong',           c.none,         c.none, b)
+Group.new('@markup.italic',           c.none,         c.none, i)
+Group.new('@markup.strikethrough',    c.none,         c.none, st)
+Group.new('@markup.quote',            c.Magenta,      c.none, i)
+Group.new('@markup.raw.block',        c.BrightWhite,  c.none, no)
+Group.new('@markup.block',            c.none,         c.none, no)
+Group.new('@markup.list',             c.Cyan,         c.none, b)
+Group.new('markdownCode',             c.Green,        c.none, no)
+Group.new('markdownCode',             c.Green,        c.none, no)
+Group.new('markdownCodeBlock',        c.Red,          c.none, no)
+Group.new('markdownCodeDelimiter',    c.Green,        c.none, no)
+Group.new('markdownHeadingDelimiter', c.BrightRed,    c.none, no)
+Group.new('@markup.heading',          c.none,         c.none, sto)
+Group.new('@markup.heading.1',        c.BrightRed,    c.none, b)
+Group.new('@markup.heading.2',        c.Red,          c.none, b)
+Group.new('@markup.heading.3',        c.Yellow,       c.none, b)
+Group.new('@markup.heading.4',        c.BrightYellow, c.none, b)
+Group.new('@markup.heading.5',        c.Green,        c.none, b)
+Group.new('@markup.heading.6',        c.Red,          c.none, b)
+Group.new('@markup.heading.7',        c.Red,          c.none, b)
+Group.new('markdownListMarker',       c.Red,          c.none, b)
+Group.new('markdownlinktext',         c.Blue,         c.none, b)
 
 ---------------------------
 ---- Vim Terminal Colors --
@@ -649,6 +676,7 @@ Group.new('jsonStringSQError',        c.Red,           c.none,        r)
 Group.new('jsonSemicolonError',       c.Red,           c.none,        r)
 
 -- Markdown
+
 Group.new('markdownUrl',              c.Blue,          c.none,        no)
 Group.new('markdownBold',             c.Yellow,        c.none,        b)
 Group.new('markdownItalic',           c.Yellow,        c.none,        i)
