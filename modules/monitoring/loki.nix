@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.monitoring-server.loki;
@@ -22,13 +27,17 @@ in
       configuration = {
         auth_enabled = false;
 
-        server = { http_listen_port = port-loki; };
+        server = {
+          http_listen_port = port-loki;
+        };
 
         ingester = {
           lifecycler = {
             address = "0.0.0.0";
             ring = {
-              kvstore = { store = "inmemory"; };
+              kvstore = {
+                store = "inmemory";
+              };
               replication_factor = 1;
             };
             final_sleep = "0s";
@@ -46,22 +55,21 @@ in
           # Must be greater than index read cache TTL if using an index cache (Default
           # index read cache TTL is 5m)
           chunk_retain_period = "30s";
-
-          # Chunk transfers disabled
-          max_transfer_retries = 0;
         };
 
         schema_config = {
-          configs = [{
-            from = "2020-10-24";
-            store = "boltdb-shipper";
-            object_store = "filesystem";
-            schema = "v11";
-            index = {
-              prefix = "index_";
-              period = "24h";
-            };
-          }];
+          configs = [
+            {
+              from = "2020-10-24";
+              store = "boltdb-shipper";
+              object_store = "filesystem";
+              schema = "v13";
+              index = {
+                prefix = "index_";
+                period = "24h";
+              };
+            }
+          ];
         };
 
         storage_config = {
@@ -73,19 +81,18 @@ in
             # Can be increased for faster performance over longer query periods,
             # uses more disk space
             cache_ttl = "24h";
-
-            shared_store = "filesystem";
           };
 
-          filesystem = { directory = "/var/lib/loki/chunks"; };
+          filesystem = {
+            directory = "/var/lib/loki/chunks";
+          };
         };
 
         limits_config = {
           reject_old_samples = true;
           reject_old_samples_max_age = "168h";
+          allow_structured_metadata = false;
         };
-
-        chunk_store_config = { max_look_back_period = "0s"; };
 
         table_manager = {
           retention_deletes_enabled = false;
@@ -94,7 +101,6 @@ in
 
         compactor = {
           working_directory = "/var/lib/loki/boltdb-shipper-compactor";
-          shared_store = "filesystem";
         };
       };
     };
@@ -113,27 +119,31 @@ in
           grpc_listen_port = 0;
         };
 
-        positions = { filename = "/tmp/positions.yml"; };
+        positions = {
+          filename = "/tmp/positions.yml";
+        };
 
-        clients = [{
-          url = "http://localhost:${toString port-loki}/loki/api/v1/push";
-        }];
+        clients = [ { url = "http://localhost:${toString port-loki}/loki/api/v1/push"; } ];
 
-        scrape_configs = [{
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "${config.networking.hostName}";
+        scrape_configs = [
+          {
+            job_name = "journal";
+            journal = {
+              max_age = "12h";
+              labels = {
+                job = "systemd-journal";
+                host = "${config.networking.hostName}";
+              };
             };
-          };
-          relabel_configs = [{
+            relabel_configs = [
+              {
 
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
-        }];
+                source_labels = [ "__journal__systemd_unit" ];
+                target_label = "unit";
+              }
+            ];
+          }
+        ];
       };
     };
   };
