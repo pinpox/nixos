@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.restic-client;
+let
+  cfg = config.pinpox.services.restic-client;
 in
 {
 
@@ -44,12 +50,12 @@ in
           if [ $EXIT_STATUS -ne 0 ]; then
             ${pkgs.curl}/bin/curl -u $NTFY_USER:$NTFY_PASS \
             -H 'Title: Backup (${site}) on ${host} failed!' \
-            -H 'Tags: backup,borg,${host},${site}' \
+            -H 'Tags: backup,restic,${host},${site}' \
             -d "Restic (${site}) backup error on ${host}!" 'https://push.pablo.tools/pinpox_backups'
           else
             ${pkgs.curl}/bin/curl -u $NTFY_USER:$NTFY_PASS \
             -H 'Title: Backup (${site}) on ${host} successful!' \
-            -H 'Tags: backup,borg,${host},${site}' \
+            -H 'Tags: backup,restic,${host},${site}' \
             -d "Restic (${site}) backup success on ${host}!" 'https://push.pablo.tools/pinpox_backups'
           fi
         '';
@@ -81,6 +87,12 @@ in
           environmentFile = "${config.lollypops.secrets.files."restic/credentials".path}";
           passwordFile = "${config.lollypops.secrets.files."restic/repo-pw".path}";
           backupCleanupCommand = script-post config.networking.hostName "NAS";
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-monthly 12"
+            "--keep-yearly 75"
+          ];
 
           extraBackupArgs = [
             "--exclude-file=${restic-ignore-file}"

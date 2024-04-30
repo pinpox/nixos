@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 with lib;
 let
   cfg = config.pinpox.services.monitoring-server.loki;
@@ -16,6 +11,8 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    pinpox.services.restic-client.backup-paths-exclude = [ "/var/lib/loki" ];
 
     networking.firewall = {
       enable = true;
@@ -94,11 +91,6 @@ in
         compactor.working_directory = "/var/lib/loki/boltdb-shipper-compactor";
       };
     };
-
-    # Exclude loki directory from backup
-    services.borgbackup.jobs.box-backup.exclude = [
-      config.services.loki.configuration.storage_config.filesystem.directory
-    ];
 
     services.promtail = {
       enable = true;

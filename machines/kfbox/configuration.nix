@@ -101,7 +101,6 @@
         };
       };
 
-      borg-backup.enable = true;
       hedgedoc.enable = true;
       miniflux.enable = true;
       thelounge.enable = true;

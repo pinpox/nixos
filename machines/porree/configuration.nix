@@ -1,4 +1,13 @@
-{ lib, matrix-hook, config, retiolum, alertmanager-ntfy, pkgs, ... }: {
+{
+  lib,
+  matrix-hook,
+  config,
+  retiolum,
+  alertmanager-ntfy,
+  pkgs,
+  ...
+}:
+{
 
   imports = [
     ./hardware-configuration.nix
@@ -8,10 +17,12 @@
   ];
 
   networking.interfaces.ens3 = {
-    ipv6.addresses = [{
-      address = "2a03:4000:51:aa3::1";
-      prefixLength = 64;
-    }];
+    ipv6.addresses = [
+      {
+        address = "2a03:4000:51:aa3::1";
+        prefixLength = 64;
+      }
+    ];
   };
 
   lollypops.deployment.ssh.host = "94.16.108.229";
@@ -49,7 +60,6 @@
     # };
   };
 
-
   networking.retiolum.ipv4 = "10.243.100.101";
   networking.retiolum.ipv6 = "42:0:3c46:b51c:b34d:b7e1:3b02:8d24";
 
@@ -84,7 +94,11 @@
   networking.firewall = {
     enable = true;
     allowPing = true;
-    allowedTCPPorts = [ 80 443 22 ];
+    allowedTCPPorts = [
+      80
+      443
+      22
+    ];
     allowedUDPPorts = [ 51820 ];
 
     interfaces.wg0.allowedTCPPorts = [
@@ -230,13 +244,11 @@
         }
         reverse_proxy @vpnonly birne.wireguard:9000
       '';
-
     };
   };
 
   # Enable ip forwarding, so wireguard peers can reach eachother
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-
 
   services.alertmanager-ntfy = {
     enable = true;
@@ -262,7 +274,6 @@
       vaultwarden.enable = true;
       ntfy-sh.enable = true;
 
-
       matrix-hook = {
         enable = true;
         httpAddress = "localhost";
@@ -270,11 +281,8 @@
         matrixUser = "@alertus-maximus:matrix.org";
         matrixRoom = "!ilXTQgAfoBlNBuDmsz:matrix.org";
         envFile = "${config.lollypops.secrets.files."matrix-hook/envfile".path}";
-        msgTemplatePath = "${matrix-hook.packages."x86_64-linux".matrix-hook }/bin/message.html.tmpl";
+        msgTemplatePath = "${matrix-hook.packages."x86_64-linux".matrix-hook}/bin/message.html.tmpl";
       };
-
-
-      borg-backup.enable = true;
 
       # Enable nextcloud configuration
       nextcloud.enable = true;
@@ -286,16 +294,6 @@
         alertmanager-irc-relay.enable = true;
 
         enable = true;
-
-        # TODO remove with borg
-        jsonTargets = [
-          "http://birne.wireguard/borg-ahorn.json"
-          "http://birne.wireguard/borg-birne.json"
-          "http://birne.wireguard/borg-kartoffel.json"
-          "http://birne.wireguard/borg-kfbox.json"
-          "http://birne.wireguard/borg-mega.json"
-          "http://birne.wireguard/borg-porree.json"
-        ];
 
         blackboxTargets = [
           "https://pablo.tools"

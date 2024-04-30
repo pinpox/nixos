@@ -80,7 +80,11 @@ in
           "*/.vim"
           "*/.vimtemp"
         ];
-        backup-paths-offsite = [ config.services.postgresqlBackup.location ];
+        backup-paths-onsite = [
+          config.services.postgresqlBackup.location
+          "/home"
+          "/root"
+        ];
       };
     };
 

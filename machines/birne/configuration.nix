@@ -1,5 +1,6 @@
 # Configuration for birne
-{ nixpkgs, pkgs, ... }: {
+{ nixpkgs, pkgs, ... }:
+{
   imports = [ ./hardware-configuration.nix ];
 
   lollypops.deployment.ssh.host = "192.168.2.84";
@@ -34,42 +35,7 @@
     };
 
     services = {
-
       minio.enable = true;
-
-      # Backup up this host itself
-      borg-backup.enable = true;
-
-      # Set up borg repositories for all hosts
-      borg-server.enable = true;
-
-      borg-server.repositories = {
-        kartoffel.authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHmA67Wm0zAJ+SK1/hhoTO4Zjwe2FyE/6DlyC4JD5S0X borg@kartoffel"
-        ];
-
-        porree.authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEi3WWUu3LXSckiOl1m+4Gjeb71ge7JV6IvBu9Y+R7uZ borg@porree"
-        ];
-
-        ahorn.authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMiQyd921cRNjN4+uGlHS0UjKV3iPTVOWBypvzJVJ6a borg@ahorn"
-        ];
-
-        birne.authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwlv5kttrOxSF9EWffxzj8SDEQvFnJbq139HEQsTLVV borg@birne"
-        ];
-
-        kfbox.authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6bgC5b0zWJTzI58zWGRdFtTvnS6EGeV9NKymVXf4Ht borg@kfbox"
-        ];
-
-        # mega.authorizedKeys = [
-        #   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW3f7nGeEDJIvu7LyLz/bWswPq9gR7AnC9vtiCmdG7C borg@mega"
-        # ];
-
-      };
-
       home-assistant.enable = true;
     };
 
