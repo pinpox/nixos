@@ -27,17 +27,13 @@ in
       configuration = {
         auth_enabled = false;
 
-        server = {
-          http_listen_port = port-loki;
-        };
+        server.http_listen_port = port-loki;
 
         ingester = {
           lifecycler = {
             address = "0.0.0.0";
             ring = {
-              kvstore = {
-                store = "inmemory";
-              };
+              kvstore.store = "inmemory";
               replication_factor = 1;
             };
             final_sleep = "0s";
@@ -57,20 +53,18 @@ in
           chunk_retain_period = "30s";
         };
 
-        schema_config = {
-          configs = [
-            {
-              from = "2020-10-24";
-              store = "boltdb-shipper";
-              object_store = "filesystem";
-              schema = "v13";
-              index = {
-                prefix = "index_";
-                period = "24h";
-              };
-            }
-          ];
-        };
+        schema_config.configs = [
+          {
+            from = "2020-10-24";
+            store = "boltdb-shipper";
+            object_store = "filesystem";
+            schema = "v13";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+        ];
 
         storage_config = {
 
@@ -83,9 +77,7 @@ in
             cache_ttl = "24h";
           };
 
-          filesystem = {
-            directory = "/var/lib/loki/chunks";
-          };
+          filesystem.directory = "/var/lib/loki/chunks";
         };
 
         limits_config = {
@@ -99,9 +91,7 @@ in
           retention_period = "0s";
         };
 
-        compactor = {
-          working_directory = "/var/lib/loki/boltdb-shipper-compactor";
-        };
+        compactor.working_directory = "/var/lib/loki/boltdb-shipper-compactor";
       };
     };
 
@@ -119,9 +109,7 @@ in
           grpc_listen_port = 0;
         };
 
-        positions = {
-          filename = "/tmp/positions.yml";
-        };
+        positions.filename = "/tmp/positions.yml";
 
         clients = [ { url = "http://localhost:${toString port-loki}/loki/api/v1/push"; } ];
 
@@ -137,7 +125,6 @@ in
             };
             relabel_configs = [
               {
-
                 source_labels = [ "__journal__systemd_unit" ];
                 target_label = "unit";
               }
