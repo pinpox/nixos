@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.binary-cache;
+let
+  cfg = config.pinpox.services.binary-cache;
 in
 {
 
@@ -45,7 +51,10 @@ in
       groups.nix-serve = { };
     };
 
-    nix.settings.allowed-users = [ "nix-serve" "push-cache" ];
+    nix.settings.allowed-users = [
+      "nix-serve"
+      "push-cache"
+    ];
 
     nix.extraOptions = ''
       secret-key-files = ${config.lollypops.secrets.files."binary-cache/cache-priv-key.pem".path}
@@ -55,7 +64,8 @@ in
       enable = true;
       secretKeyFile = config.lollypops.secrets.files."binary-cache/cache-priv-key.pem".path;
     };
-    /* nix.extraOptions = let
+    /*
+      nix.extraOptions = let
       upload-script = pkgs.writeShellScript "upload-to-cache" ''
 
       #!/bin/sh
@@ -82,9 +92,7 @@ in
           addSSL = true;
           enableACME = true;
           locations."/".extraConfig = ''
-            proxy_pass http://localhost:${
-              toString config.services.nix-serve.port
-            };
+            proxy_pass http://localhost:${toString config.services.nix-serve.port};
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

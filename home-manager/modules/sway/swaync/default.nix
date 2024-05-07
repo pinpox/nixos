@@ -1,7 +1,11 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 {
-
 
   xdg = {
     enable = true;
@@ -9,7 +13,6 @@ with lib;
 
       swaync-style = {
         target = "swaync/style.css";
-
 
         text =
           let
@@ -35,8 +38,6 @@ with lib;
 
             ${fileContents ./style.css}
           '';
-
-
       };
 
       swaync-config = {

@@ -1,11 +1,15 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.foot;
 in
 {
-  options.pinpox.programs.foot.enable =
-    mkEnableOption "foot terminal emulator";
+  options.pinpox.programs.foot.enable = mkEnableOption "foot terminal emulator";
 
   config = mkIf cfg.enable {
 
@@ -66,9 +70,7 @@ in
         # mouse = {
         #   hide-when-typing = "yes";
         # };
-
       };
     };
-
   };
 }

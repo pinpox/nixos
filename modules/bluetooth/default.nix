@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.bluetooth;
+let
+  cfg = config.pinpox.defaults.bluetooth;
 in
 {
 

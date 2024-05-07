@@ -1,4 +1,11 @@
-{ pkgs, stdenv, fetchFromGitHub, lib, inputs, ... }:
+{
+  pkgs,
+  stdenv,
+  fetchFromGitHub,
+  lib,
+  inputs,
+  ...
+}:
 pkgs.vimUtils.buildVimPlugin {
   pname = "nvim-cokeline";
   version = "latest";
@@ -11,4 +18,3 @@ pkgs.vimUtils.buildVimPlugin {
     platforms = platforms.unix;
   };
 }
-

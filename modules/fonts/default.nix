@@ -1,10 +1,18 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.fonts;
+let
+  cfg = config.pinpox.defaults.fonts;
 in
 {
 
-  options.pinpox.defaults.fonts = { enable = mkEnableOption "Fonts defaults"; };
+  options.pinpox.defaults.fonts = {
+    enable = mkEnableOption "Fonts defaults";
+  };
 
   config = mkIf cfg.enable {
 
@@ -26,12 +34,18 @@ in
 
       fontconfig = {
         defaultFonts = {
-          serif =
-            [ "Berkeley Mono" "Inconsolata Nerd Font Mono" ];
-          sansSerif =
-            [ "Berkeley Mono" "Inconsolata Nerd Font Mono" ];
-          monospace =
-            [ "Berkeley Mono" "Inconsolata Nerd Font Mono" ];
+          serif = [
+            "Berkeley Mono"
+            "Inconsolata Nerd Font Mono"
+          ];
+          sansSerif = [
+            "Berkeley Mono"
+            "Inconsolata Nerd Font Mono"
+          ];
+          monospace = [
+            "Berkeley Mono"
+            "Inconsolata Nerd Font Mono"
+          ];
           emoji = [ "Noto Color Emoji" ];
         };
       };

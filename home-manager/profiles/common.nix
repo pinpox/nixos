@@ -1,4 +1,11 @@
-{ lib, pkgs, nur, flake-self, config, ... }:
+{
+  lib,
+  pkgs,
+  nur,
+  flake-self,
+  config,
+  ...
+}:
 with lib;
 {
   imports = [ ../colorscheme.nix ];
@@ -15,7 +22,9 @@ with lib;
     nixpkgs = {
 
       # Allow "unfree" licenced packages
-      config = { allowUnfree = true; };
+      config = {
+        allowUnfree = true;
+      };
 
       overlays = [
         flake-self.overlays.default

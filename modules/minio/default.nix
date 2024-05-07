@@ -1,10 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.minio;
+let
+  cfg = config.pinpox.services.minio;
 in
 {
 
-  options.pinpox.services.minio = { enable = mkEnableOption "mino s3 config"; };
+  options.pinpox.services.minio = {
+    enable = mkEnableOption "mino s3 config";
+  };
 
   config = mkIf cfg.enable {
 

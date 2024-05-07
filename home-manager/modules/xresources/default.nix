@@ -9,7 +9,6 @@ in
 
   config = mkIf cfg.enable {
 
-
     # ANSI Colors
     # Black
     # Red
@@ -19,8 +18,6 @@ in
     # Purple
     # Cyan
     # White
-
-
 
     xresources.properties = {
       # Black

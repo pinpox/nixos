@@ -1,6 +1,13 @@
-{ config, pkgs, lib, pinpox-keys, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  pinpox-keys,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.openssh;
+let
+  cfg = config.pinpox.services.openssh;
 in
 {
 
@@ -27,8 +34,6 @@ in
       allowedTCPPorts = [ 22 ];
     };
 
-    users.users.root.openssh.authorizedKeys.keyFiles = [
-      pinpox-keys
-    ];
+    users.users.root.openssh.authorizedKeys.keyFiles = [ pinpox-keys ];
   };
 }

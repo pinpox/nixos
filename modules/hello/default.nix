@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.hello;
+let
+  cfg = config.pinpox.services.hello;
 in
 {
   options.pinpox.services.hello = {
@@ -19,8 +25,7 @@ in
 
     systemd.services.hello = {
       wantedBy = [ "multi-user.target" ];
-      serviceConfig.ExecStart =
-        "${pkgs.hello}/bin/hello -g'Hello, ${escapeShellArg cfg.greeter}!'";
+      serviceConfig.ExecStart = "${pkgs.hello}/bin/hello -g'Hello, ${escapeShellArg cfg.greeter}!'";
     };
   };
 }

@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.pinpox.services.hedgedoc;
+let
+  cfg = config.pinpox.services.hedgedoc;
 in
 {
 
@@ -63,7 +64,9 @@ in
     };
 
     # Backup SQLite databse
-    pinpox.services.restic-client.backup-paths-offsite = [ config.services.hedgedoc.settings.db.storage ];
+    pinpox.services.restic-client.backup-paths-offsite = [
+      config.services.hedgedoc.settings.db.storage
+    ];
 
     # systemd.services.hedgedoc-git-sync = {
     #   serviceConfig = {

@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.monitoring-server.dashboard;
@@ -54,32 +59,27 @@ in
         };
       };
 
-
       # TODO add plugins here, instead of using grafana-cli
       # declarativePlugins = with pkgs.grafanaPlugins [
       #    grafana-piechart-panel
       # ];
       # TODO provision the dashboards as currently configured
 
-      provision.datasources.settings =
-        {
-          datasources =
-            [
-              {
-                name = "Prometheus localhost";
-                url = "http://localhost:9090";
-                type = "prometheus";
-                isDefault = true;
-              }
-              {
-                name = "loki";
-                url = "http://localhost:3100";
-                type = "loki";
-              }
-            ];
-
-        };
-
+      provision.datasources.settings = {
+        datasources = [
+          {
+            name = "Prometheus localhost";
+            url = "http://localhost:9090";
+            type = "prometheus";
+            isDefault = true;
+          }
+          {
+            name = "loki";
+            url = "http://localhost:3100";
+            type = "loki";
+          }
+        ];
+      };
     };
   };
 }

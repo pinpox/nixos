@@ -1,4 +1,10 @@
-{ config, pkgs, lib, wallpaper-generator, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  wallpaper-generator,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.awesome;
@@ -24,7 +30,10 @@ in
 
       # List of lua packages available for being used in the Awesome
       # configuration.
-      luaModules = [ pkgs.luaPackages.lgi pkgs.luaPackages.luafilesystem ];
+      luaModules = [
+        pkgs.luaPackages.lgi
+        pkgs.luaPackages.luafilesystem
+      ];
 
       # Disable client transparency support, which can be greatly detrimental to
       # performance in some setups

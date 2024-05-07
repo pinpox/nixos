@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.polybar;
@@ -57,8 +62,7 @@ in
           module-margin-left = 2;
           module-margin-right = 2;
 
-          font-0 =
-            "${config.pinpox.font.normal.family}:style=${config.pinpox.font.normal.style}:pixelsize=8";
+          font-0 = "${config.pinpox.font.normal.family}:style=${config.pinpox.font.normal.style}:pixelsize=8";
 
           modules-left = "i3";
           modules-center = "music";
@@ -122,7 +126,6 @@ in
           label-urgent = "%name%";
           label-urgent-background = "#${config.pinpox.colors.Red}";
           label-urgent-padding = 2;
-
         };
 
         "module/cpu" = {

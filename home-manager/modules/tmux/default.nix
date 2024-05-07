@@ -1,10 +1,15 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.programs.tmux;
+let
+  cfg = config.pinpox.programs.tmux;
 in
 {
-  options.pinpox.programs.tmux.enable =
-    mkEnableOption "tmux terminal mutliplexer";
+  options.pinpox.programs.tmux.enable = mkEnableOption "tmux terminal mutliplexer";
 
   config = mkIf cfg.enable {
     programs.tmux = {
@@ -31,9 +36,7 @@ in
       # Set the $TERM variable.
       terminal = "screen-256color";
 
-      plugins = with pkgs.tmuxPlugins; [
-        tmux-fzf
-      ];
+      plugins = with pkgs.tmuxPlugins; [ tmux-fzf ];
 
       extraConfig = builtins.readFile ./tmux.conf;
     };

@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.programs.zk;
+let
+  cfg = config.pinpox.programs.zk;
 in
 {
   options.pinpox.programs.zk.enable = mkEnableOption "zk zettelkasten client";

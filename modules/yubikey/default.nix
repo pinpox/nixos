@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.yubikey;
+let
+  cfg = config.pinpox.defaults.yubikey;
 in
 {
 
@@ -15,7 +21,6 @@ in
       enableSSHSupport = true;
       pinentryPackage = pkgs.pinentry-qt;
     };
-
 
     # Needed for yubikey to work
     environment.shellInit = ''

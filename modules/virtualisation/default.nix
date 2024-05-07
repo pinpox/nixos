@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.virtualisation;
+let
+  cfg = config.pinpox.virtualisation;
 in
 {
 
@@ -24,6 +30,5 @@ in
     virtualisation.virtualbox.host.enable = true;
     # virtualisation.virtualbox.host.enableExtensionPack = true;
     users.extraGroups.vboxusers.members = [ "pinpox" ];
-
   };
 }

@@ -1,10 +1,20 @@
-{ config, pkgs, lib, flake-self, nixpkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake-self,
+  nixpkgs,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.nix;
+let
+  cfg = config.pinpox.defaults.nix;
 in
 {
 
-  options.pinpox.defaults.nix = { enable = mkEnableOption "Nix defaults"; };
+  options.pinpox.defaults.nix = {
+    enable = mkEnableOption "Nix defaults";
+  };
 
   config = mkIf cfg.enable {
 
@@ -13,14 +23,18 @@ in
       text = ''
         # HELP flake_registry_last_modified Last modification date of flake input in unixtime
         # TYPE flake_input_last_modified gauge
-        ${concatStringsSep "\n" (map (i:
-          ''
-            flake_input_last_modified{input="${i}",${
-              concatStringsSep "," (mapAttrsToList (n: v: ''${n}="${v}"'')
-                (filterAttrs (n: v: (builtins.typeOf v) == "string")
-                  flake-self.inputs."${i}"))
-                }} ${ toString flake-self.inputs."${i}".lastModified or 0 }'')
-          (attrNames flake-self.inputs))}
+        ${concatStringsSep "\n" (
+          map (
+            i:
+            ''flake_input_last_modified{input="${i}",${
+              concatStringsSep "," (
+                mapAttrsToList (n: v: ''${n}="${v}"'') (
+                  filterAttrs (n: v: (builtins.typeOf v) == "string") flake-self.inputs."${i}"
+                )
+              )
+            }} ${toString flake-self.inputs."${i}".lastModified or 0}''
+          ) (attrNames flake-self.inputs)
+        )}
       '';
     };
 
@@ -35,8 +49,7 @@ in
     nixpkgs.overlays = [ flake-self.overlays.default ];
 
     # Let 'nixos-version --json' know the Git revision of this flake.
-    system.configurationRevision =
-      nixpkgs.lib.mkIf (flake-self ? rev) flake-self.rev;
+    system.configurationRevision = nixpkgs.lib.mkIf (flake-self ? rev) flake-self.rev;
     nix.registry.nixpkgs.flake = nixpkgs;
     nix.registry.pinpox.flake = flake-self;
 
@@ -60,18 +73,22 @@ in
 
       settings = {
 
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
 
-        trusted-public-keys =
-          [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
+        trusted-public-keys = [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
 
         substituters = [
           "https://cache.nixos.org"
           "https://cache.lounge.rocks/nix-cache"
         ];
 
-        trusted-substituters =
-          [ "https://cache.nixos.org" "https://cache.lounge.rocks" ];
+        trusted-substituters = [
+          "https://cache.nixos.org"
+          "https://cache.lounge.rocks"
+        ];
 
         # Save space by hardlinking store files
         auto-optimise-store = true;

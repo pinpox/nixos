@@ -1,45 +1,53 @@
 # Taken from https://raw.githubusercontent.com/Mic92/dotfiles/23f163cae52545d44a7e379dc204010b013d679a/nixos/vms/modules/secrets.nix
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.krops.secrets;
-  secret-file = types.submodule ({ config, ... }: {
-    options = {
-      name = mkOption {
-        type = types.str;
-        default = config._module.args.name;
-        description = "Name of the secret";
+  secret-file = types.submodule (
+    { config, ... }:
+    {
+      options = {
+        name = mkOption {
+          type = types.str;
+          default = config._module.args.name;
+          description = "Name of the secret";
+        };
+        path = mkOption {
+          type = types.str;
+          default = "/run/keys/${config.name}";
+          description = "Path to place the secret file";
+        };
+        mode = mkOption {
+          type = types.str;
+          default = "0400";
+          description = "Unix permission";
+        };
+        owner = mkOption {
+          type = types.str;
+          default = "root";
+          description = "Owner of the file";
+        };
+        group-name = mkOption {
+          type = types.str;
+          default = "root";
+          description = "Group of the file";
+        };
+        source-path = mkOption {
+          type = types.str;
+          default = "/var/src/secrets/${config.name}";
+          description = "Source to copy from";
+        };
       };
-      path = mkOption {
-        type = types.str;
-        default = "/run/keys/${config.name}";
-        description = "Path to place the secret file";
-      };
-      mode = mkOption {
-        type = types.str;
-        default = "0400";
-        description = "Unix permission";
-      };
-      owner = mkOption {
-        type = types.str;
-        default = "root";
-        description = "Owner of the file";
-      };
-      group-name = mkOption {
-        type = types.str;
-        default = "root";
-        description = "Group of the file";
-      };
-      source-path = mkOption {
-        type = types.str;
-        default = "/var/src/secrets/${config.name}";
-        description = "Source to copy from";
-      };
-    };
-  });
+    }
+  );
 in
 {
   options.krops.secrets = {
@@ -52,8 +60,7 @@ in
   config = lib.mkIf (cfg.files != { }) {
     system.activationScripts.setup-secrets =
       let
-        files =
-          unique (map (flip removeAttrs [ "_module" ]) (attrValues cfg.files));
+        files = unique (map (flip removeAttrs [ "_module" ]) (attrValues cfg.files));
         script = ''
           echo setting up secrets...
           mkdir -p /run/keys -m 0750
@@ -72,7 +79,9 @@ in
           '') files}
         '';
       in
-      stringAfter [ "users" "groups" ]
-        "source ${pkgs.writeText "setup-secrets.sh" script}";
+      stringAfter [
+        "users"
+        "groups"
+      ] "source ${pkgs.writeText "setup-secrets.sh" script}";
   };
 }

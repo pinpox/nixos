@@ -1,6 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.vikunja;
+let
+  cfg = config.pinpox.services.vikunja;
 in
 {
 
@@ -16,8 +22,8 @@ in
 
   config = mkIf cfg.enable {
 
-    services.caddy.virtualHosts."${cfg.host}".extraConfig =
-      "reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE }";
+    services.caddy.virtualHosts."${cfg.host
+    }".extraConfig = "reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE}";
 
     # Vikunja doesn't allow setting openid configuration parameters (e.g.
     # openid_secret) via environment variables, so we have to treat the
@@ -30,7 +36,9 @@ in
       group = "vikunja";
     };
 
-    users.groups.vikunja = { name = "vikunja"; };
+    users.groups.vikunja = {
+      name = "vikunja";
+    };
 
     lollypops.secrets.files = {
       "vikunja/config" = {
@@ -101,8 +109,9 @@ in
         ExecStart = "${pkgs.vikunja}/bin/vikunja";
         Restart = "always";
         EnvironmentFile = [ config.lollypops.secrets.files."vikunja/envfile".path ];
-        BindReadOnlyPaths = [ "${config.lollypops.secrets.files."vikunja/config".path}:/etc/vikunja/config.yaml" ];
-
+        BindReadOnlyPaths = [
+          "${config.lollypops.secrets.files."vikunja/config".path}:/etc/vikunja/config.yaml"
+        ];
       };
     };
   };

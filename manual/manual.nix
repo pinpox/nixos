@@ -1,4 +1,9 @@
-{ stdenvNoCC, pkgs, flake-self, inputs }:
+{
+  stdenvNoCC,
+  pkgs,
+  flake-self,
+  inputs,
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "flake-manual";
@@ -13,13 +18,17 @@ stdenvNoCC.mkDerivation rec {
       options-json =
         let
 
-          isValidOpt = a: (builtins.hasAttr "_type" a) && (a._type == "option")
+          isValidOpt =
+            a:
+            (builtins.hasAttr "_type" a)
+            && (a._type == "option")
             && (builtins.hasAttr "default" a)
             && (builtins.hasAttr "example" a)
             && (builtins.hasAttr "description" a)
             && (builtins.hasAttr "type" a);
 
-          getOptionValues = opt: path:
+          getOptionValues =
+            opt: path:
             if builtins.typeOf opt == "set" then
               if isValidOpt opt then
                 {
@@ -32,43 +41,42 @@ stdenvNoCC.mkDerivation rec {
                   documentedOption = true;
                 }
               else
-              # it is a set, but has no "default", recurse
+                # it is a set, but has no "default", recurse
                 builtins.mapAttrs (name: value: getOptionValues value (path ++ [ "${name}" ])) opt
             else
               { }; # it is no set
         in
-        pkgs.writeTextFile
-          {
-            name = "options.json";
-            text = builtins.toJSON
+        pkgs.writeTextFile {
+          name = "options.json";
+          text =
+            builtins.toJSON
 
               {
-                options = pkgs.lib.attrsets.collect (o: o ? "documentedOption")
-                  (pkgs.lib.attrsets.mapAttrs
-                    (name: value:
-                      let
-                        allopts = getOptionValues
-                          (value ({
-                            inherit (inputs) flake-self;
-                            inherit pkgs;
-                            lib = pkgs.lib;
-                            config = { };
-                          } // inputs)
-                          ) [ ];
-                      in
-                      if
+                options = pkgs.lib.attrsets.collect (o: o ? "documentedOption") (
+                  pkgs.lib.attrsets.mapAttrs (
+                    name: value:
+                    let
+                      allopts = getOptionValues (value (
+                        {
+                          inherit (inputs) flake-self;
+                          inherit pkgs;
+                          lib = pkgs.lib;
+                          config = { };
+                        }
+                        // inputs
+                      )) [ ];
+                    in
+                    if
                       # Filter out everything that has no ".options.pinpox"
-                        builtins.hasAttr "options" allopts then
-                        if builtins.hasAttr "pinpox" allopts.options then
-                          allopts.options.pinpox
-                        else null
-                      else
-                        null
-                    )
-                    flake-self.nixosModules
-                  );
+                      builtins.hasAttr "options" allopts
+                    then
+                      if builtins.hasAttr "pinpox" allopts.options then allopts.options.pinpox else null
+                    else
+                      null
+                  ) flake-self.nixosModules
+                );
               };
-          };
+        };
     in
     ''
       cat ${options-json} | ${pkgs.mustache-go}/bin/mustache --allow-missing-variables=false ${src}/template.html > index.html

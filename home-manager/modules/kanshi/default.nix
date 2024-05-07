@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.kanshi;
@@ -29,7 +34,6 @@ in
         triple-home = {
           outputs = [
 
-
             # generate with wlay
             #output "eDP-1" {
             #mode 1920x1080@60Hz
@@ -46,8 +50,6 @@ in
             #pos 1920 0
             #transform normal
             #}
-
-
 
             {
               criteria = "eDP-1";

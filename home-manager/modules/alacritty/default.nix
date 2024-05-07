@@ -44,7 +44,9 @@ in
           size = 10;
         };
 
-        cursor = { style = "Beam"; };
+        cursor = {
+          style = "Beam";
+        };
         colors = {
           primary = {
             background = "0x${config.pinpox.colors.Black}";

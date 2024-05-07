@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.monitoring-server.http-irc;
@@ -30,12 +35,10 @@ let
 
   templateFile = pkgs.writeTextFile {
     name = "template.mustache";
-    text = concatStrings [
-      "{{#plain}}{{plain}}{{/plain}}"
-    ];
+    text = concatStrings [ "{{#plain}}{{plain}}{{/plain}}" ];
   };
-  # port-loki = 3100;
 in
+# port-loki = 3100;
 {
 
   options.pinpox.services.monitoring-server.http-irc = {
@@ -53,7 +56,9 @@ in
       createHome = true;
     };
 
-    users.groups.http2irc = { name = "http2irc"; };
+    users.groups.http2irc = {
+      name = "http2irc";
+    };
 
     lollypops.secrets.files."http2irc/envfile" = { };
 
@@ -81,6 +86,5 @@ in
     };
 
     # Reverse proxy
-
   };
 }

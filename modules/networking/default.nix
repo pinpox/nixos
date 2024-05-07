@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.networking;
+let
+  cfg = config.pinpox.defaults.networking;
 in
 {
 
@@ -13,7 +19,11 @@ in
     networking = {
 
       # Define the DNS servers
-      nameservers = [ "1.1.1.1" "8.8.8.8" "192.168.2.1" ];
+      nameservers = [
+        "1.1.1.1"
+        "8.8.8.8"
+        "192.168.2.1"
+      ];
 
       # Enables wireless support via wpa_supplicant.
       # networking.wireless.enable = true;

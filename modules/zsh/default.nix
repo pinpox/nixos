@@ -1,10 +1,18 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.zsh;
+let
+  cfg = config.pinpox.defaults.zsh;
 in
 {
 
-  options.pinpox.defaults.zsh = { enable = mkEnableOption "ZSH defaults"; };
+  options.pinpox.defaults.zsh = {
+    enable = mkEnableOption "ZSH defaults";
+  };
   config = mkIf cfg.enable {
 
     environment.systemPackages = with pkgs; [ zsh ];
@@ -16,7 +24,9 @@ in
 
     programs.zsh = {
       enable = true;
-      shellAliases = { vim = "nvim"; };
+      shellAliases = {
+        vim = "nvim";
+      };
       enableCompletion = true;
       autosuggestions.enable = true;
     };

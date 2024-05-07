@@ -1,4 +1,9 @@
-{ stdenvNoCC, lib, fetchFromGitHub, inputs }:
+{
+  stdenvNoCC,
+  lib,
+  fetchFromGitHub,
+  inputs,
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "zsh-colored-man-pages";

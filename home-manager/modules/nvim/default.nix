@@ -1,4 +1,10 @@
-{ config, pkgs, lib, utils, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  utils,
+  ...
+}:
 
 with lib;
 
@@ -8,7 +14,8 @@ let
 
   # Helper function to add plugins directly from GitHub if they are not
   # packaged in nixpkgs yet
-  plugin = name: repo: branch: sha256:
+  plugin =
+    name: repo: branch: sha256:
     pkgs.vimUtils.buildVimPlugin {
       pname = "vim-plugin-${name}";
       version = "git";
@@ -18,7 +25,6 @@ let
         rev = sha256;
       };
     };
-
 in
 {
   options.pinpox.programs.nvim.enable = mkEnableOption "neovim";
@@ -30,7 +36,6 @@ in
       typst
       typstfmt
       typst-lsp
-
 
       zig
       zls
@@ -94,37 +99,37 @@ in
 
       extraConfig = ''
 
-      source ~/.config/nvim/vimscript/wilder.vim
+        source ~/.config/nvim/vimscript/wilder.vim
 
-      lua << EOF
+        lua << EOF
 
-      local utils = require('utils')
+        local utils = require('utils')
 
-      require('config.general') -- General options, should stay first!
-      require('config.pinpox-colors')
-      require('config.appearance')
-      require('config.treesitter')
-      require('config.lsp')
-      require('config.devicons')
-      require('config.cmp')
-      require('config.which-key')
-      require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-      -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-      require('config.lualine')
-      require('config.gitsigns')
-      -- require('config.zk')
+        require('config.general') -- General options, should stay first!
+        require('config.pinpox-colors')
+        require('config.appearance')
+        require('config.treesitter')
+        require('config.lsp')
+        require('config.devicons')
+        require('config.cmp')
+        require('config.which-key')
+        require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+        -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
+        require('config.lualine')
+        require('config.gitsigns')
+        -- require('config.zk')
 
-      EOF
+        EOF
 
-      " Add snippet directories from packages
-      let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.go}/share/vscode/extensions/golang.Go/snippets/']
-      let g:formatdef_nixpkgs_fmt = '"${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"'
-      let g:formatters_nix = ['nixpkgs_fmt']
+        " Add snippet directories from packages
+        let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.go}/share/vscode/extensions/golang.Go/snippets/']
+        let g:formatdef_nixpkgs_fmt = '"${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"'
+        let g:formatters_nix = ['nixpkgs_fmt']
 
-      let g:formatdef_typst = '"${pkgs.typstfmt}/bin/typstfmt"'
-      let g:formatters_typst = ['typst']
+        let g:formatdef_typst = '"${pkgs.typstfmt}/bin/typstfmt"'
+        let g:formatters_typst = ['typst']
 
-    '';
+      '';
 
       # loaded on launch
       plugins = with pkgs.vimPlugins; [

@@ -1,7 +1,20 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
 
   # Install these packages for my user
-  home.packages = with pkgs; [ exa htop httpie pkg-config tealdeer unzip ];
+  home.packages = with pkgs; [
+    exa
+    htop
+    httpie
+    pkg-config
+    tealdeer
+    unzip
+  ];
 
   pinpox = {
     defaults = {

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
 
@@ -38,8 +43,7 @@ in
           font = "${config.pinpox.font.normal.family} ${config.pinpox.font.normal.style} 8";
           line_height = 0;
           markup = "full";
-          format =
-            "<b><span foreground='#${config.pinpox.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
+          format = "<b><span foreground='#${config.pinpox.colors.Blue}'>%s</span></b>\\n<span>%b</span>";
           alignment = "left";
           show_age_threshold = 60;
           word_wrap = "yes";

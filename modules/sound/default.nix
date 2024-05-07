@@ -1,10 +1,18 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.defaults.sound;
+let
+  cfg = config.pinpox.defaults.sound;
 in
 {
 
-  options.pinpox.defaults.sound = { enable = mkEnableOption "sound defaults"; };
+  options.pinpox.defaults.sound = {
+    enable = mkEnableOption "sound defaults";
+  };
   config = mkIf cfg.enable {
 
     # Enable sound.
@@ -29,6 +37,5 @@ in
     #     session.suspend-timeout-seconds = 0
     #   '';
     # };
-
   };
 }

@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.pinpox.services.thelounge;
+let
+  cfg = config.pinpox.services.thelounge;
 in
 {
 
@@ -36,5 +37,4 @@ in
       "/var/lib/thelounge/vapid.json"
     ];
   };
-
 }

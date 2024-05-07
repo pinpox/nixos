@@ -1,4 +1,11 @@
-{ config, pkgs, lib, flake-self, nixpkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake-self,
+  nixpkgs,
+  ...
+}:
 with lib;
 {
   options.pinpox.defaults = {

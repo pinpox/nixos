@@ -1,7 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.filebrowser;
-
+let
+  cfg = config.pinpox.services.filebrowser;
 in
 {
 
@@ -22,7 +27,9 @@ in
       createHome = true;
     };
 
-    users.groups.filebrowser = { name = "filebrowser"; };
+    users.groups.filebrowser = {
+      name = "filebrowser";
+    };
 
     # Service
     systemd.services.filebrowser = {

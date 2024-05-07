@@ -1,4 +1,11 @@
-{ config, pkgs, lib, pinpox-keys, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  pinpox-keys,
+  ...
+}:
+{
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {

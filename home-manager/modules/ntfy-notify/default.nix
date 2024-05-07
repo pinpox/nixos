@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.ntfy-notify;
@@ -8,7 +13,6 @@ in
 
   config = mkIf cfg.enable {
 
-
     lollypops.secrets.files."ntfy-envfile" = { };
 
     systemd.user.services =
@@ -16,18 +20,17 @@ in
 
         ntfy-config = pkgs.writeTextFile {
           name = "ntfy-client.json";
-          text = builtins.toJSON
-            {
-              default-host = "https://push.pablo.tools";
-              default-command = ''
-                echo $raw | ${pkgs.libnotify}/bin/notify-send "$title" "$m"
-              '';
-              subscribe = [
-                { topic = "pinpox_backups"; }
-                { topic = "pinpox_alertmanager"; }
-                { topic = "woodpecker_ci"; }
-              ];
-            };
+          text = builtins.toJSON {
+            default-host = "https://push.pablo.tools";
+            default-command = ''
+              echo $raw | ${pkgs.libnotify}/bin/notify-send "$title" "$m"
+            '';
+            subscribe = [
+              { topic = "pinpox_backups"; }
+              { topic = "pinpox_alertmanager"; }
+              { topic = "woodpecker_ci"; }
+            ];
+          };
         };
       in
 

@@ -25,6 +25,5 @@ in
         # citeproc = true;
       };
     };
-
   };
 }

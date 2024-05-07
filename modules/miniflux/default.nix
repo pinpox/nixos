@@ -1,7 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.miniflux;
-
+let
+  cfg = config.pinpox.services.miniflux;
 in
 {
 
@@ -26,7 +31,9 @@ in
       serviceConfig = {
         LoadCredential = [
           "oauth2_client_id_file:${config.lollypops.secrets.files."miniflux/oauth2_client_id_file".path}"
-          "oauth2_client_secret_file:${config.lollypops.secrets.files."miniflux/oauth2_client_secret_file".path}"
+          "oauth2_client_secret_file:${
+            config.lollypops.secrets.files."miniflux/oauth2_client_secret_file".path
+          }"
         ];
       };
     };

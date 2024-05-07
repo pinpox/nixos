@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-
 
   # Filesystems
   fileSystems."/" = {
@@ -17,7 +19,10 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_rpi4;
     tmpOnTmpfs = true;
-    initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = [
+      "usbhid"
+      "usb_storage"
+    ];
     # ttyAMA0 is the serial console broken out to the GPIO
     kernelParams = [
       "8250.nr_uarts=1"
@@ -27,8 +32,6 @@
       "cma=128M"
     ];
   };
-
-
 
   # Openssh
   programs.ssh.startAgent = false;
@@ -58,16 +61,12 @@
     };
   };
 
-
-
   # Locale settings
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     keyMap = "colemak";
   };
-
-
 
   users = {
     users.root = {
@@ -79,9 +78,6 @@
       ];
     };
   };
-
-
-
 
   nix = {
     autoOptimiseStore = true;

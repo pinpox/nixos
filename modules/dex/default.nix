@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.pinpox.services.dex;
+let
+  cfg = config.pinpox.services.dex;
 in
 {
 
@@ -17,8 +18,8 @@ in
   config = mkIf cfg.enable {
 
     # Reverse proxy
-    services.caddy.virtualHosts."${cfg.host}".extraConfig =
-      "reverse_proxy ${config.services.dex.settings.web.http}";
+    services.caddy.virtualHosts."${cfg.host
+    }".extraConfig = "reverse_proxy ${config.services.dex.settings.web.http}";
 
     # Secrets
     lollypops.secrets.files."dex/envfile" = { };

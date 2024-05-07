@@ -1,7 +1,15 @@
-{ stdenv, smartmontools, python3, ... }:
+{
+  stdenv,
+  smartmontools,
+  python3,
+  ...
+}:
 stdenv.mkDerivation {
   name = "smartmon-script";
-  buildInputs = [ python3 smartmontools ];
+  buildInputs = [
+    python3
+    smartmontools
+  ];
   unpackPhase = "true";
   installPhase = ''
     mkdir -p $out/bin

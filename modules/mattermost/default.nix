@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.mattermost;
+let
+  cfg = config.pinpox.services.mattermost;
 in
 {
 
@@ -25,14 +31,16 @@ in
         ServiceSettings = {
           EnableEmailInvitations = true;
           EnableOAuthServiceProvider = true;
-          TrustedProxyIPHeader = [ "X-Forwarded-For" "X-Real-IP" ];
+          TrustedProxyIPHeader = [
+            "X-Forwarded-For"
+            "X-Real-IP"
+          ];
           AllowCorsFrom = "*";
         };
 
         FileSettings.Directory = "/var/lib/mattermost/files";
       };
     };
-
 
     lollypops.secrets.files."mattermost/envfile" = { };
 

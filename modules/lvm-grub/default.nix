@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.pinpox.defaults.lvm-grub;
+let
+  cfg = config.pinpox.defaults.lvm-grub;
 in
 {
 
@@ -23,7 +24,6 @@ in
         grub.efiInstallAsRemovable = true;
         # efi.canTouchEfiVariables = true;
         # useOSProber = true;
-
       };
 
       # /tmp is cleaned after each reboot

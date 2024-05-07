@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.mako;
@@ -7,7 +12,6 @@ in
   options.pinpox.programs.mako.enable = mkEnableOption "mako notifications";
 
   config = mkIf cfg.enable {
-
 
     # Needed for firefox and thunderbird
     home.packages = [ pkgs.libnotify ];

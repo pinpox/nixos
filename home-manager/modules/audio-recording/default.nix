@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.defaults.audio-recording;
@@ -26,13 +31,15 @@ in
 
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-      reaper
-      alsa-scarlett-gui
-    ]
+    home.packages =
+      with pkgs;
+      [
+        reaper
+        alsa-scarlett-gui
+      ]
 
-    # Some plugins also have a binary, so we also add them to PATH
-    ++ plugins;
+      # Some plugins also have a binary, so we also add them to PATH
+      ++ plugins;
 
     # Place vst, vst3, clap, lv2 and ladspa plugins in the according
     # directories where reaper will look for them
@@ -44,11 +51,31 @@ in
         };
       in
       {
-        all-lv2 = { recursive = true; source = "${all-audio-plugins}/lib/lv2"; target = ".lv2"; };
-        all-clap = { recursive = true; source = "${all-audio-plugins}/lib/clap"; target = ".clap"; };
-        all-vst = { recursive = true; source = "${all-audio-plugins}/lib/vst"; target = ".vst"; };
-        all-vst3 = { recursive = true; source = "${all-audio-plugins}/lib/vst3"; target = ".vst3"; };
-        all-ladspa = { recursive = true; source = "${all-audio-plugins}/lib/ladspa"; target = ".ladspa"; };
+        all-lv2 = {
+          recursive = true;
+          source = "${all-audio-plugins}/lib/lv2";
+          target = ".lv2";
+        };
+        all-clap = {
+          recursive = true;
+          source = "${all-audio-plugins}/lib/clap";
+          target = ".clap";
+        };
+        all-vst = {
+          recursive = true;
+          source = "${all-audio-plugins}/lib/vst";
+          target = ".vst";
+        };
+        all-vst3 = {
+          recursive = true;
+          source = "${all-audio-plugins}/lib/vst3";
+          target = ".vst3";
+        };
+        all-ladspa = {
+          recursive = true;
+          source = "${all-audio-plugins}/lib/ladspa";
+          target = ".ladspa";
+        };
       };
   };
 }

@@ -1,6 +1,13 @@
-{ config, lib, pkgs, caddy-patched, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  caddy-patched,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.caddy-security;
+let
+  cfg = config.pinpox.services.caddy-security;
 in
 {
 
@@ -132,22 +139,23 @@ in
 
       virtualHosts =
         let
-          mkStaticTestSite = num: pkgs.writeTextFile {
-            name = "index.html";
-            text = ''
-              <!DOCTYPE html>
-              <html>
-                <head> <meta charset="UTF-8"> </head>
-                <body>
-                <h1>Hello World (${num})!</h1>
-                <p>This is the site number ${num}</p>
-                </body>
-              </html>
-            '';
-            executable = false;
-            destination = "/html/index.html";
-          };
-
+          mkStaticTestSite =
+            num:
+            pkgs.writeTextFile {
+              name = "index.html";
+              text = ''
+                <!DOCTYPE html>
+                <html>
+                  <head> <meta charset="UTF-8"> </head>
+                  <body>
+                  <h1>Hello World (${num})!</h1>
+                  <p>This is the site number ${num}</p>
+                  </body>
+                </html>
+              '';
+              executable = false;
+              destination = "/html/index.html";
+            };
         in
         {
 

@@ -12,7 +12,10 @@ in
         enable = true;
         lfs.enable = true;
 
-        ignores = [ "tags" "*.swp" ];
+        ignores = [
+          "tags"
+          "*.swp"
+        ];
 
         extraConfig = {
           # Possibly change this to "main" when majority of projects have

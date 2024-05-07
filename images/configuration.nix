@@ -1,5 +1,12 @@
-{ config, pkgs, lib, modulesPath, ... }:
-with lib; {
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+with lib;
+{
 
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
@@ -53,11 +60,14 @@ with lib; {
     nix.package = pkgs.nixVersions.stable;
 
     # Install some basic utilities
-    environment.systemPackages = [ pkgs.git pkgs.ag pkgs.htop ];
+    environment.systemPackages = [
+      pkgs.git
+      pkgs.ag
+      pkgs.htop
+    ];
 
     # Let 'nixos-version --json' know about the Git revision
     # of this flake.
     # system.configurationRevision = pkgs.lib.mkIf (self ? rev) self.rev;
-
   };
 }

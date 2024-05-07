@@ -17,7 +17,6 @@ in
     networking.firewall.trustedInterfaces = [ "wg0" ];
 
     /*
-
       services.wyoming = {
       faster-whisper = {
         servers."name" = {
@@ -66,7 +65,10 @@ in
     pinpox.services.restic-client.backup-paths-offsite = [ config.services.home-assistant.configDir ];
 
     # Needed for some integrations
-    users.users.hass.extraGroups = [ "dialout" "keys" ];
+    users.users.hass.extraGroups = [
+      "dialout"
+      "keys"
+    ];
 
     # Open port for mqtt
     networking.firewall = {
@@ -89,18 +91,20 @@ in
 
       # Mosquitto is only listening on the local IP, traffic from outside is not
       # allowed.
-      listeners = [{
-        address = "192.168.2.84";
-        port = 1883;
-        users = {
-          # No real authentication needed here, since the local network is
-          # trusted.
-          mosquitto = {
-            acl = [ "readwrite #" ];
-            password = "mosquitto";
+      listeners = [
+        {
+          address = "192.168.2.84";
+          port = 1883;
+          users = {
+            # No real authentication needed here, since the local network is
+            # trusted.
+            mosquitto = {
+              acl = [ "readwrite #" ];
+              password = "mosquitto";
+            };
           };
-        };
-      }];
+        }
+      ];
     };
 
     # The prometheus integration of home-assistant is incomplete (e.g. missing
@@ -173,13 +177,13 @@ in
       config = {
 
         /*
-        # M5Stack Atom Echo
-        # Example configuration.yaml
-        homeassistant.media_dirs = {
-          # media ="/var/lib/hass/media";
-          media = "/var/lib/hass/tts";
-          recording = "/var/lib/hass/recordings";
-        };
+          # M5Stack Atom Echo
+          # Example configuration.yaml
+          homeassistant.media_dirs = {
+            # media ="/var/lib/hass/media";
+            media = "/var/lib/hass/tts";
+            recording = "/var/lib/hass/recordings";
+          };
         */
 
         sensor = [
@@ -223,17 +227,18 @@ in
         device_tracker =
           let
             # Unifi APs
-            ap-ips = [ "192.168.2.110" "192.168.2.111" "192.168.2.126" ];
+            ap-ips = [
+              "192.168.2.110"
+              "192.168.2.111"
+              "192.168.2.126"
+            ];
           in
-          map
-            (host: {
-              inherit host;
-              platform = "unifi_direct";
-              username = "pinpox";
-              password = "!unifi-ap-ssh";
-            })
-            ap-ips;
-
+          map (host: {
+            inherit host;
+            platform = "unifi_direct";
+            username = "pinpox";
+            password = "!unifi-ap-ssh";
+          }) ap-ips;
 
         weather = { };
         sun = { };
@@ -247,7 +252,6 @@ in
             data_template.device_name = "Apfeltasche (2)";
           };
         };
-
 
         ios = {
           actions = [
@@ -321,38 +325,46 @@ in
             mode = "single";
             alias = "Rack Button 1";
             description = "Toggle Lightbulb Box";
-            trigger = [{
-              type = "turned_off";
-              platform = "device";
-              device_id = "f0a65ba3fc5a542ec83a1fc22a36d2e2";
-              entity_id = "42b59835bb83659d01cc2ab0da4c429e";
-              domain = "binary_sensor";
-            }];
-            action = [{
-              type = "toggle";
-              device_id = "a8c96a8429ae8a7a13c058f79c886684";
-              entity_id = "switch.lightbulb_box";
-              domain = "switch";
-            }];
+            trigger = [
+              {
+                type = "turned_off";
+                platform = "device";
+                device_id = "f0a65ba3fc5a542ec83a1fc22a36d2e2";
+                entity_id = "42b59835bb83659d01cc2ab0da4c429e";
+                domain = "binary_sensor";
+              }
+            ];
+            action = [
+              {
+                type = "toggle";
+                device_id = "a8c96a8429ae8a7a13c058f79c886684";
+                entity_id = "switch.lightbulb_box";
+                domain = "switch";
+              }
+            ];
           }
           {
             id = "rackmount_button2";
             mode = "single";
             alias = "Rack Button 2";
             description = "Toggle RGB Strip";
-            trigger = [{
-              type = "turned_off";
-              platform = "device";
-              device_id = "f0a65ba3fc5a542ec83a1fc22a36d2e2";
-              entity_id = "binary_sensor.button_2";
-              domain = "binary_sensor";
-            }];
-            action = [{
-              type = "toggle";
-              device_id = "d97c93bff99173ae0b3b20d640050508";
-              entity_id = "light.rgb_strip_1";
-              domain = "light";
-            }];
+            trigger = [
+              {
+                type = "turned_off";
+                platform = "device";
+                device_id = "f0a65ba3fc5a542ec83a1fc22a36d2e2";
+                entity_id = "binary_sensor.button_2";
+                domain = "binary_sensor";
+              }
+            ];
+            action = [
+              {
+                type = "toggle";
+                device_id = "d97c93bff99173ae0b3b20d640050508";
+                entity_id = "light.rgb_strip_1";
+                domain = "light";
+              }
+            ];
           }
 
           {
@@ -360,35 +372,43 @@ in
             mode = "single";
             alias = "Rack Button 3";
             description = "Toggle Ceiling light";
-            trigger = [{
-              type = "turned_off";
-              platform = "device";
-              device_id = "f0a65ba3fc5a542ec83a1fc22a36d2e2";
-              entity_id = "binary_sensor.button_3";
-              domain = "binary_sensor";
-            }];
-            action = [{
-              type = "toggle";
-              device_id = "d71e3f9c22a777149793e6b126f27550";
-              entity_id = "switch.deckenlicht";
-              domain = "switch";
-            }];
+            trigger = [
+              {
+                type = "turned_off";
+                platform = "device";
+                device_id = "f0a65ba3fc5a542ec83a1fc22a36d2e2";
+                entity_id = "binary_sensor.button_3";
+                domain = "binary_sensor";
+              }
+            ];
+            action = [
+              {
+                type = "toggle";
+                device_id = "d71e3f9c22a777149793e6b126f27550";
+                entity_id = "switch.deckenlicht";
+                domain = "switch";
+              }
+            ];
           }
           {
             id = "auto_deckenlicht_toggle";
             alias = "Deckenlicht Toggle";
-            trigger = [{
-              platform = "event";
-              event_type = "ios.action_fired";
-              event_data.actionName = "Toggle Deckenlicht";
-            }];
+            trigger = [
+              {
+                platform = "event";
+                event_type = "ios.action_fired";
+                event_data.actionName = "Toggle Deckenlicht";
+              }
+            ];
 
-            action = [{
-              type = "toggle";
-              device_id = "d71e3f9c22a777149793e6b126f27550";
-              entity_id = "switch.deckenlicht";
-              domain = "switch";
-            }];
+            action = [
+              {
+                type = "toggle";
+                device_id = "d71e3f9c22a777149793e6b126f27550";
+                entity_id = "switch.deckenlicht";
+                domain = "switch";
+              }
+            ];
           }
           {
             id = "auto_rgb_toggle";
@@ -417,12 +437,14 @@ in
               }
             ];
 
-            action = [{
-              type = "toggle";
-              device_id = "d97c93bff99173ae0b3b20d640050508";
-              entity_id = "light.rgb_strip_1";
-              domain = "light";
-            }];
+            action = [
+              {
+                type = "toggle";
+                device_id = "d97c93bff99173ae0b3b20d640050508";
+                entity_id = "light.rgb_strip_1";
+                domain = "light";
+              }
+            ];
           }
         ];
 
@@ -480,7 +502,9 @@ in
         # sensor = [{ platform = "fritzbox_netmonitor"; }];
 
         # Metrics for prometheus
-        prometheus = { namespace = "hass"; };
+        prometheus = {
+          namespace = "hass";
+        };
 
         # Enable MQTT
         mqtt = { };

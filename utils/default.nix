@@ -1,5 +1,7 @@
-{ pkgs, ... }: {
-  renderMustache = name: template: data:
+{ pkgs, ... }:
+{
+  renderMustache =
+    name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON
     pkgs.stdenv.mkDerivation {
 
@@ -13,7 +15,10 @@
       passAsFile = [ "jsonData" ];
       jsonData = builtins.toJSON data;
 
-      phases = [ "buildPhase" "installPhase" ];
+      phases = [
+        "buildPhase"
+        "installPhase"
+      ];
 
       buildPhase = ''
         ${pkgs.mustache-go}/bin/mustache $jsonDataPath ${template} > rendered_file

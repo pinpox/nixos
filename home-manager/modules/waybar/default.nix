@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.waybar;
@@ -42,7 +47,6 @@ in
           ${fileContents ./style.css}
         '';
 
-
       settings.mainbar = {
         layer = "top";
         position = "bottom";
@@ -58,7 +62,14 @@ in
         ];
         # modules-center = ["river/mode", "river/window"],
         # modules-right = ["idle_inhibitor", "backlight",  "cpu","memory", "temperature"],
-        modules-right = [ "tray" "custom/notification" "network" "pulseaudio" "battery" "clock" ];
+        modules-right = [
+          "tray"
+          "custom/notification"
+          "network"
+          "pulseaudio"
+          "battery"
+          "clock"
+        ];
 
         # "river/tags" = {
         #   "num-tags" = 9;
@@ -112,7 +123,13 @@ in
           format-alt = "{time} {icon}";
           format-good = "{capacity}% {icon}";
           format-full = "{capacity}% {icon}";
-          format-icons = [ " " " " " " " " " " ];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
         };
         network = {
           format-wifi = "{essid} ({signalStrength}%)  ";
@@ -152,7 +169,11 @@ in
           format-source-muted = "";
           format-icons = {
             headphone = "";
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           on-click = "pavucontrol";
         };

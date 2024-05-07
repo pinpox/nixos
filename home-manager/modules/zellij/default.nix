@@ -1,10 +1,10 @@
 { lib, config, ... }:
 with lib;
-let cfg = config.pinpox.programs.zellij;
+let
+  cfg = config.pinpox.programs.zellij;
 in
 {
-  options.pinpox.programs.zellij.enable =
-    mkEnableOption "zellij terminal mutliplexer";
+  options.pinpox.programs.zellij.enable = mkEnableOption "zellij terminal mutliplexer";
 
   config = mkIf cfg.enable {
     programs.zellij = {

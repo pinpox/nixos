@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.pinpox.services.owncast;
+let
+  cfg = config.pinpox.services.owncast;
 in
 {
   options.pinpox.services.owncast = {
@@ -25,8 +26,8 @@ in
 
     services.caddy = {
       enable = true;
-      virtualHosts. "${cfg.host}".extraConfig =
-        "reverse_proxy 127.0.0.1:${builtins.toString config.services.owncast.port}";
+      virtualHosts."${cfg.host
+      }".extraConfig = "reverse_proxy 127.0.0.1:${builtins.toString config.services.owncast.port}";
     };
   };
 }

@@ -1,7 +1,12 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.vaultwarden;
-
+let
+  cfg = config.pinpox.services.vaultwarden;
 in
 {
 
@@ -50,15 +55,14 @@ in
       in
       {
         enable = true;
-        virtualHosts."${cfg.host}".extraConfig =
-          ''
-            handle /api/config/ {
-              try_files {path} ${config_workfile}
-              file_server
-            }
+        virtualHosts."${cfg.host}".extraConfig = ''
+          handle /api/config/ {
+            try_files {path} ${config_workfile}
+            file_server
+          }
 
-            reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
-          '';
+          reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
+        '';
       };
 
     systemd.services.backup-vaultwarden.serviceConfig.StateDirectory = "vaultwarden-backups";
@@ -86,6 +90,5 @@ in
       "${config.services.vaultwarden.backupDir}"
       "/var/lib/bitwarden_rs"
     ];
-
   };
 }

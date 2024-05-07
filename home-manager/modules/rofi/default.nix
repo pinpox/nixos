@@ -13,8 +13,8 @@ in
       # General
       enable = true;
       font = "${config.pinpox.font.family} ${config.pinpox.font.normal.style} ${
-          toString (config.pinpox.font.size * 2)
-        }px";
+        toString (config.pinpox.font.size * 2)
+      }px";
       cycle = true;
       # extraConfig = "";
 

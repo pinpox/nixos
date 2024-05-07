@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.defaults.credentials;
@@ -13,7 +18,9 @@ in
 
     programs.neomutt = {
       enable = true;
-      sidebar = { enable = true; };
+      sidebar = {
+        enable = true;
+      };
       extraConfig = ''
         set imap_user = "pablo1@mailbox.org"
         set imap_pass = "`pass mailbox.org/pablo1@mailbox.org`"
@@ -38,7 +45,9 @@ in
           # extraConfig = '''';
         };
 
-        maildir = { path = "pablo_tools"; };
+        maildir = {
+          path = "pablo_tools";
+        };
         # himalaya.enable = true;
 
         # folders = {

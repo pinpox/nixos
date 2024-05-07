@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
 
@@ -83,7 +88,10 @@ in
             optipng
           ];
           MATERIA_COLORS = materia_colors;
-          phases = [ "unpackPhase" "installPhase" ];
+          phases = [
+            "unpackPhase"
+            "installPhase"
+          ];
           installPhase = ''
             HOME=/build
             chmod 777 -R .

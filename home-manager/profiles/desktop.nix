@@ -1,16 +1,18 @@
-{ system-config, pkgs, ... }: {
-
+{ system-config, pkgs, ... }:
+{
 
   programs.helix = {
     enable = true;
 
     # https://docs.helix-editor.com/languages.html
     languages = {
-      language = [{
-        name = "nix";
-        auto-format = false;
-        formatter.command = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
-      }];
+      language = [
+        {
+          name = "nix";
+          auto-format = false;
+          formatter.command = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
+        }
+      ];
     };
 
     settings = {
@@ -33,10 +35,13 @@
       theme = "catppuccin_mocha";
 
       keys = {
-        normal = { ";" = "command_mode"; };
-        select = { ";" = "command_mode"; };
+        normal = {
+          ";" = "command_mode";
+        };
+        select = {
+          ";" = "command_mode";
+        };
       };
-
     };
     # themes = { };
   };
@@ -96,87 +101,89 @@
       };
   };
 
-
   # Install these packages for my user
-  home.packages = with pkgs; [
-    swaynotificationcenter
+  home.packages =
+    with pkgs;
+    [
+      swaynotificationcenter
 
-    zotero
+      zotero
 
-    # From nixpkgs
-    # arduino
-    # arduino-cli
-    # calibre
-    # recursive
-    # retroarch
-    asciinema
-    cbatticon
-    evince
-    eza
-    fd
-    gcc
-    gimp
-    gnome.adwaita-icon-theme
-    gnome.file-roller
-    gtk_engines
-    h # https://github.com/zimbatm/h
-    helix
-    htop
-    imagemagick
-    inetutils
-    libnotify
-    lxappearance
-    manix
-    matcha-gtk-theme
-    meld
-    ncdu
-    networkmanager-openvpn
-    networkmanagerapplet
-    nextcloud-client
-    nitrogen
-    nix-index
-    nmap
-    openvpn
-    papirus-icon-theme
-    pavucontrol
-    pkg-config
-    playerctl
-    pre-commit
-    scrot
-    signal-desktop
-    spotify
-    sqlite
-    taskwarrior
-    tealdeer
-    tfenv
-    thunderbird-bin
-    timewarrior
-    unzip
-    viewnior
-    vlc
-    xarchiver
-    xdg-utils
-    xfce.exo # thunar "open terminal here"
-    xfce.thunar-archive-plugin
-    xfce.thunar-volman
-    xfce.tumbler # thunar thumbnails
-    xfce.xfce4-volumed-pulse
-    xfce.xfconf # thunar save settings
-    # yubioath-desktop
-    # xfce.thunar
-    (xfce.thunar.override {
-      thunarPlugins = with pkgs; [
-        xfce.thunar-volman
-        xfce.thunar-archive-plugin
-        xfce.thunar-media-tags-plugin
+      # From nixpkgs
+      # arduino
+      # arduino-cli
+      # calibre
+      # recursive
+      # retroarch
+      asciinema
+      cbatticon
+      evince
+      eza
+      fd
+      gcc
+      gimp
+      gnome.adwaita-icon-theme
+      gnome.file-roller
+      gtk_engines
+      h # https://github.com/zimbatm/h
+      helix
+      htop
+      imagemagick
+      inetutils
+      libnotify
+      lxappearance
+      manix
+      matcha-gtk-theme
+      meld
+      ncdu
+      networkmanager-openvpn
+      networkmanagerapplet
+      nextcloud-client
+      nitrogen
+      nix-index
+      nmap
+      openvpn
+      papirus-icon-theme
+      pavucontrol
+      pkg-config
+      playerctl
+      pre-commit
+      scrot
+      signal-desktop
+      spotify
+      sqlite
+      taskwarrior
+      tealdeer
+      tfenv
+      thunderbird-bin
+      timewarrior
+      unzip
+      viewnior
+      vlc
+      xarchiver
+      xdg-utils
+      xfce.exo # thunar "open terminal here"
+      xfce.thunar-archive-plugin
+      xfce.thunar-volman
+      xfce.tumbler # thunar thumbnails
+      xfce.xfce4-volumed-pulse
+      xfce.xfconf # thunar save settings
+      # yubioath-desktop
+      # xfce.thunar
+      (xfce.thunar.override {
+        thunarPlugins = with pkgs; [
+          xfce.thunar-volman
+          xfce.thunar-archive-plugin
+          xfce.thunar-media-tags-plugin
+        ];
+      })
+    ]
+    ++
+      # Packages only useful when using xserver
+      lib.optionals system-config.pinpox.services.xserver.enable [
+        arandr
+        xorg.xrandr
       ];
-    })
-  ] ++
-  # Packages only useful when using xserver
-  lib.optionals system-config.pinpox.services.xserver.enable [
-    arandr
-    xorg.xrandr
-  ];
 
   xdg = {
     enable = true;
@@ -219,7 +226,8 @@
     cbatticon.enable = true;
 
     # Keyring
-    gnome-keyring = { enable = true; };
-
+    gnome-keyring = {
+      enable = true;
+    };
   };
 }

@@ -1,4 +1,9 @@
-{ lib, fetchFromGitHub, buildGoModule, pkgs }:
+{
+  lib,
+  fetchFromGitHub,
+  buildGoModule,
+  pkgs,
+}:
 
 buildGoModule rec {
   pname = "fritzbox_exporter";

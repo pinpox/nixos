@@ -1,4 +1,9 @@
-{ stdenvNoCC, lib, fetchFromGitHub, inputs }:
+{
+  stdenvNoCC,
+  lib,
+  fetchFromGitHub,
+  inputs,
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "zsh-abbrev-alias";
@@ -16,8 +21,7 @@ stdenvNoCC.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description =
-      "ZSH plugin with functionality similar to Vim's abbreviation expansion.";
+    description = "ZSH plugin with functionality similar to Vim's abbreviation expansion.";
     homepage = "https://github.com/momo-lab/zsh-abbrev-alias";
     license = licenses.mit;
     platforms = platforms.unix;

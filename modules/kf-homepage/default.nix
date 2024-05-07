@@ -1,6 +1,7 @@
 { lib, config, ... }:
 with lib;
-let cfg = config.pinpox.services.kf-homepage;
+let
+  cfg = config.pinpox.services.kf-homepage;
 in
 {
 

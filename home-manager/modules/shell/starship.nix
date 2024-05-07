@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs.starship = {
     enable = false;
     enableBashIntegration = true;
@@ -10,11 +11,17 @@
         error_symbol = "[×](bold red) ";
       };
 
-      aws = { disabled = true; };
+      aws = {
+        disabled = true;
+      };
 
-      python = { disabled = true; };
+      python = {
+        disabled = true;
+      };
 
-      nix_shell = { symbol = "❄  "; };
+      nix_shell = {
+        symbol = "❄  ";
+      };
 
       git_status = {
 
@@ -32,11 +39,9 @@
 
         substitutions = {
           "~/code/github.com/pinpox/nixos" = "<pinpox/nixos>";
-          "~/code/github.com/pinpox/dotfiles-awesome" =
-            "<pinpox/dotfiles-awesome>";
+          "~/code/github.com/pinpox/dotfiles-awesome" = "<pinpox/dotfiles-awesome>";
         };
       };
-
     };
   };
 }
