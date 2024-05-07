@@ -1,13 +1,23 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.nextcloud;
-
+let
+  cfg = config.pinpox.services.nextcloud;
 in
 {
 
-  options.pinpox.services.nextcloud = { enable = mkEnableOption "Nextcloud"; };
+  options.pinpox.services.nextcloud = {
+    enable = mkEnableOption "Nextcloud";
+  };
 
   config = mkIf cfg.enable {
+
+    # Backup
+    pinpox.services.restic-client.backup-paths-onsite = [ "/var/lib/nextcloud" ];
 
     pinpox.services.restic-client.backup-paths-offsite = [
       # TODO Plan on how to backup nextcloud data
@@ -70,10 +80,13 @@ in
         # Admin user
         adminuser = "pinpox";
         adminpassFile = "${config.lollypops.secrets.files."nextcloud/admin-pass".path}";
-
       };
 
-      extraOptions.trusted_proxies = [ "192.168.7.1" "94.16.108.229" "birne.wireguard" ];
+      extraOptions.trusted_proxies = [
+        "192.168.7.1"
+        "94.16.108.229"
+        "birne.wireguard"
+      ];
       extraOptions.trusted_domains = [ "birne.wireguard" ];
       extraOptions.default_phone_region = "DE";
 
@@ -138,7 +151,6 @@ in
       '';
     };
 
-
     # reverse_proxy 127.0.0.2:9876
     # services.caddy.virtualHosts."files.pablo.tools".extraConfig = ''
     #   root * ${pkgs.nextcloud26}
@@ -167,8 +179,5 @@ in
       requires = [ "postgresql.service" ];
       after = [ "postgresql.service" ];
     };
-
-    # Backup
-    services.borgbackup.jobs.box-backup.paths = [ "/var/lib/nextcloud" ];
   };
 }

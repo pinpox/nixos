@@ -1,6 +1,13 @@
-{ lib, pkgs, config, flake-self, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  flake-self,
+  ...
+}:
 with lib;
-let cfg = config.pinpox.services.monitoring-server;
+let
+  cfg = config.pinpox.services.monitoring-server;
 in
 {
 
@@ -19,7 +26,7 @@ in
     jsonTargets = mkOption {
       type = types.listOf types.str;
       # default = [ "https://pablo.tools" ];
-      example = [ "http://birne.wireguard/borg-ahorn.json" ];
+      example = [ "http://birne.wireguard/restic-ahorn.json" ];
       description = "Targets to probe with the json-exporter";
     };
   };
@@ -42,20 +49,25 @@ in
       checkConfig = false;
 
       webExternalUrl = "https://vpn.prometheus.pablo.tools";
-      extraFlags =
-        [ "--log.level=debug" "--storage.tsdb.retention.size='6GB'" ];
+      extraFlags = [
+        "--log.level=debug"
+        "--storage.tsdb.retention.size='6GB'"
+      ];
       # ruleFiles = [ ./alert-rules.json ];
       # ruleFiles = [ ./alert-rules.yml ];
       ruleFiles = [
-        (pkgs.writeText "prometheus-rules.yml" (builtins.toJSON {
-          groups = [{
-            name = "alerting-rules";
-            rules = import ./alert-rules.nix { inherit lib; };
-          }];
-        }))
+        (pkgs.writeText "prometheus-rules.yml" (
+          builtins.toJSON {
+            groups = [
+              {
+                name = "alerting-rules";
+                rules = import ./alert-rules.nix { inherit lib; };
+              }
+            ];
+          }
+        ))
       ];
-      alertmanagers =
-        [{ static_configs = [{ targets = [ "localhost:9093" ]; }]; }];
+      alertmanagers = [ { static_configs = [ { targets = [ "localhost:9093" ]; } ]; } ];
 
       scrapeConfigs = [
         # TODO fix esp config
@@ -84,7 +96,7 @@ in
           scrape_interval = "60s";
           metrics_path = "/metrics";
           scheme = "http";
-          static_configs = [{ targets = [ "birne.wireguard:9273" ]; }];
+          static_configs = [ { targets = [ "birne.wireguard:9273" ]; } ];
         }
         {
           job_name = "homeassistant";
@@ -92,13 +104,13 @@ in
           metrics_path = "/api/prometheus";
           bearer_token_file = config.lollypops.secrets.files."prometheus/home-assistant-token".path;
           scheme = "http";
-          static_configs = [{ targets = [ "birne.wireguard:8123" ]; }];
+          static_configs = [ { targets = [ "birne.wireguard:8123" ]; } ];
         }
         {
           job_name = "backup-reports";
           scrape_interval = "60m";
           metrics_path = "/probe";
-          static_configs = [{ targets = cfg.jsonTargets; }];
+          static_configs = [ { targets = cfg.jsonTargets; } ];
 
           relabel_configs = [
             {
@@ -111,8 +123,7 @@ in
             }
             {
               target_label = "__address__";
-              replacement =
-                "127.0.0.1:7979"; # The blackbox exporter's real hostname:port.
+              replacement = "127.0.0.1:7979"; # The blackbox exporter's real hostname:port.
             }
           ];
         }
@@ -120,13 +131,16 @@ in
           job_name = "restic-exporter";
           scrape_interval = "1h";
           metrics_path = "/probe";
-          static_configs = [{
-            # Build list of all hosts that have restic-client.enable set to "true"
-            targets = (builtins.attrNames
-              (lib.filterAttrs
-                (n: v: v.config.pinpox.services.restic-client.enable)
-                flake-self.nixosConfigurations));
-          }];
+          static_configs = [
+            {
+              # Build list of all hosts that have restic-client.enable set to "true"
+              targets = (
+                builtins.attrNames (
+                  lib.filterAttrs (n: v: v.config.pinpox.services.restic-client.enable) flake-self.nixosConfigurations
+                )
+              );
+            }
+          ];
           relabel_configs = [
             {
               source_labels = [ "__address__" ];
@@ -138,8 +152,7 @@ in
             }
             {
               target_label = "__address__";
-              replacement =
-                "127.0.0.1:${builtins.toString config.services.restic-exporter.port}";
+              replacement = "127.0.0.1:${builtins.toString config.services.restic-exporter.port}";
             }
           ];
         }
@@ -147,8 +160,10 @@ in
           job_name = "blackbox";
           scrape_interval = "2m";
           metrics_path = "/probe";
-          params = { module = [ "http_2xx" ]; };
-          static_configs = [{ targets = cfg.blackboxTargets; }];
+          params = {
+            module = [ "http_2xx" ];
+          };
+          static_configs = [ { targets = cfg.blackboxTargets; } ];
 
           relabel_configs = [
             {
@@ -161,23 +176,25 @@ in
             }
             {
               target_label = "__address__";
-              replacement =
-                "127.0.0.1:9115"; # The blackbox exporter's real hostname:port.
+              replacement = "127.0.0.1:9115"; # The blackbox exporter's real hostname:port.
             }
           ];
         }
         {
           job_name = "node-stats";
-          static_configs = [{
-            # Build list of all hosts that have pinpox.metrics.node.enable set to
-            # "true", adding ".wireguard:9100"
-            targets = (map (x: x + ".wireguard:9100")
-              (builtins.attrNames
-                (lib.filterAttrs
-                  (n: v: v.config.pinpox.metrics.node.enable)
-                  flake-self.nixosConfigurations))
-            );
-          }];
+          static_configs = [
+            {
+              # Build list of all hosts that have pinpox.metrics.node.enable set to
+              # "true", adding ".wireguard:9100"
+              targets = (
+                map (x: x + ".wireguard:9100") (
+                  builtins.attrNames (
+                    lib.filterAttrs (n: v: v.config.pinpox.metrics.node.enable) flake-self.nixosConfigurations
+                  )
+                )
+              );
+            }
+          ];
         }
       ];
       alertmanager = {
@@ -203,16 +220,12 @@ in
             repeat_interval = "24h";
           };
 
-
           receivers = [
             {
               name = "all";
               webhook_configs = [
                 { url = "http://127.0.0.1:11000/alert"; } # matrix-hook
-                {
-                  url = with config.services.alertmanager-ntfy;
-                    "http://${httpAddress}:${httpPort}";
-                } # alertmanger-ntfy
+                { url = with config.services.alertmanager-ntfy; "http://${httpAddress}:${httpPort}"; } # alertmanger-ntfy
               ];
             }
           ];

@@ -132,7 +132,6 @@ in
 
         xserver.enable = false;
         openssh.enable = true;
-        borg-backup.enable = true;
 
         restic-client = {
           enable = true;
@@ -147,6 +146,7 @@ in
 
           backup-paths-exclude = [
             "*.pyc"
+            "tags"
             "*/.BurpSuite"
             "*/.arduino15/packages"
             "*/.cache"
@@ -182,6 +182,7 @@ in
             "/home/*/code"
             "/home/pinpox/.local/share/typeracer"
             "discord/Cache"
+            "/var/lib/docker"
           ];
         };
       };
@@ -193,9 +194,6 @@ in
         clientIp = cfg.wireguardIp;
       };
     };
-
-    # Don' backup docker stuff on desktops
-    services.borgbackup.jobs.box-backup.exclude = [ "/var/lib/docker" ];
 
     # here goes the configuration, reference values with cfg.varname
     # e.g. networking.wireguard.interfaces = { };
@@ -210,8 +208,7 @@ in
       orca-slicer
       discord
 
-      # borgbackup
-      # wezterm-nightly
+      gcc
       acpi
       arandr
       binutils
