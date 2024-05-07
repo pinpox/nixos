@@ -162,6 +162,31 @@
 
     virtualHosts = {
 
+      "tm.0cx.de".extraConfig = ''
+        log {
+            level DEBUG
+        }
+            @options {
+                method OPTIONS
+            }
+            header {
+                Access-Control-Allow-Origin "{http.request.header.Origin}"
+                Access-Control-Allow-Credentials true
+                Access-Control-Allow-Methods *
+                Access-Control-Allow-Headers *
+                defer
+            }
+            reverse_proxy https://trackmania.exchange:443 {
+                header_down -Access-Control-Allow-Origin
+                header_down -Access-Control-Allow-Headers
+                header_down -Access-Control-Allow-Credentials
+                header_down +Access-Control-Allow-Credentials true
+                header_up -Host
+                header_up +Host trackmania.exchange
+            }
+            respond @options 204
+      '';
+
       "megaclan3000.de".extraConfig = ''
         root * ${mc3000.packages.x86_64-linux.mc3000}
         file_server
