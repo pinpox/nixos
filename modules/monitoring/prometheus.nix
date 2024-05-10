@@ -25,7 +25,7 @@ in
 
     jsonTargets = mkOption {
       type = types.listOf types.str;
-      # default = [ "https://pablo.tools" ];
+      default = [ ];
       example = [ "http://birne.wireguard/restic-ahorn.json" ];
       description = "Targets to probe with the json-exporter";
     };
