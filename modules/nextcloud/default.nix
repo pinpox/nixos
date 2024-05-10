@@ -46,7 +46,7 @@ in
       enable = true;
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud28;
+      package = pkgs.nextcloud29;
 
       # Use HTTPS for links
       https = true;
