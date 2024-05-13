@@ -81,7 +81,11 @@ in
       enable = true;
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud29;
+
+      # Workaround for nextcloud bug.
+      # TODO remove when https://github.com/nextcloud/server/pull/43794 hits
+      # the release
+      package = pkgs.nextcloud-patched;
 
       # Use HTTPS for links
       https = true;
