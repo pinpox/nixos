@@ -42,11 +42,50 @@ in
     };
 
     services.nextcloud = {
+      caching.apcu = true;
+      caching.redis = true;
+      configureRedis = true;
+
+      phpOptions."opcache.interned_strings_buffer" = "64";
+      # opcache.memory_consumption=256
+      # opcache.interned_strings_buffer=64
+      # opcache.max_accelerated_files=100000
+
+      settings = {
+        maintenance_window_start = "4";
+
+        trusted_proxies = [
+          "192.168.7.1"
+          "94.16.108.229"
+        ];
+
+        trusted_domains = [ "birne.wireguard" ];
+        default_phone_region = "DE";
+
+        enabledPreviewProviders = [
+          "OC\\Preview\\BMP"
+          "OC\\Preview\\GIF"
+          "OC\\Preview\\JPEG"
+          "OC\\Preview\\Krita"
+          "OC\\Preview\\MarkDown"
+          "OC\\Preview\\MP3"
+          "OC\\Preview\\OpenDocument"
+          "OC\\Preview\\PNG"
+          "OC\\Preview\\TXT"
+          "OC\\Preview\\XBitmap"
+          "OC\\Preview\\HEIC"
+          "OC\\Preview\\Movie"
+        ];
+      };
 
       enable = true;
       # Pin Nextcloud major version.
       # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud28;
+
+      # Workaround for nextcloud bug.
+      # TODO remove when https://github.com/nextcloud/server/pull/43794 hits
+      # the release
+      package = pkgs.nextcloud-patched;
 
       # Use HTTPS for links
       https = true;
@@ -82,30 +121,7 @@ in
         adminpassFile = "${config.lollypops.secrets.files."nextcloud/admin-pass".path}";
       };
 
-      extraOptions.trusted_proxies = [
-        "192.168.7.1"
-        "94.16.108.229"
-        "birne.wireguard"
-      ];
-      extraOptions.trusted_domains = [ "birne.wireguard" ];
-      extraOptions.default_phone_region = "DE";
-
       nginx.recommendedHttpHeaders = true;
-
-      extraOptions.enabledPreviewProviders = [
-        "OC\\Preview\\BMP"
-        "OC\\Preview\\GIF"
-        "OC\\Preview\\JPEG"
-        "OC\\Preview\\Krita"
-        "OC\\Preview\\MarkDown"
-        "OC\\Preview\\MP3"
-        "OC\\Preview\\OpenDocument"
-        "OC\\Preview\\PNG"
-        "OC\\Preview\\TXT"
-        "OC\\Preview\\XBitmap"
-        "OC\\Preview\\HEIC"
-        "OC\\Preview\\Movie"
-      ];
     };
 
     environment.systemPackages = with pkgs; [
@@ -113,22 +129,21 @@ in
       ffmpeg
     ];
 
-    # redis.servers.nextcloud = {
-    #   enable = true;
-    #   user = "nextcloud";
-    #   port = 0;
-    # };
-
     # To run nginx alongside caddy for nextcloud only
     services.nginx.enable = false;
     # services.nginx.virtualHosts."files.pablo.tools".listen = [{ addr = "0.0.0.0"; port = 8080; }];
 
     # reverse_proxy http://127.0.0.1:8080
     services.caddy.virtualHosts = {
+
       "files.pablo.tools".extraConfig = ''
 
-        redir /.well-known/carddav /remote.php/dav 301
-        redir /.well-known/caldav /remote.php/dav 301
+        header {
+            Strict-Transport-Security max-age=31536000;
+        }
+
+        redir /.well-known/carddav /remote.php/dav/ 301
+        redir /.well-known/caldav /remote.php/dav/ 301
 
         @forbidden {
             path /.htaccess
@@ -150,24 +165,6 @@ in
         php_fastcgi unix//run/phpfpm/nextcloud.sock
       '';
     };
-
-    # reverse_proxy 127.0.0.2:9876
-    # services.caddy.virtualHosts."files.pablo.tools".extraConfig = ''
-    #   root * ${pkgs.nextcloud26}
-    #   file_server
-    # '';
-
-    # Reverse proxy
-    # services.nginx.virtualHosts = {
-    #   "files.pablo.tools" = {
-    #     forceSSL = true;
-    #     enableACME = true;
-    #     locations."/" = {
-    #       proxyPass = "http://127.0.0.2:9876";
-    #       proxyWebsockets = true;
-    #     };
-    #   };
-    # };
 
     # Database configuration
     services.postgresql = {

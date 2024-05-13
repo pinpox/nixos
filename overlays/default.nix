@@ -15,6 +15,14 @@ self: super: {
   #   '';
   # });
 
+  nextcloud-patched = super.nextcloud29.overrideAttrs (old: {
+    patches = [ ./nextcloud.patch ];
+    # CXXFLAGS = [
+    #   # GCC 13: error: 'uint8_t' does not name a type
+    #   "-include cstdint"
+    # ];
+  });
+
   # TODO remove when fixed upsteam
   zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {
     CXXFLAGS = [
