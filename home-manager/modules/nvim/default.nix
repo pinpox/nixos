@@ -135,6 +135,8 @@ in
       plugins = with pkgs.vimPlugins; [
         rose-pine
 
+        oil-nvim
+
         zig-vim
 
         ccc-nvim
