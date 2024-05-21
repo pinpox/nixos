@@ -185,7 +185,6 @@ in
         tabular
         vim-autoformat
         vim-better-whitespace
-        vim-commentary
         vim-devicons
         vim-easy-align
         vim-eunuch
