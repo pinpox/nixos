@@ -20,6 +20,7 @@ in
       fontDir.enable = true;
       packages = with pkgs; [
 
+        stix-two
         league-of-moveable-type
         inter
         source-sans-pro

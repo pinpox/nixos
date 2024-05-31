@@ -34,6 +34,7 @@ in
     home.packages = with pkgs; [
 
       typst
+      stix-two
       typstfmt
       typst-lsp
 
