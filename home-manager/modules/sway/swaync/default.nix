@@ -161,7 +161,7 @@ with lib;
                   }
                   {
                     "label" = "";
-                    "command" = "screenshot-region";
+                    "command" = "screenshot-region-satty";
                   }
                 ];
               };
