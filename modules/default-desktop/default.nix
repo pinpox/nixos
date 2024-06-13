@@ -223,7 +223,7 @@ in
       macchanger
       neovim
       nixpkgs-review
-      kicad
+      # kicad
       nix-init
       nix-update
       nixfmt-rfc-style

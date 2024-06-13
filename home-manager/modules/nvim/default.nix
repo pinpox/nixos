@@ -41,7 +41,7 @@ in
       zig
       zls
       nil
-      nodePackages.pyright # LSP python
+      pyright # LSP python
       nodePackages.yaml-language-server # LSP yaml
       nodePackages.vscode-json-languageserver-bin # LSP json
       vscode-extensions.golang.go # Golang snippets
