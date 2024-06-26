@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.home-assistant;
@@ -16,50 +21,15 @@ in
 
     networking.firewall.trustedInterfaces = [ "wg0" ];
 
-    /*
-      services.wyoming = {
-      faster-whisper = {
-        servers."name" = {
-          enable = true;
-          # beamSize
-          device = "cpu"; # "cpu", "cuda", "auto"
-          # extraArgs
-          language = "de";
-          model = "tiny"; # one of "tiny", "tiny-int8", "base", "base-int8", "small", "small-int8", "medium-int8"
-          uri = "tcp://192.168.7.7:10300";
-        };
-      };
-      openwakeword = {
-        enable = true;
-        # customModelsDirectories
-        # extraArgs
-        # package
-        # preloadModels
-        # threshold
-        # triggerLevel
-        uri = "tcp://127.0.0.1:10400";
-      };
-      piper = {
-        # package
-        servers."name" = {
-          enable = true;
-          # extraArgs
-          # lengthScale
-          # noiseScale
-          # noiseWidth
-          # piper
-          voice = "de_DE-karlsson-low";
-          uri = "tcp://127.0.0.1:10200";
-          # speaker
-        };
-      };
-      };
-    */
-
     lollypops.secrets.files."home-assistant/secrets.yaml" = {
       owner = "hass";
       path = "/var/lib/hass/secrets.yaml";
     };
+
+    # https://nixos.wiki/wiki/Home_Assistant#Combine_declarative_and_UI_defined_automations
+    systemd.tmpfiles.rules = [
+      "f ${config.services.home-assistant.configDir}/automations.yaml 0755 hass hass"
+    ];
 
     # Backup configuration dir - Config done via UI stateful
     pinpox.services.restic-client.backup-paths-offsite = [ config.services.home-assistant.configDir ];
@@ -146,6 +116,11 @@ in
     # Enable home-assistant service
     services.home-assistant = {
       enable = true;
+      customComponents = with pkgs.home-assistant-custom-components; [
+        ntfy
+        awtrix
+        moonraker
+      ];
 
       # List extraComponents here to be installed. The names can be found here:
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
@@ -154,9 +129,7 @@ in
       extraComponents = [
         # "piper"
         # "whisper"
-        # "wyoming"
         "bthome"
-        # "octoprint"
         "nextcloud"
         "unifi_direct"
         "unifi"
@@ -298,28 +271,10 @@ in
 
         # https://home.pablo.tools/developer-tools/event
         # https://home.pablo.tools/config/automation/dashboard
-        automation = [
-          # {
-          #   id = "3dprint_notify_done";
-          #   alias = "3D-Printer notification";
-          #   description = "Send a notification when the 3D-printer is done";
-          #   trigger = [{
-          #     platform = "state";
-          #     entity_id = "binary_sensor.octoprint_printing";
-          #     to = "off";
-          #   }];
-          #   action = [{
-          #     service = "notify.notify";
-          #     data.tag = "3d_printer_state";
-          #     data.message = ''
-          #       {% if is_state('binary_sensor.octoprint_printing_error', 'off') %}
-          #       3D-Printer finished successfully!
-          #       {% else %}
-          #       3D-Printer finished with an ERROR!
-          #       {% endif %}
-          #     '';
-          #   }];
-          # }
+
+        "automation ui" = "!include automations.yaml";
+
+        "automation manual" = [
           {
             id = "rackmount_button1";
             mode = "single";
@@ -473,7 +428,6 @@ in
         };
 
         frontend = { };
-        "map" = { };
         shopping_list = { };
         sun = { };
         config = { };
