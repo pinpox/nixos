@@ -24,10 +24,14 @@ in
 
   config = mkIf cfg.virtualbox.enable {
 
-    virtualisation.docker.enable = true;
     users.users.pinpox.extraGroups = [ "docker" ];
 
+    virtualisation.docker.enable = true;
+
     virtualisation.virtualbox.host.enable = true;
+    # virtualisation.virtualbox.host.enableKvm = true;
+    # virtualisation.virtualbox.host.addNetworkInterface = false;
+
     # virtualisation.virtualbox.host.enableExtensionPack = true;
     users.extraGroups.vboxusers.members = [ "pinpox" ];
   };
