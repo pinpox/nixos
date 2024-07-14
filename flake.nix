@@ -66,14 +66,6 @@
     wallpaper-generator.url = "github:pinpox/wallpaper-generator";
     wallpaper-generator.flake = false;
 
-    # dotfiles-awesome.url = "github:pinpox/dotfiles-awesome";
-    # dotfiles-awesome.inputs = {
-    #   nixpkgs.follows = "nixpkgs";
-    #   wallpaper-generator.follows = "wallpaper-generator";
-    #   flake-utils.follows = "flake-utils";
-    #   flake-compat.follows = "flake-compat";
-    # };
-
     restic-exporter.url = "github:pinpox/restic-exporter";
     restic-exporter.inputs = {
       nixpkgs.follows = "nixpkgs";
@@ -95,10 +87,6 @@
       flake-utils.follows = "flake-utils";
       flake-compat.follows = "flake-compat";
     };
-
-    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    # neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
-    # neovim-nightly.inputs.flake-utils.follows = "flake-utils";
 
     # Krops
     krops.url = "git+https://cgit.krebsco.de/krops";
@@ -130,9 +118,6 @@
     tfenv.url = "github:tfutils/tfenv";
     tfenv.flake = false;
 
-    # ndi-linux.url = "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz";
-    # ndi-linux.flake = false;
-
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";
@@ -140,17 +125,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # helix-editor = {
-    #   url = "github:helix-editor/helix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    # zellij = {
-    #   url = "github:zellij-org/zellij";
-    #   inputs.flake-compat.follows = "flake-compat";
-    #   inputs.flake-utils.follows = "flake-utils";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
   outputs =
     { self, ... }@inputs:
