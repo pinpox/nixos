@@ -9,6 +9,30 @@
 }:
 {
 
+  lollypops.secrets.files."ente/credentials.yaml" = {
+    owner = "ente";
+    group-name = "ente";
+    path = "/var/lib/ente/crendentials.yaml";
+  };
+
+  services.ente =
+    let
+      envfile = pkgs.writeTextFile {
+        name = "env";
+        text = '''';
+      };
+    in
+    {
+
+      settings = {
+        internal.admins = [ "1580559962386438" ];
+      };
+
+      enable = true;
+      environmentFile = envfile;
+      credentialsFile = "${config.lollypops.secrets.files."ente/credentials.yaml".path}";
+    };
+
   networking.interfaces.ens3 = {
     ipv6.addresses = [
       {
@@ -106,7 +130,7 @@
       thelounge.enable = true;
       kf-homepage.enable = true;
       gitea.enable = true;
-      owncast.enable = true;
+      owncast.enable = false;
       vikunja.enable = true;
       wastebin.enable = true;
     };
@@ -171,6 +195,66 @@
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
       # "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
+
+      "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
+
+      #   let
+      #
+      #     ente-web-package = with pkgs; stdenv.mkDerivation rec {
+      #
+      #       pname = "ente-web";
+      #       version = "0.9.5";
+      #
+      #       src = fetchFromGitHub
+      #         {
+      #           owner = "ente-io";
+      #           repo = "ente";
+      #           sparseCheckout = [ "web" ];
+      #           rev = "photos-v${version}";
+      #           fetchSubmodules = true;
+      #           hash = "sha256-YJuhdMrgOQW4+LaxEvZNmFZDlFRBmPZot8oUdACdhhE=";
+      #         }
+      #       + "/web";
+      #
+      #       offlineCache = fetchYarnDeps {
+      #         yarnLock = "${src}/yarn.lock";
+      #         hash = "sha256-ZGZkpHZD2LoMIXzpQRAO4Fh9Jf4WxosgykKnn7I1+2g=";
+      #       };
+      #
+      #       nativeBuildInputs = [
+      #         yarnConfigHook
+      #         yarnBuildHook
+      #         nodejs
+      #       ];
+      #
+      #       installPhase = ''
+      #         cp -r apps/photos/out $out
+      #       '';
+      #
+      #       meta = {
+      #         description = "Web client for Ente Photos";
+      #         homepage = "https://ente.io/";
+      #         license = lib.licenses.agpl3Only;
+      #         maintainers = with lib.maintainers; [
+      #           surfaceflinger
+      #           pinpox
+      #         ];
+      #         platforms = lib.platforms.all;
+      #       };
+      #     };
+      #
+      #   in
+      #
+      #   ''
+      #
+      #  handle_path /api/* {
+      #       reverse_proxy 127.0.0.1:8080
+      #  }
+      #
+      #  root * ${ente-web-package}
+      #   file_server
+      #   encode zstd gzip
+      # '';
 
       "paste.0cx.de".extraConfig = "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
     };

@@ -43,7 +43,6 @@ in
       nil
       pyright # LSP python
       nodePackages.yaml-language-server # LSP yaml
-      nodePackages.vscode-json-languageserver-bin # LSP json
       vscode-extensions.golang.go # Golang snippets
       nodePackages.bash-language-server
       gopls # LSP go
@@ -183,7 +182,7 @@ in
         nvim-colorizer-lua
         nvim-web-devicons
         plenary-nvim
-        tabular
+        # tabular
         vim-autoformat
         vim-better-whitespace
         vim-devicons

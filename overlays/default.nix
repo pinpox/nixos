@@ -1,10 +1,24 @@
-inputs:
+inputs: flake-self:
 let
   # Pass flake inputs to overlay so we can use the sources pinned in flake.lock
   # instead of having to keep sha256 hashes in each package for src
   inherit inputs;
+
+  # Pass flake itself, so we can build woodpecker-pipeline and manual
+  inherit flake-self;
 in
 self: super: {
+
+  # TODO: fix infinite recursion
+  # manual = super.callPackage ../packages/manual {
+  #   inherit inputs;
+  #   inherit flake-self;
+  # };
+
+  woodpecker-pipeline = super.callPackage ../packages/woodpecker-pipeline {
+    inherit inputs;
+    inherit flake-self;
+  };
 
   # Override unfree src with flake input
   # ndi = super.ndi.overrideAttrs (old: {
@@ -14,6 +28,9 @@ self: super: {
   #     sourceRoot="NDI SDK for Linux";
   #   '';
   # });
+
+  museum = super.callPackage ../packages/ente/museum.nix { };
+  # ente-web = super.callPackage ../packages/ente/web.nix {};
 
   # TODO remove when fixed upsteam
   zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {

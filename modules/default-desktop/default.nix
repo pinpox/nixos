@@ -6,6 +6,7 @@
   flake-self,
   wallpaper-generator,
   promterm,
+  home-manager,
   ...
 }:
 with lib;
@@ -14,7 +15,10 @@ let
 in
 {
 
-  imports = [ ../../users/pinpox.nix ];
+  imports = [
+    ../../users/pinpox.nix
+    home-manager.nixosModules.home-manager
+  ];
 
   options.pinpox.desktop = {
 
@@ -213,7 +217,7 @@ in
       arandr
       binutils
       file
-      freecad
+      # freecad
       git
       gnumake
       go

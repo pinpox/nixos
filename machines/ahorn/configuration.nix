@@ -9,6 +9,12 @@
 }:
 {
 
+  networking.hosts = {
+    "192.168.56.107" = [ "status.fernuni" ];
+  };
+
+  services.gnome.gnome-keyring.enable = true;
+
   hardware.keyboard.qmk.enable = true;
 
   services.usbmuxd.enable = true;
@@ -44,14 +50,15 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
+
     #retiolum.nixosModules.ca
   ];
 
   programs.sway.enable = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   xdg.portal = {

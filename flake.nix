@@ -39,7 +39,6 @@
     promterm.inputs = {
       nixpkgs.follows = "nixpkgs";
       naersk.follows = "naersk";
-      utils.follows = "flake-utils";
     };
 
     go-karma-bot.url = "github:pinpox/go-karma-bot";
@@ -47,12 +46,7 @@
       nixpkgs.follows = "nixpkgs";
     };
 
-    # retiolum.url = "github:krebs/retiolum";
-    # retiolum.flake = false;
-
     retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
-
-    flake-utils.url = "github:numtide/flake-utils";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
@@ -69,14 +63,12 @@
     restic-exporter.url = "github:pinpox/restic-exporter";
     restic-exporter.inputs = {
       nixpkgs.follows = "nixpkgs";
-      flake-utils.follows = "flake-utils";
     };
 
     alertmanager-ntfy = {
       url = "github:pinpox/alertmanager-ntfy";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
       };
     };
@@ -84,7 +76,6 @@
     matrix-hook.url = "github:pinpox/matrix-hook";
     matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";
-      flake-utils.follows = "flake-utils";
       flake-compat.follows = "flake-compat";
     };
 
@@ -121,7 +112,6 @@
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -129,31 +119,85 @@
   outputs =
     { self, ... }@inputs:
     with inputs;
+    let
+
+      # to work with older version of flakes
+      lastModifiedDate = self.lastModifiedDate or self.lastModified or "19700101";
+
+      # Generate a user-friendly version number.
+      version = builtins.substring 0 8 lastModifiedDate;
+
+      # System types to support.
+      supportedSystems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+
+      # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'.
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
+      # Nixpkgs instantiated for supported system types.
+      nixpkgsFor = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ self.overlays.default ];
+        }
+      );
+
+    in
     {
+
+      apps = forAllSystems (system: {
+        # For testing:
+        # nix flake update --override-input lollypops ../lollypops
+        default = lollypops.apps."${system}".default { configFlake = self; };
+      });
+
+      # Custom packages added via the overlay are selectively exposed here, to
+      # allow using them from other flakes that import this one.
+      packages = forAllSystems (
+        system: with nixpkgsFor.${system}; {
+
+          inherit
+            hello-custom
+            filebrowser
+            fritzbox_exporter
+            mqtt2prometheus
+            smartmon-script
+            woodpecker-pipeline
+            # manual
+            tfenv
+            ;
+
+        }
+      );
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
-      overlays.default = final: prev: (import ./overlays inputs) final prev;
+      overlays.default = final: prev: (import ./overlays inputs self) final prev;
 
       # Use nixpkgs-fmt for 'nix fmt'
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
+
+      # Each subdirectory in ./modules/<module-name> is a nixos module
       nixosModules = builtins.listToAttrs (
-        map (x: {
-          name = x;
-          value = import (./modules + "/${x}");
+        map (name: {
+          inherit name;
+          value = import (./modules + "/${name}");
         }) (builtins.attrNames (builtins.readDir ./modules))
       );
 
-      # Each subdirectory in ./machines is a host. Add them all to
-      # nixosConfigurations. Host configurations need a file called
-      # configuration.nix that will be read first
+      # Each subdirectory in ./machines/<machine-name> is a host config
       nixosConfigurations = builtins.listToAttrs (
-        map (x: {
-          name = x;
+        map (name: {
+          inherit name;
           value = nixpkgs.lib.nixosSystem {
 
             # Make inputs and the flake itself accessible as module parameters.
@@ -167,185 +211,47 @@
             system = "x86_64-linux";
 
             modules = [
-              (./machines + "/${x}/configuration.nix")
+              (./machines + "/${name}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
-              home-manager.nixosModules.home-manager
-              restic-exporter.nixosModules.default
             ];
           };
         }) (builtins.attrNames (builtins.readDir ./machines))
       );
 
-      homeConfigurations = {
+      # Each subdirectory in ./home-manager/profiles/<profile-name> is a
+      # home-manager profile
+      homeConfigurations = builtins.listToAttrs (
+        map
+          (name: {
+            inherit name;
+            value =
+              {
+                pkgs,
+                lib,
+                username,
+                ...
+              }:
+              {
+                imports = [
+                  (./home-manager/profiles + "/${name}")
+                  lollypops.hmModule
+                ] ++ (builtins.attrValues self.homeManagerModules);
+              };
+          })
+          (
+            builtins.attrNames (
+              nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir ./home-manager/profiles)
+            )
+          )
+      );
 
-        # For servers (no gui)
-        server =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/server.nix
-              lollypops.hmModule
-            ] ++ (builtins.attrValues self.homeManagerModules);
-          };
-
-        # For workstations (X11 + awesome)
-        desktop =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/desktop.nix
-              lollypops.hmModule
-            ] ++ (builtins.attrValues self.homeManagerModules);
-          };
-      };
-
+      # Each subdirectory in ./home-manager/modules/<module-name> is a
+      # home-manager module
       homeManagerModules = builtins.listToAttrs (
         map (name: {
           inherit name;
           value = import (./home-manager/modules + "/${name}");
         }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
       );
-
-      /*
-        # Hydra build jobs. Builds all configs in the CI to verify integrity
-        hydraJobs = (nixpkgs.lib.mapAttrs' (name: config:
-        nixpkgs.lib.nameValuePair "nixos-${name}"
-        config.config.system.build.toplevel) self.nixosConfigurations);
-        # // (nixpkgs.lib.mapAttrs' (name: config: nixpkgs.lib.nameValuePair
-        # "home-manager-${name}" config.activation-script)
-        # self.hmConfigurations);
-      */
-
-      # nix build '.#base-image'
-      raspi-image =
-        let
-          system = "aarch64-linux";
-        in
-        import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
-          pkgs = nixpkgs.legacyPackages."${system}";
-          lib = nixpkgs.lib;
-          config =
-            (nixpkgs.lib.nixosSystem {
-              inherit system;
-              modules = [ ./images/raspi.nix ];
-            }).config;
-          format = "qcow2";
-          diskSize = 4096;
-          name = "raspi-image";
-        };
-
-      base-image =
-        let
-          system = "x86_64-linux";
-        in
-        import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
-          pkgs = nixpkgs.legacyPackages."${system}";
-          lib = nixpkgs.lib;
-          config =
-            (nixpkgs.lib.nixosSystem {
-              inherit system;
-              modules = [ ./images/configuration.nix ];
-            }).config;
-          format = "qcow2";
-          diskSize = 2048;
-          name = "base-image";
-        };
-    }
-    //
-
-      # All packages in the ./packages subfolder are also added to the flake.
-      # flake-utils is used for this part to make each package available for each
-      # system. This works as all packages are compatible with all architectures
-      (flake-utils.lib.eachSystem [
-        "aarch64-linux"
-        "x86_64-linux"
-      ])
-        (
-          system:
-          let
-            pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
-          in
-          {
-            # Custom packages added via the overlay are selectively exposed here, to
-            # allow using them from other flakes that import this one.
-            packages = flake-utils.lib.flattenTree {
-              # wezterm-bin = pkgs.wezterm-bin;
-              # wezterm-nightly = pkgs.wezterm-nightly;
-              hello-custom = pkgs.hello-custom;
-              filebrowser = pkgs.filebrowser;
-              fritzbox_exporter = pkgs.fritzbox_exporter;
-              mqtt2prometheus = pkgs.mqtt2prometheus;
-              smartmon-script = pkgs.smartmon-script;
-              tfenv = pkgs.tfenv;
-
-              # Manual for github pages (https://pinpox.github.io/nixos)
-              flake-manual = pkgs.callPackage ./manual/manual.nix {
-                inputs = inputs;
-                flake-self = self;
-              };
-
-              woodpecker-pipeline = pkgs.callPackage ./woodpecker-pipeline.nix {
-                inputs = inputs;
-                flake-self = self;
-              };
-            };
-
-            # Run with: nix develop '.#test-shell'
-            # devShells = flake-utils.lib.flattenTree {
-            #   test-shell = import ./shells/test-shell.nix { inherit pkgs; };
-            # };
-
-            # Allow custom packages to be run using `nix run`
-            apps =
-              let
-                configFlake = self;
-              in
-              # {
-              #   nixosConfigurations = {
-              #     host1 = nixpkgs.lib.nixosSystem {
-              #       system = "x86_64-linux";
-              #       modules = [ lollypops.nixosModules.lollypops ];
-              #     };
-              #   };
-              # };
-              {
-                # TODO for testing
-                # nix flake update --override-input lollypops ../lollypops
-                default = lollypops.apps."${system}".default { inherit configFlake; };
-                # hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-              };
-
-            # Checks to run with `nix flake check -L`, will run in a QEMU VM.
-            # Looks for all ./modules/<module name>/test.nix files and adds them to
-            # the flake's checks output. The test.nix file is optional and may be
-            # added to any module.
-            # checks = builtins.listToAttrs
-            #   (map
-            #     (x: {
-            #       name = x;
-            #       value = (import (./modules + "/${x}/test.nix")) {
-            #         pkgs = nixpkgs;
-            #         inherit system self;
-            #       };
-            #     })
-            #     (
-            #       # Filter list of modules, leaving only modules which contain a
-            #       # `test.nix` file
-            #       builtins.filter
-            #         (p: builtins.pathExists (./modules + "/${p}/test.nix"))
-            #         (builtins.attrNames (builtins.readDir ./modules))));
-          }
-        );
+    };
 }

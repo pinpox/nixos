@@ -1,4 +1,6 @@
 {
+
+  restic-exporter,
   lib,
   pkgs,
   config,
@@ -10,7 +12,12 @@ let
 in
 {
 
-  imports = [ ../../users/pinpox.nix ];
+  imports = [
+    ../../users/pinpox.nix
+
+    restic-exporter.nixosModules.default
+
+  ];
 
   options.pinpox.server = {
     enable = mkEnableOption "the default server configuration";

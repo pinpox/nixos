@@ -1,3 +1,39 @@
+# # nix build '.#base-image'
+# raspi-image =
+#   let
+#     system = "aarch64-linux";
+#   in
+#   import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+#     pkgs = nixpkgs.legacyPackages."${system}";
+#     lib = nixpkgs.lib;
+#     config =
+#       (nixpkgs.lib.nixosSystem {
+#         inherit system;
+#         modules = [ ./images/raspi.nix ];
+#       }).config;
+#     format = "qcow2";
+#     diskSize = 4096;
+#     name = "raspi-image";
+#   };
+#
+# base-image =
+#   let
+#     system = "x86_64-linux";
+#   in
+#   import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+#     pkgs = nixpkgs.legacyPackages."${system}";
+#     lib = nixpkgs.lib;
+#     config =
+#       (nixpkgs.lib.nixosSystem {
+#         inherit system;
+#         modules = [ ./images/configuration.nix ];
+#       }).config;
+#     format = "qcow2";
+#     diskSize = 2048;
+#     name = "base-image";
+#   };
+#
+
 {
   config,
   pkgs,
