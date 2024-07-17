@@ -168,10 +168,9 @@
             mqtt2prometheus
             smartmon-script
             woodpecker-pipeline
-            # manual
+            manual
             tfenv
             ;
-
         }
       );
 

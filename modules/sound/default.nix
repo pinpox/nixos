@@ -15,8 +15,6 @@ in
   };
   config = mkIf cfg.enable {
 
-    # Enable sound.
-    sound.enable = true;
     environment.systemPackages = [ pkgs.qjackctl ];
 
     # Use pipeware to emulate jack and pulseaudio

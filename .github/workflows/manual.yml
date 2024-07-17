@@ -1,24 +1,24 @@
-# name: Build and Deploy Manual
-# on:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   tests:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Checkout
-#       uses: actions/checkout@v3
-#     - name: Install Nix
-#       uses: cachix/install-nix-action@v20
-#     - name: Build manual
-#       run: |
-#         nix build '.#flake-manual' --show-trace  -vv -L
-#         mkdir docs
-#         curl https://nixos.org/favicon.ico -o docs/favicon.ico
-#         cp result/index.html  docs/index.html
-#     - name: Deploy 🚀
-#       uses: JamesIves/github-pages-deploy-action@4.1.0
-#       with:
-#         branch: gh-pages # The branch the action should deploy to.
-#         folder: docs # The folder the action should deploy.
+name: Build and Deploy Manual
+on:
+  push:
+    branches:
+      - main
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install Nix
+      uses: cachix/install-nix-action@v20
+    - name: Build manual
+      run: |
+        nix build '.#manual' --show-trace  -vv -L
+        mkdir docs
+        curl https://nixos.org/favicon.ico -o docs/favicon.ico
+        cp result/index.html  docs/index.html
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@4.1.0
+      with:
+        branch: gh-pages # The branch the action should deploy to.
+        folder: docs # The folder the action should deploy.

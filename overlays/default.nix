@@ -10,10 +10,61 @@ in
 self: super: {
 
   # TODO: fix infinite recursion
-  # manual = super.callPackage ../packages/manual {
-  #   inherit inputs;
-  #   inherit flake-self;
-  # };
+  manual = super.callPackage ../packages/manual {
+    inherit inputs;
+    flake-self.nixosModules = with flake-self.nixosModules; {
+
+      # TODO:
+      # Some modules cause infinite recursion, so we only pass the ones that
+      # work. There is probably a better way, this should be automagic.
+
+      # caddy-security = flake-self.nixosModules.caddy-security;
+
+      inherit
+        activation-secrets
+        binary-cache
+        bluetooth
+        ci
+        default-desktop
+        default-server
+        dex
+        ente
+        environment
+        filebrowser
+        fonts
+        gitea
+        hedgedoc
+        hello
+        home-assistant
+        http2irc
+        kf-homepage
+        locale
+        lollypops-common
+        lvm-grub
+        mattermost
+        miniflux
+        minio
+        monitoring
+        networking
+        nextcloud
+        nix-common
+        ntfy-sh
+        openssh
+        owncast
+        restic
+        sound
+        thelounge
+        unbound-desktop
+        vikunja
+        virtualisation
+        wastebin
+        wireguard-client
+        xserver
+        yubikey
+        zsh
+        ;
+    };
+  };
 
   woodpecker-pipeline = super.callPackage ../packages/woodpecker-pipeline {
     inherit inputs;
