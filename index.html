@@ -68,92 +68,6 @@
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
 						</div>
 					</div>
-					<div class="nixoption block" id="options.pinpox.services.borg-backup.enable">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.services.borg-backup.enable"># </a> options.pinpox.services.borg-backup.enable  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">boolean</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Whether to enable daily backup with borg. </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>false</code> </p>
-							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.services.borg-server.enable">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.services.borg-server.enable"># </a> options.pinpox.services.borg-server.enable  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">boolean</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Whether to enable borg-server setup. </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>false</code> </p>
-							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.services.borg-server.repositories">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.services.borg-server.repositories"># </a> options.pinpox.services.borg-server.repositories  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">attribute set of attribute set of list of string</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Attribute set of the hosts to backup, with the respective public keys
-authorized for the repository.
- </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>map[]</code> </p>
-							<p class="block"><strong>Example:</strong> <code>map[myHostname:map[authorizedKeys:[ssh-ed25519 AAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX borg@myHostname]]]</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.services.caddy-portal.enable">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-portal.enable"># </a> options.pinpox.services.caddy-portal.enable  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">boolean</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Whether to enable Caddy authentication portal. </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>false</code> </p>
-							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
 					<div class="nixoption block" id="options.pinpox.defaults.CISkip">
 						<div class="level">
 							<div class="level-left">
@@ -828,6 +742,48 @@ blkid /dev/sda2 </p>
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
 						</div>
 					</div>
+					<div class="nixoption block" id="options.pinpox.services.owncast.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.owncast.enable"># </a> options.pinpox.services.owncast.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable owncast server. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.owncast.host">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.owncast.host"># </a> options.pinpox.services.owncast.host  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Host serving owncast </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>stream.0cx.de</code> </p>
+							<p class="block"><strong>Example:</strong> <code>stream.0cx.de</code> </p>
+						</div>
+					</div>
 					<div class="nixoption block" id="options.pinpox.services.restic-client.backup-paths-exclude">
 						<div class="level">
 							<div class="level-left">
@@ -954,11 +910,11 @@ blkid /dev/sda2 </p>
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
 						</div>
 					</div>
-					<div class="nixoption block" id="options.pinpox.services.vaultwarden.enable">
+					<div class="nixoption block" id="options.pinpox.services.unbound-desktop.enable">
 						<div class="level">
 							<div class="level-left">
 								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.services.vaultwarden.enable"># </a> options.pinpox.services.vaultwarden.enable  </h3>
+									<h3 class="title is-3"> <a href="#options.pinpox.services.unbound-desktop.enable"># </a> options.pinpox.services.unbound-desktop.enable  </h3>
 								</div>
 							</div>
 							<div class="level-right">
@@ -968,32 +924,11 @@ blkid /dev/sda2 </p>
 							</div>
 						</div>
 
-						<p class="subtitle"> Whether to enable vaultwarden password manager. </p>
+						<p class="subtitle"> Whether to enable local unbound for desktops. </p>
 
 						<div class="block">
 							<p class="block"><strong>Default:</strong> <code>false</code> </p>
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.services.vaultwarden.host">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.services.vaultwarden.host"># </a> options.pinpox.services.vaultwarden.host  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">string</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Host serving vaultwarden </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>pass.pablo.tools</code> </p>
-							<p class="block"><strong>Example:</strong> <code>pass.pablo.tools</code> </p>
 						</div>
 					</div>
 					<div class="nixoption block" id="options.pinpox.services.vikunja.enable">
@@ -1074,6 +1009,27 @@ blkid /dev/sda2 </p>
 						</div>
 
 						<p class="subtitle"> Whether to enable VirtualBox virtualisation. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.wastebin.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.wastebin.enable"># </a> options.pinpox.services.wastebin.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable wastebin server. </p>
 
 						<div class="block">
 							<p class="block"><strong>Default:</strong> <code>false</code> </p>
