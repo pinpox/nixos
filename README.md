@@ -2,6 +2,8 @@
 
 **Configuration checks:** [![Build Status](https://build.lounge.rocks/api/badges/9/status.svg)](https://build.lounge.rocks/repos/9)
 
+All Module options are documeted at: https://pinpox.github.io/nixos/
+
 This repository includes all configurations for my NixOS machines. Feel free to
 use parts of it as you please, but keep it mind it is intended mostly for
 personal use. I've written posts about certain aspects of this setup on my
