@@ -6,6 +6,51 @@
 }:
 with lib;
 
+/*
+  Setup cors on backblaze:
+  https://github.com/ente-io/ente/discussions/1764
+
+  # Get keys from backblaze
+  export B2_APPLICATION_KEY_ID=
+  export B2_APPLICATION_KEY=
+
+  save to cors.json
+
+  ```
+  [
+    {
+      "corsRuleName": "entephotos",
+      "allowedOrigins": [
+        "*"
+      ],
+      "allowedHeaders": [
+        "*"
+      ],
+      "allowedOperations": [
+        "b2_download_file_by_id",
+        "b2_download_file_by_name",
+        "b2_upload_file",
+        "b2_upload_part",
+        "s3_get",
+        "s3_post",
+        "s3_put",
+        "s3_head"
+      ],
+      "exposeHeaders": [
+        "X-Amz-Request-Id",
+        "X-Amz-Id-2",
+        "ETag"
+      ],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  ```
+
+  Apply using the backblaze-b2 cli tool:
+
+  backblaze-b2 bucket update --cors-rules "$(<cors.json)" pinpox-ente allPrivate
+*/
+
 let
   cfg = config.services.ente;
   format = pkgs.formats.yaml { };
@@ -83,7 +128,7 @@ in
               secret: "00000000000000000000000000000000000000000000"
           key:
               encryption: 00000000000000000000000000000000000000000000
-              hash: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+              hash: 00000000000000000000000000000000000000000000000000
           s3:
               b2-eu-cen:
                   key: "0000000000000000000000000"
@@ -216,111 +261,114 @@ in
     };
   };
 
-  config =
-    let
-      web-package = pkgs.ente-web.overrideAttrs {
+  config = mkIf (cfg.enable) (mkMerge [
 
-        # See for options: https://github.com/ente-io/ente/blob/main/web/apps/photos/.env
-        extraBuildEnv = {
+    # (mkIf (cfg.webserver == "nginx") {
+    #   services.nginx = {
+    #     enable = true;
+    #     # TODO
+    #   };
+    # })
 
-          # The Ente API endpoint
-          NEXT_PUBLIC_ENTE_ENDPOINT = cfg.api-host;
+    (mkIf (cfg.webserver == "caddy") {
+      services.caddy = {
+        enable = true;
+        virtualHosts = {
 
-          # The URL of the accounts app
-          # NEXT_PUBLIC_ENTE_ACCOUNTS_URL = http://localhost:3001
+          "${cfg.web-host}".extraConfig =
+            let
+              ente-web = pkgs.ente-web.override {
 
-          # The URL of the payments app
-          # NEXT_PUBLIC_ENTE_PAYMENTS_URL = http://localhost:3001
+                # See for options: https://github.com/ente-io/ente/blob/main/web/apps/photos/.env
+                extraBuildEnv = {
+                  NEXT_PUBLIC_ENTE_ENDPOINT = cfg.api-host;
+                  NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT = cfg.albums-host;
+                  # NEXT_PUBLIC_ENTE_ACCOUNTS_URL = http://localhost:3001
+                  # NEXT_PUBLIC_ENTE_FAMILY_URL = http://localhost:3001
+                  # NEXT_PUBLIC_ENTE_PAYMENTS_URL = http://localhost:3001
+                  # TODO: this should only be set if the album-host is not null
+                };
+              };
+            in
+            ''
+              header Access-Control-Allow-Origin "*"
+              root * ${ente-web}
+              file_server
+              encode zstd gzip
+            '';
 
-          # The URL for the shared albums deployment
-          # Note: To use your custom albums endpoint in the generated public link, set the
-          # `apps.public-albums` property in museum's configuration.
-          NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT = cfg.album-host; # TODO: this should only be set if the album-host is not null
-
-          # The URL of the family plans web app
-          # NEXT_PUBLIC_ENTE_FAMILY_URL = http://localhost:3001
-
+          "${cfg.albums-host}".extraConfig =
+            let
+              ente-web = pkgs.ente-web.override {
+                # See for options: https://github.com/ente-io/ente/blob/main/web/apps/photos/.env
+                extraBuildEnv = {
+                  NEXT_PUBLIC_ENTE_ENDPOINT = cfg.api-host;
+                  NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT = cfg.albums-host;
+                  # NEXT_PUBLIC_ENTE_ACCOUNTS_URL = http://localhost:3001
+                  # NEXT_PUBLIC_ENTE_PAYMENTS_URL = http://localhost:3001
+                  # NEXT_PUBLIC_ENTE_FAMILY_URL = http://localhost:3001
+                };
+              };
+            in
+            ''
+              header Access-Control-Allow-Origin "*"
+              root * ${ente-web}
+              file_server
+              encode zstd gzip
+            '';
         };
       };
-    in
-    mkIf (cfg.enable) (mkMerge [
+    })
+    {
 
-      (mkIf (cfg.webserver == "nginx") {
-        services.nginx = {
-          enable = true;
-          # TODO
-        };
-      })
+      services.postgresql = {
+        enable = true;
+        package = pkgs.postgresql_15;
+        ensureUsers = [
+          {
+            name = cfg.settings.db.user;
+            ensureDBOwnership = true;
+          }
+        ];
+        ensureDatabases = [ cfg.settings.db.user ];
+      };
 
-      (mkIf (cfg.webserver == "caddy") {
-        services.caddy = {
-          enable = true;
-          virtualHosts = {
+      # User and group
+      users.users.ente = {
+        isSystemUser = true;
+        description = "ente user";
+        extraGroups = [ "ente" ];
+        group = "ente";
+      };
 
-            "${cfg.web-host}".extraConfig = ''
-              root * ${web-package}
-              file_server
-              encode zstd gzip
-            '';
+      users.groups.ente.name = "ente";
 
-            "${cfg.albums-host}".extraConfig = ''
-              root * ${web-package}
-              file_server
-              encode zstd gzip
-            '';
-          };
-        };
-      })
-      {
+      # Service
+      systemd.services.ente = {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        description = "ente";
 
-        services.postgresql = {
-          enable = true;
-          package = pkgs.postgresql_15;
-          ensureUsers = [
-            {
-              name = cfg.settings.db.user;
-              ensureDBOwnership = true;
-            }
+        serviceConfig = {
+
+          WorkingDirectory = "/var/lib/ente";
+          BindReadOnlyPaths = [
+            "${cfg.credentialsFile}:/var/lib/ente/crendentials.yaml"
+            "${configFile}:/var/lib/ente/configurations/local.yaml"
+            "${pkgs.museum}/share/museum/migrations:/var/lib/ente/migrations"
+            "${pkgs.museum}/share/museum/mail-templates:/var/lib/ente/mail-templates"
           ];
-          ensureDatabases = [ cfg.settings.db.user ];
+
+          BindPaths = "/run/postgresql";
+
+          EnvironmentFile = [ cfg.environmentFile ];
+
+          User = "ente";
+          ExecStart = "${lib.getExe pkgs.museum}";
+          Restart = "on-failure";
+          RestartSec = "5s";
         };
-
-        # User and group
-        users.users.ente = {
-          isSystemUser = true;
-          description = "ente user";
-          extraGroups = [ "ente" ];
-          group = "ente";
-        };
-
-        users.groups.ente.name = "ente";
-
-        # Service
-        systemd.services.ente = {
-          wantedBy = [ "multi-user.target" ];
-          after = [ "network.target" ];
-          description = "ente";
-
-          serviceConfig = {
-
-            WorkingDirectory = "/var/lib/ente";
-            BindReadOnlyPaths = [
-              "${cfg.credentialsFile}:/var/lib/ente/crendentials.yaml"
-              "${configFile}:/var/lib/ente/configurations/local.yaml"
-              "${pkgs.museum}/share/museum/migrations:/var/lib/ente/migrations"
-              "${pkgs.museum}/share/museum/mail-templates:/var/lib/ente/mail-templates"
-            ];
-
-            BindPaths = "/run/postgresql";
-
-            EnvironmentFile = [ cfg.environmentFile ];
-
-            User = "ente";
-            ExecStart = "${lib.getExe pkgs.museum}";
-            Restart = "on-failure";
-            RestartSec = "5s";
-          };
-        };
-      }
-    ]);
+      };
+    }
+  ]);
 }

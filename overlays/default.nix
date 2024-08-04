@@ -81,7 +81,7 @@ self: super: {
   # });
 
   museum = super.callPackage ../packages/ente/museum.nix { };
-  # ente-web = super.callPackage ../packages/ente/web.nix {};
+  ente-web = super.callPackage ../packages/ente/web.nix { };
 
   # TODO remove when fixed upsteam
   zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {
