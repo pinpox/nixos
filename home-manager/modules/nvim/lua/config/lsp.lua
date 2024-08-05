@@ -36,12 +36,38 @@ end, {
 
 -- Disable semantic highlighting
 -- TODO: Disable it only selectively for some languages
-require'lspconfig'.nil_ls.setup{
-  on_attach = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    client.server_capabilities.semanticTokensProvider = nil
-  end,
-}
+-- require'lspconfig'.nil_ls.setup{
+--   on_attach = function(args)
+--     local client = vim.lsp.get_client_by_id(args.data.client_id)
+--     client.server_capabilities.semanticTokensProvider = nil
+--   end,
+-- }
+
+
+
+local nvim_lsp = require("lspconfig")
+nvim_lsp.nixd.setup({
+   cmd = { "nixd" },
+   settings = {
+      nixd = {
+         nixpkgs = {
+            expr = "import <nixpkgs> { }",
+         },
+         formatting = {
+            command = { "nixpkgs-fmt" },
+         },
+         options = {
+            nixos = {
+               expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
+            },
+            home_manager = {
+               expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
+            },
+         },
+      },
+   },
+})
+
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
