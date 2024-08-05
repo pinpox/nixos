@@ -9,6 +9,18 @@
 }:
 {
 
+  #   nixpkgs.config.packageOverrides = pkgs: {
+  #     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  #   };
+
+  #     environment.systemPackages = with pkgs; [
+  #       intel-gpu-tools
+  #       vaapiIntel
+  #       intel-media-driver
+  #       vaapi-intel-hybrid
+  #       xorg.xf86videointel
+  #     ];
+
   networking.hosts = {
     "192.168.56.107" = [ "status.fernuni" ];
   };
@@ -59,7 +71,18 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+    ];
   };
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+    NIXOS_OZONE_WL = "1";
+  };
+
+  # You can turn on native Wayland support in all chrome and most electron apps
+  # by setting an environment variable:
 
   xdg.portal = {
 

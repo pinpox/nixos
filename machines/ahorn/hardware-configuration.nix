@@ -36,25 +36,4 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
-  #   nixpkgs.config.packageOverrides = pkgs: {
-  #     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  #   };
-
-  #     environment.systemPackages = with pkgs; [
-  #       intel-gpu-tools
-  #       vaapiIntel
-  #       intel-media-driver
-  #       vaapi-intel-hybrid
-  #       xorg.xf86videointel
-  #     ];
-
-  #   hardware.opengl = {
-  #     enable = true;
-  #     extraPackages = with pkgs; [
-  #       intel-media-driver # LIBVA_DRIVER_NAME=iHD
-  #       vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-  #       vaapiVdpau
-  #       libvdpau-va-gl
-  #     ];
-  #   };
 }
