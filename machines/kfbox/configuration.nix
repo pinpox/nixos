@@ -134,6 +134,7 @@
       };
 
       hedgedoc.enable = true;
+      screego.enable = true;
       miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
