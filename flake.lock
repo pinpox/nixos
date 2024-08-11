@@ -399,11 +399,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1723373216,
-        "narHash": "sha256-Kw8GUGrdbg+UfjXh7cSCUL+9gLDw3yJfWEzaIR4GT68=",
+        "lastModified": 1723380405,
+        "narHash": "sha256-r2TX7+d1ABS3X04kmbicfpV96yXUVLIZGC6FR55VwhA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d508f0f8894e51009a0b5201e04866a211788b6b",
+        "rev": "110866de6b9a3981751d3d4cf9f7b978610b30f1",
         "type": "github"
       },
       "original": {
@@ -543,7 +543,6 @@
         "retiolum": "retiolum",
         "tfenv": "tfenv",
         "wallpaper-generator": "wallpaper-generator",
-        "zk-nvim": "zk-nvim",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
       }
@@ -670,22 +669,6 @@
       "original": {
         "owner": "pinpox",
         "repo": "wallpaper-generator",
-        "type": "github"
-      }
-    },
-    "zk-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1629124754,
-        "narHash": "sha256-7XC2I5/XdcAAy+KPGgjY2RRDWZrlGUiqEzSsspUqtPA=",
-        "owner": "megalithic",
-        "repo": "zk.nvim",
-        "rev": "dbe88c5315ead19b99c5174a7eda7533cf6a735f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "megalithic",
-        "repo": "zk.nvim",
         "type": "github"
       }
     },
