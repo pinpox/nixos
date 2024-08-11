@@ -134,6 +134,7 @@ in
         "unifi_direct"
         "unifi"
         "esphome"
+        "map"
         "openweathermap"
         "tasmota"
         "icloud"
@@ -480,9 +481,6 @@ in
           organization = "pinpox";
           bucket = "home_assistant";
         };
-
-        # Enables a map showing the location of tracked devies
-        map = { };
 
         # Track the sun
         sun = { };
