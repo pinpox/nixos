@@ -189,7 +189,7 @@ in
         vim-devicons
         vim-easy-align
         vim-eunuch
-        # vim-go # https://github.com/NixOS/nixpkgs/pull/167912
+        # vim-go # TODO https://github.com/NixOS/nixpkgs/pull/167912
         vim-gutentags
         vim-illuminate
         which-key-nvim

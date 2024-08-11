@@ -80,7 +80,7 @@
   ];
 
   # Often hangs
-  # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
+  # TODO https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
   # systemd.services.NetworkManager-wait-online.enable = lib.mkForce
   #   false;
   # systemd.services.systemd-networkd-wait-online.enable = lib.mkForce
