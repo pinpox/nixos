@@ -109,7 +109,6 @@ self: super: {
     indent-blankline-nvim-lua = super.callPackage ../packages/indent-blankline-nvim-lua {
       inputs = inputs;
     };
-    zk-nvim = super.callPackage ../packages/zk-nvim { inputs = inputs; };
     nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
     nvim-cokeline = super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
   };

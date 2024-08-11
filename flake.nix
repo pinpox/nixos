@@ -92,9 +92,6 @@
     nvim-cokeline.url = "github:noib3/nvim-cokeline";
     nvim-cokeline.flake = false;
 
-    zk-nvim.url = "github:megalithic/zk.nvim";
-    zk-nvim.flake = false;
-
     # ZSH plugins
     zsh-abbrev-alias.url = "github:momo-lab/zsh-abbrev-alias";
     zsh-abbrev-alias.flake = false;
