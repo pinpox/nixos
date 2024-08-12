@@ -5,11 +5,14 @@ require'lspconfig'.bashls.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.zls.setup{}
-require'lspconfig'.typst_lsp.setup{}
+-- require'lspconfig'.typst_lsp.setup{}
+require'lspconfig'.tinymist.setup{}
 
 
 -- Spell/Grammar checking, e.g for markdown files
-require'lspconfig'.ltex.setup{}
+require'lspconfig'.ltex.setup{
+	autostart = false,
+}
 
 -- Adds `:LtexLangChangeLanguage de` command to allow changing language for a
 -- document. Defaults to en

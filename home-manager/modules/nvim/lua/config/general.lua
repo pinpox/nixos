@@ -68,10 +68,10 @@ vim.g["terraform_fmt_on_save"] = 1          -- Terraform: Format on saving
 
 -- TODO This variable should be used instead, but is supported on neovim >0.10.0
 -- https://neovim.io/doc/user/filetype.html#filetype-overrule
--- vim.g.filetype_typ = "typst"
+vim.g.filetype_typ = "typst"
 --
 -- Recognize *.typ files as typst filetype instead of sql.
-vim.filetype.add({ extension = { typ = 'typst' } })
+-- vim.filetype.add({ extension = { typ = 'typst' } })
 
 -- Wrap markdown files to 80 chars per line
 vim.cmd('au BufRead,BufNewFile *.md setlocal textwidth=80')

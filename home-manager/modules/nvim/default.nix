@@ -36,6 +36,7 @@ in
       typst
       stix-two
       typstfmt
+      tinymist
       typst-lsp
 
       zig
@@ -118,7 +119,7 @@ in
         -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
         require('config.lualine')
         require('config.gitsigns')
-        -- require('config.zk')
+        require('config.zk')
 
         EOF
 
@@ -127,8 +128,8 @@ in
         let g:formatdef_nixpkgs_fmt = '"${lib.getExe pkgs.nixfmt-rfc-style}"'
         let g:formatters_nix = ['nixpkgs_fmt']
 
-        let g:formatdef_typst = '"${pkgs.typstfmt}/bin/typstfmt"'
-        let g:formatters_typst = ['typst']
+        " let g:formatdef_typst = '"${pkgs.typstfmt}/bin/typstfmt"'
+        " let g:formatters_typst = ['typst']
 
       '';
 
@@ -144,7 +145,7 @@ in
         nvim-treesitter.withAllGrammars
         playground # Treesitter playground
 
-        # zk-nvim
+        zk-nvim
         # vim-visual-increment
         # vim-indent-object
         # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
@@ -195,6 +196,7 @@ in
         which-key-nvim
         vim-nix
         vim-repeat
+        typst-vim
         vim-sandwich
         vim-table-mode
         vim-terraform
