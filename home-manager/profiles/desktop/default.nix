@@ -41,6 +41,12 @@
         keys = {
           normal = {
             ";" = "command_mode";
+            "C-g" = [
+              ":new"
+              ":insert-output ${pkgs.lazygit}/bin/lazygit"
+              ":buffer-close!"
+              ":redraw"
+            ];
           };
           select = {
             ";" = "command_mode";
