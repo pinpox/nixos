@@ -487,11 +487,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1725299959,
-        "narHash": "sha256-zA46wtKokbgEo0FizCQZFi3cC6eqBCvc6G8hzaxC8TE=",
+        "lastModified": 1725300413,
+        "narHash": "sha256-a2k2+6qndxnIDspVYQkmFnPKn90yFhHHd4l00n4JHI4=",
         "owner": "pinpox",
         "repo": "radio",
-        "rev": "24ca2e090071af044c5adb23b86c50bddf596b8f",
+        "rev": "0bbc8f9354e38fa56c7f33f03058022cd1beadd9",
         "type": "github"
       },
       "original": {
