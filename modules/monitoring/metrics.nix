@@ -42,7 +42,10 @@ in
         # Default port is 9100
         # Listen on 0.0.0.0, bet we only open the firewall for wg0
         openFirewall = false;
-        enabledCollectors = [ "systemd" ];
+        enabledCollectors = [
+          "cgroups"
+          "systemd"
+        ];
 
         extraFlags = [ "--collector.textfile.directory=/etc/nix" ];
       };
