@@ -80,7 +80,7 @@ self: super: {
   #   '';
   # });
 
-  museum = super.callPackage ../packages/ente/museum.nix { };
+  # museum = super.callPackage ../packages/ente/museum.nix { };
   ente-web = super.callPackage ../packages/ente/web.nix { };
 
   # TODO remove when fixed upsteam
