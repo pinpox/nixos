@@ -125,6 +125,7 @@
         # calibre
         # recursive
         # retroarch
+        chafa
         asciinema
         cbatticon
         evince
