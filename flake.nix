@@ -22,6 +22,11 @@
       flake = false;
     };
 
+    radio = {
+      url = "github:pinpox/radio";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     mc3000 = {
       url = "github:pinpox/mc3000";
       inputs.nixpkgs.follows = "nixpkgs";

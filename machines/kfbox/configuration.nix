@@ -5,6 +5,7 @@
   mc3000,
   pkgs,
   retiolum,
+  radio,
   ...
 }:
 {
@@ -130,6 +131,7 @@
         };
       };
 
+      radio.enable = true;
       hedgedoc.enable = true;
       screego.enable = true;
       miniflux.enable = true;
