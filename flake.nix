@@ -122,12 +122,6 @@
     with inputs;
     let
 
-      # to work with older version of flakes
-      lastModifiedDate = self.lastModifiedDate or self.lastModified or "19700101";
-
-      # Generate a user-friendly version number.
-      version = builtins.substring 0 8 lastModifiedDate;
-
       # System types to support.
       supportedSystems = [
         "x86_64-linux"
@@ -225,12 +219,7 @@
           (name: {
             inherit name;
             value =
-              {
-                pkgs,
-                lib,
-                username,
-                ...
-              }:
+              { ... }:
               {
                 imports = [
                   (./home-manager/profiles + "/${name}")
