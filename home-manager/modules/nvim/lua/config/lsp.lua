@@ -8,6 +8,8 @@ require'lspconfig'.zls.setup{}
 -- require'lspconfig'.typst_lsp.setup{}
 require'lspconfig'.tinymist.setup{}
 
+require'lspconfig'.harper_ls.setup{}
+
 
 -- Spell/Grammar checking, e.g for markdown files
 require'lspconfig'.ltex.setup{

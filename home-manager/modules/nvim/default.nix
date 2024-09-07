@@ -12,8 +12,10 @@ let
 
   cfg = config.pinpox.programs.nvim;
 
-  # Helper function to add plugins directly from GitHub if they are not
-  # packaged in nixpkgs yet
+in
+# Helper function to add plugins directly from GitHub if they are not
+# packaged in nixpkgs yet
+/*
   plugin =
     name: repo: branch: sha256:
     pkgs.vimUtils.buildVimPlugin {
@@ -25,7 +27,7 @@ let
         rev = sha256;
       };
     };
-in
+*/
 {
   options.pinpox.programs.nvim.enable = mkEnableOption "neovim";
 
@@ -37,8 +39,9 @@ in
       stix-two
       typstfmt
       tinymist
-      typst-lsp
+      # typst-lsp
 
+      harper
       zig
       zls
       nil
@@ -181,7 +184,8 @@ in
         cmp_luasnip
         friendly-snippets
 
-        nvim-colorizer-lua
+        # nvim-colorizer-lua
+        nvim-highlight-colors
         nvim-web-devicons
         plenary-nvim
         # tabular

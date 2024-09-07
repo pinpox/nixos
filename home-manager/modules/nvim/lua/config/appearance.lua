@@ -12,7 +12,10 @@ require("ibl").setup {
     -- show_current_context_start = false,
 }
 
-require'colorizer'.setup()
+-- require'colorizer'.setup()
+-- Ensure termguicolors is enabled if not already
+vim.opt.termguicolors = true
+require('nvim-highlight-colors').setup({})
 
 -- TODO convert to lua
 vim.cmd 'let $NVIM_TUI_ENABLE_TRUE_COLOR=1'
