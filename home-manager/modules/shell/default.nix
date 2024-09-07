@@ -64,6 +64,10 @@ in
 
       # Aliases expanded only at beginning of lines
       {
+        alias = "g";
+        command = "git";
+      }
+      {
         alias = "m";
         command = "neomutt";
       }
