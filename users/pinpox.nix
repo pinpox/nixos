@@ -18,6 +18,8 @@
     # Shell is set to zsh for all users as default.
     defaultUserShell = pkgs.zsh;
 
+    intialPassword = "pinpox";
+
     users.pinpox = {
       isNormalUser = true;
       home = "/home/pinpox";

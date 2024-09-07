@@ -1,7 +1,4 @@
 {
-  config,
-  pkgs,
-  lib,
   pinpox-keys,
   ...
 }:
