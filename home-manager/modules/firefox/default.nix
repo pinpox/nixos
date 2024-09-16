@@ -91,11 +91,8 @@ in
             darkreader
             web-search-navigator
             ublock-origin
-            tree-style-tab
+            simple-tab-groups
           ];
-
-          # Extra preferences to add to user.js.
-          # extraConfig = "";
 
           isDefault = true;
           settings = {
