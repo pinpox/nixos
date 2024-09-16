@@ -28,10 +28,12 @@ bindkey -s "^T" 'pazi_cd --pipe="fzf"^M'
 # Make tab-completion case-insensitive
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-# Start x on first login
-# if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-#	startx
-# fi
+# fzf-tab: https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
+
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
 # Self-hosted transfer.sh sharing. Expects ~/.netrc with crendentials in this format:
 # machine transfer.0cx.de login my-super-user password super-secret-password
