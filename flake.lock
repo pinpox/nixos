@@ -367,11 +367,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1727598569,
-        "narHash": "sha256-xGn/LxSQ+Ujnoeupc1ZzdQNal9qceHETcIGfwBZvz7Y=",
+        "lastModified": 1727613673,
+        "narHash": "sha256-qqIffTQfxMYo3MKQ9BoY2s2mdKZNnUiksdnxv81js9U=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "e88d37154f74e2bc2545514612dd20a16bb3e2f0",
+        "rev": "f5c239fa9acb27f0a5326ba2949c00fada89ca9f",
         "type": "github"
       },
       "original": {
@@ -399,11 +399,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1727605244,
-        "narHash": "sha256-ppcC/W/rKLQr1F2iA+7ClWhx6fhewh59em5qkXf3G70=",
+        "lastModified": 1727622222,
+        "narHash": "sha256-Nh4gmTLDYZTKfXWBdL8EocTOyKKn+3nXqlUlg6GcnRE=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3c37b6df4a773825187dd960dc0b330e387d34ce",
+        "rev": "8ad93a63359caf2ed00d647264a59ca030691c71",
         "type": "github"
       },
       "original": {
@@ -454,6 +454,26 @@
       "original": {
         "type": "file",
         "url": "https://github.com/pinpox.keys"
+      }
+    },
+    "pinpox-neovim": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1727353780,
+        "narHash": "sha256-ohsM4thhVfRgWxq1cRNj4Aj30l78RZzMOPFWwLkwy7Q=",
+        "owner": "pinpox",
+        "repo": "pinpox-neovim",
+        "rev": "b7d2df0b305d6edc570f23f0acab5e80031efaa9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "pinpox-neovim",
+        "type": "github"
       }
     },
     "promterm": {
@@ -558,6 +578,7 @@
         "nvim-cokeline": "nvim-cokeline",
         "nvim-fzf": "nvim-fzf",
         "pinpox-keys": "pinpox-keys",
+        "pinpox-neovim": "pinpox-neovim",
         "promterm": "promterm",
         "radio": "radio",
         "restic-exporter": "restic-exporter",
