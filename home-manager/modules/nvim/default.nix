@@ -28,8 +28,6 @@ in
 
     # Set env vars
     # TODO: which ones are really nedded?
-    environment.variables.EDITOR = "nvim";
-    environment.variables.VISUAL = "nvim";
     programs.zsh.sessionVariables.EDITOR = "nvim";
     programs.zsh.sessionVariables.VISUAL = "nvim";
     systemd.user.sessionVariables.EDITOR = "nvim";
