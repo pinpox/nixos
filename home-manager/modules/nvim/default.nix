@@ -9,216 +9,33 @@
 with lib;
 
 let
-
   cfg = config.pinpox.programs.nvim;
-
 in
-# Helper function to add plugins directly from GitHub if they are not
-# packaged in nixpkgs yet
-/*
-  plugin =
-    name: repo: branch: sha256:
-    pkgs.vimUtils.buildVimPlugin {
-      pname = "vim-plugin-${name}";
-      version = "git";
-      src = builtins.fetchGit {
-        url = "https://github.com/${repo}.git";
-        ref = branch;
-        rev = sha256;
-      };
-    };
-*/
 {
   options.pinpox.programs.nvim.enable = mkEnableOption "neovim";
 
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-
-      typst
-      stix-two
-      typstfmt
-      tinymist
-      # typst-lsp
-
-      harper
-      zig
-      zls
-      nil
-      nixd
-      pyright # LSP python
-      nodePackages.yaml-language-server # LSP yaml
-      vscode-extensions.golang.go # Golang snippets
-      nodePackages.bash-language-server
-      gopls # LSP go
-      terraform-ls # LSP terraform
-      # terraform # TODO add options to enable/disable large packages like terraform
-      libgccjit # Needed for treesitter
-      # sumneko-lua-language-server # Lua language server
-      cargo
-      rustc
-      rustfmt
-      rust-analyzer
-      ltex-ls
-    ];
+    home.packages = with pkgs; [ neovim ];
 
     xdg = {
       enable = true;
-      configFile = {
-
-        nixcolors-lua = {
-          target = "nvim/lua/nixcolors.lua";
-          source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache config.pinpox.colors;
-        };
-
-        nvim_lua_config = {
-          target = "nvim/lua/config";
-          source = ./lua/config;
-        };
-
-        nvim_lua_utils = {
-          target = "nvim/lua/utils";
-          source = ./lua/utils;
-        };
-
-        colors = {
-          target = "nvim/colors/generated.vim";
-          text = ''" File empty on purpouse'';
-        };
-
-        nvim_vimscript = {
-          target = "nvim/vimscript";
-          source = ./vimscript;
-        };
+      configFile.nixcolors-lua = {
+        target = "nvim/lua/nixcolors.lua";
+        source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache config.pinpox.colors;
       };
     };
 
-    programs.neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
+    # Set env vars
+    # TODO: which ones are really nedded?
+    environment.variables.EDITOR = "nvim";
+    environment.variables.VISUAL = "nvim";
+    programs.zsh.sessionVariables.EDITOR = "nvim";
+    programs.zsh.sessionVariables.VISUAL = "nvim";
+    systemd.user.sessionVariables.EDITOR = "nvim";
+    systemd.user.sessionVariables.VISUAL = "nvim";
+    home.sessionVariables.EDITOR = "nvim";
+    home.sessionVariables.VISUAL = "nvim";
 
-      extraConfig = ''
-
-        source ~/.config/nvim/vimscript/wilder.vim
-
-        lua << EOF
-
-        local utils = require('utils')
-
-        require('config.general') -- General options, should stay first!
-        require('config.pinpox-colors')
-        require('config.appearance')
-        require('config.treesitter')
-        require('config.lsp')
-        require('config.devicons')
-        require('config.cmp')
-        require('config.which-key')
-        require('config.bufferline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-        -- require('config.cokeline') -- https://github.com/akinsho/bufferline.nvim/issues/271
-        require('config.lualine')
-        require('config.gitsigns')
-        require('config.zk')
-
-        EOF
-
-        " Add snippet directories from packages
-        let g:vsnip_snippet_dirs = ['${pkgs.vscode-extensions.golang.go}/share/vscode/extensions/golang.Go/snippets/']
-        let g:formatdef_nixpkgs_fmt = '"${lib.getExe pkgs.nixfmt-rfc-style}"'
-        let g:formatters_nix = ['nixpkgs_fmt']
-
-        " let g:formatdef_typst = '"${pkgs.typstfmt}/bin/typstfmt"'
-        " let g:formatters_typst = ['typst']
-
-      '';
-
-      # loaded on launch
-      plugins = with pkgs.vimPlugins; [
-        rose-pine
-
-        oil-nvim
-
-        zig-vim
-
-        ccc-nvim
-        nvim-treesitter.withAllGrammars
-        playground # Treesitter playground
-
-        zk-nvim
-        # vim-visual-increment
-        # vim-indent-object
-        # vim-markdown # Disabled because of https://github.com/plasticboy/vim-markdown/issues/461
-        # vim-vinegar
-        bufferline-nvim
-        # i3config-vim
-        # nvim-cokeline
-        nvim-fzf
-        fzf-lua
-        indent-blankline-nvim-lua
-        colorbuddy-nvim
-        BufOnly-vim
-        ansible-vim
-        base16-vim
-        committia-vim
-        gitsigns-nvim
-        gotests-vim
-        haskell-vim
-        lualine-nvim
-        nvim-lspconfig
-        vim-jsonnet
-
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-calc
-        cmp-emoji
-        cmp-nvim-lua
-        cmp-spell
-        # cmp-cmdline -- use wilder-nvim instead
-        nvim-cmp
-        luasnip
-        cmp_luasnip
-        friendly-snippets
-
-        # nvim-colorizer-lua
-        nvim-highlight-colors
-        nvim-web-devicons
-        plenary-nvim
-        # tabular
-        vim-autoformat
-        vim-better-whitespace
-        vim-devicons
-        vim-easy-align
-        vim-eunuch
-        # vim-go # TODO https://github.com/NixOS/nixpkgs/pull/167912
-        vim-gutentags
-        vim-illuminate
-        which-key-nvim
-        vim-nix
-        vim-repeat
-        typst-vim
-        vim-sandwich
-        vim-table-mode
-        vim-terraform
-        vim-textobj-user
-        vim-gnupg
-        # vim-vsnip
-        # vim-vsnip-integ
-        wilder-nvim
-        diffview-nvim
-      ];
-    };
   };
 }
-
-# TODO Missing plugins
-# TODO use flake inputs for this, if needed
-# autopairs
-# fvictorio/vim-textobj-backticks'
-# nicwest/vim-camelsnek'
-# thinca/vim-textobj-between'           "Text objects for a range between a character
-# timakro/vim-searchant'                " Better highlighting of search

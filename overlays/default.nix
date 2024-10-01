@@ -104,6 +104,9 @@ self: super: {
   filebrowser = super.callPackage ../packages/filebrowser { };
   smartmon-script = super.callPackage ../packages/smartmon-script { };
 
+  # Use custom neovim in standalone flake
+  neovim = inputs.pinpox-neovim.packages.x86_64-linux.pinpox-neovim;
+
   # Vim plugins, added inside existing pkgs.vimPlugins
   vimPlugins = super.vimPlugins // {
     indent-blankline-nvim-lua = super.callPackage ../packages/indent-blankline-nvim-lua {

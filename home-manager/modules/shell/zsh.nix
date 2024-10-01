@@ -16,8 +16,6 @@
     sessionVariables = {
       RPS1 = ""; # Disable the right side prompt that "walters" theme introduces
       ZDOTDIR = "/home/pinpox/.config/zsh";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
     };
 
     initExtraBeforeCompInit = builtins.readFile ./zshrc;

@@ -22,6 +22,11 @@
       flake = false;
     };
 
+    pinpox-neovim = {
+      url = "github:pinpox/pinpox-neovim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     radio = {
       url = "github:pinpox/radio";
       inputs.nixpkgs.follows = "nixpkgs";

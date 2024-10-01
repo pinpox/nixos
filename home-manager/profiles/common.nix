@@ -29,7 +29,6 @@ with lib;
       overlays = [
         flake-self.overlays.default
         nur.overlay
-        # inputs.neovim-nightly.overlay
       ];
     };
 
@@ -38,8 +37,6 @@ with lib;
       cmd-name-prefix = "nixos-secrets/users/pinpox/";
       default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
     };
-
-    # programs.neovim.package = pkgs.neovim-nightly;
 
     # Extra arguments to pass to modules
     _module.args = {
@@ -51,8 +48,6 @@ with lib;
 
     # Environment variables
     systemd.user.sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
       ZDOTDIR = "/home/pinpox/.config/zsh";
     };
 
@@ -70,8 +65,6 @@ with lib;
       sessionVariables = {
         # Workaround for alacritty (breaks wezterm and other apps!)
         # LIBGL_ALWAYS_SOFTWARE = "1";
-        EDITOR = "nvim";
-        VISUAL = "nvim";
         ZDOTDIR = "/home/pinpox/.config/zsh";
       };
 
