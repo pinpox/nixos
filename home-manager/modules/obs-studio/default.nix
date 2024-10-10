@@ -24,6 +24,10 @@ in
 
     home.packages = [
       pkgs.uxplay # AirPlay Unix mirroring server
+
+      pkgs.slurp
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gtk
     ];
 
     programs.obs-studio = {

@@ -168,6 +168,7 @@
         tfenv
         thunderbird-bin
         timewarrior
+        typst
         unzip
         viewnior
         vlc
