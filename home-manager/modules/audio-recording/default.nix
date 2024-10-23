@@ -15,10 +15,12 @@ let
     # Effects
     calf
     lsp-plugins
-    distrho
     zam-plugins
     talentedhack
     gxplugins-lv2
+
+    # TODO https://github.com/NixOS/nixpkgs/issues/348871
+    # distrho
   ];
 in
 {
