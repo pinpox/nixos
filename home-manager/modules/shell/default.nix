@@ -91,6 +91,10 @@ in
         alias = "nfu";
         command = "nix flake update --commit-lock-file";
       }
+      {
+        alias = "yt-dlp-mp4";
+        command = "nix run nixpkgs#yt-dlp -- -S res,ext:mp4:m4a --recode mp4 ";
+      }
 
       # Global aliases, get expanded everywhere
       {
