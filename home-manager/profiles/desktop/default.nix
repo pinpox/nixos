@@ -163,7 +163,6 @@
         signal-desktop
         spotify
         sqlite
-        taskwarrior
         tealdeer
         tfenv
         thunderbird-bin
