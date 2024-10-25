@@ -46,9 +46,13 @@ in
           "${modifier}+Shift+Tab" = "focus prev";
           "${modifier}+Tab" = "focus next";
 
+          # Screen lock
+          "${modifier}+Shift+l" = "swaylock";
+
           # SwayNotificationCenter
           "${modifier}+n" = "exec swaync-client -t -sw";
 
+          # Scratchpad
           "${modifier}+u" = ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 98ppt 98ppt; [app_id="dropdown"] move position center'';
         };
 
