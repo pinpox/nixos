@@ -18,6 +18,8 @@ in
 
   config = mkIf cfg.enable {
 
+    # Generates a .prom file that can be scraped with prometheus to monitor the
+    # current nixpkgs version
     environment.etc."nix/flake_inputs.prom" = {
       mode = "0555";
       text = ''
@@ -57,6 +59,8 @@ in
     nixpkgs.config.allowUnfree = true;
 
     lollypops.secrets.files."nix/nix-access-tokens" = { };
+
+    nix.trustedUsers = [ "@wheel" ];
 
     # Enable flakes
     nix = {
