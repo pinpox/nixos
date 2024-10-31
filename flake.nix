@@ -3,6 +3,9 @@
 
   inputs = {
 
+    disko.url = "github:nix-community/disko/latest";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
     caddy-patched = {
       url = "github:pinpox/nixos-caddy-patched";
       inputs.nixpkgs.follows = "nixpkgs";
