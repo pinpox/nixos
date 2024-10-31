@@ -128,6 +128,7 @@
         chafa
         asciinema
         cbatticon
+        duf
         evince
         eza
         fd
