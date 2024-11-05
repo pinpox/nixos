@@ -262,7 +262,9 @@
     },
     "inovex-mdm": {
       "inputs": {
-        "mdm-linux-inventory": "mdm-linux-inventory",
+        "mdm-linux-inventory": [
+          "mdm-linux-inventory"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -368,17 +370,20 @@
     "mdm-linux-inventory": {
       "flake": false,
       "locked": {
+        "host": "gitlab.inovex.de",
         "lastModified": 1729248637,
         "narHash": "sha256-2VhU4ozf5IrtadOoHe7vqUzwvJlCPZpNcl9o+h1lyac=",
-        "ref": "refs/heads/main",
+        "owner": "inovex-it-mdm",
+        "repo": "mdm-linux-inventory",
         "rev": "3773229472a54623f179c85cb5fcb62124f35b20",
-        "revCount": 51,
-        "type": "git",
-        "url": "ssh://git@gitlab.inovex.de:2424/inovex-it-mdm/mdm-linux-inventory.git"
+        "type": "gitlab"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@gitlab.inovex.de:2424/inovex-it-mdm/mdm-linux-inventory.git"
+        "host": "gitlab.inovex.de",
+        "owner": "inovex-it-mdm",
+        "ref": "main",
+        "repo": "mdm-linux-inventory",
+        "type": "gitlab"
       }
     },
     "naersk": {
@@ -633,6 +638,7 @@
         "lollypops": "lollypops",
         "matrix-hook": "matrix-hook",
         "mc3000": "mc3000",
+        "mdm-linux-inventory": "mdm-linux-inventory",
         "naersk": "naersk",
         "nix-apple-fonts": "nix-apple-fonts",
         "nixos-hardware": "nixos-hardware",
