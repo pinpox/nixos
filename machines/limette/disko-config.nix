@@ -1,21 +1,15 @@
-# # USAGE in your configuration.nix.
-# # Update devices to match your hardware.
-# # {
-# #   imports = [ ./disko-config.nix ];
-# #   disko.devices.disk.root.device = "/dev/sda";
-# #   disko.devices.disk.data1.device = "/dev/sdb";
-# #   disko.devices.disk.data2.device = "/dev/sdc";
-# # }
 {
   disko.devices = {
     disk = {
       main = {
         type = "disk";
         device = "/dev/vdb";
+        # device = builtins.elemAt disks 0;
         content = {
           type = "gpt";
           partitions = {
             ESP = {
+              name = "BOOT";
               size = "500M";
               type = "EF00";
               content = {
@@ -23,17 +17,21 @@
                 format = "vfat";
                 mountpoint = "/boot";
                 mountOptions = [ "umask=0077" ];
+                extraArgs = [
+                  "-n"
+                  "BOOT"
+                ];
               };
             };
             luks = {
               size = "100%";
+              name = "SYSTEM";
               content = {
                 type = "luks";
                 name = "crypted";
                 extraOpenArgs = [ ];
-                settings = {
-                  allowDiscards = true;
-                };
+                passwordFile = "/tmp/secret.key";
+                settings.allowDiscards = true;
                 content = {
                   type = "lvm_pv";
                   vg = "pool";
@@ -48,8 +46,22 @@
       pool = {
         type = "lvm_vg";
         lvs = {
+
+          swap = {
+            name = "swap";
+            size = "8G";
+            content = {
+              type = "swap";
+              resumeDevice = true;
+              extraArgs = [
+                "-L"
+                "swap"
+              ];
+            };
+          };
           root = {
-            size = "100%";
+            name = "root";
+            size = "100%FREE";
             content = {
               type = "filesystem";
               format = "ext4";
@@ -57,8 +69,26 @@
               mountOptions = [
                 "defaults"
               ];
+              extraArgs = [
+                "-L"
+                "root"
+              ];
             };
           };
+
+          # root = {
+          #   size = "100%";
+          #     name = "root";
+          #   content = {
+          #     type = "filesystem";
+          #     format = "ext4";
+          #     mountpoint = "/";
+          #     mountOptions = [
+          #       "defaults"
+          #     ];
+          #       extraArgs = [ "-L root" ];
+          #   };
+          # };
         };
       };
     };
