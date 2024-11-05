@@ -260,6 +260,30 @@
         "type": "github"
       }
     },
+    "inovex-mdm": {
+      "inputs": {
+        "mdm-linux-inventory": "mdm-linux-inventory",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "host": "gitlab.inovex.de",
+        "lastModified": 1730186269,
+        "narHash": "sha256-ovSOX6ZpnJj2RRu94hgf9EGLcPs/XfjXqDHc5iZKK4A=",
+        "owner": "ffranzmann",
+        "repo": "mdm-linux-inventory-nix",
+        "rev": "d3f405a712d3f250a46c51c7c31fe855289511b7",
+        "type": "gitlab"
+      },
+      "original": {
+        "host": "gitlab.inovex.de",
+        "owner": "ffranzmann",
+        "ref": "master",
+        "repo": "mdm-linux-inventory-nix",
+        "type": "gitlab"
+      }
+    },
     "krops": {
       "flake": false,
       "locked": {
@@ -339,6 +363,22 @@
         "owner": "pinpox",
         "repo": "mc3000",
         "type": "github"
+      }
+    },
+    "mdm-linux-inventory": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1729248637,
+        "narHash": "sha256-2VhU4ozf5IrtadOoHe7vqUzwvJlCPZpNcl9o+h1lyac=",
+        "ref": "refs/heads/main",
+        "rev": "3773229472a54623f179c85cb5fcb62124f35b20",
+        "revCount": 51,
+        "type": "git",
+        "url": "ssh://git@gitlab.inovex.de:2424/inovex-it-mdm/mdm-linux-inventory.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@gitlab.inovex.de:2424/inovex-it-mdm/mdm-linux-inventory.git"
       }
     },
     "naersk": {
@@ -588,6 +628,7 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
+        "inovex-mdm": "inovex-mdm",
         "krops": "krops",
         "lollypops": "lollypops",
         "matrix-hook": "matrix-hook",
