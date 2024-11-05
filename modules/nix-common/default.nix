@@ -67,13 +67,13 @@ in
 
       # Enable flakes
       package = pkgs.nixVersions.stable;
-      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
       extraOptions = ''
         fallback = true
         connect-timeout = 100
         stalled-download-timeout = 100
       '';
+      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
       settings = {
 
