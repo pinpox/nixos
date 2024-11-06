@@ -10,6 +10,7 @@
   services.gnome.gnome-keyring.enable = true;
   hardware.keyboard.qmk.enable = true;
 
+  hardware.enableRedistributableFirmware = true;
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-x230
     # ./hardware-configuration.nix
