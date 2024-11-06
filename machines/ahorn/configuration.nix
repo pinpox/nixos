@@ -194,6 +194,17 @@
     enable = true;
     wireguardIp = "192.168.7.2";
     hostname = "ahorn";
-    bootDevice = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
   };
+
+  # Encrypted drive to be mounted by the bootloader. Path of the device will
+  # have to be changed for each install.
+  boot.initrd.luks.devices = {
+    root = {
+      # Get UUID from blkid /dev/sda2
+      device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+      preLVM = true;
+      allowDiscards = true;
+    };
+  };
+
 }

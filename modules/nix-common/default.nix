@@ -60,8 +60,6 @@ in
 
     lollypops.secrets.files."nix/nix-access-tokens" = { };
 
-    nix.trustedUsers = [ "@wheel" ];
-
     # Enable flakes
     nix = {
 
@@ -81,6 +79,8 @@ in
           "nix-command"
           "flakes"
         ];
+
+        trusted-users = [ "@wheel" ];
 
         trusted-public-keys = [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
 

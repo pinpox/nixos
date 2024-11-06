@@ -45,15 +45,15 @@ in
       description = "hostname to identify the instance";
     };
 
-    bootDevice = mkOption {
-      type = types.str;
-      default = null;
-      description = ''
-        Path of the underlying luks-encrypted root.
-        Get UUID from e.g.
-        blkid /dev/sda2'';
-      example = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
-    };
+    # bootDevice = mkOption {
+    #   type = types.str;
+    #   default = null;
+    #   description = ''
+    #     Path of the underlying luks-encrypted root.
+    #     Get UUID from e.g.
+    #     blkid /dev/sda2'';
+    #   example = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
+    # };
   };
 
   config = mkIf cfg.enable {
@@ -256,14 +256,14 @@ in
 
       # Encrypted drive to be mounted by the bootloader. Path of the device will
       # have to be changed for each install.
-      initrd.luks.devices = {
-        root = {
-          # Get UUID from blkid /dev/sda2
-          device = cfg.bootDevice;
-          preLVM = true;
-          allowDiscards = true;
-        };
-      };
+      # initrd.luks.devices = {
+      #   root = {
+      #     # Get UUID from blkid /dev/sda2
+      #     device = cfg.bootDevice;
+      #     preLVM = true;
+      #     allowDiscards = true;
+      #   };
+      # };
     };
 
     # Define the hostname

@@ -28,7 +28,7 @@
               name = "SYSTEM";
               content = {
                 type = "luks";
-                name = "crypted";
+                name = "root";
                 extraOpenArgs = [ ];
                 passwordFile = "/tmp/secret.key";
                 settings.allowDiscards = true;
@@ -36,6 +36,9 @@
                   type = "lvm_pv";
                   vg = "pool";
                 };
+                extraFormatArgs = [
+                  "--label LUKS"
+                ];
               };
             };
           };
@@ -46,17 +49,13 @@
       pool = {
         type = "lvm_vg";
         lvs = {
-
           swap = {
             name = "swap";
             size = "8G";
             content = {
               type = "swap";
               resumeDevice = true;
-              extraArgs = [
-                "-L"
-                "swap"
-              ];
+              extraArgs = [ "-L swap" ];
             };
           };
           root = {
@@ -69,26 +68,9 @@
               mountOptions = [
                 "defaults"
               ];
-              extraArgs = [
-                "-L"
-                "root"
-              ];
+              extraArgs = [ "-L root" ];
             };
           };
-
-          # root = {
-          #   size = "100%";
-          #     name = "root";
-          #   content = {
-          #     type = "filesystem";
-          #     format = "ext4";
-          #     mountpoint = "/";
-          #     mountOptions = [
-          #       "defaults"
-          #     ];
-          #       extraArgs = [ "-L root" ];
-          #   };
-          # };
         };
       };
     };
