@@ -97,7 +97,7 @@
   # Karmabot for IRC channel
   lollypops.secrets.files."go-karma-bot/envfile" = { };
   services.go-karma-bot.environmentFile = config.lollypops.secrets.files."go-karma-bot/envfile".path;
-  services.go-karma-bot.enable = false;
+  services.go-karma-bot.enable = true;
 
   # Discord AoE2 taunt bot
   lollypops.secrets.files."aoe-taunt-discord-bot/discord_token" = { };
