@@ -209,7 +209,7 @@ in
       # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
       # pkgs.nur.repos.mic92.irc-announce
 
-      orca-slicer
+      # orca-slicer
       discord
 
       gcc
