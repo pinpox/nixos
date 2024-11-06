@@ -260,32 +260,6 @@
         "type": "github"
       }
     },
-    "inovex-mdm": {
-      "inputs": {
-        "mdm-linux-inventory": [
-          "mdm-linux-inventory"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "host": "gitlab.inovex.de",
-        "lastModified": 1730186269,
-        "narHash": "sha256-ovSOX6ZpnJj2RRu94hgf9EGLcPs/XfjXqDHc5iZKK4A=",
-        "owner": "ffranzmann",
-        "repo": "mdm-linux-inventory-nix",
-        "rev": "d3f405a712d3f250a46c51c7c31fe855289511b7",
-        "type": "gitlab"
-      },
-      "original": {
-        "host": "gitlab.inovex.de",
-        "owner": "ffranzmann",
-        "ref": "master",
-        "repo": "mdm-linux-inventory-nix",
-        "type": "gitlab"
-      }
-    },
     "krops": {
       "flake": false,
       "locked": {
@@ -365,25 +339,6 @@
         "owner": "pinpox",
         "repo": "mc3000",
         "type": "github"
-      }
-    },
-    "mdm-linux-inventory": {
-      "flake": false,
-      "locked": {
-        "host": "gitlab.inovex.de",
-        "lastModified": 1729248637,
-        "narHash": "sha256-2VhU4ozf5IrtadOoHe7vqUzwvJlCPZpNcl9o+h1lyac=",
-        "owner": "inovex-it-mdm",
-        "repo": "mdm-linux-inventory",
-        "rev": "3773229472a54623f179c85cb5fcb62124f35b20",
-        "type": "gitlab"
-      },
-      "original": {
-        "host": "gitlab.inovex.de",
-        "owner": "inovex-it-mdm",
-        "ref": "main",
-        "repo": "mdm-linux-inventory",
-        "type": "gitlab"
       }
     },
     "naersk": {
@@ -633,12 +588,10 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
-        "inovex-mdm": "inovex-mdm",
         "krops": "krops",
         "lollypops": "lollypops",
         "matrix-hook": "matrix-hook",
         "mc3000": "mc3000",
-        "mdm-linux-inventory": "mdm-linux-inventory",
         "naersk": "naersk",
         "nix-apple-fonts": "nix-apple-fonts",
         "nixos-hardware": "nixos-hardware",

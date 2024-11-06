@@ -5,7 +5,7 @@
   pkgs,
   lib,
   nixos-hardware,
-  inovex-mdm,
+  # inovex-mdm,
   ...
 }:
 {
@@ -66,19 +66,19 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
-    inovex-mdm.nixosModules.default
+    # inovex-mdm.nixosModules.default
 
     #retiolum.nixosModules.ca
   ];
 
   lollypops.secrets.files."inovex-mdm/mdm-create-token" = { };
 
-  services.inovex-mdm = {
-    enable = true;
-    userhome = "/home/pinpox";
-    tokenFile = "${config.lollypops.secrets.files."inovex-mdm/mdm-create-token".path}";
-    screenLockTimeout = "300";
-  };
+  # services.inovex-mdm = {
+  #   enable = true;
+  #   userhome = "/home/pinpox";
+  #   tokenFile = "${config.lollypops.secrets.files."inovex-mdm/mdm-create-token".path}";
+  #   screenLockTimeout = "300";
+  # };
 
   programs.sway.enable = true;
 
