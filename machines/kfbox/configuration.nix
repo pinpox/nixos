@@ -10,6 +10,8 @@
 }:
 {
 
+  lollypops.deployment.deploy-method = "archive";
+
   lollypops.secrets.files."ente/credentials.yaml" = {
     owner = "ente";
     group-name = "ente";

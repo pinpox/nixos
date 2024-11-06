@@ -5,6 +5,7 @@
   pkgs,
   lib,
   nixos-hardware,
+  inovex-mdm,
   ...
 }:
 {
@@ -65,9 +66,19 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
+    inovex-mdm.nixosModules.default
 
     #retiolum.nixosModules.ca
   ];
+
+  lollypops.secrets.files."inovex-mdm/mdm-create-token" = { };
+
+  services.inovex-mdm = {
+    enable = true;
+    userhome = "/home/pinpox";
+    tokenFile = "${config.lollypops.secrets.files."inovex-mdm/mdm-create-token".path}";
+    screenLockTimeout = "300";
+  };
 
   programs.sway.enable = true;
 
@@ -183,6 +194,17 @@
     enable = true;
     wireguardIp = "192.168.7.2";
     hostname = "ahorn";
-    bootDevice = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
   };
+
+  # Encrypted drive to be mounted by the bootloader. Path of the device will
+  # have to be changed for each install.
+  boot.initrd.luks.devices = {
+    root = {
+      # Get UUID from blkid /dev/sda2
+      device = "/dev/disk/by-uuid/d4b70087-c965-40e8-9fca-fc3b2606a590";
+      preLVM = true;
+      allowDiscards = true;
+    };
+  };
+
 }

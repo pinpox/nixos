@@ -60,20 +60,18 @@ in
 
     lollypops.secrets.files."nix/nix-access-tokens" = { };
 
-    nix.trustedUsers = [ "@wheel" ];
-
     # Enable flakes
     nix = {
 
       # Enable flakes
       package = pkgs.nixVersions.stable;
-      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
       extraOptions = ''
         fallback = true
         connect-timeout = 100
         stalled-download-timeout = 100
       '';
+      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
 
       settings = {
 
@@ -81,6 +79,8 @@ in
           "nix-command"
           "flakes"
         ];
+
+        trusted-users = [ "@wheel" ];
 
         trusted-public-keys = [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
 
