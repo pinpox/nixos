@@ -209,6 +209,7 @@ in
       # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
       # pkgs.nur.repos.mic92.irc-announce
 
+      # TODO orca-slicer broken until https://github.com/NixOS/nixpkgs/pull/354038 is merged
       # orca-slicer
       discord
 

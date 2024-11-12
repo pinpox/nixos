@@ -71,6 +71,21 @@
       "image": "bash",
       "name": "Push result-porree to Attic",
       "secrets": [ "attic_key" ]
+    },
+    {
+      "commands": [
+        "nix build '.#nixosConfigurations.limette.config.system.build.toplevel' -o 'result-limette'"
+      ],
+      "image": "bash",
+      "name": "Build configuration for limette"
+    },
+    {
+      "commands": [
+        "attic push lounge-rocks:nix-cache 'result-limette'"
+      ],
+      "image": "bash",
+      "name": "Push result-limette to Attic",
+      "secrets": [ "attic_key" ]
     }
   ]
 }
