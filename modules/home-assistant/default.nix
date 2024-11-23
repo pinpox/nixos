@@ -134,7 +134,7 @@ in
         "unifi_direct"
         "unifi"
         "esphome"
-        "map"
+        # "map"
         "openweathermap"
         "tasmota"
         "icloud"
