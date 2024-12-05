@@ -1,8 +1,9 @@
 {
   "labels": {
-    "backend": "local"
+    "backend": "local",
+  "platform": "linux/amd64"
   },
-  "platform": "linux/amd64",
+
   "steps": [
     {
       "commands": [
