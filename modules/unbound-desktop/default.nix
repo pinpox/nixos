@@ -49,7 +49,7 @@ in
         stub-zone = [
           {
             name = "fritz.box";
-            stub-addr = "192.168.2.1";
+            stub-addr = "192.168.101.1";
           }
         ];
 
@@ -67,7 +67,7 @@ in
             forward-addr = [
               "1.1.1.1@853#cloudflare-dns.com"
               "1.0.0.1@853#cloudflare-dns.com"
-              "192.168.2.1"
+              "192.168.101.1"
             ];
             forward-tls-upstream = "yes";
           }
