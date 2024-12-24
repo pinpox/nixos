@@ -184,6 +184,7 @@
         system: with nixpkgsFor.${system}; {
 
           inherit
+            ltex-ls
             hello-custom
             filebrowser
             fritzbox_exporter
