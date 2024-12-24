@@ -214,6 +214,7 @@ in
       discord
 
       gcc
+      comma
       acpi
       arandr
       binutils
