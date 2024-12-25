@@ -14,7 +14,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      inconsolata-nerdfont # Fallback Nerd Font to provide special glyphs
+
       wezterm
       # (callPackage ../../../packages/wezterm-nightly { })
     ];

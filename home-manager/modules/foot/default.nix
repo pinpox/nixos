@@ -14,7 +14,7 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
-      inconsolata-nerdfont # Fallback Nerd Font to provide special glyphs
+      nerd-fonts.inconsolata
       foot
     ];
 
@@ -37,7 +37,7 @@ in
         cursor = {
           style = "beam";
           blink = "yes";
-          # beam-thickness = 
+          # beam-thickness =
         };
 
         colors = {
