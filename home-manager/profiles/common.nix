@@ -28,7 +28,7 @@ with lib;
 
       overlays = [
         flake-self.overlays.default
-        nur.overlay
+        nur.overlays.default
       ];
     };
 

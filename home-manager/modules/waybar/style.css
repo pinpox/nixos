@@ -58,13 +58,13 @@ window#waybar {
 #workspaces button,
 #tags button {
 	background: @Black;
-	color: @White;
+	color: @Green;
 	padding: 0px 0px;
 }
 
 #workspaces button.focused,
 #tags button.focused {
-	background: @Blue;
+	background: @Green;
 	color: @Black;
 }
 
