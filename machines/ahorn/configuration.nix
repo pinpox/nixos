@@ -68,6 +68,8 @@
 
   lollypops.secrets.files."inovex-mdm/mdm-create-token" = { };
 
+  clan.core.networking.targetHost = "ahorn";
+
   # services.inovex-mdm = {
   #   enable = true;
   #   userhome = "/home/pinpox";

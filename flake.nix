@@ -193,6 +193,15 @@
               { imports = builtins.attrValues self.nixosModules; }
             ];
           };
+
+          ahorn = {
+            nixpkgs.hostPlatform = "x86_64-linux";
+            imports = [
+              ./machines/ahorn/configuration.nix
+              { imports = builtins.attrValues self.nixosModules; }
+            ];
+          };
+
         };
       };
     in
@@ -269,7 +278,6 @@
             })
             # (builtins.attrNames (builtins.readDir ./machines))
             [
-              "ahorn"
               "birne"
               "kartoffel"
               "limette"
