@@ -37,9 +37,9 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
 
     aoe-taunt-discord-bot = {
       url = "github:pinpox/aoe-taunt-discord-bot";
