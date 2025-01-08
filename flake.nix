@@ -179,7 +179,10 @@
       clan = clan-core.lib.buildClan {
         # this needs to point at the repository root
         directory = self;
-        specialArgs = { };
+
+        specialArgs = {
+          flake-self = self;
+        } // inputs;
         # settings.
         inventory.meta.name = "pinpox-clan";
         machines = {
@@ -273,9 +276,7 @@
               "porree"
             ]
         )
-        // {
-          inherit (clan) nixosConfigurations;
-        };
+        // clan.nixosConfigurations;
 
       inherit (clan) clanInternals;
 
