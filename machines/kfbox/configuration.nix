@@ -70,6 +70,8 @@
 
   lollypops.deployment.ssh.host = "46.38.242.17";
 
+  clan.core.networking.targetHost = "46.38.242.17";
+
   services.logind.extraConfig = ''
     RuntimeDirectorySize=20G
   '';
@@ -208,7 +210,8 @@
 
       "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
 
-      "paste.0cx.de".extraConfig = "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
+      "paste.0cx.de".extraConfig =
+        "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
     };
   };
 }
