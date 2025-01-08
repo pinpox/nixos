@@ -34,6 +34,8 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+
     aoe-taunt-discord-bot = {
       url = "github:pinpox/aoe-taunt-discord-bot";
       inputs.nixpkgs.follows = "nixpkgs";

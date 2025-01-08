@@ -98,7 +98,7 @@ in
     };
 
     nixpkgs.overlays = [
-      nur.overlay
+      nur.overlays.default
       flake-self.overlays.default
       # inputs.neovim-nightly.overlay
     ];

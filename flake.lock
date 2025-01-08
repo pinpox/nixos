@@ -439,6 +439,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1736348064,
+        "narHash": "sha256-if5MiqGTiRFgbtVZT8D0i9dIrmd+GSglQIQk6Sy7zLw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "8a3e14e082b0b40f29778c077b6c23857e614bdb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1736012469,
@@ -638,6 +654,7 @@
         "nix-apple-fonts": "nix-apple-fonts",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",
         "nvim-fzf": "nvim-fzf",
