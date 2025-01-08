@@ -25,6 +25,11 @@
     disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    clan-core = {
+      url = "git+https://git.clan.lol/clan/clan-core";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     caddy-patched = {
       url = "github:pinpox/nixos-caddy-patched";
       inputs.nixpkgs.follows = "nixpkgs";
