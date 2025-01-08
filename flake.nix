@@ -176,7 +176,24 @@
         }
       );
 
+      clan = clan-core.lib.buildClan {
+        # this needs to point at the repository root
+        directory = self;
+        specialArgs = { };
+        # settings.
+        inventory.meta.name = "pinpox-clan";
+        machines = {
+          kfbox = {
+            nixpkgs.hostPlatform = "x86_64-linux";
+            imports = [
+              ./machines/kfbox/configuration.nix
+              { imports = builtins.attrValues self.nixosModules; }
+            ];
+          };
+        };
+      };
     in
+
     {
 
       apps = forAllSystems (system: {
@@ -197,7 +214,7 @@
             fritzbox_exporter
             mqtt2prometheus
             smartmon-script
-            woodpecker-pipeline
+            # woodpecker-pipeline
             manual
             tfenv
             ;
@@ -224,28 +241,43 @@
       );
 
       # Each subdirectory in ./machines/<machine-name> is a host config
-      nixosConfigurations = builtins.listToAttrs (
-        map (name: {
-          inherit name;
-          value = nixpkgs.lib.nixosSystem {
+      nixosConfigurations =
+        builtins.listToAttrs (
+          map
+            (name: {
+              inherit name;
+              value = nixpkgs.lib.nixosSystem {
 
-            # Make inputs and the flake itself accessible as module parameters.
-            # Technically, adding the inputs is redundant as they can be also
-            # accessed with flake-self.inputs.X, but adding them individually
-            # allows to only pass what is needed to each module.
-            specialArgs = {
-              flake-self = self;
-            } // inputs;
+                # Make inputs and the flake itself accessible as module parameters.
+                # Technically, adding the inputs is redundant as they can be also
+                # accessed with flake-self.inputs.X, but adding them individually
+                # allows to only pass what is needed to each module.
+                specialArgs = {
+                  flake-self = self;
+                } // inputs;
 
-            system = "x86_64-linux";
+                system = "x86_64-linux";
 
-            modules = [
-              (./machines + "/${name}/configuration.nix")
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
-        }) (builtins.attrNames (builtins.readDir ./machines))
-      );
+                modules = [
+                  (./machines + "/${name}/configuration.nix")
+                  { imports = builtins.attrValues self.nixosModules; }
+                ];
+              };
+            })
+            # (builtins.attrNames (builtins.readDir ./machines))
+            [
+              "ahorn"
+              "birne"
+              "kartoffel"
+              "limette"
+              "porree"
+            ]
+        )
+        // {
+          inherit (clan) nixosConfigurations;
+        };
+
+      inherit (clan) clanInternals;
 
       # Each subdirectory in ./home-manager/profiles/<profile-name> is a
       # home-manager profile
