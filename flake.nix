@@ -47,7 +47,7 @@
     };
 
     pinpox-neovim = {
-      url = "github:pinpox/pinpox-neovim";
+      url = "github:pinpox/pinpox-neovim/default-colors";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

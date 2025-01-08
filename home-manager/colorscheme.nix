@@ -43,7 +43,7 @@ in
     # magenta = "#4c0049"
     # red     = "#5e0009"
     # yellow  = "#6e5600"
-    #
+
     # Light:
     # blue    = "#9fd8ff"
     # cyan    = "#83efef"
@@ -55,23 +55,27 @@ in
     # magenta = "#ffc3fa"
     # red     = "#ffbcb5"
     # yellow  = "#f4d88c"
-    #
 
-    Black = "24273a"; # 24273a
-    BrightBlack = "5b6078"; # 5b6078
-    White = "cad3f5"; # cad3f5
-    BrightWhite = "747c9e"; # 747c9e
-    Red = "ed8796"; # ed8796
-    BrightRed = "ff5370"; # FF5370
-    Green = "a6da95"; # a6da95
-    BrightGreen = "68f288"; # 68f288
-    Yellow = "eed49f"; # eed49f
-    BrightYellow = "fab387"; # fab387
-    Blue = "8aadf4"; # 8aadf4
-    BrightBlue = "74c7ec"; # 74c7ec
-    Magenta = "cba6f7"; # cba6f7
-    BrightMagenta = "f5bde6"; # f5bde6
-    Cyan = "8bd5ca"; # 8bd5ca
-    BrightCyan = "aee2da"; # aee2da
+    # foreground = e0e2ea
+    # background = 14161b
+
+    Black = "14161b";
+    BrightBlack = "2c2e33";
+    # BrightBlack = "4f5258";
+    White = "e0e2ea";
+    BrightWhite = "9b9ea4";
+
+    BrightRed = "5e0009";
+    Red = "ffbcb5";
+    BrightGreen = "015825";
+    Green = "aaedb7";
+    BrightYellow = "6e5600";
+    Yellow = "f4d88c";
+    BrightBlue = "005078";
+    Blue = "9fd8ff";
+    BrightMagenta = "4c0049";
+    Magenta = "ffc3fa";
+    BrightCyan = "007676";
+    Cyan = "83efef";
   };
 }

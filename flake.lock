@@ -252,11 +252,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736336279,
-        "narHash": "sha256-9Xp2X7ofKY4h39vUbd4coNambsG7Y/9axLFyTXaXOMU=",
+        "lastModified": 1736204492,
+        "narHash": "sha256-CoBPRgkUex9Iz6qGSzi/BFVUQjndB0PmME2B6eEyeCs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "45bcdbc910dc5131943bb6f7edb156617898fd1a",
+        "rev": "20665c6efa83d71020c8730f26706258ba5c6b2a",
         "type": "github"
       },
       "original": {
@@ -369,6 +369,7 @@
         ]
       },
       "locked": {
+
         "lastModified": 1736269059,
         "narHash": "sha256-VaZlkrcfZOl85fz3o+GnNv+FkMG4RtnZA1eVa6v2TJs=",
         "owner": "nix-community",
@@ -441,6 +442,7 @@
     },
     "nixpkgs-master": {
       "locked": {
+
         "lastModified": 1736348064,
         "narHash": "sha256-if5MiqGTiRFgbtVZT8D0i9dIrmd+GSglQIQk6Sy7zLw=",
         "owner": "nixos",
@@ -551,6 +553,7 @@
       },
       "original": {
         "owner": "pinpox",
+        "ref": "default-colors",
         "repo": "pinpox-neovim",
         "type": "github"
       }
