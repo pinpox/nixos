@@ -2,7 +2,6 @@
   pkgs,
   lib,
   nixos-hardware,
-  disko,
   ...
 }:
 {
@@ -15,8 +14,6 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-x230
     # ./hardware-configuration.nix
     ./disko-config.nix
-    disko.nixosModules.disko
-
   ];
 
   disko.devices.disk.main.imageSize = "40G";
