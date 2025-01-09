@@ -180,60 +180,30 @@
         # this needs to point at the repository root
         directory = self;
 
+        # Make inputs and the flake itself accessible as module parameters.
+        # Technically, adding the inputs is redundant as they can be also
+        # accessed with flake-self.inputs.X, but adding them individually
+        # allows to only pass what is needed to each module.
         specialArgs = {
           flake-self = self;
         } // inputs;
-        # settings.
         inventory.meta.name = "pinpox-clan";
-        machines = {
-          kfbox = {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            imports = [
-              ./machines/kfbox/configuration.nix
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
 
-          ahorn = {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            imports = [
-              ./machines/ahorn/configuration.nix
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
-
-          porree = {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            imports = [
-              ./machines/porree/configuration.nix
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
-
-          birne = {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            imports = [
-              ./machines/birne/configuration.nix
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
-
-          limette = {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            imports = [
-              ./machines/limette/configuration.nix
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
-
-          kartoffel = {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            imports = [
-              ./machines/kartoffel/configuration.nix
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-          };
-        };
+        # Each subdirectory in ./machines/<machine-name> is a host config. Clan
+        # auto-imports all machines from ./machines without this too, but does
+        # not import the modules from nixosModules, so we override it here.
+        machines = builtins.listToAttrs (
+          map (name: {
+            inherit name;
+            value = {
+              nixpkgs.hostPlatform = "x86_64-linux";
+              imports = [
+                (./machines + "/${name}/configuration.nix")
+                { imports = builtins.attrValues self.nixosModules; }
+              ];
+            };
+          }) (builtins.attrNames (builtins.readDir ./machines))
+        );
       };
     in
 
@@ -283,40 +253,7 @@
         }) (builtins.attrNames (builtins.readDir ./modules))
       );
 
-      # Each subdirectory in ./machines/<machine-name> is a host config
-      nixosConfigurations =
-        # builtins.listToAttrs (
-        #   map
-        #     (name: {
-        #       inherit name;
-        #       value = nixpkgs.lib.nixosSystem {
-        #
-        #         # Make inputs and the flake itself accessible as module parameters.
-        #         # Technically, adding the inputs is redundant as they can be also
-        #         # accessed with flake-self.inputs.X, but adding them individually
-        #         # allows to only pass what is needed to each module.
-        #         specialArgs = {
-        #           flake-self = self;
-        #         } // inputs;
-        #
-        #         system = "x86_64-linux";
-        #
-        #         modules = [
-        #           (./machines + "/${name}/configuration.nix")
-        #           { imports = builtins.attrValues self.nixosModules; }
-        #         ];
-        #       };
-        #     })
-        #     # (builtins.attrNames (builtins.readDir ./machines))
-        #     [
-        #       # "birne"
-        #       # "kartoffel"
-        #       # "limette"
-        #     ]
-        # )
-        # //
-
-        clan.nixosConfigurations;
+      nixosConfigurations = clan.nixosConfigurations;
 
       inherit (clan) clanInternals;
 
