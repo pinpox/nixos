@@ -60,6 +60,15 @@ in
 
   config = mkIf cfg.enable {
 
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+      # https://direnv.net/man/direnv.toml.1.html
+      # config = {};
+
+    };
+
     pinpox.defaults.shell.abbrev-aliases = [
 
       # Aliases expanded only at beginning of lines

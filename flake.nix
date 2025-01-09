@@ -209,6 +209,14 @@
 
     {
 
+      devShells = forAllSystems (
+        system: with nixpkgsFor.${system}; {
+          default = pkgs.mkShell {
+            packages = [ clan-core.packages.${system}.clan-cli ];
+          };
+        }
+      );
+
       apps = forAllSystems (system: {
         # For testing:
         # nix flake update --override-input lollypops ../lollypops
@@ -242,9 +250,8 @@
       # Use nixpkgs-fmt for 'nix fmt'
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
 
-      # Output all modules in ./modules to flake. Modules should be in
-      # individual subdirectories and contain a default.nix file
-
+      # Output all modules in ./modules/<module-name> to flake. Modules should be in
+      # individual subdirectories and contain a default.nix file.
       # Each subdirectory in ./modules/<module-name> is a nixos module
       nixosModules = builtins.listToAttrs (
         map (name: {
