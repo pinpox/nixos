@@ -26,6 +26,7 @@
   };
 
   lollypops.deployment.ssh.host = "94.16.108.229";
+  clan.core.networking.targetHost = "94.16.108.229";
 
   # Often hangs
   systemd.services = {

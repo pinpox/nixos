@@ -202,6 +202,13 @@
             ];
           };
 
+          porree = {
+            nixpkgs.hostPlatform = "x86_64-linux";
+            imports = [
+              ./machines/porree/configuration.nix
+              { imports = builtins.attrValues self.nixosModules; }
+            ];
+          };
         };
       };
     in
@@ -281,7 +288,6 @@
               "birne"
               "kartoffel"
               "limette"
-              "porree"
             ]
         )
         // clan.nixosConfigurations;
