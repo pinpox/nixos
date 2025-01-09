@@ -69,7 +69,6 @@
   };
 
   lollypops.deployment.ssh.host = "46.38.242.17";
-
   clan.core.networking.targetHost = "46.38.242.17";
 
   services.logind.extraConfig = ''
