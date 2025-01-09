@@ -83,11 +83,11 @@
         "rev": "ca3e989aba2f3f508f0ddb56256142d0a555acb8",
         "revCount": 5412,
         "type": "git",
-        "url": "https://git.clan.lol/pinpox/clan-core"
+        "url": "https://git.clan.lol/clan/clan-core"
       },
       "original": {
         "type": "git",
-        "url": "https://git.clan.lol/pinpox/clan-core"
+        "url": "https://git.clan.lol/clan/clan-core"
       }
     },
     "disko": {
@@ -524,11 +524,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1736437178,
-        "narHash": "sha256-AdV3KG8kkJZHJBX6pzISwocVv734L+9X1eQ2SVB76zQ=",
+        "lastModified": 1736438847,
+        "narHash": "sha256-SW19WSLwDtk4as6oyVjKGE4/8BTuZhP+T7Q+JCPZFh4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e82788ee876f504417a62a0beaac9d8f2a1dcd3d",
+        "rev": "63272387773786b8860006818dcdc8dc900ae169",
         "type": "github"
       },
       "original": {
