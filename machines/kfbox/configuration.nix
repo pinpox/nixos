@@ -5,9 +5,12 @@
   mc3000,
   pkgs,
   retiolum,
-  radio,
+  lib,
   ...
 }:
+let
+  pinpox-utils = import ../../utils { inherit pkgs lib; };
+in
 {
 
   lollypops.deployment.deploy-method = "archive";
@@ -96,6 +99,14 @@
   };
 
   # Karmabot for IRC channel
+
+  clan.core.vars.generators."go-karma-bot" = pinpox-utils.mkEnvGenerator [
+    "IRC_BOT_SERVER"
+    "IRC_BOT_CHANNEL"
+    "IRC_BOT_NICK"
+    "IRC_BOT_PASS"
+  ];
+
   lollypops.secrets.files."go-karma-bot/envfile" = { };
   services.go-karma-bot.environmentFile = config.lollypops.secrets.files."go-karma-bot/envfile".path;
   services.go-karma-bot.enable = true;
@@ -135,6 +146,7 @@
       };
 
       radio.enable = true;
+      jitsi-matrix-presence.enable = true;
       hedgedoc.enable = true;
       screego.enable = true;
       miniflux.enable = true;
@@ -188,6 +200,7 @@
       80
       443
       22
+      8227
     ];
   };
 
@@ -208,6 +221,8 @@
       "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
       "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
+
+      "matrixpresence.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8227";
 
       "paste.0cx.de".extraConfig =
         "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";

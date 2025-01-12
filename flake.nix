@@ -25,10 +25,11 @@
     disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core = {
-      url = "git+https://git.clan.lol/clan/clan-core";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
+    jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
+
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     caddy-patched = {
       url = "github:pinpox/nixos-caddy-patched";
@@ -66,10 +67,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lollypops = {
-      url = "github:pinpox/lollypops";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    lollypops.url = "github:pinpox/lollypops";
+    lollypops.inputs.nixpkgs.follows = "nixpkgs";
 
     naersk.url = "github:nix-community/naersk/master";
     naersk.inputs.nixpkgs.follows = "nixpkgs";
@@ -99,9 +98,7 @@
     wallpaper-generator.flake = false;
 
     restic-exporter.url = "github:pinpox/restic-exporter";
-    restic-exporter.inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
+    restic-exporter.inputs.nixpkgs.follows = "nixpkgs";
 
     alertmanager-ntfy = {
       url = "github:pinpox/alertmanager-ntfy";

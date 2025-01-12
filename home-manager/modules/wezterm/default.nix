@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-  utils,
+  pinpox-utils,
   ...
 }:
 with lib;
@@ -26,7 +26,7 @@ in
 
         colors_lua = {
           target = "wezterm/colors.lua";
-          source = utils.renderMustache "colors.lua" ./colors.lua.mustache config.pinpox.colors;
+          source = pinpox-utils.renderMustache "colors.lua" ./colors.lua.mustache config.pinpox.colors;
         };
 
         wezterm_lua = {

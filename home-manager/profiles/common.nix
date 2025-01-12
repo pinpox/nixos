@@ -40,7 +40,7 @@ with lib;
 
     # Extra arguments to pass to modules
     _module.args = {
-      utils = import ../../utils { inherit pkgs; };
+      pinpox-utils = import ../../utils { inherit pkgs; };
     };
 
     # Include man-pages

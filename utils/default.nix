@@ -1,5 +1,20 @@
 { pkgs, ... }:
 {
+
+  mkEnvGenerator = envs: {
+    files.envfile = { };
+    runtimeInputs = [ pkgs.coreutils ];
+    prompts = pkgs.lib.genAttrs envs (name: {
+      persist = false;
+    });
+    script = ''
+      mkdir -p $out
+      cat <<EOT >> $out/envfile
+      ${builtins.concatStringsSep "\n" (map (e: "${e}='$(cat $prompts/${e})'") envs)}
+      EOT
+    '';
+  };
+
   renderMustache =
     name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON
