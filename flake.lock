@@ -77,11 +77,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1736634180,
-        "narHash": "sha256-IWQl9cLXw4NphkTR5bwX0Mo0tYQhC8UrJiuX61Ro+9c=",
+        "lastModified": 1736677342,
+        "narHash": "sha256-s2u0Hu8XUh2qu9aIFyRzlHSiUg7g1FmQpK9MZ+2VTas=",
         "ref": "refs/heads/main",
-        "rev": "35ae1f2286e2fc86189c26555c7c3eabd19fe4c5",
-        "revCount": 5453,
+        "rev": "17c62612ff9e85ff35e4010a41be165cd3eaa448",
+        "revCount": 5457,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -349,6 +349,24 @@
         "type": "github"
       }
     },
+    "jitsi-matrix-presence": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1736722023,
+        "narHash": "sha256-uGffqYATJao8mFJ01qRqN82zIweDNJSSmW2/sw8eJxQ=",
+        "owner": "pinpox",
+        "repo": "jitsi-matrix-presence",
+        "rev": "c0cfba3f1e8ee2c97f8c5af2154cd8be8e8e1165",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "jitsi-matrix-presence",
+        "type": "github"
+      }
+    },
     "krops": {
       "flake": false,
       "locked": {
@@ -510,25 +528,24 @@
       "locked": {
         "lastModified": 1736344531,
         "narHash": "sha256-8YVQ9ZbSfuUk2bUf2KRj60NRraLPKPS0Q4QFTbc+c2c=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "bffc22eb12172e6db3c5dde9e3e5628f8e3e7912",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "id": "nixpkgs",
         "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "indirect"
       }
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1736646810,
-        "narHash": "sha256-SDcO/d2GNtO0trQN9kaWSMLDS8f2QkBJeCMvy+ivxG8=",
+        "lastModified": 1736722000,
+        "narHash": "sha256-jWmexy3sQykTSHYZ7opC/w631DQzgc9fn5n5VzBcHjI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "79481aada2520b4320e3a91d209194ffa34c0f9e",
+        "rev": "ba30dde64b6b98d63bee64ad1582e1d7915c9231",
         "type": "github"
       },
       "original": {
@@ -540,11 +557,27 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1736344531,
-        "narHash": "sha256-8YVQ9ZbSfuUk2bUf2KRj60NRraLPKPS0Q4QFTbc+c2c=",
+        "lastModified": 1736523798,
+        "narHash": "sha256-Xb8mke6UCYjge9kPR9o4P1nVrhk7QBbKv3xQ9cj7h2s=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bffc22eb12172e6db3c5dde9e3e5628f8e3e7912",
+        "rev": "130595eba61081acde9001f43de3248d8888ac4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1736523798,
+        "narHash": "sha256-Xb8mke6UCYjge9kPR9o4P1nVrhk7QBbKv3xQ9cj7h2s=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "130595eba61081acde9001f43de3248d8888ac4a",
         "type": "github"
       },
       "original": {
@@ -557,15 +590,15 @@
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1736640362,
-        "narHash": "sha256-DLEa+apt0izWvIWE6ocWZehZ1QiesLE4xPo1i0V/2iI=",
+        "lastModified": 1736719214,
+        "narHash": "sha256-amRlBGtXZ9qg4YQlBo97OWKOVEBiTTh2XBytLayUeIk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "e834ccb9859322f8c2aaf509a0128f73c654dcea",
+        "rev": "20c9e76bb42cd03659957df126e5a770a8ef9a51",
         "type": "github"
       },
       "original": {
@@ -730,6 +763,7 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
+        "jitsi-matrix-presence": "jitsi-matrix-presence",
         "krops": "krops",
         "lollypops": "lollypops",
         "matrix-hook": "matrix-hook",
@@ -737,7 +771,7 @@
         "naersk": "naersk",
         "nix-apple-fonts": "nix-apple-fonts",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
         "nvim-cokeline": "nvim-cokeline",
