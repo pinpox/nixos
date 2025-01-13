@@ -356,11 +356,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736722023,
-        "narHash": "sha256-uGffqYATJao8mFJ01qRqN82zIweDNJSSmW2/sw8eJxQ=",
+        "lastModified": 1736726890,
+        "narHash": "sha256-/xcmuMSJSEC0cyOgWPE9XcNJ7fY15HRHD+RS8H9HDhE=",
         "owner": "pinpox",
         "repo": "jitsi-matrix-presence",
-        "rev": "c0cfba3f1e8ee2c97f8c5af2154cd8be8e8e1165",
+        "rev": "2241d7285285056ea548159b3408bc18e0b68331",
         "type": "github"
       },
       "original": {
@@ -544,11 +544,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1736722000,
-        "narHash": "sha256-jWmexy3sQykTSHYZ7opC/w631DQzgc9fn5n5VzBcHjI=",
+        "lastModified": 1736723930,
+        "narHash": "sha256-do7CB777LQau4MJH1lCEKzQ0oOeFOVgUnCXSvdUvJhQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ba30dde64b6b98d63bee64ad1582e1d7915c9231",
+        "rev": "ebc074d89f759a7edea8921bdc8dbaf55f9db616",
         "type": "github"
       },
       "original": {
