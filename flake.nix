@@ -173,6 +173,8 @@
         }
       );
 
+      # Each subdirectory in ./machines/<machine-name> is a host config. Clan
+      # auto-imports all machines from ./machines
       clan = clan-core.lib.buildClan {
         # this needs to point at the repository root
         directory = self;
@@ -185,22 +187,18 @@
           flake-self = self;
         } // inputs;
         inventory.meta.name = "pinpox-clan";
+        inventory.services = {
+          importer.default = {
+            roles.default.tags = [ "all" ];
+            # import all modules from ./modules/<module-name> everywhere
+            roles.default.extraModules = [
 
-        # Each subdirectory in ./machines/<machine-name> is a host config. Clan
-        # auto-imports all machines from ./machines without this too, but does
-        # not import the modules from nixosModules, so we override it here.
-        machines = builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = {
-              nixpkgs.hostPlatform = "x86_64-linux";
-              imports = [
-                (./machines + "/${name}/configuration.nix")
-                { imports = builtins.attrValues self.nixosModules; }
-              ];
-            };
-          }) (builtins.attrNames (builtins.readDir ./machines))
-        );
+              # Clan modules deployed on all machines
+              clan-core.clanModules.state-version
+
+            ] ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+          };
+        };
       };
     in
     {

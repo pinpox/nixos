@@ -1,5 +1,12 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   clan.core.vars.settings.secretStore = "password-store";
 
