@@ -200,7 +200,6 @@ in
       80
       443
       22
-      8227
     ];
   };
 
@@ -222,7 +221,7 @@ in
 
       "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
 
-      "matrixpresence.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8227";
+      # "matrixpresence.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8227";
 
       "paste.0cx.de".extraConfig =
         "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";

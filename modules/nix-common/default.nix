@@ -4,6 +4,7 @@
   lib,
   flake-self,
   nixpkgs,
+  nix-index-database,
   ...
 }:
 with lib;
@@ -16,7 +17,12 @@ in
     enable = mkEnableOption "Nix defaults";
   };
 
+  imports = [ nix-index-database.nixosModules.nix-index ];
+
   config = mkIf cfg.enable {
+
+    # Use nix-index-database for comma
+    programs.nix-index-database.comma.enable = true;
 
     # Generates a .prom file that can be scraped with prometheus to monitor the
     # current nixpkgs version
