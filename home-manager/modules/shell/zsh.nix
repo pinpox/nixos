@@ -34,7 +34,11 @@
           ) config.pinpox.defaults.shell.abbrev-aliases
         );
       in
-      abbrevs + builtins.readFile ./zshrc-extra;
+      abbrevs
+      + builtins.readFile ./zshrc-extra
+      + ''
+        function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
+      '';
 
     history = {
       expireDuplicatesFirst = true;
@@ -47,7 +51,7 @@
       # Allows addressing directorys by shortname, e.g. `cd ~notes`
       docs = "$HOME/Documents";
       notes = "$HOME/Notes";
-      ma = "$HOME/Documents/Info-Master-Hagen/masterarbeit";
+      downloads = "$HOME/Downloads";
     };
 
     shellAliases = rec {

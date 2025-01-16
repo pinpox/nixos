@@ -3,6 +3,9 @@
 
   inputs = {
 
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
     # inovex-mdm = {
     #   type = "gitlab";
     #   host = "gitlab.inovex.de";
