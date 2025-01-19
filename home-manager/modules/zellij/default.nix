@@ -12,6 +12,8 @@ in
 
       settings = {
 
+        keybinds.unbind = "Ctrl q";
+
         session_serialization = false;
 
         theme = "custom";
