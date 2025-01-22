@@ -191,6 +191,28 @@
         } // inputs;
         inventory.meta.name = "pinpox-clan";
         inventory.services = {
+
+          restic.clan-backup = {
+            roles.server.machines = [ "birne" ];
+            roles.server.config = {
+              listenPort = 8123;
+              listenAddress = "192.168.101.221";
+            };
+
+            roles.client.machines = [
+              "kfbox"
+              "ahorn"
+            ];
+            roles.client.config = {
+
+              destinations.local-nas.host = "rest:https://192.168.101.221:8123";
+
+              # backblaze.host = "kfbox";
+
+            };
+
+          };
+
           importer.default = {
             roles.default.tags = [ "all" ];
             # import all modules from ./modules/<module-name> everywhere
