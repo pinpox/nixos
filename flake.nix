@@ -195,22 +195,27 @@
           restic.clan-backup = {
             roles.server.machines = [ "birne" ];
             roles.server.config = {
-              listenPort = 8123;
-              listenAddress = "192.168.101.221";
+              # listenPort = 8124;
+              # listenAddr = "192.168.101.221";
+              directory = "/var/lib/restic";
             };
 
             roles.client.machines = [
               "kfbox"
               "ahorn"
             ];
+
             roles.client.config = {
+              destinations = {
 
-              destinations.local-nas.host = "rest:https://192.168.101.221:8123";
+                local-nas.target = "birne";
+                local-nas.extraPaths = [ "/home/pinpox/test-backup" ];
 
-              # backblaze.host = "kfbox";
+                # backblaze-s3.external-target = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic-clan";
+                # backblaze-s3.extraPaths = [ "/home/pinpox/test-backup" ];
 
+              };
             };
-
           };
 
           importer.default = {
