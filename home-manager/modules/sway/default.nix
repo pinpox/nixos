@@ -53,7 +53,8 @@ in
           "${modifier}+n" = "exec swaync-client -t -sw";
 
           # Scratchpad
-          "${modifier}+u" = ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 98ppt 98ppt; [app_id="dropdown"] move position center'';
+          "${modifier}+u" =
+            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 98ppt 98ppt; [app_id="dropdown"] move position center'';
         };
 
         modifier = "Mod4"; # Win key

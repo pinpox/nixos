@@ -22,8 +22,8 @@ in
 
   config = mkIf cfg.enable {
 
-    services.caddy.virtualHosts."${cfg.host
-    }".extraConfig = "reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE}";
+    services.caddy.virtualHosts."${cfg.host}".extraConfig =
+      "reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE}";
 
     # Vikunja doesn't allow setting openid configuration parameters (e.g.
     # openid_secret) via environment variables, so we have to treat the

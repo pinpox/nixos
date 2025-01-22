@@ -87,7 +87,7 @@ in
         #   scheme = "http";
         #   scrape_interval = "60s";
         #   metrics_path = "/metrics";
-        #   static_configs = [{ targets = [ 
+        #   static_configs = [{ targets = [
         #     "192.168.2.147"
         #   ]; }];
         # }

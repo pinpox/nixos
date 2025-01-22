@@ -128,7 +128,8 @@ in
           lib.mkOptionDefault {
 
             "${modifier}+Shift+Escape" = "exec xkill";
-            "${modifier}+p" = "exec ${pkgs.rofi}/bin/rofi -show run -lines 7 -eh 1 -bw 0  -fullscreen -padding 200";
+            "${modifier}+p" =
+              "exec ${pkgs.rofi}/bin/rofi -show run -lines 7 -eh 1 -bw 0  -fullscreen -padding 200";
             "${modifier}+Shift+p" = "exec ${pkgs.rofi-pass} -show combi -lines 7 -eh 3 -bw 0 -matching fuzzy";
             "${modifier}+Shift+x" = "exec xscreensaver-command -lock";
             "${modifier}+Shift+Tab" = "workspace prev";

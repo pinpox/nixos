@@ -18,8 +18,8 @@ in
   config = mkIf cfg.enable {
 
     # Reverse proxy
-    services.caddy.virtualHosts."${cfg.host
-    }".extraConfig = "reverse_proxy ${config.services.gitea.settings.server.HTTP_ADDR}:${builtins.toString config.services.gitea.settings.server.HTTP_PORT}";
+    services.caddy.virtualHosts."${cfg.host}".extraConfig =
+      "reverse_proxy ${config.services.gitea.settings.server.HTTP_ADDR}:${builtins.toString config.services.gitea.settings.server.HTTP_PORT}";
 
     # Backups
     pinpox.services.restic-client.backup-paths-offsite = [ "/var/lib/gitea" ];
