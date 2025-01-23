@@ -211,8 +211,8 @@
                 local-nas.target = "birne";
                 local-nas.extraPaths = [ "/home/pinpox/test-backup" ];
 
-                # backblaze-s3.external-target = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic-clan";
-                # backblaze-s3.extraPaths = [ "/home/pinpox/test-backup" ];
+                backblaze-s3.external-target = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic-clan";
+                backblaze-s3.extraPaths = [ "/home/pinpox/test-backup" ];
 
               };
             };
