@@ -52,6 +52,7 @@
       docs = "$HOME/Documents";
       notes = "$HOME/Notes";
       downloads = "$HOME/Downloads";
+      nix-config = "/home/pinpox/code/github.com/pinpox/nixos";
     };
 
     shellAliases = rec {
