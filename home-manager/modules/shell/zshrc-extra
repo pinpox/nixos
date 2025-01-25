@@ -10,10 +10,6 @@ ttake () { cd $(mktemp -d) }
 # Use `line 10 /etc/hosts` to get 10th line of file
 line () { awk "NR == $1" "$2" }
 
-waster() {
-	jq -Rns '{text: inputs}' | curl  -s -H 'Content-Type: application/json' \
-		--data-binary @- https://paste.0cx.de | jq -r '. | "https://paste.0cx.de\(.path)"'
-	}
 
 # Bind up and down keys to history matching partial input
 bindkey "$terminfo[kcuu1]" history-search-backward
@@ -38,10 +34,9 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 # Wastebin
 # command | paste
 function paste() {
-    jq -Rns '{text: inputs}' | \
-        curl  -s -H 'Content-Type: application/json' --data-binary @- https://paste.0cx.de | \
-        jq -r '. | "paste.0cx.de\(.path)"'
-}
+	jq -Rns '{text: inputs}' | curl  -s -H 'Content-Type: application/json' \
+		--data-binary @- https://paste.0cx.de | jq -r '. | "https://paste.0cx.de\(.path)"'
+	}
 
 # Self-hosted transfer.sh sharing. Expects ~/.netrc with crendentials in this format:
 # machine transfer.0cx.de login my-super-user password super-secret-password
