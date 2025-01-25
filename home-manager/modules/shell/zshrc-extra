@@ -35,14 +35,16 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
-# Self-hosted transfer.sh sharing. Expects ~/.netrc with crendentials in this format:
-# machine transfer.0cx.de login my-super-user password super-secret-password
-
+# Wastebin
 # command | paste
-paste () {
-	cat | curl -n --upload-file - https://transfer.0cx.de/paste.txt
+function paste() {
+    jq -Rns '{text: inputs}' | \
+        curl  -s -H 'Content-Type: application/json' --data-binary @- https://paste.0cx.de | \
+        jq -r '. | "paste.0cx.de\(.path)"'
 }
 
+# Self-hosted transfer.sh sharing. Expects ~/.netrc with crendentials in this format:
+# machine transfer.0cx.de login my-super-user password super-secret-password
 # transfer file.txt
 transfer () {
 	if [ $# -eq 0 ]

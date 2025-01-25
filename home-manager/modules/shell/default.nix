@@ -113,7 +113,7 @@ in
       {
         global = true;
         alias = "P";
-        command = "| tb";
+        command = "| paste";
       }
     ];
 
