@@ -9,6 +9,27 @@ with lib;
 let
   cfg = config.pinpox.services.jitsi-matrix-presence;
   pinpox-utils = import ../../utils { inherit pkgs; };
+  mkPres = JITSI_ROOMS: JITSI_SERVER: ROOM_ID: port: {
+
+    wantedBy = [ "multi-user.target" ];
+    environment = {
+      inherit JITSI_ROOMS JITSI_SERVER ROOM_ID;
+      HOMESERVER_URL = "https://matrix.org";
+      USER_ID = "@alertus-maximus:matrix.org";
+      LISTEN_ADDRESS = "0.0.0.0:${port}";
+    };
+
+    serviceConfig = {
+      EnvironmentFile = [
+        config.clan.core.vars.generators."jitsi-presence".files."envfile".path
+      ];
+      DynamicUser = true;
+      ExecStart = "${jitsi-matrix-presence.packages.x86_64-linux.default}/bin/jitsi-presence";
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+  };
+
 in
 {
 
@@ -24,73 +45,19 @@ in
       8228
     ];
 
-    # clan channel
-    clan.core.vars.generators."jitsi-presence" = pinpox-utils.mkEnvGenerator [
-      "ACCESS_TOKEN"
-      "ROOM_ID"
-    ];
+    clan.core.vars.generators."jitsi-presence" = pinpox-utils.mkEnvGenerator [ "ACCESS_TOKEN" ];
 
-    systemd.services.jitsi-matrix-presence-krebs = {
-      wantedBy = [ "multi-user.target" ];
-      environment = {
-        HOMESERVER_URL = "https://matrix.org";
-        LISTEN_ADDRESS = "0.0.0.0:8226";
-        USER_ID = "@alertus-maximus:matrix.org";
-        JITSI_ROOMS = "krebs,nixos";
-        JITSI_SERVER = "https://jitsi.lassul.us";
-      };
+    systemd.services.jitsi-matrix-presence-krebs =
+      mkPres "krebs,nixos" "https://jitsi.lassul.us" "!bohcSYPVoePqBDWlvE:hackint.org"
+        "8226";
 
-      serviceConfig = {
-        EnvironmentFile = [
-          config.clan.core.vars.generators."jitsi-presence".files."envfile".path
-        ];
-        DynamicUser = true;
-        ExecStart = "${jitsi-matrix-presence.packages.x86_64-linux.default}/bin/jitsi-presence";
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-    };
+    systemd.services.jitsi-matrix-presence-clan-lol =
+      mkPres "clan.lol,space,standup" "https://jitsi.clan.lol" "!HlSSgpBfhsKrEmqAtE:matrix.org"
+        "8228";
 
-    systemd.services.jitsi-matrix-presence-clan-lol = {
-      wantedBy = [ "multi-user.target" ];
-      environment = {
-        HOMESERVER_URL = "https://matrix.org";
-        LISTEN_ADDRESS = "0.0.0.0:8228";
-        USER_ID = "@alertus-maximus:matrix.org";
-        JITSI_ROOMS = "clan.lol,space,standup";
-        JITSI_SERVER = "https://jitsi.clan.lol";
-      };
+    systemd.services.jitsi-matrix-presence =
+      mkPres "clan.lol,space" "https://jitsi.lassul.us" "!HlSSgpBfhsKrEmqAtE:matrix.org"
+        "8227";
 
-      serviceConfig = {
-        EnvironmentFile = [
-          config.clan.core.vars.generators."jitsi-presence".files."envfile".path
-        ];
-        DynamicUser = true;
-        ExecStart = "${jitsi-matrix-presence.packages.x86_64-linux.default}/bin/jitsi-presence";
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-    };
-
-    systemd.services.jitsi-matrix-presence = {
-      wantedBy = [ "multi-user.target" ];
-      environment = {
-        HOMESERVER_URL = "https://matrix.org";
-        LISTEN_ADDRESS = "0.0.0.0:8227";
-        USER_ID = "@alertus-maximus:matrix.org";
-        JITSI_ROOMS = "clan.lol,space";
-        JITSI_SERVER = "https://jitsi.lassul.us";
-      };
-
-      serviceConfig = {
-        EnvironmentFile = [
-          config.clan.core.vars.generators."jitsi-presence".files."envfile".path
-        ];
-        DynamicUser = true;
-        ExecStart = "${jitsi-matrix-presence.packages.x86_64-linux.default}/bin/jitsi-presence";
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-    };
   };
 }
