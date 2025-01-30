@@ -1,12 +1,16 @@
 { pkgs, ... }:
 {
 
-  mkEnvGenerator = envs: {
+  mkEnvGenerator = envs: rec {
     files.envfile = { };
     runtimeInputs = [ pkgs.coreutils ];
     prompts = pkgs.lib.genAttrs envs (name: {
       persist = false;
     });
+
+    # Invalidate on env change
+    validation.script = script;
+
     script = ''
       mkdir -p $out
       cat <<EOT >> $out/envfile
