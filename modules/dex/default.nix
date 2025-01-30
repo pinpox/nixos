@@ -107,14 +107,14 @@ in
             redirectURIs = [ "https://${config.services.hedgedoc.settings.domain}/auth/oauth2/callback" ];
             secretEnv = "CLIENT_SECRET_HEDGEDOC";
           }
-          {
-            id = "vikunja";
-            name = "vikunja";
-            redirectURIs = [
-              "${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_FRONTENDURL}auth/openid/dex"
-            ];
-            secretEnv = "CLIENT_SECRET_VIKUNJA";
-          }
+          # {
+          #   id = "vikunja";
+          #   name = "vikunja";
+          #   redirectURIs = [
+          #     "${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_FRONTENDURL}auth/openid/dex"
+          #   ];
+          #   secretEnv = "CLIENT_SECRET_VIKUNJA";
+          # }
         ];
       };
     };

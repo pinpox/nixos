@@ -154,7 +154,7 @@ in
       kf-homepage.enable = true;
       gitea.enable = true;
       owncast.enable = false;
-      vikunja.enable = true;
+      vikunja.enable = false;
       wastebin.enable = true;
     };
 
