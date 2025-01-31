@@ -38,6 +38,16 @@
       + builtins.readFile ./zshrc-extra
       + ''
         function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
+
+
+        function ai() {
+          echo "$@" | ${pkgs.shell-gpt}/bin/sgpt
+        }
+
+        function aip() {
+          wl-paste | ${pkgs.shell-gpt}/bin/sgpt
+        }
+
       '';
 
     history = {
