@@ -10,6 +10,11 @@
 }:
 {
 
+  # clan.core.state.userdata.folders = [
+  #   "/home/pinpox/test-backup"
+  #   "/home/pinpox/test-backup2"
+  # ];
+
   #   nixpkgs.config.packageOverrides = pkgs: {
   #     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   #   };

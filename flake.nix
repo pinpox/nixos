@@ -190,35 +190,33 @@
           flake-self = self;
         } // inputs;
         inventory.meta.name = "pinpox-clan";
+
         inventory.services = {
+          /*
+            restic.clan-backup = {
 
-          restic.clan-backup = {
-            roles.server.machines = [ "birne" ];
-            roles.server.config = {
-              # listenPort = 8124;
-              # listenAddr = "192.168.101.221";
-              directory = "/var/lib/restic";
-            };
+              # TODO Check only one or 0 server
+              roles.server.machines = [ "birne" ]; #OK
+              # roles.server.machines = [ ]; #OK
+              # roles.server.machines = [ "birne" "other" ]; # Should error
 
-            roles.client.machines = [
-              "kfbox"
-              "ahorn"
-            ];
+              roles.server.config.directory = "/var/lib/restic";
 
-            roles.client.config = {
-              destinations = {
+              roles.client.machines = [
+                "kfbox"
+                "ahorn"
+              ];
 
-                local-nas.target = "birne";
-                local-nas.target-ip = "192.168.7.2";
+              roles.client.config."test" = {
 
-                local-nas.extraPaths = [ "/home/pinpox/test-backup" ];
+                # If externalDestination is set, we ignore other targets
+                # externalDestination = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic-clan";
 
-                backblaze-s3.external-target = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic-clan";
-                backblaze-s3.extraPaths = [ "/home/pinpox/test-backup" ];
-
+                # Will be ignored, no backup to birne
+                targetIp = "192.168.7.2";
               };
             };
-          };
+          */
 
           importer.default = {
             roles.default.tags = [ "all" ];
