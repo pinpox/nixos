@@ -27,10 +27,6 @@
   #       xorg.xf86videointel
   #     ];
 
-  networking.hosts = {
-    "192.168.56.107" = [ "status.fernuni" ];
-  };
-
   services.gnome.gnome-keyring.enable = true;
 
   hardware.keyboard.qmk.enable = true;
