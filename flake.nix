@@ -179,8 +179,9 @@
       # Each subdirectory in ./machines/<machine-name> is a host config. Clan
       # auto-imports all machines from ./machines
       clan = clan-core.lib.buildClan {
+
         # this needs to point at the repository root
-        directory = self;
+        inherit self;
 
         # Make inputs and the flake itself accessible as module parameters.
         # Technically, adding the inputs is redundant as they can be also
