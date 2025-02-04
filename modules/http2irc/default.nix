@@ -60,7 +60,12 @@ in
       name = "http2irc";
     };
 
-    lollypops.secrets.files."http2irc/envfile" = { };
+    clan.core.vars.generators."http2irc" = pinpox-utils.mkEnvGenerator [
+      "IRC_SASL_PASS"
+      "IRC_SASL_USER"
+      "IRC_NICK"
+      "IRC_BOT_TOKEN"
+    ];
 
     # Service
     systemd.services.http2irc = {
@@ -68,7 +73,9 @@ in
       after = [ "network.target" ];
       description = "Start http2irc";
       serviceConfig = {
-        EnvironmentFile = [ config.lollypops.secrets.files."http2irc/envfile".path ];
+        EnvironmentFile = [
+          config.clan.core.vars.generators.http2irc.files."envfile".path
+        ];
         Environment = [
           "IRC_TEMPLATE='${templateFile}'"
           "IRC_CHANNEL='#lounge-rocks'"
