@@ -54,7 +54,7 @@ in
 
           # Scratchpad
           "${modifier}+u" =
-            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 98ppt 98ppt; [app_id="dropdown"] move position center'';
+            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 99ppt 98ppt; [app_id="dropdown"] move position center'';
         };
 
         modifier = "Mod4"; # Win key
@@ -84,7 +84,7 @@ in
             criteria.app_id = "dropdown";
           }
           {
-            command = "resize set 98ppt 98ppt";
+            command = "resize set 99ppt 98ppt";
             criteria.app_id = "dropdown";
           }
           {
@@ -92,7 +92,7 @@ in
             criteria.app_id = "dropdown";
           }
           {
-            command = "border pixel 10";
+            command = "border pixel 8";
             criteria.app_id = "dropdown";
           }
         ];
