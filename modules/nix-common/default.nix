@@ -81,9 +81,15 @@ in
 
       settings = {
 
+        auto-allocate-uids = true;
+        system-features = lib.mkDefault [ "uid-range" ];
+
         experimental-features = [
           "nix-command"
           "flakes"
+
+          "auto-allocate-uids"
+          "cgroups"
         ];
 
         trusted-users = [ "@wheel" ];
