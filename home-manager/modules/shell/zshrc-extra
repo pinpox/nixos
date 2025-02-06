@@ -79,3 +79,25 @@ function delta_sidebyside {
   fi
 }
 trap delta_sidebyside WINCH
+
+function ranger-cd {
+    tempfile=$(mktemp)
+    \ranger --choosedir="$tempfile" "${@:-$(pwd)}" < $TTY
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+
+function carry-ranger-cd {
+    ranger-cd
+    VISUAL=true zle edit-command-line
+}
+
+autoload -z edit-command-line
+zle -N edit-command-line
+
+zle -N carry-ranger-cd
+
+bindkey '^E' carry-ranger-cd

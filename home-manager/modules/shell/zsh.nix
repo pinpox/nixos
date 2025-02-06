@@ -6,6 +6,9 @@
   ...
 }:
 {
+
+  programs.ranger.enable = true;
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -75,6 +78,9 @@
       ll = "${l} -G";
       la = "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
       lt = "${ls} --tree --level=2 --icons";
+
+      nb = "nix build --no-link --print-out-paths -L";
+      ne = "nix eval --strict --json";
 
       # Git
       gs = "${pkgs.git}/bin/git status";
