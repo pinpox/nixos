@@ -117,6 +117,16 @@
       [
         swaynotificationcenter
 
+        (mpv.override {
+          scripts = with pkgs.mpvScripts; [
+            sponsorblock
+            quality-menu
+            visualizer
+            twitch-chat
+            mpris
+          ];
+        })
+
         zotero
 
         # From nixpkgs
