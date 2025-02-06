@@ -15,7 +15,7 @@ The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
 parts of the configuration as needed.
 
-Deployment is managed with [lollypops](https://github.com/pinpox/lollypops)
+Deployment and management is done with [clan](https://clan.lol).
 Secrets are stored in [pass](https://www.passwordstore.org/).
 
 **TL;DR** To use a host configuration on a fresh install, make sure that:
@@ -61,12 +61,6 @@ The services running on each host are documented in the host-specific
 `README.md` files.
 
 # Deployment
-
-## Default Deployment
-
-Deployment is handled with [lollypops](https://github.com/pinpox/lollypops).
-
-TODO Update/document
 
 ## First Deployment
 
