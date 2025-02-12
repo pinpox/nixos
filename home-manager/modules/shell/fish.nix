@@ -24,7 +24,22 @@
       line = ''awk "NR == $1" "$2"'';
     };
 
-    # plugins = [ ];
+    plugins = [
+
+      {
+
+        # https://github.com/gazorby/fifc
+
+        name = "fifc";
+        src = pkgs.fetchFromGitHub {
+          owner = "gazorby";
+          repo = "fifc";
+          rev = "a01650cd432becdc6e36feeff5e8d657bd7ee84a";
+          sha256 = "sha256-Ynb0Yd5EMoz7tXwqF8NNKqCGbzTZn/CwLsZRQXIAVp4=";
+        };
+      }
+
+    ];
 
     shellAbbrs = {
 
