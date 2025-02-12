@@ -47,7 +47,7 @@ in
           "${modifier}+Tab" = "focus next";
 
           # Screen lock
-          "${modifier}+Shift+l" = "swaylock";
+          "${modifier}+Shift+l" = "exec swaylock";
 
           # SwayNotificationCenter
           "${modifier}+n" = "exec swaync-client -t -sw";
