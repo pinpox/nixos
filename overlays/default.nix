@@ -41,7 +41,6 @@ self: super: {
         locale
         lollypops-common
         lvm-grub
-        mattermost
         miniflux
         minio
         monitoring
