@@ -8,7 +8,11 @@ in
 
   config = mkIf cfg.enable {
     programs.zellij = {
+
       enable = true;
+
+      # Don't auto-start zellij on new shells
+      enableZshIntegration = false;
 
       settings = {
 

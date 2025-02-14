@@ -100,4 +100,4 @@ zle -N edit-command-line
 
 zle -N carry-ranger-cd
 
-bindkey '^E' carry-ranger-cd
+bindkey '^L' carry-ranger-cd
