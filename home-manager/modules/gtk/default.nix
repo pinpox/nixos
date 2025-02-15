@@ -66,6 +66,8 @@ in
 
   config = mkIf cfg.enable {
 
+    imports = [ ./banana.nix ];
+
     nixpkgs.overlays = [
       (self: super: {
         rendersvg = self.runCommand "rendersvg" { } ''
@@ -128,7 +130,6 @@ in
 
       gtk3 = {
         extraConfig = {
-          gtk-cursor-theme-name = "breeze";
           gtk-application-prefer-dark-theme = 1;
         };
       };

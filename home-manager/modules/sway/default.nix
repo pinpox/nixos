@@ -38,6 +38,13 @@ in
     wayland.windowManager.sway = {
       enable = true;
       config = rec {
+
+        seat = {
+          "*" = {
+            xcursor_theme = "${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}";
+          };
+        };
+
         keybindings = lib.mkOptionDefault {
           "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
           "${modifier}+p" = "exec ${pkgs.wofi}/bin/wofi --show run";
