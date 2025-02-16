@@ -13,7 +13,7 @@
       gtk.enable = true;
     };
 
-    wayland.windowManager.sway.seat."*".xcursor_theme =
+    wayland.windowManager.sway.config.seat."*".xcursor_theme =
       "${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}";
 
     gtk.cursorTheme = {

@@ -64,9 +64,9 @@ in
 {
   options.pinpox.defaults.gtk.enable = mkEnableOption "gtk defaults";
 
-  config = mkIf cfg.enable {
+  imports = [ ./banana.nix ];
 
-    imports = [ ./banana.nix ];
+  config = mkIf cfg.enable {
 
     nixpkgs.overlays = [
       (self: super: {
