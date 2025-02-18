@@ -30,9 +30,7 @@ in
           # dpi-aware = "yes"; # Defaults to auto
         };
 
-        scrollback = {
-          lines = 10000;
-        };
+        scrollback.lines = 10000;
 
         cursor = {
           style = "beam";
@@ -43,6 +41,8 @@ in
         colors = {
 
           alpha = "0.9";
+          # background = "${config.pinpox.colors.White}";
+          # foreground = "${config.pinpox.colors.Black}";
           background = "${config.pinpox.colors.Black}";
           foreground = "${config.pinpox.colors.White}";
 
