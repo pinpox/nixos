@@ -34,7 +34,10 @@ in
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
         obs-pipewire-audio-capture
-        droidcam-obs
+
+        # TODO add droidcam-obs again when https://github.com/NixOS/nixpkgs/pull/382559 is merged
+        # droidcam-obs
+
         wlrobs
         # obs-vintage-filter
         # obs-teleport
