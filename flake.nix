@@ -6,25 +6,6 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    # inovex-mdm = {
-    #   type = "gitlab";
-    #   host = "gitlab.inovex.de";
-    #   owner = "ffranzmann";
-    #   ref = "master";
-    #   repo = "mdm-linux-inventory-nix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.mdm-linux-inventory.follows = "mdm-linux-inventory";
-    # };
-    #
-    # mdm-linux-inventory = {
-    #   type = "gitlab";
-    #   host = "gitlab.inovex.de";
-    #   owner = "inovex-it-mdm";
-    #   ref = "main";
-    #   repo = "mdm-linux-inventory";
-    #   flake = false;
-    # };
-
     disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -5,7 +5,7 @@
   pkgs,
   lib,
   nixos-hardware,
-  # inovex-mdm,
+  clan-core,
   ...
 }:
 {
@@ -62,21 +62,11 @@
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
-    # inovex-mdm.nixosModules.default
 
     #retiolum.nixosModules.ca
   ];
 
-  lollypops.secrets.files."inovex-mdm/mdm-create-token" = { };
-
   clan.core.networking.targetHost = "ahorn";
-
-  # services.inovex-mdm = {
-  #   enable = true;
-  #   userhome = "/home/pinpox";
-  #   tokenFile = "${config.lollypops.secrets.files."inovex-mdm/mdm-create-token".path}";
-  #   screenLockTimeout = "300";
-  # };
 
   programs.sway.enable = true;
 
@@ -153,18 +143,6 @@
   networking.retiolum = {
     ipv4 = "10.243.100.100";
     ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
-  };
-
-  lollypops.extraTasks = {
-
-    rebuild-nosecrets = {
-      desc = "Rebuild without deloying secrets";
-      cmds = [ ];
-      deps = [
-        "deploy-flake"
-        "rebuild"
-      ];
-    };
   };
 
   lollypops.secrets.files = {
