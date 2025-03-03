@@ -7,6 +7,11 @@
 with lib;
 let
   cfg = config.pinpox.services.nextcloud;
+
+  # Pin Nextcloud major version.
+  # Refer to upstream docs for updating major versions
+  package = pkgs.nextcloud30;
+
 in
 {
 
@@ -80,18 +85,29 @@ in
 
       enable = true;
 
-      # Pin Nextcloud major version.
-      # Refer to upstream docs for updating major versions
-      package = pkgs.nextcloud30;
+      inherit package;
 
       # Use HTTPS for links
       https = true;
       # overwriteProtocol = "https";
       hostName = "files.pablo.tools";
 
-      # Auto-update Nextcloud Apps
-      autoUpdateApps.enable = true;
-      autoUpdateApps.startAt = "05:00:00";
+      # Disable adding apps from the app store, apps are only configured
+      # declaratively via nix
+      appstoreEnable = false;
+      extraApps = {
+        inherit (package.packages.apps)
+          mail
+          calendar
+          contacts
+          memories
+          previewgenerator
+          maps
+          twofactor_webauthn
+          music
+          # phonetrack
+          ;
+      };
 
       # phpExtraExtensions = [];
       home = "/var/lib/nextcloud";
@@ -134,39 +150,63 @@ in
     services.caddy.virtualHosts = {
 
       "files.pablo.tools".extraConfig = ''
+        encode zstd gzip
+
+        root * ${config.services.nginx.virtualHosts."files.pablo.tools".root}
+        root /nix-apps/* ${config.services.nginx.virtualHosts."files.pablo.tools".root}
+
+        redir /.well-known/carddav /remote.php/dav 301
+        redir /.well-known/caldav /remote.php/dav 301
+        redir /.well-known/* /index.php{uri} 301
+        redir /remote/* /remote.php{uri} 301
 
         header {
-            Strict-Transport-Security max-age=31536000;
+          Strict-Transport-Security max-age=31536000
+          Permissions-Policy interest-cohort=()
+          X-Content-Type-Options nosniff
+          X-Frame-Options SAMEORIGIN
+          Referrer-Policy no-referrer
+          X-XSS-Protection "1; mode=block"
+          X-Permitted-Cross-Domain-Policies none
+          X-Robots-Tag "noindex, nofollow"
+          -X-Powered-By
         }
 
-        redir /.well-known/carddav /remote.php/dav/ 301
-        redir /.well-known/caldav /remote.php/dav/ 301
+        php_fastcgi unix//run/phpfpm/nextcloud.sock {
+          root ${config.services.nginx.virtualHosts."files.pablo.tools".root}
+          env front_controller_active true
+          env modHeadersAvailable true
+        }
 
         @forbidden {
-            path /.htaccess
-            path /data/*
-            path /config/*
-            path /db_structure
-            path /.xml
-            path /README
-            path /3rdparty/*
-            path /lib/*
-            path /templates/*
-            path /occ
-            path /console.php
+          path /build/* /tests/* /config/* /lib/* /3rdparty/* /templates/* /data/*
+          path /.* /autotest* /occ* /issue* /indie* /db_* /console*
+          not path /.well-known/*
         }
-        respond @forbidden 404
+        error @forbidden 404
 
-        root * ${config.services.nextcloud.package}
+        @immutable {
+          path *.css *.js *.mjs *.svg *.gif *.png *.jpg *.ico *.wasm *.tflite
+          query v=*
+        }
+        header @immutable Cache-Control "max-age=15778463, immutable"
+
+        @static {
+          path *.css *.js *.mjs *.svg *.gif *.png *.jpg *.ico *.wasm *.tflite
+          not query v=*
+        }
+        header @static Cache-Control "max-age=15778463"
+
+        @woff2 path *.woff2
+        header @woff2 Cache-Control "max-age=604800"
+
         file_server
-        php_fastcgi unix//run/phpfpm/nextcloud.sock
       '';
+
     };
 
     # Database configuration
-    services.postgresql = {
-      enable = true;
-    };
+    services.postgresql.enable = true;
 
     # Ensure that postgres is running *before* running the setup
     systemd.services."nextcloud-setup" = {
