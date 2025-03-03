@@ -104,6 +104,7 @@ in
           previewgenerator
           maps
           twofactor_webauthn
+          recognize
           music
           # phonetrack
           ;
@@ -202,7 +203,12 @@ in
 
         file_server
       '';
+    };
 
+    # Fix for memories
+    # https://memories.gallery/troubleshooting/#trigger-compatibility-mode
+    systemd.services.nextcloud-cron = {
+      path = [ pkgs.perl ];
     };
 
     # Database configuration
