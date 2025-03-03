@@ -1,8 +1,14 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pinpox-utils,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.hedgedoc;
 in
+# pinpox-utils = import ../../utils { inherit pkgs; };
 {
 
   options.pinpox.services.hedgedoc = {
@@ -11,14 +17,11 @@ in
 
   config = mkIf cfg.enable {
 
-    # env file contains:
-    # CMD_SESSION_SECRET
-    # CMD_OAUTH2_CLIENT_ID
-    # CMD_OAUTH2_CLIENT_SECRET=
-
-    clan.core.vars.generators."hedgedoc" = {
-      files.envfile = { };
-    };
+    clan.core.vars.generators."hedgedoc" = pinpox-utils.mkEnvGenerator [
+      "CMD_SESSION_SECRET"
+      "CMD_OAUTH2_CLIENT_ID"
+      "CMD_OAUTH2_CLIENT_SECRET"
+    ];
 
     systemd.services.hedgedoc.serviceConfig.Environment = [
       # Allow creating on-the-fly by url
