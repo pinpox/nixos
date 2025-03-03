@@ -21,6 +21,8 @@ in
 
   config = mkIf cfg.enable {
 
+    _module.args.pinpox-utils = import ../../utils { inherit pkgs; };
+
     # Use nix-index-database for comma
     programs.nix-index-database.comma.enable = true;
 
