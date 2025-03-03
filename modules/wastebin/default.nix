@@ -33,7 +33,7 @@ in
         WASTEBIN_ADDRESS_PORT = "127.0.0.1:8088";
         WASTEBIN_BASE_URL = "https://paste.0cx.de";
         WASTEBIN_HTTP_TIMEOUT = 7;
-        WASTEBIN_MAX_BODY_SIZE = 1024;
+        WASTEBIN_MAX_BODY_SIZE = 16384;
         WASTEBIN_TITLE = "wastebin";
         RUST_LOG = "warning";
       };
