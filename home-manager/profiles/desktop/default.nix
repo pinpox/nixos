@@ -5,6 +5,16 @@
 
   config = {
 
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          email = "git@pablo.tools";
+          name = "pinpox";
+        };
+      };
+    };
+
     programs.helix = {
       enable = true;
 
