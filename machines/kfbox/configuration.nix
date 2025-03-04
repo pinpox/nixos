@@ -13,6 +13,9 @@ let
 in
 {
 
+  # Build on machine executing the clan
+  clan.core.networking.buildHost = "pinpox@localhost";
+
   lollypops.deployment.deploy-method = "archive";
 
   lollypops.secrets.files."ente/credentials.yaml" = {
