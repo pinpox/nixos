@@ -100,6 +100,7 @@
           tmux.enable = true;
           wezterm.enable = true;
           zk.enable = true;
+          taskwarrior.enable = true;
           go.enable = true;
 
           # XServer only
