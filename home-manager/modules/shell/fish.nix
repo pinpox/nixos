@@ -43,7 +43,6 @@
 
     shellAbbrs = {
 
-      m = "neomutt";
       o = "xdg-open";
       q = "exit";
       snvim = "sudo -E nvim";

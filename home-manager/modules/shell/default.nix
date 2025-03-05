@@ -76,10 +76,6 @@ in
         command = "git";
       }
       {
-        alias = "m";
-        command = "neomutt";
-      }
-      {
         alias = "o";
         command = "xdg-open";
       }

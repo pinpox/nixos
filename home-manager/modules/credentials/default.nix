@@ -16,17 +16,6 @@ in
 
     accounts.email.maildirBasePath = "Mail";
 
-    programs.neomutt = {
-      enable = true;
-      sidebar = {
-        enable = true;
-      };
-      extraConfig = ''
-        set imap_user = "pablo1@mailbox.org"
-        set imap_pass = "`pass mailbox.org/pablo1@mailbox.org`"
-      '';
-    };
-
     accounts.email.accounts = {
       pablo_tools = {
         address = "mail@pablo.tools";
@@ -42,7 +31,6 @@ in
         neomutt = {
           enable = true;
           mailboxName = "pablo_tools";
-          # extraConfig = '''';
         };
 
         maildir = {
