@@ -28,6 +28,12 @@ in
       owner = "gitea";
       path = "/var/lib/gitea/mailer-pw";
     };
+
+    clan.core.vars.generators."gitea" = {
+      files.mailer-pw.owner = "gitea";
+      prompts.mailer-pw.persist = true;
+    };
+
     services.gitea = {
 
       enable = true;
