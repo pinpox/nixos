@@ -6,6 +6,10 @@
 
   services.udev.packages = [ pkgs.qmk-udev-rules ];
 
+  hardware.nvidia.open = false;
+
+  clan.core.networking.targetHost = "kartoffel";
+
   # documentation.nixos.includeAllModules = true;
   # documentation.nixos.options.splitBuild = false;
 
