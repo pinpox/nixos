@@ -25,7 +25,18 @@ in
 
   config = mkIf cfg.enable {
 
-    lollypops.secrets.files."wireguard/private" = { };
+    clan.core.vars.generators."wireguard" = {
+
+      files.publickey.secret = false;
+      files.privatekey = { };
+
+      runtimeInputs = with pkgs; [ wireguard-tools ];
+
+      script = ''
+        wg genkey > $out/privatekey
+        wg pubkey < $out/privatekey > $out/publickey
+      '';
+    };
 
     networking.wireguard.interfaces = {
 
@@ -34,7 +45,7 @@ in
         ips = [ "${cfg.clientIp}/24" ];
 
         # Path to the private key file
-        privateKeyFile = "${config.lollypops.secrets.files."wireguard/private".path}";
+        privateKeyFile = "${config.clan.core.vars.generators."wireguard".files."privatekey".path}";
 
         peers = [
           {
