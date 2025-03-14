@@ -58,6 +58,12 @@ in
 
   config = mkIf cfg.enable {
 
+    services.fwupd.enable = true;
+    services.acpid.enable = true;
+
+    # To build raspi images
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     services.greetd = {
       enable = true;
       settings = {
@@ -75,6 +81,24 @@ in
 
     # Enable networkmanager
     networking.networkmanager.enable = true;
+
+    # Often hangs
+    systemd.services = {
+      NetworkManager-wait-online.enable = lib.mkForce false;
+      systemd-networkd-wait-online.enable = lib.mkForce false;
+    };
+
+    services.udev.packages = [
+      pkgs.via
+      pkgs.qmk-udev-rules # For QMK/Via
+      pkgs.libsigrok # For pulseview
+    ];
+
+    hardware.sane.enable = true;
+    users.users.pinpox.extraGroups = [
+      "scanner"
+      "lp"
+    ];
 
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
@@ -135,6 +159,7 @@ in
         unbound-desktop.enable = true;
 
         xserver.enable = false;
+        wayland.enable = true;
         openssh.enable = true;
 
         restic-client = {

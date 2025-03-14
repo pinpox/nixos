@@ -4,14 +4,7 @@
 
   imports = [ ./hardware-configuration.nix ];
 
-  services.udev.packages = [ pkgs.qmk-udev-rules ];
-
-  hardware.nvidia.open = false;
-
   clan.core.networking.targetHost = "kartoffel";
-
-  # documentation.nixos.includeAllModules = true;
-  # documentation.nixos.options.splitBuild = false;
 
   pinpox.desktop = {
     enable = true;
@@ -30,18 +23,11 @@
     };
   };
 
-  pinpox.defaults.CISkip = true;
+  # pinpox.defaults.CISkip = true;
 
   # Video driver for nvidia graphics card
+  hardware.nvidia.open = false;
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
 
-  hardware.sane.enable = true;
-  users.users.pinpox.extraGroups = [
-    "scanner"
-    "lp"
-  ];
-
-  # To build raspi images
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }

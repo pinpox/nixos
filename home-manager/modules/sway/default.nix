@@ -13,7 +13,7 @@ let
       ''
         export WLR_DRM_NO_MODIFIERS=1
         # dbus-launch --sh-syntax --exit-with-session ${pkgs.sway}/bin/sway
-        ${pkgs.sway}/bin/sway
+        ${pkgs.sway}/bin/sway --unsupported-gpu
       '';
 in
 {

@@ -3,134 +3,41 @@
   config,
   retiolum,
   pkgs,
-  lib,
   nixos-hardware,
-  clan-core,
   ...
 }:
 {
-
-  # clan.core.state.userdata.folders = [
-  #   "/home/pinpox/test-backup"
-  #   "/home/pinpox/test-backup2"
-  # ];
-
-  #   nixpkgs.config.packageOverrides = pkgs: {
-  #     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  #   };
-
-  #     environment.systemPackages = with pkgs; [
-  #       intel-gpu-tools
-  #       vaapiIntel
-  #       intel-media-driver
-  #       vaapi-intel-hybrid
-  #       xorg.xf86videointel
-  #     ];
-
-  services.gnome.gnome-keyring.enable = true;
-
-  hardware.keyboard.qmk.enable = true;
-
-  # RTL-SDR
-  # hardware.rtl-sdr.enable = true;
-  # users.users.pinpox.extraGroups = [ "plugdev" ];
-
-  boot.initrd.services.udev.rules = ''
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8037", MODE:="0666"
-  '';
-
-  # Enable driver for Focusrite Scarlett 2i2 Gen3.
-  # This can be removed when we reach Linux Kernel 6.7, as it includes the driver by default
-  # See: https://github.com/geoffreybennett/alsa-scarlett-gui/blob/master/INSTALL.md#enabling-the-driver
-  boot.extraModprobeConfig = ''
-    options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1
-  '';
-
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.v4l2loopback
-    config.boot.kernelPackages.v4l2loopback.out
-  ];
-
-  # Register a v4l2loopback device at boot
-  boot.kernelModules = [ "v4l2loopback" ];
-
-  # boot.extraModprobeConfig = ''
-  #   options v4l2loopback exclusive_caps=1 video_nr=9 card_label=a7III
-  # '';
 
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-t480s
     ./hardware-configuration.nix
     retiolum.nixosModules.retiolum
-
-    #retiolum.nixosModules.ca
   ];
 
   clan.core.networking.targetHost = "ahorn";
 
-  programs.sway.enable = true;
-
-  hardware.graphics = {
+  pinpox.desktop = {
     enable = true;
-    enable32Bit = true;
-
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-    ];
-  };
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
-    NIXOS_OZONE_WL = "1";
+    wireguardIp = "192.168.7.2";
+    hostname = "ahorn";
   };
 
-  # You can turn on native Wayland support in all chrome and most electron apps
-  # by setting an environment variable:
+  services.gnome.gnome-keyring.enable = true;
 
-  xdg.portal = {
+  hardware.keyboard.qmk.enable = true;
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
 
-    enable = true;
+  boot.initrd.services.udev.rules = ''
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="8037", MODE:="0666"
+  '';
 
-    wlr = {
-      enable = true;
-      settings = {
 
-        # See xdg-desktop-portal-wlr(5) for supported values.
-        screencast = {
-          # output_name = "HDMI-A-1";
-          max_fps = 30;
-          # exec_before = "disable_notifications.sh";
-          # exec_after = "enable_notifications.sh";
-          chooser_type = "simple";
-          chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-        };
-      };
-    };
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr
-    ];
-  };
+  # Register a v4l2loopback device at boot
+  boot.kernelModules = [ "v4l2loopback" ];
 
-  services.fwupd.enable = true;
-  services.acpid.enable = true;
-
-  # Often hangs
-  systemd.services = {
-    NetworkManager-wait-online.enable = lib.mkForce false;
-    systemd-networkd-wait-online.enable = lib.mkForce false;
-  };
-
-  services.udev.packages = [
-
-    pkgs.via
-    pkgs.qmk-udev-rules # For QMK/Via
-    pkgs.libsigrok # For pulseview
-  ];
-
-  hardware.sane.enable = true;
-  users.users.pinpox.extraGroups = [
-    "scanner"
-    "lp"
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.v4l2loopback
+    config.boot.kernelPackages.v4l2loopback.out
   ];
 
   # Enable audio producion for pinpox
@@ -156,21 +63,6 @@
   };
 
   boot.blacklistedKernelModules = [ "nouveau" ];
-
-  environment.systemPackages = [
-    pkgs.via
-
-    pkgs.libimobiledevice
-    pkgs.ifuse # optional, to mount using 'ifuse'
-    pkgs.xdg-desktop-portal
-    pkgs.xdg-desktop-portal-wlr
-  ];
-
-  pinpox.desktop = {
-    enable = true;
-    wireguardIp = "192.168.7.2";
-    hostname = "ahorn";
-  };
 
   # Encrypted drive to be mounted by the bootloader. Path of the device will
   # have to be changed for each install.
