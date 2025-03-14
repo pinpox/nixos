@@ -171,7 +171,7 @@
         ncdu
         networkmanager-openvpn
         networkmanagerapplet
-        # nextcloud-client
+        nextcloud-client
         nitrogen
         nix-index
         nmap
