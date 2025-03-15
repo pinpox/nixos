@@ -8,6 +8,7 @@
 
   services.gnome.gnome-keyring.enable = true;
   hardware.keyboard.qmk.enable = true;
+  clan.core.networking.targetHost = "limette";
 
   hardware.enableRedistributableFirmware = true;
   imports = [
