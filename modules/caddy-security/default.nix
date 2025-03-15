@@ -61,12 +61,15 @@ in
 
   config = mkIf cfg.enable {
 
-    # Contains: JWT_SHARED_KEY GENERIC_CLIENT_ID GENERIC_CLIENT_SECRET
-    lollypops.secrets.files."caddy/envfile" = { };
+    clan.core.vars.generators."caddy" = pinpox-utils.mkEnvGenerator [
+      "JWT_SHARED_KEY"
+      "GENERIC_CLIENT_ID"
+      "GENERIC_CLIENT_SECRET"
+    ];
 
     systemd.services.caddy.serviceConfig = {
       AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
-      EnvironmentFile = [ config.lollypops.secrets.files."caddy/envfile".path ];
+      EnvironmentFile = [ config.clan.core.vars.generators."caddy".files."envfile".path ];
     };
 
     services.caddy = {
