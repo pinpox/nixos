@@ -1,8 +1,11 @@
 # Configuration for kartoffel
-{ pkgs, ... }:
+{ ... }:
 {
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./retiolum.nix
+  ];
 
   clan.core.networking.targetHost = "kartoffel";
 
