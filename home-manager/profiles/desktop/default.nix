@@ -98,7 +98,6 @@
           nvim.enable = true;
           firefox.enable = true;
           tmux.enable = true;
-          wezterm.enable = true;
           zk.enable = true;
           taskwarrior.enable = true;
           go.enable = true;
@@ -230,7 +229,7 @@
                 <icon>utilities-terminal</icon>
                 <name>Open Terminal Here</name>
                 <unique-id>1604472351415438-1</unique-id>
-                <command>wezterm start --cwd %f</command>
+                <command>foot -D %f</command>
                 <description>Example for a custom action</description>
                 <patterns>*</patterns>
                 <startup-notify/>
