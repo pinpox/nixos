@@ -126,6 +126,7 @@
       with pkgs;
       [
         swaynotificationcenter
+        tea
 
         mpv
         # (mpv.override {
