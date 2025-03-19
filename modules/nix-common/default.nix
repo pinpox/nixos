@@ -96,10 +96,16 @@ in
 
         trusted-users = [ "@wheel" ];
 
-        trusted-public-keys = [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
+        trusted-public-keys = [
+          "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+
+        # nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
         substituters = [
           "https://cache.nixos.org"
+          "https://nix-community.cachix.org"
           "https://cache.lounge.rocks/nix-cache"
         ];
 
