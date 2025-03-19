@@ -6,56 +6,25 @@
 }:
 {
 
-  services.gnome.gnome-keyring.enable = true;
-  hardware.keyboard.qmk.enable = true;
+
   clan.core.networking.targetHost = "limette";
 
   hardware.enableRedistributableFirmware = true;
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-x230
-    # ./hardware-configuration.nix
     ./disko-config.nix
   ];
 
   disko.devices.disk.main.imageSize = "40G";
   disko.imageBuilder.extraDependencies = [ pkgs.kmod ];
-  #   disko.devices.disk.root.device = "/dev/sda";
 
   programs.sway.enable = true;
 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
-    ];
-  };
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
-    NIXOS_OZONE_WL = "1";
-  };
-
-  xdg.portal = {
-    enable = true;
-    wlr = {
-      enable = true;
-      settings = {
-
-        # See xdg-desktop-portal-wlr(5) for supported values.
-        screencast = {
-          # output_name = "HDMI-A-1";
-          max_fps = 30;
-          # exec_before = "disable_notifications.sh";
-          # exec_after = "enable_notifications.sh";
-          chooser_type = "simple";
-          chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-        };
-      };
-    };
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr
     ];
   };
 
@@ -78,11 +47,6 @@
       ];
     };
   };
-
-  environment.systemPackages = [
-    pkgs.xdg-desktop-portal
-    pkgs.xdg-desktop-portal-wlr
-  ];
 
   pinpox.desktop = {
     enable = true;

@@ -53,5 +53,11 @@ in
       ];
     };
 
+
+  environment.systemPackages = [
+    pkgs.xdg-desktop-portal
+    pkgs.xdg-desktop-portal-wlr
+  ];
+
   };
 }

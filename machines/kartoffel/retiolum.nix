@@ -12,6 +12,8 @@
     ipv6 = "42:0:3c46:519d:1696:f464:9756:8727";
   };
 
+  networking.retiolum.nodename = "ahorn";
+
   clan.core.vars.generators."retiolum" = {
     prompts.rsa_priv.persist = true;
     prompts.ed25519_priv.persist = true;
