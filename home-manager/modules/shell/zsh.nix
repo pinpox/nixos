@@ -66,6 +66,8 @@
       notes = "$HOME/Notes";
       downloads = "$HOME/Downloads";
       nix-config = "/home/pinpox/code/github.com/pinpox/nixos";
+      clan ="$HOME/code/git.clan.lol/clan/clan-core";
+      clan-infra ="$HOME/code/git.clan.lol/clan/clan-infra";
     };
 
     shellAliases = rec {
