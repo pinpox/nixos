@@ -89,12 +89,6 @@ in
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
   ];
 
-  # Often hangs
-  # TODO https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
-  # systemd.services.NetworkManager-wait-online.enable = lib.mkForce
-  #   false;
-  # systemd.services.systemd-networkd-wait-online.enable = lib.mkForce
-  #   false;
   systemd.services.NetworkManager-wait-online = {
     serviceConfig = {
       ExecStart = [ "${pkgs.networkmanager}/bin/nm-online -q" ];

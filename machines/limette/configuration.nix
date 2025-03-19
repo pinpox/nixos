@@ -6,7 +6,6 @@
 }:
 {
 
-
   clan.core.networking.targetHost = "limette";
 
   hardware.enableRedistributableFirmware = true;
@@ -26,26 +25,6 @@
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
     ];
-  };
-
-  services.fwupd.enable = true;
-  services.acpid.enable = true;
-
-  # Often hangs
-  systemd.services = {
-    NetworkManager-wait-online.enable = lib.mkForce false;
-    systemd-networkd-wait-online.enable = lib.mkForce false;
-  };
-
-  lollypops.extraTasks = {
-    rebuild-nosecrets = {
-      desc = "Rebuild without deloying secrets";
-      cmds = [ ];
-      deps = [
-        "deploy-flake"
-        "rebuild"
-      ];
-    };
   };
 
   pinpox.desktop = {
