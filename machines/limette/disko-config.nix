@@ -4,71 +4,63 @@
       main = {
         type = "disk";
         device = "/dev/vdb";
-        # device = builtins.elemAt disks 0;
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              name = "BOOT";
-              size = "500M";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
                 mountOptions = [ "umask=0077" ];
-                extraArgs = [
-                  "-n"
-                  "BOOT"
-                ];
               };
             };
             luks = {
               size = "100%";
-              name = "SYSTEM";
               content = {
                 type = "luks";
-                name = "root";
-                extraOpenArgs = [ ];
-                passwordFile = "/tmp/secret.key";
-                settings.allowDiscards = true;
-                content = {
-                  type = "lvm_pv";
-                  vg = "pool";
+                name = "crypted";
+                # disable settings.keyFile if you want to use interactive password entry
+                #passwordFile = "/tmp/secret.key"; # Interactive
+                settings = {
+                  allowDiscards = true;
+                  # keyFile = "/tmp/secret.key";
                 };
-                extraFormatArgs = [
-                  "--label LUKS"
-                ];
+                # additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
+                      swap.swapfile.size = "20M";
+                    };
+                  };
+                };
               };
-            };
-          };
-        };
-      };
-    };
-    lvm_vg = {
-      pool = {
-        type = "lvm_vg";
-        lvs = {
-          swap = {
-            name = "swap";
-            size = "8G";
-            content = {
-              type = "swap";
-              resumeDevice = true;
-              extraArgs = [ "-L swap" ];
-            };
-          };
-          root = {
-            name = "root";
-            size = "100%FREE";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-              mountOptions = [
-                "defaults"
-              ];
-              extraArgs = [ "-L root" ];
             };
           };
         };
