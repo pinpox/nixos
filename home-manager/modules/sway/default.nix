@@ -82,10 +82,13 @@ in
         # Application/window specific rules
         window.commands = [
           {
+            command = "split horizontal, resize grow width 30 px or 30 ppt";
+            criteria.class = "^Audacious$";
+          }
+          {
             command = "floating enable";
             criteria.title = "Firefox — Sharing Indicator";
           }
-
           {
             command = "floating enable";
             criteria.app_id = "dropdown";
