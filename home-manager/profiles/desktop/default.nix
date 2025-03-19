@@ -128,6 +128,10 @@
         swaynotificationcenter
         tea
 
+        (audacious.override { withPlugins = true; })
+        feishin
+        strawberry
+
         mpv
         # (mpv.override {
         #   scripts = with pkgs.mpvScripts; [
