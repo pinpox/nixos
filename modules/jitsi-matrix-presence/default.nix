@@ -50,10 +50,5 @@ in
     systemd.services.jitsi-matrix-presence-krebs =
       mkPres "krebs,nixos" "https://jitsi.lassul.us" "!bohcSYPVoePqBDWlvE:hackint.org"
         "8226";
-
-    systemd.services.jitsi-matrix-presence =
-      mkPres "clan.lol,space" "https://jitsi.lassul.us" "!HlSSgpBfhsKrEmqAtE:matrix.org"
-        "8227";
-
   };
 }
