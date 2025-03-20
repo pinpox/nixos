@@ -34,9 +34,11 @@ in
       NIXOS_OZONE_WL = "1";
     };
 
+
     # Extra portals (screensharing)
     xdg.portal = {
       enable = true;
+      config.common.default = [ "wlr" "gtk" ]; 
       wlr = {
         enable = true;
         settings = {
@@ -49,15 +51,12 @@ in
       };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-wlr
       ];
     };
 
-
-  environment.systemPackages = [
-    pkgs.xdg-desktop-portal
-    pkgs.xdg-desktop-portal-wlr
-  ];
+    environment.systemPackages = [
+      pkgs.xdg-desktop-portal
+    ];
 
   };
 }
