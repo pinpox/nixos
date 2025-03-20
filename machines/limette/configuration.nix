@@ -41,17 +41,5 @@
   users.users.pinpox.initialPassword = "changeme";
 
   boot.loader.efi.canTouchEfiVariables = false;
-  # boot.loader.grub.device = "/dev/disk/by-label/BOOT";
-
-  # Encrypted drive to be mounted by the bootloader. Path of the device will
-  # have to be changed for each install.
-  # Get UUID from blkid /dev/sda2
-  boot.initrd.luks.devices = {
-    "root" = {
-      preLVM = true;
-      device = lib.mkForce "/dev/disk/by-label/LUKS";
-      allowDiscards = true;
-    };
-  };
 
 }
