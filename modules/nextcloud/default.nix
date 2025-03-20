@@ -10,7 +10,7 @@ let
 
   # Pin Nextcloud major version.
   # Refer to upstream docs for updating major versions
-  package = pkgs.nextcloud30;
+  package = pkgs.nextcloud31;
 
 in
 {
@@ -102,7 +102,7 @@ in
           contacts
           memories
           previewgenerator
-          maps
+          # maps
           twofactor_webauthn
           recognize
           music
