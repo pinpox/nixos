@@ -80,6 +80,42 @@
     # udp/10001 # UDP port used for device discovery.
   };
 
+  # Waiting until seafile/seahub is fixed
+  # services.seafile = {
+  #   enable = true;
+  #
+  #   adminEmail = "seafile@pablo.tools";
+  #
+  #   # ccnetSettings
+  #   # https://manual.seafile.com/config/ccnet-conf/
+  #   ccnetSettings.General.SERVICE_URL = "https://cloud.pablo.tools";
+  #
+  #   # dataDir = "/var/lib/seafile/data";
+  #
+  #   # gc.dates
+  #   # gc.enable
+  #   # gc.persistent
+  #   # gc.randomizedDelaySec
+  #
+  #   initialAdminPassword = "changeme";
+  #
+  #   seafileSettings = {
+  #     # fileserver.port = 8082;
+  #     # fileserver.host = "ipv4:127.0.0.1";
+  #   };
+  #
+  #   # seahubAddress = "unix:/run/seahub/gunicorn.sock";
+  #
+  #   # https://manual.seafile.com/config/seahub_settings_py/
+  #   # seahubExtraConf =
+  #   # ''
+  #   #   CSRF_TRUSTED_ORIGINS = ["https://example.com"]
+  #   # ''
+  #
+  #   # seahubPackage
+  #   # workers
+  # };
+
   # Open ports in the firewall.
   networking.firewall = {
 
