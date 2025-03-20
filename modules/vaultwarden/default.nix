@@ -76,6 +76,7 @@ in
         SIGNUPS_ALLOWED = false;
         INVITATIONS_ALLOWED = "true";
         ROCKET_PORT = 8222;
+        EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "ssh-key-vault-item,ssh-agent";
       };
 
       # The environment file contains secrets and is stored in pass
