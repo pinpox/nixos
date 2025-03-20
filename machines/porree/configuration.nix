@@ -282,7 +282,7 @@
       monitoring-server = {
 
         dashboard.enable = true;
-        loki.enable = true;
+        loki.enable = false;
         alertmanager-irc-relay.enable = true;
 
         enable = true;
