@@ -61,7 +61,6 @@ in
     services.fwupd.enable = true;
     services.acpid.enable = true;
 
-    services.gnome.gnome-keyring.enable = true;
     hardware.keyboard.qmk.enable = true;
 
     # To build raspi images

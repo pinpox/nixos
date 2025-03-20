@@ -262,11 +262,6 @@
 
       # Battery Warning
       cbatticon.enable = true;
-
-      # Keyring
-      gnome-keyring = {
-        enable = true;
-      };
     };
   };
 }

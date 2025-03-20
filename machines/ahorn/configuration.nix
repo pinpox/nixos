@@ -20,8 +20,6 @@
     hostname = "ahorn";
   };
 
-  services.gnome.gnome-keyring.enable = true;
-
   hardware.keyboard.qmk.enable = true;
   services.udev.packages = [ pkgs.qmk-udev-rules ];
 
