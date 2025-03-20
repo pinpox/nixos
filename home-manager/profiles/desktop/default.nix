@@ -151,6 +151,7 @@
         # calibre
         # recursive
         # retroarch
+        deluge
         chafa
         asciinema
         cbatticon
