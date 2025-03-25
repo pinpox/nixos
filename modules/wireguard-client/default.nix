@@ -12,6 +12,13 @@ in
 
   options.pinpox.wg-client = {
     enable = mkEnableOption "wireguard client configuration";
+
+    serverHostname = mkOption {
+      type = types.str;
+      default = "porree";
+      description = "Hostname of the server (to retrieve pubkey from flake)";
+    };
+
     clientIp = mkOption {
       type = types.str;
       default = "0.0.0.0";
@@ -50,7 +57,12 @@ in
         peers = [
           {
             # Public key of the server (not a file path).
-            publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
+            publicKey = (
+              builtins.readFile (
+                config.clan.core.settings.directory
+                + "/vars/per-machine/${cfg.serverHostname}/wireguard/publickey/value"
+              )
+            );
 
             # Don't forward all the traffic via VPN, only particular subnets
             allowedIPs = [ "192.168.7.0/24" ];

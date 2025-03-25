@@ -28,41 +28,17 @@
   lollypops.deployment.ssh.host = "94.16.108.229";
   clan.core.networking.targetHost = "94.16.108.229";
 
-  lollypops.secrets.files = {
-    "matrix-hook/envfile" = { };
-    "alertmanager-ntfy/envfile" = { };
-    "wireguard/private" = { };
+  clan.core.vars.generators."wireguard" = {
 
-    "caddy/basicauth_beta" = { };
-    "caddy/basicauth_3dprint" = { };
-    "caddy/basicauth_notify" = { };
+    files.publickey.secret = false;
+    files.privatekey = { };
 
-    # "nginx/blog.passwd" = {
-    #   path = "/var/www/blog.passwd";
-    #   owner = "nginx";
-    # };
+    runtimeInputs = with pkgs; [ wireguard-tools ];
 
-    # "nginx/3dprint.passwd" = {
-    #   path = "/var/www/3dprint.passwd";
-    #   owner = "nginx";
-    # };
-    # "matrix-hook/alerts.passwd" = {
-    #   path = "/var/lib/matrix-hook/alerts.passwd";
-    #   owner = "nginx";
-    # };
-  };
-
-  networking.retiolum.ipv4 = "10.243.100.101";
-  networking.retiolum.ipv6 = "42:0:3c46:b51c:b34d:b7e1:3b02:8d24";
-
-  lollypops.secrets.files = {
-    "retiolum/rsa_priv" = { };
-    "retiolum/ed25519_priv" = { };
-  };
-
-  services.tinc.networks.retiolum = {
-    rsaPrivateKeyFile = "${config.lollypops.secrets.files."retiolum/rsa_priv".path}";
-    ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
+    script = ''
+      wg genkey > $out/privatekey
+      wg pubkey < $out/privatekey > $out/publickey
+    '';
   };
 
   programs.gnupg.agent = {
@@ -323,51 +299,36 @@
       ips = [ "192.168.7.1/24" ];
 
       listenPort = 51820;
+      privateKeyFile = config.clan.core.vars.generators."wireguard".files.privatekey.path;
 
-      # Path to the private key file
-      privateKeyFile = "${config.lollypops.secrets.files."wireguard/private".path}";
-      peers = [
-        # kartoffel
-        {
-          publicKey = "759CaBnvpwNqFJ8e9d5PhJqIlUabjq72HocuC9z5XEs=";
-          allowedIPs = [ "192.168.7.3" ];
-          persistentKeepalive = 25;
-        }
-        # ahorn
-        {
-          publicKey = "ny2G9iJPBRLSn48fEmcfoIdYi3uHLbJZe3pH1F0/XVg=";
-          allowedIPs = [ "192.168.7.2" ];
-          persistentKeepalive = 25;
-        }
-        # kfbox
-        {
-          publicKey = "Cykozj24IkXEJ/6ktXxaqqIsxx8xjRMHKmR76lindCc=";
-          allowedIPs = [ "192.168.7.5" ];
-          persistentKeepalive = 25;
-        }
-        # birne
-        {
-          publicKey = "feDKNR4ZAeEiAsLFJM9FdNi6LHMjnvDj9ap/GRdLKF0=";
-          allowedIPs = [
+      peers =
+        let
+          mkWgPeer = host: IPs: {
+            publicKey = (
+              builtins.readFile (
+                config.clan.core.settings.directory + "/vars/per-machine/${host}/wireguard/publickey/value"
+              )
+            );
+            allowedIPs = IPs;
+            persistentKeepalive = 25;
+          };
+        in
+        [
+          (mkWgPeer "kartoffel" [ "192.168.7.3" ])
+          (mkWgPeer "ahorn" [ "192.168.7.2" ])
+          (mkWgPeer "kfbox" [ "192.168.7.5" ])
+          (mkWgPeer "birne" [
             "192.168.7.4"
-            # Also allow local IP's from the home network (e.g. shelly plugs)
             "192.168.2.0/24"
-          ];
-          persistentKeepalive = 25;
-        }
-        # mega
-        {
-          publicKey = "0IjZ/3dTvz0zaWPhJ9vIAINYG+W0MjbwePUDvhQNCXo=";
-          allowedIPs = [ "192.168.7.6" ];
-          persistentKeepalive = 25;
-        }
-        # mayniklas GPU
-        {
-          publicKey = "aD6SXOOB3JJnRXUvB09yXlf/2kyFe1TZ5HEx2TIJKTQ=";
-          allowedIPs = [ "192.168.7.7" ];
-          persistentKeepalive = 25;
-        }
-      ];
+          ])
+          # (mkWgPeer "mega" [ "192.168.7.6" ])
+          # {
+          #    mayniklas GPU
+          #   publicKey = "aD6SXOOB3JJnRXUvB09yXlf/2kyFe1TZ5HEx2TIJKTQ=";
+          #   allowedIPs = [ "192.168.7.7" ];
+          #   persistentKeepalive = 25;
+          # }
+        ];
     };
   };
 }

@@ -16,8 +16,6 @@ in
   # Build on machine executing the clan
   clan.core.networking.buildHost = "pinpox@localhost";
 
-  lollypops.deployment.deploy-method = "archive";
-
   lollypops.secrets.files."ente/credentials.yaml" = {
     owner = "ente";
     group-name = "ente";
@@ -74,7 +72,6 @@ in
     ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
   };
 
-  lollypops.deployment.ssh.host = "46.38.242.17";
   clan.core.networking.targetHost = "46.38.242.17";
 
   services.logind.extraConfig = ''

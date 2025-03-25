@@ -1,9 +1,12 @@
 # Configuration for birne
-{ nixpkgs, pkgs, ... }:
+{
+  nixpkgs,
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [ ./hardware-configuration.nix ];
-
-  lollypops.deployment.ssh.host = "192.168.2.84";
 
   clan.core.networking.targetHost = "192.168.101.221";
 
