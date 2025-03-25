@@ -80,6 +80,7 @@ in
             "strawberry" = "🍓";
           };
           format = "{player_icon} {artist} - {title}";
+          ignored-players = [ "firefox" "chromium"];
         };
 
         # "river/tags" = {
