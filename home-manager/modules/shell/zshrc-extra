@@ -1,9 +1,6 @@
 # Create and change to a directory
 take () { mkdir -p -- "$1" && cd -- "$1"; }
 
-# Deploy host with lollypops (without secrets)
-ndep () { nix run '.#' -- "$1":deploy-flake "$1":rebuild }
-
 # Create and change to a new temporary directory
 ttake () { cd $(mktemp -d) }
 
