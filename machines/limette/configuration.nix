@@ -8,6 +8,8 @@
 
   clan.core.networking.targetHost = "limette";
 
+  boot.growPartition = true;
+
   hardware.enableRedistributableFirmware = true;
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-x230
