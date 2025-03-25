@@ -15,14 +15,44 @@ in
         ignores = [
           "tags"
           "*.swp"
+          "result"
         ];
 
         extraConfig = {
-          # Possibly change this to "main" when majority of projects have
-          # switched branch names
-          init.defaultBranch = "master";
+          init.defaultBranch = "main";
+          pull = {
+            rebase = true;
+            autostash = true;
+            twohead = "ort";
+          };
 
-          pull.rebase = false;
+          push = {
+            default = "simple";
+            autoSetupRemote = true;
+          };
+
+          rerere = {
+            #   autoUpdate = true
+            #   enabled = true
+          };
+
+          # [branch]
+          branch = {
+            autoSetupRebase = "always";
+            autoSetupMerge = "always";
+          };
+
+          # [rebase]
+          rebase = {
+            stat = true;
+            autoStash = true;
+            autoSquash = true;
+            updateRefs = true;
+          };
+
+          help = {
+            autocorrect = 10;
+          };
         };
 
         signing = {
@@ -36,7 +66,13 @@ in
           a = "add";
           c = "commit";
           p = "push";
+          o = "checkout";
           co = "checkout";
+          uncommit = "reset --soft HEAD^";
+          comma = "commit --amend";
+          reset-pr = "reset --hard FETCH_HEAD";
+          force-push = "push --force-with-lease";
+
         };
 
         userEmail = "mail@pablo.tools";
