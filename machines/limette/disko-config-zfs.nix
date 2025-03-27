@@ -1,4 +1,7 @@
 {
+
+
+
   disko.devices = {
     disk = {
       root = {
@@ -68,6 +71,15 @@
             options.mountpoint = "/var/lib";
             mountpoint = "/var/lib";
           };
+
+          # "root/tmp" = {
+          #   type = "zfs_fs";
+          #   mountpoint = "/tmp";
+          #   options = {
+          #     mountpoint = "/tmp";
+          #     sync = "disabled";
+          #   };
+          # };
 
           # README MORE: https://wiki.archlinux.org/title/ZFS#Swap_volume
           # "root/swap" = {
