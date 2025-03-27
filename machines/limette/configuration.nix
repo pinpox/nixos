@@ -13,10 +13,10 @@
   hardware.enableRedistributableFirmware = true;
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-x230
-    ./disko-config.nix
+    ./disko-config-zfs.nix
   ];
 
-  disko.devices.disk.main.imageSize = "40G";
+  # disko.devices.disk.main.imageSize = "40G";
   disko.imageBuilder.extraDependencies = [ pkgs.kmod ];
 
   programs.sway.enable = true;
