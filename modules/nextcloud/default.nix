@@ -33,12 +33,22 @@ in
 
     services.postgresql.package = pkgs.postgresql_13;
 
-    lollypops.secrets.files = {
-      "nextcloud/admin-pass" = {
-        # name = "nextcloud-admin-pass";
-        path = "/var/lib/nextcloud/admin-pass";
+    clan.core.vars.generators."nextcloud" = {
+
+      files.admin-pass-file = {
         owner = "nextcloud";
+        # path = "/var/lib/nextcloud/admin-pass";
       };
+
+      runtimeInputs = with pkgs; [
+        coreutils
+        xkcdpass
+      ];
+
+      script = ''
+        mkdir -p $out
+        xkcdpass > $out/admin-pass-file
+      '';
     };
 
     services.phpfpm.pools.nextcloud.settings = {
@@ -132,7 +142,7 @@ in
 
         # Admin user
         adminuser = "pinpox";
-        adminpassFile = "${config.lollypops.secrets.files."nextcloud/admin-pass".path}";
+        adminpassFile = "${config.clan.core.vars.generators."nextcloud".files."admin-pass-file".path}";
       };
 
       nginx.recommendedHttpHeaders = true;
