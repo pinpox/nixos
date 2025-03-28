@@ -19,15 +19,11 @@ in
 
     # Reverse proxy
     services.caddy.virtualHosts."${cfg.host}".extraConfig =
-      "reverse_proxy ${config.services.gitea.settings.server.HTTP_ADDR}:${builtins.toString config.services.gitea.settings.server.HTTP_PORT}";
+      with config.services.gitea.settings.server;
+      "reverse_proxy ${HTTP_ADDR}:${builtins.toString HTTP_PORT}";
 
     # Backups
     pinpox.services.restic-client.backup-paths-offsite = [ "/var/lib/gitea" ];
-
-    lollypops.secrets.files."gitea/mailer-pw" = {
-      owner = "gitea";
-      path = "/var/lib/gitea/mailer-pw";
-    };
 
     clan.core.vars.generators."gitea" = {
       files.mailer-pw.owner = "gitea";
@@ -37,7 +33,7 @@ in
     services.gitea = {
 
       enable = true;
-      mailerPasswordFile = "${config.lollypops.secrets.files."gitea/mailer-pw".path}";
+      mailerPasswordFile = "${config.clan.core.vars.generators."gitea".files."mailer-pw".path}";
 
       settings = {
         server = {
