@@ -55,6 +55,9 @@ in
       nixfmt-rfc-style
       ripgrep
       wget
+      ncdu
+      duf
+      tmux
     ];
 
     pinpox.defaults = {
