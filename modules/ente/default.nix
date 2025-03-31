@@ -117,30 +117,6 @@ in
       '';
     };
 
-    credentialsFile = mkOption {
-      default = null;
-      description = # yaml
-        ''
-          # TODO
-          # https://github.com/ente-io/ente/blob/main/server/scripts/compose/credentials.yaml#L10
-
-          jwt:
-              secret: "00000000000000000000000000000000000000000000"
-          key:
-              encryption: 00000000000000000000000000000000000000000000
-              hash: 00000000000000000000000000000000000000000000000000
-          s3:
-              b2-eu-cen:
-                  key: "0000000000000000000000000"
-                  secret: "0000000000000000000000000000000"
-                  endpoint: "000000000000000000000000000000"
-                  region: "00000000000"
-                  bucket: "00000000000"
-        '';
-      example = "/run/secrets/ente";
-      type = with types; nullOr path;
-    };
-
     environmentFile = mkOption {
       default = null;
       description = ''
@@ -166,7 +142,7 @@ in
 
           credentials-file = lib.mkOption {
             type = lib.types.str;
-            default = "${cfg.credentialsFile}";
+            default = "/credentials.yaml";
             internal = true;
           };
 
@@ -178,32 +154,6 @@ in
               If you're running a self hosted instance and wish to serve public links,
               set this to the URL where your albums web app is running.
             '';
-          };
-
-          s3 = {
-            b2-eu-cen = {
-              endpoint = lib.mkOption {
-                type = with types; str;
-                default = "";
-                description = ''
-                  TODO
-                '';
-              };
-              region = lib.mkOption {
-                type = with types; str;
-                default = "";
-                description = ''
-                  TODO
-                '';
-              };
-              bucket = lib.mkOption {
-                type = with types; str;
-                default = "";
-                description = ''
-                  TODO
-                '';
-              };
-            };
           };
 
           # Key used for encrypting customer emails before storing them in DB
@@ -343,6 +293,20 @@ in
 
       users.groups.ente.name = "ente";
 
+      clan.core.vars.generators."ente" = {
+        files.credentials-yaml = {
+          owner = "ente";
+          group = "ente";
+        };
+
+        # files.<name>.secret = true;
+        script = "cp $prompts/credentials $out/credentials-yaml";
+        # }
+
+        prompts.credentials.type = "multiline";
+        prompts.credentials.persist = true;
+      };
+
       # Service
       systemd.services.ente = {
         wantedBy = [ "multi-user.target" ];
@@ -353,7 +317,7 @@ in
 
           WorkingDirectory = "/var/lib/ente";
           BindReadOnlyPaths = [
-            "${cfg.credentialsFile}:/var/lib/ente/crendentials.yaml"
+            "${config.clan.core.vars.generators."ente".files."credentials-yaml".path}:/credentials.yaml"
             "${configFile}:/var/lib/ente/configurations/local.yaml"
             "${pkgs.museum}/share/museum/migrations:/var/lib/ente/migrations"
             "${pkgs.museum}/share/museum/mail-templates:/var/lib/ente/mail-templates"

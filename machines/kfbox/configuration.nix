@@ -15,37 +15,19 @@ in
   # Build on machine executing the clan
   clan.core.networking.buildHost = "pinpox@localhost";
 
-  lollypops.secrets.files."ente/credentials.yaml" = {
-    owner = "ente";
-    group-name = "ente";
-    path = "/var/lib/ente/crendentials.yaml";
-  };
-
-  services.ente =
-    let
-      envfile = pkgs.writeTextFile {
-        name = "env";
-        text = '''';
-      };
-    in
-    {
-
-      web = true;
-      albums = true;
-      web-host = "https://photos.0cx.de";
-      albums-host = "https://albums.0cx.de";
-      api-host = "https://photos-api.0cx.de";
-      webserver = "caddy";
-
-      settings = {
-        internal.admins = [ "1580559962386438" ];
-        apps.public-albums = "https://albums.0cx.de";
-      };
-
-      enable = true;
-      environmentFile = envfile;
-      credentialsFile = "${config.lollypops.secrets.files."ente/credentials.yaml".path}";
+  services.ente = {
+    enable = true;
+    web = true;
+    albums = true;
+    web-host = "https://photos.0cx.de";
+    albums-host = "https://albums.0cx.de";
+    api-host = "https://photos-api.0cx.de";
+    webserver = "caddy";
+    settings = {
+      internal.admins = [ "1580559962386438" ];
+      apps.public-albums = "https://albums.0cx.de";
     };
+  };
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [
@@ -56,7 +38,6 @@ in
     ];
   };
 
-
   clan.core.networking.targetHost = "46.38.242.17";
 
   services.logind.extraConfig = ''
@@ -66,19 +47,15 @@ in
   imports = [
     ./retiolum.nix
     ./hardware-configuration.nix
-    #retiolum.nixosModules.ca
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
   ];
 
-  systemd.services.NetworkManager-wait-online = {
-    serviceConfig = {
-      ExecStart = [ "${pkgs.networkmanager}/bin/nm-online -q" ];
-    };
-  };
+  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = [
+    "${pkgs.networkmanager}/bin/nm-online -q"
+  ];
 
   # Karmabot for IRC channel
-
   clan.core.vars.generators."go-karma-bot" = pinpox-utils.mkEnvGenerator [
     "IRC_BOT_SERVER"
     "IRC_BOT_CHANNEL"
@@ -86,15 +63,21 @@ in
     "IRC_BOT_PASS"
   ];
 
-  lollypops.secrets.files."go-karma-bot/envfile" = { };
-  services.go-karma-bot.environmentFile = config.lollypops.secrets.files."go-karma-bot/envfile".path;
-  services.go-karma-bot.enable = true;
+  services.go-karma-bot = {
+    enable = true;
+    environmentFile = config.clan.core.vars.generators."go-karma-bot".files."envfile".path;
+  };
 
   # Discord AoE2 taunt bot
-  lollypops.secrets.files."aoe-taunt-discord-bot/discord_token" = { };
-  services.aoe-taunt-discord-bot.discordTokenFile =
-    config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
-  services.aoe-taunt-discord-bot.enable = true;
+  clan.core.vars.generators."aoe-taunt-discord-bot" = {
+    prompts.discord_token.persist = true;
+  };
+
+  services.aoe-taunt-discord-bot = {
+    enable = true;
+    discordTokenFile =
+      config.clan.core.vars.generators."aoe-taunt-discord-bot".files."discord_token".path;
+  };
 
   pinpox = {
 
