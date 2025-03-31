@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  pinpox-utils,
+  config,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.dex;
@@ -22,7 +27,19 @@ in
       "reverse_proxy ${config.services.dex.settings.web.http}";
 
     # Secrets
-    lollypops.secrets.files."dex/envfile" = { };
+    clan.core.vars.generators."dex" = pinpox-utils.mkEnvGenerator [
+      # Providers
+      "GITEA_CLIENT_ID"
+      "GITEA_CLIENT_SECRET"
+      "GITHUB_CLIENT_ID"
+      "GITHUB_CLIENT_SECRET"
+      "AUTHELIA_CLIENT_SECRET"
+
+      # Applications
+      "CLIENT_SECRET_HEDGEDOC"
+      "CLIENT_SECRET_VIKUNJA"
+      "CLIENT_SECRET_CADDY"
+    ];
 
     # Backups
     pinpox.services.restic-client.backup-paths-offsite = [
@@ -34,7 +51,7 @@ in
 
     services.dex = {
       enable = true;
-      environmentFile = config.lollypops.secrets.files."dex/envfile".path;
+      environmentFile = config.clan.core.vars.generators."dex".files."envfile".path;
       settings = {
 
         # External url
