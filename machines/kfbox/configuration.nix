@@ -4,7 +4,6 @@
   go-karma-bot,
   mc3000,
   pkgs,
-  retiolum,
   lib,
   ...
 }:
@@ -57,20 +56,6 @@ in
     ];
   };
 
-  networking.retiolum = {
-    ipv4 = "10.243.100.102";
-    ipv6 = "42:0:3c46:3ae6:90a8:b220:e772:8a5c";
-  };
-
-  lollypops.secrets.files = {
-    "retiolum/rsa_priv" = { };
-    "retiolum/ed25519_priv" = { };
-  };
-
-  services.tinc.networks.retiolum = {
-    rsaPrivateKeyFile = "${config.lollypops.secrets.files."retiolum/rsa_priv".path}";
-    ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
-  };
 
   clan.core.networking.targetHost = "46.38.242.17";
 
@@ -79,8 +64,8 @@ in
   '';
 
   imports = [
+    ./retiolum.nix
     ./hardware-configuration.nix
-    retiolum.nixosModules.retiolum
     #retiolum.nixosModules.ca
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
