@@ -33,4 +33,9 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
 
+  boot.supportedFilesystems = {
+    btrfs = true;
+    zfs = true;
+  };
+
 }
