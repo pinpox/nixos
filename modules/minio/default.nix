@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -16,13 +17,18 @@ in
   config = mkIf cfg.enable {
 
     clan.core.vars.generators."minio" = rec {
-      files.rootCredentials = { };
+      files.root-credentials = { };
       validation.script = script;
+
+      runtimeInputs = with pkgs; [
+        coreutils
+        xkcdpass
+      ];
+
       script = # sh
         ''
           mkdir -p $out
-          echo "MINIO_ROOT_USER=admin" > $out/rootCredentials
-          printf "MINIO_ROOT_PASSWORD='%s'" "$(xkcdpass -d-)" >> $out/rootCredentials
+          printf "MINIO_ROOT_USER=admin\nMINIO_ROOT_PASSWORD='%s'" "$(xkcdpass -d-)" > $out/root-credentials
         '';
     };
 
@@ -36,7 +42,7 @@ in
       listenAddress = "${config.pinpox.wg-client.clientIp}:9000";
       consoleAddress = "${config.pinpox.wg-client.clientIp}:9001";
       region = "eu-central-1";
-      rootCredentialsFile = "${config.clan.core.vars.generators."minio".files."rootCredentials".path}";
+      rootCredentialsFile = "${config.clan.core.vars.generators."minio".files."root-credentials".path}";
       dataDir = [ "/mnt/data/minio/data" ];
       configDir = "/mnt/data/minio/config";
     };
