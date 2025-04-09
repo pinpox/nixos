@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  pinpox-utils,
   ...
 }:
 with lib;
@@ -28,11 +29,16 @@ in
 
   config = {
 
-    lollypops.secrets.files."restic-exporter/envfile" = { };
+    clan.core.vars.generators."restic-exporter" = pinpox-utils.mkEnvGenerator [
+      "RESTIC_PASSWORD"
+      "AWS_ACCESS_KEY_ID"
+      "AWS_SECRET_ACCESS_KEY"
+      "RESTIC_REPOSITORY"
+    ];
 
     services.restic-exporter = {
       enable = cfg.restic.enable;
-      environmentFile = "${config.lollypops.secrets.files."restic-exporter/envfile".path}";
+      environmentFile = "${config.clan.core.vars.generators."restic-exporter".files."envfile".path}";
       port = "8999";
     };
 

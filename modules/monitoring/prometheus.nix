@@ -33,10 +33,11 @@ in
 
   config = mkIf cfg.enable {
 
-    lollypops.secrets.files = {
-      "prometheus/home-assistant-token" = {
+    clan.core.vars.generators."prometheus" = {
+      prompts.home-assistant-token.persist = true;
+      files.home-assistant-token = {
+        group = "prometheus";
         owner = "prometheus";
-        path = "/var/lib/prometheus2/home-assistant-token";
       };
     };
 
@@ -102,7 +103,7 @@ in
           job_name = "homeassistant";
           scrape_interval = "60s";
           metrics_path = "/api/prometheus";
-          bearer_token_file = config.lollypops.secrets.files."prometheus/home-assistant-token".path;
+          bearer_token_file = config.clan.core.vars.generators."prometheus".files."home-assistant-token".path;
           scheme = "http";
           static_configs = [ { targets = [ "birne.wireguard:8123" ]; } ];
         }

@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -28,10 +27,7 @@ in
   config = mkIf cfg.enable {
 
     # SMTP password file
-    lollypops.secrets.files."grafana/smtp-password" = {
-      owner = "grafana";
-      path = "/var/lib/grafana/smtp-password";
-    };
+    clan.core.vars.generators."grafana".prompts.smtp-password.persist = true;
 
     # Backup Graphana dir, contains stateful config
     pinpox.services.restic-client.backup-paths-offsite = [ "/var/lib/grafana" ];
@@ -54,7 +50,7 @@ in
           enabled = true;
           host = "smtp.sendgrid.net:587";
           user = "apikey";
-          passwordFile = "${config.lollypops.secrets.files."grafana/smtp-password".path}";
+          passwordFile = "${config.clan.core.vars.generators."grafana".files."smtp-password".path}";
           fromAddress = "status@pablo.tools";
         };
       };
