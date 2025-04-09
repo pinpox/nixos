@@ -31,18 +31,16 @@ in
             autoSetupRemote = true;
           };
 
-          rerere = {
+          # rerere = {
             #   autoUpdate = true
             #   enabled = true
-          };
+          # };
 
-          # [branch]
           branch = {
             autoSetupRebase = "always";
             autoSetupMerge = "always";
           };
 
-          # [rebase]
           rebase = {
             stat = true;
             autoStash = true;
@@ -50,9 +48,7 @@ in
             updateRefs = true;
           };
 
-          help = {
-            autocorrect = 10;
-          };
+          help.autocorrect = 10;
         };
 
         signing = {
@@ -72,11 +68,10 @@ in
           comma = "commit --amend";
           reset-pr = "reset --hard FETCH_HEAD";
           force-push = "push --force-with-lease";
-
         };
 
-        userEmail = "mail@pablo.tools";
-        userName = "Pablo Ovelleiro Corral";
+        userEmail = "git@pablo.tools";
+        userName = "pinpox";
       };
     };
   };
