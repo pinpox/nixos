@@ -10,7 +10,7 @@ local hosts = std.objectFields(info.nixosConfigurations);
 local packages = std.objectFields(info.packages['x86_64-linux']);
 
 // To overerride the lists use:
-// local hosts = ['ahorn', 'birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
+// local hosts = ['birne', 'bob', 'kartoffel', 'kfbox', 'porree'];
 // local packages = [ 'filebrowser', 'fritzbox_exporter', 'hello-custom', ];
 
 local steps_hosts() = std.flatMap(function(host) [

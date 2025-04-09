@@ -51,10 +51,9 @@ sudo nixos-rebuild --flake ".#kartoffel" switch
 | Configuration                       | Type      | Location    | VPN IP         | Description                  |
 | ----------------------------------- | --------- | ----------- | -------------- | ---------------------------- |
 | [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.7.3`  | Desktop                      |
-| [ahorn](./machines/ahorn)           | Desktop   | local       | `192.168.7.2`  | Notebook                     |
+| [limette](./machines/limette)       | Desktop   | local       | `192.168.7.2`  | Notebook                     |
 | [birne](./machines/birne)           | Server    | local       | `192.168.7.4`  | Local NAS                    |
 | [porree](./machines/porree)         | Server    | netcup.de   | `192.168.7.1`  | Server for pablo.tools       |
-| [mega](./machines/mega)             | Server    | netcup.de   | `192.168.7.6`  | Server for megaclan3000.de   |
 | [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.7.5`  | Server for 0cx.de            |
 
 The services running on each host are documented in the host-specific

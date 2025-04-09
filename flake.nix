@@ -186,7 +186,6 @@
 
               roles.client.machines = [
                 "kfbox"
-                "ahorn"
               ];
 
               roles.client.config."test" = {

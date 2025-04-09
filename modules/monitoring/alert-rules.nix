@@ -102,7 +102,7 @@ lib.mapAttrsToList
     };
 
     host_down = {
-      condition = ''up{job="node-stats", instance!~"ahorn.wireguard:9100|kartoffel.wireguard:9100|mega.wireguard:9100"} == 0'';
+      condition = ''up{job="node-stats", instance!~"limette.wireguard:9100|kartoffel.wireguard:9100"} == 0'';
       description = "{{$labels.instance}} is down!";
     };
 

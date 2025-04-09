@@ -191,7 +191,6 @@
         in
         [
           (mkWgPeer "kartoffel" [ "192.168.7.3" ])
-          (mkWgPeer "ahorn" [ "192.168.7.2" ])
           (mkWgPeer "kfbox" [ "192.168.7.5" ])
           (mkWgPeer "birne" [
             "192.168.7.4"
