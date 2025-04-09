@@ -16,15 +16,18 @@ in
 
   config = mkIf cfg.enable {
 
-    # TODO workaround for https://github.com/NixOS/nixpkgs/pull/272576
-    nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
-
     networking.firewall.trustedInterfaces = [ "wg0" ];
 
-    lollypops.secrets.files."home-assistant/secrets.yaml" = {
-      owner = "hass";
-      path = "/var/lib/hass/secrets.yaml";
+    clan.core.vars.generators."home-assistant" = {
+      prompts."secrets.yaml".persist = true;
+      prompts."secrets.yaml".type = "multiline";
     };
+
+    systemd.services.home-manager.serviceConfig.BindReadOnlyPaths = [
+      "${
+        config.clan.core.vars.generators."home-assistant".files."secrets.yaml".path
+      }:/var/lib/hass/secrets.yaml"
+    ];
 
     # https://nixos.wiki/wiki/Home_Assistant#Combine_declarative_and_UI_defined_automations
     systemd.tmpfiles.rules = [
