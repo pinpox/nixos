@@ -169,6 +169,10 @@ in
           backup-paths-onsite = [
             "/home/pinpox/Notes"
             "/home/pinpox"
+            # "*/.local/share/password-store"
+            # "*/.passage"
+            # "*/.gnupg"
+            # "*/.ssh"
           ];
           backup-paths-offsite = [
             "/home/pinpox/Notes"
@@ -177,12 +181,14 @@ in
 
           backup-paths-exclude = [
             "*.pyc"
-            "tags"
             "*/.BurpSuite"
+            "*/.coc"
             "*/.arduino15/packages"
             "*/.cache"
             "*/.cargo"
+            "*/.config/Nextcloud/logs"
             "*/.config/Signal"
+            "*/.config/retroarch"
             "*/.config/chromium"
             "*/.config/discord"
             "*/.container-diff"
@@ -206,14 +212,15 @@ in
             "*/Seafile"
             "*/VirtualBox VMs"
             "*/cache2"
-            "/home/*/.local/share/tor-browser"
-            "/home/*/.local/share/typeracer"
-            "/home/*/.local/state/NvChad/"
-            "/home/*/.npm"
-            "/home/*/code"
-            "/home/pinpox/.local/share/typeracer"
-            "discord/Cache"
+            "*/.local/share/tor-browser"
+            "*/.local/share/typeracer"
+            "*/.local/state/NvChad/"
+            "*/.npm"
+            "*/code"
+            "*/.local/share/typeracer"
             "/var/lib/docker"
+            "discord/Cache"
+            "tags"
           ];
         };
       };
