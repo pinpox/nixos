@@ -22,7 +22,6 @@ self: super: {
 
       inherit
         activation-secrets
-        binary-cache
         bluetooth
         ci
         default-desktop
