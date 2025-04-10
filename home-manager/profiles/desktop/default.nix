@@ -83,8 +83,6 @@
         git.enable = true;
       };
 
-      services.ntfy-notify.enable = true;
-
       programs =
         let
           inXserver = system-config.pinpox.services.xserver.enable;
