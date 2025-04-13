@@ -4,7 +4,6 @@
   alertmanager-ntfy,
   pinpox-utils,
   pkgs,
-  self,
   ...
 }:
 {
