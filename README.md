@@ -61,18 +61,7 @@ The services running on each host are documented in the host-specific
 
 # Deployment
 
-## First Deployment
-
-If the system has not been configured to use flakes (e.g. fresh install), the
-first deployment will have to be build on a machine that has. This can be done
-from any of the other hosts that have the repository. The configuration will the
-have the necessary options set, so that flakes works from now on with the normal
-lollypops deployment.
-
-```bash
-# bash, zsh doesn't always work correctly
-sudo nixos-rebuild --flake .#new-hostname --target-host <new-host-ip> --build-host localhost switch
- ```
+Deployment is done via [clan CLI](https://clan.lol).
 
 # Contributing?
 

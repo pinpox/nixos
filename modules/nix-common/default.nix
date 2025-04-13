@@ -66,7 +66,10 @@ in
     # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;
 
-    lollypops.secrets.files."nix/nix-access-tokens" = { };
+    clan.core.vars.generators."nix" = {
+      prompts.nix-access-tokens.persist = true;
+      share = true;
+    };
 
     # Enable flakes
     nix = {
@@ -79,7 +82,7 @@ in
         connect-timeout = 100
         stalled-download-timeout = 100
       '';
-      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
+      # !include ${config.clan.core.vars.generators."nix".files."nix-access-tokens".path}
 
       settings = {
 

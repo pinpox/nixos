@@ -28,12 +28,6 @@ with lib;
       ];
     };
 
-    # Lollypops user secrets defaults
-    lollypops.secrets = {
-      cmd-name-prefix = "nixos-secrets/users/pinpox/";
-      default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
-    };
-
     # Extra arguments to pass to modules
     _module.args = {
       pinpox-utils = import ../../utils { inherit pkgs; };

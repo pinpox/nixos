@@ -51,9 +51,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lollypops.url = "github:pinpox/lollypops";
-    lollypops.inputs.nixpkgs.follows = "nixpkgs";
-
     naersk.url = "github:nix-community/naersk/master";
     naersk.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -222,12 +219,6 @@
         }
       );
 
-      apps = forAllSystems (system: {
-        # For testing:
-        # nix flake update --override-input lollypops ../lollypops
-        default = lollypops.apps."${system}".default { configFlake = self; };
-      });
-
       # Custom packages added via the overlay are selectively exposed here, to
       # allow using them from other flakes that import this one.
       packages = forAllSystems (
@@ -280,7 +271,6 @@
               {
                 imports = [
                   (./home-manager/profiles + "/${name}")
-                  lollypops.hmModule
                 ] ++ (builtins.attrValues self.homeManagerModules);
               };
           })

@@ -38,7 +38,6 @@ self: super: {
         http2irc
         kf-homepage
         locale
-        lollypops-common
         lvm-grub
         miniflux
         minio
