@@ -5,6 +5,16 @@
 
   config = {
 
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          email = "git@pablo.tools";
+          name = "pinpox";
+        };
+      };
+    };
+
     programs.helix = {
       enable = true;
 
@@ -73,8 +83,6 @@
         git.enable = true;
       };
 
-      services.ntfy-notify.enable = true;
-
       programs =
         let
           inXserver = system-config.pinpox.services.xserver.enable;
@@ -88,8 +96,8 @@
           nvim.enable = true;
           firefox.enable = true;
           tmux.enable = true;
-          wezterm.enable = true;
           zk.enable = true;
+          taskwarrior.enable = true;
           go.enable = true;
 
           # XServer only
@@ -116,6 +124,22 @@
       with pkgs;
       [
         swaynotificationcenter
+        tea
+
+        (audacious.override { withPlugins = true; })
+        feishin
+        strawberry
+
+        mpv
+        # (mpv.override {
+        #   scripts = with pkgs.mpvScripts; [
+        #     sponsorblock
+        #     quality-menu
+        #     visualizer
+        #     twitch-chat
+        #     mpris
+        #   ];
+        # })
 
         zotero
 
@@ -125,6 +149,7 @@
         # calibre
         # recursive
         # retroarch
+        deluge
         chafa
         asciinema
         cbatticon
@@ -150,7 +175,7 @@
         ncdu
         networkmanager-openvpn
         networkmanagerapplet
-        # nextcloud-client
+        nextcloud-client
         nitrogen
         nix-index
         nmap
@@ -209,7 +234,7 @@
                 <icon>utilities-terminal</icon>
                 <name>Open Terminal Here</name>
                 <unique-id>1604472351415438-1</unique-id>
-                <command>wezterm start --cwd %f</command>
+                <command>foot -D %f</command>
                 <description>Example for a custom action</description>
                 <patterns>*</patterns>
                 <startup-notify/>
@@ -236,11 +261,6 @@
 
       # Battery Warning
       cbatticon.enable = true;
-
-      # Keyring
-      gnome-keyring = {
-        enable = true;
-      };
     };
   };
 }

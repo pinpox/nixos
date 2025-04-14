@@ -8,9 +8,15 @@ in
 
   config = mkIf cfg.enable {
     programs.zellij = {
+
       enable = true;
 
+      # Don't auto-start zellij on new shells
+      enableZshIntegration = false;
+
       settings = {
+
+        keybinds.unbind = "Ctrl q";
 
         session_serialization = false;
 

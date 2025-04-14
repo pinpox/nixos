@@ -1,19 +1,12 @@
 # Create and change to a directory
 take () { mkdir -p -- "$1" && cd -- "$1"; }
 
-# Deploy host with lollypops (without secrets)
-ndep () { nix run '.#' -- "$1":deploy-flake "$1":rebuild }
-
 # Create and change to a new temporary directory
 ttake () { cd $(mktemp -d) }
 
 # Use `line 10 /etc/hosts` to get 10th line of file
 line () { awk "NR == $1" "$2" }
 
-waster() {
-	jq -Rns '{text: inputs}' | curl  -s -H 'Content-Type: application/json' \
-		--data-binary @- https://paste.0cx.de | jq -r '. | "https://paste.0cx.de\(.path)"'
-	}
 
 # Bind up and down keys to history matching partial input
 bindkey "$terminfo[kcuu1]" history-search-backward
@@ -35,14 +28,15 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
+# Wastebin
+# command | paste
+function paste() {
+	jq -Rns '{text: inputs}' | curl  -s -H 'Content-Type: application/json' \
+		--data-binary @- https://paste.0cx.de | jq -r '. | "https://paste.0cx.de\(.path)"'
+	}
+
 # Self-hosted transfer.sh sharing. Expects ~/.netrc with crendentials in this format:
 # machine transfer.0cx.de login my-super-user password super-secret-password
-
-# command | paste
-paste () {
-	cat | curl -n --upload-file - https://transfer.0cx.de/paste.txt
-}
-
 # transfer file.txt
 transfer () {
 	if [ $# -eq 0 ]
@@ -73,3 +67,34 @@ transfer () {
 		curl -n --progress-bar --upload-file "-" "https://transfer.0cx.de/$file_name" | tee /dev/null
 	fi
 }
+
+function delta_sidebyside {
+  if [[ COLUMNS -ge 140 ]]; then
+    export DELTA_FEATURES='side-by-side'
+  else
+    export DELTA_FEATURES=''
+  fi
+}
+trap delta_sidebyside WINCH
+
+function ranger-cd {
+    tempfile=$(mktemp)
+    \ranger --choosedir="$tempfile" "${@:-$(pwd)}" < $TTY
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+
+function carry-ranger-cd {
+    ranger-cd
+    VISUAL=true zle edit-command-line
+}
+
+autoload -z edit-command-line
+zle -N edit-command-line
+
+zle -N carry-ranger-cd
+
+bindkey '^L' carry-ranger-cd

@@ -29,7 +29,8 @@ in
   # pw-metadata -n settings 0 clock.force-quantum 1024
   # pw-metadata -n settings 0 clock.force-rate 96000
 
-  options.pinpox.defaults.audio-recording.enable = mkEnableOption "audio production setup (DAW and plugins)";
+  options.pinpox.defaults.audio-recording.enable =
+    mkEnableOption "audio production setup (DAW and plugins)";
 
   config = mkIf cfg.enable {
 

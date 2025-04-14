@@ -19,6 +19,11 @@ in
       extraConfig = {
         host = "127.0.0.1";
         reverseProxy = true;
+        storagePolicy = {
+          enabled = true;
+          maxAgeDays = 365;
+          deletionPolicy = "everything";
+        };
 
         # TODO default network to mattermost brideg
         # defaults = {};

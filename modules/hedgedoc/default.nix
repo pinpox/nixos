@@ -1,20 +1,27 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pinpox-utils,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.services.hedgedoc;
 in
+# pinpox-utils = import ../../utils { inherit pkgs; };
 {
 
   options.pinpox.services.hedgedoc = {
     enable = mkEnableOption "Hedgedoc server";
   };
+
   config = mkIf cfg.enable {
 
-    # env file contains:
-    # CMD_SESSION_SECRET
-    # CMD_OAUTH2_CLIENT_ID
-    # CMD_OAUTH2_CLIENT_SECRET=
-    lollypops.secrets.files."hedgedoc/envfile" = { };
+    clan.core.vars.generators."hedgedoc" = pinpox-utils.mkEnvGenerator [
+      "CMD_SESSION_SECRET"
+      "CMD_OAUTH2_CLIENT_ID"
+      "CMD_OAUTH2_CLIENT_SECRET"
+    ];
 
     systemd.services.hedgedoc.serviceConfig.Environment = [
       # Allow creating on-the-fly by url
@@ -41,7 +48,9 @@ in
     # Create system user and group
     services.hedgedoc = {
       enable = true;
-      environmentFile = "${config.lollypops.secrets.files."hedgedoc/envfile".path}";
+
+      environmentFile = "${config.clan.core.vars.generators."hedgedoc".files."envfile".path}";
+
       settings = {
 
         protocolUseSSL = true; # Use https when loading assets
@@ -51,7 +60,6 @@ in
         domain = "pads.0cx.de";
         host = "127.0.0.1";
         # port = 3000; # Default
-        # allowOrigin = [ "localhost" ]; # TODO not sure if neeeded
         debug = true;
 
         db = {

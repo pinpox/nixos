@@ -22,3 +22,5 @@ tags
 
 tags.lock
 tags.temp
+.direnv
+.env

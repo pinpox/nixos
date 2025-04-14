@@ -1,9 +1,12 @@
 # Configuration for birne
-{ nixpkgs, pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   imports = [ ./hardware-configuration.nix ];
 
-  lollypops.deployment.ssh.host = "192.168.2.84";
+  clan.core.networking.targetHost = "192.168.101.221";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -13,19 +16,11 @@
 
   # Host forwards incoming wg connections to the local network so we can reach LAN devices via wireguard. E.g. for retrieving stats directly from smart-home devices
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  networking.wireguard.interfaces.wg0 =
-    let
-      iptables = "${nixpkgs.legacyPackages.x86_64-linux.iptables}/bin/iptables";
-    in
-    {
-      postSetup = ''
-        ${iptables} -t nat -A POSTROUTING -s 192.168.7.0/24 -o eno1 -j MASQUERADE; ${iptables} -A FORWARD -i wg0 -j ACCEPT
-      '';
 
-      postShutdown = ''
-        ${iptables} -t nat -D POSTROUTING -s 192.168.7.0/24 -o eno1 -j MASQUERADE; ${iptables} -D FORWARD -i wg0 -j ACCEPT
-      '';
-    };
+  boot.supportedFilesystems = {
+    btrfs = true;
+    zfs = true;
+  };
 
   pinpox = {
 
@@ -76,6 +71,42 @@
     # udp/3478  # UDP port used for STUN.
     # udp/10001 # UDP port used for device discovery.
   };
+
+  # Waiting until seafile/seahub is fixed
+  # services.seafile = {
+  #   enable = true;
+  #
+  #   adminEmail = "seafile@pablo.tools";
+  #
+  #   # ccnetSettings
+  #   # https://manual.seafile.com/config/ccnet-conf/
+  #   ccnetSettings.General.SERVICE_URL = "https://cloud.pablo.tools";
+  #
+  #   # dataDir = "/var/lib/seafile/data";
+  #
+  #   # gc.dates
+  #   # gc.enable
+  #   # gc.persistent
+  #   # gc.randomizedDelaySec
+  #
+  #   initialAdminPassword = "changeme";
+  #
+  #   seafileSettings = {
+  #     # fileserver.port = 8082;
+  #     # fileserver.host = "ipv4:127.0.0.1";
+  #   };
+  #
+  #   # seahubAddress = "unix:/run/seahub/gunicorn.sock";
+  #
+  #   # https://manual.seafile.com/config/seahub_settings_py/
+  #   # seahubExtraConf =
+  #   # ''
+  #   #   CSRF_TRUSTED_ORIGINS = ["https://example.com"]
+  #   # ''
+  #
+  #   # seahubPackage
+  #   # workers
+  # };
 
   # Open ports in the firewall.
   networking.firewall = {

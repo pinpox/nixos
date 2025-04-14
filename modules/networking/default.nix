@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -42,7 +41,6 @@ in
       extraHosts = ''
         # Wireguard
         192.168.7.1 porree.wireguard
-        192.168.7.2 ahorn.wireguard
         192.168.7.3 kartoffel.wireguard
         192.168.7.4 birne.wireguard
         192.168.7.5 kfbox.wireguard

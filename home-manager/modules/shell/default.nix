@@ -55,10 +55,18 @@ in
   imports = [
     ./starship.nix
     ./zsh.nix
-    # ./fish.nix
+    ./fish.nix
   ];
 
   config = mkIf cfg.enable {
+
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+      # https://direnv.net/man/direnv.toml.1.html
+      # config = {};
+    };
 
     pinpox.defaults.shell.abbrev-aliases = [
 
@@ -66,10 +74,6 @@ in
       {
         alias = "g";
         command = "git";
-      }
-      {
-        alias = "m";
-        command = "neomutt";
       }
       {
         alias = "o";
@@ -105,7 +109,7 @@ in
       {
         global = true;
         alias = "P";
-        command = "| tb";
+        command = "| paste";
       }
     ];
 

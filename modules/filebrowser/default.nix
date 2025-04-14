@@ -16,8 +16,6 @@ in
 
   config = mkIf cfg.enable {
 
-    lollypops.secrets.files."filebrowser/envfile" = { };
-
     # User and group
     users.users.filebrowser = {
       isSystemUser = true;
@@ -36,6 +34,11 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       description = "Start filebrowser";
+      environment = {
+        FB_ADDRESS = "192.168.7.4";
+        FB_PORT = 8787;
+        FB_SIGNUP = false;
+      };
       serviceConfig = {
         EnvironmentFile = [ config.secrets.files."filebrowser/envfiles".path ];
         # Environment = [ ];

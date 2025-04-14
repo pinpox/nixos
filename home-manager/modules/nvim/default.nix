@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  utils,
+  pinpox-utils,
   ...
 }:
 
@@ -22,7 +22,7 @@ in
       enable = true;
       configFile.nixcolors-lua = {
         target = "nvim/lua/nixcolors.lua";
-        source = utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache config.pinpox.colors;
+        source = pinpox-utils.renderMustache "nixcolors.lua" ./nixcolors.lua.mustache config.pinpox.colors;
       };
     };
 

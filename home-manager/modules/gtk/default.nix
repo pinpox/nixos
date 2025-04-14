@@ -64,6 +64,8 @@ in
 {
   options.pinpox.defaults.gtk.enable = mkEnableOption "gtk defaults";
 
+  imports = [ ./banana.nix ];
+
   config = mkIf cfg.enable {
 
     nixpkgs.overlays = [
@@ -128,7 +130,6 @@ in
 
       gtk3 = {
         extraConfig = {
-          gtk-cursor-theme-name = "breeze";
           gtk-application-prefer-dark-theme = 1;
         };
       };

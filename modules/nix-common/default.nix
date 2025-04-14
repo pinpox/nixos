@@ -4,6 +4,7 @@
   lib,
   flake-self,
   nixpkgs,
+  nix-index-database,
   ...
 }:
 with lib;
@@ -16,7 +17,14 @@ in
     enable = mkEnableOption "Nix defaults";
   };
 
+  imports = [ nix-index-database.nixosModules.nix-index ];
+
   config = mkIf cfg.enable {
+
+    _module.args.pinpox-utils = import ../../utils { inherit pkgs; };
+
+    # Use nix-index-database for comma
+    programs.nix-index-database.comma.enable = true;
 
     # Generates a .prom file that can be scraped with prometheus to monitor the
     # current nixpkgs version
@@ -58,7 +66,10 @@ in
     # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;
 
-    lollypops.secrets.files."nix/nix-access-tokens" = { };
+    clan.core.vars.generators."nix" = {
+      prompts.nix-access-tokens.persist = true;
+      share = true;
+    };
 
     # Enable flakes
     nix = {
@@ -71,21 +82,33 @@ in
         connect-timeout = 100
         stalled-download-timeout = 100
       '';
-      # !include ${config.lollypops.secrets.files."nix/nix-access-tokens".path}
+      # !include ${config.clan.core.vars.generators."nix".files."nix-access-tokens".path}
 
       settings = {
+
+        auto-allocate-uids = true;
+        system-features = lib.mkDefault [ "uid-range" ];
 
         experimental-features = [
           "nix-command"
           "flakes"
+
+          "auto-allocate-uids"
+          "cgroups"
         ];
 
         trusted-users = [ "@wheel" ];
 
-        trusted-public-keys = [ "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" ];
+        trusted-public-keys = [
+          "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+
+        # nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
         substituters = [
           "https://cache.nixos.org"
+          "https://nix-community.cachix.org"
           "https://cache.lounge.rocks/nix-cache"
         ];
 

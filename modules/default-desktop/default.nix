@@ -58,11 +58,19 @@ in
 
   config = mkIf cfg.enable {
 
+    services.fwupd.enable = true;
+    services.acpid.enable = true;
+
+    hardware.keyboard.qmk.enable = true;
+
+    # To build raspi images
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     services.greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd start-sway";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'sway --unsupported-gpu'";
           user = "greeter";
         };
 
@@ -75,6 +83,24 @@ in
 
     # Enable networkmanager
     networking.networkmanager.enable = true;
+
+    # Often hangs
+    systemd.services = {
+      NetworkManager-wait-online.enable = lib.mkForce false;
+      systemd-networkd-wait-online.enable = lib.mkForce false;
+    };
+
+    services.udev.packages = [
+      pkgs.via
+      pkgs.qmk-udev-rules # For QMK/Via
+      pkgs.libsigrok # For pulseview
+    ];
+
+    hardware.sane.enable = true;
+    users.users.pinpox.extraGroups = [
+      "scanner"
+      "lp"
+    ];
 
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
@@ -135,6 +161,7 @@ in
         unbound-desktop.enable = true;
 
         xserver.enable = false;
+        wayland.enable = true;
         openssh.enable = true;
 
         restic-client = {
@@ -142,6 +169,10 @@ in
           backup-paths-onsite = [
             "/home/pinpox/Notes"
             "/home/pinpox"
+            # "*/.local/share/password-store"
+            # "*/.passage"
+            # "*/.gnupg"
+            # "*/.ssh"
           ];
           backup-paths-offsite = [
             "/home/pinpox/Notes"
@@ -150,12 +181,14 @@ in
 
           backup-paths-exclude = [
             "*.pyc"
-            "tags"
             "*/.BurpSuite"
+            "*/.coc"
             "*/.arduino15/packages"
             "*/.cache"
             "*/.cargo"
+            "*/.config/Nextcloud/logs"
             "*/.config/Signal"
+            "*/.config/retroarch"
             "*/.config/chromium"
             "*/.config/discord"
             "*/.container-diff"
@@ -179,14 +212,15 @@ in
             "*/Seafile"
             "*/VirtualBox VMs"
             "*/cache2"
-            "/home/*/.local/share/tor-browser"
-            "/home/*/.local/share/typeracer"
-            "/home/*/.local/state/NvChad/"
-            "/home/*/.npm"
-            "/home/*/code"
-            "/home/pinpox/.local/share/typeracer"
-            "discord/Cache"
+            "*/.local/share/tor-browser"
+            "*/.local/share/typeracer"
+            "*/.local/state/NvChad/"
+            "*/.npm"
+            "*/code"
+            "*/.local/share/typeracer"
             "/var/lib/docker"
+            "discord/Cache"
+            "tags"
           ];
         };
       };

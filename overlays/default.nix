@@ -22,7 +22,6 @@ self: super: {
 
       inherit
         activation-secrets
-        binary-cache
         bluetooth
         ci
         default-desktop
@@ -39,9 +38,7 @@ self: super: {
         http2irc
         kf-homepage
         locale
-        lollypops-common
         lvm-grub
-        mattermost
         miniflux
         minio
         monitoring
@@ -110,8 +107,6 @@ self: super: {
 
   # Custom packages. Will be made available on all machines and used where
   # needed.
-  wezterm-bin = super.callPackage ../packages/wezterm-bin { };
-  wezterm-nightly = super.callPackage ../packages/wezterm-nightly { };
   filebrowser = super.callPackage ../packages/filebrowser { };
   smartmon-script = super.callPackage ../packages/smartmon-script { };
 

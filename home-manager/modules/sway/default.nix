@@ -13,7 +13,7 @@ let
       ''
         export WLR_DRM_NO_MODIFIERS=1
         # dbus-launch --sh-syntax --exit-with-session ${pkgs.sway}/bin/sway
-        ${pkgs.sway}/bin/sway
+        ${pkgs.sway}/bin/sway --unsupported-gpu
       '';
 in
 {
@@ -38,6 +38,13 @@ in
     wayland.windowManager.sway = {
       enable = true;
       config = rec {
+
+        seat = {
+          "*" = {
+            xcursor_theme = "${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}";
+          };
+        };
+
         keybindings = lib.mkOptionDefault {
           "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
           "${modifier}+p" = "exec ${pkgs.wofi}/bin/wofi --show run";
@@ -47,13 +54,14 @@ in
           "${modifier}+Tab" = "focus next";
 
           # Screen lock
-          "${modifier}+Shift+l" = "swaylock";
+          "${modifier}+Shift+l" = "exec swaylock";
 
           # SwayNotificationCenter
           "${modifier}+n" = "exec swaync-client -t -sw";
 
           # Scratchpad
-          "${modifier}+u" = ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 98ppt 98ppt; [app_id="dropdown"] move position center'';
+          "${modifier}+u" =
+            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 99ppt 98ppt; [app_id="dropdown"] move position center'';
         };
 
         modifier = "Mod4"; # Win key
@@ -74,16 +82,19 @@ in
         # Application/window specific rules
         window.commands = [
           {
+            command = "split horizontal, resize grow width 30 px or 30 ppt";
+            criteria.class = "^Audacious$";
+          }
+          {
             command = "floating enable";
             criteria.title = "Firefox — Sharing Indicator";
           }
-
           {
             command = "floating enable";
             criteria.app_id = "dropdown";
           }
           {
-            command = "resize set 98ppt 98ppt";
+            command = "resize set 99ppt 98ppt";
             criteria.app_id = "dropdown";
           }
           {
@@ -91,7 +102,7 @@ in
             criteria.app_id = "dropdown";
           }
           {
-            command = "border pixel 10";
+            command = "border pixel 8";
             criteria.app_id = "dropdown";
           }
         ];

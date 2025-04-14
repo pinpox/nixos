@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.pinpox.services.screego;
 in
@@ -24,17 +29,33 @@ in
       };
     };
 
-    lollypops.secrets.files."screego/users" = { };
-    lollypops.secrets.files."screego/env" = { };
+    clan.core.vars.generators."screego" = {
+
+      files.envfile = { };
+      files.users = { };
+      files.prometheus-pass = { };
+
+      runtimeInputs = with pkgs; [
+        coreutils
+        screego
+        xkcdpass
+      ];
+
+      script = ''
+        echo "SCREEGO_SECRET=$(tr -dc A-Za-z0-9 < /dev/urandom | head -c 40)" > $out/envfile
+        xkcdpass -n 4 -d - > $out/prometheus-pass
+        cat $out/prometheus-pass | screego hash --name "prometheus" --pass - > $out/users
+      '';
+    };
 
     systemd.services.screego.serviceConfig.LoadCredential = [
-      "users:${config.lollypops.secrets.files."screego/users".path}"
+      "users:${config.clan.core.vars.generators.screego.files."users".path}"
     ];
 
     services.screego = {
       enable = true;
       openFirewall = true;
-      environmentFile = "${config.lollypops.secrets.files."screego/env".path}";
+      environmentFile = "${config.clan.core.vars.generators.screego.files."envfile".path}";
       settings = {
         # SCREEGO_EXTERNAL_IP = "46.38.242.17";
         SCREEGO_EXTERNAL_IP = "dns:screen.${cfg.domain}";

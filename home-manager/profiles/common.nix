@@ -14,10 +14,6 @@ with lib;
 
     services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
 
-    # # often hangs
-    # systemd.services.systemd-networkd-wait-online.enable = false;
-    # systemd.services.NetworkManager-wait-online.enable = false;
-
     # Home-manager nixpkgs config
     nixpkgs = {
 
@@ -32,15 +28,9 @@ with lib;
       ];
     };
 
-    # Lollypops user secrets defaults
-    lollypops.secrets = {
-      cmd-name-prefix = "nixos-secrets/users/pinpox/";
-      default-dir = "${config.home.homeDirectory}/.lollypops-secrets";
-    };
-
     # Extra arguments to pass to modules
     _module.args = {
-      utils = import ../../utils { inherit pkgs; };
+      pinpox-utils = import ../../utils { inherit pkgs; };
     };
 
     # Include man-pages
@@ -63,7 +53,7 @@ with lib;
       ];
 
       sessionVariables = {
-        # Workaround for alacritty (breaks wezterm and other apps!)
+        # Workaround for alacritty (might break other apps!)
         # LIBGL_ALWAYS_SOFTWARE = "1";
         ZDOTDIR = "/home/pinpox/.config/zsh";
       };

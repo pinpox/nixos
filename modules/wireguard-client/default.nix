@@ -12,6 +12,13 @@ in
 
   options.pinpox.wg-client = {
     enable = mkEnableOption "wireguard client configuration";
+
+    serverHostname = mkOption {
+      type = types.str;
+      default = "porree";
+      description = "Hostname of the server (to retrieve pubkey from flake)";
+    };
+
     clientIp = mkOption {
       type = types.str;
       default = "0.0.0.0";
@@ -25,7 +32,18 @@ in
 
   config = mkIf cfg.enable {
 
-    lollypops.secrets.files."wireguard/private" = { };
+    clan.core.vars.generators."wireguard" = {
+
+      files.publickey.secret = false;
+      files.privatekey = { };
+
+      runtimeInputs = with pkgs; [ wireguard-tools ];
+
+      script = ''
+        wg genkey > $out/privatekey
+        wg pubkey < $out/privatekey > $out/publickey
+      '';
+    };
 
     networking.wireguard.interfaces = {
 
@@ -34,12 +52,17 @@ in
         ips = [ "${cfg.clientIp}/24" ];
 
         # Path to the private key file
-        privateKeyFile = "${config.lollypops.secrets.files."wireguard/private".path}";
+        privateKeyFile = "${config.clan.core.vars.generators."wireguard".files."privatekey".path}";
 
         peers = [
           {
             # Public key of the server (not a file path).
-            publicKey = "XKqEk5Hsp3SRVPrhWD2eLFTVEYb9NYRky6AermPG8hU=";
+            publicKey = (
+              builtins.readFile (
+                config.clan.core.settings.directory
+                + "/vars/per-machine/${cfg.serverHostname}/wireguard/publickey/value"
+              )
+            );
 
             # Don't forward all the traffic via VPN, only particular subnets
             allowedIPs = [ "192.168.7.0/24" ];

@@ -7,11 +7,15 @@ in
   options.pinpox.programs.neomutt.enable = mkEnableOption "neomutt mail client";
 
   config = mkIf cfg.enable {
-    programs = {
-      neomutt = {
+    programs.neomutt = {
+      enable = true;
+      sidebar = {
         enable = true;
-        # TODO
       };
+      extraConfig = ''
+        set imap_user = "pablo1@mailbox.org"
+        set imap_pass = "`pass mailbox.org/pablo1@mailbox.org`"
+      '';
     };
   };
 }

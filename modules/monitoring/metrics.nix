@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  pinpox-utils,
   ...
 }:
 with lib;
@@ -9,10 +10,6 @@ let
   cfg = config.pinpox.metrics;
 in
 {
-
-  options.pinpox.metrics.restic = {
-    enable = mkEnableOption "prometheus restic-exporter metrics collection";
-  };
 
   options.pinpox.metrics.node = {
     enable = mkEnableOption "prometheus node-exporter metrics collection";
@@ -27,14 +24,6 @@ in
   };
 
   config = {
-
-    lollypops.secrets.files."restic-exporter/envfile" = { };
-
-    services.restic-exporter = {
-      enable = cfg.restic.enable;
-      environmentFile = "${config.lollypops.secrets.files."restic-exporter/envfile".path}";
-      port = "8999";
-    };
 
     services.prometheus.exporters = {
       node = mkIf cfg.node.enable {

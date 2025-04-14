@@ -62,6 +62,9 @@ in
         ];
         # modules-center = ["river/mode", "river/window"],
         # modules-right = ["idle_inhibitor", "backlight",  "cpu","memory", "temperature"],
+
+        modules-center = [ "mpris" ];
+
         modules-right = [
           "tray"
           "custom/notification"
@@ -70,6 +73,15 @@ in
           "battery"
           "clock"
         ];
+
+        mpris = {
+          player-icons = {
+            "default" = "🎵";
+            "strawberry" = "🍓";
+          };
+          format = "{player_icon} {artist} - {title}";
+          ignored-players = [ "firefox" "chromium"];
+        };
 
         # "river/tags" = {
         #   "num-tags" = 9;

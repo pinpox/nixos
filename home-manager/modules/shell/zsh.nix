@@ -6,6 +6,9 @@
   ...
 }:
 {
+
+  programs.ranger.enable = true;
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -34,7 +37,21 @@
           ) config.pinpox.defaults.shell.abbrev-aliases
         );
       in
-      abbrevs + builtins.readFile ./zshrc-extra;
+      abbrevs
+      + builtins.readFile ./zshrc-extra
+      + ''
+        function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
+
+
+        function ai() {
+          echo "$@" | ${pkgs.shell-gpt}/bin/sgpt
+        }
+
+        function aip() {
+          wl-paste | ${pkgs.shell-gpt}/bin/sgpt
+        }
+
+      '';
 
     history = {
       expireDuplicatesFirst = true;
@@ -47,7 +64,10 @@
       # Allows addressing directorys by shortname, e.g. `cd ~notes`
       docs = "$HOME/Documents";
       notes = "$HOME/Notes";
-      ma = "$HOME/Documents/Info-Master-Hagen/masterarbeit";
+      downloads = "$HOME/Downloads";
+      nix-config = "/home/pinpox/code/github.com/pinpox/nixos";
+      clan ="$HOME/code/git.clan.lol/clan/clan-core";
+      clan-infra ="$HOME/code/git.clan.lol/clan/clan-infra";
     };
 
     shellAliases = rec {
@@ -60,6 +80,9 @@
       ll = "${l} -G";
       la = "${ls} -lbhHigmuSa@ --time-style=long-iso --git --color-scale --icons";
       lt = "${ls} --tree --level=2 --icons";
+
+      nb = "nix build --no-link --print-out-paths -L";
+      ne = "nix eval --strict --json";
 
       # Git
       gs = "${pkgs.git}/bin/git status";

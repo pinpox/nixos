@@ -42,7 +42,7 @@ in
             url = "https://hirschmilch.de:7000/progressive.mp3"
 
             [Lassulus Radio]
-            url = "https://radio.lassul.us/music.mp3"
+            url = "https://radio.lassul.us/radio.mp3"
           '';
         };
 

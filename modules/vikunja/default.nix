@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  pkgs,
+  pinpox-utils,
   ...
 }:
 with lib;
@@ -22,96 +22,65 @@ in
 
   config = mkIf cfg.enable {
 
-    services.caddy.virtualHosts."${cfg.host
-    }".extraConfig = "reverse_proxy ${config.systemd.services.vikunja-api.environment.VIKUNJA_SERVICE_INTERFACE}";
+    services.caddy.virtualHosts."${cfg.host}".extraConfig =
+      "reverse_proxy localhost:${toString config.services.vikunja.port}";
 
-    # Vikunja doesn't allow setting openid configuration parameters (e.g.
-    # openid_secret) via environment variables, so we have to treat the
-    # config.yaml as a secret and can't use the nixos service
+    clan.core.vars.generators."vikunja" = pinpox-utils.mkEnvGenerator [
+      "VIKUNJA_AUTH_OPENID_PROVIDERS_DEX_CLIENTID"
+      "VIKUNJA_AUTH_OPENID_PROVIDERS_DEX_CLIENTSECRET"
+      "VIKUNJA_METRIC_PASSWORD"
+      "VIKUNJA_MAILER_PASSWORD"
+    ];
 
-    # User and group
-    users.users.vikunja = {
-      isSystemUser = true;
-      description = "vikunja system user";
-      group = "vikunja";
-    };
+    services.vikunja = {
+      enable = true;
+      port = 3456;
+      environmentFiles = [ config.clan.core.vars.generators."vikunja".files."envfile".path ];
 
-    users.groups.vikunja = {
-      name = "vikunja";
-    };
+      frontendScheme = "https";
+      frontendHostname = cfg.host;
 
-    lollypops.secrets.files = {
-      "vikunja/config" = {
-        owner = "vikunja";
-        group-name = "vikunja";
-      };
+      settings = {
 
-      # Additional envfile contains secrets:
-      # VIKUNJA_METRICS_PASSWORD
-      # VIKUNJA_MAILER_PASSWORD
-      "vikunja/envfile" = { };
-    };
+        service.timezone = "Europe/Berlin";
+        files.basepath = "/var/lib/vikunja/files";
 
-    systemd.services.vikunja-api = {
-      description = "vikunja-api";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.vikunja ];
-      restartTriggers = [
-        config.lollypops.secrets.files."vikunja/config".path
-        config.lollypops.secrets.files."vikunja/envfile".path
-      ];
+        defaultsettings = {
+          discoverable_by_name = true;
+          discoverable_by_email = true;
+          email_reminders_enabled = true;
+          overdue_tasks_reminders_enabled = true;
+          overdue_tasks_reminders_time = "10:00";
+          week_start = "1";
+        };
 
-      environment = {
+        mailer = {
+          enabled = true;
+          host = "smtp.sendgrid.net";
+          username = "apikey";
+          frommail = "todo@0cx.de";
+          port = "587";
+          authtype = "plain";
+          skiptlsverify = "false";
+          forcessl = true;
+        };
 
-        # VIKUNJA_LOG_LEVEL = "debug";
+        metrics = {
+          enabled = true;
+          username = "prometheus";
+        };
 
-        # General
-        VIKUNJA_SERVICE_FRONTENDURL = "https://${cfg.host}/";
-        VIKUNJA_SERVICE_INTERFACE = "127.0.0.1:3456";
-        VIKUNJA_SERVICE_TIMEZONE = "Europe/Berlin";
-        VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME = "true";
-        VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_EMAIL = "true";
-        VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED = "true";
-        VIKUNJA_DEFAULTSETTINGS_OVERDUE_TASKS_REMINDERS_enabled = "true";
-        VIKUNJA_DEFAULTSETTINGS_OVERDUE_TASKS_REMINDERS_TIME = "10:00";
-        VIKUNJA_DEFAULTSETTINGS_WEEK_START = "1";
-        VIKUNJA_FILES_BASEPATH = "/var/lib/vikunja/files";
-
-        # Database
-        VIKUNJA_DATABASE_DATABASE = "vikunja";
-        VIKUNJA_DATABASE_HOST = "localhost";
-        VIKUNJA_DATABASE_PATH = "/var/lib/vikunja/vikunja.db";
-        VIKUNJA_DATABASE_TYPE = "sqlite";
-        VIKUNJA_DATABASE_USER = "vikunja";
-
-        # Mailer
-        VIKUNJA_MAILER_ENABLED = "true";
-        VIKUNJA_MAILER_HOST = "smtp.sendgrid.net";
-        VIKUNJA_MAILER_USERNAME = "apikey";
-        VIKUNJA_MAILER_FROMMAIL = "todo@0cx.de";
-        VIKUNJA_MAILER_PORT = "587";
-        VIKUNJA_MAILER_AUTHTYPE = "plain";
-        VIKUNJA_MAILER_SKIPTLSVERIFY = "false";
-        VIKUNJA_MAILER_FORCESSL = "true";
-
-        # Monitoring Metrics
-        VIKUNJA_METRICS_ENABLED = "true";
-        VIKUNJA_METRICS_USERNAME = "prometheus";
-      };
-
-      serviceConfig = {
-
-        Type = "simple";
-        User = "vikunja";
-        Group = "vikunja";
-        StateDirectory = "vikunja";
-        ExecStart = "${pkgs.vikunja}/bin/vikunja";
-        Restart = "always";
-        EnvironmentFile = [ config.lollypops.secrets.files."vikunja/envfile".path ];
-        BindReadOnlyPaths = [
-          "${config.lollypops.secrets.files."vikunja/config".path}:/etc/vikunja/config.yaml"
-        ];
+        auth = {
+          local.enabled = false;
+          openid = {
+            enabled = true;
+            redirect_url = "https://todo.0cx.de/auth/openid/";
+            providers.dex = {
+              authurl = "https://login.0cx.de";
+              name = "dex";
+            };
+          };
+        };
       };
     };
   };

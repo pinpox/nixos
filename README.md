@@ -15,7 +15,7 @@ The structure of this repository is meant to allow easy manual deployment.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
 parts of the configuration as needed.
 
-Deployment is managed with [lollypops](https://github.com/pinpox/lollypops)
+Deployment and management is done with [clan](https://clan.lol).
 Secrets are stored in [pass](https://www.passwordstore.org/).
 
 **TL;DR** To use a host configuration on a fresh install, make sure that:
@@ -51,10 +51,9 @@ sudo nixos-rebuild --flake ".#kartoffel" switch
 | Configuration                       | Type      | Location    | VPN IP         | Description                  |
 | ----------------------------------- | --------- | ----------- | -------------- | ---------------------------- |
 | [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.7.3`  | Desktop                      |
-| [ahorn](./machines/ahorn)           | Desktop   | local       | `192.168.7.2`  | Notebook                     |
+| [limette](./machines/limette)       | Desktop   | local       | `192.168.7.2`  | Notebook                     |
 | [birne](./machines/birne)           | Server    | local       | `192.168.7.4`  | Local NAS                    |
 | [porree](./machines/porree)         | Server    | netcup.de   | `192.168.7.1`  | Server for pablo.tools       |
-| [mega](./machines/mega)             | Server    | netcup.de   | `192.168.7.6`  | Server for megaclan3000.de   |
 | [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.7.5`  | Server for 0cx.de            |
 
 The services running on each host are documented in the host-specific
@@ -62,25 +61,15 @@ The services running on each host are documented in the host-specific
 
 # Deployment
 
-## Default Deployment
 
-Deployment is handled with [lollypops](https://github.com/pinpox/lollypops).
+Deployment is done via [clan CLI](https://clan.lol) provided via the flake's
+default nix shell. I use [direnv](https://direnv.net/) to automatically start it
+when entering the repository's directory. Run `direnv allow` on the first time,
+after that, deployment can be done via:
 
-TODO Update/document
-
-## First Deployment
-
-If the system has not been configured to use flakes (e.g. fresh install), the
-first deployment will have to be build on a machine that has. This can be done
-from any of the other hosts that have the repository. The configuration will the
-have the necessary options set, so that flakes works from now on with the normal
-lollypops deployment.
-
-```bash
-# bash, zsh doesn't always work correctly
-sudo nixos-rebuild --flake .#new-hostname --target-host <new-host-ip> --build-host localhost switch
- ```
-
+```sh
+clan machines update <hostname>
+```
 # Contributing?
 
 While contributions don't make much sense for a personal configuration repository,

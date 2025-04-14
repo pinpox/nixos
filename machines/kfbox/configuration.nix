@@ -4,45 +4,30 @@
   go-karma-bot,
   mc3000,
   pkgs,
-  retiolum,
-  radio,
+  lib,
   ...
 }:
+let
+  pinpox-utils = import ../../utils { inherit pkgs lib; };
+in
 {
 
-  lollypops.deployment.deploy-method = "archive";
+  # Build on machine executing the clan
+  clan.core.networking.buildHost = "pinpox@localhost";
 
-  lollypops.secrets.files."ente/credentials.yaml" = {
-    owner = "ente";
-    group-name = "ente";
-    path = "/var/lib/ente/crendentials.yaml";
-  };
-
-  services.ente =
-    let
-      envfile = pkgs.writeTextFile {
-        name = "env";
-        text = '''';
-      };
-    in
-    {
-
-      web = true;
-      albums = true;
-      web-host = "https://photos.0cx.de";
-      albums-host = "https://albums.0cx.de";
-      api-host = "https://photos-api.0cx.de";
-      webserver = "caddy";
-
-      settings = {
-        internal.admins = [ "1580559962386438" ];
-        apps.public-albums = "https://albums.0cx.de";
-      };
-
-      enable = true;
-      environmentFile = envfile;
-      credentialsFile = "${config.lollypops.secrets.files."ente/credentials.yaml".path}";
+  services.ente = {
+    enable = true;
+    web = true;
+    albums = true;
+    web-host = "https://photos.0cx.de";
+    albums-host = "https://albums.0cx.de";
+    api-host = "https://photos-api.0cx.de";
+    webserver = "caddy";
+    settings = {
+      internal.admins = [ "1580559962386438" ];
+      apps.public-albums = "https://albums.0cx.de";
     };
+  };
 
   networking.interfaces.ens3 = {
     ipv6.addresses = [
@@ -53,57 +38,46 @@
     ];
   };
 
-  networking.retiolum = {
-    ipv4 = "10.243.100.102";
-    ipv6 = "42:0:3c46:3ae6:90a8:b220:e772:8a5c";
-  };
-
-  lollypops.secrets.files = {
-    "retiolum/rsa_priv" = { };
-    "retiolum/ed25519_priv" = { };
-  };
-
-  services.tinc.networks.retiolum = {
-    rsaPrivateKeyFile = "${config.lollypops.secrets.files."retiolum/rsa_priv".path}";
-    ed25519PrivateKeyFile = "${config.lollypops.secrets.files."retiolum/ed25519_priv".path}";
-  };
-
-  lollypops.deployment.ssh.host = "46.38.242.17";
+  clan.core.networking.targetHost = "46.38.242.17";
 
   services.logind.extraConfig = ''
     RuntimeDirectorySize=20G
   '';
 
   imports = [
+    ./retiolum.nix
     ./hardware-configuration.nix
-    retiolum.nixosModules.retiolum
-    #retiolum.nixosModules.ca
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
   ];
 
-  # Often hangs
-  # TODO https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1660635001
-  # systemd.services.NetworkManager-wait-online.enable = lib.mkForce
-  #   false;
-  # systemd.services.systemd-networkd-wait-online.enable = lib.mkForce
-  #   false;
-  systemd.services.NetworkManager-wait-online = {
-    serviceConfig = {
-      ExecStart = [ "${pkgs.networkmanager}/bin/nm-online -q" ];
-    };
-  };
+  systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = [
+    "${pkgs.networkmanager}/bin/nm-online -q"
+  ];
 
   # Karmabot for IRC channel
-  lollypops.secrets.files."go-karma-bot/envfile" = { };
-  services.go-karma-bot.environmentFile = config.lollypops.secrets.files."go-karma-bot/envfile".path;
-  services.go-karma-bot.enable = true;
+  clan.core.vars.generators."go-karma-bot" = pinpox-utils.mkEnvGenerator [
+    "IRC_BOT_SERVER"
+    "IRC_BOT_CHANNEL"
+    "IRC_BOT_NICK"
+    "IRC_BOT_PASS"
+  ];
+
+  services.go-karma-bot = {
+    enable = true;
+    environmentFile = config.clan.core.vars.generators."go-karma-bot".files."envfile".path;
+  };
 
   # Discord AoE2 taunt bot
-  lollypops.secrets.files."aoe-taunt-discord-bot/discord_token" = { };
-  services.aoe-taunt-discord-bot.discordTokenFile =
-    config.lollypops.secrets.files."aoe-taunt-discord-bot/discord_token".path;
-  services.aoe-taunt-discord-bot.enable = true;
+  clan.core.vars.generators."aoe-taunt-discord-bot" = {
+    prompts.discord_token.persist = true;
+  };
+
+  services.aoe-taunt-discord-bot = {
+    enable = true;
+    discordTokenFile =
+      config.clan.core.vars.generators."aoe-taunt-discord-bot".files."discord_token".path;
+  };
 
   pinpox = {
 
@@ -134,6 +108,7 @@
       };
 
       radio.enable = true;
+      jitsi-matrix-presence.enable = true;
       hedgedoc.enable = true;
       screego.enable = true;
       miniflux.enable = true;
@@ -141,7 +116,7 @@
       kf-homepage.enable = true;
       gitea.enable = true;
       owncast.enable = false;
-      vikunja.enable = true;
+      vikunja.enable = false;
       wastebin.enable = true;
     };
 
@@ -208,7 +183,10 @@
 
       "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
 
-      "paste.0cx.de".extraConfig = "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
+      # "matrixpresence.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8227";
+
+      "paste.0cx.de".extraConfig =
+        "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
     };
   };
 }

@@ -1,7 +1,7 @@
 {
   lib,
-  pkgs,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -16,7 +16,21 @@ in
 
   config = mkIf cfg.enable {
 
-    lollypops.secrets.files."minio/env" = { };
+    clan.core.vars.generators."minio" = rec {
+      files.root-credentials = { };
+      validation.script = script;
+
+      runtimeInputs = with pkgs; [
+        coreutils
+        xkcdpass
+      ];
+
+      script = # sh
+        ''
+          mkdir -p $out
+          printf "MINIO_ROOT_USER=admin\nMINIO_ROOT_PASSWORD='%s'" "$(xkcdpass -d-)" > $out/root-credentials
+        '';
+    };
 
     networking.firewall.interfaces.wg0.allowedTCPPorts = [
       9000
@@ -28,7 +42,7 @@ in
       listenAddress = "${config.pinpox.wg-client.clientIp}:9000";
       consoleAddress = "${config.pinpox.wg-client.clientIp}:9001";
       region = "eu-central-1";
-      rootCredentialsFile = "${config.lollypops.secrets.files."minio/env".path}";
+      rootCredentialsFile = "${config.clan.core.vars.generators."minio".files."root-credentials".path}";
       dataDir = [ "/mnt/data/minio/data" ];
       configDir = "/mnt/data/minio/config";
     };
