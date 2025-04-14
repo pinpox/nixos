@@ -61,8 +61,15 @@ The services running on each host are documented in the host-specific
 
 # Deployment
 
-Deployment is done via [clan CLI](https://clan.lol).
 
+Deployment is done via [clan CLI](https://clan.lol) provided via the flake's
+default nix shell. I use [direnv](https://direnv.net/) to automatically start it
+when entering the repository's directory. Run `direnv allow` on the first time,
+after that, deployment can be done via:
+
+```sh
+clan machines update <hostname>
+```
 # Contributing?
 
 While contributions don't make much sense for a personal configuration repository,
