@@ -11,10 +11,6 @@ let
 in
 {
 
-  options.pinpox.metrics.restic = {
-    enable = mkEnableOption "prometheus restic-exporter metrics collection";
-  };
-
   options.pinpox.metrics.node = {
     enable = mkEnableOption "prometheus node-exporter metrics collection";
   };
@@ -28,19 +24,6 @@ in
   };
 
   config = {
-
-    clan.core.vars.generators."restic-exporter" = pinpox-utils.mkEnvGenerator [
-      "RESTIC_PASSWORD"
-      "AWS_ACCESS_KEY_ID"
-      "AWS_SECRET_ACCESS_KEY"
-      "RESTIC_REPOSITORY"
-    ];
-
-    services.restic-exporter = {
-      enable = cfg.restic.enable;
-      environmentFile = "${config.clan.core.vars.generators."restic-exporter".files."envfile".path}";
-      port = "8999";
-    };
 
     services.prometheus.exporters = {
       node = mkIf cfg.node.enable {

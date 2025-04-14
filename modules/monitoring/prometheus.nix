@@ -11,6 +11,7 @@ let
 in
 {
 
+
   # TODO https://github.com/NixOS/nixpkgs/issues/126083
   # TODO https://github.com/NixOS/nixpkgs/pull/144984
   options.pinpox.services.monitoring-server = {
@@ -32,6 +33,20 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    clan.core.vars.generators."restic-exporter" = pinpox-utils.mkEnvGenerator [
+      "RESTIC_PASSWORD"
+      "AWS_ACCESS_KEY_ID"
+      "AWS_SECRET_ACCESS_KEY"
+      "RESTIC_REPOSITORY"
+    ];
+
+    services.restic-exporter = {
+      enable = cfg.restic.enable;
+      environmentFile = "${config.clan.core.vars.generators."restic-exporter".files."envfile".path}";
+      port = "8999";
+    };
+
 
     clan.core.vars.generators."prometheus" = {
       prompts.home-assistant-token.persist = true;
@@ -71,27 +86,6 @@ in
       alertmanagers = [ { static_configs = [ { targets = [ "localhost:9093" ]; } ]; } ];
 
       scrapeConfigs = [
-        # TODO fix esp config
-        # {
-        #   job_name = "esphome";
-        #   scrape_interval = "30s";
-        #   scheme = "http";
-        #   static_configs = [{
-        #     targets = [
-        #       "http://192.168.2.145"
-        #       "http://192.168.2.146"
-        #     ];
-        #   }];
-        # }
-        # {
-        #   job_name = "esphome";
-        #   scheme = "http";
-        #   scrape_interval = "60s";
-        #   metrics_path = "/metrics";
-        #   static_configs = [{ targets = [
-        #     "192.168.2.147"
-        #   ]; }];
-        # }
         {
           job_name = "homeassistant_influx";
           scrape_interval = "60s";
