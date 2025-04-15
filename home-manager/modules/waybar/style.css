@@ -34,6 +34,7 @@ window#waybar {
 #mode,
 #idle_inhibitor,
 #custom-notification,
+#custom-mic,
 #workspaces button,
 #mpd,
 #language,
@@ -45,17 +46,18 @@ window#waybar {
 	background-color: @Black;
 }
 
-#mpris {
+#custom-mic, #mpris {
 	padding: 3px 7px;
 	margin: 3px 3px;
 	color: @White;
 	background-color: transparent;
 }
 
+#pulseaudio.source-muted, #custom-mic { color: @Red; }
+
 #window {
 	background-color: @Black;
 	color: @White;
-	/* margin: 0 4px; */
 }
 
 /*********************

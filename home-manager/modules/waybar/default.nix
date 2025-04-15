@@ -7,13 +7,53 @@
 with lib;
 let
   cfg = config.pinpox.programs.waybar;
+
+  mic-exec-if =
+    # Returns 0 if mic is not muted and there are clients listening,
+    # 1 otherwise.
+    pkgs.writeShellScriptBin "mic-exec-if" # sh
+      ''
+        source=$(pactl get-default-source)
+        mute_state=$(pactl get-source-mute "$source" | awk '{print $2}')
+
+        if [ "$mute_state" = "yes" ]; then
+          exit 1
+        fi
+
+        clients=$(pactl list source-outputs | grep "application\.name" | uniq | awk -F'"' '{print $2}' | tr '\n' ',' | sed 's/,$/\n/')
+        if [ -n "$clients" ]; then
+          exit 0
+        fi
+
+        exit 1
+      '';
+
+  mic-toggle =
+    # Toggle microphone on/off
+    pkgs.writeShellScriptBin "mic-toggle" # sh
+      ''
+        source=$(pactl get-default-source)
+        pactl set-source-mute "$source" toggle
+      '';
+
+  mic-status-apps =
+    # List applications currently accessing the microphone
+    pkgs.writeShellScriptBin "mic-status-apps" # sh
+      ''
+        # List all input streams
+        clients=$(pactl list source-outputs | grep "application\.name" | uniq | awk -F'"' '{print $2}' | tr '\n' ',' | sed 's/,$/\n/')
+
+        # Remove duplicates and format
+        if [ -n "$clients" ]; then
+            unique_clients=$(echo "$clients" | sort | uniq | paste -sd, -)
+            echo " $unique_clients"
+        fi
+      '';
 in
 {
   options.pinpox.programs.waybar.enable = mkEnableOption "waybar configuration";
 
   config = mkIf cfg.enable {
-
-    # home.packages = with pkgs; [ waybar];
 
     programs.waybar = {
 
@@ -63,7 +103,10 @@ in
         # modules-center = ["river/mode", "river/window"],
         # modules-right = ["idle_inhibitor", "backlight",  "cpu","memory", "temperature"],
 
-        modules-center = [ "mpris" ];
+        modules-center = [
+          "custom/mic"
+          "mpris"
+        ];
 
         modules-right = [
           "tray"
@@ -80,7 +123,10 @@ in
             "strawberry" = "🍓";
           };
           format = "{player_icon} {artist} - {title}";
-          ignored-players = [ "firefox" "chromium"];
+          ignored-players = [
+            "firefox"
+            "chromium"
+          ];
         };
 
         # "river/tags" = {
@@ -151,6 +197,7 @@ in
           format-disconnected = "Disconnected ⚠";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
+
         "custom/notification" = {
           "tooltip" = false;
           "format" = "{} {icon}";
@@ -187,7 +234,18 @@ in
               ""
             ];
           };
-          on-click = "pavucontrol";
+
+          "on-click" = "${mic-toggle}/bin/mic-toggle";
+          # on-click = "pavucontrol";
+        };
+
+        "custom/mic" = {
+          "format" = "{}";
+          "tooltip" = false;
+          "interval" = 1;
+          "exec" = "${mic-status-apps}/bin/mic-status-apps";
+          "exec-if" = "${mic-exec-if}/bin/mic-exec-if";
+          "on-click" = "${mic-toggle}/bin/mic-toggle";
         };
       };
     };

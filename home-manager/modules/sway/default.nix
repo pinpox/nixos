@@ -46,15 +46,31 @@ in
         };
 
         keybindings = lib.mkOptionDefault {
+
+          # Terminal
           "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
+
+          # Laucher
           "${modifier}+p" = "exec ${pkgs.wofi}/bin/wofi --show run";
+
+          # Toggle microphone mute
+          "${modifier}+m" =
+            let
+              mic-toggle =
+                pkgs.writeShellScriptBin "mic-toggle" # sh
+                  ''
+                    source=$(pactl get-default-source)
+                    pactl set-source-mute "$source" toggle
+                  '';
+            in
+            "exec ${mic-toggle}/bin/mic-toggle";
 
           # Cycle in tabbed with win+tab
           "${modifier}+Shift+Tab" = "focus prev";
           "${modifier}+Tab" = "focus next";
 
           # Screen lock
-          "${modifier}+Shift+l" = "exec swaylock";
+          "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
 
           # SwayNotificationCenter
           "${modifier}+n" = "exec swaync-client -t -sw";
