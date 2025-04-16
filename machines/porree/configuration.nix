@@ -91,7 +91,7 @@
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   # Enable ip forwarding, so wireguard peers can reach eachother
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  # boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   services.alertmanager-ntfy = {
     enable = true;
@@ -172,7 +172,7 @@
       # tunnel interface.
       ips = [ "192.168.7.1/24" ];
 
-      listenPort = 51820;
+      listenPort = 51821;
       privateKeyFile = config.clan.core.vars.generators."wireguard".files.privatekey.path;
 
       peers =

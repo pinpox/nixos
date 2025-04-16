@@ -180,23 +180,21 @@
 
               module.name = "@pinpox/wireguard";
 
-              roles.controller.machines.porree = {
-                settings.controllerFileText = "CONTROLLER";
+              roles.controller.machines.porree.settings = {
+                ip = "192.168.8.1";
+                endpoint = "vpn.pablo.tools:51820";
               };
 
-              roles.peer.tags.all = { };
-              roles.peer.settings.peerFileText = "CLIENT";
+              roles.peer.machines.kartoffel.settings.ip = "192.168.8.3";
+              roles.peer.machines.limette.settings.ip = "192.168.8.8";
+              roles.peer.machines.porree.settings.ip = "192.168.8.1";
+
+              # roles.peer.tags.all = { };
+              # roles.peer.settings.peerFileText = "CLIENT";
             };
           };
 
-          # TODO Use when it is migrated to vars (currently still using facts)
-          # zerotier.default = {
-          #   roles.controller.machines = [ "porree" ];
-          #   roles.peer.machines = [ "kartoffel" ];
-          # };
-
           services = {
-
             importer.default = {
               roles.default.tags = [ "all" ];
               # import all modules from ./modules/<module-name> everywhere
