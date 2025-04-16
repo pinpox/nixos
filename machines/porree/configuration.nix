@@ -160,7 +160,6 @@
       node.enable = true;
       blackbox.enable = true;
       json.enable = true;
-      restic.enable = true;
     };
   };
 

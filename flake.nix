@@ -168,43 +168,45 @@
         specialArgs = {
           flake-self = self;
         } // inputs;
-        inventory.meta.name = "pinpox-clan";
 
-        inventory.services = {
-          /*
-            restic.clan-backup = {
+        inventory = {
 
-              # TODO Check only one or 0 server
-              roles.server.machines = [ "birne" ]; #OK
-              # roles.server.machines = [ ]; #OK
-              # roles.server.machines = [ "birne" "other" ]; # Should error
+          meta.name = "pinpox-clan";
 
-              roles.server.config.directory = "/var/lib/restic";
+          modules."@pinpox/wireguard" = import ./clan-service-modules/wireguard.nix;
 
-              roles.client.machines = [
-                "kfbox"
-              ];
+          instances = {
+            wg-clan = {
 
-              roles.client.config."test" = {
+              module.name = "@pinpox/wireguard";
 
-                # If externalDestination is set, we ignore other targets
-                # externalDestination = "s3:https://s3.us-east-005.backblazeb2.com/pinpox-restic-clan";
-
-                # Will be ignored, no backup to birne
-                targetIp = "192.168.7.2";
+              roles.controller.machines.porree = {
+                settings.controllerFileText = "CONTROLLER";
               };
+
+              roles.peer.tags.all = { };
+              roles.peer.settings.peerFileText = "CLIENT";
             };
-          */
+          };
 
-          importer.default = {
-            roles.default.tags = [ "all" ];
-            # import all modules from ./modules/<module-name> everywhere
-            roles.default.extraModules = [
+          # TODO Use when it is migrated to vars (currently still using facts)
+          # zerotier.default = {
+          #   roles.controller.machines = [ "porree" ];
+          #   roles.peer.machines = [ "kartoffel" ];
+          # };
 
-              # Clan modules deployed on all machines
-              clan-core.clanModules.state-version
+          services = {
 
-            ] ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+            importer.default = {
+              roles.default.tags = [ "all" ];
+              # import all modules from ./modules/<module-name> everywhere
+              roles.default.extraModules = [
+
+                # Clan modules deployed on all machines
+                clan-core.clanModules.state-version
+
+              ] ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+            };
           };
         };
       };

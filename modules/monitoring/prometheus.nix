@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  pinpox-utils,
   flake-self,
   ...
 }:
@@ -41,11 +42,11 @@ in
       "RESTIC_REPOSITORY"
     ];
 
-    services.restic-exporter = {
-      enable = cfg.restic.enable;
-      environmentFile = "${config.clan.core.vars.generators."restic-exporter".files."envfile".path}";
-      port = "8999";
-    };
+    # services.restic-exporter = {
+    #   enable = cfg.restic.enable;
+    #   environmentFile = "${config.clan.core.vars.generators."restic-exporter".files."envfile".path}";
+    #   port = "8999";
+    # };
 
 
     clan.core.vars.generators."prometheus" = {
