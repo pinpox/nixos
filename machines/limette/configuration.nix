@@ -32,7 +32,6 @@
 
   pinpox.desktop = {
     enable = true;
-    wireguardIp = "192.168.7.8";
     hostname = "limette";
   };
 

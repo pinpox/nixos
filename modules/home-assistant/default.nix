@@ -16,7 +16,7 @@ in
 
   config = mkIf cfg.enable {
 
-    networking.firewall.trustedInterfaces = [ "wg0" ];
+    networking.firewall.trustedInterfaces = [ "wg-clan" ];
 
     clan.core.vars.generators."home-assistant" = {
       prompts."secrets.yaml".persist = true;
@@ -52,7 +52,7 @@ in
       interfaces.eno1.allowedUDPPorts = [ 5683 ];
 
       # Expose home-assitant over wireguard
-      interfaces.wg0.allowedTCPPorts = [
+      interfaces.wg-clan.allowedTCPPorts = [
         8123
         9273 # Telegraf
       ];
@@ -106,12 +106,17 @@ in
         };
 
         outputs = {
-          prometheus_client = {
-            # Listen on the wireguard VPN IP. Localhost is not enough here, as
-            # prometheus is hosted on a different machine.
-            listen = "${config.pinpox.wg-client.clientIp}:9273";
-            metric_version = 2;
-          };
+          prometheus_client =
+            let
+
+              wg-clan-ip = builtins.elemAt (builtins.match "(.*)/.*" (builtins.elemAt config.networking.wireguard.interfaces.wg-clan.ips 0)) 0;
+            in
+            {
+              # Listen on the wireguard VPN IP. Localhost is not enough here, as
+              # prometheus is hosted on a different machine.
+              listen = "${wg-clan-ip}:9273";
+              metric_version = 2;
+            };
         };
       };
     };

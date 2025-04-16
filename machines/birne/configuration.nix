@@ -34,11 +34,6 @@
       home-assistant.enable = true;
     };
 
-    wg-client = {
-      enable = true;
-      clientIp = "192.168.7.4";
-    };
-
     defaults = {
       lvm-grub.enable = true;
       environment.enable = true;

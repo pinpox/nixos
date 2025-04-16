@@ -11,7 +11,6 @@
 
   pinpox.desktop = {
     enable = true;
-    wireguardIp = "192.168.7.3";
     hostname = "kartoffel";
   };
 

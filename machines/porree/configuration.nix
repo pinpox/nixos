@@ -27,19 +27,6 @@
 
   clan.core.networking.targetHost = "94.16.108.229";
 
-  clan.core.vars.generators."wireguard" = {
-
-    files.publickey.secret = false;
-    files.privatekey = { };
-
-    runtimeInputs = with pkgs; [ wireguard-tools ];
-
-    script = ''
-      wg genkey > $out/privatekey
-      wg pubkey < $out/privatekey > $out/publickey
-    '';
-  };
-
   clan.core.vars.generators."matrix-hook" = pinpox-utils.mkEnvGenerator [ "MX_TOKEN" ];
   clan.core.vars.generators."alertmanager-ntfy" = pinpox-utils.mkEnvGenerator [
     "NTFY_USER"
@@ -74,7 +61,7 @@
     ];
     allowedUDPPorts = [ 51820 ];
 
-    interfaces.wg0.allowedTCPPorts = [
+    interfaces.wg-clan.allowedTCPPorts = [
       2812
       8086 # InfluxDB
     ];
@@ -90,9 +77,6 @@
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
-  # Enable ip forwarding, so wireguard peers can reach eachother
-  # boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-
   services.alertmanager-ntfy = {
     enable = true;
     httpAddress = "localhost";
@@ -106,11 +90,6 @@
     server = {
       enable = true;
       hostname = "porree";
-    };
-
-    wg-client = {
-      # enable = true;
-      clientIp = "192.168.7.1";
     };
 
     services = {
@@ -160,48 +139,6 @@
       node.enable = true;
       blackbox.enable = true;
       json.enable = true;
-    };
-  };
-
-  # Enable Wireguard
-  networking.wireguard.interfaces = {
-
-    wg0 = {
-
-      # Determines the IP address and subnet of the client's end of the
-      # tunnel interface.
-      ips = [ "192.168.7.1/24" ];
-
-      listenPort = 51821;
-      privateKeyFile = config.clan.core.vars.generators."wireguard".files.privatekey.path;
-
-      peers =
-        let
-          mkWgPeer = host: IPs: {
-            publicKey = (
-              builtins.readFile (
-                config.clan.core.settings.directory + "/vars/per-machine/${host}/wireguard/publickey/value"
-              )
-            );
-            allowedIPs = IPs;
-            persistentKeepalive = 25;
-          };
-        in
-        [
-          (mkWgPeer "kartoffel" [ "192.168.7.3" ])
-          (mkWgPeer "kfbox" [ "192.168.7.5" ])
-          (mkWgPeer "birne" [
-            "192.168.7.4"
-            "192.168.2.0/24"
-          ])
-          # (mkWgPeer "mega" [ "192.168.7.6" ])
-          # {
-          #    mayniklas GPU
-          #   publicKey = "aD6SXOOB3JJnRXUvB09yXlf/2kyFe1TZ5HEx2TIJKTQ=";
-          #   allowedIPs = [ "192.168.7.7" ];
-          #   persistentKeepalive = 25;
-          # }
-        ];
     };
   };
 }

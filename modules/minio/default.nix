@@ -11,7 +11,7 @@ in
 {
 
   options.pinpox.services.minio = {
-    enable = mkEnableOption "mino s3 config";
+    enable = mkEnableOption "minio s3 config";
   };
 
   config = mkIf cfg.enable {
@@ -32,20 +32,26 @@ in
         '';
     };
 
-    networking.firewall.interfaces.wg0.allowedTCPPorts = [
+    networking.firewall.interfaces.wg-clan.allowedTCPPorts = [
       9000
       9001
     ];
 
-    services.minio = {
-      enable = true;
-      listenAddress = "${config.pinpox.wg-client.clientIp}:9000";
-      consoleAddress = "${config.pinpox.wg-client.clientIp}:9001";
-      region = "eu-central-1";
-      rootCredentialsFile = "${config.clan.core.vars.generators."minio".files."root-credentials".path}";
-      dataDir = [ "/mnt/data/minio/data" ];
-      configDir = "/mnt/data/minio/config";
-    };
+    services.minio =
+
+      let
+        wg-clan-ip = builtins.elemAt (builtins.match "(.*)/.*" (builtins.elemAt config.networking.wireguard.interfaces.wg-clan.ips 0)) 0;
+
+      in
+      {
+        enable = true;
+        listenAddress = "${wg-clan-ip}:9000";
+        consoleAddress = "${wg-clan-ip}:9001";
+        region = "eu-central-1";
+        rootCredentialsFile = "${config.clan.core.vars.generators."minio".files."root-credentials".path}";
+        dataDir = [ "/mnt/data/minio/data" ];
+        configDir = "/mnt/data/minio/config";
+      };
 
     systemd.services.minio = {
 

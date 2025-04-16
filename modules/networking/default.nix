@@ -24,27 +24,13 @@ in
         "192.168.2.1"
       ];
 
-      # Enables wireless support via wpa_supplicant.
-      # networking.wireless.enable = true;
-
-      # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-      # Per-interface useDHCP will be mandatory in the future, so this generated config
-      # replicates the default behaviour.
-      # useDHCP = false;
-      # interfaces.eno1.useDHCP = true;
-
-      # Configure network proxy if necessary
-      # networking.proxy.default = "http://user:password@proxy:port/";
-      # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
       # Additional hosts to put in /etc/hosts
       extraHosts = ''
         # Wireguard
-        192.168.7.1 porree.wireguard
-        192.168.7.3 kartoffel.wireguard
-        192.168.7.4 birne.wireguard
-        192.168.7.5 kfbox.wireguard
-        192.168.7.6 mega.wireguard
+        192.168.8.1 porree.wireguard
+        192.168.8.3 kartoffel.wireguard
+        192.168.8.4 birne.wireguard
+        192.168.8.5 kfbox.wireguard
 
         # Public
         94.16.114.42 porree-old.public
@@ -54,18 +40,13 @@ in
         5.181.48.121 mega.public
 
         # VPN protected services
-
-        192.168.7.1 vpn.motion.pablo.tools
-        192.168.7.1 vpn.octoprint.pablo.tools
-
-
-        # 192.168.7.1 vpn.influx.pablo.tools
-        192.168.7.1 vpn.alerts.pablo.tools
-        192.168.7.1 vpn.prometheus.pablo.tools
-        192.168.7.1 vpn.notify.pablo.tools
-        # 192.168.7.4 files.pablo.tools
-        192.168.7.1 vpn.s3.pablo.tools
-        192.168.7.1 vpn.minio.pablo.tools
+        192.168.8.1 vpn.motion.pablo.tools
+        192.168.8.1 vpn.octoprint.pablo.tools
+        192.168.8.1 vpn.alerts.pablo.tools
+        192.168.8.1 vpn.prometheus.pablo.tools
+        192.168.8.1 vpn.notify.pablo.tools
+        192.168.8.1 vpn.s3.pablo.tools
+        192.168.8.1 vpn.minio.pablo.tools
       '';
     };
   };

@@ -87,11 +87,6 @@ in
       stateVersion = "22.05";
     };
 
-    wg-client = {
-      enable = true;
-      clientIp = "192.168.7.5";
-    };
-
     services = {
       # TODO Add miniflux and vikunja to dex
       # TODO Remove gitea apps

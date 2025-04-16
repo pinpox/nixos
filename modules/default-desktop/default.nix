@@ -24,13 +24,6 @@ in
 
     enable = mkEnableOption "the default desktop configuration";
 
-    wireguardIp = mkOption {
-      type = types.str;
-      default = null;
-      description = "Wireguard for the wg0 VPN";
-      example = "192.168.7.XXX";
-    };
-
     stateVersion = mkOption {
       type = types.str;
       default = "20.03";
@@ -227,14 +220,7 @@ in
 
       metrics.node.enable = true;
 
-      wg-client = {
-        enable = true;
-        clientIp = cfg.wireguardIp;
-      };
     };
-
-    # here goes the configuration, reference values with cfg.varname
-    # e.g. networking.wireguard.interfaces = { };
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget

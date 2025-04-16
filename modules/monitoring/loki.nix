@@ -16,7 +16,7 @@ in
 
     networking.firewall = {
       enable = true;
-      interfaces.wg0.allowedTCPPorts = [ port-loki ];
+      interfaces.wg-clan.allowedTCPPorts = [ port-loki ];
     };
 
     services.loki = {

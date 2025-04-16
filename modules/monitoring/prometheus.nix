@@ -12,7 +12,6 @@ let
 in
 {
 
-
   # TODO https://github.com/NixOS/nixpkgs/issues/126083
   # TODO https://github.com/NixOS/nixpkgs/pull/144984
   options.pinpox.services.monitoring-server = {
@@ -48,13 +47,19 @@ in
     #   port = "8999";
     # };
 
-
     clan.core.vars.generators."prometheus" = {
-      prompts.home-assistant-token.persist = true;
+
+      prompts.token.description = "Home-assistant token for prometheus";
+
       files.home-assistant-token = {
         group = "prometheus";
         owner = "prometheus";
       };
+
+      script = ''
+        printf "%s" "$(cat $prompts/token)" > $out/home-assistant-token
+      '';
+
     };
 
     services.prometheus = {

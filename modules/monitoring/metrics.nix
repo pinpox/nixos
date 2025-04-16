@@ -29,7 +29,7 @@ in
       node = mkIf cfg.node.enable {
         enable = true;
         # Default port is 9100
-        # Listen on 0.0.0.0, bet we only open the firewall for wg0
+        # Listen on 0.0.0.0, bet we only open the firewall for wg-clan
         openFirewall = false;
         enabledCollectors = [
           "cgroups"
@@ -42,7 +42,7 @@ in
       blackbox = mkIf cfg.blackbox.enable {
         enable = true;
         # Default port is 9115
-        # Listen on 0.0.0.0, bet we only open the firewall for wg0
+        # Listen on 0.0.0.0, bet we only open the firewall for wg-clan
         openFirewall = false;
 
         configFile = pkgs.writeTextFile {
@@ -73,7 +73,7 @@ in
     #   };
 
     # Open firewall ports on the wireguard interface
-    networking.firewall.interfaces.wg0.allowedTCPPorts =
+    networking.firewall.interfaces.wg-clan.allowedTCPPorts =
       lib.optional cfg.blackbox.enable 9115
       ++ lib.optional cfg.node.enable 9100;
   };

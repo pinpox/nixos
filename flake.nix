@@ -185,12 +185,15 @@
                 endpoint = "vpn.pablo.tools:51820";
               };
 
-              roles.peer.machines.kartoffel.settings.ip = "192.168.8.3";
-              roles.peer.machines.limette.settings.ip = "192.168.8.8";
-              roles.peer.machines.porree.settings.ip = "192.168.8.1";
+              roles.peer.machines = {
+                kartoffel.settings.ip = "192.168.8.3";
+                limette.settings.ip = "192.168.8.8";
+                kfbox.settings.ip = "192.168.8.5";
+                birne.settings.ip = "192.168.8.4";
+                birne.settings.extraIPs = [ "192.168.2.0/24" ];
+              };
 
               # roles.peer.tags.all = { };
-              # roles.peer.settings.peerFileText = "CLIENT";
             };
           };
 
