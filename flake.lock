@@ -79,11 +79,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1744797012,
-        "narHash": "sha256-P5n2TLwsd1ALjVFeE9hD6mIeG7ykWR32bllVcjK5Ht4=",
+        "lastModified": 1744884016,
+        "narHash": "sha256-4CDil9kBUCpK6HGU9pXXmhAovld9d94VFEquOhbIU/Y=",
         "ref": "refs/heads/main",
-        "rev": "46ddc9f4386dc9c85fd5740cb987e36d28aa07ce",
-        "revCount": 6339,
+        "rev": "3f8b7feb1d8eed5ede912af1f2c855a2ddc7b338",
+        "revCount": 6368,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -337,11 +337,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744735751,
-        "narHash": "sha256-OPpfgL3qUIbQdbmp1/ZwnlsuTLooHN4or0EABnZTFRY=",
+        "lastModified": 1744833442,
+        "narHash": "sha256-BBMWW2m64Grcc5FlXz74+vdkUyCJOfUGnl+VcS/4x44=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "db7738e67a101ad945abbcb447e1310147afaf1b",
+        "rev": "c6b75d69b6994ba68ec281bd36faebcc56097800",
         "type": "github"
       },
       "original": {
@@ -581,11 +581,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1744797768,
-        "narHash": "sha256-WvCfRfWrYBz9A6f5b+B+j4r+dvghcSf40UDXpgep0Rk=",
+        "lastModified": 1744898458,
+        "narHash": "sha256-AeGt/XqhEEudwaSNAgt73I2pob9v7TFoEN0npOO/tYY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2dacde46b2dc46935752aec39053236e2aac6b69",
+        "rev": "e10e68af5a233ef75eb11a8f41fd822d040dbdd0",
         "type": "github"
       },
       "original": {
@@ -618,11 +618,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1744793674,
-        "narHash": "sha256-rYha6a3Austfc5bPmpio8UHaxlZn8XE38J5+VZ7s/KY=",
+        "lastModified": 1744894722,
+        "narHash": "sha256-JH8WAicd7yDlxsczYoLPbNo2m3XdxOztGz2FxgIXTI0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "50c9703a2f9da7abf3f18b3941e127e546a7f4c4",
+        "rev": "690c7fc4ba963d4fd0961c82341e832d8b386988",
         "type": "github"
       },
       "original": {
@@ -806,7 +806,6 @@
         "radio": "radio",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
-        "tfenv": "tfenv",
         "wallpaper-generator": "wallpaper-generator",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
@@ -905,22 +904,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "tfenv": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1702998492,
-        "narHash": "sha256-h5ZHT4u7oAdwuWpUrL35G8bIAMasx6E81h15lTJSHhQ=",
-        "owner": "tfutils",
-        "repo": "tfenv",
-        "rev": "39d8c27ad9862ffdec57989b66fd2720cb72e76c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tfutils",
-        "repo": "tfenv",
         "type": "github"
       }
     },

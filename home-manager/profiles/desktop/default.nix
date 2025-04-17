@@ -190,7 +190,6 @@
         spotify
         sqlite
         tealdeer
-        tfenv
         thunderbird-bin
         timewarrior
         typst

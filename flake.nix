@@ -107,9 +107,6 @@
     forgit.url = "github:wfxr/forgit";
     forgit.flake = false;
 
-    tfenv.url = "github:tfutils/tfenv";
-    tfenv.flake = false;
-
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";
@@ -175,6 +172,9 @@
             #     kartoffel.settings = { };
             #     limette.settings = { };
             #   };
+
+            # roles.client.tags.backup-local= { };
+
             # };
 
             wg-clan = {
@@ -237,7 +237,6 @@
             smartmon-script
             # woodpecker-pipeline
             manual
-            tfenv
             ;
         }
       );

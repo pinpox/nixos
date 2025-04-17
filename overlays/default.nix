@@ -127,5 +127,4 @@ self: super: {
   zsh-colored-man-pages = super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };
 
   forgit = super.callPackage ../packages/forgit { inputs = inputs; };
-  tfenv = super.callPackage ../packages/tfenv { inputs = inputs; };
 }
