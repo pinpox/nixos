@@ -15,10 +15,8 @@
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
-    caddy-patched = {
-      url = "github:pinpox/nixos-caddy-patched";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    caddy-patched.url = "github:pinpox/nixos-caddy-patched";
+    caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
@@ -26,30 +24,22 @@
 
     nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
 
-    aoe-taunt-discord-bot = {
-      url = "github:pinpox/aoe-taunt-discord-bot";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
+    aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
 
     pinpox-keys = {
       url = "https://github.com/pinpox.keys";
       flake = false;
     };
 
-    pinpox-neovim = {
-      url = "github:pinpox/pinpox-neovim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    pinpox-neovim.url = "github:pinpox/pinpox-neovim";
+    pinpox-neovim.inputs.nixpkgs.follows = "nixpkgs";
 
-    radio = {
-      url = "github:pinpox/radio";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    radio.url = "github:pinpox/radio";
+    radio.inputs.nixpkgs.follows = "nixpkgs";
 
-    mc3000 = {
-      url = "github:pinpox/mc3000";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    mc3000.url = "github:pinpox/mc3000";
+    mc3000.inputs.nixpkgs.follows = "nixpkgs";
 
     naersk.url = "github:nix-community/naersk/master";
     naersk.inputs.nixpkgs.follows = "nixpkgs";
@@ -61,9 +51,7 @@
     };
 
     go-karma-bot.url = "github:pinpox/go-karma-bot";
-    go-karma-bot.inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
+    go-karma-bot.inputs.nixpkgs.follows = "nixpkgs";
 
     retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
 
@@ -174,8 +162,21 @@
           meta.name = "pinpox-clan";
 
           modules."@pinpox/wireguard" = import ./clan-service-modules/wireguard.nix;
+          # modules."@pinpox/restic" = import ./clan-service-modules/restic.nix;
 
           instances = {
+
+            # restic-clan = {
+            #   module.name = "@pinpox/restic";
+            #   roles.server.machines.birne.settings = {
+            #     directory = "/var/lib/restic-clan-test";
+            #   };
+            #   roles.client.machines = {
+            #     kartoffel.settings = { };
+            #     limette.settings = { };
+            #   };
+            # };
+
             wg-clan = {
 
               module.name = "@pinpox/wireguard";

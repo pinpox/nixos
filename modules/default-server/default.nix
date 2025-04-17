@@ -14,9 +14,7 @@ in
 
   imports = [
     ../../users/pinpox.nix
-
     restic-exporter.nixosModules.default
-
   ];
 
   options.pinpox.server = {
