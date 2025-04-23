@@ -433,7 +433,7 @@ in
 
         http = {
           use_x_forwarded_for = true;
-          trusted_proxies = [ "192.168.7.1" ];
+          trusted_proxies = [ "192.168.8.1" ];
         };
 
         frontend = { };

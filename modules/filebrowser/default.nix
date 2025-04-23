@@ -35,7 +35,7 @@ in
       after = [ "network.target" ];
       description = "Start filebrowser";
       environment = {
-        FB_ADDRESS = "192.168.7.4";
+        FB_ADDRESS = "192.168.8.4";
         FB_PORT = 8787;
         FB_SIGNUP = false;
       };
