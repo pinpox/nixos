@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -34,7 +35,9 @@
   # gfxpayloadBios = "text";
 
   users.users.pinpox.initialPassword = "changeme";
-  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+        boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
 
   # You may also find this setting useful to automatically set the latest compatible kernel:
   # boot.kernelPackages = lib.mkDefault config.boot.zfs.package.latestCompatibleLinuxPackages;
