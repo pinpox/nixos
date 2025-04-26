@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   ...
 }:
@@ -12,6 +11,7 @@
 
   imports = [
     ./disko-config-btrfs.nix
+    ./framework.nix
   ];
 
   # disko.devices.disk.main.imageSize = "40G";
@@ -29,17 +29,7 @@
     hostname = "kiwi";
   };
 
-  # efiSupport = lib.mkForce false;
-  # efiInstallAsRemovable = lib.mkForce false;
-  # gfxmodeBios = "1600x900";
-  # gfxpayloadBios = "text";
-
   users.users.pinpox.initialPassword = "changeme";
   boot.loader.efi.canTouchEfiVariables = true;
-
-        boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
-
-  # You may also find this setting useful to automatically set the latest compatible kernel:
-  # boot.kernelPackages = lib.mkDefault config.boot.zfs.package.latestCompatibleLinuxPackages;
-  # boot.supportedFilesystems.zfs = true;
+  boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
 }
