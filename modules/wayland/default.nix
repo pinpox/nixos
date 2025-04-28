@@ -19,14 +19,13 @@ in
     # Wayland/sway
     programs.sway.enable = true;
 
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-
-      extraPackages = with pkgs; [
-        intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      ];
-    };
+    # hardware.graphics = {
+    #   enable = true;
+    #   enable32Bit = true;
+    #   extraPackages = with pkgs; [
+    #     intel-media-driver # LIBVA_DRIVER_NAME=iHD
+    #   ];
+    # };
 
     # Turn on wayland support for some electron apps
     environment.sessionVariables = {
@@ -56,6 +55,7 @@ in
 
     environment.systemPackages = [
       pkgs.xdg-desktop-portal
+      wdisplays # Configure screen placement
     ];
 
   };

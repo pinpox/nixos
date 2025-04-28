@@ -63,7 +63,7 @@ in
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'sway --unsupported-gpu'";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'sway'";
           user = "greeter";
         };
 
@@ -119,7 +119,6 @@ in
     nixpkgs.overlays = [
       nur.overlays.default
       flake-self.overlays.default
-      # inputs.neovim-nightly.overlay
     ];
 
     # TODO parametrize the username

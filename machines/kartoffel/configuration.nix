@@ -1,5 +1,5 @@
 # Configuration for kartoffel
-{ ... }:
+{ pkgs, lib, ... }:
 {
 
   imports = [
@@ -8,6 +8,7 @@
   ];
 
   clan.core.networking.targetHost = "kartoffel";
+
 
   pinpox.desktop = {
     enable = true;
@@ -25,12 +26,12 @@
     };
   };
 
-  # pinpox.defaults.CISkip = true;
-
   # Video driver for nvidia graphics card
   hardware.nvidia.open = false;
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
+  services.greetd.settings.default_session.command =
+    lib.mkForce "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'sway --unsupported-gpu'";
 
   boot.supportedFilesystems = {
     btrfs = true;
