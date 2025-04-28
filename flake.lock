@@ -80,11 +80,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1745753100,
-        "narHash": "sha256-bXwoDQgvMg0q4AUX7ReoitnOy5OoJc5+r/kkySw/qUQ=",
+        "lastModified": 1745827220,
+        "narHash": "sha256-vzO3qW9F4H3iZtCW3W/ObiW1zDrFhaOMb7uyRH8RJ+g=",
         "ref": "refs/heads/main",
-        "rev": "5fc1f2cdbb979fa6121cda61a6ca824eb41bb5ab",
-        "revCount": 6512,
+        "rev": "f830bf4a0e50e4dfcb99a21531948d5afce1bef6",
+        "revCount": 6524,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -113,11 +113,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745478084,
-        "narHash": "sha256-yQG9Piqa1UuVOMbxQlp7O5UP+nvWR3Z51oEDYYW2KBQ=",
+        "lastModified": 1745825431,
+        "narHash": "sha256-5u5lJorkdtafg8zBFzq0sUbaHdnqLT9qjXWCtVfoQgU=",
         "ref": "refs/heads/main",
-        "rev": "4fdda238e6eb59b6e1f0ce548f062d942aaf611a",
-        "revCount": 411,
+        "rev": "41534a39d90faf249330061db50255d9ee7b8245",
+        "revCount": 414,
         "type": "git",
         "url": "https://git.clan.lol/clan/data-mesher"
       },
@@ -134,11 +134,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745502102,
-        "narHash": "sha256-LqhRwzvIVPEjH0TaPgwzqpyhW6DtCrvz7FnUJDoUZh8=",
+        "lastModified": 1745812220,
+        "narHash": "sha256-hotBG0EJ9VmAHJYF0yhWuTVZpENHvwcJ2SxvIPrXm+g=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "ca27b88c88948d96feeee9ed814cbd34f53d0d70",
+        "rev": "d0c543d740fad42fe2c035b43c9d41127e073c78",
         "type": "github"
       },
       "original": {
@@ -338,11 +338,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745762067,
-        "narHash": "sha256-N3VjetRcJ0HgGjDFJeSQRQ6ZvAj7TD/HfsY5qBtMV0A=",
+        "lastModified": 1745810134,
+        "narHash": "sha256-WfnYH/i7DFzn4SESQfWviXiNUZjohZhzODqLwKYHIPI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ef47f36450b36d437f5c2f6953022648d76c0638",
+        "rev": "be7cf1709b469a2a2c62169172a167d1fed3509f",
         "type": "github"
       },
       "original": {
@@ -500,11 +500,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744478979,
-        "narHash": "sha256-dyN+teG9G82G+m+PX/aSAagkC+vUv0SgUw3XkPhQodQ=",
+        "lastModified": 1745816321,
+        "narHash": "sha256-Gyh/fkCDqVNGM0BWvk+4UAS17w2UI6iwnbQQCmc1TDI=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "43975d782b418ebf4969e9ccba82466728c2851b",
+        "rev": "4515dacafb0ccd42e5395aacc49fd58a43027e01",
         "type": "github"
       },
       "original": {
@@ -597,11 +597,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1745762085,
-        "narHash": "sha256-82WCjNmshvFXemBKW7GlU/bT1UjtlhtWrt3c2fj9Kf4=",
+        "lastModified": 1745837242,
+        "narHash": "sha256-J7uKAh/07UGV5nMKyXdtyw6jGeYfgZjxE6NZA64K88M=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "04d1abeac18f64f5c29591394ba2141b074b764a",
+        "rev": "03f4f61409815900c231d1b240a565570d768578",
         "type": "github"
       },
       "original": {
@@ -634,11 +634,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1745761450,
-        "narHash": "sha256-YOkTL9WCoBx0eLExVA6ONSSlz+u5O+g4gqecJ4dX5JI=",
+        "lastModified": 1745836520,
+        "narHash": "sha256-FQDQ81sO0NU6rRY/z7VU4G7H7m4QRK/ROlzUUzCQ/7E=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f9d512946fa2c797448bfd3be1e70987b8181b64",
+        "rev": "45a42382ec29b79a5f7f97aaefcb71cbe32c5b52",
         "type": "github"
       },
       "original": {
@@ -682,7 +682,7 @@
     "pinpox-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-UvTpkxHDcm9SXNZHms56FgdeSny9sflqjHGfaIbf9MU=",
+        "narHash": "sha256-DT5ifgbNcjIGWpfYUBsE72GJg1QJ6El5otyHWTwDqm4=",
         "type": "file",
         "url": "https://github.com/pinpox.keys"
       },
@@ -931,11 +931,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744961264,
-        "narHash": "sha256-aRmUh0AMwcbdjJHnytg1e5h5ECcaWtIFQa6d9gI85AI=",
+        "lastModified": 1745825030,
+        "narHash": "sha256-h7QxJdQG7WKlzTJYQewV0DMUgy1aATV3HZbkJf8AIIs=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "8d404a69efe76146368885110f29a2ca3700bee6",
+        "rev": "c6d3010631ab19f050e47ff9537c725e939fed7b",
         "type": "github"
       },
       "original": {
