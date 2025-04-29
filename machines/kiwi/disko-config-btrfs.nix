@@ -1,4 +1,8 @@
 {
+
+  boot.growPartition = true;
+  boot.supportedFilesystems.btrfs = true;
+
   disko.devices = {
     disk = {
       main = {

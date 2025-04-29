@@ -1,6 +1,18 @@
+{ lib, config, ... }:
 {
 
+  # You may also find this setting useful to automatically set the latest compatible kernel:
+  boot.kernelPackages = lib.mkDefault config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.supportedFilesystems.zfs = true;
 
+  services.zfs.autoSnapshot = {
+    enable = true;
+    frequent = 4; # 15 min
+    hourly = 24;
+    daily = 7;
+    weekly = 4;
+    monthly = 0;
+  };
 
   disko.devices = {
     disk = {

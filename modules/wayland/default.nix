@@ -19,25 +19,19 @@ in
     # Wayland/sway
     programs.sway.enable = true;
 
-    # hardware.graphics = {
-    #   enable = true;
-    #   enable32Bit = true;
-    #   extraPackages = with pkgs; [
-    #     intel-media-driver # LIBVA_DRIVER_NAME=iHD
-    #   ];
-    # };
-
     # Turn on wayland support for some electron apps
     environment.sessionVariables = {
       LIBVA_DRIVER_NAME = "iHD";
       NIXOS_OZONE_WL = "1";
     };
 
-
     # Extra portals (screensharing)
     xdg.portal = {
       enable = true;
-      config.common.default = [ "wlr" "gtk" ]; 
+      config.common.default = [
+        "wlr"
+        "gtk"
+      ];
       wlr = {
         enable = true;
         settings = {
@@ -55,7 +49,7 @@ in
 
     environment.systemPackages = [
       pkgs.xdg-desktop-portal
-      wdisplays # Configure screen placement
+      pkgs.wdisplays # Configure screen placement
     ];
 
   };

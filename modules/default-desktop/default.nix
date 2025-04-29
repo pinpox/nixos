@@ -17,6 +17,8 @@ in
 
   imports = [
     ../../users/pinpox.nix
+    # ./scanners.nix
+    ./nextcloud-desktop.nix
     home-manager.nixosModules.home-manager
   ];
 
@@ -36,8 +38,7 @@ in
 
     services.fwupd.enable = true;
     services.acpid.enable = true;
-
-    hardware.keyboard.qmk.enable = true;
+    hardware.enableRedistributableFirmware = true;
 
     # To build raspi images
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -66,16 +67,12 @@ in
       systemd-networkd-wait-online.enable = lib.mkForce false;
     };
 
+    hardware.keyboard.qmk.enable = true;
+
     services.udev.packages = [
       pkgs.via
       pkgs.qmk-udev-rules # For QMK/Via
       pkgs.libsigrok # For pulseview
-    ];
-
-    hardware.sane.enable = true;
-    users.users.pinpox.extraGroups = [
-      "scanner"
-      "lp"
     ];
 
     # DON'T set useGlobalPackages! It's not necessary in newer
@@ -110,6 +107,11 @@ in
     # Firewall ports required by home-manager modules
     networking.firewall.allowedTCPPorts = [ 5201 ]; # droidcam
 
+    # Hardware accelleration
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
 
     pinpox = {
       defaults = {
