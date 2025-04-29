@@ -114,7 +114,10 @@ in
           previewgenerator
           # maps
           twofactor_webauthn
-          recognize
+
+          # TODO re-enable after https://github.com/NixOS/nixpkgs/pull/400158
+          # recognize
+
           music
           # phonetrack
           ;

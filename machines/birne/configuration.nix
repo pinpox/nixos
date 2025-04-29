@@ -22,12 +22,11 @@
     zfs = true;
   };
 
+  networking.hostName = "birne";
+
   pinpox = {
 
-    server = {
-      enable = true;
-      hostname = "birne";
-    };
+    server.enable = true;
 
     services = {
       minio.enable = true;

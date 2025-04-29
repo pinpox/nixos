@@ -17,6 +17,7 @@
     defaultUserShell = pkgs.zsh;
 
     users.pinpox = {
+      initialPassword = "changeme";
       isNormalUser = true;
       home = "/home/pinpox";
       description = "Pablo Ovelleiro Corral";

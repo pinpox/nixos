@@ -4,7 +4,6 @@
 }:
 {
 
-  clan.core.networking.targetHost = "kiwi";
 
   boot.growPartition = true;
   hardware.enableRedistributableFirmware = true;
@@ -23,13 +22,11 @@
     enable = true;
     enable32Bit = true;
   };
+  networking.hostName = "kiwi";
+  pinpox.desktop.enable = true;
 
-  pinpox.desktop = {
-    enable = true;
-    hostname = "kiwi";
-  };
 
-  users.users.pinpox.initialPassword = "changeme";
+  # For dual-boot
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
 }

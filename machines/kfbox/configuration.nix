@@ -79,11 +79,12 @@ in
       config.clan.core.vars.generators."aoe-taunt-discord-bot".files."discord_token".path;
   };
 
+  networking.hostName = "kfbox";
+
   pinpox = {
 
     server = {
       enable = true;
-      hostname = "kfbox";
       stateVersion = "22.05";
     };
 

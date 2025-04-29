@@ -16,6 +16,9 @@
     ./retiolum.nix
   ];
 
+  clan.core.networking.targetHost = "94.16.108.229";
+  networking.hostName = "porree";
+
   networking.interfaces.ens3 = {
     ipv6.addresses = [
       {
@@ -25,7 +28,6 @@
     ];
   };
 
-  clan.core.networking.targetHost = "94.16.108.229";
 
   clan.core.vars.generators."matrix-hook" = pinpox-utils.mkEnvGenerator [ "MX_TOKEN" ];
   clan.core.vars.generators."alertmanager-ntfy" = pinpox-utils.mkEnvGenerator [
@@ -73,7 +75,6 @@
   boot.loader.timeout = 0;
 
   programs.ssh.startAgent = false;
-
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "letsencrypt@pablo.tools";
 
@@ -87,10 +88,7 @@
   };
 
   pinpox = {
-    server = {
-      enable = true;
-      hostname = "porree";
-    };
+    server.enable = true;
 
     services = {
       vaultwarden.enable = true;
@@ -111,11 +109,10 @@
 
       monitoring-server = {
 
+        enable = true;
         dashboard.enable = true;
         loki.enable = false;
         alertmanager-irc-relay.enable = true;
-
-        enable = true;
 
         blackboxTargets = [
           "https://pablo.tools"

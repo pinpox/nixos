@@ -1,13 +1,11 @@
 {
   pkgs,
-  lib,
   nixos-hardware,
-  config,
   ...
 }:
 {
 
-  clan.core.networking.targetHost = "limette";
+  networking.hostName = "limette";
 
   boot.growPartition = true;
 
@@ -17,7 +15,6 @@
     ./disko-config-zfs.nix
   ];
 
-  # disko.devices.disk.main.imageSize = "40G";
   disko.imageBuilder.extraDependencies = [ pkgs.kmod ];
 
   programs.sway.enable = true;
@@ -30,17 +27,12 @@
     ];
   };
 
-  pinpox.desktop = {
-    enable = true;
-    hostname = "limette";
-  };
-
   # efiSupport = lib.mkForce false;
   # efiInstallAsRemovable = lib.mkForce false;
   # gfxmodeBios = "1600x900";
   # gfxpayloadBios = "text";
 
-  users.users.pinpox.initialPassword = "changeme";
+  pinpox.desktop.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
   # You may also find this setting useful to automatically set the latest compatible kernel:

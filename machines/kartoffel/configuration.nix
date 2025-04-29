@@ -7,13 +7,9 @@
     ./retiolum.nix
   ];
 
-  clan.core.networking.targetHost = "kartoffel";
+  networking.hostName = "kartoffel";
 
-
-  pinpox.desktop = {
-    enable = true;
-    hostname = "kartoffel";
-  };
+  pinpox.desktop.enable = true;
 
   # Encrypted drive to be mounted by the bootloader. Path of the device will
   # have to be changed for each install.

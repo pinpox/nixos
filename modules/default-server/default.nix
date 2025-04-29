@@ -26,18 +26,11 @@ in
       example = "21.09";
       description = "NixOS state-Version";
     };
-
-    hostname = mkOption {
-      type = types.str;
-      default = null;
-      example = "deepblue";
-      description = "hostname to identify the instance";
-    };
   };
 
   config = mkIf cfg.enable {
 
-    networking.hostName = cfg.hostname;
+    hardware.enableRedistributableFirmware = true;
 
     # Limit log size for journal
     services.journald.extraConfig = "SystemMaxUse=1G";
