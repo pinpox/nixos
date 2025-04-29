@@ -20,6 +20,8 @@ in
 
         extraConfig = {
           init.defaultBranch = "main";
+
+          gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
           pull = {
             rebase = true;
             autostash = true;
@@ -32,8 +34,8 @@ in
           };
 
           # rerere = {
-            #   autoUpdate = true
-            #   enabled = true
+          #   autoUpdate = true
+          #   enabled = true
           # };
 
           branch = {
@@ -52,7 +54,8 @@ in
         };
 
         signing = {
-          key = "823A6154426408D3";
+          format = "ssh";
+          key = "~/.ssh/id_ed25519_sk_main";
           signByDefault = true;
         };
 

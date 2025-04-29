@@ -5,6 +5,8 @@
 
   config = {
 
+    services.ssh-agent.enable = true;
+
     programs.jujutsu = {
       enable = true;
       settings = {
@@ -32,9 +34,7 @@
       settings = {
 
         editor = {
-          indent-guides = {
-            render = true;
-          };
+          indent-guides.render = true;
           bufferline = "multiple";
           cursorline = true;
           cursor-shape = {
