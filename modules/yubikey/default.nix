@@ -17,11 +17,11 @@ in
     # We run the agent via home-manger
     programs.ssh.startAgent = false;
 
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryPackage = pkgs.pinentry-qt;
-    };
+    # programs.gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    #   pinentryPackage = pkgs.pinentry-qt;
+    # };
 
     # Needed for GPG with yubikey to work
     # environment.shellInit = ''
@@ -32,6 +32,7 @@ in
 
     # Setup Yubikey SSH and GPG
     services.pcscd.enable = true;
+    services.yubikey-agent.enable = true;
     services.udev.packages = [ pkgs.yubikey-personalization ];
   };
 }

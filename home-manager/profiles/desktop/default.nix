@@ -6,6 +6,9 @@
   config = {
 
     services.ssh-agent.enable = true;
+    programs.ssh.enable = true;
+    # programs.ssh.matchBlocks."*".identitiesOnly = true;
+    # programs.ssh.matchBlocks."*".identityAgent = "none";
 
     programs.jujutsu = {
       enable = true;

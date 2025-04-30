@@ -21,10 +21,10 @@ in
         address = "mail@pablo.tools";
         realName = "Pablo Ovelleiro Corral";
         primary = true;
-        gpg = {
-          key = "D03B218CAE771F77D7F920D9823A6154426408D3";
-          signByDefault = true;
-        };
+        # gpg = {
+        #   key = "D03B218CAE771F77D7F920D9823A6154426408D3";
+        #   signByDefault = true;
+        # };
         mbsync.enable = false;
         msmtp.enable = false;
         # notmuch.enable = false;
@@ -72,11 +72,13 @@ in
       package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
     };
 
-    programs.gpg.enable = true;
 
-    services.gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
-    };
+    # services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
+    # programs.gpg.enable = true;
+    #
+    # services.gpg-agent = {
+    #   enable = true;
+    #   enableSshSupport = true;
+    # };
   };
 }

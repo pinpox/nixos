@@ -35,12 +35,6 @@
     "NTFY_PASS"
   ];
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    pinentryPackage = pkgs.pinentry-qt;
-  };
-
   services.qemuGuest.enable = true;
 
   # Setup Yubikey SSH and GPG

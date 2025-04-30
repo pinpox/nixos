@@ -12,7 +12,6 @@ with lib;
 
   config = {
 
-    services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
 
     # Home-manager nixpkgs config
     nixpkgs = {
