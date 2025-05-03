@@ -3,6 +3,13 @@
   boot.growPartition = true;
   boot.supportedFilesystems.btrfs = true;
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    # Defaults to all
+    # fileSystems = [ "/" ];
+  };
+
   disko.devices = {
     disk = {
       main = {

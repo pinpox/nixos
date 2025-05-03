@@ -10,6 +10,9 @@
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ framework-laptop-kmod ];
 
+  # Module is not used for Framework EC but causes boot time error log.
+  # boot.blacklistedKernelModules = [ "cros-usbpd-charger" ];
+
   # https://github.com/DHowett/framework-laptop-kmod?tab=readme-ov-file#usage
   # boot.kernelModules = [
   #   "cros_ec"
@@ -19,15 +22,31 @@
   boot.kernelParams = [
     # For Power consumption
     # https://community.frame.work/t/linux-battery-life-tuning/6665/156
-    "nvme.noacpi=1"
+    # "nvme.noacpi=1"
   ];
+
+  # Custom udev rules
+  # services.udev.extraRules = ''
+  #   # Fix headphone noise when on powersave
+  #   # https://community.frame.work/t/headphone-jack-intermittent-noise/5246/55
+  #   SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0xa0e0", ATTR{power/control}="on"
+  # '';
 
   # Ethernet expansion card support
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8156", ATTR{power/autosuspend}="20"
   '';
 
-  environment.systemPackages = [ pkgs.framework-tool ];
+
+  environment.systemPackages = [
+
+    pkgs.framework-tool
+
+    # This adds a patched ectool, to interact with the Embedded Controller
+    # Can be used to interact with leds from userspace, etc.
+    # Not part of a nixos release yet, so package only gets added if it exists.
+    pkgs.fw-ectool
+  ];
 
   # AMD has better battery life with PPD over TLP:
   # https://community.frame.work/t/responded-amd-7040-sleep-states/38101/13
@@ -37,24 +56,9 @@
   # Needed for desktop environments to detect/manage display brightness
   hardware.sensor.iio.enable = lib.mkDefault true;
 
-  # Module is not used for Framework EC but causes boot time error log.
-  # boot.blacklistedKernelModules = [ "cros-usbpd-charger" ];
-
-  # Custom udev rules
-  # services.udev.extraRules = ''
-  #   # Fix headphone noise when on powersave
-  #   # https://community.frame.work/t/headphone-jack-intermittent-noise/5246/55
-  #   SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0xa0e0", ATTR{power/control}="on"
-  # '';
-
   # Mis-detected by nixos-generate-config
+  # Deactivates ligth sensor?
   # https://github.com/NixOS/nixpkgs/issues/171093
   # https://wiki.archlinux.org/title/Framework_Laptop#Changing_the_brightness_of_the_monitor_does_not_work
-  # hardware.acpilight.enable = lib.mkDefault true;
-
-  # This adds a patched ectool, to interact with the Embedded Controller
-  # Can be used to interact with leds from userspace, etc.
-  # Not part of a nixos release yet, so package only gets added if it exists.
-  # environment.systemPackages = lib.optional (pkgs ? "fw-ectool") pkgs.fw-ectool;
-
+  hardware.acpilight.enable = lib.mkDefault true;
 }
