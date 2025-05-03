@@ -216,7 +216,13 @@
       devShells = forAllSystems (
         system: with nixpkgsFor.${system}; {
           default = pkgs.mkShell {
-            packages = [ clan-core.packages.${system}.clan-cli ];
+            packages = [
+              clan-core.packages.${system}.clan-cli
+            ];
+
+            shellHook = ''
+              export SSH_ASKPASS=${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen
+            '';
           };
         }
       );
