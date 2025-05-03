@@ -37,9 +37,6 @@
 
   services.qemuGuest.enable = true;
 
-  # Setup Yubikey SSH and GPG
-  services.pcscd.enable = true;
-
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
