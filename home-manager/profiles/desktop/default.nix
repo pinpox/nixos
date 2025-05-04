@@ -129,7 +129,6 @@
         tea
 
         (audacious.override { withPlugins = true; })
-        feishin
         strawberry
 
         mpv
