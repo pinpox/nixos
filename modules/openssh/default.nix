@@ -35,5 +35,7 @@ in
     };
 
     users.users.root.openssh.authorizedKeys.keyFiles = [ pinpox-keys ];
+
+    services.openssh.extraConfig = "TrustedUserCAKeys ${./ca.pub}";
   };
 }
