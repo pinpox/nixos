@@ -87,7 +87,8 @@ in
       settings = {
 
         auto-allocate-uids = true;
-        system-features = lib.mkDefault [ "uid-range" ];
+
+        system-features = [ "uid-range" ];
 
         experimental-features = [
           "nix-command"
