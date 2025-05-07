@@ -8,6 +8,10 @@
     # TODO: are these needed?
     # services.ssh-agent.enable = true;
     programs.ssh.enable = true;
+    programs.ssh.extraConfig = ''
+      PKCS11Provider /run/current-system/sw/lib/libtpm2_pkcs11.so
+      CertificateFile ~/.ssh/cert.pub
+    '';
 
     programs.jujutsu = {
       enable = true;

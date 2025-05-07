@@ -55,7 +55,7 @@ in
 
         signing = {
           format = "ssh";
-          key = "~/.ssh/id_ed25519_sk_main";
+          key = "~/.ssh/key.pub";
           signByDefault = true;
         };
 

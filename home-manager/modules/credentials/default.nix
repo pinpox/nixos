@@ -72,6 +72,12 @@ in
       package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
     };
 
+    # The nixos agent is better
+    services.ssh-agent.enable = false;
+
+    home.packages = with pkgs; [
+      tpm2-tools # To work with the TPM
+    ];
 
     # services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
     # programs.gpg.enable = true;
