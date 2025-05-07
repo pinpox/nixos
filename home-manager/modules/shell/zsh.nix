@@ -21,7 +21,7 @@
       ZDOTDIR = "/home/pinpox/.config/zsh";
     };
 
-    initContent = lib.mkOrder 550 builtins.readFile ./zshrc;
+    initContent = lib.mkOrder 550 (builtins.readFile ./zshrc);
 
     initExtra =
       let
