@@ -113,4 +113,17 @@
       4533
     ];
   };
+
+  services.navidrome = {
+
+    enable = true;
+
+    settings.Port = 4533;
+    settings.Address = "192.168.8.4";
+    settings.MusicFolder = "/mnt/data/admin/ARCHIVE/Musik/Alphabetisch";
+
+    # openFirewall
+    # environmentFile
+  };
+
 }

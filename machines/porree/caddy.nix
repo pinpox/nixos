@@ -123,6 +123,9 @@ in
       # Home-assistant
       "home.pablo.tools".extraConfig = "reverse_proxy birne.wireguard:8123";
 
+      # Navidrome
+      "music.pablo.tools".extraConfig = "reverse_proxy birne.wireguard:4533";
+
       # Octoprint (set /etc/hosts for clients)
       "vpn.octoprint.pablo.tools".extraConfig = ''
         @vpnonly {
