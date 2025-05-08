@@ -18,7 +18,6 @@ in
       # config	Key-value configuration written to {file}`$XDG_CONFIG_HOME/task/taskrc`. 	attribute set of anything
       enable = true;
       # extraConfig	Additional content written at the end of {file}`$XDG_CONFIG_HOME/task/taskrc`. 	strings concatenated with "\n"
-
     };
   };
 }

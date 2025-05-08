@@ -21,9 +21,7 @@
       ZDOTDIR = "/home/pinpox/.config/zsh";
     };
 
-    initContent = lib.mkOrder 550 (builtins.readFile ./zshrc);
-
-    initExtra =
+    initContent =
       let
         abbrevs = lib.concatStrings (
           map (
@@ -36,22 +34,25 @@
             ''
           ) config.pinpox.defaults.shell.abbrev-aliases
         );
+
+        functions = ''
+          function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
+
+          function ai() {
+            echo "$@" | ${pkgs.shell-gpt}/bin/sgpt
+          }
+
+          function aip() {
+            wl-paste | ${pkgs.shell-gpt}/bin/sgpt
+          }
+        '';
       in
-      abbrevs
-      + builtins.readFile ./zshrc-extra
-      + ''
-        function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
-
-
-        function ai() {
-          echo "$@" | ${pkgs.shell-gpt}/bin/sgpt
-        }
-
-        function aip() {
-          wl-paste | ${pkgs.shell-gpt}/bin/sgpt
-        }
-
-      '';
+      lib.mkMerge [
+        (lib.mkOrder 550 (builtins.readFile ./zshrc))
+        abbrevs
+        (builtins.readFile ./zshrc-extra)
+        functions
+      ];
 
     history = {
       expireDuplicatesFirst = true;
@@ -66,8 +67,8 @@
       notes = "$HOME/Notes";
       downloads = "$HOME/Downloads";
       nix-config = "/home/pinpox/code/github.com/pinpox/nixos";
-      clan ="$HOME/code/git.clan.lol/clan/clan-core";
-      clan-infra ="$HOME/code/git.clan.lol/clan/clan-infra";
+      clan = "$HOME/code/git.clan.lol/clan/clan-core";
+      clan-infra = "$HOME/code/git.clan.lol/clan/clan-infra";
     };
 
     shellAliases = rec {

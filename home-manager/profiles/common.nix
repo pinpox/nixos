@@ -3,7 +3,6 @@
   pkgs,
   nur,
   flake-self,
-  config,
   ...
 }:
 with lib;
