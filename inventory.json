@@ -1,0 +1,12 @@
+{
+  "machines": {
+    "kiwi": {
+      "name": "kiwi",
+      "description": "This is my Laptop",
+      "tags": [
+        "all",
+        "nixos"
+      ]
+    }
+  }
+}
