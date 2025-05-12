@@ -158,7 +158,7 @@
 
           meta.name = "pinpox-clan";
 
-          modules."@pinpox/wireguard" = import ./clan-service-modules/wireguard.nix;
+          modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
           # modules."@pinpox/restic" = import ./clan-service-modules/restic.nix;
 
           instances = {

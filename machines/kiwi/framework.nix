@@ -1,12 +1,12 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
   # For fingerprint support
-  services.fprintd.enable = lib.mkDefault true;
+  # To enroll prints: `sudo fprint-enroll <username>`
+  services.fprintd.enable = true;
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ framework-laptop-kmod ];
 
@@ -19,11 +19,11 @@
   #   "cros_ec_lpcs"
   # ];
 
-  boot.kernelParams = [
-    # For Power consumption
-    # https://community.frame.work/t/linux-battery-life-tuning/6665/156
-    # "nvme.noacpi=1"
-  ];
+  # boot.kernelParams = [
+  # For Power consumption
+  # https://community.frame.work/t/linux-battery-life-tuning/6665/156
+  # "nvme.noacpi=1"
+  # ];
 
   # Custom udev rules
   # services.udev.extraRules = ''
@@ -37,15 +37,12 @@
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8156", ATTR{power/autosuspend}="20"
   '';
 
-
   environment.systemPackages = [
-
-    pkgs.framework-tool
-
     # This adds a patched ectool, to interact with the Embedded Controller
     # Can be used to interact with leds from userspace, etc.
     # Not part of a nixos release yet, so package only gets added if it exists.
     pkgs.fw-ectool
+    pkgs.framework-tool
   ];
 
   # AMD has better battery life with PPD over TLP:
@@ -54,11 +51,11 @@
   services.tlp.enable = false;
 
   # Needed for desktop environments to detect/manage display brightness
-  hardware.sensor.iio.enable = lib.mkDefault true;
+  hardware.sensor.iio.enable = true;
 
-  # Mis-detected by nixos-generate-config
-  # Deactivates ligth sensor?
+  # TODO not sure if needed
+  # Deactivates light sensor?
   # https://github.com/NixOS/nixpkgs/issues/171093
   # https://wiki.archlinux.org/title/Framework_Laptop#Changing_the_brightness_of_the_monitor_does_not_work
-  hardware.acpilight.enable = lib.mkDefault true;
+  hardware.acpilight.enable = true;
 }
