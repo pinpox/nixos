@@ -78,6 +78,35 @@ in
           # Scratchpad
           "${modifier}+u" =
             ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 99ppt 98ppt; [app_id="dropdown"] move position center'';
+
+          # Screen brightness
+          "XF86MonBrightnessUp" = "exec ${pkgs.acpilight}/bin/xbacklight -inc 10 -steps 10";
+          "XF86MonBrightnessDown" = "exec ${pkgs.acpilight}/bin/xbacklight -dec 10 -steps 10";
+
+          # Volume key
+          "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer --toggle-mute";
+          "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 10";
+          "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 10";
+
+          # Media keys
+          "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+          "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+          "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+
+          # "Airplane" button
+          # "XF86RFKill" =
+
+          # "Gear" button
+          # "XF86AudioMedia" =
+
+          # Screenshots
+          "Print" = "exec screenshot-region";
+          "Shift+Print" = "exec screenshot-region-file";
+
+          # "Monitors" button
+          # state 0x40, keycode 33 (keysym 0x3b, semicolon), same_screen YES,
+          #    state 0x40, keycode 33 (keysym 0x3b, semicolon), same_screen YES,
+
         };
 
         modifier = "Mod4"; # Win key
