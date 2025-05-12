@@ -2,7 +2,7 @@
   "machines": {
     "kiwi": {
       "name": "kiwi",
-      "description": "This is my Laptop",
+      "description": "This is my laptop",
       "tags": [
         "all",
         "nixos"
