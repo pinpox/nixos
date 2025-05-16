@@ -123,12 +123,16 @@ in
             # "distribution.searchplugins.defaultLocale" = "en-GB";
             # "general.useragent.locale" = "en-GB";
             # "browser.bookmarks.showMobileBookmarks" = true;
-            # TODO disable passwort manager
             # TODO if possible, enable sync (log in)
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "extensions.activeThemeID" = "default-theme@mozilla.org";
             "devtools.theme" = "dark";
             "dom.security.https_only_mode" = "true"; # HTTPS everywhere
+
+            # Disable password managger
+            "signon.rememberSignons" = "false";
+            "signon.autofillForms" = "false";
+            "signon.autofillForms.http" = "false";
           };
 
           # userChrome = builtins.readFile
