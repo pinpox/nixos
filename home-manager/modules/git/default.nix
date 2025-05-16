@@ -7,7 +7,29 @@ in
   options.pinpox.defaults.git.enable = mkEnableOption "git defaults";
 
   config = mkIf cfg.enable {
+
     programs = {
+
+      lazygit = {
+        enable = true;
+
+        # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+        settings = {
+
+          # reporting = "off";
+          # update.method = "never";
+
+          shortTimeFormat = "15h:30:13";
+          gui.showFileTree = true;
+          os = {
+            edit = "nvim {{filename}}";
+            editAtLine = "nvim +{{line}} {{filename}}";
+            editAtLineAndWait = "nvim --remote-wait +{{line}} {{filename}}";
+            editInTerminal = true;
+          };
+        };
+      };
+
       git = {
         enable = true;
         lfs.enable = true;

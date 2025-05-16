@@ -131,7 +131,6 @@
       [
         swaynotificationcenter
         tea
-        lazygit
 
         (audacious.override { withPlugins = true; })
         strawberry
