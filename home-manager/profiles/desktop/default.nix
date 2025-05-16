@@ -131,6 +131,7 @@
       [
         swaynotificationcenter
         tea
+        lazygit
 
         (audacious.override { withPlugins = true; })
         strawberry
@@ -147,13 +148,8 @@
         # })
 
         zotero
+        sysz
 
-        # From nixpkgs
-        # arduino
-        # arduino-cli
-        # calibre
-        # recursive
-        # retroarch
         deluge
         chafa
         asciinema
