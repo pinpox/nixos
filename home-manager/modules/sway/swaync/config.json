@@ -102,15 +102,6 @@
 			"buttons#topbar-buttons": {
 				"position": "left",
 				"actions": [
-
-					{
-						"label": "",
-						"command": "~/.config/rofi/rofi-wifi-menu.sh"
-					},
-					{
-						"label": "",
-						"command": "~/.config/rofi/rofi-bluetooth"
-					},
 					{
 						"label": "",
 						"command": "screenshot-region-satty"
