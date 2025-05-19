@@ -23,13 +23,43 @@ in
 
   config = mkIf cfg.enable {
 
+    xdg.portal.config.sway = {
+      # Use xdg-desktop-portal-gtk for every portal interface...
+      default = [ "gtk" ];
+      # ... except for the ScreenCast, Screenshot and Secret
+      "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+      "org.freedesktop.impl.portal.Screenshot" = "wlr";
+      # ignore inhibit bc gtk portal always returns as success,
+      # despite sway/the wlr portal not having an implementation,
+      # stopping firefox from using wayland idle-inhibit
+      "org.freedesktop.impl.portal.Inhibit" = "none";
+    };
+
+    # laucher
+    programs.tofi = {
+      enable = true;
+      settings = {
+        width = "100%";
+        height = "100%";
+        border-width = "0";
+        outline-width = "0";
+        padding-left = "35%";
+        padding-top = "35%";
+        result-spacing = "25";
+        num-results = "8";
+        font = "Berkeley Mono";
+        background-color = "#000A";
+        prompt-text = "\"\"";
+        placeholder-text = "yes?";
+      };
+    };
+
     # Install these packages for my user
     home.packages = with pkgs; [
       # way-displays
       (waybar.override { wireplumberSupport = false; })
       wl-clipboard
       wlr-randr
-      wofi
       start-sway
       font-awesome
       line-awesome
@@ -51,7 +81,7 @@ in
           "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
 
           # Laucher
-          "${modifier}+p" = "exec ${pkgs.wofi}/bin/wofi --show run";
+          "${modifier}+p" = "exec ${pkgs.tofi}/bin/tofi-run | xargs swaymsg exec --";
 
           # Toggle microphone mute
           "${modifier}+m" =

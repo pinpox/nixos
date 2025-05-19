@@ -48,7 +48,6 @@ in
       (waybar.override { wireplumberSupport = false; })
       wl-clipboard
       wlr-randr
-      wofi
       start-river
       screenshot-region
       screenshot-region-satty
@@ -73,7 +72,7 @@ in
               riverctl map-switch normal lid close spawn ${pkgs.swaylock}/bin/swaylock
               # riverctl map normal Super F12 spawn '${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png'
               # riverctl map normal Super F12 spawn ${screenshot-region}
-              riverctl map normal Super p spawn "${pkgs.wofi}/bin/wofi --show run"
+              riverctl map normal Super p spawn "${pkgs.tofi}/bin/tofi-run"
 
               ${pkgs.mako}/bin/mako &
               waybar
