@@ -5,6 +5,33 @@
 
   config = {
 
+    services.easyeffects = {
+      enable = true;
+      # preset = "my-preset";
+      # extraPresets = {
+      #   my-preset = {
+      #     input = {
+      #       blocklist = [
+      #
+      #       ];
+      #       "plugins_order" = [
+      #         "rnnoise#0"
+      #       ];
+      #       "rnnoise#0" = {
+      #         bypass = false;
+      #         "enable-vad" = false;
+      #         "input-gain" = 0.0;
+      #         "model-path" = "";
+      #         "output-gain" = 0.0;
+      #         release = 20.0;
+      #         "vad-thres" = 50.0;
+      #         wet = 0.0;
+      #       };
+      #     };
+      #   };
+      # };
+    };
+
     # TODO: are these needed?
     # services.ssh-agent.enable = true;
     programs.ssh.enable = true;
@@ -108,7 +135,6 @@
 
           # XServer only
           alacritty.enable = inXserver;
-          rofi.enable = inXserver;
           awesome.enable = inXserver;
           xscreensaver.enable = inXserver;
           dunst.enable = inXserver;
@@ -234,7 +260,7 @@
                 <name>Open Terminal Here</name>
                 <unique-id>1604472351415438-1</unique-id>
                 <command>foot -D %f</command>
-                <description>Example for a custom action</description>
+                <description>Open terminal in current directory</description>
                 <patterns>*</patterns>
                 <startup-notify/>
                 <directories/>

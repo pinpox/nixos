@@ -46,7 +46,7 @@ in
         padding-left = "35%";
         padding-top = "35%";
         result-spacing = "25";
-        num-results = "8";
+        num-results = "5";
         font = "Berkeley Mono";
         background-color = "#000A";
         prompt-text = "\"\"";
