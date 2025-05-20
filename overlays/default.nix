@@ -56,7 +56,6 @@ self: super: {
         virtualisation
         wastebin
         wireguard-client
-        xserver
         yubikey
         zsh
         ;

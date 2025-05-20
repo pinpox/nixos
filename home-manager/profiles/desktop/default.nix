@@ -137,100 +137,92 @@
     };
 
     # Install these packages for my user
-    home.packages =
-      with pkgs;
-      [
-        swaynotificationcenter
-        tea
+    home.packages = with pkgs; [
+      swaynotificationcenter
+      tea
 
-        (audacious.override { withPlugins = true; })
-        strawberry
+      (audacious.override { withPlugins = true; })
+      strawberry
 
-        mpv
-        # (mpv.override {
-        #   scripts = with pkgs.mpvScripts; [
-        #     sponsorblock
-        #     quality-menu
-        #     visualizer
-        #     twitch-chat
-        #     mpris
-        #   ];
-        # })
+      mpv
+      # (mpv.override {
+      #   scripts = with pkgs.mpvScripts; [
+      #     sponsorblock
+      #     quality-menu
+      #     visualizer
+      #     twitch-chat
+      #     mpris
+      #   ];
+      # })
 
-        zotero
-        sysz
+      zotero
+      sysz
 
-        deluge
-        chafa
-        asciinema
-        cbatticon
-        duf
-        evince
-        eza
-        fd
-        gcc
-        gimp
-        adwaita-icon-theme
-        file-roller
-        gtk_engines
-        h # https://github.com/zimbatm/h
-        helix
-        htop
-        imagemagick
-        inetutils
-        libnotify
-        lxappearance
-        manix
-        matcha-gtk-theme
-        meld
-        ncdu
-        networkmanager-openvpn
-        networkmanagerapplet
-        nextcloud-client
-        nitrogen
-        nix-index
-        nmap
-        openvpn
-        papirus-icon-theme
-        pavucontrol
-        pkg-config
-        playerctl
-        pre-commit
-        scrot
-        signal-desktop
-        spotify
-        sqlite
-        tealdeer
-        thunderbird-bin
-        timewarrior
-        typst
-        unzip
-        viewnior
-        vlc
-        xarchiver
-        xdg-utils
-        xfce.exo # thunar "open terminal here"
-        xfce.thunar-archive-plugin
-        xfce.thunar-volman
-        xfce.tumbler # thunar thumbnails
-        xfce.xfce4-volumed-pulse
-        xfce.xfconf # thunar save settings
-        # yubioath-desktop
-        # xfce.thunar
-        (xfce.thunar.override {
-          thunarPlugins = with pkgs; [
-            xfce.thunar-volman
-            xfce.thunar-archive-plugin
-            xfce.thunar-media-tags-plugin
-          ];
-        })
-      ]
-      ++
-        # Packages only useful when using xserver
-        lib.optionals system-config.pinpox.services.xserver.enable [
-          arandr
-          xorg.xrandr
+      deluge
+      chafa
+      asciinema
+      cbatticon
+      duf
+      evince
+      eza
+      fd
+      gcc
+      gimp
+      adwaita-icon-theme
+      file-roller
+      gtk_engines
+      h # https://github.com/zimbatm/h
+      helix
+      htop
+      imagemagick
+      inetutils
+      libnotify
+      lxappearance
+      manix
+      matcha-gtk-theme
+      meld
+      ncdu
+      networkmanager-openvpn
+      networkmanagerapplet
+      nextcloud-client
+      nitrogen
+      nix-index
+      nmap
+      openvpn
+      papirus-icon-theme
+      pavucontrol
+      pkg-config
+      playerctl
+      pre-commit
+      scrot
+      signal-desktop
+      spotify
+      sqlite
+      tealdeer
+      thunderbird-bin
+      timewarrior
+      typst
+      unzip
+      viewnior
+      vlc
+      xarchiver
+      xdg-utils
+      xfce.exo # thunar "open terminal here"
+      xfce.thunar-archive-plugin
+      xfce.thunar-volman
+      xfce.tumbler # thunar thumbnails
+      xfce.xfce4-volumed-pulse
+      xfce.xfconf # thunar save settings
+      # yubioath-desktop
+      # xfce.thunar
+      (xfce.thunar.override {
+        thunarPlugins = with pkgs; [
+          xfce.thunar-volman
+          xfce.thunar-archive-plugin
+          xfce.thunar-media-tags-plugin
         ];
+      })
+    ];
 
     xdg = {
       enable = true;

@@ -138,7 +138,6 @@ in
 
         unbound-desktop.enable = true;
 
-        xserver.enable = false;
         wayland.enable = true;
         openssh.enable = true;
 

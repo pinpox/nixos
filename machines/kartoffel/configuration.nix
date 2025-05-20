@@ -24,7 +24,6 @@
 
   # Video driver for nvidia graphics card
   hardware.nvidia.open = false;
-  services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
   services.greetd.settings.default_session.command =
     lib.mkForce "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'sway --unsupported-gpu'";
