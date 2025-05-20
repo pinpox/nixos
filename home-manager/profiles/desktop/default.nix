@@ -137,7 +137,6 @@
           alacritty.enable = inXserver;
           awesome.enable = inXserver;
           xscreensaver.enable = inXserver;
-          picom.enable = inXserver;
 
           # Wayland only
           foot.enable = !inXserver;
