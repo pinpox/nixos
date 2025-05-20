@@ -136,7 +136,6 @@
           # XServer only
           alacritty.enable = inXserver;
           awesome.enable = inXserver;
-          xscreensaver.enable = inXserver;
 
           # Wayland only
           foot.enable = !inXserver;
