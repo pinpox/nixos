@@ -26,7 +26,6 @@
       };
 
       programs = {
-        nvim.enable = true;
         tmux.enable = true;
       };
     };

@@ -349,22 +349,6 @@
         "type": "github"
       }
     },
-    "indent-blankline-nvim-lua": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1742224677,
-        "narHash": "sha256-0q/V+b4UrDRnaC/eRWOi9HU9a61vQSAM9/C8ZQyKt+Y=",
-        "owner": "lukas-reineke",
-        "repo": "indent-blankline.nvim",
-        "rev": "005b56001b2cb30bfa61b7986bc50657816ba4ba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lukas-reineke",
-        "repo": "indent-blankline.nvim",
-        "type": "github"
-      }
-    },
     "jitsi-matrix-presence": {
       "inputs": {
         "nixpkgs": [
@@ -643,38 +627,6 @@
         "type": "github"
       }
     },
-    "nvim-cokeline": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1737751869,
-        "narHash": "sha256-O0msAljyNYj4zdFBOCR43QiqHYl1e9c4MASi9MmS+R4=",
-        "owner": "noib3",
-        "repo": "nvim-cokeline",
-        "rev": "9fbed130683b7b6f73198c09e35ba4b33f547c08",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noib3",
-        "repo": "nvim-cokeline",
-        "type": "github"
-      }
-    },
-    "nvim-fzf": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1729524909,
-        "narHash": "sha256-clcZm8yGqE+erN1zBT38ai4keVTWieIjB14+gRwpM+U=",
-        "owner": "vijaymarupudi",
-        "repo": "nvim-fzf",
-        "rev": "305aa90aeb8409b4bd2af1812a4b6e157ee93953",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vijaymarupudi",
-        "repo": "nvim-fzf",
-        "type": "github"
-      }
-    },
     "pinpox-keys": {
       "flake": false,
       "locked": {
@@ -798,7 +750,6 @@
         "forgit": "forgit",
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
-        "indent-blankline-nvim-lua": "indent-blankline-nvim-lua",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
         "krops": "krops",
         "matrix-hook": "matrix-hook",
@@ -810,8 +761,6 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
-        "nvim-cokeline": "nvim-cokeline",
-        "nvim-fzf": "nvim-fzf",
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
         "promterm": "promterm",

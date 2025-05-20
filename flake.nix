@@ -87,16 +87,6 @@
     krops.url = "git+https://cgit.krebsco.de/krops";
     krops.flake = false;
 
-    # Vim plugins
-    indent-blankline-nvim-lua.url = "github:lukas-reineke/indent-blankline.nvim";
-    indent-blankline-nvim-lua.flake = false;
-
-    nvim-fzf.url = "github:vijaymarupudi/nvim-fzf";
-    nvim-fzf.flake = false;
-
-    nvim-cokeline.url = "github:noib3/nvim-cokeline";
-    nvim-cokeline.flake = false;
-
     # ZSH plugins
     zsh-abbrev-alias.url = "github:momo-lab/zsh-abbrev-alias";
     zsh-abbrev-alias.flake = false;

@@ -113,15 +113,6 @@ self: super: {
   # Use custom neovim in standalone flake
   neovim = inputs.pinpox-neovim.packages.x86_64-linux.pinpox-neovim;
 
-  # Vim plugins, added inside existing pkgs.vimPlugins
-  vimPlugins = super.vimPlugins // {
-    indent-blankline-nvim-lua = super.callPackage ../packages/indent-blankline-nvim-lua {
-      inputs = inputs;
-    };
-    nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
-    nvim-cokeline = super.callPackage ../packages/nvim-cokeline { inputs = inputs; };
-  };
-
   # ZSH plugins
   zsh-abbrev-alias = super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
   zsh-colored-man-pages = super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };

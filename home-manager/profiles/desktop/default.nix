@@ -126,7 +126,6 @@
           k9s.enable = true;
           zellij.enable = true;
           chromium.enable = true;
-          nvim.enable = true;
           firefox.enable = true;
           tmux.enable = true;
           zk.enable = true;
