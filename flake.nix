@@ -154,26 +154,13 @@
           flake-self = self;
         } // inputs;
 
+        modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
+
         inventory = {
 
           meta.name = "pinpox-clan";
 
-          modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
-          # modules."@pinpox/restic" = import ./clan-service-modules/restic.nix;
-
           instances = {
-
-            # restic-clan = {
-            #   module.name = "@pinpox/restic";
-            #   roles.server.machines.birne.settings = {
-            #     directory = "/var/lib/restic-clan-test";
-            #   };
-            #   roles.client.machines = {
-            #     kartoffel.settings = { };
-            #     limette.settings = { };
-            #   };
-            ## roles.client.tags.backup-local = { };
-            # };
 
             wg-clan = {
 

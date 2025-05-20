@@ -17,9 +17,10 @@ in
 
     environment.systemPackages = [ pkgs.qjackctl ];
 
-    # Use pipeware to emulate jack and pulseaudio
     services.pipewire = {
       enable = true;
+
+    # Use pipeware to emulate jack and pulseaudio
       jack.enable = true;
       pulse.enable = true;
       alsa.enable = true;
