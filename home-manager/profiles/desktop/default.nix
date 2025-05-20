@@ -137,7 +137,6 @@
           alacritty.enable = inXserver;
           awesome.enable = inXserver;
           xscreensaver.enable = inXserver;
-          dunst.enable = inXserver;
           picom.enable = inXserver;
 
           # Wayland only
