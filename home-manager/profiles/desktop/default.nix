@@ -107,7 +107,6 @@
 
     pinpox = {
       defaults = {
-        xresources.enable = true;
         xdg.enable = true;
         shell.enable = true;
         gtk.enable = true;
@@ -116,31 +115,25 @@
         git.enable = true;
       };
 
-      programs =
-        let
-          inXserver = system-config.pinpox.services.xserver.enable;
-        in
-        {
-          obs-studio.enable = true;
-          pandoc.enable = true;
-          k9s.enable = true;
-          zellij.enable = true;
-          chromium.enable = true;
-          firefox.enable = true;
-          tmux.enable = true;
-          zk.enable = true;
-          taskwarrior.enable = true;
-          go.enable = true;
-
-          # Wayland only
-          foot.enable = !inXserver;
-          sway.enable = !inXserver;
-          swaylock.enable = !inXserver;
-          river.enable = !inXserver;
-          waybar.enable = !inXserver;
-          mako.enable = !inXserver;
-          kanshi.enable = !inXserver;
-        };
+      programs = {
+        obs-studio.enable = true;
+        pandoc.enable = true;
+        k9s.enable = true;
+        zellij.enable = true;
+        chromium.enable = true;
+        firefox.enable = true;
+        tmux.enable = true;
+        zk.enable = true;
+        taskwarrior.enable = true;
+        go.enable = true;
+        foot.enable = true;
+        sway.enable = true;
+        swaylock.enable = true;
+        river.enable = true;
+        waybar.enable = true;
+        mako.enable = true;
+        kanshi.enable = true;
+      };
     };
 
     # Install these packages for my user
