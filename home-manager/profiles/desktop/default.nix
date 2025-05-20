@@ -133,9 +133,6 @@
           taskwarrior.enable = true;
           go.enable = true;
 
-          # XServer only
-          alacritty.enable = inXserver;
-
           # Wayland only
           foot.enable = !inXserver;
           sway.enable = !inXserver;

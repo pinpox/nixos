@@ -51,8 +51,6 @@ with lib;
       ];
 
       sessionVariables = {
-        # Workaround for alacritty (might break other apps!)
-        # LIBGL_ALWAYS_SOFTWARE = "1";
         ZDOTDIR = "/home/pinpox/.config/zsh";
       };
 
