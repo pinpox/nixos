@@ -39,7 +39,6 @@
 
         substitutions = {
           "~/code/github.com/pinpox/nixos" = "<pinpox/nixos>";
-          "~/code/github.com/pinpox/dotfiles-awesome" = "<pinpox/dotfiles-awesome>";
         };
       };
     };

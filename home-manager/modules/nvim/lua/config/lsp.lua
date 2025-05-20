@@ -92,8 +92,6 @@ require'lspconfig'.lua_ls.setup {
         -- Get the language server to recognize the `vim` global
 
         globals = {
-		    -- AwesomeWM
-		    "awesome", 
 		    "client",
 		    "screen",
 		    "root",
@@ -111,7 +109,6 @@ require'lspconfig'.lua_ls.setup {
 
 		--     -- TODO find a way to add the nix store path dynamically.
 		--     -- This will break on update!
-		--     [vim.fn.expand('/nix/store/3xx4k57zz8l3hvzqd4v3v0ffgspp3pan-awesome-4.3/share/awesome/lib')] = true,
 		-- },
       },
       -- Do not send telemetry data containing a randomized but unique identifier
