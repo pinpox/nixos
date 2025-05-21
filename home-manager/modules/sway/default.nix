@@ -81,7 +81,16 @@ in
           "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
 
           # Laucher
-          "${modifier}+p" = "exec ${pkgs.tofi}/bin/tofi-run | xargs swaymsg exec --";
+          "${modifier}+p" = ''
+            exec ${pkgs.tofi}/bin/tofi-run \
+              --output=$(swaymsg --type get_outputs | jq '.[] | select(.focused).name') | xargs swaymsg exec --
+          '';
+
+          # Url
+          "${modifier}+Shift+p" = ''
+            exec ${pkgs.firefox}/bin/firefox \
+              --new-window $(cat ~/.local/share/tofi-bookmarks | ${pkgs.tofi}/bin/tofi)
+          '';
 
           # Toggle microphone mute
           "${modifier}+m" =
