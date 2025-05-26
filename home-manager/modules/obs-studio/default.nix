@@ -41,7 +41,7 @@ in
         wlrobs
         # obs-vintage-filter
         # obs-teleport
-        # obs-backgroundremoval
+        obs-backgroundremoval
         input-overlay
       ];
     };
