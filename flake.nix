@@ -129,8 +129,6 @@
         }
       );
 
-      # Each subdirectory in ./machines/<machine-name> is a host config. Clan
-      # auto-imports all machines from ./machines
       clan = clan-core.lib.buildClan {
 
         # this needs to point at the repository root
@@ -206,7 +204,6 @@
         system: with nixpkgsFor.${system}; {
 
           inherit
-            ltex-ls
             hello-custom
             fritzbox_exporter
             mqtt2prometheus
@@ -235,6 +232,8 @@
         }) (builtins.attrNames (builtins.readDir ./modules))
       );
 
+      # Each subdirectory in ./machines/<machine-name> is a host config. Clan
+      # auto-imports all machines from ./machines
       nixosConfigurations = clan.nixosConfigurations;
 
       inherit (clan) clanInternals;
