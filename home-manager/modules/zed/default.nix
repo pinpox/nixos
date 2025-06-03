@@ -15,7 +15,7 @@ in {
     programs.zed-editor = {
       enable = true;
       extensions = ["nix"];
-      settings = {
+      userSettings = {
         telemetry = {
           metrics = false;
           diagnostics = false;
@@ -26,7 +26,7 @@ in {
         buffer_font_family = "Berkeley Mono";
         ui_font_family = "Berkeley Mono";
         theme = {
-          mode = "system";
+          mode = "dark";
           light = "Ayu Light";
           dark = "One Dark";
         };
