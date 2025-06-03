@@ -82,14 +82,12 @@ in
 
           # Laucher
           "${modifier}+p" = ''
-            exec ${pkgs.tofi}/bin/tofi-run \
-              --output=$(swaymsg --type get_outputs | jq '.[] | select(.focused).name') | xargs swaymsg exec --
+            exec ${pkgs.tofi}/bin/tofi-run --output=$(swaymsg --type get_outputs | jq '.[] | select(.focused).name') | xargs swaymsg exec --
           '';
 
           # Url
           "${modifier}+Shift+p" = ''
-            exec ${pkgs.firefox}/bin/firefox \
-              --new-window $(cat ~/.local/share/tofi-bookmarks | ${pkgs.tofi}/bin/tofi)
+            exec ${pkgs.firefox}/bin/firefox --new-window $(cat ~/.local/share/tofi-bookmarks | ${pkgs.tofi}/bin/tofi)
           '';
 
           # Toggle microphone mute
