@@ -4,6 +4,28 @@
   imports = [ ../common.nix ];
 
   config = {
+services.gnome-keyring.enable = true;
+
+    programs.zed-editor = {
+      enable = true;
+      extensions = ["nix"];
+
+#   "telemetry": {
+#     "metrics": false,
+#     "diagnostics": false
+#   },
+#   "vim_mode": true,
+#   "ui_font_size": 15,
+#   "buffer_font_size": 15,
+#   "buffer_font_family": "Berkeley Mono",
+#   "ui_font_family": "Berkeley Mono",
+#   "theme": {
+#     "mode": "system",
+#     "light": "Ayu Dark",
+#     "dark": "One Dark"
+#   }
+# }
+    };
 
     services.easyeffects = {
       enable = false;

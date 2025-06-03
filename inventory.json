@@ -28,16 +28,6 @@
     "porree": {
       "machineClass": "nixos",
       "name": "porree"
-    },
-    "anewtest": {
-      "name": "anewtest",
-      "description": "testmachine",
-      "tags": [
-        "all"
-      ],
-      "deploy": {
-        "targetHost": ""
-      }
     }
   },
   "_legacyModules": {
