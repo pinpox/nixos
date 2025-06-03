@@ -6,7 +6,7 @@
   config = {
 
     services.easyeffects = {
-      enable = true;
+      enable = false;
       # preset = "my-preset";
       # extraPresets = {
       #   my-preset = {
@@ -195,7 +195,7 @@
       playerctl
       pre-commit
       scrot
-      signal-desktop
+      signal-desktop-bin
       spotify
       sqlite
       tealdeer
