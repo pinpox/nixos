@@ -42,18 +42,6 @@
       CertificateFile ~/.ssh/cert.pub
     '';
 
-    programs.jujutsu = {
-      enable = true;
-      settings = {
-        user = {
-          email = "git@pablo.tools";
-          name = "pinpox";
-        };
-      };
-    };
-
-
-
     home.keyboard = {
       variant = "colemak";
       layout = "us";

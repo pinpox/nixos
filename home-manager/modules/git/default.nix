@@ -99,5 +99,15 @@ in
         userName = "pinpox";
       };
     };
+
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          email = "git@pablo.tools";
+          name = "pinpox";
+        };
+      };
+    };
   };
 }
