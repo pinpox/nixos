@@ -7,32 +7,7 @@
 
 
 
-    services.easyeffects = {
-      enable = false;
-      # preset = "my-preset";
-      # extraPresets = {
-      #   my-preset = {
-      #     input = {
-      #       blocklist = [
-      #
-      #       ];
-      #       "plugins_order" = [
-      #         "rnnoise#0"
-      #       ];
-      #       "rnnoise#0" = {
-      #         bypass = false;
-      #         "enable-vad" = false;
-      #         "input-gain" = 0.0;
-      #         "model-path" = "";
-      #         "output-gain" = 0.0;
-      #         release = 20.0;
-      #         "vad-thres" = 50.0;
-      #         wet = 0.0;
-      #       };
-      #     };
-      #   };
-      # };
-    };
+
 
     # TODO: are these needed?
     # services.ssh-agent.enable = true;
@@ -64,6 +39,7 @@
         k9s.enable = true;
         zed.enable = true;
         helix.enable = true;
+        easyeffects.enable = false;
         zellij.enable = true;
         chromium.enable = true;
         firefox.enable = true;
