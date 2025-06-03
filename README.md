@@ -2,7 +2,7 @@
 
 **Configuration checks:** [![Build Status](https://build.lounge.rocks/api/badges/9/status.svg)](https://build.lounge.rocks/repos/9)
 
-All Module options are documeted at: https://pinpox.github.io/nixos/
+All Module options are documented at: https://pinpox.github.io/nixos/
 
 This repository includes all configurations for my NixOS machines. Feel free to
 use parts of it as you please, but keep it mind it is intended mostly for
@@ -11,56 +11,27 @@ personal use. I've written posts about certain aspects of this setup on my
 
 # Initial Setup
 
-The structure of this repository is meant to allow easy manual deployment.
+The structure of this repository is meant to allow easy manual deployment while being
+[clan](https://clan.lol) compatible.
 Individual hosts are defined in `/machines/<hostname>` and will import re-usable
 parts of the configuration as needed.
 
 Deployment and management is done with [clan](https://clan.lol).
-Secrets are stored in [pass](https://www.passwordstore.org/).
-
-**TL;DR** To use a host configuration on a fresh install, make sure that:
-
-- The hostname is set correctly (`hostname <machine name>`)
-- You are connected to the internet and have access rights to the repository
-- Pass has the necessary secrets for the machine
-- The machine's config is up-to-date
-
-Then backup the generated `hardware-configuration.nix` file:
-
-```bash
-# Overwrite hardware-configuration.nix file with the generated one
-cp /etc/nixos/hardware-configuration.nix \
-   ./machines/$(hostname)/hardware-configuration.nix
-
-# Commit and push the new file
-git commit -am"Add hardware-configuration for $(hostname)" && git push
-```
-
-> TODO: update
-
-It is also possible to build on the system itself when logged in, e.g. to get
-additional debug information.
-
-```bash
-cd /var/src/machine-config
-sudo nixos-rebuild --flake ".#kartoffel" switch
-```
+Secrets are stored in [passage](https://github.com/FiloSottile/passage),
+a modern fork of [pass](https://www.passwordstore.org/) that uses age for encryption.
 
 # Current Hosts
 
 | Configuration                       | Type      | Location    | VPN IP         | Description                  |
 | ----------------------------------- | --------- | ----------- | -------------- | ---------------------------- |
 | [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.8.3`  | Desktop                      |
-| [limette](./machines/limette)       | Desktop   | local       | `192.168.8.2`  | Notebook                     |
+| [limette](./machines/limette)       | Desktop   | local       | `192.168.8.8`  | Notebook                     |
+| [kiwi](./machines/kiwi)             | Desktop   | local       | -              | Framework Laptop             |
 | [birne](./machines/birne)           | Server    | local       | `192.168.8.4`  | Local NAS                    |
 | [porree](./machines/porree)         | Server    | netcup.de   | `192.168.8.1`  | Server for pablo.tools       |
 | [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.8.5`  | Server for 0cx.de            |
 
-The services running on each host are documented in the host-specific
-`README.md` files.
-
 # Deployment
-
 
 Deployment is done via [clan CLI](https://clan.lol) provided via the flake's
 default nix shell. I use [direnv](https://direnv.net/) to automatically start it
@@ -70,11 +41,21 @@ after that, deployment can be done via:
 ```sh
 clan machines update <hostname>
 ```
+
+## Repository Organization
+
+The configuration is organized as follows:
+
+- `/machines/<hostname>`: Host-specific configurations
+- `/modules`: System-level NixOS modules
+- `/home-manager/modules`: User-level home-manager modules for specific applications
+- `/home-manager/profiles`: Profiles that combine multiple home-manager modules
+- `/home-manager/packages`: Custom packages for applications not present in nixpkgs
+```
 # Contributing?
 
 While contributions don't make much sense for a personal configuration repository,
-I'm always happy to get hints, tips and constructive criticism. If you find something 
+I'm always happy to get hints, tips and constructive criticism. If you find something
 that could be done in a better way, please let me know!
-
 
 <a href="https://www.buymeacoffee.com/pinpox"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=😎&slug=pinpox&button_colour=82aaff&font_colour=000000&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
