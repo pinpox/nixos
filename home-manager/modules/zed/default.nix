@@ -12,6 +12,11 @@ in {
   config = mkIf cfg.enable {
     services.gnome-keyring.enable = true;
     
+    # Add nixd (Nix language server) for better Nix support
+    home.packages = with pkgs; [
+      nixd
+    ];
+    
     programs.zed-editor = {
       enable = true;
       extensions = ["nix"];
@@ -29,6 +34,11 @@ in {
           mode = "dark";
           light = "Ayu Light";
           dark = "One Dark";
+        };
+        language_overrides = {
+          nix = {
+            language_server_id = "nixd";
+          };
         };
       };
     };
