@@ -208,7 +208,6 @@
           inherit
             ltex-ls
             hello-custom
-            filebrowser
             fritzbox_exporter
             mqtt2prometheus
             smartmon-script

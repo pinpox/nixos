@@ -29,7 +29,6 @@ self: super: {
         dex
         ente
         environment
-        filebrowser
         fonts
         gitea
         hedgedoc
@@ -106,7 +105,6 @@ self: super: {
 
   # Custom packages. Will be made available on all machines and used where
   # needed.
-  filebrowser = super.callPackage ../packages/filebrowser { };
   smartmon-script = super.callPackage ../packages/smartmon-script { };
 
   # Use custom neovim in standalone flake
