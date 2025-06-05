@@ -81,8 +81,8 @@ in
         fallback = true
         connect-timeout = 100
         stalled-download-timeout = 100
+        !include ${config.clan.core.vars.generators."nix".files."nix-access-tokens".path}
       '';
-      # !include ${config.clan.core.vars.generators."nix".files."nix-access-tokens".path}
 
       settings = {
 
