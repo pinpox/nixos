@@ -161,10 +161,11 @@
 
               roles.peer.machines = {
                 kartoffel.settings.ip = "192.168.8.3";
-                limette.settings.ip = "192.168.8.8";
-                kfbox.settings.ip = "192.168.8.5";
                 birne.settings.ip = "192.168.8.4";
                 birne.settings.extraIPs = [ "192.168.2.0/24" ];
+                kfbox.settings.ip = "192.168.8.5";
+                kiwi.settings.ip = "192.168.8.6";
+                limette.settings.ip = "192.168.8.8";
               };
 
               # roles.peer.tags.all = { };
