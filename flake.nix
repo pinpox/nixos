@@ -142,6 +142,7 @@
           flake-self = self;
         } // inputs;
 
+        # Register custom clan service modules
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
 
         inventory = {
@@ -149,6 +150,27 @@
           meta.name = "pinpox-clan";
 
           instances = {
+
+            localsend = {
+              module.name = "localsend";
+              module.input = "clan-core";
+              roles.default.tags.all = { };
+              # roles.default.extraModules = [ { networking.firewall.allowedTCPPorts = [ 53317 ]; } ];
+            };
+
+            importer = {
+              module.name = "importer";
+              module.input = "clan-core";
+              # Clan modules deployed on all machines
+              roles.default.tags.all = { };
+
+              # Import all modules from ./modules/<module-name> on all machines
+              roles.default.extraModules = [
+
+                # TODO: Move state-version to instances when it is migrated to clan services
+                clan-core.clanModules.state-version
+              ] ++ (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
+            };
 
             wg-clan = {
 
@@ -167,21 +189,6 @@
                 kiwi.settings.ip = "192.168.8.6";
                 limette.settings.ip = "192.168.8.8";
               };
-
-              # roles.peer.tags.all = { };
-            };
-          };
-
-          services = {
-            importer.default = {
-              roles.default.tags = [ "all" ];
-              # import all modules from ./modules/<module-name> everywhere
-              roles.default.extraModules = [
-
-                # Clan modules deployed on all machines
-                clan-core.clanModules.state-version
-
-              ] ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
             };
           };
         };
