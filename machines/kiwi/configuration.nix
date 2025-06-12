@@ -1,9 +1,23 @@
-{ lib, ... }:
+{
+  nixos-hardware,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./disko-config-btrfs.nix
-    ./framework.nix
+    # ./framework.nix
+    nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
+
+  # TODO: remove when 6.15.1 hits unstable
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  hardware.amdgpu.opencl.enable = true;
+
+  programs.adb.enable = true;
+  users.users.pinpox.extraGroups = [ "adbusers" ];
 
   networking.hostName = "kiwi";
   pinpox.desktop.enable = true;
