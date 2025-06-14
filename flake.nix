@@ -149,6 +149,9 @@
 
           meta.name = "pinpox-clan";
 
+          # machines.kiwi.deploy.buildHost = "kiwi";
+          # machines.kiwi.deploy.targetHost = "kiwi";
+
           instances = {
 
             localsend = {
@@ -168,6 +171,7 @@
               roles.default.extraModules = [
 
                 # TODO: Move state-version to instances when it is migrated to clan services
+                # https://git.clan.lol/clan/clan-core/pulls/3947
                 clan-core.clanModules.state-version
               ] ++ (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
             };

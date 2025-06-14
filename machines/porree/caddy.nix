@@ -57,6 +57,7 @@ in
 
   clan.core.vars.generators."caddy-basicauth" = mkBasicAuthFiles [
     "beta.pablo.tools"
+    "tumblr.pablo.tools"
     "3dprint.pablo.tools"
     "notify.pablo.tools"
   ];
@@ -89,6 +90,16 @@ in
         root * /var/www/pablo-tools
         file_server
         encode zstd gzip
+      '';
+
+
+      "tumblr.pablo.tools".extraConfig = ''
+        root * /var/www/tumblr
+        file_server
+        encode zstd gzip
+        basic_auth {
+          import ${config.clan.core.vars.generators."caddy-basicauth".files."tumblr.pablo.tools.auth".path}
+        }
       '';
 
       # Homepage (dev)
