@@ -38,6 +38,7 @@ in
           "tags"
           "*.swp"
           "result"
+          ".claude"
         ];
 
         extraConfig = {

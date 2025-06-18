@@ -57,6 +57,7 @@
     home.packages = with pkgs; [
       swaynotificationcenter
       tea
+      claude-code
 
       (audacious.override { withPlugins = true; })
       strawberry
