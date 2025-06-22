@@ -91,6 +91,9 @@ self: super: {
     ];
   });
 
+  # To override packages from master input do:
+  # dmraid = inputs.nixpkgs-master.legacyPackages."${super.system}".dmraid;
+
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
   # river-luatile = super.callPackage ../packages/river-luatile { };

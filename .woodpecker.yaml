@@ -15,21 +15,6 @@
     },
     {
       "commands": [
-        "nix build '.#nixosConfigurations.ahorn.config.system.build.toplevel' -o 'result-ahorn'"
-      ],
-      "image": "bash",
-      "name": "Build configuration for ahorn"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-ahorn'"
-      ],
-      "image": "bash",
-      "name": "Push result-ahorn to Attic",
-      "secrets": [ "attic_key" ]
-    },
-    {
-      "commands": [
         "nix build '.#nixosConfigurations.birne.config.system.build.toplevel' -o 'result-birne'"
       ],
       "image": "bash",
