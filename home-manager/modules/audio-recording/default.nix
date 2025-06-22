@@ -18,9 +18,7 @@ let
     zam-plugins
     talentedhack
     gxplugins-lv2
-
-    # TODO: https://github.com/NixOS/nixpkgs/issues/348871
-    # distrho
+    distrho
   ];
 in
 {

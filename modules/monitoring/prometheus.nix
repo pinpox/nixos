@@ -12,8 +12,6 @@ let
 in
 {
 
-  # TODO https://github.com/NixOS/nixpkgs/issues/126083
-  # TODO https://github.com/NixOS/nixpkgs/pull/144984
   options.pinpox.services.monitoring-server = {
     enable = mkEnableOption "monitoring-server setup";
 
