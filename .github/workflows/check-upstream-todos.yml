@@ -1,0 +1,101 @@
+name: Check Upstream TODOs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday
+
+jobs:
+  check-todos:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check for resolved upstream TODOs
+      run: |
+        #!/bin/bash
+        set -e
+        
+        # Find all TODO comments with GitHub PR/issue links
+        echo "Searching for TODO comments with GitHub links..."
+        
+        # Search for TODO: followed by GitHub URLs
+        TODO_PATTERN="TODO:\s*https://github\.com/[^/]+/[^/]+/(pull|issues)/[0-9]+"
+        
+        # Find all matches and extract URLs
+        TODOS=$(grep -r -n -E "$TODO_PATTERN" . --exclude-dir=.git --exclude-dir=.github || true)
+        
+        if [ -z "$TODOS" ]; then
+          echo "No TODO comments with GitHub links found."
+          exit 0
+        fi
+        
+        echo "Found TODO comments:"
+        echo "$TODOS"
+        echo ""
+        
+        # Extract unique URLs from the matches
+        URLS=$(echo "$TODOS" | grep -oE "https://github\.com/[^/]+/[^/]+/(pull|issues)/[0-9]+" | sort -u)
+        
+        FAILED=false
+        
+        for URL in $URLS; do
+          echo "Checking: $URL"
+          
+          # Extract owner, repo, type (pull or issues), and number from URL
+          if [[ $URL =~ https://github\.com/([^/]+)/([^/]+)/(pull|issues)/([0-9]+) ]]; then
+            OWNER="${BASH_REMATCH[1]}"
+            REPO="${BASH_REMATCH[2]}"
+            TYPE="${BASH_REMATCH[3]}"
+            NUMBER="${BASH_REMATCH[4]}"
+            
+            # Use GitHub API to check status
+            if [ "$TYPE" == "pull" ]; then
+              echo "  Checking PR #$NUMBER in $OWNER/$REPO..."
+              API_URL="https://api.github.com/repos/$OWNER/$REPO/pulls/$NUMBER"
+              STATE=$(curl -s -H "Accept: application/vnd.github.v3+json" "$API_URL" | jq -r '.state // "unknown"')
+              MERGED=$(curl -s -H "Accept: application/vnd.github.v3+json" "$API_URL" | jq -r '.merged // false')
+              
+              if [ "$STATE" == "closed" ] && [ "$MERGED" == "true" ]; then
+                echo "  ❌ FAIL: PR #$NUMBER is MERGED! Remove TODO and workaround."
+                FAILED=true
+              elif [ "$STATE" == "closed" ] && [ "$MERGED" == "false" ]; then
+                echo "  ⚠️  PR #$NUMBER is closed but not merged."
+              elif [ "$STATE" == "open" ]; then
+                echo "  ✅ PR #$NUMBER is still open."
+              else
+                echo "  ⚠️  Could not determine PR status (state: $STATE, merged: $MERGED)"
+              fi
+            else
+              echo "  Checking Issue #$NUMBER in $OWNER/$REPO..."
+              API_URL="https://api.github.com/repos/$OWNER/$REPO/issues/$NUMBER"
+              STATE=$(curl -s -H "Accept: application/vnd.github.v3+json" "$API_URL" | jq -r '.state // "unknown"')
+              
+              if [ "$STATE" == "closed" ]; then
+                echo "  ❌ FAIL: Issue #$NUMBER is CLOSED! Remove TODO and workaround."
+                FAILED=true
+              elif [ "$STATE" == "open" ]; then
+                echo "  ✅ Issue #$NUMBER is still open."
+              else
+                echo "  ⚠️  Could not determine issue status (state: $STATE)"
+              fi
+            fi
+          else
+            echo "  ⚠️  Could not parse URL: $URL"
+          fi
+          echo ""
+        done
+        
+        if [ "$FAILED" == "true" ]; then
+          echo "❌ One or more upstream issues/PRs have been resolved!"
+          echo "Please review and remove the corresponding TODO comments and workarounds."
+          exit 1
+        else
+          echo "✅ All upstream issues/PRs are still unresolved."
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
