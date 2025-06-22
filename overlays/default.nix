@@ -24,7 +24,7 @@ self: super: {
         inherit
           # default-desktop
           # default-server
-          # screego
+          screego
           caddy-security
           activation-secrets
           bluetooth

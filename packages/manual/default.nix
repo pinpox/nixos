@@ -19,14 +19,7 @@ stdenvNoCC.mkDerivation rec {
       options-json =
         let
 
-          isValidOpt =
-            a:
-            (builtins.hasAttr "_type" a)
-            && (a._type == "option");
-            # && (builtins.hasAttr "default" a)
-            # && (builtins.hasAttr "example" a)
-            # && (builtins.hasAttr "description" a)
-            # && (builtins.hasAttr "type" a);
+          isValidOpt = a: (builtins.hasAttr "_type" a) && (a._type == "option");
 
           getOptionValues =
             opt: path:
@@ -35,9 +28,16 @@ stdenvNoCC.mkDerivation rec {
                 {
                   inherit path;
                   name = builtins.concatStringsSep "." path;
-                  example = opt.example;
-                  description = opt.description;
-                  default = if builtins.hasAttr "default" opt then opt.default else "";
+                  example = if builtins.hasAttr "example" opt then opt.example else "";
+                  description = if builtins.hasAttr "description" opt then opt.description else "";
+                  default =
+                    if builtins.hasAttr "defaultText" opt then
+                      opt.defaultText
+                    else
+                      let
+                        defaultEval = builtins.tryEval (if builtins.hasAttr "default" opt then opt.default else "");
+                      in
+                      if defaultEval.success then defaultEval.value else "<evaluation failed>";
                   type = opt.type.description;
                   documentedOption = true;
                 }
