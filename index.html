@@ -47,6 +47,174 @@
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
 						</div>
 					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.authURL">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.authURL"># </a> options.pinpox.services.caddy-security.authURL  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Authentication URL </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>map[_type:literalExpression text:&#34;https://${cfg.host}/oauth2/generic&#34;]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>https://auth.mydomain.tld/oauth2/generic</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.domain">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.domain"># </a> options.pinpox.services.caddy-security.domain  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Domain protetected by this caddy instance </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code></code> </p>
+							<p class="block"><strong>Example:</strong> <code>0cx.de</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.enable"># </a> options.pinpox.services.caddy-security.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable Caddy security portal config. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.host">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.host"># </a> options.pinpox.services.caddy-security.host  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Host serving caddy-security portal </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>map[_type:literalExpression text:&#34;auth.${cfg.domain}&#34;]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>auth.0cx.de</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.openID.domain">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.openID.domain"># </a> options.pinpox.services.caddy-security.openID.domain  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Domain of the OpenID provider </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>map[_type:literalExpression text:cfg.domain]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>mydomain.tld</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.openID.host">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.openID.host"># </a> options.pinpox.services.caddy-security.openID.host  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Host of the OpenID provider </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>map[_type:literalExpression text:&#34;login.${cfg.openID.domain}&#34;]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>login.mydomain.tld</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.openID.metadataUrl">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.openID.metadataUrl"># </a> options.pinpox.services.caddy-security.openID.metadataUrl  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Metadata URL of the OpenID Host </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>map[_type:literalExpression text:&#34;https://${cfg.openID.host}/.well-known/openid-configuration&#34;]</code> </p>
+							<p class="block"><strong>Example:</strong> <code>https://myhost.tld/.well-known/openid-configuration</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.caddy-security.openID.name">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.caddy-security.openID.name"># </a> options.pinpox.services.caddy-security.openID.name  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Name of the OpenID provider, shown in the UI </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>Dex</code> </p>
+							<p class="block"><strong>Example:</strong> <code>GitHub</code> </p>
+						</div>
+					</div>
 					<div class="nixoption block" id="options.pinpox.defaults.CISkip">
 						<div class="level">
 							<div class="level-left">
@@ -66,90 +234,6 @@
 						<div class="block">
 							<p class="block"><strong>Default:</strong> <code>false</code> </p>
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.desktop.enable">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.desktop.enable"># </a> options.pinpox.desktop.enable  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">boolean</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Whether to enable the default desktop configuration. </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>false</code> </p>
-							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.desktop.stateVersion">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.desktop.stateVersion"># </a> options.pinpox.desktop.stateVersion  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">string</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> NixOS state-Version </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>20.03</code> </p>
-							<p class="block"><strong>Example:</strong> <code>21.09</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.server.enable">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.server.enable"># </a> options.pinpox.server.enable  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">boolean</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> Whether to enable the default server configuration. </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>false</code> </p>
-							<p class="block"><strong>Example:</strong> <code>true</code> </p>
-						</div>
-					</div>
-					<div class="nixoption block" id="options.pinpox.server.stateVersion">
-						<div class="level">
-							<div class="level-left">
-								<div class="level-item">
-									<h3 class="title is-3"> <a href="#options.pinpox.server.stateVersion"># </a> options.pinpox.server.stateVersion  </h3>
-								</div>
-							</div>
-							<div class="level-right">
-								<div class="level-item">
-									<span class="tag is-medium is-info">string</span>
-								</div>
-							</div>
-						</div>
-
-						<p class="subtitle"> NixOS state-Version </p>
-
-						<div class="block">
-							<p class="block"><strong>Default:</strong> <code>20.03</code> </p>
-							<p class="block"><strong>Example:</strong> <code>21.09</code> </p>
 						</div>
 					</div>
 					<div class="nixoption block" id="options.pinpox.services.dex.enable">
@@ -377,6 +461,27 @@
 						</div>
 
 						<p class="subtitle"> Whether to enable http2irc webhook relay. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.jitsi-matrix-presence.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.jitsi-matrix-presence.enable"># </a> options.pinpox.services.jitsi-matrix-presence.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable Jitsi presence notification service. </p>
 
 						<div class="block">
 							<p class="block"><strong>Default:</strong> <code>false</code> </p>
@@ -635,6 +740,48 @@
 							<p class="block"><strong>Example:</strong> <code>stream.0cx.de</code> </p>
 						</div>
 					</div>
+					<div class="nixoption block" id="options.pinpox.services.radio.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.radio.enable"># </a> options.pinpox.services.radio.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable web radio streamer. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.radio.host">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.radio.host"># </a> options.pinpox.services.radio.host  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Host serving the radio </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>radio.0cx.de</code> </p>
+							<p class="block"><strong>Example:</strong> <code>radio.0cx.de</code> </p>
+						</div>
+					</div>
 					<div class="nixoption block" id="options.pinpox.services.restic-client.backup-paths-exclude">
 						<div class="level">
 							<div class="level-left">
@@ -719,6 +866,48 @@
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
 						</div>
 					</div>
+					<div class="nixoption block" id="options.pinpox.services.screego.domain">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.screego.domain"># </a> options.pinpox.services.screego.domain  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Domain to create the sudomains unders </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>0cx.de</code> </p>
+							<p class="block"><strong>Example:</strong> <code></code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.screego.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.screego.enable"># </a> options.pinpox.services.screego.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable screego server. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
 					<div class="nixoption block" id="options.pinpox.defaults.sound.enable">
 						<div class="level">
 							<div class="level-left">
@@ -780,6 +969,48 @@
 						<div class="block">
 							<p class="block"><strong>Default:</strong> <code>false</code> </p>
 							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.vaultwarden.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.vaultwarden.enable"># </a> options.pinpox.services.vaultwarden.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable vaultwarden password manager. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.vaultwarden.host">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.vaultwarden.host"># </a> options.pinpox.services.vaultwarden.host  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">string</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Host serving vaultwarden </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>pass.pablo.tools</code> </p>
+							<p class="block"><strong>Example:</strong> <code>pass.pablo.tools</code> </p>
 						</div>
 					</div>
 					<div class="nixoption block" id="options.pinpox.services.vikunja.enable">
@@ -881,6 +1112,27 @@
 						</div>
 
 						<p class="subtitle"> Whether to enable wastebin server. </p>
+
+						<div class="block">
+							<p class="block"><strong>Default:</strong> <code>false</code> </p>
+							<p class="block"><strong>Example:</strong> <code>true</code> </p>
+						</div>
+					</div>
+					<div class="nixoption block" id="options.pinpox.services.wayland.enable">
+						<div class="level">
+							<div class="level-left">
+								<div class="level-item">
+									<h3 class="title is-3"> <a href="#options.pinpox.services.wayland.enable"># </a> options.pinpox.services.wayland.enable  </h3>
+								</div>
+							</div>
+							<div class="level-right">
+								<div class="level-item">
+									<span class="tag is-medium is-info">boolean</span>
+								</div>
+							</div>
+						</div>
+
+						<p class="subtitle"> Whether to enable wayland configuration. </p>
 
 						<div class="block">
 							<p class="block"><strong>Default:</strong> <code>false</code> </p>
