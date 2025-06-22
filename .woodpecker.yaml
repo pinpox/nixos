@@ -1,77 +1,76 @@
-{
-  "labels": {
-    "backend": "local",
-  "platform": "linux/amd64"
-  },
+labels:
+  backend: local
+  platform: linux/amd64
 
-  "steps": [
-    {
-      "commands": [
-        "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
-      ],
-      "image": "bash",
-      "name": "Setup Attic",
-      "secrets": [ "attic_key" ]
-    },
-    {
-      "commands": [
-        "nix build '.#nixosConfigurations.birne.config.system.build.toplevel' -o 'result-birne'"
-      ],
-      "image": "bash",
-      "name": "Build configuration for birne"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-birne'"
-      ],
-      "image": "bash",
-      "name": "Push result-birne to Attic",
-      "secrets": [ "attic_key" ]
-    },
-    {
-      "commands": [
-        "nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel' -o 'result-kfbox'"
-      ],
-      "image": "bash",
-      "name": "Build configuration for kfbox"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-kfbox'"
-      ],
-      "image": "bash",
-      "name": "Push result-kfbox to Attic",
-      "secrets": [ "attic_key" ]
-    },
-    {
-      "commands": [
-        "nix build '.#nixosConfigurations.porree.config.system.build.toplevel' -o 'result-porree'"
-      ],
-      "image": "bash",
-      "name": "Build configuration for porree"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-porree'"
-      ],
-      "image": "bash",
-      "name": "Push result-porree to Attic",
-      "secrets": [ "attic_key" ]
-    },
-    {
-      "commands": [
-        "nix build '.#nixosConfigurations.limette.config.system.build.toplevel' -o 'result-limette'"
-      ],
-      "image": "bash",
-      "name": "Build configuration for limette"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-limette'"
-      ],
-      "image": "bash",
-      "name": "Push result-limette to Attic",
-      "secrets": [ "attic_key" ]
-    }
-  ]
-}
+steps:
+  - name: setup-attic
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
+
+  - name: build-birne
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.birne.config.system.build.toplevel' -o 'result-birne'
+
+  - name: push-birne
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-birne'
+
+  - name: build-kartoffel
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.kartoffel.config.system.build.toplevel' -o 'result-kartoffel'
+
+  - name: push-kartoffel
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-kartoffel'
+
+  - name: build-kfbox
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.kfbox.config.system.build.toplevel' -o 'result-kfbox'
+
+  - name: push-kfbox
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-kfbox'
+
+  - name: build-kiwi
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.kiwi.config.system.build.toplevel' -o 'result-kiwi'
+
+  - name: push-kiwi
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-kiwi'
+
+  - name: build-limette
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.limette.config.system.build.toplevel' -o 'result-limette'
+
+  - name: push-limette
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-limette'
+
+  - name: build-porree
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.porree.config.system.build.toplevel' -o 'result-porree'
+
+  - name: push-porree
+    image: bash
+    secrets: [attic_key]
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-porree'
