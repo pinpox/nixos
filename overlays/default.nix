@@ -1,4 +1,4 @@
-inputs: flake-self:
+inputs: flake-self: pinpox-utils:
 let
   # Pass flake inputs to overlay so we can use the sources pinned in flake.lock
   # instead of having to keep sha256 hashes in each package for src
@@ -12,6 +12,7 @@ self: super: {
   # TODO: fix infinite recursion
   manual = super.callPackage ../packages/manual {
     inherit inputs;
+    inherit pinpox-utils;
     flake-self.nixosModules = with flake-self.nixosModules; {
 
       # TODO:
@@ -54,7 +55,6 @@ self: super: {
         vikunja
         virtualisation
         wastebin
-        wireguard-client
         yubikey
         zsh
         ;

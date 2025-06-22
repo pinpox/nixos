@@ -3,6 +3,7 @@
   pkgs,
   flake-self,
   inputs,
+  pinpox-utils,
 }:
 
 stdenvNoCC.mkDerivation rec {
@@ -60,6 +61,7 @@ stdenvNoCC.mkDerivation rec {
                         {
                           inherit (inputs) flake-self;
                           inherit pkgs;
+                          inherit pinpox-utils;
                           lib = pkgs.lib;
                           config = { };
                         }
