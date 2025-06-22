@@ -3,7 +3,6 @@
 {
   pkgs,
   flake-self,
-  inputs,
 }:
 with pkgs;
 writeText "pipeline" (
@@ -34,7 +33,7 @@ writeText "pipeline" (
       ++
 
         # Hosts
-        pkgs.lib.lists.flatten ([
+        pkgs.lib.lists.flatten [
           (map
             (arch: {
               name = "Hosts with arch: ${arch}";
@@ -73,7 +72,7 @@ writeText "pipeline" (
               "x86_64-linux"
             ]
           )
-        ])
+        ]
       ++
 
         # Packages
