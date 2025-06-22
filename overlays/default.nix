@@ -15,10 +15,6 @@ self: super: {
     inherit flake-self;
   };
 
-  # TODO https://github.com/nix-community/home-manager/issues/5991, remove when
-  # merged
-  utillinux = super.util-linux;
-
   woodpecker-pipeline = super.callPackage ../packages/woodpecker-pipeline {
     inherit inputs;
     inherit flake-self;
