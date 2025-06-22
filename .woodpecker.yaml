@@ -2,9 +2,14 @@ labels:
   backend: local
   platform: linux/amd64
 
+when:
+  - event: [push, manual]
+
 steps:
   - name: setup-attic
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
@@ -16,6 +21,8 @@ steps:
 
   - name: push-birne
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic push lounge-rocks:nix-cache 'result-birne'
@@ -27,6 +34,8 @@ steps:
 
   - name: push-kartoffel
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic push lounge-rocks:nix-cache 'result-kartoffel'
@@ -38,6 +47,8 @@ steps:
 
   - name: push-kfbox
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic push lounge-rocks:nix-cache 'result-kfbox'
@@ -49,6 +60,8 @@ steps:
 
   - name: push-kiwi
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic push lounge-rocks:nix-cache 'result-kiwi'
@@ -60,6 +73,8 @@ steps:
 
   - name: push-limette
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic push lounge-rocks:nix-cache 'result-limette'
@@ -71,6 +86,8 @@ steps:
 
   - name: push-porree
     image: bash
+    environment:
+      - ATTIC_KEY
     secrets: [attic_key]
     commands:
       - attic push lounge-rocks:nix-cache 'result-porree'
