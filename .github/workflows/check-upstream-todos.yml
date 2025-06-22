@@ -42,9 +42,13 @@ jobs:
         URLS=$(echo "$TODOS" | grep -oE "https://github\.com/[^/]+/[^/]+/(pull|issues)/[0-9]+" | sort -u)
         
         FAILED=false
+        FAILED_LOCATIONS=""
         
         for URL in $URLS; do
           echo "Checking: $URL"
+          
+          # Find all locations where this URL appears
+          LOCATIONS=$(echo "$TODOS" | grep -F "$URL" || true)
           
           # Extract owner, repo, type (pull or issues), and number from URL
           if [[ $URL =~ https://github\.com/([^/]+)/([^/]+)/(pull|issues)/([0-9]+) ]]; then
@@ -62,7 +66,12 @@ jobs:
               
               if [ "$STATE" == "closed" ] && [ "$MERGED" == "true" ]; then
                 echo "  ❌ FAIL: PR #$NUMBER is MERGED! Remove TODO and workaround."
+                echo "  Locations:"
+                while IFS= read -r line; do
+                  echo "    $line"
+                done <<< "$LOCATIONS"
                 FAILED=true
+                FAILED_LOCATIONS="$FAILED_LOCATIONS$LOCATIONS"$'\n'
               elif [ "$STATE" == "closed" ] && [ "$MERGED" == "false" ]; then
                 echo "  ⚠️  PR #$NUMBER is closed but not merged."
               elif [ "$STATE" == "open" ]; then
@@ -77,7 +86,12 @@ jobs:
               
               if [ "$STATE" == "closed" ]; then
                 echo "  ❌ FAIL: Issue #$NUMBER is CLOSED! Remove TODO and workaround."
+                echo "  Locations:"
+                while IFS= read -r line; do
+                  echo "    $line"
+                done <<< "$LOCATIONS"
                 FAILED=true
+                FAILED_LOCATIONS="$FAILED_LOCATIONS$LOCATIONS"$'\n'
               elif [ "$STATE" == "open" ]; then
                 echo "  ✅ Issue #$NUMBER is still open."
               else
@@ -93,6 +107,9 @@ jobs:
         if [ "$FAILED" == "true" ]; then
           echo "❌ One or more upstream issues/PRs have been resolved!"
           echo "Please review and remove the corresponding TODO comments and workarounds."
+          echo ""
+          echo "Summary of resolved TODOs:"
+          echo "$FAILED_LOCATIONS"
           exit 1
         else
           echo "✅ All upstream issues/PRs are still unresolved."
