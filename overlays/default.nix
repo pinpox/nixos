@@ -9,64 +9,10 @@ let
 in
 self: super: {
 
-  # TODO: fix infinite recursion
   manual = super.callPackage ../packages/manual {
     inherit inputs;
     inherit pinpox-utils;
-    flake-self.nixosModules =
-
-      with flake-self.nixosModules; {
-
-        # TODO:
-        # Some modules cause infinite recursion, so we only pass the ones that
-        # work. There is probably a better way, this should be automagic.
-
-        inherit
-          # default-desktop
-          # default-server
-          screego
-          caddy-security
-          activation-secrets
-          bluetooth
-          ci
-          clan-common
-          dex
-          ente
-          environment
-          fonts
-          gitea
-          hedgedoc
-          hello
-          home-assistant
-          http2irc
-          jitsi-matrix-presence
-          kf-homepage
-          locale
-          lvm-grub
-          miniflux
-          minio
-          monitoring
-          networking
-          nextcloud
-          nix-common
-          ntfy-sh
-          openssh
-          owncast
-          radio
-          restic
-          sound
-          thelounge
-          unbound-desktop
-          vaultwarden
-          vikunja
-          virtualisation
-          wastebin
-          wayland
-          yubikey
-          zsh
-
-          ;
-      };
+    inherit flake-self;
   };
 
   # TODO https://github.com/nix-community/home-manager/issues/5991, remove when
