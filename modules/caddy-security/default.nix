@@ -17,6 +17,7 @@ in
     host = mkOption {
       type = types.str;
       default = "auth.${cfg.domain}";
+      defaultText = literalExpression ''"auth.''${cfg.domain}"'';
       description = "Host serving caddy-security portal";
       example = "auth.0cx.de";
     };
@@ -24,6 +25,7 @@ in
     authURL = mkOption {
       type = types.str;
       default = "https://${cfg.host}/oauth2/generic";
+      defaultText = literalExpression ''"https://''${cfg.host}/oauth2/generic"'';
       description = "Authentication URL";
       example = "https://auth.mydomain.tld/oauth2/generic";
     };
@@ -37,9 +39,18 @@ in
         example = "GitHub";
       };
 
+      domain = mkOption {
+        type = types.str;
+        default = cfg.domain;
+        defaultText = literalExpression "cfg.domain";
+        description = "Domain of the OpenID provider";
+        example = "mydomain.tld";
+      };
+
       host = mkOption {
         type = types.str;
         default = "login.${cfg.openID.domain}";
+        defaultText = literalExpression ''"login.''${cfg.openID.domain}"'';
         description = "Host of the OpenID provider";
         example = "login.mydomain.tld";
       };
@@ -47,6 +58,7 @@ in
       metadataUrl = mkOption {
         type = types.str;
         default = "https://${cfg.openID.host}/.well-known/openid-configuration";
+        defaultText = literalExpression ''"https://''${cfg.openID.host}/.well-known/openid-configuration"'';
         description = "Metadata URL of the OpenID Host";
         example = "https://myhost.tld/.well-known/openid-configuration";
       };
