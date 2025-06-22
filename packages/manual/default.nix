@@ -22,11 +22,11 @@ stdenvNoCC.mkDerivation rec {
           isValidOpt =
             a:
             (builtins.hasAttr "_type" a)
-            && (a._type == "option")
-            && (builtins.hasAttr "default" a)
-            && (builtins.hasAttr "example" a)
-            && (builtins.hasAttr "description" a)
-            && (builtins.hasAttr "type" a);
+            && (a._type == "option");
+            # && (builtins.hasAttr "default" a)
+            # && (builtins.hasAttr "example" a)
+            # && (builtins.hasAttr "description" a)
+            # && (builtins.hasAttr "type" a);
 
           getOptionValues =
             opt: path:
@@ -37,7 +37,7 @@ stdenvNoCC.mkDerivation rec {
                   name = builtins.concatStringsSep "." path;
                   example = opt.example;
                   description = opt.description;
-                  default = opt.default;
+                  default = if builtins.hasAttr "default" opt then opt.default else "";
                   type = opt.type.description;
                   documentedOption = true;
                 }
@@ -49,35 +49,32 @@ stdenvNoCC.mkDerivation rec {
         in
         pkgs.writeTextFile {
           name = "options.json";
-          text =
-            builtins.toJSON
-
-              {
-                options = pkgs.lib.attrsets.collect (o: o ? "documentedOption") (
-                  pkgs.lib.attrsets.mapAttrs (
-                    name: value:
-                    let
-                      allopts = getOptionValues (value (
-                        {
-                          inherit (inputs) flake-self;
-                          inherit pkgs;
-                          inherit pinpox-utils;
-                          lib = pkgs.lib;
-                          config = { };
-                        }
-                        // inputs
-                      )) [ ];
-                    in
-                    if
-                      # Filter out everything that has no ".options.pinpox"
-                      builtins.hasAttr "options" allopts
-                    then
-                      if builtins.hasAttr "pinpox" allopts.options then allopts.options.pinpox else null
-                    else
-                      null
-                  ) flake-self.nixosModules
-                );
-              };
+          text = builtins.toJSON {
+            options = pkgs.lib.attrsets.collect (o: o ? "documentedOption") (
+              pkgs.lib.attrsets.mapAttrs (
+                name: value:
+                let
+                  allopts = getOptionValues (value (
+                    {
+                      inherit (inputs) flake-self;
+                      inherit pkgs;
+                      inherit pinpox-utils;
+                      lib = pkgs.lib;
+                      config = { };
+                    }
+                    // inputs
+                  )) [ ];
+                in
+                if
+                  # Filter out everything that has no ".options.pinpox"
+                  builtins.hasAttr "options" allopts
+                then
+                  if builtins.hasAttr "pinpox" allopts.options then allopts.options.pinpox else null
+                else
+                  null
+              ) flake-self.nixosModules
+            );
+          };
         };
     in
     ''

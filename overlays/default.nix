@@ -13,56 +13,63 @@ self: super: {
   manual = super.callPackage ../packages/manual {
     inherit inputs;
     inherit pinpox-utils;
-    flake-self.nixosModules = with flake-self.nixosModules; {
+    flake-self.nixosModules =
 
-      # TODO:
-      # Some modules cause infinite recursion, so we only pass the ones that
-      # work. There is probably a better way, this should be automagic.
+      with flake-self.nixosModules; {
 
-      # caddy-security = flake-self.nixosModules.caddy-security;
+        # TODO:
+        # Some modules cause infinite recursion, so we only pass the ones that
+        # work. There is probably a better way, this should be automagic.
 
-      inherit
-        activation-secrets
-        bluetooth
-        ci
-        default-desktop
-        default-server
-        dex
-        ente
-        environment
-        fonts
-        gitea
-        hedgedoc
-        hello
-        home-assistant
-        http2irc
-        kf-homepage
-        locale
-        lvm-grub
-        miniflux
-        minio
-        monitoring
-        networking
-        nextcloud
-        nix-common
-        ntfy-sh
-        openssh
-        owncast
-        restic
-        sound
-        thelounge
-        unbound-desktop
-        vikunja
-        virtualisation
-        wastebin
-        yubikey
-        zsh
-        ;
-    };
+        inherit
+          # default-desktop
+          # default-server
+          # screego
+          caddy-security
+          activation-secrets
+          bluetooth
+          ci
+          clan-common
+          dex
+          ente
+          environment
+          fonts
+          gitea
+          hedgedoc
+          hello
+          home-assistant
+          http2irc
+          jitsi-matrix-presence
+          kf-homepage
+          locale
+          lvm-grub
+          miniflux
+          minio
+          monitoring
+          networking
+          nextcloud
+          nix-common
+          ntfy-sh
+          openssh
+          owncast
+          radio
+          restic
+          sound
+          thelounge
+          unbound-desktop
+          vaultwarden
+          vikunja
+          virtualisation
+          wastebin
+          wayland
+          yubikey
+          zsh
+
+          ;
+      };
   };
 
-  # TODO workaround for
-  # https://github.com/nix-community/home-manager/issues/5991, remove when
+  # TODO https://github.com/nix-community/home-manager/issues/5991, remove when
   # merged
   utillinux = super.util-linux;
 
