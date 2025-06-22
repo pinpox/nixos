@@ -92,7 +92,7 @@ self: super: {
   });
 
   # Override packages from master until fixes arrive
-  # TODO Remove
+  # TODO: https://github.com/NixOS/nixpkgs/issues/367926
   dmraid = inputs.nixpkgs-master.legacyPackages."${super.system}".dmraid;
   fzf-tab-zsh = inputs.nixpkgs-master.legacyPackages."${super.system}".fzf-tab-zsh;
   zsh-fzf-tab = inputs.nixpkgs-master.legacyPackages."${super.system}".zsh-fzf-tab;
