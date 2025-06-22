@@ -23,8 +23,8 @@ jobs:
         # Find all TODO comments with GitHub PR/issue links
         echo "Searching for TODO comments with GitHub links..."
         
-        # Search for TODO: followed by GitHub URLs
-        TODO_PATTERN="TODO:\s*https://github\.com/[^/]+/[^/]+/(pull|issues)/[0-9]+"
+        # Search for TODO (with or without colon) followed by GitHub URLs
+        TODO_PATTERN="TODO:?\s*https://github\.com/[^/]+/[^/]+/(pull|issues)/[0-9]+"
         
         # Find all matches and extract URLs
         TODOS=$(grep -r -n -E "$TODO_PATTERN" . --exclude-dir=.git --exclude-dir=.github || true)
