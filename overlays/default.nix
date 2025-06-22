@@ -43,6 +43,22 @@ self: super: {
   # To override packages from master input do:
   # dmraid = inputs.nixpkgs-master.legacyPackages."${super.system}".dmraid;
 
+  # Override tpm2-pytss from master for all python versions
+  # TODO https://github.com/NixOS/nixpkgs/issues/417992
+  python3 = super.python3.override {
+    packageOverrides = python-self: python-super: {
+      tpm2-pytss = inputs.nixpkgs-master.legacyPackages."${super.system}".python3Packages.tpm2-pytss;
+    };
+  };
+
+  # TODO https://github.com/NixOS/nixpkgs/issues/418654
+  python3Packages = super.python3Packages // {
+    tmp2-pytss = inputs.nixpkgs-master.legacyPackages."${super.system}".python3Packages.tpm2-pytss;
+  };
+
+  # Fix clr build issue by using rocmPackages from master
+  rocmPackages = inputs.nixpkgs-master.legacyPackages."${super.system}".rocmPackages;
+
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
   # river-luatile = super.callPackage ../packages/river-luatile { };
