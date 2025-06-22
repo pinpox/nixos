@@ -145,6 +145,8 @@
         # Register custom clan service modules
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
 
+        modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
+
         inventory = {
 
           meta.name = "pinpox-clan";
@@ -155,10 +157,8 @@
           instances = {
 
             localsend = {
-              module.name = "localsend";
-              module.input = "clan-core";
+              module.name = "@pinpox/localsend";
               roles.default.tags.all = { };
-              # roles.default.extraModules = [ { networking.firewall.allowedTCPPorts = [ 53317 ]; } ];
             };
 
             importer = {
