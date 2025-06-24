@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{caddy-patched, pkgs, config, lib, pinpox-utils, ... }:
 with lib;
 let
   cfg = config.pinpox.services.caddy-security;

@@ -12,7 +12,7 @@
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=fa170a64763a01a718174298b255876bd7fae8d3";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     caddy-patched.url = "github:pinpox/nixos-caddy-patched";
