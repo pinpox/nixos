@@ -370,22 +370,6 @@
         "type": "github"
       }
     },
-    "krops": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1744155991,
-        "narHash": "sha256-5o/sfKfPut4Alhnpx0FbzSb4L3VqXsH4vg7Uc3Y4+ak=",
-        "ref": "refs/heads/master",
-        "rev": "c09b3c1fde18c6792af922e617b48fd94f5072a4",
-        "revCount": 132,
-        "type": "git",
-        "url": "https://cgit.krebsco.de/krops"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://cgit.krebsco.de/krops"
-      }
-    },
     "matrix-hook": {
       "inputs": {
         "flake-compat": [
@@ -752,7 +736,6 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
-        "krops": "krops",
         "matrix-hook": "matrix-hook",
         "mc3000": "mc3000",
         "naersk": "naersk",

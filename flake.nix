@@ -83,10 +83,6 @@
       flake-compat.follows = "flake-compat";
     };
 
-    # Krops
-    krops.url = "git+https://cgit.krebsco.de/krops";
-    krops.flake = false;
-
     # ZSH plugins
     zsh-abbrev-alias.url = "github:momo-lab/zsh-abbrev-alias";
     zsh-abbrev-alias.flake = false;
