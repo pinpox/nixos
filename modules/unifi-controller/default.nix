@@ -24,8 +24,6 @@ in
 
     users.groups.unifi.name = "unifi";
 
-    # pinpox.virtualisation.docker.enable = true;
-
     # Access locally via:
     # https://birne:8443/manage/
     # Set inform via ssh:
