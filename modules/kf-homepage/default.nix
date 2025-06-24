@@ -5,12 +5,9 @@ let
 in
 {
 
-  options.pinpox.services.kf-homepage = {
-    enable = mkEnableOption "Krosse Flagge Homepage";
-  };
+  options.pinpox.services.kf-homepage.enable = mkEnableOption "Krosse Flagge Homepage";
 
   config = mkIf cfg.enable {
-
     services.caddy = {
       enable = true;
       virtualHosts = {

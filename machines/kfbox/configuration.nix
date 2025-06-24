@@ -85,7 +85,6 @@ in
 
     server = {
       enable = true;
-      stateVersion = "22.05";
     };
 
     services = {
@@ -110,6 +109,7 @@ in
       miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
+      web-wm.enable = true;
       gitea.enable = true;
       owncast.enable = false;
       vikunja.enable = false;
