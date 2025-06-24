@@ -144,21 +144,34 @@
 
         # Register custom clan service modules
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
-
         modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
+        modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
 
         inventory = {
 
-          meta.name = "pinpox-clan";
+          machines = {
+            kiwi.tags = [ "desktop" ];
+            kartoffel.tags = [ "destkop" ];
+            limette.tags = [ "destkop" ];
 
-          # machines.kiwi.deploy.buildHost = "kiwi";
-          # machines.kiwi.deploy.targetHost = "kiwi";
+            birne.tags = [ "server" ];
+            kfbox.tags = [ "server" ];
+            porree.tags = [ "server" ];
+          };
+
+          meta.name = "pinpox-clan";
 
           instances = {
 
             localsend = {
               module.name = "@pinpox/localsend";
               roles.default.tags.all = { };
+            };
+
+            machine-type = {
+              module.name = "@pinpox/machine-type";
+              roles.desktop.tags.desktop = { };
+              # roles.desktop.machines.kiwi = { };
             };
 
             importer = {

@@ -20,7 +20,6 @@
   users.users.pinpox.extraGroups = [ "adbusers" ];
 
   networking.hostName = "kiwi";
-  pinpox.desktop.enable = true;
 
   # Games
   programs.steam.enable = true;

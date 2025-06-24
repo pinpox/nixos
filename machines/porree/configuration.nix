@@ -79,7 +79,6 @@
   };
 
   pinpox = {
-    server.enable = true;
 
     services = {
       vaultwarden.enable = true;

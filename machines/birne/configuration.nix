@@ -25,8 +25,6 @@
 
   pinpox = {
 
-    server.enable = true;
-
     services = {
       unifi-controller.enable = true;
       minio.enable = true;

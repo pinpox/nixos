@@ -17,13 +17,7 @@ in
     restic-exporter.nixosModules.default
   ];
 
-  options.pinpox.server = {
-    enable = mkEnableOption "the default server configuration";
-  };
-
   config = mkIf cfg.enable {
-
-    hardware.enableRedistributableFirmware = true;
 
     # Limit log size for journal
     services.journald.extraConfig = "SystemMaxUse=1G";
@@ -88,6 +82,5 @@ in
       location = "/var/backup/postgresql";
       backupAll = true;
     };
-
   };
 }

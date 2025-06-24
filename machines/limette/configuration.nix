@@ -22,6 +22,5 @@
     pkgs.intel-media-driver # LIBVA_DRIVER_NAME=iHD
   ];
 
-  pinpox.desktop.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 }

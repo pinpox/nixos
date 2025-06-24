@@ -9,8 +9,6 @@
 
   networking.hostName = "kartoffel";
 
-  pinpox.desktop.enable = true;
-
   # Encrypted drive to be mounted by the bootloader. Path of the device will
   # have to be changed for each install.
   boot.initrd.luks.devices = {

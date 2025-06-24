@@ -83,10 +83,6 @@ in
 
   pinpox = {
 
-    server = {
-      enable = true;
-    };
-
     services = {
       # TODO Add miniflux and vikunja to dex
       # TODO Remove gitea apps
