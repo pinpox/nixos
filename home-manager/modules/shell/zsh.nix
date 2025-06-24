@@ -143,6 +143,11 @@
     };
 
     plugins = [
+     {
+        name = "zsh-forgit";
+        src = pkgs.zsh-forgit;
+        file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
+      }
       {
         name = "fast-syntax-highlighting";
         file = "fast-syntax-highlighting.plugin.zsh";
@@ -167,11 +172,6 @@
         name = "zsh-fzf-tab";
         file = "fzf-tab.plugin.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
-      }
-      {
-        name = "forgit";
-        file = "forgit.plugin.zsh";
-        src = "${pkgs.forgit}/share/forgit";
       }
     ];
   };

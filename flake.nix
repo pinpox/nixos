@@ -90,9 +90,6 @@
     zsh-colored-man-pages.url = "github:ael-code/zsh-colored-man-pages";
     zsh-colored-man-pages.flake = false;
 
-    forgit.url = "github:wfxr/forgit";
-    forgit.flake = false;
-
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";

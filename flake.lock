@@ -294,22 +294,6 @@
         "type": "github"
       }
     },
-    "forgit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1750458987,
-        "narHash": "sha256-h9li2nwKG6SnOQntWZpdeBbU3RrwO4+4yO7tAwuOwhE=",
-        "owner": "wfxr",
-        "repo": "forgit",
-        "rev": "7a5e68b11b9e34f5b85f26050c85daf30845282f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wfxr",
-        "repo": "forgit",
-        "type": "github"
-      }
-    },
     "go-karma-bot": {
       "inputs": {
         "nixpkgs": [
@@ -732,7 +716,6 @@
         "clan-core": "clan-core",
         "disko": "disko_2",
         "flake-compat": "flake-compat",
-        "forgit": "forgit",
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
