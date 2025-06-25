@@ -30,7 +30,48 @@ in
 
     backup-paths-exclude = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [
+        "*.pyc"
+        "*/.BurpSuite"
+        "*/.arduino15/packages"
+        "*/.cache"
+        "*/.cargo"
+        "*/.coc"
+        "*/.config/Nextcloud/logs"
+        "*/.config/Signal"
+        "*/.config/chromium"
+        "*/.config/discord"
+        "*/.config/retroarch"
+        "*/.container-diff"
+        "*/.go/pkg"
+        "*/.gvfs/"
+        "*/.local/share/Steam"
+        "*/.local/share/Trash"
+        "*/.local/share/tor-browser"
+        "*/.local/share/typeracer"
+        "*/.local/share/virtualenv"
+        "*/.local/state/NvChad/"
+        "*/.mozilla/firefox"
+        "*/.nextcloud"
+        "*/.npm"
+        "*/.npm/_cacache"
+        "*/.platformio"
+        "*/.rustup"
+        "*/.thumbnails"
+        "*/.ts3client"
+        "*/.vagrant.d"
+        "*/.vim"
+        "*/.vimtemp"
+        "*/Cache"
+        "*/Downloads"
+        "*/Seafile"
+        "*/VirtualBox VMs"
+        "*/cache2"
+        "*/code"
+        "/var/lib/docker"
+        "discord/Cache"
+        "tags"
+      ];
       example = [ "/home/pinpox/cache" ];
       description = "Paths to exclude from backup";
     };

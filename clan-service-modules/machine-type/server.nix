@@ -52,21 +52,6 @@ in
     pinpox.services = {
       restic-client = {
         enable = true;
-        backup-paths-exclude = [
-          "*.pyc"
-          "*/.cache"
-          "*/.cargo"
-          "*/.container-diff"
-          "*/.go/pkg"
-          "*/.gvfs/"
-          "*/.local/share/Steam"
-          "*/.local/share/Trash"
-          "*/.local/share/virtualenv"
-          "*/.mozilla/firefox"
-          "*/.rustup"
-          "*/.vim"
-          "*/.vimtemp"
-        ];
         backup-paths-onsite = [
           config.services.postgresqlBackup.location
           "/home"

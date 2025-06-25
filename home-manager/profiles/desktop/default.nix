@@ -5,10 +5,6 @@
 
   config = {
 
-
-
-
-
     home.keyboard = {
       variant = "colemak";
       layout = "us";
