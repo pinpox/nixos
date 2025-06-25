@@ -38,7 +38,6 @@
       nix.enable = true;
     };
 
-    metrics.node.enable = true;
   };
 
   security.acme.acceptTerms = true;

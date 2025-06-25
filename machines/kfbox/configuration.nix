@@ -111,8 +111,6 @@ in
       vikunja.enable = false;
       wastebin.enable = true;
     };
-
-    metrics.node.enable = true;
   };
 
   programs.ssh.startAgent = false;

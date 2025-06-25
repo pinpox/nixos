@@ -123,7 +123,6 @@
     };
 
     metrics = {
-      node.enable = true;
       blackbox.enable = true;
       json.enable = true;
     };
