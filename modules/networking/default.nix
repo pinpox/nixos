@@ -21,7 +21,6 @@ in
       nameservers = [
         "1.1.1.1"
         "8.8.8.8"
-        "192.168.2.1"
       ];
 
       # Additional hosts to put in /etc/hosts
