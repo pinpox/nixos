@@ -99,7 +99,10 @@ in
         alias = "yt-dlp-mp4";
         command = "nix run nixpkgs#yt-dlp -- -S res,ext:mp4:m4a --recode mp4 ";
       }
-
+      {
+        alias = "rm-orig";
+        command = ''find . -name "*.orig" -type f -delete'';
+      }
       # Global aliases, get expanded everywhere
       {
         global = true;
