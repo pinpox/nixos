@@ -40,7 +40,7 @@
         { config, pkgs, ... }:
         {
           hardware.enableRedistributableFirmware = true;
-          metrics.node.enable = true;
+          pinpox.metrics.node.enable = true;
         };
     };
 }

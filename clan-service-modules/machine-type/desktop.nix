@@ -85,9 +85,6 @@
   # TODO parametrize the username
   home-manager.users.pinpox = flake-self.homeConfigurations.desktop;
 
-  # Firewall ports required by home-manager modules
-  networking.firewall.allowedTCPPorts = [ 5201 ]; # droidcam
-
   # Hardware accelleration
   hardware.graphics = {
     enable = true;
@@ -117,7 +114,7 @@
 
     services = {
 
-      unbound-desktop.enable = true;
+      unbound-desktop.enable = false;
 
       wayland.enable = true;
       openssh.enable = true;
