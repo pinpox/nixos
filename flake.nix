@@ -172,16 +172,9 @@
 
             importer = {
               module.name = "importer";
-              # Clan modules deployed on all machines
               roles.default.tags.all = { };
-
               # Import all modules from ./modules/<module-name> on all machines
-              roles.default.extraModules = [
-
-                # TODO: Move state-version to instances when it is migrated to clan services
-                # https://git.clan.lol/clan/clan-core/pulls/3947
-                clan-core.clanModules.state-version
-              ] ++ (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
+              roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
             };
 
             wg-clan = {
