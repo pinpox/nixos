@@ -105,7 +105,6 @@ in
       miniflux.enable = true;
       thelounge.enable = true;
       kf-homepage.enable = true;
-      web-wm.enable = true;
       gitea.enable = true;
       owncast.enable = false;
       vikunja.enable = false;

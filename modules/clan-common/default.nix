@@ -5,6 +5,9 @@
   ...
 }:
 {
+  
+  # Make pinpox-utils available to all modules
+  _module.args.pinpox-utils = import ../../utils { inherit pkgs lib; };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
@@ -12,7 +15,7 @@
   clan.core.networking.targetHost = lib.mkDefault config.networking.hostName;
 
   clan.core.vars.settings.secretStore = "password-store";
-  clan.core.vars.settings.passBackend = "passage";
+  clan.vars.password-store.passPackage = pkgs.passage;
 
   environment.systemPackages = [ pkgs.passage ];
 

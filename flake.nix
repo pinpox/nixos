@@ -12,7 +12,7 @@
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=fa170a64763a01a718174298b255876bd7fae8d3";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     caddy-patched.url = "github:pinpox/nixos-caddy-patched";
@@ -33,7 +33,8 @@
     };
 
     pinpox-neovim.url = "github:pinpox/pinpox-neovim";
-    pinpox-neovim.inputs.nixpkgs.follows = "nixpkgs";
+    # TODO FIX
+    # pinpox-neovim.inputs.nixpkgs.follows = "nixpkgs";
 
     radio.url = "github:pinpox/radio";
     radio.inputs.nixpkgs.follows = "nixpkgs";
@@ -157,18 +158,20 @@
           instances = {
 
             localsend = {
+              module.input = "self";
               module.name = "@pinpox/localsend";
               roles.default.tags.all = { };
             };
 
             machine-type = {
+              module.input = "self";
               module.name = "@pinpox/machine-type";
               roles.desktop.tags.desktop = { };
+              roles.server.tags.server = { };
             };
 
             importer = {
               module.name = "importer";
-              module.input = "clan-core";
               # Clan modules deployed on all machines
               roles.default.tags.all = { };
 
@@ -183,6 +186,7 @@
 
             wg-clan = {
 
+              module.input = "self";
               module.name = "@pinpox/wireguard";
 
               roles.controller.machines.porree.settings = {
