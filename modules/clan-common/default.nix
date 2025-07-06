@@ -7,7 +7,7 @@
 {
   
   # Make pinpox-utils available to all modules
-  _module.args.pinpox-utils = import ../../utils { inherit pkgs lib; };
+  # _module.args.pinpox-utils = import ../../utils { inherit pkgs lib; };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
