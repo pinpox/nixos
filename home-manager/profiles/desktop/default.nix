@@ -1,4 +1,7 @@
-{ system-config, pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
 
   imports = [ ../common.nix ];

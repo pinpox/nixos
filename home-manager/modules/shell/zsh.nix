@@ -1,4 +1,5 @@
 {
+  flake-inputs,
   pkgs,
   promterm,
   lib,
@@ -72,6 +73,9 @@
     };
 
     shellAliases = rec {
+
+      gif = "${flake-inputs.gif-searcher.packages.x86_64-linux.default}/bin/show-gif";
+      gifi = "${flake-inputs.gif-searcher.packages.x86_64-linux.gif-infinite}/bin/show-gif";
 
       remote-review = ''nixpkgs-review pr --build-args="--builders 'ssh://pinpox@build-box.nix-community.org'"'';
 

@@ -28,6 +28,7 @@ with lib;
 
     # Extra arguments to pass to modules
     _module.args = {
+      flake-inputs = flake-self.inputs;
       pinpox-utils = import ../../utils { inherit pkgs; };
     };
 
