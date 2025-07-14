@@ -7,6 +7,8 @@
 
   networking.hostName = "limette";
 
+  pinpox.defaults.lvm-grub.enable = true;
+
   boot.growPartition = true;
 
   hardware.enableRedistributableFirmware = true;
