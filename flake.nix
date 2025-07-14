@@ -4,6 +4,7 @@
   inputs = {
 
     gif-searcher.url = "github:pinpox/gif-searcher";
+    gif-searcher.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
