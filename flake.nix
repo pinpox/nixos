@@ -3,6 +3,9 @@
 
   inputs = {
 
+    khard.url = "github:lucc/khard";
+    khard.inputs.nixpkgs.follows = "nixpkgs";
+
     gif-searcher.url = "github:pinpox/gif-searcher";
     gif-searcher.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -13,6 +14,7 @@ in
   config = mkIf cfg.enable {
 
     programs.taskwarrior = {
+      package = pkgs.taskwarrior3;
 
       # colorTheme	Either one of the default provided theme as string, or a path to a theme configuration file. 	null or string or path
       # config	Key-value configuration written to {file}`$XDG_CONFIG_HOME/task/taskrc`. 	attribute set of anything

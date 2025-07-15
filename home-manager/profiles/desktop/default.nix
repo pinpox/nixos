@@ -17,6 +17,7 @@
     pinpox = {
       defaults = {
         xdg.enable = true;
+        calendar.enable = true;
         shell.enable = true;
         gtk.enable = true;
         fonts.enable = true;
@@ -59,7 +60,9 @@
       claude-code
 
       (audacious.override { withPlugins = true; })
-      strawberry
+
+      # TODO https://github.com/NixOS/nixpkgs/issues/424928
+      # strawberry
 
       mpv
       # (mpv.override {
@@ -84,14 +87,14 @@
       eza
       fd
       gcc
-      gimp
+      # gimp
       adwaita-icon-theme
       file-roller
       gtk_engines
       h # https://github.com/zimbatm/h
       htop
       imagemagick
-      inetutils
+      iputils
       libnotify
       lxappearance
       manix
