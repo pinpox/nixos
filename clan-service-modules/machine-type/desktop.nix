@@ -109,7 +109,7 @@
 
     virtualisation = {
       docker.enable = true;
-      virtualbox.enable = true;
+      virtualbox.enable = false;
     };
 
     services = {
