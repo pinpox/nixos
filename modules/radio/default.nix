@@ -43,6 +43,9 @@ in
 
             [Lassulus Radio]
             url = "https://radio.lassul.us/radio.mp3"
+
+            [Hirschmilch chillout]
+            url = "https://hirschmilch.de:7000/chillout.mp3"
           '';
         };
 
