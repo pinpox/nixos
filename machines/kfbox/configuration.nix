@@ -16,7 +16,7 @@ in
   clan.core.networking.buildHost = "pinpox@localhost";
 
   services.ente = {
-    enable = true;
+    enable = false;
     web = true;
     albums = true;
     web-host = "https://photos.0cx.de";
