@@ -66,7 +66,7 @@ in
       # allowed.
       listeners = [
         {
-          address = "192.168.2.84";
+          address = "192.168.101.221";
           port = 1883;
           users = {
             # No real authentication needed here, since the local network is
@@ -108,7 +108,6 @@ in
         outputs = {
           prometheus_client =
             let
-
               wg-clan-ip = builtins.elemAt (builtins.match "(.*)/.*" (builtins.elemAt config.networking.wireguard.interfaces.wg-clan.ips 0)) 0;
             in
             {

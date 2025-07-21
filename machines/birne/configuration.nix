@@ -1,5 +1,6 @@
 # Configuration for birne
 {
+  config,
   ...
 }:
 {
@@ -57,7 +58,12 @@
     enable = true;
 
     settings.Port = 4533;
-    settings.Address = "192.168.8.4";
+    settings.Address = "${
+      (builtins.readFile (
+        config.clan.core.settings.directory + "/vars/per-machine/birne/wireguard-wg-clan-ip/ipv4/value"
+      ))
+    }";
+
     settings.MusicFolder = "/mnt/data/admin/ARCHIVE/Musik/Alphabetisch";
 
     # openFirewall

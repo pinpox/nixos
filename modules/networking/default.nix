@@ -24,29 +24,40 @@ in
       ];
 
       # Additional hosts to put in /etc/hosts
-      extraHosts = ''
-        # Wireguard
-        192.168.8.1 porree.wireguard
-        192.168.8.3 kartoffel.wireguard
-        192.168.8.4 birne.wireguard
-        192.168.8.5 kfbox.wireguard
+      extraHosts =
 
-        # Public
-        94.16.114.42 porree-old.public
-        94.16.108.229 porree.public
-        46.38.242.17 kfbox.public
-        93.177.66.52 kfbox-old
-        5.181.48.121 mega.public
+        let
+          mkWgEntry =
+            host:
+            "${
+              builtins.readFile (
+                config.clan.core.settings.directory + "/vars/per-machine/${host}/wireguard-wg-clan-ip/ipv4/value"
+              )
+            } ${host}.wireguard";
+        in
+        ''
+          # Wireguard
+          ${mkWgEntry "porree"}
+          ${mkWgEntry "kartoffel"}
+          ${mkWgEntry "birne"}
+          ${mkWgEntry "kfbox"}
 
-        # VPN protected services
-        192.168.8.1 vpn.motion.pablo.tools
-        192.168.8.1 vpn.octoprint.pablo.tools
-        192.168.8.1 vpn.alerts.pablo.tools
-        192.168.8.1 vpn.prometheus.pablo.tools
-        192.168.8.1 vpn.notify.pablo.tools
-        192.168.8.1 vpn.s3.pablo.tools
-        192.168.8.1 vpn.minio.pablo.tools
-      '';
+          # Public
+          94.16.114.42 porree-old.public
+          94.16.108.229 porree.public
+          46.38.242.17 kfbox.public
+          93.177.66.52 kfbox-old
+          5.181.48.121 mega.public
+
+          # VPN protected services
+          192.168.8.1 vpn.motion.pablo.tools
+          192.168.8.1 vpn.octoprint.pablo.tools
+          192.168.8.1 vpn.alerts.pablo.tools
+          192.168.8.1 vpn.prometheus.pablo.tools
+          192.168.8.1 vpn.notify.pablo.tools
+          192.168.8.1 vpn.s3.pablo.tools
+          192.168.8.1 vpn.minio.pablo.tools
+        '';
     };
   };
 }

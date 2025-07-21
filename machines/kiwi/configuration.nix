@@ -2,6 +2,7 @@
   nixos-hardware,
   lib,
   pkgs,
+  clan-core,
   ...
 }:
 {
@@ -9,7 +10,13 @@
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
+
+    # clan-core.clanModules.nginx
   ];
+
+  # clan.nginx.acme.email = "redacted@redacted.net";
+  # networking.domain = "ops.redacted.net";
+  # clan.core.networking.targetHost = "root@${config.networking.fqdn}";
 
   # TODO: remove when 6.15.1 hits unstable
   boot.kernelPackages = pkgs.linuxPackages_latest;

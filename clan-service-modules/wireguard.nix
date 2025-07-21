@@ -7,22 +7,11 @@
   roles.peer = {
 
     interface = {
-
-      options.ip = lib.mkOption {
-        type = lib.types.str;
-        example = "192.168.8.1";
-        description = ''
-          IP address of the host.
-        '';
-      };
-
       options.extraIPs = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        default = [];
+        default = [ ];
         example = [ "192.168.2.0/24" ];
-        description = ''
-          IP address of the host.
-        '';
+        description = "Extra IPs to allow";
       };
     };
 
@@ -34,14 +23,12 @@
         ...
       }:
       {
-        # Analog to 'perSystem' of flake-parts.
-        # For every instance of this service we will add a nixosModule to a client-machine
         nixosModule =
           { config, ... }:
           {
             networking.wireguard.interfaces = {
               "${instanceName}" = {
-                ips = [ "${settings.ip}/24" ];
+                ips = [ "${config.clan.core.vars.generators."wireguard-${instanceName}-ip".files.ipv4.value}/24" ];
                 peers = map (name: {
                   # Public key of the server
                   publicKey = (
@@ -77,14 +64,6 @@
           Endpoint where the contoller can be reached
         '';
       };
-
-      options.ip = lib.mkOption {
-        type = lib.types.str;
-        example = "192.168.8.1";
-        description = ''
-          IP address of the host.
-        '';
-      };
     };
     perInstance =
       {
@@ -96,6 +75,10 @@
       {
         nixosModule =
           { config, ... }:
+
+          let
+            ip = config.clan.core.vars.generators."wireguard-${instanceName}-ip".files.ipv4.value;
+          in
           {
 
             # Enable ip forwarding, so wireguard peers can reach eachother
@@ -103,7 +86,7 @@
 
             networking.wireguard.interfaces."${instanceName}" = {
 
-              ips = [ "${settings.ip}/24" ];
+              ips = [ "${ip}/24" ];
               listenPort = 51820;
 
               peers = map (peer: {
@@ -116,13 +99,15 @@
                 );
 
                 allowedIPs = [
-                  # TODO we might want to add extra ip's here, e.g. for birne?
-                  roles.peer.machines."${peer}".settings.ip
-                ] ++ roles.peer.machines."${peer}".settings.extraIPs;
+                  (builtins.readFile (
+                    config.clan.core.settings.directory
+                    + "/vars/per-machine/${peer}/wireguard-${instanceName}-ip/ipv4/value"
+                  ))
+                ]
+                ++ roles.peer.machines."${peer}".settings.extraIPs;
 
                 persistentKeepalive = 25;
               }) (lib.attrNames roles.peer.machines);
-
             };
           };
       };
@@ -136,19 +121,35 @@
         { config, pkgs, ... }:
         {
 
-          # Generate keys for each instance of the host
-          clan.core.vars.generators = lib.mapAttrs' (
-            name: value:
-            lib.nameValuePair ("wireguard-" + name) {
-              files.publickey.secret = false;
-              files.privatekey = { };
-              runtimeInputs = with pkgs; [ wireguard-tools ];
-              script = ''
-                wg genkey > $out/privatekey
-                wg pubkey < $out/privatekey > $out/publickey
-              '';
-            }
-          ) instances;
+          clan.core.vars.generators =
+
+            (lib.mapAttrs' (
+              name: value:
+
+              # Set IPs for each instance fo the host
+              lib.nameValuePair "wireguard-${name}-ip" {
+                prompts.ipv4.persist = true;
+                files.ipv4.secret = false;
+
+                # TODO, not implemented yet
+                # files.ipv6.secret = false;
+              }
+            ) instances)
+            //
+
+              (lib.mapAttrs' (
+                name: value:
+                # Generate keys for each instance of the host
+                lib.nameValuePair ("wireguard-" + name) {
+                  files.publickey.secret = false;
+                  files.privatekey = { };
+                  runtimeInputs = with pkgs; [ wireguard-tools ];
+                  script = ''
+                    wg genkey > $out/privatekey
+                    wg pubkey < $out/privatekey > $out/publickey
+                  '';
+                }
+              ) instances);
 
           # Set the private key for each instance
           networking.wireguard.interfaces = builtins.mapAttrs (name: _: {

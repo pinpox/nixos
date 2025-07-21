@@ -18,7 +18,8 @@
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    # clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=3aa7750265b4d2eeb5f7791b4205d247078cf670";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     caddy-patched.url = "github:pinpox/nixos-caddy-patched";
@@ -189,17 +190,15 @@
               module.name = "@pinpox/wireguard";
 
               roles.controller.machines.porree.settings = {
-                ip = "192.168.8.1";
                 endpoint = "vpn.pablo.tools:51820";
               };
 
               roles.peer.machines = {
-                kartoffel.settings.ip = "192.168.8.3";
-                birne.settings.ip = "192.168.8.4";
-                # birne.settings.extraIPs = [ "192.168.101.0/24" ];
-                kfbox.settings.ip = "192.168.8.5";
-                kiwi.settings.ip = "192.168.8.6";
-                limette.settings.ip = "192.168.8.8";
+                kartoffel = {};
+                birne.settings.extraIPs = [ "192.168.101.0/24" ];
+                kfbox = {};
+                kiwi = {};
+                limette = {};
               };
             };
           };
@@ -218,7 +217,7 @@
         }
       );
 
-      # Custom packages added via the overlay are selectively exposed here, to
+      # Custom packages {added via the overlay are selectively exposed here, to
       # allow using them from other flakes that import this one.
       packages = forAllSystems (
         system: with nixpkgsFor.${system}; {
