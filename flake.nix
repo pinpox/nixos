@@ -40,8 +40,7 @@
     };
 
     pinpox-neovim.url = "github:pinpox/pinpox-neovim";
-    # TODO FIX
-    # pinpox-neovim.inputs.nixpkgs.follows = "nixpkgs";
+    pinpox-neovim.inputs.nixpkgs.follows = "nixpkgs";
 
     radio.url = "github:pinpox/radio";
     radio.inputs.nixpkgs.follows = "nixpkgs";
