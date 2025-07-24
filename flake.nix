@@ -129,7 +129,7 @@
         }
       );
 
-      clan = clan-core.lib.buildClan {
+      clan = clan-core.lib.clan {
 
         # this needs to point at the repository root
         inherit self;
@@ -252,9 +252,8 @@
 
       # Each subdirectory in ./machines/<machine-name> is a host config. Clan
       # auto-imports all machines from ./machines
-      nixosConfigurations = clan.nixosConfigurations;
-
-      inherit (clan) clanInternals;
+      inherit (clan.config) clanInternals nixosConfigurations;
+      clan = clan.config;
 
       # Each subdirectory in ./home-manager/profiles/<profile-name> is a
       # home-manager profile
