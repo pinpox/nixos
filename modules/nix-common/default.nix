@@ -55,7 +55,7 @@ in
     # recommended) to remove the `nixos` channel for both users
     # and root e.g. `nix-channel --remove nixos`. `nix-channel
     # --list` should be empty for all users afterwards
-    nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
     nixpkgs.overlays = [ flake-self.overlays.default ];
 
     # Let 'nixos-version --json' know the Git revision of this flake.
