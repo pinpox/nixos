@@ -7,7 +7,6 @@
   wallpaper-generator,
   promterm,
   home-manager,
-  settings,
   ...
 }:
 {
