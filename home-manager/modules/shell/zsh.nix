@@ -46,6 +46,14 @@
           function aip() {
             wl-paste | ${pkgs.shell-gpt}/bin/sgpt
           }
+
+          # Create a temporary, detached worktree of the current git repo.
+          # Great for quick hot-fixes.
+          twork () {
+              local wtpath="$(mktemp -d)"
+              git worktree add --detach $wtpath
+              cd $wtpath
+          }
         '';
       in
       lib.mkMerge [
