@@ -57,7 +57,7 @@ in
     # Install these packages for my user
     home.packages = with pkgs; [
       # way-displays
-      (waybar.override { wireplumberSupport = false; })
+      # (waybar.override { wireplumberSupport = false; })
       wl-clipboard
       wlr-randr
       start-sway
@@ -117,8 +117,8 @@ in
             ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 99ppt 98ppt; [app_id="dropdown"] move position center'';
 
           # Screen brightness
-          "XF86MonBrightnessUp" = "exec ${pkgs.acpilight}/bin/xbacklight -inc 10 -steps 10";
-          "XF86MonBrightnessDown" = "exec ${pkgs.acpilight}/bin/xbacklight -dec 10 -steps 10";
+          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
 
           # Volume key
           "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer --toggle-mute";

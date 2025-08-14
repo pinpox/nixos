@@ -3,6 +3,9 @@
 
   inputs = {
 
+    tunnel.url = "github:pinpox/tunnel";
+    tunnel.inputs.nixpkgs.follows = "nixpkgs";
+
     khard.url = "github:lucc/khard";
     khard.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -140,7 +143,8 @@
         # allows to only pass what is needed to each module.
         specialArgs = {
           flake-self = self;
-        } // inputs;
+        }
+        // inputs;
 
         # Register custom clan service modules
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
@@ -157,11 +161,25 @@
             birne.tags = [ "server" ];
             kfbox.tags = [ "server" ];
             porree.tags = [ "server" ];
+            tunnelmonster.tags = [ "server" ];
           };
 
           meta.name = "pinpox-clan";
 
           instances = {
+
+            # data-mesher = {
+            #   module = {
+            #     input = "clan-core";
+            #     name = "data-mesher";
+            #   };
+            #   roles.admin.machines.kfbox = { };
+            #   roles.peer.machines.kiwi.settings.bootstrapNodes = [ "192.168.8.5" ];
+            #   roles.peer.tags."all" = { };
+            #   roles.peer.settings.network.interface = "wg-clan";
+            #   roles.admin.settings.network.interface = "wg-clan";
+            #   roles.signer.settings.network.interface = "wg-clan";
+            # };
 
             localsend = {
               module.input = "self";
@@ -193,11 +211,11 @@
               };
 
               roles.peer.machines = {
-                kartoffel = {};
+                kartoffel = { };
                 birne.settings.extraIPs = [ "192.168.101.0/24" ];
-                kfbox = {};
-                kiwi = {};
-                limette = {};
+                kfbox = { };
+                kiwi = { };
+                limette = { };
               };
             };
           };
@@ -266,7 +284,8 @@
               {
                 imports = [
                   (./home-manager/profiles + "/${name}")
-                ] ++ (builtins.attrValues self.homeManagerModules);
+                ]
+                ++ (builtins.attrValues self.homeManagerModules);
               };
           })
           (

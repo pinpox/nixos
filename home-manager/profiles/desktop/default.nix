@@ -17,7 +17,7 @@
     pinpox = {
       defaults = {
         xdg.enable = true;
-        calendar.enable = true;
+        calendar.enable = false;
         shell.enable = true;
         gtk.enable = true;
         fonts.enable = true;
