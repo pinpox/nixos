@@ -17,12 +17,6 @@ in
 
     networking = {
 
-      # Define the DNS servers
-      nameservers = [
-        "1.1.1.1"
-        "8.8.8.8"
-      ];
-
       # Additional hosts to put in /etc/hosts
       extraHosts =
 
