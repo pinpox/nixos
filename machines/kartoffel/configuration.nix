@@ -27,7 +27,7 @@
   hardware.nvidia.open = false;
   boot.blacklistedKernelModules = [ "nouveau" ];
   services.greetd.settings.default_session.command =
-    lib.mkForce "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'sway --unsupported-gpu'";
+    lib.mkForce "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'sway --unsupported-gpu'";
 
   boot.supportedFilesystems = {
     btrfs = true;
