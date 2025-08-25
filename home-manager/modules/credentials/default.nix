@@ -12,50 +12,75 @@ in
   options.pinpox.defaults.credentials.enable = mkEnableOption "credentials defaults";
 
   config = mkIf cfg.enable {
-    # Email
 
     accounts.email.maildirBasePath = "Mail";
 
+    programs.aerc = {
+      extraConfig.general.unsafe-accounts-conf = true;
+      enable = true;
+      stylesets.pinpox = (import ./aerc-style.nix { inherit config;});
+
+      extraConfig = {
+        ui = {
+          styleset-name = "pinpox";
+          icon-attachment = "a ";
+          icon-old = "";
+          icon-replied = "↩ ";
+        };
+        compose.address-book-cmd = "carddav-query %s";
+
+        filters = {
+          "text/plain" = "colorize";
+          "text/calendar" = "calendar";
+          "message/delivery-status" = "colorize";
+          "message/rfc822" = "colorize";
+          #text/html=pandoc -f html -t plain | colorize
+          "text/html" = "! html";
+          #text/html=! w3m -T text/html -I UTF-8
+          #text/*=bat -fP --file-name="$AERC_FILENAME"
+          #application/x-sh=bat -fP -l sh
+          #image/*=catimg -w $(tput cols) -
+          #subject,~Git(hub|lab)=lolcat -f
+          #from,thatguywhodoesnothardwraphismessages=wrap -w 100 | colorize
+          ".headers" = "colorize";
+          "image/*" = "${pkgs.libsixel}/bin/img2sixel - ";
+          # image/*=catimg -w$(tput cols) -
+        };
+      };
+    };
+
     accounts.email.accounts = {
       pablo_tools = {
+        folders = {
+          # send = "SENT";
+          inbox = "INBOX";
+        };
+        aerc.enable = true;
         address = "mail@pablo.tools";
+
+        aliases = [
+          "git@pablo.tools"
+          "github@pablo.tools"
+          "pablo1@mailbox.org"
+        ];
+
         realName = "Pablo Ovelleiro Corral";
         primary = true;
-        # gpg = {
-        #   key = "D03B218CAE771F77D7F920D9823A6154426408D3";
-        #   signByDefault = true;
-        # };
-        mbsync.enable = false;
-        msmtp.enable = false;
-        # notmuch.enable = false;
-        neomutt = {
-          enable = true;
-          mailboxName = "pablo_tools";
-        };
-
-        maildir = {
-          path = "pablo_tools";
-        };
-        # himalaya.enable = true;
-
-        # folders = {
-        #   # TODO
-        #   drafts = "";
-        # };
+        maildir.path = "pablo_tools";
 
         signature = {
           text = ''
             Pablo Ovelleiro Corral
 
             Web:     https://pablo.tools
-            XMPP:    pablo1@mailbox.org
-            GPG-Key: https://pablo.tools/gpg-key
+            Matrix:  @pinpox:matrix.org
+            Github:  https://github.com/pinpox
           '';
           showSignature = "append";
         };
 
         userName = "pablo1@mailbox.org";
-        passwordCommand = "pass mailbox.org/pablo1@mailbox.org";
+        passwordCommand = "passage show mailbox.org/himalaya";
         imap = {
           host = "imap.mailbox.org";
           tls.enable = true;
@@ -78,13 +103,5 @@ in
     home.packages = with pkgs; [
       tpm2-tools # To work with the TPM
     ];
-
-    # services.gpg-agent.pinentryPackage = pkgs.pinentry-qt;
-    # programs.gpg.enable = true;
-    #
-    # services.gpg-agent = {
-    #   enable = true;
-    #   enableSshSupport = true;
-    # };
   };
 }
