@@ -46,6 +46,12 @@ in
 
             [Hirschmilch chillout]
             url = "https://hirschmilch.de:7000/chillout.mp3"
+
+            [Nightride FM]
+            url = https://stream.rekt.network/nightride.ogg
+
+            [Rekt Network]
+            url = https://stream.rekt.network/rekt.ogg
           '';
         };
 
