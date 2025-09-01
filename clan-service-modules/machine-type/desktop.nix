@@ -123,12 +123,14 @@
         backup-paths-onsite = [
           "/home/pinpox/Notes"
           "/home/pinpox"
+          "/home/pinpox/.mozilla/firefox/pinpox/places.sqlite"
           # "*/.local/share/password-store"
           # "*/.passage"
           # "*/.gnupg"
           # "*/.ssh"
         ];
         backup-paths-offsite = [
+          "/home/pinpox/.mozilla/firefox/pinpox/places.sqlite"
           "/home/pinpox/Notes"
           "/home/pinpox"
         ];
