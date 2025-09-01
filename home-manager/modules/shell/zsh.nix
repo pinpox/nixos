@@ -53,6 +53,30 @@
               git worktree add --detach $wtpath
               cd $wtpath
           }
+
+          # Jump to a code project with FZF using Ctrl+j
+          fzf_cd_widget() {
+            local base="/home/pinpox/code"
+            local rel full
+
+            rel=$(
+              find "$base" -maxdepth 3 -type d \
+                | grep -E '(/.*){6}' \
+                | sed "s|^$base/||" \
+                | fzf --preview "BASE=$base sh -c '${pkgs.eza}/bin/eza --group-directories-first --tree --level=2 --icons \"\$BASE/\$0\"' {}"
+            ) || return
+
+            full="$base/$rel"
+            cd "$full" || return
+
+            if [[ -n "$ZLE_NAME" ]]; then
+              zle reset-prompt
+            fi
+          }
+
+          zle -N fzf_cd_widget
+          bindkey '^J' fzf_cd_widget
+
         '';
       in
       lib.mkMerge [
