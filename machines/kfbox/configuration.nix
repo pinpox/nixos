@@ -40,9 +40,7 @@ in
 
   clan.core.networking.targetHost = "46.38.242.17";
 
-  services.logind.extraConfig = ''
-    RuntimeDirectorySize=20G
-  '';
+  services.logind.settings.Login.RuntimeDirectorySize = "20G";
 
   imports = [
     ./retiolum.nix

@@ -183,9 +183,7 @@
     zola
   ];
 
-  services.logind.extraConfig = ''
-    RuntimeDirectorySize=20G
-  '';
+  services.logind.settings.Login.RuntimeDirectorySize = "20G";
 
   boot = {
     # Use GRUB2 as EFI boot loader.
