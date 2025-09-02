@@ -144,11 +144,31 @@ in
     enable = true;
     allowPing = true;
     allowedTCPPorts = [
+      # 8989
       80
       443
       22
     ];
   };
+
+  # virtualisation.docker.enable = true;
+  # services.traccar = {
+  #   enable = true;
+  #   # config.xml configuration as a Nix attribute set. This option is ignored if settingsFile is set.
+  #   #
+  #   # Nested attributes get translated to a properties entry in the traccar configuration. For instance: mail.smtp.port = "25" results in the following entry: <entry key='mail.smtp.port'>25</entry>
+  #
+  #   settings = {
+  #     h02.port = "8989";
+  #     filter = {
+  #       # This filters out positions within 5 meters of the previous position.
+  #       enable = "true";
+  #       duplicate = "true";
+  #       distance = "5";
+  #     };
+  #   };
+  #
+  # };
 
   services.caddy = {
 
@@ -162,12 +182,22 @@ in
         encode zstd gzip
       '';
 
+      # "track.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8082";
+
+      # "track.0cx.de".extraConfig = "
+      # reverse_proxy 127.0.0.1:8080 {
+      #         header_up Upgrade {http.request.header.upgrade}
+      #         header_up Connection {http.request.header.connection}
+      # }
+      # ";
+
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
+
       # "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
 
       # "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
-      "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
+      # "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
 
       # "matrixpresence.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8227";
 
