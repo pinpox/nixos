@@ -3,9 +3,6 @@
 
   inputs = {
 
-    tunnel.url = "github:pinpox/tunnel";
-    tunnel.inputs.nixpkgs.follows = "nixpkgs";
-
     khard.url = "github:lucc/khard";
     khard.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -161,7 +158,6 @@
             birne.tags = [ "server" ];
             kfbox.tags = [ "server" ];
             porree.tags = [ "server" ];
-            tunnelmonster.tags = [ "server" ];
           };
 
           meta.name = "pinpox-clan";

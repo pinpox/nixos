@@ -856,7 +856,6 @@
         "radio": "radio",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
-        "tunnel": "tunnel",
         "wallpaper-generator": "wallpaper-generator",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
@@ -993,26 +992,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "tunnel": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1754492356,
-        "narHash": "sha256-mSfoSOcefn8EYluwCwPipjezZK7SROOnKqgc0aw81VY=",
-        "owner": "pinpox",
-        "repo": "tunnel",
-        "rev": "206d699161737877effb9284a4e81d5318d31172",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "tunnel",
         "type": "github"
       }
     },
