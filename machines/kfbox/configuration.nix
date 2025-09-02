@@ -98,7 +98,7 @@ in
       #
       radio.enable = true;
       jitsi-matrix-presence.enable = true;
-      hedgedoc.enable = true;
+      hedgedoc.enable = false;
       screego.enable = true;
       miniflux.enable = true;
       thelounge.enable = true;
@@ -164,7 +164,8 @@ in
 
       "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
       # "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
-      "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
+
+      # "pads.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:3000";
 
       "photos-api.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8080";
 

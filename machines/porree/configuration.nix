@@ -113,7 +113,7 @@
           "https://${config.pinpox.services.vaultwarden.host}" # Vaultwarden
           "https://pinpox.github.io/nixos/"
           "https://cache.lounge.rocks/nix-cache/nix-cache-info"
-          "https://pads.0cx.de"
+          # "https://pads.0cx.de"
           "https://news.0cx.de"
           # Gitea (on kfbox with host set to default vaulue)
           "https://${config.pinpox.services.gitea.host}"
