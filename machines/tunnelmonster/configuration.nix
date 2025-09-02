@@ -11,7 +11,10 @@ let
 in
 {
 
-  imports = [ tunnel.nixosModules.tunnel ];
+  imports = [
+    tunnel.nixosModules.tunnel
+    ./abiotic.nix
+  ];
 
   networking.hostName = "tunnelmonster";
   clan.core.networking.targetHost = "202.61.225.166";
@@ -58,13 +61,6 @@ in
     caddy.enable = true;
   };
 
-  # Allow tunnel service to bind to privileged ports and manage network
-  # security.sudo.wheelNeedsPassword = false;
-  # users.users.tunnel.extraGroups = [ "wheel" ];
-
-  # Disable firewall for testing
-  # networking.firewall.enable = lib.mkForce false;
-
   # Ensure WireGuard tools are available
   environment.systemPackages = with pkgs; [
     wireguard-go
@@ -74,41 +70,4 @@ in
     curl
   ];
 
-  # networking.interfaces.ens3 = {
-  #   ipv6.addresses = [
-  #     {
-  #       address = "2a03:4000:7:4e0::";
-  #       prefixLength = 64;
-  #     }
-  #   ];
-  # };
-  #
-  #
-  # services.logind.settings.Login.RuntimeDirectorySize = "20G";
-  #
-  # pinpox = {
-  #   services = { };
-  # };
-  #
-  # fileSystems."/" = {
-  #   device = "/dev/disk/by-label/nixos";
-  #   fsType = "ext4";
-  #   autoResize = true;
-  # };
-  #
-  # fileSystems."/tmp" = {
-  #   fsType = "tmpfs";
-  #   device = "tmpfs";
-  #   options = [
-  #     "nosuid"
-  #     "nodev"
-  #     "relatime"
-  #     "size=14G"
-  #   ];
-  # };
-  #
-  # boot.growPartition = true;
-  # boot.kernelParams = [ "console=ttyS0" ];
-  # boot.loader.grub.device = "/dev/sda";
-  # boot.loader.timeout = 0;
 }
