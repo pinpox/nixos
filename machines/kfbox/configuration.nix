@@ -84,18 +84,18 @@ in
     services = {
       # TODO Add miniflux and vikunja to dex
       # TODO Remove gitea apps
-      dex.enable = true;
-      dex.host = "login.0cx.de";
+      # dex.enable = true;
+      # dex.host = "login.0cx.de";
 
-      caddy-security = {
-        enable = true;
-        domain = "0cx.de";
-        openID = {
-          name = "Dex";
-          host = "login.0cx.de";
-        };
-      };
-
+      # caddy-security = {
+      #   enable = true;
+      #   domain = "0cx.de";
+      #   openID = {
+      #     name = "Dex";
+      #     host = "login.0cx.de";
+      #   };
+      # };
+      #
       radio.enable = true;
       jitsi-matrix-presence.enable = true;
       hedgedoc.enable = true;

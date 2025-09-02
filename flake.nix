@@ -22,8 +22,8 @@
     # clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=3aa7750265b4d2eeb5f7791b4205d247078cf670";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
-    caddy-patched.url = "github:pinpox/nixos-caddy-patched";
-    caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
+    # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
+    # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 

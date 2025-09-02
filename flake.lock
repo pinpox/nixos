@@ -44,26 +44,6 @@
         "type": "github"
       }
     },
-    "caddy-patched": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1732352955,
-        "narHash": "sha256-sp7aGi4SbxjgapVSZer/IYqC1JkdmCmE21Z4N8poHeg=",
-        "owner": "pinpox",
-        "repo": "nixos-caddy-patched",
-        "rev": "3aba37347f11f2b3e538417c92f9429db8d281d4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "nixos-caddy-patched",
-        "type": "github"
-      }
-    },
     "clan-core": {
       "inputs": {
         "data-mesher": "data-mesher",
@@ -832,7 +812,6 @@
       "inputs": {
         "alertmanager-ntfy": "alertmanager-ntfy",
         "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
-        "caddy-patched": "caddy-patched",
         "clan-core": "clan-core",
         "disko": "disko_2",
         "flake-compat": "flake-compat",
