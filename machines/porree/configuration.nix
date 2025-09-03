@@ -3,7 +3,6 @@
   config,
   alertmanager-ntfy,
   pinpox-utils,
-  pkgs,
   ...
 }:
 {
@@ -66,8 +65,6 @@
   boot.loader.timeout = 0;
 
   programs.ssh.startAgent = false;
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   services.alertmanager-ntfy = {
     enable = true;

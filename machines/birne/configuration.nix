@@ -1,6 +1,7 @@
 # Configuration for birne
 {
   config,
+  lib,
   ...
 }:
 {
@@ -38,11 +39,7 @@
       locale.enable = true;
       nix.enable = true;
     };
-
   };
-
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "letsencrypt@pablo.tools";
 
   networking.firewall = {
     allowedUDPPorts = [ 3478 ];
