@@ -114,7 +114,7 @@
       playerctl
       pre-commit
       scrot
-      signal-desktop-bin
+      signal-desktop
       spotify
       sqlite
       tealdeer
