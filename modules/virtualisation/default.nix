@@ -12,12 +12,19 @@ in
   options.pinpox.virtualisation = {
     docker.enable = mkEnableOption "Docker virtualisation";
     virtualbox.enable = mkEnableOption "VirtualBox virtualisation";
+    virt-manager.enable = mkEnableOption "Virt-Manager virtualisation";
   };
 
   config = mkMerge [
     (mkIf cfg.docker.enable {
       users.users.pinpox.extraGroups = [ "docker" ];
       virtualisation.docker.enable = true;
+    })
+
+    (mkIf cfg.virt-manager.enable {
+      boot.kernelModules = [ "kvm-amd" ];
+      virtualisation.libvirtd.enable = true;
+      programs.virt-manager.enable = true;
     })
 
     (mkIf cfg.virtualbox.enable {
