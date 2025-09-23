@@ -1,12 +1,9 @@
 {
   nixos-hardware,
   lib,
-  # config,
   ...
 }:
 {
-
-  # networking.networkmanager.insertNameservers = config.services.unbound.settings.server.interface;
 
   imports = [
     ./disko-config-btrfs.nix
