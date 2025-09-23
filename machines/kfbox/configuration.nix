@@ -15,20 +15,6 @@ in
   # Build on machine executing the clan
   clan.core.networking.buildHost = "pinpox@localhost";
 
-  # services.ente = {
-  #   enable = false;
-  #   web = true;
-  #   albums = true;
-  #   web-host = "https://photos.0cx.de";
-  #   albums-host = "https://albums.0cx.de";
-  #   api-host = "https://photos-api.0cx.de";
-  #   webserver = "caddy";
-  #   settings = {
-  #     internal.admins = [ "1580559962386438" ];
-  #     apps.public-albums = "https://albums.0cx.de";
-  #   };
-  # };
-
   networking.interfaces.ens3 = {
     ipv6.addresses = [
       {

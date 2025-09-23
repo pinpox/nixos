@@ -29,7 +29,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-    nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
+    # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";

@@ -604,22 +604,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1759911796,
-        "narHash": "sha256-pVgQinhmqsnSrUENUK6MQhLukZTTHuc8CMQ9hkC+yVE=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "c6340d0caae1d4d75f02ab2f8c81ad66e8989551",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1751949589,
@@ -813,7 +797,6 @@
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
