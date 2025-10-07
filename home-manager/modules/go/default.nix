@@ -11,7 +11,7 @@ in
     programs = {
       go = {
         enable = true;
-        goPath = ".go";
+        env.GOPATH = ".go";
         #      packages = {
         #        "golang.org/x/text" =
         #          builtins.fetchGit "https://go.googlesource.com/text";
