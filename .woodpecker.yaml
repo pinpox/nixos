@@ -66,6 +66,19 @@ steps:
     commands:
       - attic push lounge-rocks:nix-cache 'result-kiwi'
 
+  - name: build-tanne
+    image: bash
+    commands:
+      - nix build '.#nixosConfigurations.tanne.config.system.build.toplevel' -o 'result-tanne'
+
+  - name: push-tanne
+    image: bash
+    environment:
+      ATTIC_KEY:
+        from_secret: attic_key
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-tanne'
+
   - name: build-limette
     image: bash
     commands:
