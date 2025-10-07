@@ -29,7 +29,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-    nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
+    # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
@@ -69,6 +69,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
 
     wallpaper-generator.url = "github:pinpox/wallpaper-generator";
     wallpaper-generator.flake = false;

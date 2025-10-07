@@ -60,11 +60,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1759827000,
-        "narHash": "sha256-nTHYS5pUGDdh4K2KLZEnAcpxDLguXiNbpl/NRMDMo24=",
+        "lastModified": 1759831247,
+        "narHash": "sha256-JJPI15ypwsEbU/1kuAc2AFqI0l/V4LJKNNggdi5tdp0=",
         "ref": "refs/heads/main",
-        "rev": "060b22cf21442d5361188371337a5a3b39686b22",
-        "revCount": 10454,
+        "rev": "668067080dc5cba623014e0828fdf4ee19bdc86d",
+        "revCount": 10456,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -604,39 +604,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1759830493,
-        "narHash": "sha256-XC1ioQjuF3DrCWi37iC6s3vKu1CTHs1FGN5AsHf894g=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "c0166c2d9815a6ad94af8fff675c30e41b3dfd08",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1759733170,
-        "narHash": "sha256-TXnlsVb5Z8HXZ6mZoeOAIwxmvGHp1g4Dw89eLvIwKVI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "8913c168d1c56dc49a7718685968f38752171c3b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
       "locked": {
         "lastModified": 1751949589,
         "narHash": "sha256-mgFxAPLWw0Kq+C8P3dRrZrOYEQXOtKuYVlo9xvPntt8=",
@@ -655,7 +623,9 @@
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1759830014,
@@ -792,7 +762,7 @@
     "retiolum": {
       "inputs": {
         "nix-darwin": "nix-darwin_2",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1752176723,
@@ -827,7 +797,6 @@
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
