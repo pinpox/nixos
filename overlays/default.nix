@@ -41,7 +41,8 @@ self: super: {
   });
 
   # To override packages from master input do:
-  # dmraid = inputs.nixpkgs-master.legacyPackages."${super.system}".dmraid;
+  #TODO https://github.com/NixOS/nixpkgs/issues/449068
+  pamixer = inputs.nixpkgs-master.legacyPackages."${super.system}".pamixer;
 
   # Override tpm2-pytss from master for all python versions
   # TODO https://github.com/NixOS/nixpkgs/issues/417992
