@@ -11,7 +11,7 @@ let
     pkgs.writeShellScriptBin "start-river" # sh
       ''
         export WLR_DRM_NO_MODIFIERS=1
-        dbus-launch --sh-syntax --exit-with-session ${pkgs.river}/bin/river
+        dbus-launch --sh-syntax --exit-with-session ${pkgs.river-classic}/bin/river
       '';
 
   screenshot-region =
@@ -42,7 +42,7 @@ in
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      river
+      river-classic
       river-luatile
       # way-displays
       (waybar.override { wireplumberSupport = false; })
