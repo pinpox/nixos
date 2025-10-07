@@ -57,7 +57,6 @@ in
     # Install these packages for my user
     home.packages = with pkgs; [
       # way-displays
-      # (waybar.override { wireplumberSupport = false; })
       wl-clipboard
       wlr-randr
       start-sway

@@ -57,8 +57,6 @@ in
 
     programs.waybar = {
 
-      package = pkgs.waybar.override { wireplumberSupport = false; };
-
       enable = true;
 
       style =

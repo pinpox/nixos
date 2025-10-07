@@ -45,7 +45,7 @@ in
       river-classic
       river-luatile
       # way-displays
-      (waybar.override { wireplumberSupport = false; })
+      waybar
       wl-clipboard
       wlr-randr
       start-river
