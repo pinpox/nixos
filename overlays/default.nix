@@ -29,9 +29,6 @@ self: super: {
   #   '';
   # });
 
-  # museum = super.callPackage ../packages/ente/museum.nix { };
-  # ente-web = super.callPackage ../packages/ente/web.nix { };
-
   # TODO remove when fixed upsteam
   zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {
     CXXFLAGS = [
@@ -41,8 +38,11 @@ self: super: {
   });
 
   # To override packages from master input do:
-  #TODO https://github.com/NixOS/nixpkgs/issues/449068
+  # TODO https://github.com/NixOS/nixpkgs/issues/449068
   pamixer = inputs.nixpkgs-master.legacyPackages."${super.system}".pamixer;
+
+  intel-graphics-compiler =
+    inputs.nixpkgs-master.legacyPackages."${super.system}".intel-graphics-compiler;
 
   # Override tpm2-pytss from master for all python versions
   # TODO https://github.com/NixOS/nixpkgs/issues/417992
@@ -52,9 +52,6 @@ self: super: {
   #   };
   # };
   #
-
-  # Fix clr build issue by using rocmPackages from master
-  # rocmPackages = inputs.nixpkgs-master.legacyPackages."${super.system}".rocmPackages;
 
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
