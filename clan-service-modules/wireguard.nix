@@ -5,7 +5,7 @@
 
   # Peer options and configuration
   roles.peer = {
-
+    description = "Wireguard peer, connects to the server";
     interface = {
       options.extraIPs = lib.mkOption {
         type = lib.types.listOf lib.types.str;
@@ -56,6 +56,7 @@
 
   # Controller options and configuration
   roles.controller = {
+    description = "Wireguard controller, center of the star";
     interface = {
       options.endpoint = lib.mkOption {
         type = lib.types.str;

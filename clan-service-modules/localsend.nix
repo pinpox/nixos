@@ -6,6 +6,7 @@
   manifest.categories = [ "Utility" ];
 
   roles.default = {
+    description = "Sets up localsend";
     interface =
       { lib, ... }:
       {

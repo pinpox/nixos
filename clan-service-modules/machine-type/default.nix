@@ -3,7 +3,9 @@
   manifest.name = "machine-type";
 
   roles.server.perInstance.nixosModule = ./server.nix;
+  roles.server.description = "Server machine settings, no GUI";
   roles.desktop.perInstance.nixosModule = ./desktop.nix;
+  roles.desktop.description = "Desktop machine settings, including wayland and sway";
 
   # Common configuration for all macine types
   perMachine.nixosModule =
