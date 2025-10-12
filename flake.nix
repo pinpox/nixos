@@ -148,6 +148,7 @@
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
         modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
+        modules."@pinpox/desktop" = ./clan-service-modules/desktop;
 
         inventory = {
 
@@ -166,6 +167,16 @@
           meta.name = "pinpox-clan";
 
           instances = {
+
+            desktop = {
+              module.input = "self";
+              module.name = "@pinpox/destkop";
+
+              # roles.sway.machines.fichte.settings = {};
+              roles.kde.machines.fichte.settings = {};
+
+              roles.sway.machines.kiefer.settings = {};
+            };
 
             localsend = {
               module.input = "self";
