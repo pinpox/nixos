@@ -18,7 +18,7 @@ in
     programs.aerc = {
       extraConfig.general.unsafe-accounts-conf = true;
       enable = true;
-      stylesets.pinpox = (import ./aerc-style.nix { inherit config;});
+      # stylesets.pinpox = (import ./aerc-style.nix { inherit config;});
 
       extraConfig = {
         ui = {

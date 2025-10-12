@@ -148,6 +148,7 @@
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
         modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
+        modules."@pinpox/desktop" = ./clan-service-modules/desktop;
 
         inventory = {
 
@@ -155,8 +156,8 @@
             kiwi.tags = [ "desktop" ];
             tanne.tags = [ "desktop" ];
             fichte.tags = [ "desktop" ];
-            kartoffel.tags = [ "destkop" ];
-            limette.tags = [ "destkop" ];
+            kartoffel.tags = [ "desktop" ];
+            limette.tags = [ "desktop" ];
 
             birne.tags = [ "server" ];
             kfbox.tags = [ "server" ];
@@ -166,6 +167,17 @@
           meta.name = "pinpox-clan";
 
           instances = {
+
+            desktop = {
+              module.input = "self";
+              module.name = "@pinpox/desktop";
+
+              # All machines with desktop tag have sway
+              roles.sway.tags.desktop = { };
+
+              # Fichte additionally has KDE
+              roles.kde.machines.fichte = { };
+            };
 
             localsend = {
               module.input = "self";

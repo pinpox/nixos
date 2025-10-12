@@ -23,21 +23,6 @@
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'sway'";
-        user = "greeter";
-      };
-
-      river_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-river";
-        user = "greeter";
-      };
-    };
-  };
-
   # Enable networkmanager
   networking.networkmanager.enable = true;
 
@@ -59,6 +44,9 @@
   # home-manager versions and does not work with configs using
   # nixpkgs.config`
   home-manager.useUserPackages = true;
+
+  # Backup files before overwriting them with home-manager
+  home-manager.backupFileExtension = "hm-backup";
 
   # Pass all flake inputs to home-manager modules aswell so we can use them
   # there.
