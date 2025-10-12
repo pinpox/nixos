@@ -172,10 +172,11 @@
               module.input = "self";
               module.name = "@pinpox/desktop";
 
-              roles.kde.machines.fichte.settings = {};
-              roles.sway.machines.fichte.settings = {};
+              # All machines with desktop tag have sway
+              roles.sway.tags.desktop = { };
 
-              roles.sway.machines.tanne.settings = {};
+              # Fichte additionally has KDE
+              roles.kde.machines.fichte = { };
             };
 
             localsend = {

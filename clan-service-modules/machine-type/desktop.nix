@@ -45,6 +45,9 @@
   # nixpkgs.config`
   home-manager.useUserPackages = true;
 
+  # Backup files before overwriting them with home-manager
+  home-manager.backupFileExtension = "hm-backup";
+
   # Pass all flake inputs to home-manager modules aswell so we can use them
   # there.
   # home-manager.extraSpecialArgs = flake-self.inputs;
