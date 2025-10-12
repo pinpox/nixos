@@ -156,8 +156,8 @@
             kiwi.tags = [ "desktop" ];
             tanne.tags = [ "desktop" ];
             fichte.tags = [ "desktop" ];
-            kartoffel.tags = [ "destkop" ];
-            limette.tags = [ "destkop" ];
+            kartoffel.tags = [ "desktop" ];
+            limette.tags = [ "desktop" ];
 
             birne.tags = [ "server" ];
             kfbox.tags = [ "server" ];
@@ -170,12 +170,12 @@
 
             desktop = {
               module.input = "self";
-              module.name = "@pinpox/destkop";
+              module.name = "@pinpox/desktop";
 
-              # roles.sway.machines.fichte.settings = {};
               roles.kde.machines.fichte.settings = {};
+              roles.sway.machines.fichte.settings = {};
 
-              roles.sway.machines.kiefer.settings = {};
+              roles.sway.machines.tanne.settings = {};
             };
 
             localsend = {
