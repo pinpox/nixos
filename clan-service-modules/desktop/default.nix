@@ -6,28 +6,12 @@
 
     sway = {
       perInstance.nixosModule = ./sway.nix;
-      description = "Sway tiling compositor (wayland)";
+      description = "Sway (wayland): Minimalist tiling window manager with Wayland compositor support";
     };
 
     kde = {
       perInstance.nixosModule = ./kde.nix;
-      description = "KDE Plasma";
+      description = "KDE/Plasma (wayland): Full-featured desktop environment with modern Qt-based interface";
     };
-
   };
-
-  # Common configuration for all macine types
-  perMachine.nixosModule =
-    {
-      # lib,
-      ...
-    }:
-    {
-
-      # TODO
-      # security.acme.acceptTerms = true;
-      # security.acme.defaults.email = lib.mkDefault "letsencrypt@pablo.tools";
-      # clan.core.settings.state-version.enable = true;
-
-    };
 }
