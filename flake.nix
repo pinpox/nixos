@@ -154,6 +154,7 @@
           machines = {
             kiwi.tags = [ "desktop" ];
             tanne.tags = [ "desktop" ];
+            fichte.tags = [ "desktop" ];
             kartoffel.tags = [ "destkop" ];
             limette.tags = [ "destkop" ];
 
