@@ -179,6 +179,24 @@
               roles.kde.machines.fichte = { };
             };
 
+            user-pinpox = {
+              module.name = "users";
+              roles.default.tags.all = { };
+              roles.default.settings = {
+                user = "pinpox";
+                share = true;
+              };
+            };
+
+            user-lislon = {
+              module.name = "users";
+              roles.default.machines.fichte = { };
+              roles.default.settings = {
+                user = "lison";
+                share = true;
+              };
+            };
+
             localsend = {
               module.input = "self";
               module.name = "@pinpox/localsend";
