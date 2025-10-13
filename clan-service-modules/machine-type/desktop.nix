@@ -135,9 +135,7 @@
     # irc-announce irc.hackint.org 6697 testbot992 '#lounge-rocks2' 1 "test2"
     # pkgs.nur.repos.mic92.irc-announce
 
-    # TODO orca-slicer broken until https://github.com/NixOS/nixpkgs/pull/354038 is merged
-    # orca-slicer
-    discord
+    firefox
 
     gcc
     comma
@@ -145,31 +143,19 @@
     arandr
     binutils
     file
-    # freecad
     git
     gnumake
-    go
-    jetbrains-mono
     killall
     lm_sensors
-    macchanger
     neovim
     nixpkgs-review
-    # kicad
     nix-init
     nix-update
-    nixfmt-rfc-style
     nodejs
-    openvpn
-    prusa-slicer
-    recursive
     ripgrep
-    ruby
     time
-    universal-ctags
     usbutils
     wget
-    zola
   ];
 
   services.logind.settings.Login.RuntimeDirectorySize = "20G";
