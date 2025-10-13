@@ -12,7 +12,10 @@
 
   networking.hostName = "fichte";
 
-  # For dual-boot
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
+  # Set keymap to DE on this device
+  console.keyMap = lib.mkForce "de";
+  services.xserver = {
+    layout = "de";
+    xkbOptions = "eurosign:e";
+  };
 }
