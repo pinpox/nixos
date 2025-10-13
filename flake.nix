@@ -173,8 +173,6 @@
               module.name = "@pinpox/desktop";
 
               roles.sway.tags.desktop = { };
-
-              # Fichte additionally has KDE
               roles.kde.machines.fichte = { };
             };
 
@@ -260,11 +258,10 @@
         }
       );
 
-      # Custom packages {added via the overlay are selectively exposed here, to
+      # Custom packages added via the overlay are selectively exposed here, to
       # allow using them from other flakes that import this one.
       packages = forAllSystems (
         system: with nixpkgsFor.${system}; {
-
           inherit
             hello-custom
             fritzbox_exporter
