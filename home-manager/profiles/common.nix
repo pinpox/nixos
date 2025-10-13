@@ -43,6 +43,7 @@ with lib;
     home = {
       # Install these packages for my user
       packages = with pkgs; [
+        nixfmt-rfc-style
         eza
         htop
         pkg-config
