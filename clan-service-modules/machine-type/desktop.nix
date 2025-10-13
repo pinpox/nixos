@@ -12,7 +12,6 @@
 {
 
   imports = [
-    ../../users/pinpox.nix
     ./nextcloud-desktop.nix
     home-manager.nixosModules.home-manager
   ];

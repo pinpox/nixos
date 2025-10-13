@@ -9,7 +9,6 @@ with lib;
 {
 
   imports = [
-    ../../users/pinpox.nix
     restic-exporter.nixosModules.default
   ];
 

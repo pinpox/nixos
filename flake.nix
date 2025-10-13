@@ -172,11 +172,20 @@
               module.input = "self";
               module.name = "@pinpox/desktop";
 
-              # All machines with desktop tag have sway
               roles.sway.tags.desktop = { };
 
               # Fichte additionally has KDE
               roles.kde.machines.fichte = { };
+            };
+
+            user-root = {
+              module.name = "users";
+              roles.default.tags.all = { };
+              roles.default.settings = {
+                user = "root";
+                share = true;
+              };
+              roles.default.extraModules = [ ./users/root.nix ];
             };
 
             user-pinpox = {
@@ -186,13 +195,14 @@
                 user = "pinpox";
                 share = true;
               };
+              roles.default.extraModules = [ ./users/pinpox.nix ];
             };
 
             user-lislon = {
               module.name = "users";
               roles.default.machines.fichte = { };
               roles.default.settings = {
-                user = "lison";
+                user = "lislon";
                 share = true;
               };
             };
