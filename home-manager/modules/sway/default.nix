@@ -95,8 +95,8 @@ in
               mic-toggle =
                 pkgs.writeShellScriptBin "mic-toggle" # sh
                   ''
-                    source=$(pactl get-default-source)
-                    pactl set-source-mute "$source" toggle
+                    source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+                    ${pkgs.pulseaudio}/bin/pactl set-source-mute "$source" toggle
                   '';
             in
             "exec ${mic-toggle}/bin/mic-toggle";
