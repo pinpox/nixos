@@ -10,7 +10,7 @@ let
 
   # Pin Nextcloud major version.
   # Refer to upstream docs for updating major versions
-  package = pkgs.nextcloud31;
+  package = pkgs.nextcloud32;
 
 in
 {
@@ -148,7 +148,6 @@ in
         adminpassFile = "${config.clan.core.vars.generators."nextcloud".files."admin-pass-file".path}";
       };
 
-      nginx.recommendedHttpHeaders = true;
     };
 
     environment.systemPackages = with pkgs; [

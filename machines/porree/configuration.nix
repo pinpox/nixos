@@ -12,7 +12,7 @@
     matrix-hook.nixosModule
     alertmanager-ntfy.nixosModules.default
     ./caddy.nix
-    ./retiolum.nix
+    # ./retiolum.nix
   ];
 
   clan.core.networking.targetHost = "94.16.108.229";
