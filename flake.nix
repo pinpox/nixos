@@ -168,6 +168,28 @@
 
           instances = {
 
+            # yggdrasil =
+            #   let
+            #     porree_peers = [
+            #       # "tcp://94.16.108.229:6443"
+            #       "quic://94.16.108.229:6443"
+            #       "ws://94.16.108.229:6443"
+            #       "tls://94.16.108.229:6443"
+            #     ];
+            #   in
+            #   {
+            #     module.name = "yggdrasil";
+            #     roles.default.tags.all = { };
+            #
+            #     # roles.default.settings.peers =
+            #     #   lib.optionals (config.networking.hostName != "porree") porree_peers;
+            #
+            #     # roles.default.machines.kiwi.settings.peers = porree_peers;
+            #     roles.default.settings.peers = porree_peers;
+            #
+            #     roles.default.extraModules = [ "./yggdrasil_extra.nix" ];
+            #   };
+
             desktop = {
               module.input = "self";
               module.name = "@pinpox/desktop";
