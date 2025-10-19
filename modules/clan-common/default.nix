@@ -21,6 +21,12 @@
 
   clan.core.vars.generators."mkpasswd-generator" = {
     files.test-password = { };
+
+    # files.test-password = {
+    #   owner = "pinpox";
+    #   group = "users";
+    # };
+
     runtimeInputs = with pkgs; [
       coreutils
       xkcdpass
