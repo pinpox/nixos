@@ -1,4 +1,10 @@
-{ lib, ... }:
+{
+  lib,
+  # inputs,
+  clanLib,
+  directory,
+  ...
+}:
 {
   _class = "clan.service";
   manifest.name = "wireguard";
@@ -18,11 +24,23 @@
     perInstance =
       {
         instanceName,
-        settings,
+        # settings,
         roles,
         ...
       }:
       {
+
+        exports.networking = {
+          peers = lib.mapAttrs (name: machine: {
+            host.plain = clanLib.vars.getPublicValue {
+              machine = name;
+              generator = "wireguard-${instanceName}-ip";
+              file = "ipv4";
+              flake = directory;
+            };
+          }) roles.peer.machines;
+        };
+
         nixosModule =
           { config, ... }:
           {
@@ -68,7 +86,7 @@
     };
     perInstance =
       {
-        settings,
+        # settings,
         instanceName,
         roles,
         ...
