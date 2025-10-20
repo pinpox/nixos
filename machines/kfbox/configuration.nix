@@ -52,6 +52,11 @@ in
     environmentFile = config.clan.core.vars.generators."go-karma-bot".files."envfile".path;
   };
 
+  systemd.services.go-karma-bot.serviceConfig = {
+    RestartSec = 5;
+    Restart = "on-abnormal";
+  };
+
   # Discord AoE2 taunt bot
   clan.core.vars.generators."aoe-taunt-discord-bot" = {
     prompts.discord_token.persist = true;
