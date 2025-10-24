@@ -119,13 +119,31 @@ in
     programs.jujutsu = {
       enable = true;
       settings = {
+        merge-tools.meld.merge-args = [
+          "$left"
+          "$base"
+          "$right"
+          "-o"
+          "$output"
+          "--auto-merge"
+        ];
         signing = {
           behavior = "own";
           backend = "ssh";
           key = "~/.ssh/key.pub";
           allowed-signers = "~/.ssh/allowed_signers";
         };
-        ui.default-command = "log";
+        ui = {
+          default-command = "log";
+          merge-editor = [
+            "meld"
+            "$left"
+            "$base"
+            "$right"
+            "-o"
+            "$output"
+          ];
+        };
         user = {
           email = "git@pablo.tools";
           name = "pinpox";
