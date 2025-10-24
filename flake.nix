@@ -201,7 +201,11 @@
               ];
             };
 
-            # };
+            monitoring = {
+              module.name = "monitoring";
+              roles.telegraf.tags = [ "desktop" ];
+              roles.prometheus.machines.kiwi = { };
+            };
 
             desktop = {
               module.input = "self";
