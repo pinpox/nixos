@@ -98,6 +98,9 @@
     zsh-colored-man-pages.url = "github:ael-code/zsh-colored-man-pages";
     zsh-colored-man-pages.flake = false;
 
+    jj-zsh-prompt.url = "github:pinpox/jj-zsh-prompt";
+    jj-zsh-prompt.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";
@@ -182,31 +185,40 @@
               module.name = "yggdrasil";
               roles.default.tags = [ "desktop" ];
               roles.default.extraModules = [
-                {
-                  services.yggdrasil.settings =
-                    lib.optionalAttrs (networking.hostName == "kfbox" || networking.hostName == "porree")
-                      {
-                        Listen = [
-                          "quic://0.0.0.0:6443"
-                          "ws//0.0.0.0:6443"
-                          "tls://0.0.0.0:6443"
-                          "quic://[::]:6443"
-                          "ws//[::]:6443"
-                          "tls://[::]:6443"
-                        ];
-                      };
-                  networking.firewall.allowedTCPPorts = [ 6443 ];
-                  networking.firewall.allowedUDPPorts = [ 6443 ];
-                }
+                (
+                  { lib, config, ... }:
+                  {
+                    services.yggdrasil.settings =
+                      # (builtins.match "kfbox|porree" config.networking.hostName) != null
+                      lib.optionalAttrs (config.networking.hostName == "kfbox" || config.networking.hostName == "porree")
+                        {
+                          Listen = [
+                            "quic://0.0.0.0:6443"
+                            "ws//0.0.0.0:6443"
+                            "tls://0.0.0.0:6443"
+                            "quic://[::]:6443"
+                            "ws//[::]:6443"
+                            "tls://[::]:6443"
+                          ];
+                        };
+                    networking.firewall.allowedTCPPorts = [ 6443 ];
+                    networking.firewall.allowedUDPPorts = [ 6443 ];
+                  }
+                )
               ];
             };
 
-            # };
+            # Add monitoring to the whole clan
+            monitoring = {
+              module.name = "monitoring";
+              # roles.telegraf.tags = [ "all" ];
+              roles.telegraf.tags = [ "desktop" ];
+              roles.prometheus.machines.kiwi = { };
+            };
 
             desktop = {
               module.input = "self";
               module.name = "@pinpox/desktop";
-
               roles.sway.tags.desktop = { };
               roles.kde.machines.fichte = { };
             };

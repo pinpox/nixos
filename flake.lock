@@ -368,6 +368,26 @@
         "type": "github"
       }
     },
+    "jj-zsh-prompt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762269254,
+        "narHash": "sha256-+9ilF9sEX3XxYawW2GSg3FbNn/Oal4nJCrgh5+WsAM0=",
+        "owner": "pinpox",
+        "repo": "jj-zsh-prompt",
+        "rev": "be7258fb25ab800d41fe68cf69ef7da2d7a1750b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "jj-zsh-prompt",
+        "type": "github"
+      }
+    },
     "khard": {
       "inputs": {
         "nixpkgs": [
@@ -786,6 +806,7 @@
         "go-karma-bot": "go-karma-bot",
         "home-manager": "home-manager",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
+        "jj-zsh-prompt": "jj-zsh-prompt",
         "khard": "khard",
         "matrix-hook": "matrix-hook",
         "mc3000": "mc3000",

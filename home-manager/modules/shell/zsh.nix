@@ -209,6 +209,11 @@
         file = "fzf-tab.plugin.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
+      {
+        name = "jj-zsh-prompt";
+        file = "jj-zsh-prompt.plugin.zsh";
+        src = "${flake-inputs.jj-zsh-prompt.packages.x86_64-linux.default}/share/jj-zsh-prompt";
+      }
     ];
   };
 }
