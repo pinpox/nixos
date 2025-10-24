@@ -1,4 +1,9 @@
-{pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.defaults.git;
@@ -106,6 +111,13 @@ in
     programs.jujutsu = {
       enable = true;
       settings = {
+        signing = {
+          behavior = "own";
+          backend = "ssh";
+          key = "~/.ssh/key.pub";
+          allowed-signers = "~/.ssh/allowed_signers";
+        };
+        ui.default-command = "log";
         user = {
           email = "git@pablo.tools";
           name = "pinpox";
