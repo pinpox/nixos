@@ -53,7 +53,6 @@ in
           extraConfig = {
             init.defaultBranch = "main";
 
-            gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
             pull = {
               rebase = true;
               autostash = true;
@@ -105,15 +104,13 @@ in
             force-push = "push --force-with-lease";
           };
 
-          userEmail = "git@pablo.tools";
-          userName = "pinpox";
+          user.email= "git@pablo.tools";
+          user.name = "pinpox";
         };
       };
     };
 
     # [kiwi] evaluation warning: pinpox profile: The option `programs.git.aliases' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings.alias'.
-    # [kiwi] evaluation warning: pinpox profile: The option `programs.git.userEmail' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings.user.email'.
-    # [kiwi] evaluation warning: pinpox profile: The option `programs.git.userName' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings.user.name'.
     # [kiwi] evaluation warning: pinpox profile: The option `programs.git.extraConfig' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings'.
 
     programs.jujutsu = {
