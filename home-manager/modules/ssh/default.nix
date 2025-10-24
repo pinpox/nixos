@@ -16,7 +16,7 @@ in
     programs.ssh = {
       enable = true;
 
-      ssh.enableDefaultConfig = false;
+      enableDefaultConfig = false;
 
       extraConfig = ''
         PKCS11Provider /run/current-system/sw/lib/libtpm2_pkcs11.so
@@ -24,6 +24,24 @@ in
       '';
 
       matchBlocks = {
+
+        "*" = {
+          extraOptions = {
+            ForwardAgent = "no";
+            ServerAliveInterval = "0";
+            ServerAliveCountMax = "3";
+            Compression = "no";
+            AddKeysToAgent = "no";
+            HashKnownHosts = "no";
+            UserKnownHostsFile = "~/.ssh/known_hosts";
+            ControlMaster = "no";
+            ControlPath = "~/.ssh/master-%r@%n:%p";
+            ControlPersist = "no";
+            PKCS11Provider = "/run/current-system/sw/lib/libtpm2_pkcs11.so";
+            CertificateFile = "~/.ssh/cert.pub";
+          };
+        };
+
         "ap-oben" = {
           hostname = "UAP-ProOBEN.lan";
           user = "pinpox";
