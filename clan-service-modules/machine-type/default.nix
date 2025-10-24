@@ -1,6 +1,7 @@
 {
   _class = "clan.service";
   manifest.name = "machine-type";
+  manifest.readme = "Machine classification/profiles";
 
   roles.server.perInstance.nixosModule = ./server.nix;
   roles.server.description = "Server machine settings, no GUI";

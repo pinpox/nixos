@@ -1,6 +1,7 @@
 {
   _class = "clan.service";
   manifest.name = "desktop";
+  manifest.readme = "Desktop environment/wayland compositor setup";
 
   roles = {
 

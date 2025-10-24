@@ -3,6 +3,7 @@
   _class = "clan.service";
   manifest.name = "localsend";
   manifest.description = "Local network file sharing application";
+  manifest.readme  = "Local network file sharing application";
   manifest.categories = [ "Utility" ];
 
   roles.default = {

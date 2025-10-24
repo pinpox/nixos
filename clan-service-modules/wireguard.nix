@@ -1,6 +1,5 @@
 {
   lib,
-  # inputs,
   clanLib,
   directory,
   ...
@@ -8,6 +7,7 @@
 {
   _class = "clan.service";
   manifest.name = "wireguard";
+  manifest.readme = "Wireguard star configuration";
 
   # Peer options and configuration
   roles.peer = {
