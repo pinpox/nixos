@@ -83,6 +83,7 @@
         (lib.mkOrder 550 (builtins.readFile ./zshrc))
         abbrevs
         (builtins.readFile ./zshrc-extra)
+        (builtins.readFile ./zshrc-coffee)
         functions
       ];
 

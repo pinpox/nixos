@@ -1,0 +1,44 @@
+function coffee {
+	# Hide cursor
+	tput civis
+
+	# Restore cursor on exit
+	trap 'tput cnorm; clear; return 0' EXIT INT TERM
+
+	local frame1='         )  (
+        (   ) )
+         ) ( (
+       _______)_
+    .-'"'"'---------|
+   ( C|/\/\/\/\/|
+    '"'"'-./\/\/\/\/|
+      '"'"'_________'"'"'
+       '"'"'-------'"'"'
+
+   pinpox went for coffee.
+   brb.
+'
+
+	local frame2='         (  )
+        )   ( (
+         ( ) )
+       _______(_
+    .-'"'"'---------|
+   ( C|/\/\/\/\/|
+    '"'"'-./\/\/\/\/|
+      '"'"'_________'"'"'
+       '"'"'-------'"'"'
+
+   pinpox went for coffee.
+   brb.
+'
+
+	while true; do
+		clear
+		echo "$frame1"
+		sleep 0.5
+		clear
+		echo "$frame2"
+		sleep 0.5
+	done
+}
