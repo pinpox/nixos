@@ -22,7 +22,7 @@ in
 
       extraConfig = {
         ui = {
-          styleset-name = "pinpox";
+          # styleset-name = "pinpox";
           icon-attachment = "a ";
           icon-old = "";
           icon-replied = "↩ ";
