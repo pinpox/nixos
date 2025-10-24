@@ -183,16 +183,18 @@
               roles.default.tags = [ "desktop" ];
               roles.default.extraModules = [
                 {
-                  services.yggdrasil.settings = lib.optionalAttrs (networking.hostName == "kfbox") {
-                    Listen = [
-                      "quic://0.0.0.0:6443"
-                      "ws//0.0.0.0:6443"
-                      "tls://0.0.0.0:6443"
-                      "quic://[::]:6443"
-                      "ws//[::]:6443"
-                      "tls://[::]:6443"
-                    ];
-                  };
+                  services.yggdrasil.settings =
+                    lib.optionalAttrs (networking.hostName == "kfbox" || networking.hostName == "porree")
+                      {
+                        Listen = [
+                          "quic://0.0.0.0:6443"
+                          "ws//0.0.0.0:6443"
+                          "tls://0.0.0.0:6443"
+                          "quic://[::]:6443"
+                          "ws//[::]:6443"
+                          "tls://[::]:6443"
+                        ];
+                      };
                   networking.firewall.allowedTCPPorts = [ 6443 ];
                   networking.firewall.allowedUDPPorts = [ 6443 ];
                 }
