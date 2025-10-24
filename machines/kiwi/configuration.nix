@@ -10,6 +10,7 @@
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
+  hardware.rtl-sdr.enable = true;
 
   # TODO: remove when 6.15.1 hits unstable
   # boot.kernelPackages = pkgs.linuxPackages_latest;
