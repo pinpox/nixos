@@ -104,7 +104,7 @@ in
             force-push = "push --force-with-lease";
           };
 
-          user.email= "git@pablo.tools";
+          user.email = "git@pablo.tools";
           user.name = "pinpox";
         };
       };
@@ -131,6 +131,17 @@ in
           allowed-signers = "~/.ssh/allowed_signers";
         };
         ui = {
+
+          pager = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "less-less";
+              text = ''
+                export LESS_LINES=-2
+                exec less -FRX "$@"
+              '';
+            }
+          );
+
           default-command = "log";
           merge-editor = [
             "meld"
