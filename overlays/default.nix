@@ -68,5 +68,6 @@ self: super: {
   # ZSH plugins
   zsh-abbrev-alias = super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
   zsh-colored-man-pages = super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };
+  zsh-async = super.callPackage ../packages/zsh-async { inputs = inputs; };
 
 }
