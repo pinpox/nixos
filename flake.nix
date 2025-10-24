@@ -169,6 +169,12 @@
 
           instances = {
 
+            # yggdrasil = {
+            #   module.name = "yggdrasil";
+            #   roles.default.tags = [ "desktop" ];
+            #   roles.default.extraModules = [ "./yggdrasil_extra.nix" ];
+            # };
+
             desktop = {
               module.input = "self";
               module.name = "@pinpox/desktop";
