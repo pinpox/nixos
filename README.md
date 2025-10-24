@@ -27,6 +27,8 @@ a modern fork of [pass](https://www.passwordstore.org/) that uses age for encryp
 | [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.8.3`  | Desktop                      |
 | [limette](./machines/limette)       | Desktop   | local       | `192.168.8.8`  | Notebook                     |
 | [kiwi](./machines/kiwi)             | Desktop   | local       | -              | Framework Laptop             |
+| [fichte](./machines/fichte)         | Desktop   | local       | ` `            | Notebook                     |
+| [tanne](./machines/fichte)          | Desktop   | local       | ` `            | Notebook                     |
 | [birne](./machines/birne)           | Server    | local       | `192.168.8.4`  | Local NAS                    |
 | [porree](./machines/porree)         | Server    | netcup.de   | `192.168.8.1`  | Server for pablo.tools       |
 | [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.8.5`  | Server for 0cx.de            |
@@ -46,12 +48,13 @@ clan machines update <hostname>
 
 The configuration is organized as follows:
 
-- `/machines/<hostname>`: Host-specific configurations
-- `/modules`: System-level NixOS modules
-- `/home-manager/modules`: User-level home-manager modules for specific applications
-- `/home-manager/profiles`: Profiles that combine multiple home-manager modules
-- `/home-manager/packages`: Custom packages for applications not present in nixpkgs
-```
+- `machines/<hostname>`: Host-specific configurations
+- `modules`: System-level NixOS modules
+- `home-manager/modules`: User-level home-manager modules for specific applications
+- `home-manager/profiles`: Profiles that combine multiple home-manager modules
+- `home-manager/packages`: Custom packages for applications not present in nixpkgs
+- `clan-service-modules`: [Clan](https://clan.lol) services
+
 # Contributing?
 
 While contributions don't make much sense for a personal configuration repository,
