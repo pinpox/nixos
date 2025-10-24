@@ -48,65 +48,73 @@ in
           ".claude"
         ];
 
-        extraConfig = {
-          init.defaultBranch = "main";
+        settings = {
 
-          gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-          pull = {
-            rebase = true;
-            autostash = true;
-            twohead = "ort";
+          extraConfig = {
+            init.defaultBranch = "main";
+
+            gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+            pull = {
+              rebase = true;
+              autostash = true;
+              twohead = "ort";
+            };
+
+            push = {
+              default = "simple";
+              autoSetupRemote = true;
+            };
+
+            # rerere = {
+            #   autoUpdate = true
+            #   enabled = true
+            # };
+
+            branch = {
+              autoSetupRebase = "always";
+              autoSetupMerge = "always";
+            };
+
+            rebase = {
+              stat = true;
+              autoStash = true;
+              autoSquash = true;
+              updateRefs = true;
+            };
+
+            help.autocorrect = 10;
           };
 
-          push = {
-            default = "simple";
-            autoSetupRemote = true;
+          signing = {
+            format = "ssh";
+            key = "~/.ssh/key.pub";
+            signByDefault = true;
           };
 
-          # rerere = {
-          #   autoUpdate = true
-          #   enabled = true
-          # };
-
-          branch = {
-            autoSetupRebase = "always";
-            autoSetupMerge = "always";
+          aliases = {
+            s = "status";
+            d = "diff";
+            a = "add";
+            c = "commit";
+            p = "push";
+            o = "checkout";
+            co = "checkout";
+            uncommit = "reset --soft HEAD^";
+            comma = "commit --amend";
+            reset-pr = "reset --hard FETCH_HEAD";
+            force-push = "push --force-with-lease";
           };
 
-          rebase = {
-            stat = true;
-            autoStash = true;
-            autoSquash = true;
-            updateRefs = true;
-          };
-
-          help.autocorrect = 10;
+          userEmail = "git@pablo.tools";
+          userName = "pinpox";
         };
-
-        signing = {
-          format = "ssh";
-          key = "~/.ssh/key.pub";
-          signByDefault = true;
-        };
-
-        aliases = {
-          s = "status";
-          d = "diff";
-          a = "add";
-          c = "commit";
-          p = "push";
-          o = "checkout";
-          co = "checkout";
-          uncommit = "reset --soft HEAD^";
-          comma = "commit --amend";
-          reset-pr = "reset --hard FETCH_HEAD";
-          force-push = "push --force-with-lease";
-        };
-
-        userEmail = "git@pablo.tools";
-        userName = "pinpox";
       };
     };
+
+    # [kiwi] evaluation warning: pinpox profile: The option `programs.git.aliases' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings.alias'.
+    # [kiwi] evaluation warning: pinpox profile: The option `programs.git.userEmail' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings.user.email'.
+    # [kiwi] evaluation warning: pinpox profile: The option `programs.git.userName' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings.user.name'.
+    # [kiwi] evaluation warning: pinpox profile: The option `programs.git.extraConfig' defined in `/nix/store/fsc89mqrbiij6pnl4vrf0l0plv0i8pp6-source/clan-service-modules/machine-type/desktop.nix' has been renamed to `programs.git.settings'.
 
     programs.jujutsu = {
       enable = true;
