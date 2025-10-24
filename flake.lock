@@ -60,8 +60,8 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1761390835,
-        "narHash": "sha256-gZruVgPnMFBO6p7m3A+CPz1QK5nyniY4K/6Pmk8Ppbc=",
+        "lastModified": 1762269765,
+        "narHash": "sha256-30+dSjDAPls9O+iyY4UENTCZdTIbZK6kjdiBacgy4DI=",
         "path": "/home/pinpox/code/git.clan.lol/clan/clan-core",
         "type": "path"
       },
@@ -824,6 +824,7 @@
         "retiolum": "retiolum",
         "wallpaper-generator": "wallpaper-generator",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
+        "zsh-async": "zsh-async",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
       }
     },
@@ -948,11 +949,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760945191,
-        "narHash": "sha256-ZRVs8UqikBa4Ki3X4KCnMBtBW0ux1DaT35tgsnB1jM4=",
+        "lastModified": 1761311587,
+        "narHash": "sha256-Msq86cR5SjozQGCnC6H8C+0cD4rnx91BPltZ9KK613Y=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "f56b1934f5f8fcab8deb5d38d42fd692632b47c2",
+        "rev": "2eddae033e4e74bf581c2d1dfa101f9033dbd2dc",
         "type": "github"
       },
       "original": {
@@ -1008,6 +1009,22 @@
       "original": {
         "owner": "momo-lab",
         "repo": "zsh-abbrev-alias",
+        "type": "github"
+      }
+    },
+    "zsh-async": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1672955751,
+        "narHash": "sha256-mkTmgSnfoZlTaOPhw0Y0yG1BkZv+oTo/eEisZZTN5nM=",
+        "owner": "mafredri",
+        "repo": "zsh-async",
+        "rev": "ee1d11b68c38dec24c22b1c51a45e8a815a79756",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mafredri",
+        "repo": "zsh-async",
         "type": "github"
       }
     },

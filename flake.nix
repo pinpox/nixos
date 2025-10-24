@@ -101,6 +101,9 @@
     jj-zsh-prompt.url = "github:pinpox/jj-zsh-prompt";
     jj-zsh-prompt.inputs.nixpkgs.follows = "nixpkgs";
 
+    zsh-async.url = "github:mafredri/zsh-async";
+    zsh-async.flake = false;
+
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";

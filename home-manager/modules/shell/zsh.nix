@@ -158,7 +158,7 @@
 
     prezto = {
       enable = true;
-      prompt.theme = "pure";
+      # prompt.theme = "pure";
 
       # Case insensitive completion
       caseSensitive = true;
@@ -172,7 +172,7 @@
         "utility"
         "editor"
         "directory"
-        "prompt"
+        # "prompt"
       ];
 
       terminal.autoTitle = true;
@@ -210,12 +210,14 @@
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
       {
-        name = "jj-zsh-prompt";
-        file = "jj-zsh-prompt.plugin.zsh";
-        src = "${flake-inputs.jj-zsh-prompt.packages.x86_64-linux.default}/share/jj-zsh-prompt";
         name = "zsh-async";
         file = "async.zsh";
         src = "${pkgs.zsh-async}/share/zsh-async";
+      }
+      {
+        name = "jj-zsh-prompt";
+        file = "jj-zsh-prompt.plugin.zsh";
+        src = "${flake-inputs.jj-zsh-prompt.packages.${pkgs.system}.default}/share/jj-zsh-prompt";
       }
     ];
   };
