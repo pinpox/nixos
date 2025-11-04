@@ -25,7 +25,7 @@ in
         inter
         source-sans-pro
         source-serif-pro
-        noto-fonts-emoji
+        noto-fonts-monochrome-emoji
         # corefonts
         recursive
         iosevka-bin
