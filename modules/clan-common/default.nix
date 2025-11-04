@@ -12,7 +12,7 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # Default to depolying to the hostname
-  clan.core.networking.targetHost = lib.mkDefault config.networking.hostName;
+  clan.core.networking.targetHost = lib.mkDefault "${config.networking.hostName}.pin";
 
   clan.core.vars.settings.secretStore = "password-store";
   clan.core.vars.password-store.passPackage = pkgs.passage;
