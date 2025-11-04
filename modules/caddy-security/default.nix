@@ -1,5 +1,4 @@
 {
-  caddy-patched,
   pkgs,
   config,
   lib,
@@ -88,7 +87,9 @@ in
     services.caddy = {
 
       enable = true;
-      package = caddy-patched.packages.x86_64-linux.caddy;
+
+      # package = caddy-patched.packages.x86_64-linux.caddy;
+      # Custom package no longer necessary. See https://github.com/NixOS/nixpkgs/pull/358586
 
       globalConfig = ''
         order authenticate before respond
