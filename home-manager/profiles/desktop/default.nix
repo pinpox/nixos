@@ -100,10 +100,7 @@
       ncdu
       networkmanager-openvpn
       networkmanagerapplet
-
-      # TODO https://github.com/NixOS/nixpkgs/pull/454716
-      # nextcloud-client
-
+      nextcloud-client
       nitrogen
       nix-index
       nmap
