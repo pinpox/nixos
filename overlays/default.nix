@@ -44,7 +44,7 @@ self: super: {
   #   inputs.nixpkgs-master.legacyPackages."${super.system}".intel-graphics-compiler;
 
   # Override tpm2-pytss from master for all python versions
-  # TODO https://github.com/NixOS/nixpkgs/issues/417992
+  # https://github.com/NixOS/nixpkgs/issues/417992
   # python3 = super.python3.override {
   #   packageOverrides = python-self: python-super: {
   #     tpm2-pytss = inputs.nixpkgs-master.legacyPackages."${super.system}".python3Packages.tpm2-pytss;

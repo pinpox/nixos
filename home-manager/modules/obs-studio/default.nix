@@ -34,10 +34,7 @@ in
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
         obs-pipewire-audio-capture
-
-        # TODO https://github.com/NixOS/nixpkgs/pull/382559
         # droidcam-obs
-
         wlrobs
         # obs-vintage-filter
         # obs-teleport

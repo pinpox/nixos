@@ -61,9 +61,6 @@
 
       (audacious.override { withPlugins = true; })
 
-      # TODO https://github.com/NixOS/nixpkgs/issues/424928
-      # strawberry
-
       mpv
       # (mpv.override {
       #   scripts = with pkgs.mpvScripts; [
