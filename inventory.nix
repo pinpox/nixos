@@ -1,0 +1,138 @@
+{ self }:
+{
+  machines = {
+    kiwi.tags = [ "desktop" ];
+    tanne.tags = [ "desktop" ];
+    fichte.tags = [ "desktop" ];
+    kartoffel.tags = [ "desktop" ];
+    limette.tags = [ "desktop" ];
+
+    birne.tags = [ "server" ];
+    kfbox.tags = [ "server" ];
+    porree.tags = [ "server" ];
+  };
+
+  meta.name = "pinpox-clan";
+  meta.tld = "pin";
+
+  instances = {
+
+    internet = {
+      module.name = "internet";
+      roles.default.tags = [ "server" ];
+      roles.default.machines = {
+        kfbox.settings.host = "46.38.242.17";
+        porree.settings.host = "94.16.108.229";
+      };
+    };
+
+    yggdrasil = {
+      module.name = "yggdrasil";
+      roles.default.tags = [ "desktop" ];
+      roles.default.extraModules = [
+        (
+          { lib, config, ... }:
+          {
+            services.yggdrasil.settings =
+              # (builtins.match "kfbox|porree" config.networking.hostName) != null
+              lib.optionalAttrs (config.networking.hostName == "kfbox" || config.networking.hostName == "porree")
+                {
+                  Listen = [
+                    "quic://0.0.0.0:6443"
+                    "ws//0.0.0.0:6443"
+                    "tls://0.0.0.0:6443"
+                    "quic://[::]:6443"
+                    "ws//[::]:6443"
+                    "tls://[::]:6443"
+                  ];
+                };
+            networking.firewall.allowedTCPPorts = [ 6443 ];
+            networking.firewall.allowedUDPPorts = [ 6443 ];
+          }
+        )
+      ];
+    };
+
+    # Add monitoring to the whole clan
+    monitoring = {
+      module.name = "monitoring";
+      # roles.telegraf.tags = [ "all" ];
+      roles.telegraf.tags = [ "desktop" ];
+      roles.prometheus.machines.kiwi = { };
+    };
+
+    desktop = {
+      module.input = "self";
+      module.name = "@pinpox/desktop";
+      roles.sway.tags.desktop = { };
+      roles.kde.machines.fichte = { };
+    };
+
+    user-root = {
+      module.name = "users";
+      roles.default.tags.all = { };
+      roles.default.settings = {
+        user = "root";
+        share = true;
+      };
+      roles.default.extraModules = [ ./users/root.nix ];
+    };
+
+    user-pinpox = {
+      module.name = "users";
+      roles.default.tags.all = { };
+      roles.default.settings = {
+        user = "pinpox";
+        share = true;
+      };
+      roles.default.extraModules = [ ./users/pinpox.nix ];
+    };
+
+    user-lislon = {
+      module.name = "users";
+      roles.default.machines.fichte = { };
+      roles.default.settings = {
+        user = "lislon";
+        share = true;
+      };
+    };
+
+    localsend = {
+      module.input = "self";
+      module.name = "@pinpox/localsend";
+      roles.default.tags.all = { };
+    };
+
+    machine-type = {
+      module.input = "self";
+      module.name = "@pinpox/machine-type";
+      roles.desktop.tags.desktop = { };
+      roles.server.tags.server = { };
+    };
+
+    importer = {
+      module.name = "importer";
+      roles.default.tags.all = { };
+      # Import all modules from ./modules/<module-name> on all machines
+      roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
+    };
+
+    wg-clan = {
+
+      module.input = "self";
+      module.name = "@pinpox/wireguard";
+
+      roles.controller.machines.porree.settings = {
+        endpoint = "vpn.pablo.tools:51820";
+      };
+
+      roles.peer.machines = {
+        kartoffel = { };
+        birne.settings.extraIPs = [ "192.168.101.0/24" ];
+        kfbox = { };
+        kiwi = { };
+        limette = { };
+      };
+    };
+  };
+}
