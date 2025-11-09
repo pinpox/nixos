@@ -19,6 +19,7 @@ in
         keybinds.unbind = "Ctrl q";
 
         session_serialization = false;
+        show_startup_tips = false;
 
         theme = "custom";
         themes.custom = {
