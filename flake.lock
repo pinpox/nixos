@@ -677,11 +677,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762290429,
-        "narHash": "sha256-B310oAn2zYFVQ5YYMYRuSMQSwrUqSsmq3rx+tIIGIkU=",
+        "lastModified": 1762703021,
+        "narHash": "sha256-MYXb9TbxxdM+ZvCAZP8oAb24Ssh+eLQy4ELijO0cmqs=",
         "owner": "pinpox",
         "repo": "pinpox-neovim",
-        "rev": "42b74615fdd94052350346f821ed635263d8c8fa",
+        "rev": "5cd1aafb9b12a1a7a015026eb42d948740d6be7a",
         "type": "github"
       },
       "original": {
