@@ -30,7 +30,7 @@
       };
 
       programs = {
-        obs-studio.enable = true;
+        obs-studio.enable = false;
         pandoc.enable = true;
         k9s.enable = true;
         zed.enable = true;
