@@ -29,4 +29,11 @@
   # For dual-boot
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
+
+  # Remap Caps Lock to Esc and vice versa
+  services.udev.extraHwdb = ''
+    evdev:atkbd:dmi:*
+      KEYBOARD_KEY_3a=esc      # Caps Lock -> Esc
+      KEYBOARD_KEY_01=capslock # Esc -> Caps Lock
+  '';
 }
