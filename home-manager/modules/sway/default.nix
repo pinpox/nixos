@@ -54,9 +54,7 @@ in
       };
     };
 
-    # Install these packages for my user
     home.packages = with pkgs; [
-      # way-displays
       wl-clipboard
       wlr-randr
       start-sway
@@ -113,7 +111,7 @@ in
 
           # Scratchpad
           "${modifier}+u" =
-            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] resize set 99ppt 98ppt; [app_id="dropdown"] move position center'';
+            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] move position 0 0; [app_id="dropdown"] resize set width 100 ppt height 100 ppt'';
 
           # Screen brightness
           "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
@@ -175,7 +173,7 @@ in
             criteria.app_id = "dropdown";
           }
           {
-            command = "resize set 99ppt 98ppt";
+            command = "move position 0 0, resize set width 100 ppt height 100 ppt";
             criteria.app_id = "dropdown";
           }
           {
@@ -183,7 +181,7 @@ in
             criteria.app_id = "dropdown";
           }
           {
-            command = "border pixel 8";
+            command = "border pixel 4";
             criteria.app_id = "dropdown";
           }
         ];
