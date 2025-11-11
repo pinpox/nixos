@@ -47,7 +47,7 @@ in
             "Berkeley Mono"
             "Inconsolata Nerd Font Mono"
           ];
-          emoji = [ "Noto Color Emoji" ];
+          emoji = [ "Noto Emoji" ];
         };
       };
     };
