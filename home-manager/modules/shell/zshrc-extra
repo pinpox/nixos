@@ -98,3 +98,8 @@ zle -N edit-command-line
 zle -N carry-ranger-cd
 
 bindkey '^,' carry-ranger-cd
+
+# Allow jumping between prompts in foot with Ctrl+Shift+x/z
+precmd() {
+    print -Pn "\e]133;A\e\\"
+}
