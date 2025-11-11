@@ -136,5 +136,12 @@ in
     };
 
     home.sessionVariables.GTK_THEME = "Generated";
+
+    # Set default dark theme via dconf (can be changed at runtime)
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
   };
 }
