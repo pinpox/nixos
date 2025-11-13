@@ -14,6 +14,7 @@
     };
 
     pinpox = {
+
       defaults = {
         xdg.enable = true;
         calendar.enable = false;

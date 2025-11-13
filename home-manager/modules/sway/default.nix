@@ -110,7 +110,7 @@ in
         keybindings = lib.mkOptionDefault {
 
           # Terminal
-          "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
+          "${modifier}+Return" = "exec rio";
 
           # Laucher
           "${modifier}+p" = ''
@@ -179,7 +179,7 @@ in
         };
 
         modifier = "Mod4"; # Win key
-        terminal = "${pkgs.foot}/bin/foot";
+        terminal = "rio";
 
         startup = [
           {
@@ -187,7 +187,7 @@ in
             always = true;
           }
           {
-            command = "foot --app-id=dropdown";
+            command = "rio --app-id=dropdown";
             always = true;
           }
           { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
@@ -312,5 +312,5 @@ in
         # output.DP-1.mode = "2560x1440@60";
       };
     };
-  };
+  });
 }

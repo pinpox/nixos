@@ -52,6 +52,8 @@ self: super: {
   # };
   #
 
+  rio = inputs.rio.packages.${super.stdenv.hostPlatform.system}.default;
+
   # Example package, used only for tests
   hello-custom = super.callPackage ../packages/hello-custom { };
   # river-luatile = super.callPackage ../packages/river-luatile { };

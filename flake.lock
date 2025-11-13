@@ -219,6 +219,24 @@
         "type": "github"
       }
     },
+    "flake-parts_3": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1762440070,
+        "narHash": "sha256-xxdepIcb39UJ94+YydGP221rjnpkDZUlykKuF54PsqI=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "26d05891e14c88eb4a5d5bee659c0db5afb609d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -621,6 +639,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1761765539,
+        "narHash": "sha256-b0yj6kfvO8ApcSE+QmA6mUfu8IYG6/uU28OFn4PaC8M=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "719359f4562934ae99f5443f20aa06c2ffff91fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1751949589,
@@ -795,6 +828,29 @@
         "url": "https://git.thalheim.io/Mic92/retiolum"
       }
     },
+    "rio": {
+      "inputs": {
+        "flake-parts": "flake-parts_3",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay",
+        "systems": "systems_6"
+      },
+      "locked": {
+        "lastModified": 1763048673,
+        "narHash": "sha256-lsrUKvOSELqmJKA/v4Dyihj4E5X2MsVDyK9sOgcKb8s=",
+        "owner": "pinpox",
+        "repo": "rio",
+        "rev": "e59f599834781b3694b656689fa6ce9341bd06f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "rio",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "alertmanager-ntfy": "alertmanager-ntfy",
@@ -822,6 +878,7 @@
         "radio": "radio",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
+        "rio": "rio",
         "wallpaper-generator": "wallpaper-generator",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-async": "zsh-async",
@@ -842,6 +899,27 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "rio",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762569282,
+        "narHash": "sha256-vINZAJpXQTZd5cfh06Rcw7hesH7sGSvi+Tn+HUieJn8=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "a35a6144b976f70827c2fe2f5c89d16d8f9179d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
         "type": "github"
       }
     },
@@ -927,6 +1005,21 @@
       }
     },
     "systems_5": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_6": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

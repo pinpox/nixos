@@ -3,6 +3,9 @@
 
   inputs = {
 
+    rio.url = "github:pinpox/rio";
+    rio.inputs.nixpkgs.follows = "nixpkgs";
+
     khard.url = "github:lucc/khard";
     khard.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -45,10 +45,10 @@ in
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
-    environment.systemPackages = [
-      pkgs.xdg-desktop-portal
-      pkgs.wdisplays # Configure screen placement
+    environment.systemPackages = with pkgs; [
+      rio
+      xdg-desktop-portal
+      wdisplays # Configure screen placement
     ];
-
   };
 }
