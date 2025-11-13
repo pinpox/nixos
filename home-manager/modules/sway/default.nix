@@ -21,9 +21,44 @@ in
 
   imports = [ ./swaync/default.nix ];
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (
+    let
+      c = config.pinpox.colors;
 
-    xdg.portal.config.sway = {
+      # Dark theme color scheme (current)
+      darkColors = ''
+        client.focused #${c.BrightBlue} #${c.Blue} #${c.Black} #${c.BrightBlue} #${c.Blue}
+        client.focused_inactive #${c.BrightWhite} #${c.BrightBlack} #${c.BrightWhite} #${c.BrightBlack} #${c.BrightBlack}
+        client.unfocused #${c.BrightBlack} #${c.Black} #${c.BrightBlack} #${c.BrightBlack} #${c.Black}
+        client.urgent #${c.BrightRed} #${c.Red} #${c.White} #${c.Red} #${c.Red}
+      '';
+
+      # Light theme color scheme (inverted contrast)
+      lightColors = ''
+        client.focused #${c.Blue} #${c.BrightBlue} #${c.Black} #${c.Blue} #${c.BrightBlue}
+        client.focused_inactive #${c.BrightBlack} #${c.White} #${c.Black} #${c.BrightBlack} #${c.BrightBlack}
+        client.unfocused #${c.White} #${c.BrightWhite} #${c.BrightBlack} #${c.White} #${c.BrightWhite}
+        client.urgent #${c.Red} #${c.BrightRed} #${c.Black} #${c.Red} #${c.BrightRed}
+      '';
+
+      # Script to update Sway colors based on theme preference
+      swayThemeSwitcher = pkgs.writeShellScript "sway-theme-switcher" ''
+        theme="$1"
+
+        if [[ "$theme" == "prefer-light" ]]; then
+          ${pkgs.sway}/bin/swaymsg "${lightColors}"
+        else
+          ${pkgs.sway}/bin/swaymsg "${darkColors}"
+        fi
+      '';
+    in
+    {
+      # Enable theme switcher and register Sway's theme script
+      pinpox.services.theme-switcher = {
+        scripts = [ "${swayThemeSwitcher}" ];
+      };
+
+      xdg.portal.config.sway = {
       # Use xdg-desktop-portal-gtk for every portal interface...
       default = [ "gtk" ];
       # ... except for the ScreenCast, Screenshot and Secret

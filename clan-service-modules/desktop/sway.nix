@@ -5,11 +5,7 @@
   ...
 }:
 with lib;
-let
-  toggle-theme = pkgs.writeShellScriptBin "toggle-theme" (builtins.readFile ./toggle-theme.sh);
-in
 {
-  environment.systemPackages = [ toggle-theme ];
 
   programs.sway = {
     enable = true;

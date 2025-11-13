@@ -24,6 +24,8 @@
         git.enable = true;
       };
 
+      services.theme-switcher.enable = true;
+
       programs.ssh = {
         enable = true;
       };
