@@ -3,8 +3,20 @@
 
   inputs = {
 
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
+    # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
+
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    # clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=3aa7750265b4d2eeb5f7791b4205d247078cf670";
+    # clan-core.inputs.nixpkgs.follows = "nixpkgs";
+    # clan-core.inputs.disko.follows = "disko";
+
+    # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
+    # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
+
     rio.url = "github:pinpox/rio";
     rio.inputs.nixpkgs.follows = "nixpkgs";
+    rio.inputs.systems.follows = "clan-core/systems";
 
     khard.url = "github:lucc/khard";
     khard.inputs.nixpkgs.follows = "nixpkgs";
@@ -21,26 +33,13 @@
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
-    # clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=3aa7750265b4d2eeb5f7791b4205d247078cf670";
-    clan-core.inputs.nixpkgs.follows = "nixpkgs";
-
-    # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
-    # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
-
-    # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
 
-    pinpox-keys = {
-      url = "https://github.com/pinpox.keys";
-      flake = false;
-    };
+    pinpox-keys.url = "https://github.com/pinpox.keys";
+    pinpox-keys.flake = false;
 
     pinpox-neovim.url = "github:pinpox/pinpox-neovim";
     pinpox-neovim.inputs.nixpkgs.follows = "nixpkgs";
@@ -64,6 +63,7 @@
     go-karma-bot.inputs.nixpkgs.follows = "nixpkgs";
 
     retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
+    retiolum.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
@@ -85,6 +85,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
+        flake-utils.inputs.systems.follows = "clan-core/systems";
       };
     };
 
@@ -92,6 +93,7 @@
     matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-compat.follows = "flake-compat";
+      flake-utils.follows = "alertmanager-ntfy/flake-utils";
     };
 
     # ZSH plugins
