@@ -216,7 +216,7 @@ in
             criteria.app_id = "dropdown";
           }
           {
-            command = "border pixel 4";
+            command = "border pixel 0";
             criteria.app_id = "dropdown";
           }
         ];
@@ -285,6 +285,8 @@ in
         workspaceLayout = "tabbed";
 
         gaps = {
+          smartGaps = true;
+          smartBorders  = "on";
           bottom = 3;
           top = 3;
           horizontal = 3;
