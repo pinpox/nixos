@@ -20,6 +20,7 @@ in
 
         session_serialization = false;
         show_startup_tips = false;
+        simplified_ui = true;
 
         theme = "custom";
         themes.custom = {
