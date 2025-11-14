@@ -12,7 +12,7 @@
 }
 
 window#waybar {
-	background-color: transparent;
+	background-color: @BrightBlack;
 	color: @White;
 }
 

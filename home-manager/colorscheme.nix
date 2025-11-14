@@ -31,47 +31,21 @@ in
 
   config.pinpox.colors = {
 
-    # Default neovim colorschmeme
-    # Dark:
-    # blue    = "#005078"
-    # cyan    = "#007676"
-    # green   = "#015825"
-    # grey1   = "#0a0b10"
-    # grey2   = "#1c1d23"
-    # grey3   = "#2c2e33"
-    # grey4   = "#4f5258"
-    # magenta = "#4c0049"
-    # red     = "#5e0009"
-    # yellow  = "#6e5600"
-    #
-    # Light:
-    # blue    = "#9fd8ff"
-    # cyan    = "#83efef"
-    # green   = "#aaedb7"
-    # grey1   = "#ebeef5"
-    # grey2   = "#d7dae1"
-    # grey3   = "#c4c6cd"
-    # grey4   = "#9b9ea4"
-    # magenta = "#ffc3fa"
-    # red     = "#ffbcb5"
-    # yellow  = "#f4d88c"
-    #
-
-    Black = "24273a"; # 24273a
-    BrightBlack = "5b6078"; # 5b6078
-    White = "cad3f5"; # cad3f5
-    BrightWhite = "747c9e"; # 747c9e
-    Red = "ed8796"; # ed8796
-    BrightRed = "ff5370"; # FF5370
-    Green = "a6da95"; # a6da95
-    BrightGreen = "68f288"; # 68f288
-    Yellow = "eed49f"; # eed49f
-    BrightYellow = "fab387"; # fab387
-    Blue = "8aadf4"; # 8aadf4
-    BrightBlue = "74c7ec"; # 74c7ec
-    Magenta = "cba6f7"; # cba6f7
-    BrightMagenta = "f5bde6"; # f5bde6
-    Cyan = "8bd5ca"; # 8bd5ca
-    BrightCyan = "aee2da"; # aee2da
+    Black = "000000"; # 000000
+    BrightBlack = "262626"; #262626
+    White = "d0d0d0"; # d0d0d0
+    BrightWhite = "ffffff"; # ffffff
+    Red = "d7005f"; # d7005f
+    BrightRed = "ff5f87"; # ff5f87
+    Green = "00af5f"; # 00af5f
+    BrightGreen = "00d75f"; # 00d75f
+    Yellow = "d78700"; # d78700
+    BrightYellow = "ffaf00"; # ffaf00
+    Blue = "0087d7"; # 0087d7
+    BrightBlue = "00afff"; # 00afff
+    Magenta = "d787d7"; # d787d7
+    BrightMagenta = "ff87ff"; # ff87ff
+    Cyan = "00afaf"; # 00afaf
+    BrightCyan = "00d7d7"; # 00d7d7
   };
 }
