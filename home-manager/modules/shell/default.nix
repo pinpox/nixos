@@ -72,7 +72,7 @@ in
 
       # Aliases expanded only at beginning of lines
       {
-        alias = "flake-init";
+        alias = "flakeinit";
         command = "nix flake init -t github:pinpox/nixos";
       }
       {
