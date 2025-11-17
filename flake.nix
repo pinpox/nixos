@@ -199,6 +199,19 @@
       # Use nixpkgs-fmt for 'nix fmt'
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
 
+      # Each subdirectory in ./templates/<template-name> is a
+      # template, which can be used for new proects with:
+      # `nix flake init`
+      templates = builtins.listToAttrs (
+        map (name: {
+          inherit name;
+          value = {
+            path = ./templates + "/${name}";
+            description = (import (./templates + "/${name}/flake.nix")).description;
+          };
+        }) (builtins.attrNames (builtins.readDir ./templates))
+      );
+
       # Output all modules in ./modules/<module-name> to flake. Modules should be in
       # individual subdirectories and contain a default.nix file.
       # Each subdirectory in ./modules/<module-name> is a nixos module
