@@ -16,7 +16,6 @@ let
     update_theme() {
       local scheme=$(${pkgs.dconf}/bin/dconf read /org/gnome/desktop/interface/color-scheme 2>/dev/null)
 
-      # Normalize the scheme value to prefer-light or prefer-dark
       local theme="prefer-dark"
       if [[ "$scheme" == "'prefer-light'" ]]; then
         theme="prefer-light"

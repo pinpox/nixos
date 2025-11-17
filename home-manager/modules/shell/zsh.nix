@@ -12,7 +12,10 @@
 
   programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
+    autosuggestion = {
+      enable = true;
+      highlight = "fg=8";
+    };
     enableCompletion = true;
     autocd = true;
     dotDir = "${config.xdg.configHome}/zsh";
