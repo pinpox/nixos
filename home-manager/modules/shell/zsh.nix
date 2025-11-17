@@ -42,11 +42,11 @@
           function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
 
           function ai() {
-            echo "$@" | ${pkgs.shell-gpt}/bin/sgpt
+            echo "$@" | $##{pkgs.shell-gpt}/bin/sgpt
           }
 
           function aip() {
-            wl-paste | ${pkgs.shell-gpt}/bin/sgpt
+            wl-paste | $##{pkgs.shell-gpt}/bin/sgpt
           }
 
           # Create a temporary, detached worktree of the current git repo.
