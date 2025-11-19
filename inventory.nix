@@ -54,12 +54,13 @@
     };
 
     # Add monitoring to the whole clan
-    monitoring = {
-      module.name = "monitoring";
-      # roles.telegraf.tags = [ "all" ];
-      roles.telegraf.tags = [ "desktop" ];
-      roles.prometheus.machines.kiwi = { };
-    };
+    # TODO: re-enable when merged
+    # monitoring = {
+    #   module.name = "monitoring";
+    #   # roles.telegraf.tags = [ "all" ];
+    #   roles.telegraf.tags = [ "desktop" ];
+    #   roles.prometheus.machines.kiwi = { };
+    # };
 
     desktop = {
       module.input = "self";

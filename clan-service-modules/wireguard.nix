@@ -24,21 +24,20 @@
     perInstance =
       {
         instanceName,
-        # settings,
         roles,
+        machine,
+        mkExports,
         ...
       }:
       {
 
-        exports.networking = {
-          peers = lib.mapAttrs (name: machine: {
-            host.plain = clanLib.vars.getPublicValue {
-              machine = name;
-              generator = "wireguard-${instanceName}-ip";
-              file = "ipv4";
-              flake = directory;
-            };
-          }) roles.peer.machines;
+        exports = mkExports {
+          peer.host.plain = clanLib.vars.getPublicValue {
+            machine = machine.name;
+            generator = "wireguard-${instanceName}-ip";
+            file = "ipv4";
+            flake = directory;
+          };
         };
 
         nixosModule =

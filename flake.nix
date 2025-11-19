@@ -85,7 +85,6 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
-        flake-utils.inputs.systems.follows = "clan-core/systems";
       };
     };
 
