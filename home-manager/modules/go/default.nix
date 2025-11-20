@@ -11,7 +11,7 @@ in
     programs = {
       go = {
         enable = true;
-        env.GOPATH = ".go";
+        env.GOPATH = "/home/pinpox/.go";
         #      packages = {
         #        "golang.org/x/text" =
         #          builtins.fetchGit "https://go.googlesource.com/text";

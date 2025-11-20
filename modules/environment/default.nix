@@ -20,7 +20,7 @@ in
     environment = {
       variables = {
         EDITOR = "nvim";
-        GOPATH = ".go";
+        GOPATH = "/home/pinpox/.go";
         VISUAL = "nvim";
         # Use librsvg's gdk-pixbuf loader cache file as it enables gdk-pixbuf to load
         # SVG files (important for icons)
