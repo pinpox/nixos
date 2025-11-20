@@ -34,7 +34,6 @@
           { lib, config, ... }:
           {
             services.yggdrasil.settings =
-              # (builtins.match "kfbox|porree" config.networking.hostName) != null
               lib.optionalAttrs (config.networking.hostName == "kfbox" || config.networking.hostName == "porree")
                 {
                   Listen = [

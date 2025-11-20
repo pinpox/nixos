@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   clanLib,
   directory,
   ...
@@ -8,6 +9,16 @@
   _class = "clan.service";
   manifest.name = "wireguard";
   manifest.readme = "Wireguard star configuration";
+
+  exports = lib.mapAttrs' (instanceName: _: {
+    name = clanLib.exports.buildScopeKey {
+      inherit instanceName;
+      serviceName = config.manifest.name;
+    };
+    value = {
+      networking.priority = 1500;
+    };
+  }) config.instances;
 
   # Peer options and configuration
   roles.peer = {
