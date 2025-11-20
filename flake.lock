@@ -823,11 +823,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763051116,
-        "narHash": "sha256-EqVt3e5bNM/bwABXE3NwakFHSa1dWDffwzV6GED9F8A=",
+        "lastModified": 1763643635,
+        "narHash": "sha256-Lwn1D0IPJs+c2wk7e4DSHzQL06+6n7Lk+/ZK2XbwRFo=",
         "owner": "pinpox",
         "repo": "rio",
-        "rev": "3dd123ed9854a76f7a918269427b36c47abcb814",
+        "rev": "c23c0b5b7da04ab8d9f6b27c0ec27876c1f4ff82",
         "type": "github"
       },
       "original": {
