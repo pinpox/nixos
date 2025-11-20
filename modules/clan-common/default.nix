@@ -1,11 +1,13 @@
 {
   config,
+  clan-core,
+  self,
   pkgs,
   lib,
   ...
 }:
 {
-  
+
   # Make pinpox-utils available to all modules
   # _module.args.pinpox-utils = import ../../utils { inherit pkgs lib; };
 
@@ -33,6 +35,7 @@
     ];
     script = ''
       mkdir -p $out
+      echo ${(self.clan.exports."clan-core/internet:internet::".networking.module)}
       xkcdpass > $out/test-password
     '';
   };
