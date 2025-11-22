@@ -43,12 +43,16 @@
       {
 
         exports = mkExports {
-          peer.host.plain = clanLib.vars.getPublicValue {
-            machine = machine.name;
-            generator = "wireguard-${instanceName}-ip";
-            file = "ipv4";
-            flake = directory;
-          };
+          peer.host = [
+            {
+              plain = clanLib.vars.getPublicValue {
+                machine = machine.name;
+                generator = "wireguard-${instanceName}-ip";
+                file = "ipv4";
+                flake = directory;
+              };
+            }
+          ];
         };
 
         nixosModule =
