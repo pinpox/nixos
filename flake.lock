@@ -58,11 +58,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1764175833,
-        "narHash": "sha256-0n8x6fc3zoxvYzDMTofgxcyptb+6ToMp0niga81B5+c=",
+        "lastModified": 1764220269,
+        "narHash": "sha256-rSSmhTCjfZLZog3qO6Q5C58pINmDv8EheGUhcojxd6c=",
         "ref": "refs/heads/main",
-        "rev": "44d31a5c3c0c5f396542c73e4812f2f0af9d56b6",
-        "revCount": 11232,
+        "rev": "c70c04d09477ceee5820a8da4d9c0d1b50eb6cc6",
+        "revCount": 11240,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -296,11 +296,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752053055,
-        "narHash": "sha256-11HYlJ6w3Zlfx5D8Ht9QLnmlnhQ7FPJ5rAUxcXEboMo=",
+        "lastModified": 1764196657,
+        "narHash": "sha256-FMnN7zzIzgh7VewlLhKpQ7Guh9Ai4VsebhYrb3hkYRE=",
         "owner": "pinpox",
         "repo": "gif-searcher",
-        "rev": "acd1fdfda875b7075cc3083466c577adb7f6d2f0",
+        "rev": "d54c4fcfcd0d852f87c03e56920c5e9c3aa221fe",
         "type": "github"
       },
       "original": {
@@ -336,11 +336,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763748372,
-        "narHash": "sha256-AUc78Qv3sWir0hvbmfXoZ7Jzq9VVL97l+sP9Jgms+JU=",
+        "lastModified": 1764194569,
+        "narHash": "sha256-iUM9ktarEzThkayyZrzQ7oycPshAY2XRQqVKz0xX/L0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d10a9b16b2a3ee28433f3d1c603f4e9f1fecb8e1",
+        "rev": "9651819d75f6c7ffaf8a9227490ac704f29659f0",
         "type": "github"
       },
       "original": {
@@ -511,11 +511,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763505477,
-        "narHash": "sha256-nJRd4LY2kT3OELfHqdgWjvToNZ4w+zKCMzS2R6z4sXE=",
+        "lastModified": 1764161084,
+        "narHash": "sha256-HN84sByg9FhJnojkGGDSrcjcbeioFWoNXfuyYfJ1kBE=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "3bda9f6b14161becbd07b3c56411f1670e19b9b5",
+        "rev": "e95de00a471d07435e0527ff4db092c84998698e",
         "type": "github"
       },
       "original": {
@@ -552,11 +552,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763265660,
-        "narHash": "sha256-Ad9Rd3ZAidrH01xP73S3CjPiyXo7ywZs3uCESjPwUdc=",
+        "lastModified": 1763870992,
+        "narHash": "sha256-NPyc76Wxmv/vAsXJ8F+/8fXECHYcv2YGSqdiSHp/F/A=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "469ef53571ea80890c9497952787920c79c1ee6e",
+        "rev": "d7423982c7a26586aa237d130b14c8b302c7a367",
         "type": "github"
       },
       "original": {
@@ -595,11 +595,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1762847253,
-        "narHash": "sha256-BWWnUUT01lPwCWUvS0p6Px5UOBFeXJ8jR+ZdLX8IbrU=",
+        "lastModified": 1764080039,
+        "narHash": "sha256-b1MtLQsQc4Ji1u08f+C6g5XrmLPkJQ1fhNkCt+0AERQ=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "899dc449bc6428b9ee6b3b8f771ca2b0ef945ab9",
+        "rev": "da17006633ca9cda369be82893ae36824a2ddf1a",
         "type": "github"
       },
       "original": {
@@ -639,11 +639,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1763421233,
-        "narHash": "sha256-Stk9ZYRkGrnnpyJ4eqt9eQtdFWRRIvMxpNRf4sIegnw=",
+        "lastModified": 1763966396,
+        "narHash": "sha256-6eeL1YPcY1MV3DDStIDIdy/zZCDKgHdkCmsrLJFiZf0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "89c2b2330e733d6cdb5eae7b899326930c2c0648",
+        "rev": "5ae3b07d8d6527c42f17c876e404993199144b6a",
         "type": "github"
       },
       "original": {
@@ -693,10 +693,12 @@
         ]
       },
       "locked": {
-        "lastModified": 1764080154,
-        "narHash": "sha256-q902rHLBMQ5ubqA2gWzTnODVoQVxV6BMdIUA79WIvEk=",
-        "path": "/home/pinpox/code/github.com/pinpox/pinpox-neovim",
-        "type": "path"
+        "lastModified": 1764072829,
+        "narHash": "sha256-K79Vu3zOQVJwAu+6pnmquC3ohPJbxkybQWi+hmV2d64=",
+        "owner": "pinpox",
+        "repo": "pinpox-neovim",
+        "rev": "08a211ac9e8ff2cfb160bf5a0e367b4e7114bacf",
+        "type": "github"
       },
       "original": {
         "owner": "pinpox",
