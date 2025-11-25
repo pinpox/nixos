@@ -47,16 +47,15 @@ in
 
     clan.core.vars.generators."prometheus" = {
 
-      prompts.token.description = "Home-assistant token for prometheus";
+      prompts.token = {
+        description = "Home-assistant token for prometheus";
+        persist = true;
+      };
 
-      files.home-assistant-token = {
+      files.token = {
         group = "prometheus";
         owner = "prometheus";
       };
-
-      script = ''
-        printf "%s" "$(cat $prompts/token)" > $out/home-assistant-token
-      '';
 
     };
 
@@ -101,7 +100,7 @@ in
           job_name = "homeassistant";
           scrape_interval = "60s";
           metrics_path = "/api/prometheus";
-          bearer_token_file = config.clan.core.vars.generators."prometheus".files."home-assistant-token".path;
+          bearer_token_file = config.clan.core.vars.generators."prometheus".files."token".path;
           scheme = "http";
           static_configs = [ { targets = [ "birne.wireguard:8123" ]; } ];
         }
