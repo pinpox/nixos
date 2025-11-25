@@ -8,8 +8,6 @@
 }:
 {
 
-  programs.ranger.enable = true;
-
   programs.zsh = {
     enable = true;
     autosuggestion = {
