@@ -58,16 +58,15 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1763992401,
-        "narHash": "sha256-CtXcTsMz4L/mz3MUf08tpBc2CvobeLEdoCmzu+9TCKA=",
-        "ref": "check",
-        "rev": "1b004a46e18d7d1727e826eb6160e721e243ef82",
-        "revCount": 11175,
+        "lastModified": 1764175833,
+        "narHash": "sha256-0n8x6fc3zoxvYzDMTofgxcyptb+6ToMp0niga81B5+c=",
+        "ref": "refs/heads/main",
+        "rev": "44d31a5c3c0c5f396542c73e4812f2f0af9d56b6",
+        "revCount": 11232,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
       "original": {
-        "ref": "check",
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       }
@@ -107,11 +106,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763651264,
-        "narHash": "sha256-8vvwZbw0s7YvBMJeyPVpWke6lg6ROgtts5N2/SMCcv4=",
+        "lastModified": 1764110879,
+        "narHash": "sha256-xanUzIb0tf3kJ+PoOFmXEXV1jM3PjkDT/TQ5DYeNYRc=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "e86a89079587497174ccab6d0d142a65811a4fd9",
+        "rev": "aecba248f9a7d68c5d1ed15de2d1c8a4c994a3c5",
         "type": "github"
       },
       "original": {
@@ -694,12 +693,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1763119259,
-        "narHash": "sha256-2k+q3vh/lpPv0htGOToLKAa7QblI8emEs4hR303xZZs=",
-        "owner": "pinpox",
-        "repo": "pinpox-neovim",
-        "rev": "6b57ff173acb998289781ddb1d7b74b9e71c80b2",
-        "type": "github"
+        "lastModified": 1764080154,
+        "narHash": "sha256-q902rHLBMQ5ubqA2gWzTnODVoQVxV6BMdIUA79WIvEk=",
+        "path": "/home/pinpox/code/github.com/pinpox/pinpox-neovim",
+        "type": "path"
       },
       "original": {
         "owner": "pinpox",
@@ -920,11 +917,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763870012,
-        "narHash": "sha256-AHxFfIu73SpNLAOZbu/AvpLhZ/Szhx6gRPj9ufZtaZA=",
+        "lastModified": 1764021963,
+        "narHash": "sha256-1m84V2ROwNEbqeS9t37/mkry23GBhfMt8qb6aHHmjuc=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "4e7d74d92398b933cc0e0e25af5b0836efcfdde3",
+        "rev": "c482a1c1bbe030be6688ed7dc84f7213f304f1ec",
         "type": "github"
       },
       "original": {
