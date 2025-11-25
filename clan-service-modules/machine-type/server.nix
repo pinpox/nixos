@@ -60,4 +60,20 @@ with lib;
     location = "/var/backup/postgresql";
     backupAll = true;
   };
+
+
+  # Remove wayland dependencies on server machine type
+  nixpkgs.overlays = [
+
+    (final: super: {
+      passage = super.passage.override {
+        wl-clipboard = null;
+        xclip = null;
+      };
+
+      neovim = super.neovim.override {
+        waylandSupport = false;
+      };
+    })
+  ];
 }
