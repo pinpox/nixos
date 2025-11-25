@@ -32,6 +32,7 @@
       };
 
       programs = {
+        games.enable = true;
         obs-studio.enable = false;
         pandoc.enable = true;
         k9s.enable = true;
