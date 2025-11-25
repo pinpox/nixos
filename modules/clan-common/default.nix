@@ -17,7 +17,7 @@
   clan.core.networking.targetHost = lib.mkDefault "${config.networking.hostName}.pin";
 
   clan.core.vars.settings.secretStore = "password-store";
-  clan.core.vars.password-store.passPackage = pkgs.passage;
+  clan.core.vars.password-store.passCommand = "passage";
 
   environment.systemPackages = [ pkgs.passage ];
 
