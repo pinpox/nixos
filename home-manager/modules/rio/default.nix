@@ -12,14 +12,8 @@ in
   options.pinpox.programs.rio.enable = mkEnableOption "rio terminal emulator";
 
   config = mkIf cfg.enable {
-
     home.packages = with pkgs; [ rio ];
-
     xdg.enable = true;
-
-    xdg.configFile.rio-conf = {
-      # target = ./
-      source = ./config/rio;
-    };
+    xdg.configFile.rio.source = ./config/rio;
   };
 }
