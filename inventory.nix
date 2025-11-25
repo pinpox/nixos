@@ -100,7 +100,7 @@
     localsend = {
       module.input = "self";
       module.name = "@pinpox/localsend";
-      roles.default.tags.all = { };
+      roles.default.tags = [ "desktop" ];
     };
 
     machine-type = {
