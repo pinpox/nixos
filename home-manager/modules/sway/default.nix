@@ -172,10 +172,6 @@ in
           "Print" = "exec screenshot-region";
           "Shift+Print" = "exec screenshot-region-file";
 
-          # "Monitors" button
-          # state 0x40, keycode 33 (keysym 0x3b, semicolon), same_screen YES,
-          #    state 0x40, keycode 33 (keysym 0x3b, semicolon), same_screen YES,
-
         };
 
         modifier = "Mod4"; # Win key
