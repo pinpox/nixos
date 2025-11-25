@@ -46,7 +46,6 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      rio
       xdg-desktop-portal
       wdisplays # Configure screen placement
     ];

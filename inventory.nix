@@ -52,8 +52,8 @@
       ];
     };
 
-    # Add monitoring to the whole clan
     # TODO: re-enable when merged
+    # Add monitoring to the whole clan
     # monitoring = {
     #   module.name = "monitoring";
     #   # roles.telegraf.tags = [ "all" ];

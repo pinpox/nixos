@@ -47,6 +47,7 @@
         taskwarrior.enable = true;
         go.enable = true;
         foot.enable = true;
+        rio.enable = true;
         sway.enable = true;
         swaylock.enable = true;
         river.enable = true;
