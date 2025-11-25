@@ -28,7 +28,7 @@
 
     yggdrasil = {
       module.name = "yggdrasil";
-      roles.default.tags = [ "desktop" ];
+      roles.default.tags = [ "all" ];
       roles.default.extraModules = [
         (
           { lib, config, ... }:
