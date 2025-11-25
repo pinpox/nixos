@@ -6,10 +6,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
     # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
-    # clan-core.url = "git+https://git.clan.lol/clan/clan-core?rev=3aa7750265b4d2eeb5f7791b4205d247078cf670";
-    # clan-core.inputs.nixpkgs.follows = "nixpkgs";
-    # clan-core.inputs.disko.follows = "disko";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=check";
+    # clan-core.url = "git+https://git.clan.lol/clan/clan-core";
 
     # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
     # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
@@ -71,7 +69,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nur.url = "github:nix-community/NUR";
+    nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
     wallpaper-generator.url = "github:pinpox/wallpaper-generator";
