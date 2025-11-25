@@ -31,7 +31,7 @@ in
             ServerAliveInterval = "0";
             ServerAliveCountMax = "3";
             Compression = "no";
-            AddKeysToAgent = "no";
+            AddKeysToAgent = "yes";
             HashKnownHosts = "no";
             UserKnownHostsFile = "~/.ssh/known_hosts";
             ControlMaster = "no";
