@@ -154,8 +154,8 @@ in
 
           # Volume key
           "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer --toggle-mute";
-          "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 10";
-          "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 10";
+          "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
+          "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
 
           # Media keys
           "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
