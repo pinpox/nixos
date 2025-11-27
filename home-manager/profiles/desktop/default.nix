@@ -35,9 +35,9 @@
         games.enable = true;
         obs-studio.enable = false;
         pandoc.enable = true;
-        k9s.enable = true;
-        zed.enable = true;
-        helix.enable = true;
+        k9s.enable = false;
+        zed.enable = false;
+        helix.enable = false;
         easyeffects.enable = false;
         zellij.enable = true;
         chromium.enable = true;
