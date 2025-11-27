@@ -13,7 +13,7 @@
   };
 
   meta.name = "pinpox-clan";
-  meta.tld = "pin";
+  meta.domain = "pin";
 
   instances = {
 
