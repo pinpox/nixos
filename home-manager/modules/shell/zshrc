@@ -6,3 +6,4 @@ local snowflake='❄'
 
 # Don't do shit with the # in flake commmands
 unsetopt nomatch
+

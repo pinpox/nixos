@@ -64,7 +64,8 @@
               find "$base" -maxdepth 3 -type d \
                 | grep -E '(/.*){6}' \
                 | sed "s|^$base/||" \
-                | fzf --preview "BASE=$base sh -c '${pkgs.eza}/bin/eza --group-directories-first --tree --level=2 --icons \"\$BASE/\$0\"' {}"
+                | fzf --preview "BASE=$base sh -c '${pkgs.eza}/bin/eza \
+                  --group-directories-first --tree --level=2 --icons \"\$BASE/\$0\"' {}"
             ) || return
 
             full="$base/$rel"
@@ -77,6 +78,23 @@
 
           zle -N fzf_cd_widget
           bindkey '^J' fzf_cd_widget
+
+          # Power profile function using ryzenadj
+          power-profile() {
+          if [ $# -ne 4 ]; then
+            echo "Usage: power-profile <name> <stapm> <fast> <slow>"
+            echo "Example: power-profile PERFORMANCE 30000 35000 35000"
+            return 1
+          fi
+
+          local name=$1
+          local stapm=$2 # Sustained power limit
+          local fast=$3 # Short burst power limit (instant peak response)
+          local slow=$4 # Slow burst power limit (~5-10s)
+
+          sudo ${lib.getExe pkgs.ryzenadj} --stapm-limit=$stapm --fast-limit=$fast --slow-limit=$slow && \
+            echo "Power profile set to: $name (''${stapm}mW/''${fast}mW/''${slow}mW)"
+          }
 
         '';
       in
@@ -155,6 +173,13 @@
       za = "${./zellij-chooser}";
 
       upterm = "${pkgs.upterm}/bin/upterm host --server ssh://upterm.thalheim.io:2323 --force-command 'zellij attach pair-programming' -- zellij attach --create pair-programming";
+
+      # Power profile aliases
+      power-performance = "power-profile PERFORMANCE 30000 35000 35000";
+      power-balanced = "power-profile BALANCED 25000 33000 33000";
+      power-saver = "power-profile POWER-SAVER 26000 30000 15000";
+      power-ultra-saver = "power-profile ULTRA-POWER-SAVER 10000 20000 10000";
+
     };
 
     prezto = {
@@ -180,7 +205,7 @@
     };
 
     plugins = [
-     {
+      {
         name = "zsh-forgit";
         src = pkgs.zsh-forgit;
         file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
