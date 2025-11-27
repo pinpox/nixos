@@ -5,6 +5,8 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
     # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
+    # nixpkgs-local.url = "path:/home/pinpox/code/github.com/NixOS/nixpkgs";
+    # nixpkgs-local.flake = false;
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
 
