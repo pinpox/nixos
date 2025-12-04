@@ -58,11 +58,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1764665602,
-        "narHash": "sha256-gMtVDJKi3a2G2J3voTV1FoThnUHjHQhD1qPukDc5X1A=",
+        "lastModified": 1764862070,
+        "narHash": "sha256-mr7yXD8KhxBmep+BMmeBtDR3iyVKzGSW0ALjsfM//U0=",
         "ref": "refs/heads/main",
-        "rev": "b751389bb9a86463681afa46dccdabf8e5a019d5",
-        "revCount": 11380,
+        "rev": "bed6e22033e0833b8b266a692ed04d45555f3e70",
+        "revCount": 11440,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -612,10 +612,10 @@
     "nixpkgs": {
       "locked": {
         "lastModified": 315532800,
-        "narHash": "sha256-yDxtm0PESdgNetiJN5+MFxgubBcLDTiuSjjrJiyvsvM=",
-        "rev": "d7f52a7a640bc54c7bb414cca603835bf8dd4b10",
+        "narHash": "sha256-RpDoXu4dMzS4Q3qq3vdlTXbL8ZLn42i5QPD5X0RPqT0=",
+        "rev": "e1ebeec86b771e9d387dd02d82ffdc77ac753abc",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre871443.d7f52a7a640b/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre890836.e1ebeec86b77/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
