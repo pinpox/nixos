@@ -11,7 +11,7 @@
   manifest.readme = "Wireguard star configuration";
 
   exports = lib.mapAttrs' (instanceName: _: {
-    name = clanLib.exports.buildScopeKey {
+    name = clanLib.buildScopeKey {
       inherit instanceName;
       serviceName = config.manifest.name;
     };
@@ -45,7 +45,7 @@
         exports = mkExports {
           peer.hosts = [
             {
-              plain = clanLib.vars.getPublicValue {
+              plain = clanLib.getPublicValue {
                 machine = machine.name;
                 generator = "wireguard-${instanceName}-ip";
                 file = "ipv4";
