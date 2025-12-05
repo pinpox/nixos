@@ -4,6 +4,11 @@
   ...
 }:
 {
+  # Create storage-users group for restricted access to storagebox
+  users.groups.storage-users = {
+    gid = 982;
+  };
+
   # SSH keypair generator for Hetzner Storage Box
   clan.core.vars.generators."storagebox-ssh" = {
     files.ssh-private-key = { };
@@ -36,7 +41,8 @@
       "vfs_cache_mode=full"
       "cache_dir=/var/cache/rclone-storagebox"
       "checkers=8"
-      "umask=002"
+      "gid=${toString config.users.groups.storage-users.gid}"
+      "umask=007"
       "allow_other"
       "sftp_host=u515095.your-storagebox.de"
       "sftp_user=u515095"

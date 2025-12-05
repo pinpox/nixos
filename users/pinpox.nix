@@ -29,6 +29,7 @@
         "tty"
         "dialout"
         "video"
+        "storage-users"
       ];
       shell = pkgs.zsh;
 
