@@ -31,7 +31,7 @@ in
       # "${config.services.nextcloud.home}/store-apps"
     ];
 
-    services.postgresql.package = pkgs.postgresql_13;
+    services.postgresql.package = pkgs.postgresql_17;
 
     clan.core.vars.generators."nextcloud" = {
 
