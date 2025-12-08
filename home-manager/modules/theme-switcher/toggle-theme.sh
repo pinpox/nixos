@@ -3,7 +3,7 @@
 # Read current setting
 current=$(dconf read /org/gnome/desktop/interface/color-scheme 2>/dev/null)
 
-if [[ "$current" == "'prefer-dark'" ]] || [[ "$current" == "" ]]; then
+if [[ $current == "'prefer-dark'" ]] || [[ $current == "" ]]; then
   dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
   echo "Switched to light theme"
 else
