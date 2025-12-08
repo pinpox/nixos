@@ -81,6 +81,10 @@
     defaults = {
       bluetooth.enable = true;
       environment.enable = true;
+      storagebox ={
+        enable = true;
+        mountOnAccess = true;
+      };
       fonts.enable = true;
       locale.enable = true;
       networking.enable = true;

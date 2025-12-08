@@ -9,7 +9,6 @@
 
   imports = [
     ./disko-config-btrfs.nix
-    ./storagebox.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
