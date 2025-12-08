@@ -40,17 +40,16 @@ let
 
     validation.script = builtins.concatStringsSep "" hosts;
 
-    script =
-      ''
-        mkdir -p $out
-      ''
-      + builtins.concatStringsSep "\n" (
-        map (h: ''
-          xkcdpass -d- > $out/${h}
-          printf "%s %s" "$(cat $prompts/${h})" "$(cat $out/${h} | caddy hash-password)" \
-            > $out/${h}.auth
-        '') hosts
-      );
+    script = ''
+      mkdir -p $out
+    ''
+    + builtins.concatStringsSep "\n" (
+      map (h: ''
+        xkcdpass -d- > $out/${h}
+        printf "%s %s" "$(cat $prompts/${h})" "$(cat $out/${h} | caddy hash-password)" \
+          > $out/${h}.auth
+      '') hosts
+    );
   };
 in
 {
@@ -91,7 +90,6 @@ in
         file_server
         encode zstd gzip
       '';
-
 
       "tumblr.pablo.tools".extraConfig = ''
         root * /var/www/tumblr

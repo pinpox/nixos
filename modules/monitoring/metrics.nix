@@ -74,7 +74,6 @@ in
 
     # Open firewall ports on the wireguard interface
     networking.firewall.interfaces.wg-clan.allowedTCPPorts =
-      lib.optional cfg.blackbox.enable 9115
-      ++ lib.optional cfg.node.enable 9100;
+      lib.optional cfg.blackbox.enable 9115 ++ lib.optional cfg.node.enable 9100;
   };
 }

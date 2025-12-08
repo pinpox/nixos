@@ -4,7 +4,8 @@
   # Nixpkgs / NixOS version to use.
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
 
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     let
 
       # to work with older version of flakes
@@ -23,7 +24,8 @@
     {
 
       # Provide some binary packages for selected system types.
-      packages = forAllSystems (system:
+      packages = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
@@ -47,17 +49,25 @@
 
             vendorHash = "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo=";
           };
-        });
+        }
+      );
 
       # Add dependencies that are only needed for development
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
         {
           default = pkgs.mkShell {
-            buildInputs = with pkgs; [ go gopls gotools go-tools ];
+            buildInputs = with pkgs; [
+              go
+              gopls
+              gotools
+              go-tools
+            ];
           };
-        });
+        }
+      );
     };
 }

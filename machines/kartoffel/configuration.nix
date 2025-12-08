@@ -9,7 +9,6 @@
 
   networking.hostName = "kartoffel";
 
-
   pinpox.defaults.lvm-grub.enable = true;
 
   # Encrypted drive to be mounted by the bootloader. Path of the device will

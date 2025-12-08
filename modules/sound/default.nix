@@ -20,7 +20,7 @@ in
     services.pipewire = {
       enable = true;
 
-    # Use pipeware to emulate jack and pulseaudio
+      # Use pipeware to emulate jack and pulseaudio
       jack.enable = true;
       pulse.enable = true;
       alsa.enable = true;
@@ -61,11 +61,13 @@ in
 
                 "capture.props" = {
                   "audio.rate" = 48000;
-                } // capture;
+                }
+                // capture;
 
                 "playback.props" = {
                   "audio.rate" = 48000;
-                } // playback;
+                }
+                // playback;
               };
             };
 

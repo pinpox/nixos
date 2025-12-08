@@ -61,7 +61,6 @@ with lib;
     backupAll = true;
   };
 
-
   # Remove wayland dependencies on server machine type
   nixpkgs.overlays = [
 

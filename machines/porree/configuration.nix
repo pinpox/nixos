@@ -27,7 +27,6 @@
     ];
   };
 
-
   clan.core.vars.generators."matrix-hook" = pinpox-utils.mkEnvGenerator [ "MX_TOKEN" ];
   clan.core.vars.generators."alertmanager-ntfy" = pinpox-utils.mkEnvGenerator [
     "NTFY_USER"
