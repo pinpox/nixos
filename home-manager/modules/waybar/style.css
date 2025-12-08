@@ -1,23 +1,22 @@
-
 /***************
  *   GENERAL   *
  ***************/
 
 * {
-	border: none;
-	border-radius: 0;
-	min-height: 0;
-    font-family: "Berkeley Mono", "Font Awesome 6 Free";
-	font-size: 12px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: "Berkeley Mono", "Font Awesome 6 Free";
+  font-size: 12px;
 }
 
 window#waybar {
-	background-color: @BrightBlack;
-	color: @White;
+  background-color: @BrightBlack;
+  color: @White;
 }
 
 #mode {
-	border-bottom: 3px solid @White;
+  border-bottom: 3px solid @White;
 }
 
 #clock,
@@ -39,25 +38,29 @@ window#waybar {
 #mpd,
 #language,
 #idle_inhibitor {
-	padding: 3px 7px;
-	margin: 3px 3px;
-	color: @White;
-	border-radius: 3px;
-	background-color: @Black;
+  padding: 3px 7px;
+  margin: 3px 3px;
+  color: @White;
+  border-radius: 3px;
+  background-color: @Black;
 }
 
-#custom-mic, #mpris {
-	padding: 3px 7px;
-	margin: 3px 3px;
-	color: @White;
-	background-color: transparent;
+#custom-mic,
+#mpris {
+  padding: 3px 7px;
+  margin: 3px 3px;
+  color: @White;
+  background-color: transparent;
 }
 
-#pulseaudio.source-muted, #custom-mic { color: @Red; }
+#pulseaudio.source-muted,
+#custom-mic {
+  color: @Red;
+}
 
 #window {
-	background-color: @Black;
-	color: @White;
+  background-color: @Black;
+  color: @White;
 }
 
 /*********************
@@ -66,28 +69,28 @@ window#waybar {
 
 #workspaces button,
 #tags button {
-	background: @Black;
-	color: @White;
-	padding: 0px 0px;
+  background: @Black;
+  color: @White;
+  padding: 0px 0px;
 }
 
 #workspaces button.focused,
 #tags button.focused {
-	background: @Blue;
-	color: @Black;
+  background: @Blue;
+  color: @Black;
 }
 
 #workspaces button.urgent,
 #tags button.urgent {
-	background-color: @Red;
-	color: @Black;
+  background-color: @Red;
+  color: @Black;
 }
 
-#workspaces button:hover ,
+#workspaces button:hover,
 #tags button:hover {
-	background: rgba(0, 0, 0, 0.2);
-	box-shadow: inherit;
-	text-shadow: inherit;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inherit;
+  text-shadow: inherit;
 }
 
 /* /1* If workspaces is the leftmost module, omit left margin *1/ */
@@ -104,8 +107,8 @@ window#waybar {
  *********************/
 
 #clock {
-	min-width: 45px;
-	margin-right: 11px;
+  min-width: 45px;
+  margin-right: 11px;
 }
 
 /*********************
@@ -113,37 +116,36 @@ window#waybar {
  *********************/
 
 #battery {
-	min-width: 55px;
+  min-width: 55px;
 }
 
 @keyframes blink {
-	to {
-		background-color: @White;
-		color: @Black;
-	}
+  to {
+    background-color: @White;
+    color: @Black;
+  }
 }
 
 #battery.critical:not(.charging) {
-	background-color: @Red;
-	color: @White;
-	animation-name: blink;
-	animation-duration: 0.5s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
+  background-color: @Red;
+  color: @White;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 /* label:focus { */
 /*	background-color: @White; */
 /* } */
 
-
 /*********************
  *     BACKLIGHT     *
  *********************/
 
 #backlight {
-	min-width: 55px;
+  min-width: 55px;
 }
 
 /* #network { */
@@ -155,16 +157,14 @@ window#waybar {
  *********************/
 
 #tray {
-	background-color: @Black;
+  background-color: @Black;
 }
 
 #tray > .passive {
-	-gtk-icon-effect: dim;
+  -gtk-icon-effect: dim;
 }
 
 #tray > .needs-attention {
-	-gtk-icon-effect: highlight;
-	background-color: @Red;
+  -gtk-icon-effect: highlight;
+  background-color: @Red;
 }
-
-

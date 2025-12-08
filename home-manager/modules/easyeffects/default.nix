@@ -1,10 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.pinpox.programs.easyeffects;
+let
+  cfg = config.pinpox.programs.easyeffects;
 
-in {
+in
+{
   options.pinpox.programs.easyeffects = {
     enable = mkEnableOption "EasyEffects audio effects";
   };

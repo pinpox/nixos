@@ -11,7 +11,6 @@ with lib;
 
   config = {
 
-
     # Home-manager nixpkgs config
     nixpkgs = {
 

@@ -59,256 +59,257 @@ in
       };
 
       xdg.portal.config.sway = {
-      # Use xdg-desktop-portal-gtk for every portal interface...
-      default = [ "gtk" ];
-      # ... except for the ScreenCast, Screenshot and Secret
-      "org.freedesktop.impl.portal.ScreenCast" = "wlr";
-      "org.freedesktop.impl.portal.Screenshot" = "wlr";
-      # ignore inhibit bc gtk portal always returns as success,
-      # despite sway/the wlr portal not having an implementation,
-      # stopping firefox from using wayland idle-inhibit
-      "org.freedesktop.impl.portal.Inhibit" = "none";
-    };
-
-    # laucher
-    programs.tofi = {
-      enable = true;
-      settings = {
-        width = "100%";
-        height = "100%";
-        border-width = "0";
-        outline-width = "0";
-        padding-left = "35%";
-        padding-top = "35%";
-        result-spacing = "25";
-        num-results = "5";
-        font = "Berkeley Mono";
-        background-color = "#000A";
-        prompt-text = "\"\"";
-        placeholder-text = "yes?";
+        # Use xdg-desktop-portal-gtk for every portal interface...
+        default = [ "gtk" ];
+        # ... except for the ScreenCast, Screenshot and Secret
+        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+        "org.freedesktop.impl.portal.Screenshot" = "wlr";
+        # ignore inhibit bc gtk portal always returns as success,
+        # despite sway/the wlr portal not having an implementation,
+        # stopping firefox from using wayland idle-inhibit
+        "org.freedesktop.impl.portal.Inhibit" = "none";
       };
-    };
 
-    home.packages = with pkgs; [
-      wl-clipboard
-      wlr-randr
-      start-sway
-      font-awesome
-      line-awesome
-    ];
-
-    wayland.windowManager.sway = {
-      enable = true;
-      config = rec {
-
-        seat = {
-          "*" = {
-            xcursor_theme = "${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}";
-          };
+      # laucher
+      programs.tofi = {
+        enable = true;
+        settings = {
+          width = "100%";
+          height = "100%";
+          border-width = "0";
+          outline-width = "0";
+          padding-left = "35%";
+          padding-top = "35%";
+          result-spacing = "25";
+          num-results = "5";
+          font = "Berkeley Mono";
+          background-color = "#000A";
+          prompt-text = "\"\"";
+          placeholder-text = "yes?";
         };
+      };
 
-        keybindings = lib.mkOptionDefault {
+      home.packages = with pkgs; [
+        wl-clipboard
+        wlr-randr
+        start-sway
+        font-awesome
+        line-awesome
+      ];
 
-          # Terminal
-          "${modifier}+Return" = "exec rio";
+      wayland.windowManager.sway = {
+        enable = true;
+        config = rec {
 
-          # Laucher
-          "${modifier}+p" = ''
-            exec ${pkgs.tofi}/bin/tofi-run --output=$(swaymsg --type get_outputs | jq '.[] | select(.focused).name') | xargs swaymsg exec --
-          '';
+          seat = {
+            "*" = {
+              xcursor_theme = "${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}";
+            };
+          };
 
-          # Url
-          "${modifier}+Shift+p" = ''
-            exec ${pkgs.firefox}/bin/firefox --new-window $(cat ~/.local/share/tofi-bookmarks | ${pkgs.tofi}/bin/tofi)
-          '';
+          keybindings = lib.mkOptionDefault {
 
-          # Toggle microphone mute
-          "${modifier}+m" =
+            # Terminal
+            "${modifier}+Return" = "exec rio";
+
+            # Laucher
+            "${modifier}+p" = ''
+              exec ${pkgs.tofi}/bin/tofi-run --output=$(swaymsg --type get_outputs | jq '.[] | select(.focused).name') | xargs swaymsg exec --
+            '';
+
+            # Url
+            "${modifier}+Shift+p" = ''
+              exec ${pkgs.firefox}/bin/firefox --new-window $(cat ~/.local/share/tofi-bookmarks | ${pkgs.tofi}/bin/tofi)
+            '';
+
+            # Toggle microphone mute
+            "${modifier}+m" =
+              let
+                mic-toggle =
+                  pkgs.writeShellScriptBin "mic-toggle" # sh
+                    ''
+                      source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+                      ${pkgs.pulseaudio}/bin/pactl set-source-mute "$source" toggle
+                    '';
+              in
+              "exec ${mic-toggle}/bin/mic-toggle";
+
+            # Cycle in tabbed with win+tab
+            "${modifier}+Shift+Tab" = "focus prev";
+            "${modifier}+Tab" = "focus next";
+
+            # Screen lock
+            "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
+
+            # SwayNotificationCenter
+            "${modifier}+n" = "exec swaync-client -t -sw";
+
+            # Scratchpad
+            "${modifier}+u" =
+              ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] move position 0 0; [app_id="dropdown"] resize set width 100 ppt height 100 ppt'';
+
+            # Screen brightness
+            "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+            "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+
+            # Volume key
+            "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer --toggle-mute";
+            "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
+            "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
+
+            # Media keys
+            "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+            "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+            "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+
+            # "Airplane" button
+            # "XF86RFKill" =
+
+            # "Gear" button
+            # "XF86AudioMedia" =
+
+            # Screenshots
+            "Print" = "exec screenshot-region";
+            "Shift+Print" = "exec screenshot-region-file";
+
+          };
+
+          modifier = "Mod4"; # Win key
+          terminal = "rio";
+
+          startup = [
+            {
+              command = "swaync";
+              always = true;
+            }
+            {
+              command = "rio --app-id=dropdown";
+              always = true;
+            }
+            { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
+          ];
+
+          # Application/window specific rules
+          window.commands = [
+            {
+              command = "split horizontal, resize grow width 30 px or 30 ppt";
+              criteria.class = "^Audacious$";
+            }
+            {
+              command = "floating enable";
+              criteria.title = "Firefox — Sharing Indicator";
+            }
+            {
+              command = "floating enable";
+              criteria.app_id = "dropdown";
+            }
+            {
+              command = "move position 0 0, resize set width 100 ppt height 100 ppt";
+              criteria.app_id = "dropdown";
+            }
+            {
+              command = "move scratchpad";
+              criteria.app_id = "dropdown";
+            }
+            {
+              command = "border pixel 0";
+              criteria.app_id = "dropdown";
+            }
+          ];
+
+          input = {
+            "*" = {
+              xkb_layout = "us";
+              xkb_variant = "colemak";
+            };
+          };
+
+          focus.wrapping = "workspace";
+
+          colors =
             let
-              mic-toggle =
-                pkgs.writeShellScriptBin "mic-toggle" # sh
-                  ''
-                    source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
-                    ${pkgs.pulseaudio}/bin/pactl set-source-mute "$source" toggle
-                  '';
+              c = config.pinpox.colors;
             in
-            "exec ${mic-toggle}/bin/mic-toggle";
+            {
 
-          # Cycle in tabbed with win+tab
-          "${modifier}+Shift+Tab" = "focus prev";
-          "${modifier}+Tab" = "focus next";
+              focused = {
+                background = "#${c.Blue}";
+                border = "#${c.BrightBlue}";
+                childBorder = "#${c.Blue}";
+                indicator = "#${c.BrightBlue}";
+                text = "#${c.Black}";
+              };
 
-          # Screen lock
-          "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
+              focusedInactive = {
+                background = "#${c.BrightWhite}";
+                border = "#${c.BrightBlack}";
+                childBorder = "#${c.BrightWhite}";
+                indicator = "#${c.BrightBlack}";
+                text = "#${c.White}";
+              };
 
-          # SwayNotificationCenter
-          "${modifier}+n" = "exec swaync-client -t -sw";
+              unfocused = {
+                background = "#${c.Black}";
+                border = "#${c.BrightBlack}";
+                childBorder = "#${c.Black}";
+                indicator = "#${c.BrightBlack}";
+                text = "#${c.BrightBlack}";
+              };
 
-          # Scratchpad
-          "${modifier}+u" =
-            ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] move position 0 0; [app_id="dropdown"] resize set width 100 ppt height 100 ppt'';
-
-          # Screen brightness
-          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
-          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
-
-          # Volume key
-          "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer --toggle-mute";
-          "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
-          "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
-
-          # Media keys
-          "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-          "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
-          "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
-
-          # "Airplane" button
-          # "XF86RFKill" =
-
-          # "Gear" button
-          # "XF86AudioMedia" =
-
-          # Screenshots
-          "Print" = "exec screenshot-region";
-          "Shift+Print" = "exec screenshot-region-file";
-
-        };
-
-        modifier = "Mod4"; # Win key
-        terminal = "rio";
-
-        startup = [
-          {
-            command = "swaync";
-            always = true;
-          }
-          {
-            command = "rio --app-id=dropdown";
-            always = true;
-          }
-          { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
-        ];
-
-        # Application/window specific rules
-        window.commands = [
-          {
-            command = "split horizontal, resize grow width 30 px or 30 ppt";
-            criteria.class = "^Audacious$";
-          }
-          {
-            command = "floating enable";
-            criteria.title = "Firefox — Sharing Indicator";
-          }
-          {
-            command = "floating enable";
-            criteria.app_id = "dropdown";
-          }
-          {
-            command = "move position 0 0, resize set width 100 ppt height 100 ppt";
-            criteria.app_id = "dropdown";
-          }
-          {
-            command = "move scratchpad";
-            criteria.app_id = "dropdown";
-          }
-          {
-            command = "border pixel 0";
-            criteria.app_id = "dropdown";
-          }
-        ];
-
-        input = {
-          "*" = {
-            xkb_layout = "us";
-            xkb_variant = "colemak";
-          };
-        };
-
-        focus.wrapping = "workspace";
-
-        colors =
-          let
-            c = config.pinpox.colors;
-          in
-          {
-
-            focused = {
-              background = "#${c.Blue}";
-              border = "#${c.BrightBlue}";
-              childBorder = "#${c.Blue}";
-              indicator = "#${c.BrightBlue}";
-              text = "#${c.Black}";
+              urgent = {
+                background = "#${c.Red}";
+                border = "#${c.Black}";
+                childBorder = "#${c.Red}";
+                indicator = "#${c.Red}";
+                text = "#${c.White}";
+              };
             };
 
-            focusedInactive = {
-              background = "#${c.BrightWhite}";
-              border = "#${c.BrightBlack}";
-              childBorder = "#${c.BrightWhite}";
-              indicator = "#${c.BrightBlack}";
-              text = "#${c.White}";
-            };
+          bars = [
+            # { command = "${pkgs.waybar}/bin/waybar"; }
+            { command = "waybar"; }
+          ];
 
-            unfocused = {
-              background = "#${c.Black}";
-              border = "#${c.BrightBlack}";
-              childBorder = "#${c.Black}";
-              indicator = "#${c.BrightBlack}";
-              text = "#${c.BrightBlack}";
-            };
-
-            urgent = {
-              background = "#${c.Red}";
-              border = "#${c.Black}";
-              childBorder = "#${c.Red}";
-              indicator = "#${c.Red}";
-              text = "#${c.White}";
-            };
+          fonts = {
+            names = [ "Berkeley Mono" ];
+            size = 11.0;
           };
 
-        bars = [
-          # { command = "${pkgs.waybar}/bin/waybar"; }
-          { command = "waybar"; }
-        ];
+          workspaceAutoBackAndForth = true;
 
-        fonts = {
-          names = [ "Berkeley Mono" ];
-          size = 11.0;
+          # Default to tabbed layout
+          workspaceLayout = "tabbed";
+
+          gaps = {
+            smartGaps = true;
+            smartBorders = "on";
+            bottom = 3;
+            top = 3;
+            horizontal = 3;
+            vertical = 3;
+            inner = 3;
+            left = 3;
+            right = 3;
+            outer = 3;
+          };
+
+          # swaymsg 'output eDP-1 pos 0 0'
+          # swaymsg 'output DP-1 pos 1920 0'
+          # swaymsg 'output DP-2 pos 4480 0'
+
+          # Set wallpaper for all screens
+          # TODO: generated based on coloscheme
+          output."*".bg = "${./nixos-wallpaper.png} fill #000000";
+
+          # swaymsg 'output DP-2 mode 2560x1440@165Hz'
+
+          # Lenovo (Left USB-C port)
+          output.DP-2.mode = "2560x1440@165Hz";
+
+          # Phillips (Right USB-C port)
+          # output.DP-1.mode = "2560x1440@60";
         };
-
-        workspaceAutoBackAndForth = true;
-
-        # Default to tabbed layout
-        workspaceLayout = "tabbed";
-
-        gaps = {
-          smartGaps = true;
-          smartBorders  = "on";
-          bottom = 3;
-          top = 3;
-          horizontal = 3;
-          vertical = 3;
-          inner = 3;
-          left = 3;
-          right = 3;
-          outer = 3;
-        };
-
-        # swaymsg 'output eDP-1 pos 0 0'
-        # swaymsg 'output DP-1 pos 1920 0'
-        # swaymsg 'output DP-2 pos 4480 0'
-
-        # Set wallpaper for all screens
-        # TODO: generated based on coloscheme
-        output."*".bg = "${./nixos-wallpaper.png} fill #000000";
-
-        # swaymsg 'output DP-2 mode 2560x1440@165Hz'
-
-        # Lenovo (Left USB-C port)
-        output.DP-2.mode = "2560x1440@165Hz";
-
-        # Phillips (Right USB-C port)
-        # output.DP-1.mode = "2560x1440@60";
       };
-    };
-  });
+    }
+  );
 }

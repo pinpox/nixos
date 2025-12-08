@@ -32,7 +32,7 @@ in
   config.pinpox.colors = {
 
     Black = "000000"; # 000000
-    BrightBlack = "262626"; #262626
+    BrightBlack = "262626"; # 262626
     White = "d0d0d0"; # d0d0d0
     BrightWhite = "ffffff"; # ffffff
     Red = "d7005f"; # d7005f

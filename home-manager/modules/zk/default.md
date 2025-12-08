@@ -1,10 +1,10 @@
 ---
-title: {{title}}
-created: {{format-date now}}
+title: { { title } }
+created: { { format-date now } }
 visibility: private
 language: en
 tags:
-- {{slug title}}
+  - { { slug title } }
 ---
 
 {{content}}

@@ -1,25 +1,32 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.pinpox.programs.zed;
+let
+  cfg = config.pinpox.programs.zed;
 
-in {
+in
+{
   options.pinpox.programs.zed = {
     enable = mkEnableOption "Zed editor configuration";
   };
 
   config = mkIf cfg.enable {
     services.gnome-keyring.enable = true;
-    
+
     # Add nixd (Nix language server) for better Nix support
     home.packages = with pkgs; [
       nixd
     ];
-    
+
     programs.zed-editor = {
       enable = true;
-      extensions = ["nix"];
+      extensions = [ "nix" ];
       userSettings = {
         telemetry = {
           metrics = false;

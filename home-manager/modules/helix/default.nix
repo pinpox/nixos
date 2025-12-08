@@ -1,10 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.pinpox.programs.helix;
+let
+  cfg = config.pinpox.programs.helix;
 
-in {
+in
+{
   options.pinpox.programs.helix = {
     enable = mkEnableOption "Helix editor configuration";
   };
