@@ -3,6 +3,9 @@
 
   inputs = {
 
+    wrappers.url = "github:lassulus/wrappers";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
     # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
     # nixpkgs-local.url = "path:/home/pinpox/code/github.com/NixOS/nixpkgs";

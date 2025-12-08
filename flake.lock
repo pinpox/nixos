@@ -869,6 +869,7 @@
           "treefmt-nix"
         ],
         "wallpaper-generator": "wallpaper-generator",
+        "wrappers": "wrappers",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-async": "zsh-async",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
@@ -1045,6 +1046,26 @@
       "original": {
         "owner": "pinpox",
         "repo": "wallpaper-generator",
+        "type": "github"
+      }
+    },
+    "wrappers": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764326721,
+        "narHash": "sha256-JT6Nz/I4IpJNIbY5Oy+NpHTe4fqEsIuxIpIZAfEZWEc=",
+        "owner": "lassulus",
+        "repo": "wrappers",
+        "rev": "94d1131dd8c8a310f3e23c82ee75919cb401e716",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lassulus",
+        "repo": "wrappers",
         "type": "github"
       }
     },
