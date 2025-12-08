@@ -26,6 +26,45 @@
       };
     };
 
+    tor = {
+      module.name = "tor";
+
+      roles.client.machines.kiwi = { };
+      roles.client.machines.porree = { };
+
+      roles.server.machines = {
+
+        kiwi.settings = {
+          secretHostname = false;
+          portMapping = [
+            {
+              port = 6443;
+              target.port = 6443;
+            }
+            {
+              port = 6446;
+              target.port = 6446;
+            }
+          ];
+        };
+
+        porree.settings = {
+          secretHostname = false;
+          portMapping = [
+            {
+              port = 6443;
+              target.port = 6443;
+            }
+            {
+              port = 6446;
+              target.port = 6446;
+            }
+          ];
+
+        };
+      };
+    };
+
     yggdrasil = {
       module.name = "yggdrasil";
       roles.default.tags = [ "all" ];
