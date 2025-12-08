@@ -1,5 +1,11 @@
+# Modifier to line-height. Default is `1.0`
 line-height = 1.06
+
+# Environment variables
 env-vars = ["TERM=xterm-256color"]
+
+# Don't confirm before exiting Rio
+confirm-before-quit = false
 
 [adaptive-theme]
 light = "wildcharm-light"
@@ -14,13 +20,6 @@ dark = "wildcharm-dark"
 # Ignore theme selection foreground color
 # ignore-selection-foreground-color = false
 
-# Line height
-#
-# This option will apply an modifier to line-height
-# Default is `1.0`
-#
-# Example:
-
 # Startup directory
 #
 # Directory the shell is started in. If this is unset the working
@@ -31,10 +30,6 @@ dark = "wildcharm-dark"
 # Example:
 # working-dir = "/Users/raphael/Documents/"
 
-# Environment variables
-#
-# Example:
-# env-vars = []
 
 # Use fork
 #
@@ -44,11 +39,6 @@ dark = "wildcharm-dark"
 #
 # Example:
 # use-fork = false
-
-# Confirm before exiting Rio
-# Default is `true`
-#
-# confirm-before-quit = false
 
 # Cursor
 #
@@ -177,17 +167,14 @@ blur = true
 # Note: Font features do not have support to live reload on configuration,
 # so to reflect your changes, you will need to close and reopen Rio.
 #
-# You can also disable font hinting. Font hinting is enabled by default.
-# [fonts]
-# hinting = false
-#
 # You can also map the specified Unicode codepoints to a particular font.
-# [fonts]
 # symbol-map = [
 #   { start = "2297", end = "2299", font-family = "Cascadia Code NF" }
 # ]
 
 [fonts]
+# You can also disable font hinting. Font hinting is enabled by default.
+# hinting = false
 size = 16.6
 family = "Berkeley Mono"
 
