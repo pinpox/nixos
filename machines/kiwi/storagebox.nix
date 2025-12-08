@@ -4,13 +4,11 @@
   ...
 }:
 {
-  # Create storage-users group for restricted access to storagebox
-  users.groups.storage-users = {
-    gid = 982;
-  };
+  users.groups.storage-users.gid = 982;
 
   # SSH keypair generator for Hetzner Storage Box
   clan.core.vars.generators."storagebox-ssh" = {
+    share = true;
     files.ssh-private-key = { };
     files.ssh-public-key.secret = false;
     runtimeInputs = with pkgs; [ openssh ];
@@ -26,6 +24,11 @@
 
   # Hetzner Storage Box mount with rclone - using proper mount helper
   # Mounts on first access via automount, unmounts after 10min idle
+  # Create cache directory for rclone
+  systemd.tmpfiles.rules = [
+    "d /var/cache/rclone-storagebox 0750 root storage-users -"
+  ];
+
   fileSystems."/mnt/storagebox" = {
     device = ":sftp:";
     fsType = "rclone";
@@ -36,14 +39,16 @@
       "_netdev"
       "x-systemd.automount"
       "x-systemd.idle-timeout=600"
-      "x-systemd.mount-timeout=30s"
+      "x-systemd.mount-timeout=120s"
       "args2env"
+      "config=/dev/null"
       "vfs_cache_mode=full"
       "cache_dir=/var/cache/rclone-storagebox"
       "checkers=8"
       "gid=${toString config.users.groups.storage-users.gid}"
       "umask=007"
       "allow_other"
+      "links"
       "sftp_host=u515095.your-storagebox.de"
       "sftp_user=u515095"
       "sftp_port=23"
