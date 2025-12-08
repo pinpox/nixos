@@ -1,7 +1,7 @@
 repos:
--   repo: local
+  - repo: local
     hooks:
-    -   id: treefmt
+      - id: treefmt
         name: treefmt
         entry: nix fmt
         language: system
