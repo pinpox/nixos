@@ -71,22 +71,8 @@ in
   networking.hostName = "kfbox";
 
   pinpox = {
-
     services = {
-      # TODO Add miniflux and vikunja to dex
-      # TODO Remove gitea apps
-      # dex.enable = true;
-      # dex.host = "login.0cx.de";
-
-      # caddy-security = {
-      #   enable = true;
-      #   domain = "0cx.de";
-      #   openID = {
-      #     name = "Dex";
-      #     host = "login.0cx.de";
-      #   };
-      # };
-      #
+      navidrome.enable = true;
       radio.enable = true;
       jitsi-matrix-presence.enable = true;
       hedgedoc.enable = false;
