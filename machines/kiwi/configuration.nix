@@ -5,6 +5,8 @@
 }:
 {
 
+  hardware.fw-fanctrl.enable = true;
+
   imports = [
     ./disko-config-btrfs.nix
     ./storagebox.nix
