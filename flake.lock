@@ -864,6 +864,10 @@
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
         "rio": "rio",
+        "treefmt-nix": [
+          "clan-core",
+          "treefmt-nix"
+        ],
         "wallpaper-generator": "wallpaper-generator",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-async": "zsh-async",

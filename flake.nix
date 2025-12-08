@@ -113,6 +113,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt-nix.follows = "clan-core/treefmt-nix";
+
   };
   outputs =
     { self, ... }@inputs:
@@ -136,6 +138,32 @@
         import nixpkgs {
           inherit system;
           overlays = [ self.overlays.default ];
+        }
+      );
+
+      # treefmt configuration
+      treefmtEval = forAllSystems (
+        system:
+        treefmt-nix.lib.evalModule nixpkgsFor.${system} {
+          projectRootFile = "flake.nix";
+          programs = {
+            nixfmt.enable = true;
+            nixfmt.package = nixpkgsFor.${system}.nixfmt-rfc-style;
+            prettier.enable = true;
+            shellcheck.enable = true;
+            shfmt.enable = true;
+          };
+          settings.formatter = {
+            prettier.includes = [
+              "*.md"
+              "*.yaml"
+              "*.yml"
+              "*.json"
+              "*.toml"
+            ];
+            shellcheck.includes = [ "*.sh" ];
+            shfmt.includes = [ "*.sh" ];
+          };
         }
       );
 
@@ -169,6 +197,7 @@
           default = pkgs.mkShell {
             packages = [
               clan-core.packages.${system}.clan-cli
+              treefmtEval.${system}.config.build.wrapper
             ];
           };
         }
@@ -194,8 +223,13 @@
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs self pinpox-utils) final prev;
 
-      # Use nixpkgs-fmt for 'nix fmt'
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+      # Use treefmt for 'nix fmt'
+      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
+
+      # Expose treefmt check for CI
+      checks = forAllSystems (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
+      });
 
       # Each subdirectory in ./templates/<template-name> is a
       # template, which can be used for new proects with:

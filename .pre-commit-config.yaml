@@ -1,11 +1,11 @@
 repos:
 -   repo: local
     hooks:
-    -   id: nix fmt
-        name: Nix fmt
+    -   id: treefmt
+        name: treefmt
         entry: nix fmt
-        files: \.nix$
         language: system
+        pass_filenames: false
     # -   id: nix lint
     #     name: Nix lint
     #     entry: nix run 'nixpkgs#nix-linter'
