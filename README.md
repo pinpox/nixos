@@ -22,16 +22,16 @@ a modern fork of [pass](https://www.passwordstore.org/) that uses age for encryp
 
 # Current Hosts
 
-| Configuration                       | Type      | Location    | VPN IP         | Description                  |
-| ----------------------------------- | --------- | ----------- | -------------- | ---------------------------- |
-| [kartoffel](./machines/kartoffel)   | Desktop   | local       | `192.168.8.3`  | Desktop                      |
-| [limette](./machines/limette)       | Desktop   | local       | `192.168.8.8`  | Notebook                     |
-| [kiwi](./machines/kiwi)             | Desktop   | local       | -              | Framework Laptop             |
-| [fichte](./machines/fichte)         | Desktop   | local       | ` `            | Notebook                     |
-| [tanne](./machines/fichte)          | Desktop   | local       | ` `            | Notebook                     |
-| [birne](./machines/birne)           | Server    | local       | `192.168.8.4`  | Local NAS                    |
-| [porree](./machines/porree)         | Server    | netcup.de   | `192.168.8.1`  | Server for pablo.tools       |
-| [kfbox](./machines/kfbox)           | Server    | netcup.de   | `192.168.8.5`  | Server for 0cx.de            |
+| Configuration                     | Type    | Location  | VPN IP        | Description            |
+| --------------------------------- | ------- | --------- | ------------- | ---------------------- |
+| [kartoffel](./machines/kartoffel) | Desktop | local     | `192.168.8.3` | Desktop                |
+| [limette](./machines/limette)     | Desktop | local     | `192.168.8.8` | Notebook               |
+| [kiwi](./machines/kiwi)           | Desktop | local     | -             | Framework Laptop       |
+| [fichte](./machines/fichte)       | Desktop | local     | ` `           | Notebook               |
+| [tanne](./machines/fichte)        | Desktop | local     | ` `           | Notebook               |
+| [birne](./machines/birne)         | Server  | local     | `192.168.8.4` | Local NAS              |
+| [porree](./machines/porree)       | Server  | netcup.de | `192.168.8.1` | Server for pablo.tools |
+| [kfbox](./machines/kfbox)         | Server  | netcup.de | `192.168.8.5` | Server for 0cx.de      |
 
 # Deployment
 
