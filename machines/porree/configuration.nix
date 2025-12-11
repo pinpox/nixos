@@ -97,7 +97,7 @@
 
         enable = true;
         dashboard.enable = true;
-        loki.enable = false;
+        loki.enable = true;
         alertmanager-irc-relay.enable = true;
 
         blackboxTargets = [
