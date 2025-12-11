@@ -20,8 +20,6 @@ in
       description = "Whether to mount on access, instead of permanently";
       example = true;
     };
-
-    # TODO use this option
     mountPoint = mkOption {
       type = types.str;
       default = "/mnt/storagebox";
@@ -52,22 +50,18 @@ in
     environment.systemPackages = [ pkgs.rclone ];
 
     # Hetzner Storage Box mount with rclone - using proper mount helper
-    # Mounts on first access via automount, unmounts after 10min idle
     # Create cache directory for rclone
     systemd.tmpfiles.rules = [
       "d /var/cache/rclone-storagebox 0750 root storage-users -"
     ];
 
-    fileSystems."${cfg.moutnPoint}" = {
+    fileSystems."${cfg.mountPoint}" = {
       device = ":sftp:";
       fsType = "rclone";
       options = [
         "rw"
-        "noauto"
         "nofail"
         "_netdev"
-        "x-systemd.automount"
-        "x-systemd.idle-timeout=600"
         "x-systemd.mount-timeout=120s"
         "args2env"
         "config=/dev/null"
@@ -77,18 +71,24 @@ in
         "gid=${toString config.users.groups.storage-users.gid}"
         "umask=007"
         "allow_other"
+        "allow_non_empty"
         "links"
         "sftp_host=u515095.your-storagebox.de"
         "sftp_user=u515095"
         "sftp_port=23"
         "sftp_key_file=${config.clan.core.vars.generators."storagebox-ssh".files."ssh-private-key".path}"
-        "vfs_cache_max_size=10G"
-        "vfs_cache_max_age=168h"
+        "vfs_cache_max_size=2G"
+        "vfs_cache_max_age=5m"
         "vfs_read_ahead=128M"
         "buffer_size=64M"
-        "dir_cache_time=5m"
+        "dir_cache_time=30s"
         "log_level=INFO"
         "log_systemd=true"
+      ]
+      ++ optionals cfg.mountOnAccess [
+        "noauto"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=600"
       ];
     };
   };

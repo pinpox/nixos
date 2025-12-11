@@ -27,7 +27,7 @@ in
     services.caddy = {
       enable = true;
       virtualHosts."${cfg.host}".extraConfig =
-        "reverse_proxy 127.0.0.1:${config.services.navidrome.settings.Port}";
+        "reverse_proxy 127.0.0.1:${toString config.services.navidrome.settings.Port}";
     };
 
     # Mount storagebox
@@ -35,6 +35,9 @@ in
       enable = true;
       mountOnAccess = false;
     };
+
+    # Add navidrome user to storage-users group for access to storagebox
+    users.users.navidrome.extraGroups = [ "storage-users" ];
 
     # Set up navidrome
     services.navidrome = {
@@ -44,6 +47,12 @@ in
       settings.MusicFolder = "${config.pinpox.defaults.storagebox.mountPoint}/music";
       # openFirewall
       # environmentFile
+    };
+
+    # Ensure storagebox is mounted before navidrome starts
+    systemd.services.navidrome = {
+      requires = [ "mnt-storagebox.mount" ];
+      after = [ "mnt-storagebox.mount" ];
     };
   };
 }

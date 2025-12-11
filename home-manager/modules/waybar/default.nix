@@ -8,19 +8,33 @@ with lib;
 let
   cfg = config.pinpox.programs.waybar;
 
+                      # source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+# writeShellApplication {
+#   name = "show-nixos-org";
+#
+#   runtimeInputs = [
+#     curl
+#     w3m
+#   ];
+#
+#   text = ''
+#     curl -s 'https://nixos.org' | w3m -dump -T text/html
+#   '';
+# }
+
   mic-exec-if =
     # Returns 0 if mic is not muted and there are clients listening,
     # 1 otherwise.
     pkgs.writeShellScriptBin "mic-exec-if" # sh
       ''
-        source=$(pactl get-default-source)
-        mute_state=$(pactl get-source-mute "$source" | awk '{print $2}')
+        source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+        mute_state=$(${pkgs.pulseaudio}/bin/pactl get-source-mute "$source" | awk '{print $2}')
 
         if [ "$mute_state" = "yes" ]; then
           exit 1
         fi
 
-        clients=$(pactl list source-outputs | grep "application\.name" | uniq | awk -F'"' '{print $2}' | tr '\n' ',' | sed 's/,$/\n/')
+        clients=$(${pkgs.pulseaudio}/bin/pactl list source-outputs | grep "application\.name" | uniq | awk -F'"' '{print $2}' | tr '\n' ',' | sed 's/,$/\n/')
         if [ -n "$clients" ]; then
           exit 0
         fi
@@ -32,8 +46,8 @@ let
     # Toggle microphone on/off
     pkgs.writeShellScriptBin "mic-toggle" # sh
       ''
-        source=$(pactl get-default-source)
-        pactl set-source-mute "$source" toggle
+        source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+        ${pkgs.pulseaudio}/bin/pactl set-source-mute "$source" toggle
       '';
 
   mic-status-apps =
@@ -41,7 +55,7 @@ let
     pkgs.writeShellScriptBin "mic-status-apps" # sh
       ''
         # List all input streams
-        clients=$(pactl list source-outputs | grep "application\.name" | uniq | awk -F'"' '{print $2}' | tr '\n' ',' | sed 's/,$/\n/')
+        clients=$(${pkgs.pulseaudio}/bin/pactl list source-outputs | grep "application\.name" | uniq | awk -F'"' '{print $2}' | tr '\n' ',' | sed 's/,$/\n/')
 
         # Remove duplicates and format
         if [ -n "$clients" ]; then

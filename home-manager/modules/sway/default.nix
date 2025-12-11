@@ -46,9 +46,9 @@ in
         theme="$1"
 
         if [[ "$theme" == "prefer-light" ]]; then
-          ${pkgs.sway}/bin/swaymsg "${lightColors}"
+          ${pkgs.sway}/bin/swaymsg '${lightColors}'
         else
-          ${pkgs.sway}/bin/swaymsg "${darkColors}"
+          ${pkgs.sway}/bin/swaymsg '${darkColors}'
         fi
       '';
     in
@@ -176,6 +176,7 @@ in
 
           modifier = "Mod4"; # Win key
           terminal = "rio";
+          floating.modifier = "Mod4";
 
           startup = [
             {
@@ -192,7 +193,7 @@ in
           # Application/window specific rules
           window.commands = [
             {
-              command = "split horizontal, resize grow width 30 px or 30 ppt";
+              command = "floating enable, border pixel 0";
               criteria.class = "^Audacious$";
             }
             {
