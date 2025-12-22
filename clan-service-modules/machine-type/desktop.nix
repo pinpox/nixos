@@ -81,7 +81,7 @@
     defaults = {
       bluetooth.enable = true;
       environment.enable = true;
-      storagebox ={
+      storagebox = {
         enable = true;
         mountOnAccess = true;
       };

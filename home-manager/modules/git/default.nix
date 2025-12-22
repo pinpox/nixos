@@ -13,7 +13,10 @@ in
 
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs; [ tig ];
+    home.packages = with pkgs; [
+      tig
+      jjui
+    ];
 
     programs = {
 

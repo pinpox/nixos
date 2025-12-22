@@ -8,19 +8,19 @@ with lib;
 let
   cfg = config.pinpox.programs.waybar;
 
-                      # source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
-# writeShellApplication {
-#   name = "show-nixos-org";
-#
-#   runtimeInputs = [
-#     curl
-#     w3m
-#   ];
-#
-#   text = ''
-#     curl -s 'https://nixos.org' | w3m -dump -T text/html
-#   '';
-# }
+  # source=$(${pkgs.pulseaudio}/bin/pactl get-default-source)
+  # writeShellApplication {
+  #   name = "show-nixos-org";
+  #
+  #   runtimeInputs = [
+  #     curl
+  #     w3m
+  #   ];
+  #
+  #   text = ''
+  #     curl -s 'https://nixos.org' | w3m -dump -T text/html
+  #   '';
+  # }
 
   mic-exec-if =
     # Returns 0 if mic is not muted and there are clients listening,
