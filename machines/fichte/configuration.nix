@@ -7,6 +7,7 @@
 {
 
   imports = [
+    ../../39c3-wifi.nix
     ./disko-config-btrfs.nix
     nixos-hardware.nixosModules.lenovo-thinkpad-t490
   ];

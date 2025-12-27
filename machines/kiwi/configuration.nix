@@ -8,6 +8,7 @@
   hardware.fw-fanctrl.enable = true;
 
   imports = [
+    ../../39c3-wifi.nix
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
