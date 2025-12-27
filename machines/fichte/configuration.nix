@@ -1,4 +1,5 @@
 {
+  pkgs,
   nixos-hardware,
   lib,
   ...
@@ -9,6 +10,13 @@
     ./disko-config-btrfs.nix
     nixos-hardware.nixosModules.lenovo-thinkpad-t490
   ];
+
+  environment.systemPackages = with pkgs; [
+    python3
+
+  ];
+
+programs.vscode.enable = true;
 
   networking.hostName = "fichte";
 
