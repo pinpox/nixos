@@ -1,9 +1,11 @@
-{
+
+
   config,
   pkgs,
   ...
 }:
 {
+
   # For fingerprint support
   # To enroll prints: `sudo fprint-enroll <username>`
   services.fprintd.enable = true;
