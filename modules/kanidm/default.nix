@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib;
@@ -36,12 +37,26 @@ in
     ];
 
     systemd.services.kanidm = {
-      after = [ "caddy.service" "systemd-tmpfiles-setup.service" ];
-      requires = [ "caddy.service" "systemd-tmpfiles-setup.service" ];
+      after = [
+        "caddy.service"
+        "systemd-tmpfiles-setup.service"
+      ];
+      requires = [
+        "caddy.service"
+        "systemd-tmpfiles-setup.service"
+      ];
+      serviceConfig.LoadCredential = [
+        "admin-password:${config.clan.core.vars.generators.kanidm.files.admin-password.path}"
+        "idm-admin-password:${config.clan.core.vars.generators.kanidm.files.idm-admin-password.path}"
+      ];
     };
 
     services.kanidm = {
       enableServer = true;
+      package = pkgs.kanidmWithSecretProvisioning_1_8;
+
+      enableClient = true;
+      clientSettings.uri = config.services.kanidm.serverSettings.origin;
 
       serverSettings = {
         origin = "https://${cfg.host}";
@@ -52,6 +67,43 @@ in
         role = "WriteReplica";
         log_level = "info";
       };
+
+      provision = {
+        enable = true;
+        autoRemove = false;
+        adminPasswordFile = "/run/credentials/kanidm.service/admin-password";
+        idmAdminPasswordFile = "/run/credentials/kanidm.service/idm-admin-password";
+
+        persons = {
+          pinpox = {
+            displayName = "pinpox";
+            groups = [
+              "unix.admins"
+              "tv.users"
+            ];
+          };
+        };
+        groups = {
+          "unix.admins" = { };
+          "tv.users" = { };
+        };
+      };
+    };
+
+    clan.core.vars.generators."kanidm" = {
+      files.admin-password = { };
+      files.idm-admin-password = { };
+
+      runtimeInputs = with pkgs; [
+        coreutils
+        xkcdpass
+      ];
+
+      script = ''
+        mkdir -p $out
+        xkcdpass -n 8 > $out/admin-password
+        xkcdpass -n 8 > $out/idm-admin-password
+      '';
     };
 
     # Backup kanidm database
