@@ -77,6 +77,8 @@
   pinpox = {
 
     services = {
+
+      kanidm.enable = true;
       vaultwarden.enable = true;
       ntfy-sh.enable = true;
 
