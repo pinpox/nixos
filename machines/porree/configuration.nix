@@ -78,7 +78,8 @@
 
     services = {
 
-      kanidm.enable = true;
+      # kanidm.enable = true;
+       authelia.enable = true;
       vaultwarden.enable = true;
       ntfy-sh.enable = true;
 

@@ -127,12 +127,12 @@
       vlc
       xarchiver
       xdg-utils
-      xfce.exo # thunar "open terminal here"
+      xfce-exo # thunar "open terminal here"
       xfce.thunar-archive-plugin
       xfce.thunar-volman
       xfce.tumbler # thunar thumbnails
       xfce.xfce4-volumed-pulse
-      xfce.xfconf # thunar save settings
+      xfconf # thunar save settings
       # yubioath-desktop
       # xfce.thunar
       (xfce.thunar.override {
