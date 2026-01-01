@@ -45,7 +45,6 @@ in
 
           # VPN protected services
           192.168.8.1 vpn.motion.pablo.tools
-          192.168.8.1 vpn.octoprint.pablo.tools
           192.168.8.1 vpn.alerts.pablo.tools
           192.168.8.1 vpn.prometheus.pablo.tools
           192.168.8.1 vpn.notify.pablo.tools

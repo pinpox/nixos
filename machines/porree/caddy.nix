@@ -55,9 +55,6 @@ in
 {
 
   clan.core.vars.generators."caddy-basicauth" = mkBasicAuthFiles [
-    "beta.pablo.tools"
-    "tumblr.pablo.tools"
-    "3dprint.pablo.tools"
     "notify.pablo.tools"
   ];
 
@@ -91,31 +88,24 @@ in
         encode zstd gzip
       '';
 
-      "tumblr.pablo.tools".extraConfig = ''
-        root * /var/www/tumblr
-        file_server
-        encode zstd gzip
-        basic_auth {
-          import ${config.clan.core.vars.generators."caddy-basicauth".files."tumblr.pablo.tools.auth".path}
-        }
-      '';
-
-      # Homepage (dev)
+      # Homepage (dev) - protected by Authelia
       "beta.pablo.tools".extraConfig = ''
+        forward_auth http://127.0.0.1:9091 {
+          uri /api/authz/forward-auth
+          copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+        }
         root * /var/www/pablo-tools-beta
         file_server
         encode zstd gzip
-        basic_auth {
-          import ${config.clan.core.vars.generators."caddy-basicauth".files."beta.pablo.tools.auth".path}
-        }
       '';
 
-      # Camera (read-only) stream
+      # Camera (read-only) stream - protected by Authelia
       "3dprint.pablo.tools".extraConfig = ''
-        reverse_proxy 192.168.2.121:8081
-        basic_auth {
-          import ${config.clan.core.vars.generators."caddy-basicauth".files."3dprint.pablo.tools.auth".path}
+        forward_auth http://127.0.0.1:9091 {
+          uri /api/authz/forward-auth
+          copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
         }
+        reverse_proxy 192.168.2.121:8081
       '';
 
       # Notifications API
@@ -134,14 +124,6 @@ in
 
       # Navidrome
       "music.pablo.tools".extraConfig = "reverse_proxy birne.wireguard:4533";
-
-      # Octoprint (set /etc/hosts for clients)
-      "vpn.octoprint.pablo.tools".extraConfig = ''
-        @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16
-        }
-        reverse_proxy @vpnonly 192.168.2.121:5000
-      '';
 
       # Alertmanager
       "vpn.alerts.pablo.tools".extraConfig = ''
