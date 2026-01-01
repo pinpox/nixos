@@ -37,6 +37,202 @@
           </p>
         </div>
         <div class="results block" id="list">
+          <div class="nixoption block" id="options.pinpox.services.authelia.declarativeUsers.enable">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.declarativeUsers.enable"># </a> options.pinpox.services.authelia.declarativeUsers.enable
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">boolean</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Whether to enable declarative users.</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>false</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.authelia.declarativeUsers.users">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.declarativeUsers.users"># </a> options.pinpox.services.authelia.declarativeUsers.users
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">attribute set of (attribute set)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Authelia users as JSON-compatible attribute sets.
+For any field, use a *File suffix (e.g. passwordFile) to read
+the value from a file at runtime, keeping secrets out of the Nix store.
+</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>map[]</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>map[_type:literalExpression text:{
+  pinpox = {
+    displayname = &#34;Pablo&#34;;
+    email = &#34;mail@example.com&#34;;
+    groups = [ &#34;admins&#34; &#34;users&#34; ];
+    passwordFile = &#34;/run/secrets/pinpox-hash&#34;;
+  };
+}
+]</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.authelia.enable">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.enable"># </a> options.pinpox.services.authelia.enable
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">boolean</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Whether to enable authelia authentication server.</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>false</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.authelia.host">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.host"># </a> options.pinpox.services.authelia.host
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">string</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Host serving authelia</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>auth.pablo.tools</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>login.pablo.tools</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.authelia.oidcAuthorizationPolicies">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.oidcAuthorizationPolicies"># </a> options.pinpox.services.authelia.oidcAuthorizationPolicies
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">attribute set of (attribute set)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Custom authorization policies for OIDC clients.
+Each policy can define rules based on groups or networks.
+</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>map[]</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>map[_type:literalExpression text:{
+  miniflux-users = {
+    default_policy = &#34;deny&#34;;
+    rules = [
+      { policy = &#34;one_factor&#34;; subject = &#34;group:miniflux-users&#34;; }
+    ];
+  };
+}
+]</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.authelia.oidcClients">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.oidcClients"># </a> options.pinpox.services.authelia.oidcClients
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">list of (attribute set)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">OIDC clients for Authelia. Each client needs at minimum:
+- client_id
+- client_secret (hashed) or client_secret_file (path to file with plaintext secret)
+- redirect_uris
+</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>[]</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>map[_type:literalExpression text:[
+  {
+    client_id = &#34;miniflux&#34;;
+    client_secret_file = &#34;/run/secrets/miniflux-oidc-secret&#34;;
+    redirect_uris = [ &#34;https://news.example.com/oauth2/oidc/callback&#34; ];
+    scopes = [ &#34;openid&#34; &#34;profile&#34; &#34;email&#34; ];
+    authorization_policy = &#34;two_factor&#34;;
+  }
+]
+]</code>
+              </p>
+            </div>
+          </div>
           <div class="nixoption block" id="options.pinpox.defaults.bluetooth.enable">
             <div class="level">
               <div class="level-left">
@@ -736,6 +932,60 @@
               </p>
               <p class="block">
                 <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.kanidm.enable">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.kanidm.enable"># </a> options.pinpox.services.kanidm.enable
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">boolean</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Whether to enable kanidm identity management server.</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>false</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.kanidm.host">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.kanidm.host"># </a> options.pinpox.services.kanidm.host
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">string</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Host serving kanidm</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>auth.pablo.tools</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>signin.pablo.tools</code>
               </p>
             </div>
           </div>
