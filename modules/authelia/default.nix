@@ -69,6 +69,25 @@ in
       '';
     };
 
+    oidcAuthorizationPolicies = lib.mkOption {
+      type = lib.types.attrsOf lib.types.attrs;
+      default = { };
+      description = ''
+        Custom authorization policies for OIDC clients.
+        Each policy can define rules based on groups or networks.
+      '';
+      example = lib.literalExpression ''
+        {
+          miniflux-users = {
+            default_policy = "deny";
+            rules = [
+              { policy = "one_factor"; subject = "group:miniflux-users"; }
+            ];
+          };
+        }
+      '';
+    };
+
   };
 
   config = mkIf cfg.enable (
@@ -85,7 +104,11 @@ in
       # Generate OIDC clients config JSON (with *File references)
       oidcConfigJson = pkgs.writeText "authelia-oidc-input.json" (
         builtins.toJSON {
-          identity_providers.oidc.clients = cfg.oidcClients;
+          identity_providers.oidc = {
+            clients = cfg.oidcClients;
+          } // lib.optionalAttrs (cfg.oidcAuthorizationPolicies != {}) {
+            authorization_policies = cfg.oidcAuthorizationPolicies;
+          };
         }
       );
     in
@@ -122,6 +145,14 @@ in
         settings = {
           theme = "dark";
 
+          webauthn = {
+            enable_passkey_login = true;
+            selection_criteria = {
+              # Require discoverable credentials (passkeys), not just 2FA keys
+              discoverability = "required";
+            };
+          };
+
           server.address = "tcp://127.0.0.1:${toString port}";
 
           log = {
@@ -140,6 +171,12 @@ in
           access_control = {
             default_policy = "deny";
             rules = [
+              {
+                # Settings page requires 2FA to enable passkey registration
+                domain = "auth.pablo.tools";
+                resources = [ "^/settings.*$" ];
+                policy = "two_factor";
+              }
               {
                 domain = "*.pablo.tools";
                 policy = "one_factor";

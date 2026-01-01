@@ -111,8 +111,6 @@
   pinpox = {
 
     services = {
-
-      # kanidm.enable = true;
       authelia = {
         enable = true;
         declarativeUsers = {
@@ -121,7 +119,7 @@
             pinpox = {
               displayname = "pinpox";
               email = "mail@pablo.tools";
-              groups = [ "admins" "users" ];
+              groups = [ "admins" "users" "miniflux-users" ];
               passwordFile = config.clan.core.vars.generators."authelia-user-pinpox".files.password-hash.path;
             };
             lislon = {
@@ -132,6 +130,14 @@
             };
           };
         };
+        oidcAuthorizationPolicies = {
+          miniflux-policy = {
+            default_policy = "deny";
+            rules = [
+              { policy = "one_factor"; subject = "group:miniflux-users"; }
+            ];
+          };
+        };
         oidcClients = [
           {
             client_id = "miniflux";
@@ -139,7 +145,7 @@
             client_secret_file = config.clan.core.vars.generators."miniflux-oidc".files.client_secret.path;
             redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
             scopes = [ "openid" "profile" "email" ];
-            authorization_policy = "one_factor";
+            authorization_policy = "miniflux-policy";
             token_endpoint_auth_method = "client_secret_basic";
           }
         ];
