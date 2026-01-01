@@ -56,6 +56,17 @@
     '';
   };
 
+  clan.core.vars.generators."authelia-user-berber" = {
+    files.password = { };
+    files.password-hash.owner = "authelia-main";
+    runtimeInputs = with pkgs; [ coreutils authelia xkcdpass gnused ];
+    script = ''
+      mkdir -p $out
+      xkcdpass -n 7 -d- > $out/password
+      authelia crypto hash generate argon2 --password "$(cat $out/password)" | sed 's/^Digest: //' > $out/password-hash
+    '';
+  };
+
   # OIDC client secret for miniflux (generated here, shared to kfbox)
   clan.core.vars.generators."miniflux-oidc" = {
     share = true;
@@ -127,6 +138,12 @@
               email = "lislon@pablo.tools";
               groups = [ "users" ];
               passwordFile = config.clan.core.vars.generators."authelia-user-lislon".files.password-hash.path;
+            };
+            berber = {
+              displayname = "berber";
+              email = "berber@pablo.tools";
+              groups = [ "users" "ocis-users" "miniflux-users" ];
+              passwordFile = config.clan.core.vars.generators."authelia-user-berber".files.password-hash.path;
             };
           };
         };
