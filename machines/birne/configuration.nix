@@ -46,25 +46,6 @@
     allowedTCPPorts = [
       80
       443
-      4533
     ];
   };
-
-  services.navidrome = {
-
-    enable = true;
-
-    settings.Port = 4533;
-    settings.Address = "${
-      (builtins.readFile (
-        config.clan.core.settings.directory + "/vars/per-machine/birne/wireguard-wg-clan-ip/ipv4/value"
-      ))
-    }";
-
-    settings.MusicFolder = "/mnt/data/admin/ARCHIVE/Musik/Alphabetisch";
-
-    # openFirewall
-    # environmentFile
-  };
-
 }
