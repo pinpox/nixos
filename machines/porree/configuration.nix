@@ -56,6 +56,17 @@
     '';
   };
 
+  # OIDC client secret for miniflux (generated here, shared to kfbox)
+  clan.core.vars.generators."miniflux-oidc" = {
+    share = true;
+    files.client_secret.owner = "authelia-main";
+    runtimeInputs = with pkgs; [ coreutils openssl ];
+    script = ''
+      mkdir -p $out
+      openssl rand -hex 32 > $out/client_secret
+    '';
+  };
+
   services.qemuGuest.enable = true;
 
   fileSystems."/" = {
@@ -121,6 +132,17 @@
             };
           };
         };
+        oidcClients = [
+          {
+            client_id = "miniflux";
+            # Secret is shared via clan vars (share = true)
+            client_secret_file = config.clan.core.vars.generators."miniflux-oidc".files.client_secret.path;
+            redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
+            scopes = [ "openid" "profile" "email" ];
+            authorization_policy = "one_factor";
+            token_endpoint_auth_method = "client_secret_basic";
+          }
+        ];
       };
       vaultwarden.enable = true;
       ntfy-sh.enable = true;

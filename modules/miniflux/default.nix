@@ -7,6 +7,8 @@
 with lib;
 let
   cfg = config.pinpox.services.miniflux;
+  # Use shared secret from porree (miniflux-oidc generator with share=true)
+  oidcSecretPath = config.clan.core.vars.generators."miniflux-oidc".files.client_secret.path;
 in
 {
 
@@ -19,20 +21,29 @@ in
     clan.core.vars.generators."miniflux" = {
       files.credentials = { };
 
-      # From Gitea
-      prompts.oauth2_client_id.persist = true;
-      prompts.oauth2_client_secret.persist = true;
-
       runtimeInputs = with pkgs; [
         coreutils
         xkcdpass
       ];
 
-      script = # sh
-        ''
-          mkdir -p $out
-          printf "ADMIN_USERNAME=admin\nADMIN_PASSWORD='%s'" "$(xkcdpass -d-)" > $out/credentials
-        '';
+      script = ''
+        mkdir -p $out
+        printf "ADMIN_USERNAME=admin\nADMIN_PASSWORD='%s'" "$(xkcdpass -d-)" > $out/credentials
+      '';
+    };
+
+    # Shared OIDC secret (same generator on porree for authelia)
+    clan.core.vars.generators."miniflux-oidc" = {
+      share = true;
+      files.client_secret = { };
+      runtimeInputs = with pkgs; [
+        coreutils
+        openssl
+      ];
+      script = ''
+        mkdir -p $out
+        openssl rand -hex 32 > $out/client_secret
+      '';
     };
 
     services.caddy = {
@@ -41,25 +52,26 @@ in
         "reverse_proxy ${config.services.miniflux.config.LISTEN_ADDR}";
     };
 
-    systemd.services.miniflux.serviceConfig.LoadCredential =
-      with config.clan.core.vars.generators."miniflux".files; [
-        "oauth2_client_id_file:${oauth2_client_id.path}"
-        "oauth2_client_secret_file:${oauth2_client_secret.path}"
-      ];
+    systemd.services.miniflux.serviceConfig.LoadCredential = [
+      "oauth2_client_secret_file:${oidcSecretPath}"
+    ];
 
     services.miniflux = {
       enable = true;
       config = {
-        # OAUTH2_USER_CREATION = "1";
+        OAUTH2_USER_CREATION = "1";
+        DISABLE_LOCAL_AUTH = "1";
         CLEANUP_FREQUENCY = "48";
         LISTEN_ADDR = "127.0.0.1:8787";
         OAUTH2_PROVIDER = "oidc";
-        OAUTH2_CLIENT_ID_FILE = "%d/oauth2_client_id_file";
-        OAUTH2_CLIENT_SECRET_FILE = "%d/oauth2_client_secret_file";
+        OAUTH2_CLIENT_ID = "miniflux";
+        OAUTH2_CLIENT_SECRET_FILE = "/run/credentials/miniflux.service/oauth2_client_secret_file";
         OAUTH2_REDIRECT_URL = "https://news.0cx.de/oauth2/oidc/callback";
-        OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://git.0cx.de/";
+        OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://auth.pablo.tools";
+        OAUTH2_OIDC_PROVIDER_NAME = "pablo.tools";
       };
       adminCredentialsFile = config.clan.core.vars.generators."miniflux".files."credentials".path;
     };
+
   };
 }
