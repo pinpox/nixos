@@ -7,7 +7,6 @@
 with lib;
 let
   cfg = config.pinpox.services.miniflux;
-  # Use shared secret from porree (miniflux-oidc generator with share=true)
   oidcSecretPath = config.clan.core.vars.generators."miniflux-oidc".files.client_secret.path;
 in
 {
@@ -32,17 +31,12 @@ in
       '';
     };
 
-    # Shared OIDC secret (same generator on porree for authelia)
     clan.core.vars.generators."miniflux-oidc" = {
       share = true;
       files.client_secret = { };
-      runtimeInputs = with pkgs; [
-        coreutils
-        openssl
-      ];
       script = ''
-        mkdir -p $out
-        openssl rand -hex 32 > $out/client_secret
+        echo "Run the miniflux-oidc generator on the authelia host"
+        exit 1
       '';
     };
 
