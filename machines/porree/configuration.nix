@@ -1,6 +1,7 @@
 {
   matrix-hook,
   config,
+  pkgs,
   alertmanager-ntfy,
   pinpox-utils,
   ...
@@ -32,6 +33,28 @@
     "NTFY_USER"
     "NTFY_PASS"
   ];
+
+  clan.core.vars.generators."authelia-user-pinpox" = {
+    files.password = { };
+    files.password-hash = { };
+    runtimeInputs = with pkgs; [ coreutils authelia xkcdpass gnused ];
+    script = ''
+      mkdir -p $out
+      xkcdpass -n 7 -d- > $out/password
+      authelia crypto hash generate argon2 --password "$(cat $out/password)" | sed 's/^Digest: //' > $out/password-hash
+    '';
+  };
+
+  clan.core.vars.generators."authelia-user-lislon" = {
+    files.password = { };
+    files.password-hash = { };
+    runtimeInputs = with pkgs; [ coreutils authelia xkcdpass gnused ];
+    script = ''
+      mkdir -p $out
+      xkcdpass -n 7 -d- > $out/password
+      authelia crypto hash generate argon2 --password "$(cat $out/password)" | sed 's/^Digest: //' > $out/password-hash
+    '';
+  };
 
   services.qemuGuest.enable = true;
 
@@ -79,7 +102,26 @@
     services = {
 
       # kanidm.enable = true;
-       authelia.enable = true;
+      authelia = {
+        enable = true;
+        declarativeUsers = {
+          enable = true;
+          users = {
+            pinpox = {
+              displayname = "pinpox";
+              email = "mail@pablo.tools";
+              groups = [ "admins" "users" ];
+              passwordFile = config.clan.core.vars.generators."authelia-user-pinpox".files.password-hash.path;
+            };
+            lislon = {
+              displayname = "lislon";
+              email = "lislon@pablo.tools";
+              groups = [ "users" ];
+              passwordFile = config.clan.core.vars.generators."authelia-user-lislon".files.password-hash.path;
+            };
+          };
+        };
+      };
       vaultwarden.enable = true;
       ntfy-sh.enable = true;
 

@@ -1,19 +1,3 @@
-let
-  users = {
-    lislon = {
-      email = "lislon@pablo.tools";
-      groups = [ "users" ];
-    };
-    pinpox = {
-      email = "mail@pablo.tools";
-      groups = [
-        "admins"
-        "users"
-      ];
-    };
-  };
-in
-
 {
   config,
   lib,
@@ -25,67 +9,8 @@ let
   cfg = config.pinpox.services.authelia;
   port = 9091;
 
-  # Custom authelia package from pinpox fork with user yaml filters support
-  authelia-custom = pkgs.authelia.override {
-    buildGoModule =
-      args:
-      pkgs.buildGoModule (
-        args
-        // {
-          src = pkgs.fetchFromGitHub {
-            owner = "pinpox";
-            repo = "authelia";
-            rev = "user-yaml-filters";
-            hash = "sha256-0gormVGxtfL3Ia0yljwRafsvjVg2rDrgMWoni2cC5QA=";
-          };
-          vendorHash = "sha256-dBiUbvZjGbmJqwUBcUKyY/CIdngmvyUAY5aeiEv7OCI=";
-        }
-      );
-  };
-
-  # Generate usersConfig from the users attrset
-  yamlFormat = pkgs.formats.yaml { };
-
-  usersConfig = {
-    users = lib.mapAttrs (name: user: {
-      displayname = name;
-      password = ''{{ secret "/run/credentials/authelia-main.service/${name}-password-hash" }}'';
-      email = user.email;
-      groups = user.groups;
-    }) users;
-  };
-
-  usersFile = yamlFormat.generate "authelia-users.yaml" usersConfig;
-
-  # Generate LoadCredential entries for user password hashes
-  userCredentials = lib.mapAttrsToList (
-    name: _:
-    "${name}-password-hash:${
-      config.clan.core.vars.generators."authelia-user-${name}".files.password-hash.path
-    }"
-  ) users;
-
-  # Generate vars generators for each user
-  userGenerators = lib.mapAttrs' (
-    name: _:
-    lib.nameValuePair "authelia-user-${name}" {
-      files.password = { };
-      files.password-hash = { };
-
-      runtimeInputs = with pkgs; [
-        coreutils
-        authelia
-        xkcdpass
-        gnused
-      ];
-
-      script = ''
-        mkdir -p $out
-        xkcdpass -n 7 -d- > $out/password
-        authelia crypto hash generate argon2 --password "$(cat $out/password)" | sed 's/^Digest: //' > $out/password-hash
-      '';
-    }
-  ) users;
+  # The user generation script
+  authelia-users-gen = "${./authelia-users-gen.py}";
 in
 {
 
@@ -98,78 +23,127 @@ in
       description = "Host serving authelia";
       example = "login.pablo.tools";
     };
-  };
 
-  config = mkIf cfg.enable {
-
-    systemd.services.authelia-main = {
-      serviceConfig.LoadCredential = [
-        "jwt-secret:${config.clan.core.vars.generators.authelia.files.jwt-secret.path}"
-        "session-secret:${config.clan.core.vars.generators.authelia.files.session-secret.path}"
-        "storage-encryption-key:${config.clan.core.vars.generators.authelia.files.storage-encryption-key.path}"
-      ]
-      ++ userCredentials;
+    declarativeUsers = {
+      enable = lib.mkEnableOption "declarative users";
+      users = lib.mkOption {
+        type = lib.types.attrsOf lib.types.attrs;
+        default = { };
+        description = ''
+          Authelia users as JSON-compatible attribute sets.
+          For any field, use a *File suffix (e.g. passwordFile) to read
+          the value from a file at runtime, keeping secrets out of the Nix store.
+        '';
+        example = lib.literalExpression ''
+          {
+            pinpox = {
+              displayname = "Pablo";
+              email = "mail@example.com";
+              groups = [ "admins" "users" ];
+              passwordFile = "/run/secrets/pinpox-hash";
+            };
+          }
+        '';
+      };
     };
 
-    services.authelia.instances.main = {
-      enable = true;
-      package = authelia-custom;
+  };
 
-      secrets = {
-        jwtSecretFile = "/run/credentials/authelia-main.service/jwt-secret";
-        sessionSecretFile = "/run/credentials/authelia-main.service/session-secret";
-        storageEncryptionKeyFile = "/run/credentials/authelia-main.service/storage-encryption-key";
+  config = mkIf cfg.enable (
+    let
+      # Generate config JSON from declarative users, filtering out null values
+      configJson = pkgs.writeText "authelia-users-config.json" (
+        builtins.toJSON {
+          users = lib.mapAttrs (
+            _name: user: lib.filterAttrs (_: v: v != null && v != [ ]) user
+          ) cfg.declarativeUsers.users;
+        }
+      );
+
+      # Script to generate users file (runs as root via + prefix)
+      usersGenScript = pkgs.writeShellScript "authelia-users-gen" ''
+        ${pkgs.python3}/bin/python3 ${authelia-users-gen} ${configJson} /run/authelia-main/users.yaml
+        chown authelia-main:authelia-main /run/authelia-main/users.yaml
+      '';
+    in
+    {
+
+      systemd.services.authelia-main = {
+        serviceConfig.LoadCredential = [
+          "jwt-secret:${config.clan.core.vars.generators.authelia.files.jwt-secret.path}"
+          "session-secret:${config.clan.core.vars.generators.authelia.files.session-secret.path}"
+          "storage-encryption-key:${config.clan.core.vars.generators.authelia.files.storage-encryption-key.path}"
+        ];
+
+        # Run as root (+) to read secrets, then chown to authelia
+        serviceConfig.ExecStartPre = [ "+${usersGenScript}" ];
+        serviceConfig.RuntimeDirectory = lib.mkDefault "authelia-main";
+
       };
 
-      # Enable templating in cnfig files
-      environmentVariables = {
-        X_AUTHELIA_CONFIG_FILTERS = "template";
-      };
+      services.authelia.instances.main = {
+        enable = true;
 
-      settings = {
-        theme = "dark";
-
-        server.address = "tcp://127.0.0.1:${toString port}";
-
-        log = {
-          level = "info";
-          format = "text";
+        secrets = {
+          jwtSecretFile = "/run/credentials/authelia-main.service/jwt-secret";
+          sessionSecretFile = "/run/credentials/authelia-main.service/session-secret";
+          storageEncryptionKeyFile = "/run/credentials/authelia-main.service/storage-encryption-key";
         };
 
-        authentication_backend.file.path = usersFile;
+        # Enable templating in cnfig files
+        # environmentVariables = {
+        #   X_AUTHELIA_CONFIG_FILTERS = "template";
+        # };
 
-        access_control = {
-          default_policy = "deny";
-          rules = [
-            {
-              domain = "*.pablo.tools";
-              policy = "one_factor";
-            }
-          ];
-        };
+        settings = {
+          theme = "dark";
 
-        session = {
-          name = "authelia_session";
-          cookies = [
-            {
-              domain = "pablo.tools";
-              authelia_url = "https://${cfg.host}";
-            }
-          ];
-        };
+          server.address = "tcp://127.0.0.1:${toString port}";
 
-        storage.local.path = "/var/lib/authelia-main/db.sqlite3";
+          log = {
+            level = "info";
+            format = "text";
+          };
 
-        notifier = {
-          filesystem = {
-            filename = "/var/lib/authelia-main/notifications.txt";
+          authentication_backend = {
+            file.path = "/run/authelia-main/users.yaml";
+            # Disable password reset/change when using declarative users,
+            # since changes would be overwritten on service restart
+            password_reset.disable = cfg.declarativeUsers.enable;
+            password_change.disable = cfg.declarativeUsers.enable;
+          };
+
+          access_control = {
+            default_policy = "deny";
+            rules = [
+              {
+                domain = "*.pablo.tools";
+                policy = "one_factor";
+              }
+            ];
+          };
+
+          session = {
+            name = "authelia_session";
+            cookies = [
+              {
+                domain = "pablo.tools";
+                authelia_url = "https://${cfg.host}";
+              }
+            ];
+          };
+
+          storage.local.path = "/var/lib/authelia-main/db.sqlite3";
+
+          notifier = {
+            filesystem = {
+              filename = "/var/lib/authelia-main/notifications.txt";
+            };
           };
         };
       };
-    };
 
-    clan.core.vars.generators = {
-      authelia = {
+      clan.core.vars.generators.authelia = {
         files.jwt-secret = { };
         files.session-secret = { };
         files.storage-encryption-key = { };
@@ -186,20 +160,19 @@ in
           openssl rand -hex 64 > $out/storage-encryption-key
         '';
       };
+
+      # Backup authelia data
+      pinpox.services.restic-client.backup-paths-offsite = [
+        "/var/lib/authelia-main"
+      ];
+
+      # Reverse proxy via caddy (caddy handles ACME internally)
+      services.caddy = {
+        enable = true;
+        virtualHosts."${cfg.host}".extraConfig = ''
+          reverse_proxy http://127.0.0.1:${toString port}
+        '';
+      };
     }
-    // userGenerators;
-
-    # Backup authelia data
-    pinpox.services.restic-client.backup-paths-offsite = [
-      "/var/lib/authelia-main"
-    ];
-
-    # Reverse proxy via caddy (caddy handles ACME internally)
-    services.caddy = {
-      enable = true;
-      virtualHosts."${cfg.host}".extraConfig = ''
-        reverse_proxy http://127.0.0.1:${toString port}
-      '';
-    };
-  };
+  );
 }
