@@ -130,7 +130,7 @@
             pinpox = {
               displayname = "pinpox";
               email = "mail@pablo.tools";
-              groups = [ "admins" "users" "miniflux-users" ];
+              groups = [ "admins" "users" "miniflux-users" "ocis-users" ];
               passwordFile = config.clan.core.vars.generators."authelia-user-pinpox".files.password-hash.path;
             };
             lislon = {
@@ -148,6 +148,12 @@
           };
         };
         oidcAuthorizationPolicies = {
+          ocis-policy = {
+            default_policy = "deny";
+            rules = [
+              { policy = "one_factor"; subject = "group:ocis-users"; }
+            ];
+          };
           miniflux-policy = {
             default_policy = "deny";
             rules = [
@@ -164,6 +170,27 @@
             scopes = [ "openid" "profile" "email" ];
             authorization_policy = "miniflux-policy";
             token_endpoint_auth_method = "client_secret_basic";
+          }
+          {
+            # OCIS uses public client with PKCE (no secret needed)
+            client_id = "ocis";
+            client_name = "ownCloud Infinite Scale";
+            public = true;
+            authorization_policy = "ocis-policy";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            scopes = [ "openid" "offline_access" "groups" "profile" "email" ];
+            redirect_uris = [
+              "https://cloud.pablo.tools/"
+              "https://cloud.pablo.tools/oidc-callback.html"
+              "https://cloud.pablo.tools/oidc-silent-redirect.html"
+              "https://cloud.pablo.tools/web-oidc-callback"
+            ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" "refresh_token" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
           }
         ];
       };
@@ -182,6 +209,9 @@
 
       # Enable nextcloud configuration
       nextcloud.enable = true;
+
+      # Enable ownCloud Infinite Scale (uses Authelia OIDC)
+      ocis.enable = true;
 
       monitoring-server = {
 

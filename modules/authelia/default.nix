@@ -106,6 +106,11 @@ in
         builtins.toJSON {
           identity_providers.oidc = {
             clients = cfg.oidcClients;
+            # CORS configuration for public OIDC clients
+            cors = {
+              endpoints = [ "authorization" "token" "revocation" "introspection" "userinfo" ];
+              allowed_origins_from_client_redirect_uris = true;
+            };
           } // lib.optionalAttrs (cfg.oidcAuthorizationPolicies != {}) {
             authorization_policies = cfg.oidcAuthorizationPolicies;
           };
