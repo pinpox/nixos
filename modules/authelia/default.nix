@@ -9,8 +9,8 @@ let
   cfg = config.pinpox.services.authelia;
   port = 9091;
 
-  # The user generation script
-  authelia-users-gen = "${./authelia-users-gen.py}";
+  # Generic script to transform Nix JSON with *File references
+  nix-to-config = ./nix-to-config.py;
 in
 {
 
@@ -47,12 +47,34 @@ in
       };
     };
 
+    oidcClients = lib.mkOption {
+      type = lib.types.listOf lib.types.attrs;
+      default = [ ];
+      description = ''
+        OIDC clients for Authelia. Each client needs at minimum:
+        - client_id
+        - client_secret (hashed) or client_secret_file (path to file with plaintext secret)
+        - redirect_uris
+      '';
+      example = lib.literalExpression ''
+        [
+          {
+            client_id = "miniflux";
+            client_secret_file = "/run/secrets/miniflux-oidc-secret";
+            redirect_uris = [ "https://news.example.com/oauth2/oidc/callback" ];
+            scopes = [ "openid" "profile" "email" ];
+            authorization_policy = "two_factor";
+          }
+        ]
+      '';
+    };
+
   };
 
   config = mkIf cfg.enable (
     let
-      # Generate config JSON from declarative users, filtering out null values
-      configJson = pkgs.writeText "authelia-users-config.json" (
+      # Generate users config JSON (with *File references to be resolved at runtime)
+      usersConfigJson = pkgs.writeText "authelia-users-input.json" (
         builtins.toJSON {
           users = lib.mapAttrs (
             _name: user: lib.filterAttrs (_: v: v != null && v != [ ]) user
@@ -60,40 +82,42 @@ in
         }
       );
 
-      # Script to generate users file (runs as root via + prefix)
-      usersGenScript = pkgs.writeShellScript "authelia-users-gen" ''
-        ${pkgs.python3}/bin/python3 ${authelia-users-gen} ${configJson} /run/authelia-main/users.yaml
-        chown authelia-main:authelia-main /run/authelia-main/users.yaml
-      '';
+      # Generate OIDC clients config JSON (with *File references)
+      oidcConfigJson = pkgs.writeText "authelia-oidc-input.json" (
+        builtins.toJSON {
+          identity_providers.oidc.clients = cfg.oidcClients;
+        }
+      );
     in
     {
 
       systemd.services.authelia-main = {
-        serviceConfig.LoadCredential = [
-          "jwt-secret:${config.clan.core.vars.generators.authelia.files.jwt-secret.path}"
-          "session-secret:${config.clan.core.vars.generators.authelia.files.session-secret.path}"
-          "storage-encryption-key:${config.clan.core.vars.generators.authelia.files.storage-encryption-key.path}"
-        ];
-
-        # Run as root (+) to read secrets, then chown to authelia
-        serviceConfig.ExecStartPre = [ "+${usersGenScript}" ];
+        # mkBefore so files exist before authelia's preStart validates config
+        preStart = lib.mkBefore ''
+          ${pkgs.python3}/bin/python3 ${nix-to-config} ${usersConfigJson} /run/authelia-main/users.json
+          ${lib.optionalString (cfg.oidcClients != []) ''
+            ${pkgs.python3}/bin/python3 ${nix-to-config} ${oidcConfigJson} /run/authelia-main/oidc.json
+          ''}
+        '';
         serviceConfig.RuntimeDirectory = lib.mkDefault "authelia-main";
-
       };
 
       services.authelia.instances.main = {
         enable = true;
 
-        secrets = {
-          jwtSecretFile = "/run/credentials/authelia-main.service/jwt-secret";
-          sessionSecretFile = "/run/credentials/authelia-main.service/session-secret";
-          storageEncryptionKeyFile = "/run/credentials/authelia-main.service/storage-encryption-key";
+        secrets = with config.clan.core.vars.generators.authelia.files; {
+          jwtSecretFile = jwt-secret.path;
+          sessionSecretFile = session-secret.path;
+          storageEncryptionKeyFile = storage-encryption-key.path;
+        } // lib.optionalAttrs (cfg.oidcClients != []) {
+          oidcHmacSecretFile = oidc-hmac-secret.path;
+          oidcIssuerPrivateKeyFile = oidc-jwks-key.path;
         };
 
-        # Enable templating in cnfig files
-        # environmentVariables = {
-        #   X_AUTHELIA_CONFIG_FILTERS = "template";
-        # };
+        # Include generated OIDC config at runtime
+        settingsFiles = lib.mkIf (cfg.oidcClients != []) [
+          "/run/authelia-main/oidc.json"
+        ];
 
         settings = {
           theme = "dark";
@@ -106,7 +130,7 @@ in
           };
 
           authentication_backend = {
-            file.path = "/run/authelia-main/users.yaml";
+            file.path = "/run/authelia-main/users.json";
             # Disable password reset/change when using declarative users,
             # since changes would be overwritten on service restart
             password_reset.disable = cfg.declarativeUsers.enable;
@@ -144,9 +168,11 @@ in
       };
 
       clan.core.vars.generators.authelia = {
-        files.jwt-secret = { };
-        files.session-secret = { };
-        files.storage-encryption-key = { };
+        files.jwt-secret.owner = "authelia-main";
+        files.session-secret.owner = "authelia-main";
+        files.storage-encryption-key.owner = "authelia-main";
+        files.oidc-hmac-secret.owner = "authelia-main";
+        files.oidc-jwks-key.owner = "authelia-main";
 
         runtimeInputs = with pkgs; [
           coreutils
@@ -158,6 +184,8 @@ in
           openssl rand -hex 64 > $out/jwt-secret
           openssl rand -hex 64 > $out/session-secret
           openssl rand -hex 64 > $out/storage-encryption-key
+          openssl rand -hex 64 > $out/oidc-hmac-secret
+          openssl genrsa -out $out/oidc-jwks-key 4096
         '';
       };
 

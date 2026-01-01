@@ -36,7 +36,7 @@
 
   clan.core.vars.generators."authelia-user-pinpox" = {
     files.password = { };
-    files.password-hash = { };
+    files.password-hash.owner = "authelia-main";
     runtimeInputs = with pkgs; [ coreutils authelia xkcdpass gnused ];
     script = ''
       mkdir -p $out
@@ -47,7 +47,7 @@
 
   clan.core.vars.generators."authelia-user-lislon" = {
     files.password = { };
-    files.password-hash = { };
+    files.password-hash.owner = "authelia-main";
     runtimeInputs = with pkgs; [ coreutils authelia xkcdpass gnused ];
     script = ''
       mkdir -p $out
