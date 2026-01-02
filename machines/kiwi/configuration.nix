@@ -5,6 +5,15 @@
 }:
 {
 
+  # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
+  services.hardware.bolt.enable = true;
+
+  # Trust all thunderbolt devices
+  # boot.kernelParams = [ "thunderbolt.host_reset=0" ];
+  # services.udev.extraRules = ''
+  #   ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+  # '';
+
   hardware.fw-fanctrl.enable = true;
 
   imports = [
