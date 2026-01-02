@@ -130,7 +130,7 @@
             pinpox = {
               displayname = "pinpox";
               email = "mail@pablo.tools";
-              groups = [ "admins" "users" "miniflux-users" "ocis-users" ];
+              groups = [ "admins" "users" "miniflux-users" "opencloud-users" ];
               passwordFile = config.clan.core.vars.generators."authelia-user-pinpox".files.password-hash.path;
             };
             lislon = {
@@ -142,16 +142,16 @@
             berber = {
               displayname = "berber";
               email = "berber@pablo.tools";
-              groups = [ "users" "ocis-users" "miniflux-users" ];
+              groups = [ "users" "opencloud-users" "miniflux-users" ];
               passwordFile = config.clan.core.vars.generators."authelia-user-berber".files.password-hash.path;
             };
           };
         };
         oidcAuthorizationPolicies = {
-          ocis-policy = {
+          opencloud-policy = {
             default_policy = "deny";
             rules = [
-              { policy = "one_factor"; subject = "group:ocis-users"; }
+              { policy = "one_factor"; subject = "group:opencloud-users"; }
             ];
           };
           miniflux-policy = {
@@ -172,11 +172,11 @@
             token_endpoint_auth_method = "client_secret_basic";
           }
           {
-            # OCIS uses public client with PKCE (no secret needed)
-            client_id = "ocis";
-            client_name = "ownCloud Infinite Scale";
+            # OpenCloud uses public client with PKCE (no secret needed)
+            client_id = "opencloud";
+            client_name = "OpenCloud";
             public = true;
-            authorization_policy = "ocis-policy";
+            authorization_policy = "opencloud-policy";
             require_pkce = true;
             pkce_challenge_method = "S256";
             scopes = [ "openid" "offline_access" "groups" "profile" "email" ];
@@ -184,7 +184,6 @@
               "https://cloud.pablo.tools/"
               "https://cloud.pablo.tools/oidc-callback.html"
               "https://cloud.pablo.tools/oidc-silent-redirect.html"
-              "https://cloud.pablo.tools/web-oidc-callback"
             ];
             response_types = [ "code" ];
             grant_types = [ "authorization_code" "refresh_token" ];
@@ -210,8 +209,8 @@
       # Enable nextcloud configuration
       nextcloud.enable = true;
 
-      # Enable ownCloud Infinite Scale (uses Authelia OIDC)
-      ocis.enable = true;
+      # Enable OpenCloud (uses Authelia OIDC)
+      opencloud.enable = true;
 
       monitoring-server = {
 
