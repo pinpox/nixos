@@ -154,7 +154,7 @@
           projectRootFile = "flake.nix";
           programs = {
             nixfmt.enable = true;
-            nixfmt.package = nixpkgsFor.${system}.nixfmt-rfc-style;
+            nixfmt.package = nixpkgsFor.${system}.nixfmt;
             prettier.enable = true;
             shellcheck.enable = true;
             shfmt.enable = true;

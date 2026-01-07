@@ -128,18 +128,18 @@
       xarchiver
       xdg-utils
       # xfce-exo # thunar "open terminal here"
-      xfce.thunar-archive-plugin
-      xfce.thunar-volman
-      xfce.tumbler # thunar thumbnails
-      xfce.xfce4-volumed-pulse
+      thunar-archive-plugin
+      thunar-volman
+      tumbler # thunar thumbnails
+      xfce4-volumed-pulse
       xfconf # thunar save settings
       # yubioath-desktop
-      # xfce.thunar
-      (xfce.thunar.override {
+      # thunar
+      (thunar.override {
         thunarPlugins = with pkgs; [
-          xfce.thunar-volman
-          xfce.thunar-archive-plugin
-          xfce.thunar-media-tags-plugin
+          thunar-volman
+          thunar-archive-plugin
+          thunar-media-tags-plugin
         ];
       })
     ];

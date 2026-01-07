@@ -243,7 +243,7 @@
       {
         name = "jj-zsh-prompt";
         file = "jj-zsh-prompt.plugin.zsh";
-        src = "${flake-inputs.jj-zsh-prompt.packages.${pkgs.system}.default}/share/jj-zsh-prompt";
+        src = "${flake-inputs.jj-zsh-prompt.packages.${pkgs.stdenv.hostPlatform.system}.default}/share/jj-zsh-prompt";
       }
     ];
   };

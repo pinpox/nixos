@@ -23,7 +23,7 @@ with lib;
     htop
     neovim
     nix-index
-    nixfmt-rfc-style
+    nixfmt
     ripgrep
     wget
     ncdu
