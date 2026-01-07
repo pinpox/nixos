@@ -178,6 +178,9 @@
         # this needs to point at the repository root
         inherit self;
 
+        # Vars backend configuration (moved from machine-level)
+        vars.settings.secretStore = "password-store";
+
         # Make inputs and the flake itself accessible as module parameters.
         # Technically, adding the inputs is redundant as they can be also
         # accessed with flake-self.inputs.X, but adding them individually

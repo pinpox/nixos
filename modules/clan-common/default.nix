@@ -16,7 +16,7 @@
   # Default to depolying to the hostname
   clan.core.networking.targetHost = lib.mkDefault "${config.networking.hostName}.pin";
 
-  clan.core.vars.settings.secretStore = "password-store";
+  # passCommand must remain at machine-level (not flake-level)
   clan.core.vars.password-store.passCommand = "passage";
 
   environment.systemPackages = [ pkgs.passage ];
