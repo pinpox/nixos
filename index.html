@@ -935,60 +935,6 @@ Each policy can define rules based on groups or networks.
               </p>
             </div>
           </div>
-          <div class="nixoption block" id="options.pinpox.services.kanidm.enable">
-            <div class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <h3 class="title is-3">
-                    <a href="#options.pinpox.services.kanidm.enable"># </a> options.pinpox.services.kanidm.enable
-                  </h3>
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item">
-                  <span class="tag is-medium is-info">boolean</span>
-                </div>
-              </div>
-            </div>
-
-            <p class="subtitle">Whether to enable kanidm identity management server.</p>
-
-            <div class="block">
-              <p class="block">
-                <strong>Default:</strong> <code>false</code>
-              </p>
-              <p class="block">
-                <strong>Example:</strong> <code>true</code>
-              </p>
-            </div>
-          </div>
-          <div class="nixoption block" id="options.pinpox.services.kanidm.host">
-            <div class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <h3 class="title is-3">
-                    <a href="#options.pinpox.services.kanidm.host"># </a> options.pinpox.services.kanidm.host
-                  </h3>
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item">
-                  <span class="tag is-medium is-info">string</span>
-                </div>
-              </div>
-            </div>
-
-            <p class="subtitle">Host serving kanidm</p>
-
-            <div class="block">
-              <p class="block">
-                <strong>Default:</strong> <code>auth.pablo.tools</code>
-              </p>
-              <p class="block">
-                <strong>Example:</strong> <code>signin.pablo.tools</code>
-              </p>
-            </div>
-          </div>
           <div class="nixoption block" id="options.pinpox.services.kf-homepage.enable">
             <div class="level">
               <div class="level-left">
@@ -1283,6 +1229,141 @@ Each policy can define rules based on groups or networks.
               </p>
               <p class="block">
                 <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.opencloud.enable">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.opencloud.enable"># </a> options.pinpox.services.opencloud.enable
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">boolean</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Whether to enable OpenCloud file sync and sharing.</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>false</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.opencloud.host">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.opencloud.host"># </a> options.pinpox.services.opencloud.host
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">string</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Host serving OpenCloud</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>cloud.pablo.tools</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code></code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.opencloud.oidcClientId">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.opencloud.oidcClientId"># </a> options.pinpox.services.opencloud.oidcClientId
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">string</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">OIDC client ID</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>opencloud</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code></code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.opencloud.oidcIssuer">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.opencloud.oidcIssuer"># </a> options.pinpox.services.opencloud.oidcIssuer
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">string</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">OIDC issuer URL (Authelia)</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>https://auth.pablo.tools</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code></code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.opencloud.port">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.opencloud.port"># </a> options.pinpox.services.opencloud.port
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">16 bit unsigned integer; between 0 and 65535 (both inclusive)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Port OpenCloud listens on</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>9200</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code></code>
               </p>
             </div>
           </div>
