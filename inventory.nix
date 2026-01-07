@@ -135,6 +135,13 @@
       roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
     };
 
+    dns-mesher = {
+      module.input = "self";
+      module.name = "@pinpox/dns-mesher";
+      roles.default.tags = [ "all" ];
+      roles.exampleservice.machines.kiwi = { };
+    };
+
     wg-clan = {
 
       module.input = "self";

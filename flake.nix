@@ -13,6 +13,9 @@
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
 
+    dns-mesher.url = "git+https://git.clan.lol/pinpox/data-smasher";
+    dns-mesher.inputs.nixpkgs.follows = "nixpkgs";
+
     # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
     # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -189,6 +192,10 @@
         modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
+        modules."@pinpox/dns-mesher" = dns-mesher.clan.modules.dns-mesher;
+
+        # Include dns-mesher's custom exports module for endpoints
+        exportsModule = dns-mesher.clanExportsModule;
 
         inventory = import ./inventory.nix { inherit self; };
       };

@@ -29,9 +29,6 @@
 
   hardware.amdgpu.opencl.enable = true;
 
-  programs.adb.enable = true;
-  users.users.pinpox.extraGroups = [ "adbusers" ];
-
   networking.hostName = "kiwi";
 
   # Games
