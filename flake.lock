@@ -232,11 +232,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1767815996,
-        "narHash": "sha256-c769yuhZ7PAtC7VCCSJkl1PvRvtvIYIJZsO5VJ5MvC0=",
+        "lastModified": 1767904151,
+        "narHash": "sha256-82mYmWHVO0frEbAXc/7CrLR/YPX0cJYMK36d298Dg94=",
         "ref": "refs/heads/master",
-        "rev": "21c4b2cd26bb38a10adc6ffdcc059480dd318771",
-        "revCount": 6,
+        "rev": "0a6ed1547441d225bb0115c02bd62e24260703a3",
+        "revCount": 11,
         "type": "git",
         "url": "https://git.clan.lol/pinpox/data-smasher"
       },

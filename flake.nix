@@ -193,6 +193,7 @@
         # Register custom clan service modules
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
         modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
+        modules."@pinpox/navidrome" = ./clan-service-modules/navidrome.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
         modules."@pinpox/dns-mesher" = dns-mesher.clan.modules.dns-mesher;

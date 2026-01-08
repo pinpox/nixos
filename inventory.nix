@@ -121,6 +121,12 @@
       roles.default.tags = [ "desktop" ];
     };
 
+    navidrome = {
+      module.input = "self";
+      module.name = "@pinpox/navidrome";
+      roles.default.machines.kfbox = { };
+    };
+
     machine-type = {
       module.input = "self";
       module.name = "@pinpox/machine-type";
@@ -139,7 +145,14 @@
       module.input = "self";
       module.name = "@pinpox/dns-mesher";
       roles.default.tags = [ "all" ];
-      roles.exampleservice.machines.kiwi = { };
+
+      # roles.exampleservice.machines.porree = { settings.host = "hallowelt.pablo.tools"; };
+
+
+      # roles.exampleservice.machines.kiwi = { settings.host = "something.pin"; };
+      # roles.exampleservice.machines.tanne = {
+        # settings.host = "testtwo.pin";
+      # };
     };
 
     wg-clan = {

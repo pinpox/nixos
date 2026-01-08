@@ -1,9 +1,26 @@
 {
   nixos-hardware,
   lib,
+  pkgs,
+  config,
+  dns-mesher,
   ...
 }:
+let
+  dns-mesher-push-local = pkgs.writeShellApplication {
+    name = "dns-mesher-push-local";
+    runtimeInputs = [ dns-mesher.packages.${pkgs.system}.dns-mesher-push ];
+    text = ''
+      dns-mesher-push \
+      --zone-file ./vars/shared/dns-mesher/zone.conf/value \
+      --domain=pin \
+      --key="$(passage show clan-vars/shared/dns-mesher-key/private_key)" \
+      --host localhost
+    '';
+  };
+in
 {
+  environment.systemPackages = [ dns-mesher-push-local ];
 
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
   services.hardware.bolt.enable = true;

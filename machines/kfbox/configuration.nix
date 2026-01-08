@@ -72,8 +72,7 @@ in
 
   pinpox = {
     services = {
-      navidrome.enable = true;
-      immich.enable = true;
+      immich.enable = false;
       radio.enable = true;
       jitsi-matrix-presence.enable = true;
       hedgedoc.enable = false;
