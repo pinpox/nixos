@@ -12,6 +12,9 @@
 
   networking.hostName = "tanne";
 
+  programs.steam.enable = true;
+  programs.gamemode.enable = true;
+
   # For dual-boot
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
