@@ -178,7 +178,7 @@ in
             rules = [
               {
                 # Settings page requires 2FA to enable passkey registration
-                domain = "auth.pablo.tools";
+                domain = "${cfg.host}";
                 resources = [ "^/settings.*$" ];
                 policy = "two_factor";
               }

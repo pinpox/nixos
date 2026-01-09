@@ -22,8 +22,15 @@
       };
 
     perInstance =
-      { settings, ... }:
       {
+        settings,
+        mkExports,
+        ...
+      }:
+      {
+
+        exports = mkExports { endpoints.hosts = [ settings.host ]; };
+
         nixosModule =
           { config, ... }:
           {

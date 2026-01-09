@@ -124,7 +124,9 @@
     navidrome = {
       module.input = "self";
       module.name = "@pinpox/navidrome";
-      roles.default.machines.kfbox = { };
+      roles.default.machines.kfbox = {
+        settings.host = "music.0cx.de";
+      };
     };
 
     machine-type = {
@@ -148,10 +150,9 @@
 
       # roles.exampleservice.machines.porree = { settings.host = "hallowelt.pablo.tools"; };
 
-
       # roles.exampleservice.machines.kiwi = { settings.host = "something.pin"; };
       # roles.exampleservice.machines.tanne = {
-        # settings.host = "testtwo.pin";
+      # settings.host = "testtwo.pin";
       # };
     };
 
