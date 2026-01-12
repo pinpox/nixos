@@ -40,9 +40,5 @@ in
 
     # The nixos agent is better
     services.ssh-agent.enable = false;
-
-    home.packages = with pkgs; [
-      tpm2-tools # To work with the TPM
-    ];
   };
 }

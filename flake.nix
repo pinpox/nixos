@@ -121,6 +121,9 @@
 
     treefmt-nix.follows = "clan-core/treefmt-nix";
 
+    age-plugin-picohsm.url = "github:pinpox/age-plugin-picohsm";
+    age-plugin-picohsm.inputs.nixpkgs.follows = "nixpkgs";
+
   };
   outputs =
     { self, ... }@inputs:

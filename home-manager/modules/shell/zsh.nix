@@ -168,6 +168,8 @@
 
       zzz = "systemctl suspend";
 
+      picohsm-add-to-agent = "ssh-add -s ${pkgs.opensc}/lib/opensc-pkcs11.so";
+
       serve = "${pkgs.miniserve}/bin/miniserve";
 
       za = "${./zellij-chooser}";
