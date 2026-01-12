@@ -72,6 +72,7 @@ in
       home = "/home/pinpox";
       description = "Pablo Ovelleiro Corral";
       extraGroups = [
+        "plugdev"
         "docker"
         "wheel"
         "networkmanager"
