@@ -22,6 +22,7 @@
         gtk.enable = true;
         fonts.enable = true;
         credentials.enable = true;
+        email.enable = true;
         git.enable = true;
       };
 
