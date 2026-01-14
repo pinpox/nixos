@@ -26,17 +26,13 @@ in
       fi
     '';
 
-    # Passage recipients (public keys for encryption)
-    home.file.".passage/.age-recipients".text = ''
-      age15m0pgtr06pqaql2wx8e2xqupcctzkf0dk0cc06hv3cjcgpe5u3ns59jaun
-      age1picohsm1qjpqjd9pnlh8zem6wwz62ml9z995fsdz9e23dumamjj0nl4cq0m5dx5v5mm5njelm3hmv4w3mfs5mzvks3xtu6k723jr0am49hrk9mduxvxpps
-    '';
-
     # The file ~/.config/age/identities still needs to be generated.
     # Run `age-plugin-picohsm -list` and put the age-key identity
     # (AGE-PLUGIN-PICOHSM-XXXXX) into the file
     programs.zsh.sessionVariables.PASSAGE_IDENTITIES_FILE = "$HOME/.config/age/identities";
+    programs.zsh.sessionVariables.PASSAGE_RECIPIENTS_FILE = "${./age-recipients}";
     home.sessionVariables.PASSAGE_IDENTITIES_FILE = "$HOME/.config/age/identities";
+    home.sessionVariables.PASSAGE_RECIPIENTS_FILE = "${./age-recipients}";
 
     # The nixos agent is better
     services.ssh-agent.enable = false;
