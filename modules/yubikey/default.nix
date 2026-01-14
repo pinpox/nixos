@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  age-plugin-picohsm,
   ...
 }:
 with lib;
