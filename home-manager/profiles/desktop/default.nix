@@ -60,27 +60,17 @@
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      spotify
+      mpv
+      sysz
+      thunderbird-bin
+      deluge
+      (audacious.override { withPlugins = true; })
+      file-roller
+      imagemagick
       swaynotificationcenter
       tea
       claude-code
-
-      (audacious.override { withPlugins = true; })
-
-      mpv
-      # (mpv.override {
-      #   scripts = with pkgs.mpvScripts; [
-      #     sponsorblock
-      #     quality-menu
-      #     visualizer
-      #     twitch-chat
-      #     mpris
-      #   ];
-      # })
-
-      zotero
-      sysz
-
-      deluge
       chafa
       asciinema
       cbatticon
@@ -91,38 +81,27 @@
       gcc
       # gimp
       adwaita-icon-theme
-      file-roller
       gtk_engines
       h # https://github.com/zimbatm/h
       htop
-      imagemagick
       iputils
       libnotify
-      lxappearance
       manix
       matcha-gtk-theme
       meld
       ncdu
-      networkmanager-openvpn
       networkmanagerapplet
       nextcloud-client
-      nitrogen
       nix-index
       nmap
-      openvpn
       papirus-icon-theme
       pavucontrol
       pkg-config
       playerctl
       pre-commit
-      scrot
       signal-desktop
-      spotify
       sqlite
       tealdeer
-      thunderbird-bin
-      timewarrior
-      typst
       unzip
       viewnior
       vlc
