@@ -20,15 +20,15 @@ in
       fontDir.enable = true;
       packages = with pkgs; [
 
-        stix-two
-        league-of-moveable-type
-        inter
-        source-sans-pro
-        source-serif-pro
-        noto-fonts-monochrome-emoji
+        # stix-two
+        # league-of-moveable-type
+        # inter
+        # source-sans-pro
+        # source-serif-pro
+        # noto-fonts-monochrome-emoji
         # corefonts
-        recursive
-        iosevka-bin
+        # recursive
+        # iosevka-bin
         font-awesome
         line-awesome
       ];
