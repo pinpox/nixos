@@ -30,10 +30,12 @@ in
     # Use `age-plugin-picohsm --list` to get the HSM key if needed. The second
     # key is an offline last-resort backup key
     home.sessionVariables.PASSAGE_RECIPIENTS_FILE = "${./age-recipients}";
+    programs.zsh.sessionVariables.PASSAGE_RECIPIENTS_FILE = "${./age-recipients}";
 
     # The file ~/.config/age/identities still needs to be generated.
     # Run `age-plugin-picohsm -list` and put the age-key identity
     # (AGE-PLUGIN-PICOHSM-XXXXX) into the file
+    home.sessionVariables.PASSAGE_IDENTITIES_FILE = "$HOME/.config/age/identities";
     programs.zsh.sessionVariables.PASSAGE_IDENTITIES_FILE = "$HOME/.config/age/identities";
 
     # The nixos agent is better
