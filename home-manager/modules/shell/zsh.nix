@@ -79,7 +79,8 @@
           zle -N fzf_cd_widget
           bindkey '^J' fzf_cd_widget
 
-          # Power profile function using ryzenadj
+${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
+          # Power profile function using ryzenadj (x86_64 only)
           power-profile() {
           if [ $# -ne 4 ]; then
             echo "Usage: power-profile <name> <stapm> <fast> <slow>"
@@ -95,6 +96,7 @@
           sudo ${lib.getExe pkgs.ryzenadj} --stapm-limit=$stapm --fast-limit=$fast --slow-limit=$slow && \
             echo "Power profile set to: $name (''${stapm}mW/''${fast}mW/''${slow}mW)"
           }
+        ''}
 
         '';
       in
@@ -125,9 +127,6 @@
 
     shellAliases = rec {
 
-      gif = "${flake-inputs.gif-searcher.packages.x86_64-linux.default}/bin/show-gif";
-      gifi = "${flake-inputs.gif-searcher.packages.x86_64-linux.gif-infinite}/bin/show-gif";
-
       remote-review = ''nixpkgs-review pr --build-args="--builders 'ssh://pinpox@build-box.nix-community.org'"'';
 
       # eza ls replacement
@@ -152,14 +151,14 @@
       cdnh = "cd ~/code/github.com/pinpox/nixos-home";
 
       # Other
-      pt = "${promterm.defaultPackage.x86_64-linux}/bin/promterm 'https://vpn.prometheus.pablo.tools/api/v1/alerts'";
       lsblk = "lsblk -o name,mountpoint,label,size,type,uuid";
       c = "${pkgs.bat}/bin/bat -n --decorations never";
       cc = "${pkgs.clang}/bin/clang -Wall -Wextra -pedantic -std=c99 -Wshadow -Weverything";
       qr = "${pkgs.qrencode}/bin/qrencode -t utf8 -o-";
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
-      radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
+      # radio = "${
+        #pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
 
       # ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
       yotp = ''
@@ -175,13 +174,17 @@
       za = "${./zellij-chooser}";
 
       upterm = "${pkgs.upterm}/bin/upterm host --server ssh://upterm.thalheim.io:2323 --force-command 'zellij attach pair-programming' -- zellij attach --create pair-programming";
+    } // lib.optionalAttrs (pkgs.stdenv.hostPlatform.system == "x86_64-linux") {
+      # x86_64-only aliases
+      gif = "${flake-inputs.gif-searcher.packages.x86_64-linux.default}/bin/show-gif";
+      gifi = "${flake-inputs.gif-searcher.packages.x86_64-linux.gif-infinite}/bin/show-gif";
+      pt = "${promterm.defaultPackage.x86_64-linux}/bin/promterm 'https://vpn.prometheus.pablo.tools/api/v1/alerts'";
 
-      # Power profile aliases
+      # Power profile aliases (requires ryzenadj)
       power-performance = "power-profile PERFORMANCE 30000 35000 35000";
       power-balanced = "power-profile BALANCED 25000 33000 33000";
       power-saver = "power-profile POWER-SAVER 26000 30000 15000";
       power-ultra-saver = "power-profile ULTRA-POWER-SAVER 10000 20000 10000";
-
     };
 
     prezto = {
