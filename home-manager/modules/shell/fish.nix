@@ -81,7 +81,8 @@
       qr = "${pkgs.qrencode}/bin/qrencode -t utf8 -o-";
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
-      radio = "${pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
+      #radio = "${
+      #pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
 
       zzz = "systemctl suspend";
 

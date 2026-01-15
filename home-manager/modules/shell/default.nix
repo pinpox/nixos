@@ -55,7 +55,7 @@ in
   imports = [
     ./starship.nix
     ./zsh.nix
-    ./fish.nix
+    # ./fish.nix
   ];
 
   config = mkIf cfg.enable {
