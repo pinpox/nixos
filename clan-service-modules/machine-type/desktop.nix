@@ -34,7 +34,7 @@
   hardware.keyboard.qmk.enable = true;
 
   services.udev.packages = [
-    pkgs.via
+    # pkgs.via
     pkgs.qmk-udev-rules # For QMK/Via
     pkgs.libsigrok # For pulseview
   ];

@@ -30,6 +30,9 @@
     tor = {
       module.name = "tor";
 
+      # ADD all mahines to tor
+      # Add smokeping to test if yggdrasil uses the best way
+
       roles.client.machines.kiwi = { };
       roles.client.machines.porree = { };
 
@@ -61,7 +64,6 @@
               target.port = 6446;
             }
           ];
-
         };
       };
     };

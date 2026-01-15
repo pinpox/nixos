@@ -65,7 +65,7 @@ self: super: {
   smartmon-script = super.callPackage ../packages/smartmon-script { };
 
   # Use custom neovim in standalone flake
-  neovim = inputs.pinpox-neovim.packages.x86_64-linux.pinpox-neovim;
+  neovim = inputs.pinpox-neovim.packages.${super.stdenv.hostPlatform.system}.pinpox-neovim;
 
   # ZSH plugins
   zsh-abbrev-alias = super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };

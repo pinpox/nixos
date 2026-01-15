@@ -115,6 +115,7 @@
       xfconf # thunar save settings
       # yubioath-desktop
       # thunar
+noto-fonts-color-emoji
       (thunar.override {
         thunarPlugins = with pkgs; [
           thunar-volman

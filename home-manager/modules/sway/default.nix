@@ -17,7 +17,14 @@ let
       '';
 in
 {
-  options.pinpox.programs.sway.enable = mkEnableOption "sway window manager";
+  options.pinpox.programs.sway = {
+    enable = mkEnableOption "sway window manager";
+    keyboardVariant = mkOption {
+      type = types.str;
+      default = "colemak";
+      description = "Keyboard variant for sway input (empty string for standard US layout)";
+    };
+  };
 
   imports = [ ./swaync/default.nix ];
 
@@ -221,7 +228,8 @@ in
           input = {
             "*" = {
               xkb_layout = "us";
-              xkb_variant = "colemak";
+            } // lib.optionalAttrs (cfg.keyboardVariant != "") {
+              xkb_variant = cfg.keyboardVariant;
             };
           };
 

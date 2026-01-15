@@ -8,6 +8,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
     # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
+
     # nixpkgs-local.url = "path:/home/pinpox/code/github.com/NixOS/nixpkgs";
     # nixpkgs-local.flake = false;
 
@@ -38,7 +39,8 @@
     jitsi-matrix-presence.url = "github:pinpox/jitsi-matrix-presence";
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "path:/home/pinpox/code/github.com/NixOS/nixos-hardware";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
@@ -221,18 +223,27 @@
 
       # Custom packages added via the overlay are selectively exposed here, to
       # allow using them from other flakes that import this one.
-      packages = forAllSystems (
-        system: with nixpkgsFor.${system}; {
-          inherit
-            hello-custom
-            fritzbox_exporter
-            mqtt2prometheus
-            smartmon-script
-            # woodpecker-pipeline
-            manual
-            ;
-        }
-      );
+      packages =
+        forAllSystems (
+          system: with nixpkgsFor.${system}; {
+            inherit
+              hello-custom
+              fritzbox_exporter
+              mqtt2prometheus
+              smartmon-script
+              # woodpecker-pipeline
+              manual
+              ;
+          }
+        )
+        // {
+          # Flashable SD card image for uconsole (uses binfmt emulation)
+          # Build with: nix build .#uconsole-image
+          # Then flash with: dd if=result/main.raw of=/dev/sdX bs=4M status=progress
+          aarch64-linux = (forAllSystems (s: { })).aarch64-linux // {
+            uconsole-image = self.nixosConfigurations.uconsole.config.system.build.diskoImages;
+          };
+        };
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
@@ -272,7 +283,19 @@
 
       # Each subdirectory in ./machines/<machine-name> is a host config. Clan
       # auto-imports all machines from ./machines
-      inherit (clan.config) clanInternals nixosConfigurations;
+      inherit (clan.config) clanInternals;
+      nixosConfigurations = clan.config.nixosConfigurations // {
+        # Cross-compilation target for uconsole (build on x86_64)
+        uconsole-cross = clan.config.nixosConfigurations.uconsole.extendModules {
+          modules = [
+            {
+              nixpkgs.hostPlatform = nixpkgs.lib.mkForce "aarch64-linux";
+              nixpkgs.buildPlatform = "x86_64-linux";
+              boot.binfmt.emulatedSystems = nixpkgs.lib.mkForce [ ];
+            }
+          ];
+        };
+      };
       clan = clan.config;
 
       # Each subdirectory in ./home-manager/profiles/<profile-name> is a

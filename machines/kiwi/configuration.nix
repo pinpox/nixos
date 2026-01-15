@@ -59,6 +59,9 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.efiInstallAsRemovable = lib.mkForce false;
 
+  # Enable aarch64 emulation for cross-building ARM images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # Remap Caps Lock to Esc and vice versa
   services.udev.extraHwdb = ''
     evdev:atkbd:dmi:*

@@ -35,7 +35,9 @@
         zellij.enable = true;
         tmux.enable = true;
         foot.enable = true;
+        rio.enable = true;
         sway.enable = true;
+        sway.keyboardVariant = ""; # Use standard US QWERTY on mobile devices
         swaylock.enable = true;
         waybar.enable = true;
         mako.enable = true;
