@@ -6,6 +6,7 @@
     fichte.tags = [ "desktop" ];
     kartoffel.tags = [ "desktop" ];
     limette.tags = [ "desktop" ];
+    uconsole.tags = [ "mobile" ];
 
     birne.tags = [ "server" ];
     kfbox.tags = [ "server" ];
@@ -134,6 +135,7 @@
       module.name = "@pinpox/machine-type";
       roles.desktop.tags.desktop = { };
       roles.server.tags.server = { };
+      roles.mobile.tags.mobile = { };
     };
 
     importer = {
@@ -169,6 +171,7 @@
         kartoffel = { };
         birne.settings.extraIPs = [ "192.168.101.0/24" ];
         kfbox = { };
+        uconsole = { };
         kiwi = { };
         limette = { };
       };

@@ -7,6 +7,8 @@
   roles.server.description = "Server machine settings, no GUI";
   roles.desktop.perInstance.nixosModule = ./desktop.nix;
   roles.desktop.description = "Desktop machine settings, including wayland and sway";
+  roles.mobile.perInstance.nixosModule = ./mobile.nix;
+  roles.mobile.description = "Mobile/ARM device settings, lightweight desktop";
 
   # Common configuration for all macine types
   perMachine.nixosModule =
