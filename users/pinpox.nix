@@ -21,19 +21,19 @@ let
   };
 
   # Instantiate the wrapped ffmpeg with custom options
-  ffmpeg-wrapped =
-    (myWrappers.wrapperModules.ffmpeg.apply {
-      inherit pkgs;
-      profile = "quality"; # or "fast"
-      outputDir = "/home/pinpox/videos"; # customize as needed
-    }).wrapper;
+  # ffmpeg-wrapped =
+  #   (myWrappers.wrapperModules.ffmpeg.apply {
+  #     inherit pkgs;
+  #     profile = "quality"; # or "fast"
+  #     outputDir = "/home/pinpox/videos"; # customize as needed
+  #   }).wrapper;
 
   # Example using a built-in wrapper module
-  mpv-wrapped =
-    (myWrappers.wrapperModules.mpv.apply {
-      inherit pkgs;
-      scripts = [ pkgs.mpvScripts.mpris ];
-    }).wrapper;
+  # mpv-wrapped =
+  #   (myWrappers.wrapperModules.mpv.apply {
+  #     inherit pkgs;
+  #     scripts = [ pkgs.mpvScripts.mpris ];
+  #   }).wrapper;
 
   # Chromium with extensions configured
   chromium-wrapped =
@@ -63,9 +63,9 @@ in
     users.pinpox = {
 
       packages = [
-        ffmpeg-wrapped
-        mpv-wrapped
-        chromium-wrapped
+        # ffmpeg-wrapped
+        # mpv-wrapped
+        # chromium-wrapped
       ];
 
       isNormalUser = true;
