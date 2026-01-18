@@ -10,49 +10,70 @@ let
   kernelPackage = config.boot.kernelPackages.kernel;
 
   # config.txt for Raspberry Pi CM4 / uConsole
+  # IMPORTANT: Kernel must be at root level, not in subdirectory - GPU firmware can't load from subdirs
   configTxt = pkgs.writeText "config.txt" ''
     [all]
     arm_64bit=1
     enable_uart=1
+    uart_2ndstage=1
     avoid_warnings=1
     disable_overscan=1
     disable_splash=0
 
-    # HDMI output configuration
-    hdmi_force_hotplug=1
-    hdmi_drive=2
-    config_hdmi_boost=4
+    # GPU memory allocation (256MB for GPU)
+    gpu_mem=256
 
-    # Enable VC4 graphics driver for HDMI output
-    dtoverlay=vc4-kms-v3d
+    # Ignore LCD detect - we use DSI display
+    ignore_lcd=1
 
-    # Use kernel and initrd from extlinux
-    kernel=nixos/default-kernel
-    initramfs nixos/default-initrd followkernel
+    # Audio settings
+    disable_audio_dither=1
+    pwm_sample_bits=20
 
-    # Device tree for CM4
-    device_tree=bcm2711-rpi-cm4.dtb
+    # Device tree debug (use vclog -m to view)
+    dtdebug=1
+
+    # GPIO configuration for uConsole hardware
+    gpio=10=ip,np
+    gpio=11=op,dh
+
+    # Enable VC4 graphics driver - MUST use pi4 variant for CM4
+    # cma-384 allocates 384MB contiguous memory for GPU (needed for full resolution)
+    dtoverlay=vc4-kms-v3d-pi4,cma-384
+
+    # USB controller - host mode
+    dtoverlay=dwc2,dr_mode=host
 
     # uConsole display and hardware overlay
     dtoverlay=clockworkpi-uconsole
 
+    # Audio routing to GPIO 12/13 (headphone jack)
+    dtoverlay=audremap,pins_12_13
+
+    # External WiFi antenna
+    dtparam=ant2=on
+    dtparam=audio=on
+
+    # Kernel and initrd at root level (GPU firmware can't load from subdirectories)
+    kernel=kernel.img
+    initramfs initrd.img followkernel
+
+    # Device tree for CM4
+    device_tree=bcm2711-rpi-cm4.dtb
+
     [cm4]
     # CM4-specific settings
-    otg_mode=1
+    otg_mode=0
+    over_voltage=6
+    arm_freq=2000
+    gpu_freq=750
+    force_turbo=1
+    dtparam=spi=on
   '';
 
-  # extlinux.conf for boot menu
-  extlinuxConf = pkgs.writeText "extlinux.conf" ''
-    TIMEOUT 30
-    DEFAULT nixos
-    MENU TITLE NixOS Boot Menu
-
-    LABEL nixos
-      MENU LABEL NixOS
-      LINUX ../nixos/default-kernel
-      INITRD ../nixos/default-initrd
-      FDTDIR ../
-      APPEND init=${toplevel}/init root=LABEL=NIXOS_SD rootfstype=btrfs rootflags=subvol=/root loglevel=7 console=tty1 fbcon=rotate:1
+  # cmdline.txt for kernel parameters
+  cmdlineTxt = pkgs.writeText "cmdline.txt" ''
+    console=tty1 root=LABEL=NIXOS_SD rootfstype=btrfs rootflags=subvol=/root init=${toplevel}/init loglevel=4 fbcon=rotate:1 video=DSI-1:panel_orientation=right_side_up
   '';
 
 in
@@ -101,18 +122,16 @@ in
     ${pkgs.coreutils}/bin/echo "=== Copying firmware files ==="
 
     # Create directories first
-    ${pkgs.mtools}/bin/mmd -i "$out/main.raw"@@$OFFSET ::nixos || true
     ${pkgs.mtools}/bin/mmd -i "$out/main.raw"@@$OFFSET ::overlays || true
-    ${pkgs.mtools}/bin/mmd -i "$out/main.raw"@@$OFFSET ::extlinux || true
 
     # Copy Raspberry Pi firmware
     ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${rpiFirmware}/share/raspberrypi/boot/start4.elf ::
     ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${rpiFirmware}/share/raspberrypi/boot/fixup4.dat ::
     ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${rpiFirmware}/share/raspberrypi/boot/bootcode.bin :: || true
 
-    # Copy kernel and initrd
-    ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${toplevel}/kernel ::nixos/default-kernel
-    ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${toplevel}/initrd ::nixos/default-initrd
+    # Copy kernel and initrd to ROOT level (GPU firmware can't load from subdirectories!)
+    ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${toplevel}/kernel ::kernel.img
+    ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${toplevel}/initrd ::initrd.img
 
     # Copy device tree for CM4 (from toplevel/dtbs/broadcom/)
     ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${toplevel}/dtbs/broadcom/bcm2711-rpi-cm4.dtb ::
@@ -126,13 +145,11 @@ in
 
     # Copy config files
     ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${configTxt} ::config.txt
-    ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${extlinuxConf} ::extlinux/extlinux.conf
+    ${pkgs.mtools}/bin/mcopy -i "$out/main.raw"@@$OFFSET ${cmdlineTxt} ::cmdline.txt
 
     # List what we copied
     ${pkgs.coreutils}/bin/echo "=== Firmware partition contents ==="
     ${pkgs.mtools}/bin/mdir -i "$out/main.raw"@@$OFFSET ::
-    ${pkgs.mtools}/bin/mdir -i "$out/main.raw"@@$OFFSET ::nixos
-    ${pkgs.mtools}/bin/mdir -i "$out/main.raw"@@$OFFSET ::extlinux
 
     ${pkgs.coreutils}/bin/echo "=== Firmware population complete ==="
   '';
@@ -172,7 +189,7 @@ in
                 ];
               };
             };
-            # Root partition with BTRFS (no LUKS for debugging)
+            # Root partition with BTRFS
             root = {
               size = "100%";
               content = {
