@@ -71,7 +71,7 @@ let
     dtparam=spi=on
   '';
 
-  # cmdline.txt for kernel parameters
+  # cmdline.txt for kernel parameters (non-LUKS version)
   cmdlineTxt = pkgs.writeText "cmdline.txt" ''
     console=tty1 root=LABEL=NIXOS_SD rootfstype=btrfs rootflags=subvol=/root init=${toplevel}/init loglevel=4 fbcon=rotate:1 video=DSI-1:panel_orientation=right_side_up
   '';
@@ -189,7 +189,7 @@ in
                 ];
               };
             };
-            # Root partition with BTRFS
+            # Root partition with BTRFS (no LUKS - testing early display)
             root = {
               size = "100%";
               content = {

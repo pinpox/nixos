@@ -19,28 +19,74 @@
   # Disable grub - we use extlinux from the rpi4 module
   boot.loader.grub.enable = lib.mkForce false;
 
-  # Additional initrd modules for early display (LUKS prompt)
+  # ============================================================================
+  # EARLY DISPLAY MODULES FOR INITRAMFS
+  # ============================================================================
+  # Goal: Get the uConsole's built-in screen working as early as possible
+  # during boot, so we can later see the LUKS password prompt.
+  #
+  # Based on:
+  # - https://blog.quendi.moe/2024/07/25/en-enabling-fde-on-the-clockworkpi-uconsole/
+  # - https://forum.clockworkpi.com/t/updated-guide-for-bookworm-encrypted-root-partition-on-uconsole/15778/4
+  #   (fenryxo's solution for initramfs display)
+  #
+  # The 18-second delay before screen activates is caused by late I2C bus
+  # initialization, which delays the AXP228 power management IC that controls
+  # the display power rail.
+  # ============================================================================
+
   boot.initrd.kernelModules = [
+    # DRM core and helpers - needed for framebuffer console
     "drm"
     "drm_kms_helper"
-    "vc4"
-    "panel_cwu50"
-    "ocp8178_bl"
-    "pwm_bcm2835"
+    "drm_display_helper"
+    "drm_dma_helper"
+    "drm_shmem_helper"
+    "drm_panel_orientation_quirks"
+    "ttm"
+    # Note: drm_ttm_helper may be built-in or merged into ttm
+
+    # GPU drivers for BCM2711 (CM4)
+    "v3d"       # Broadcom V3D 3D graphics
+    "vc4"       # Broadcom VC4 graphics (includes DSI support)
+
+    # Panel and backlight drivers (uConsole specific)
+    "panel_cwu50"   # CWU50 5" DSI panel driver
+    "ocp8178_bl"    # OCP8178 backlight controller (1-wire GPIO)
+    "backlight"     # Backlight subsystem
+    "pwm_bcm2835"   # PWM driver for backlight
+
+    # I2C bus drivers - CRITICAL for early display!
+    # i2c_bcm2708 is the BSC controller driver for fe205000.i2c where AXP228 lives
+    # Without this loaded early, display power doesn't come up until ~9s into boot.
+    "i2c_bcm2708"   # THIS IS THE KEY ONE - drives the bus with AXP228
+    "i2c_brcmstb"
     "i2c_bcm2835"
     "i2c_dev"
+    "i2c_mux"
+    "i2c_mux_pinctrl"
+
+    # Power management - AXP228 PMIC
+    # Note: axp20x core and regulator may be built-in (=y) in RPi kernel
+    # These are the loadable helper modules
+    "axp20x_battery"
+    "axp20x_ac_power"
+    "axp20x_adc"
   ];
 
   # Console configuration for boot
   boot.kernelParams = [
     "console=tty1"
     "fbcon=rotate:1"  # uConsole display is rotated 90 degrees
+    "fbcon=nodefer"   # Disable deferred framebuffer console takeover
     "loglevel=4"
+    # Force DSI panel orientation
+    "video=DSI-1:panel_orientation=right_side_up"
   ];
 
-  # Add modules needed in initrd
+  # Additional modules available in initrd (not forced to load)
   boot.initrd.availableKernelModules = [
-    # USB ethernet adapters
+    # USB ethernet adapters (for network debugging)
     "usbnet"
     "ax88179_178a"
     "cdc_ether"
@@ -53,6 +99,7 @@
   hardware.graphics.enable32Bit = lib.mkForce false;
 
   # Console font sized for the 5" 720x1280 display
+  # earlySetup ensures the font is available in initramfs
   console = {
     earlySetup = true;
     font = "ter-v24n";
