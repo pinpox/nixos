@@ -71,15 +71,18 @@ let
     dtparam=spi=on
   '';
 
-  # cmdline.txt for kernel parameters (non-LUKS version)
+  # cmdline.txt for kernel parameters (LUKS version)
   cmdlineTxt = pkgs.writeText "cmdline.txt" ''
-    console=tty1 root=LABEL=NIXOS_SD rootfstype=btrfs rootflags=subvol=/root init=${toplevel}/init loglevel=4 fbcon=rotate:1 video=DSI-1:panel_orientation=right_side_up
+    console=tty1 root=/dev/mapper/crypted rootfstype=btrfs rootflags=subvol=/root init=${toplevel}/init loglevel=4 fbcon=rotate:1,nodefer video=DSI-1:panel_orientation=right_side_up
   '';
 
 in
 {
   # Use a generic kernel for the disko VM (the RPi CM4 kernel doesn't work in QEMU)
   disko.imageBuilder.kernelPackages = pkgs.linuxPackages;
+
+  # Increase VM memory for LUKS + nix store copy (default 1024 MiB is too low)
+  disko.memSize = 4096;
 
   # Populate firmware partition after VM creates the base image
   # Note: Images are in $out after VM completes
@@ -189,37 +192,53 @@ in
                 ];
               };
             };
-            # Root partition with BTRFS (no LUKS - testing early display)
-            root = {
+            # LUKS-encrypted partition containing BTRFS
+            luks = {
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = [ "-f" "-L" "NIXOS_SD" ];
-                subvolumes = {
-                  "/root" = {
-                    mountpoint = "/";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
-                  };
-                  "/home" = {
-                    mountpoint = "/home";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
-                  };
-                  "/nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
-                  };
-                  "/swap" = {
-                    mountpoint = "/.swapvol";
-                    swap.swapfile.size = "1G";
+                type = "luks";
+                name = "crypted";
+                # Password file for image building (change after first boot!)
+                passwordFile = toString (pkgs.writeText "luks-password" "changeme");
+                # Use xchacha20,aes-adiantum because BCM2711 lacks AES hardware acceleration
+                # This provides good performance on ARM without AES-NI
+                extraFormatArgs = [
+                  "--type" "luks2"
+                  "--cipher" "xchacha20,aes-adiantum-plain64"
+                  "--key-size" "256"
+                ];
+                settings = {
+                  allowDiscards = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
+                      swap.swapfile.size = "1G";
+                    };
                   };
                 };
               };

@@ -91,6 +91,20 @@
     "ax88179_178a"
     "cdc_ether"
     "r8152"
+    # LUKS/dm-crypt support
+    "dm_crypt"
+    "dm_mod"
+    # Crypto modules for xchacha20,aes-adiantum cipher (fast on ARM without AES-NI)
+    "xchacha20"
+    "adiantum"
+    "nhpoly1305"
+    "chacha_generic"
+    "chacha_neon"
+    "aes_generic"
+    "aes_arm64"
+    "sha256_generic"
+    "sha256_arm64"
+    "algif_skcipher"
   ];
 
   # Enable Mesa GPU drivers for Wayland/graphics support
