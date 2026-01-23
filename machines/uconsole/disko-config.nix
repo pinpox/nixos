@@ -172,7 +172,7 @@ in
       main = {
         type = "disk";
         # Image size for generation (actual SD card will be larger)
-        imageSize = "8G";
+        imageSize = "16G";
         content = {
           type = "gpt";
           partitions = {
