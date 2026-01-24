@@ -14,9 +14,11 @@
     # nixpkgs-local.flake = false;
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     dns-mesher.url = "git+https://git.clan.lol/pinpox/data-smasher";
     dns-mesher.inputs.nixpkgs.follows = "nixpkgs";
+    dns-mesher.inputs.clan-core.follows = "clan-core";
 
     # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
     # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
@@ -65,16 +67,19 @@
     promterm.inputs = {
       nixpkgs.follows = "nixpkgs";
       naersk.follows = "naersk";
+      utils.follows = "age-plugin-picohsm/flake-utils";
     };
 
     go-karma-bot.url = "github:pinpox/go-karma-bot";
     go-karma-bot.inputs.nixpkgs.follows = "nixpkgs";
 
-    rogue-talk.url = "github:Lassulus/rogue-talk";
+    rogue-talk.url = "github:rogue-talk/rogue-talk";
     rogue-talk.inputs.nixpkgs.follows = "nixpkgs";
+    rogue-talk.inputs.treefmt-nix.follows = "treefmt-nix";
 
     retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
     retiolum.inputs.nixpkgs.follows = "nixpkgs";
+    retiolum.inputs.nix-darwin.follows = "clan-core/nix-darwin";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
@@ -84,18 +89,21 @@
 
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
+    nur.inputs.flake-parts.follows = "clan-core/flake-parts";
 
     wallpaper-generator.url = "github:pinpox/wallpaper-generator";
     wallpaper-generator.flake = false;
 
     restic-exporter.url = "github:pinpox/restic-exporter";
     restic-exporter.inputs.nixpkgs.follows = "nixpkgs";
+    restic-exporter.inputs.flake-utils.follows = "age-plugin-picohsm/flake-utils";
 
     alertmanager-ntfy = {
       url = "github:pinpox/alertmanager-ntfy";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
+        flake-utils.follows = "age-plugin-picohsm/flake-utils";
       };
     };
 
@@ -103,7 +111,7 @@
     matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-compat.follows = "flake-compat";
-      flake-utils.follows = "alertmanager-ntfy/flake-utils";
+      flake-utils.follows = "age-plugin-picohsm/flake-utils";
     };
 
     # ZSH plugins
@@ -122,6 +130,7 @@
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";
+      inputs.flake-utils.follows = "age-plugin-picohsm/flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
