@@ -257,6 +257,20 @@
           # Flashable SD card image for uconsole (uses binfmt emulation)
           # Build with: nix build .#uconsole-image
           # Then flash with: dd if=result/main.raw of=/dev/sdX bs=4M status=progress
+
+          # Build the image on the remote server
+          # ssh root@build01.clan.lol \
+          #   'nix build github:pinpox/nixos#packages.aarch64-linux.uconsole-image -L'
+
+          # Download image (compressed)
+          # ssh root@build01.clan.lol \
+          #  'zstd -c \
+          #  $(nix build github:pinpox/nixos#packages.aarch64-linux.uconsole-image --print-out-paths)/main.raw' > \
+          #  uconsole.img.zst
+
+          # Decompress
+          # zstd -d uconsole.img.zst
+
           aarch64-linux = (forAllSystems (s: { })).aarch64-linux // {
             uconsole-image = self.nixosConfigurations.uconsole.config.system.build.diskoImages;
           };
