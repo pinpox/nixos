@@ -52,6 +52,8 @@ self: super: {
   # };
   #
 
+  pi = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.pi;
+
   rio = inputs.rio.packages.${super.stdenv.hostPlatform.system}.default;
 
   # Example package, used only for tests

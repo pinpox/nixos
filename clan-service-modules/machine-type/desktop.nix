@@ -140,6 +140,7 @@
     # pkgs.nur.repos.mic92.irc-announce
 
     firefox
+    pi
 
     gcc
     comma
