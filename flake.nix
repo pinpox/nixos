@@ -70,6 +70,9 @@
     go-karma-bot.url = "github:pinpox/go-karma-bot";
     go-karma-bot.inputs.nixpkgs.follows = "nixpkgs";
 
+    rogue-talk.url = "github:Lassulus/rogue-talk";
+    rogue-talk.inputs.nixpkgs.follows = "nixpkgs";
+
     retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
     retiolum.inputs.nixpkgs.follows = "nixpkgs";
 

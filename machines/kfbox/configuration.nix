@@ -5,6 +5,7 @@
   mc3000,
   pkgs,
   lib,
+  rogue-talk,
   ...
 }:
 let
@@ -33,6 +34,7 @@ in
     ./hardware-configuration.nix
     go-karma-bot.nixosModules.go-karma-bot
     aoe-taunt-discord-bot.nixosModules.aoe-taunt-discord-bot
+    rogue-talk.nixosModules.default
   ];
 
   systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = [
@@ -122,6 +124,7 @@ in
       80
       443
       22
+      7777
     ];
   };
 
@@ -179,4 +182,35 @@ in
         "reverse_proxy ${config.services.wastebin.settings.WASTEBIN_ADDRESS_PORT}";
     };
   };
+
+  # Livekit keys generator
+  clan.core.vars.generators."livekit" = {
+    files.keyfile = { };
+    files.api-key = { };
+    files.api-secret = { };
+    runtimeInputs = with pkgs; [
+      livekit
+      coreutils
+      gnugrep
+      gnused
+    ];
+    script = ''
+      mkdir -p $out
+      output=$(livekit-server generate-keys)
+      api_key=$(echo "$output" | grep 'API Key:' | sed 's/.*API Key: //')
+      api_secret=$(echo "$output" | grep 'API Secret:' | sed 's/.*API Secret: //')
+      printf "%s: %s" "$api_key" "$api_secret" > $out/keyfile
+      printf "%s" "$api_key" > $out/api-key
+      printf "%s" "$api_secret" > $out/api-secret
+    '';
+  };
+
+  # Rogue-Talk game server (includes livekit)
+  services.rogue-talk-server = {
+    enable = true;
+    livekitKeyFile = config.clan.core.vars.generators."livekit".files."keyfile".path;
+    livekitApiKeyFile = config.clan.core.vars.generators."livekit".files."api-key".path;
+    livekitApiSecretFile = config.clan.core.vars.generators."livekit".files."api-secret".path;
+  };
+
 }

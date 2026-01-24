@@ -1048,6 +1048,27 @@
         "type": "github"
       }
     },
+    "rogue-talk": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix_3"
+      },
+      "locked": {
+        "lastModified": 1770244633,
+        "narHash": "sha256-TUQcGa1dD5gTMUz6M0G0W+m88UD68jkkG2IS7U+CjQM=",
+        "owner": "Lassulus",
+        "repo": "rogue-talk",
+        "rev": "c853a03a775e2779088df079386ac98cd70aad08",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lassulus",
+        "repo": "rogue-talk",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "age-plugin-picohsm": "age-plugin-picohsm",
@@ -1078,6 +1099,7 @@
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
         "rio": "rio",
+        "rogue-talk": "rogue-talk",
         "treefmt-nix": [
           "clan-core",
           "treefmt-nix"
