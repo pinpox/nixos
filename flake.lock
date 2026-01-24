@@ -795,8 +795,8 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1768434776,
-        "narHash": "sha256-3/VKF9Z6C83V4Y799SAN8BKP27vz+ki+jesiyS7uyJU=",
+        "lastModified": 1769032930,
+        "narHash": "sha256-c5qnoR2Bb+ujzuxwA4k8K5CjImbwmkHmUbnF286Km+A=",
         "path": "/home/pinpox/code/github.com/NixOS/nixos-hardware",
         "type": "path"
       },
