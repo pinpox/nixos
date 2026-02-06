@@ -53,6 +53,7 @@ self: super: {
   #
 
   pi = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.pi;
+  claude-code = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.claude-code;
 
   rio = inputs.rio.packages.${super.stdenv.hostPlatform.system}.default;
 
