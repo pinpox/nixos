@@ -66,19 +66,13 @@
     promterm.inputs = {
       nixpkgs.follows = "nixpkgs";
       naersk.follows = "naersk";
-      utils.follows = "age-plugin-picohsm/flake-utils";
     };
 
     go-karma-bot.url = "github:pinpox/go-karma-bot";
     go-karma-bot.inputs.nixpkgs.follows = "nixpkgs";
 
-    rogue-talk.url = "github:rogue-talk/rogue-talk";
-    rogue-talk.inputs.nixpkgs.follows = "nixpkgs";
-    rogue-talk.inputs.treefmt-nix.follows = "treefmt-nix";
-
     retiolum.url = "git+https://git.thalheim.io/Mic92/retiolum";
     retiolum.inputs.nixpkgs.follows = "nixpkgs";
-    retiolum.inputs.nix-darwin.follows = "clan-core/nix-darwin";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
