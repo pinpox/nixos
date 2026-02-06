@@ -21,6 +21,8 @@ in
 
   config = mkIf cfg.enable {
 
+    boot.loader.grub.configurationLimit = 5;
+
     _module.args.pinpox-utils = import ../../utils { inherit pkgs; };
 
     # Use nix-index-database for comma
