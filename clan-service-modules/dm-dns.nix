@@ -8,8 +8,8 @@
 {
   _class = "clan.service";
   manifest.name = "dm-dns";
-  manifest.description = "Distributed DNS zone propagation and PKI certificates for clan networks";
-  manifest.readme = "Provides distributed DNS zone synchronization and automatic TLS certificates for clan services.";
+  manifest.description = "Distributed DNS zone propagation for clan networks";
+  manifest.readme = "Provides distributed DNS zone synchronization for clan services via data-mesher and unbound.";
   manifest.traits = [ "dataMesher" ];
 
   roles.default = {
