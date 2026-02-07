@@ -1,4 +1,5 @@
 { self }:
+{ clanLib, config, ... }:
 {
   machines = {
     kiwi.tags = [ "desktop" ];
@@ -14,9 +15,23 @@
   };
 
   meta.name = "pinpox-clan";
+
+  # My clan's top-level domain. All my service shall be accessible from within
+  # the clan at https://<service>.pin
   meta.domain = "pin";
 
   instances = {
+
+    # A service, which exports a endpoint: "music"
+    # The goal is to be able to access https://music.pin from everywhere in the
+    # clan and reach the navidrome server
+    navidrome = {
+      module.input = "self";
+      module.name = "@pinpox/navidrome";
+      roles.default.machines.kfbox = {
+        settings.host = "music.pin";
+      };
+    };
 
     # Collects all "endpoint" exports from all services and generates a file
     # with CNAME entries.
@@ -26,6 +41,7 @@
       module.input = "self";
       module.name = "@pinpox/dm-dns";
       roles.default.tags = [ "all" ];
+    };
 
     # Also collects all "endpoint" exports from all services and uses them to
     # set up certificates. Only generators are used, no step-ca or otherwise
@@ -46,69 +62,33 @@
       module.name = "@pinpox/certificates";
       roles.default.tags = [ "all" ];
     };
+
+    # The actual data-mesher. It collects all exports of type "dataMesher" from
+    # all services and configures itself to distribute the files accordingly.
     data-mesher = {
 
       roles.default.tags = [ "all" ];
+
+      # TODO add bootsrap role to DM?
+      # roles.bootstrap.tags = [ "all" ];
+
       roles.default.settings = {
         interfaces = [ "ygg" ];
-        bootstrapNodes = [
-          # TODO set this to all machines with the default role
-          "kiwi.pin"
-          "tanne.pin"
-          "kfbox.pin"
-        ];
+
+        # TODO @hsjobeki make this pretty
+        # set this to all machines with the default role
+        bootstrapNodes =
+          (clanLib.inventory.resolveTags {
+            # Config is the inventory here, because we are in an inventory subdmodule
+            machines = config.machines;
+            roleName = "default";
+            instanceName = "data-mesher";
+            members = {
+              machines = (builtins.attrNames config.instances.data-mesher.roles.default.machines);
+              tags = (builtins.attrNames config.instances.data-mesher.roles.default.tags);
+            };
+          }).machines;
       };
-
-      roles.default.extraModules = [
-        (
-          { config, pkgs, ... }:
-          {
-            clan.core.vars.generators.data-mesher-signing-key = {
-              share = true;
-              files = {
-                "signing.key".deploy = false;
-                "signing.pub".secret = false;
-              };
-              runtimeInputs = [ config.services.data-mesher.package ];
-              script = ''
-                data-mesher generate signing-key \
-                  --private-key-path "$out/signing.key" \
-                  --public-key-path "$out/signing.pub"
-              '';
-            };
-
-            # TODO this config should be done via exports
-            services.data-mesher.settings.files = {
-              "test/shared" = [
-                # TODO add other keys
-                config.clan.core.vars.generators.data-mesher-signing-key.files."signing.pub".value
-              ];
-              "test/foo" = [
-                config.clan.core.vars.generators.data-mesher-signing-key.files."signing.pub".value
-              ];
-            };
-
-            environment.systemPackages =
-              let
-                dm-send = pkgs.writeShellApplication {
-                  name = "dm-send";
-                  runtimeInputs = [ config.services.data-mesher.package ];
-                  text = ''
-                    if [ $# -ne 2 ]; then
-                      echo "Usage: dm-send <name> <file>"
-                      exit 1
-                    fi
-                    data-mesher file update "$2" \
-                      --url http://localhost:7331 \
-                      --key "$(passage show clan-vars/shared/data-mesher-signing-key/signing.key)" \
-                      --name "$1"
-                  '';
-                };
-              in
-              [ dm-send ];
-          }
-        )
-      ];
     };
 
     internet = {
@@ -217,14 +197,6 @@
       roles.default.tags = [ "desktop" ];
     };
 
-    navidrome = {
-      module.input = "self";
-      module.name = "@pinpox/navidrome";
-      roles.default.machines.kfbox = {
-        settings.host = "music.pin";
-      };
-    };
-
     machine-type = {
       module.input = "self";
       module.name = "@pinpox/machine-type";
@@ -238,19 +210,6 @@
       roles.default.tags.all = { };
       # Import all modules from ./modules/<module-name> on all machines
       roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
-    };
-
-    dns-mesher = {
-      module.input = "self";
-      module.name = "@pinpox/dns-mesher";
-      roles.default.tags = [ "all" ];
-
-      # roles.exampleservice.machines.porree = { settings.host = "hallowelt.pablo.tools"; };
-
-      # roles.exampleservice.machines.kiwi = { settings.host = "something.pin"; };
-      # roles.exampleservice.machines.tanne = {
-      # settings.host = "testtwo.pin";
-      # };
     };
 
     wg-clan = {

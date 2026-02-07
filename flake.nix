@@ -12,7 +12,7 @@
     # nixpkgs-local.url = "path:/home/pinpox/code/github.com/NixOS/nixpkgs";
     # nixpkgs-local.flake = false;
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-core";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     dns-mesher.url = "git+https://git.clan.lol/pinpox/data-smasher";
@@ -212,8 +212,6 @@
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
         modules."@pinpox/dns-mesher" = dns-mesher.clan.modules.dns-mesher;
-
-        # Include dns-mesher's custom exports module for endpoints
         modules."@pinpox/dm-dns" = import ./clan-service-modules/dm-dns.nix { inherit self; };
         modules."@pinpox/certificates" = ./clan-service-modules/certificates.nix;
 
