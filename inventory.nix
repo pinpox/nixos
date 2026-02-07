@@ -66,29 +66,9 @@
     # The actual data-mesher. It collects all exports of type "dataMesher" from
     # all services and configures itself to distribute the files accordingly.
     data-mesher = {
-
+      roles.bootstrap.tags = [ "server" ];
       roles.default.tags = [ "all" ];
-
-      # TODO add bootsrap role to DM?
-      # roles.bootstrap.tags = [ "all" ];
-
-      roles.default.settings = {
-        interfaces = [ "ygg" ];
-
-        # TODO @hsjobeki make this pretty
-        # set this to all machines with the default role
-        bootstrapNodes =
-          (clanLib.inventory.resolveTags {
-            # Config is the inventory here, because we are in an inventory subdmodule
-            machines = config.machines;
-            roleName = "default";
-            instanceName = "data-mesher";
-            members = {
-              machines = (builtins.attrNames config.instances.data-mesher.roles.default.machines);
-              tags = (builtins.attrNames config.instances.data-mesher.roles.default.tags);
-            };
-          }).machines;
-      };
+      roles.default.settings.interfaces = [ "ygg" ];
     };
 
     internet = {
