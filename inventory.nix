@@ -18,6 +18,25 @@
 
   instances = {
 
+    # Also collects all "endpoint" exports from all services and uses them to
+    # set up certificates. Only generators are used, no step-ca or otherwise
+    # centralized service. The architecture is:
+    # - A clan-wide CA is created (shared generater with deploy = false)
+    # - Each host in the clan with the role additionally gets a Host CA, which
+    #   is signed by the Root CA (generator dependand on the root-ca, deployed
+    #   on each host)
+    # - Each endpoint gets a certificate, signed by the Host CA (generator
+    #   dependant on the Host CA)
+    # - All hosts trust the Clan-wide Root CA
+    # With this, every host can just visit the endpoint and is presented with a
+    # certificate that is automatically trusted, because there is a chain of
+    # trust up to the Root CA. If a host adds a new service/endpoint no
+    # re-deployment of other hosts is required.
+    certificates = {
+      module.input = "self";
+      module.name = "@pinpox/certificates";
+      roles.default.tags = [ "all" ];
+    };
     data-mesher = {
 
       roles.default.tags = [ "all" ];
