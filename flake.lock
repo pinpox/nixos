@@ -184,34 +184,6 @@
         "type": "github"
       }
     },
-    "dns-mesher": {
-      "inputs": {
-        "clan-core": [
-          "clan-core"
-        ],
-        "flake-parts": [
-          "dns-mesher",
-          "clan-core",
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768047823,
-        "narHash": "sha256-JcNBJcfypocyaF8g//sLU6XRfFxCm6uh+RIKRbE90Bc=",
-        "ref": "refs/heads/master",
-        "rev": "a5296f059c69c4f715970661798ea65948336915",
-        "revCount": 13,
-        "type": "git",
-        "url": "https://git.clan.lol/pinpox/data-smasher"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.clan.lol/pinpox/data-smasher"
-      }
-    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -865,7 +837,6 @@
         "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
         "clan-core": "clan-core",
         "disko": "disko_2",
-        "dns-mesher": "dns-mesher",
         "flake-compat": "flake-compat",
         "gif-searcher": "gif-searcher",
         "go-karma-bot": "go-karma-bot",

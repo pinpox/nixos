@@ -37,8 +37,7 @@
     # The dm-dns services has an export of type "dataMesher" which signals "I
     # want the file 'dns/cnames' to be distributed via data-mesher".
     dm-dns = {
-      module.input = "self";
-      module.name = "@pinpox/dm-dns";
+      module.name = "dm-dns";
       roles.default.tags = [ "all" ];
     };
 
@@ -57,8 +56,7 @@
     # trust up to the Root CA. If a host adds a new service/endpoint no
     # re-deployment of other hosts is required.
     pki = {
-      module.input = "self";
-      module.name = "@pinpox/pki";
+      module.name = "pki";
       roles.default.tags = [ "all" ];
     };
 
