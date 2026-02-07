@@ -105,8 +105,8 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1770417547,
-        "narHash": "sha256-F114cEq9ja6Ujir4bGMwOopm+qfVxygOLHUA667ln4Q=",
+        "lastModified": 1770476985,
+        "narHash": "sha256-pGsWe9eM8tFYP1aA48OD8aR+g3DD7Ei1g0+ZPvzIJ+Q=",
         "path": "/home/pinpox/code/git.clan.lol/clan/clan-core",
         "type": "path"
       },

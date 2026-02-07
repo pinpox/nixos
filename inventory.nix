@@ -1,5 +1,4 @@
 { self }:
-{ clanLib, config, ... }:
 {
   machines = {
     kiwi.tags = [ "desktop" ];
