@@ -5,7 +5,7 @@
 }:
 {
   _class = "clan.service";
-  manifest.name = "certificates";
+  manifest.name = "pki";
   manifest.description = "PKI certificate infrastructure for clan endpoints";
   manifest.readme = "Provides Root CA, per-machine intermediate CAs, and automatic TLS endpoint certificates for clan services.";
 
@@ -58,16 +58,33 @@
               }) internalHosts
             );
 
+            nginxSSLOverrides = lib.listToAttrs (
+              map (host:
+                let
+                  endpoint = extractEndpoint host;
+                  cert = config.clan.core.vars.generators."cert-${endpoint}".files."${endpoint}.fullchain.crt".path;
+                  key = config.clan.core.vars.generators."cert-${endpoint}".files."${endpoint}.key".path;
+                in
+                {
+                  name = host;
+                  value = {
+                    sslCertificate = cert;
+                    sslCertificateKey = key;
+                  };
+                }
+              ) internalHosts
+            );
+
             endpointCertGenerators = lib.listToAttrs (
               map (endpoint: {
                 name = "cert-${endpoint}";
                 value = {
-                  dependencies = [ "certificates-intermediate-ca" ];
+                  dependencies = [ "pki-intermediate-ca" ];
 
                   files."${endpoint}.key" = {
                     secret = true;
                     deploy = true;
-                    group = "clan-certificates";
+                    group = "clan-pki";
                     mode = "0640";
                   };
                   files."${endpoint}.crt" = {
@@ -95,15 +112,15 @@
 
                     openssl x509 -req \
                       -in endpoint.csr \
-                      -CA "$in/certificates-intermediate-ca/intermediate.crt" \
-                      -CAkey "$in/certificates-intermediate-ca/intermediate.key" \
+                      -CA "$in/pki-intermediate-ca/intermediate.crt" \
+                      -CAkey "$in/pki-intermediate-ca/intermediate.key" \
                       -CAcreateserial \
                       -days 365 \
                       -sha256 \
                       -extfile <(printf "subjectAltName=DNS:${endpoint}.${domain}") \
                       -out "$out/${endpoint}.crt"
 
-                    cat "$out/${endpoint}.crt" "$in/certificates-intermediate-ca/intermediate.crt" \
+                    cat "$out/${endpoint}.crt" "$in/pki-intermediate-ca/intermediate.crt" \
                       > "$out/${endpoint}.fullchain.crt"
                   '';
                 };
@@ -111,22 +128,28 @@
             );
           in
           {
-            users.groups.clan-certificates = { };
+            users.groups.clan-pki = { };
 
             security.pki.certificateFiles = [
-              config.clan.core.vars.generators."certificates-root-ca".files."ca.crt".path
+              config.clan.core.vars.generators."pki-root-ca".files."ca.crt".path
             ];
 
-            users.users = lib.mkIf config.services.caddy.enable {
-              caddy.extraGroups = [ "clan-certificates" ];
-            };
+            users.users = lib.mkMerge [
+              (lib.mkIf config.services.caddy.enable {
+                caddy.extraGroups = [ "clan-pki" ];
+              })
+              (lib.mkIf config.services.nginx.enable {
+                nginx.extraGroups = [ "clan-pki" ];
+              })
+            ];
 
             services.caddy.virtualHosts = lib.mkIf (internalHosts != [ ]) tlsOverrides;
+            services.nginx.virtualHosts = lib.mkIf (internalHosts != [ ]) nginxSSLOverrides;
 
             # Root CA + Intermediate CA + endpoint certificate generators
             clan.core.vars.generators =
               {
-                "certificates-root-ca" = {
+                "pki-root-ca" = {
                   share = true;
 
                   files."ca.key" = {
@@ -148,8 +171,8 @@
                   '';
                 };
 
-                "certificates-intermediate-ca" = {
-                  dependencies = [ "certificates-root-ca" ];
+                "pki-intermediate-ca" = {
+                  dependencies = [ "pki-root-ca" ];
 
                   files."intermediate.key" = {
                     secret = true;
@@ -176,8 +199,8 @@
 
                     openssl x509 -req \
                       -in intermediate.csr \
-                      -CA $in/certificates-root-ca/ca.crt \
-                      -CAkey $in/certificates-root-ca/ca.key \
+                      -CA $in/pki-root-ca/ca.crt \
+                      -CAkey $in/pki-root-ca/ca.key \
                       -CAcreateserial \
                       -days 1825 \
                       -sha256 \

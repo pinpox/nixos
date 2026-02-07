@@ -44,7 +44,7 @@
     };
 
     # Also collects all "endpoint" exports from all services and uses them to
-    # set up certificates. Only generators are used, no step-ca or otherwise
+    # set up PKI. Only generators are used, no step-ca or otherwise
     # centralized service. The architecture is:
     # - A clan-wide CA is created (shared generater with deploy = false)
     # - Each host in the clan with the role additionally gets a Host CA, which
@@ -57,9 +57,9 @@
     # certificate that is automatically trusted, because there is a chain of
     # trust up to the Root CA. If a host adds a new service/endpoint no
     # re-deployment of other hosts is required.
-    certificates = {
+    pki = {
       module.input = "self";
-      module.name = "@pinpox/certificates";
+      module.name = "@pinpox/pki";
       roles.default.tags = [ "all" ];
     };
 

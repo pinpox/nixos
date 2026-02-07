@@ -213,7 +213,7 @@
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
         modules."@pinpox/dns-mesher" = dns-mesher.clan.modules.dns-mesher;
         modules."@pinpox/dm-dns" = import ./clan-service-modules/dm-dns.nix { inherit self; };
-        modules."@pinpox/certificates" = ./clan-service-modules/certificates.nix;
+        modules."@pinpox/pki" = ./clan-service-modules/pki.nix;
 
         inventory = import ./inventory.nix { inherit self; };
       };
