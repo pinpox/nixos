@@ -5,6 +5,7 @@
   manifest.description = "Navidrome music streaming server";
   manifest.readme = "Self-hosted music streaming server with subsonic API";
   manifest.categories = [ "Media" ];
+  manifest.traits = [ "endpoints" ];
 
   roles.default = {
     description = "Sets up navidrome music server with caddy reverse proxy";
