@@ -9,7 +9,7 @@
   _class = "clan.service";
   manifest.name = "wireguard";
   manifest.readme = "Wireguard star configuration";
-  manifest.traits = [ "networking" "peer" ];
+  manifest.exports.out = [ "networking" "peer" ];
 
   exports = lib.mapAttrs' (instanceName: _: {
     name = clanLib.buildScopeKey {

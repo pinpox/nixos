@@ -39,6 +39,29 @@
     dm-dns = {
       module.name = "dm-dns";
       roles.default.tags = [ "all" ];
+
+      # Script to send the DNS into data-mesher. This should at some point be
+      # hooked into the clan CLI instead, so it happens automatically on update.
+      roles.default.extraModules = [
+        (
+          { config, pkgs, ... }:
+          {
+            environment.systemPackages = [
+              (pkgs.writeShellApplication {
+                name = "dm-send-dns";
+                runtimeInputs = [ config.services.data-mesher.package ];
+                text = ''
+                  data-mesher file update \
+                    "${config.clan.core.vars.generators.dm-dns.files."zone.conf".path}" \
+                    --url http://localhost:7331 \
+                    --key "$(passage show clan-vars/shared/dm-dns-signing-key/signing.key)" \
+                    --name "dns/cnames"
+                '';
+              })
+            ];
+          }
+        )
+      ];
     };
 
     # Also collects all "endpoint" exports from all services and uses them to
@@ -122,15 +145,6 @@
       module.name = "yggdrasil";
       roles.default.tags = [ "all" ];
     };
-
-    # TODO: re-enable when merged
-    # Add monitoring to the whole clan
-    # monitoring = {
-    #   module.name = "monitoring";
-    #   # roles.telegraf.tags = [ "all" ];
-    #   roles.telegraf.tags = [ "desktop" ];
-    #   roles.prometheus.machines.kiwi = { };
-    # };
 
     desktop = {
       module.input = "self";
