@@ -18,6 +18,15 @@
 
   instances = {
 
+    # Collects all "endpoint" exports from all services and generates a file
+    # with CNAME entries.
+    # The dm-dns services has an export of type "dataMesher" which signals "I
+    # want the file 'dns/cnames' to be distributed via data-mesher".
+    dm-dns = {
+      module.input = "self";
+      module.name = "@pinpox/dm-dns";
+      roles.default.tags = [ "all" ];
+
     # Also collects all "endpoint" exports from all services and uses them to
     # set up certificates. Only generators are used, no step-ca or otherwise
     # centralized service. The architecture is:

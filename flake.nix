@@ -214,6 +214,7 @@
         modules."@pinpox/dns-mesher" = dns-mesher.clan.modules.dns-mesher;
 
         # Include dns-mesher's custom exports module for endpoints
+        modules."@pinpox/dm-dns" = import ./clan-service-modules/dm-dns.nix { inherit self; };
         modules."@pinpox/certificates" = ./clan-service-modules/certificates.nix;
 
         inventory = import ./inventory.nix { inherit self; };
