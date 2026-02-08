@@ -206,6 +206,7 @@
         modules."@pinpox/wireguard" = ./clan-service-modules/wireguard.nix;
         modules."@pinpox/localsend" = ./clan-service-modules/localsend.nix;
         modules."@pinpox/navidrome" = ./clan-service-modules/navidrome.nix;
+        modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
         inventory = import ./inventory.nix { inherit self; };

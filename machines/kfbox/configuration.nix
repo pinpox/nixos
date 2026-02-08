@@ -78,7 +78,6 @@ in
       hedgedoc.enable = false;
       screego.enable = true;
       miniflux.enable = true;
-      thelounge.enable = true;
       kf-homepage.enable = true;
       calibre-web.enable = false;
       gitea.enable = true;
@@ -165,8 +164,6 @@ in
       #         header_up Connection {http.request.header.connection}
       # }
       # ";
-
-      "irc.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:9090";
 
       # "transfer.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:6767";
 

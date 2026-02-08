@@ -13,6 +13,9 @@
       { lib, ... }:
       {
         options = {
+
+          # TODO When https://git.clan.lol/clan/clan-core/pulls/6727 gets
+          # merged, we can just default to music.<meta.domain>
           host = lib.mkOption {
             type = lib.types.str;
             default = "music.0cx.de";
