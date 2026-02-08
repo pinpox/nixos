@@ -601,14 +601,18 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1768684193,
-        "narHash": "sha256-EYHh9VbsfWwDs0JHup9gfkWKnPmn/y4UVrWE3TEv5IE=",
-        "path": "/home/pinpox/code/github.com/NixOS/nixos-hardware",
-        "type": "path"
+        "lastModified": 1768438216,
+        "narHash": "sha256-hzEerEtXLNhtPl6GTBgzBhoWizwvtPX4l/sXL+7E0Vo=",
+        "owner": "pinpox",
+        "repo": "nixos-hardware",
+        "rev": "cc45f15c9c30222807a88cce2629b89150f6d148",
+        "type": "github"
       },
       "original": {
-        "path": "/home/pinpox/code/github.com/NixOS/nixos-hardware",
-        "type": "path"
+        "owner": "pinpox",
+        "ref": "clockworkpi-uconsole",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixpkgs": {

@@ -39,7 +39,7 @@
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixos-hardware.url = "path:/home/pinpox/code/github.com/NixOS/nixos-hardware";
+    nixos-hardware.url = "github:pinpox/nixos-hardware/clockworkpi-uconsole";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
