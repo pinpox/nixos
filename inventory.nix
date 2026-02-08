@@ -58,7 +58,7 @@
                 runtimeInputs = [ config.services.data-mesher.package ];
                 text = ''
                   data-mesher file update \
-                    "${config.clan.core.vars.generators.dm-dns.files."zone.conf".path}" \
+                    /home/pinpox/code/github.com/pinpox/nixos/vars/shared/dm-dns/zone.conf/value \
                     --url http://localhost:7331 \
                     --key "$(passage show clan-vars/shared/dm-dns-signing-key/signing.key)" \
                     --name "dns/cnames"
