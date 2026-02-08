@@ -35,8 +35,7 @@
   # Games
   programs.steam.enable = true;
   programs.gamemode.enable = true;
-  # TODO https://github.com/NixOS/nixpkgs/issues/467803
-  # hardware.xone.enable = true;
+  hardware.xone.enable = true;
 
   # For dual-boot
   boot.loader.efi.canTouchEfiVariables = true;
