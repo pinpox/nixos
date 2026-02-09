@@ -89,6 +89,15 @@
       roles.default.tags = [ "all" ];
     };
 
+    # Pull-based NixOS deployment via data-mesher. Push machines send a flake
+    # ref, all machines rebuild themselves from it.
+    dm-deploy = {
+      module.input = "self";
+      module.name = "@pinpox/dm-deploy";
+      roles.push.machines.kiwi = { };
+      roles.default.tags = [ "all" ];
+    };
+
     # The actual data-mesher. It collects all exports of type "dataMesher" from
     # all services and configures itself to distribute the files accordingly.
     data-mesher = {

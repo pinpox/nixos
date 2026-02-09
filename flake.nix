@@ -209,6 +209,7 @@
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
+        modules."@pinpox/dm-deploy" = ./clan-service-modules/dm-deploy.nix;
         inventory = import ./inventory.nix { inherit self; };
       };
     in
