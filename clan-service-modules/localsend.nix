@@ -18,13 +18,6 @@
             description = "The name that localsend will use to display your instance.";
           };
 
-          package = lib.mkOption {
-            type = lib.types.nullOr lib.types.package;
-            default = null;
-            defaultText = "pkgs.localsend of the machine";
-            description = "The localsend package to use.";
-          };
-
           ipv4Addr = lib.mkOption {
             type = lib.types.nullOr lib.types.str;
             default = null;
@@ -62,7 +55,7 @@
                     ${lib.getExe localsend-ensure-config} ${
                       lib.optionalString (settings.displayName != null) settings.displayName
                     }
-                    ${if settings.package != null then lib.getExe settings.package else lib.getExe pkgs.localsend}
+                    ${lib.getExe pkgs.localsend}
                   '';
                 in
                 [ localsend ];

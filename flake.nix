@@ -12,8 +12,8 @@
     # nixpkgs-local.url = "path:/home/pinpox/code/github.com/NixOS/nixpkgs";
     # nixpkgs-local.flake = false;
 
-    # clan-core.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-core";
-    clan-core.url = "git+file:///home/pinpox/code/git.clan.lol/clan/clan-core?ref=pinpox-clan-input";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    # clan-core.url = "git+file:///home/pinpox/code/git.clan.lol/clan/clan-core?ref=pinpox-clan-input";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
