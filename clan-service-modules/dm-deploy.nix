@@ -7,6 +7,7 @@
   _class = "clan.service";
   manifest.name = "dm-deploy";
   manifest.description = "Pull-based NixOS deployment via data-mesher";
+  manifest.readme = "Pull-based NixOS deployment via data-mesher";
   manifest.categories = [ "System" ];
   manifest.exports.out = [ "dataMesher" ];
 
@@ -18,19 +19,20 @@
     perInstance =
       {
         mkExports,
+        machine,
         ...
       }:
       {
         exports = mkExports {
           dataMesher.files = {
-            "dm-deploy/target" = [
+            "dm_deploy/target" = [
               (clanLib.getPublicValue {
                 flake = directory;
                 generator = "dm-deploy-signing-key";
                 file = "signing.pub";
                 default = throw ''
                   dm-deploy: Signing key not yet generated.
-                  Run 'clan vars generate' to generate the dm-deploy signing key before deploying.
+                  Run 'clan vars generate ${machine.name} -g dm-deploy-signing-key' to generate it.
                 '';
               })
             ];
@@ -75,7 +77,7 @@
                   data-mesher file update "$TMPFILE" \
                     --url http://localhost:7331 \
                     --key "${config.clan.core.vars.generators.dm-deploy-signing-key.files."signing.key".path}" \
-                    --name "dm-deploy/target"
+                    --name "dm_deploy/target"
 
                   echo "Deployment target pushed: $FLAKE_REF"
                 '';
@@ -99,7 +101,7 @@
       {
         exports = mkExports {
           dataMesher.files = {
-            "dm-deploy/status-${machine.name}" = [
+            "dm_deploy/status_${machine.name}" = [
               (clanLib.getPublicValue {
                 flake = directory;
                 machine = machine.name;
@@ -107,7 +109,7 @@
                 file = "signing.pub";
                 default = throw ''
                   dm-deploy: Status signing key for ${machine.name} not yet generated.
-                  Run 'clan vars generate' to generate it before deploying.
+                  Run 'clan vars generate ${machine.name} -g dm-deploy-status-key' to generate it.
                 '';
               })
             ];
@@ -124,7 +126,7 @@
           let
             hostname = machine.name;
             revision = flake-self.rev or "unknown";
-            dmFilesDir = "/var/lib/data-mesher/files/dm-deploy";
+            dmFilesDir = "/var/lib/data-mesher/files/dm_deploy";
             targetFile = "${dmFilesDir}/target";
           in
           {
@@ -143,7 +145,7 @@
             };
 
             # Create dm-deploy subdirectory in data-mesher's file storage
-            services.data-mesher.fileDirectories = [ "dm-deploy" ];
+            services.data-mesher.fileDirectories = [ "dm_deploy" ];
 
             # Watch for new deployment targets
             systemd.paths.dm-deploy = {
@@ -179,7 +181,7 @@
 
                 FLAKE_REF=$(cat "${targetFile}")
                 echo "Deployment target: $FLAKE_REF"
-                echo "DRY-RUN: would run nixos-rebuild switch --flake $FLAKE_REF#${hostname}"
+                nixos-rebuild dry-build --flake "$FLAKE_REF#${hostname}"
                 # nixos-rebuild switch --flake "$FLAKE_REF#${hostname}"
               '';
             };
@@ -207,7 +209,7 @@
                 data-mesher file update "$TMPFILE" \
                   --url http://localhost:7331 \
                   --key "${config.clan.core.vars.generators.dm-deploy-status-key.files."signing.key".path}" \
-                  --name "dm-deploy/status-${hostname}"
+                  --name "dm_deploy/status_${hostname}"
 
                 echo "Status updated for ${hostname}: ${revision}"
               '';
