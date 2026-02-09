@@ -44,30 +44,8 @@
     # want the file 'dns/cnames' to be distributed via data-mesher".
     dm-dns = {
       module.name = "dm-dns";
+      roles.push.machines.kiwi = { };
       roles.default.tags = [ "all" ];
-
-      # Script to send the DNS into data-mesher. This should at some point be
-      # hooked into the clan CLI instead, so it happens automatically on update.
-      roles.default.extraModules = [
-        (
-          { config, pkgs, ... }:
-          {
-            environment.systemPackages = [
-              (pkgs.writeShellApplication {
-                name = "dm-send-dns";
-                runtimeInputs = [ config.services.data-mesher.package ];
-                text = ''
-                  data-mesher file update \
-                    /home/pinpox/code/github.com/pinpox/nixos/vars/shared/dm-dns/zone.conf/value \
-                    --url http://localhost:7331 \
-                    --key "$(passage show clan-vars/shared/dm-dns-signing-key/signing.key)" \
-                    --name "dns/cnames"
-                '';
-              })
-            ];
-          }
-        )
-      ];
     };
 
     # Also collects all "endpoint" exports from all services and uses them to
@@ -118,7 +96,7 @@
     tor = {
       module.name = "tor";
 
-      # ADD all mahines to tor
+      # Add all machines to tor
       # Add smokeping to test if yggdrasil uses the best way
 
       roles.client.machines.kiwi = { };
