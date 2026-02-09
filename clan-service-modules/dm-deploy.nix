@@ -68,6 +68,12 @@
                     exit 1
                   fi
 
+                  KEY="${config.clan.core.vars.generators.dm-deploy-signing-key.files."signing.key".path}"
+                  if [ ! -r "$KEY" ]; then
+                    echo "Error: cannot read signing key at $KEY (are you root?)"
+                    exit 1
+                  fi
+
                   FLAKE_REF="$1"
                   TMPFILE=$(mktemp)
                   trap 'rm -f "$TMPFILE"' EXIT
@@ -76,7 +82,7 @@
 
                   data-mesher file update "$TMPFILE" \
                     --url http://localhost:7331 \
-                    --key "${config.clan.core.vars.generators.dm-deploy-signing-key.files."signing.key".path}" \
+                    --key "$KEY" \
                     --name "dm_deploy/target"
 
                   echo "Deployment target pushed: $FLAKE_REF"
