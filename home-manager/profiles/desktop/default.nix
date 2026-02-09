@@ -51,7 +51,7 @@
         rio.enable = true;
         sway.enable = true;
         swaylock.enable = true;
-        river.enable = true;
+        # river.enable = true; # TODO: broken in nixpkgs (Zig build failure)
         waybar.enable = true;
         mako.enable = true;
         kanshi.enable = true;
