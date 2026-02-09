@@ -144,7 +144,6 @@ ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
 
       # Pastebin (termbin.com)
       tb = "${pkgs.netcat-gnu}/bin/nc termbin.com 9999";
-      tbc = "${tb} | ${pkgs.xclip}/bin/xclip -selection c";
 
       # Frequendly used folders
       cdn = "cd ~/code/github.com/pinpox/nixos";

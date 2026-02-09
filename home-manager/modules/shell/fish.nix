@@ -14,13 +14,13 @@
       gitignore = "curl -sL https://www.gitignore.io/api/$argv";
       fish_command_not_found = "echo Did not find command $argv[1]";
 
-      # # Create and change to a directory
+      # Create and change to a directory
       take = ''mkdir -p -- "$1" && cd -- "$1"'';
 
-      # # Create and change to a new temporary directory
+      # Create and change to a new temporary directory
       ttake = "cd $(mktemp -d)";
 
-      # # Use `line 10 /etc/hosts` to get 10th line of file
+      # Use `line 10 /etc/hosts` to get 10th line of file
       line = ''awk "NR == $1" "$2"'';
     };
 
@@ -67,7 +67,6 @@
 
       # Pastebin (termbin.com)
       tb = "${pkgs.netcat-gnu}/bin/nc termbin.com 9999";
-      tbc = "${tb} | ${pkgs.xclip}/bin/xclip -selection c";
 
       # Frequendly used folders
       cdn = "cd ~/code/github.com/pinpox/nixos";
