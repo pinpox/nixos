@@ -105,13 +105,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1770649721,
-        "narHash": "sha256-4syGZZIi6sYvstH4d9+uoWai2JZclf+1xahZjr08/P0=",
-        "ref": "refs/heads/main",
-        "rev": "c976a9743f9a4ea6e0915ef17c6a6ddb0652dce1",
-        "revCount": 12867,
-        "type": "git",
-        "url": "https://git.clan.lol/clan/clan-core"
+        "lastModified": 1770652154,
+        "narHash": "sha256-OdkTmVsHe65c6PchTAL55c4FW7YLFWji3Im62vgAaBA=",
+        "path": "/home/pinpox/code/git.clan.lol/clan/clan-core",
+        "type": "path"
       },
       "original": {
         "type": "git",
@@ -688,11 +685,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770513400,
-        "narHash": "sha256-2wGX6fdxYExeqohvzSQgogVOyVnxCoJGoLWx+jo9E/0=",
+        "lastModified": 1770653728,
+        "narHash": "sha256-Pa5NieAM7vJOYuDP1Nxjhd4AkNnMHZVAm5Xt5w/Q+NI=",
         "owner": "pinpox",
         "repo": "pinpox-neovim",
-        "rev": "dc77767dcb4ae96801ba9733ad7c99f798a812c6",
+        "rev": "974b06677bbd1b70a861b3b671e3b3c7761b771b",
         "type": "github"
       },
       "original": {
