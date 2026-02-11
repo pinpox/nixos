@@ -1,9 +1,162 @@
-# Initialize prompt
+# zsh-prompt.zsh - Nushell-style prompt for zsh
 #
-# Show nix-shell in right prompt
-local snowflake='❄'
-[[ ! -z "$IN_NIX_SHELL" ]] && RPROMPT="%F{blue}$IN_NIX_SHELL $snowflake $NIX_SHELL_PACKAGES"
+# Set HOST_COLOR before sourcing this file, e.g.:
+#   HOST_COLOR="magenta"
+#   HOST_COLOR="#ff79c6"
+#   source /path/to/zsh-prompt.zsh
+#
+# Supports named colors (red, green, magenta, ...), 256-palette
+# numbers (0-255), and hex colors (#rrggbb).
 
-# Don't do shit with the # in flake commmands
-unsetopt nomatch
+HOST_COLOR="${HOST_COLOR:-default}"
 
+zmodload zsh/datetime
+setopt PROMPT_SUBST
+
+# Short hostname locally, user@hostname over SSH
+if [[ -n "$SSH_CONNECTION" ]]; then
+  _PROMPT_HOST="${USER}@${HOST}"
+else
+  _PROMPT_HOST="${HOST%%.*}"
+fi
+
+# Derive HOST_COLOR from hostname hash if not explicitly set.
+# Maps hash bytes into the 20-180 range for readable white text on top.
+if [[ -z "$HOST_COLOR" || "$HOST_COLOR" == "default" ]]; then
+  _hc_hash=$(printf '%s' "$HOST" | md5sum)
+  _hc_r=$(( 16#${_hc_hash[1,2]} % 161 + 20 ))
+  _hc_g=$(( 16#${_hc_hash[3,4]} % 161 + 20 ))
+  _hc_b=$(( 16#${_hc_hash[5,6]} % 161 + 20 ))
+  HOST_COLOR="$(printf '#%02x%02x%02x' $_hc_r $_hc_g $_hc_b)"
+  unset _hc_r _hc_g _hc_b _hc_hash
+fi
+
+# Resolve HOST_COLOR into raw ANSI escape sequences so that hex
+# colors (#rrggbb) work alongside named/256 colors.
+if [[ "$HOST_COLOR" == "#"* ]]; then
+  _hc_hex="${HOST_COLOR#\#}"
+  _hc_r=$((16#${_hc_hex[1,2]}))
+  _hc_g=$((16#${_hc_hex[3,4]}))
+  _hc_b=$((16#${_hc_hex[5,6]}))
+  _prompt_hc_fg=$'\e[38;2;'"${_hc_r};${_hc_g};${_hc_b}"'m'
+  _prompt_hc_bg=$'\e[48;2;'"${_hc_r};${_hc_g};${_hc_b}"'m'
+else
+  _prompt_hc_fg="$(print -Pn "%F{${HOST_COLOR}}")"
+  _prompt_hc_bg="$(print -Pn "%K{${HOST_COLOR}}")"
+fi
+unset _hc_hex _hc_r _hc_g _hc_b
+
+# Vi mode indicator
+_vi_mode_indicator=" "
+
+function zle-keymap-select {
+  case $KEYMAP in
+    vicmd) _vi_mode_indicator="> " ;;
+    viins|main) _vi_mode_indicator=" " ;;
+  esac
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+
+function zle-line-init {
+  _vi_mode_indicator=" "
+}
+zle -N zle-line-init
+
+# Command duration tracking
+_prompt_cmd_start=0
+
+_prompt_preexec() {
+  _prompt_cmd_start=$EPOCHREALTIME
+}
+
+_prompt_format_duration() {
+  local -i ms=$1
+  if (( ms < 1000 )); then
+    printf '%dms' $ms
+  elif (( ms < 60000 )); then
+    local -i sec=$(( ms / 1000 ))
+    local -i rem=$(( ms % 1000 ))
+    if (( rem > 0 )); then
+      printf '%dsec %dms' $sec $rem
+    else
+      printf '%dsec' $sec
+    fi
+  elif (( ms < 3600000 )); then
+    local -i min=$(( ms / 60000 ))
+    local -i sec=$(( (ms % 60000) / 1000 ))
+    if (( sec > 0 )); then
+      printf '%dmin %dsec' $min $sec
+    else
+      printf '%dmin' $min
+    fi
+  else
+    local -i hr=$(( ms / 3600000 ))
+    local -i min=$(( (ms % 3600000) / 60000 ))
+    if (( min > 0 )); then
+      printf '%dhr %dmin' $hr $min
+    else
+      printf '%dhr' $hr
+    fi
+  fi
+}
+
+# Computed prompt segments (rebuilt each precmd)
+_prompt_segments=""
+
+_prompt_precmd() {
+  local exit_code=$?
+
+  # Duration
+  local duration=""
+  if (( _prompt_cmd_start > 0 )); then
+    local -i elapsed_ms=$(( (EPOCHREALTIME - _prompt_cmd_start) * 1000 ))
+    duration="$(_prompt_format_duration $elapsed_ms)"
+    _prompt_cmd_start=0
+  fi
+
+  # JJ branches
+  local jj_branches=""
+  local jj_out
+  jj_out=$(PAGER=cat command jj log -r 'trunk()..@ & bookmarks()' -T 'bookmarks.join("\n") ++ "\n"' --no-graph --ignore-working-copy 2>/dev/null)
+  if [[ $? -eq 0 && -n "$jj_out" ]]; then
+    jj_out="${jj_out//$'\n'/ }"
+    jj_out="${jj_out%% }"
+    jj_out="${jj_out## }"
+    [[ -n "$jj_out" ]] && jj_branches="$jj_out"
+  fi
+
+  # Build segments
+  # Path: bold underline, red for root
+  if (( EUID == 0 )); then
+    _prompt_segments="%U%B%F{red}%~%f%b%u"
+  else
+    _prompt_segments="%U%B%~%b%u"
+  fi
+
+  # Nix shell name
+  [[ -n "$name" ]] && _prompt_segments+=" %F{red}${name}%f"
+
+  # Duration (dark gray italic)
+  [[ -n "$duration" ]] && \
+    _prompt_segments+=$' %F{240}%{\e[3m%}'"${duration}"$'%{\e[23m%}%f'
+
+  # JJ branches (magenta)
+  [[ -n "$jj_branches" ]] && \
+    _prompt_segments+=" %F{magenta}${jj_branches}%f"
+
+  # Last exit code (red bold)
+  (( exit_code != 0 )) && \
+    _prompt_segments+=" %F{red}%B×${exit_code}%b%f"
+}
+
+precmd_functions+=(_prompt_precmd)
+preexec_functions+=(_prompt_preexec)
+
+PROMPT=$'\n''%{${_prompt_hc_fg}%}╭%{${_prompt_hc_bg}%}%F{white}%B ${_PROMPT_HOST} %b%k%f ${_prompt_segments}'$'\n''%{${_prompt_hc_fg}%}╰▶ %f${_vi_mode_indicator}'
+# Show nix-shell packages in right prompt
+if [[ -n "$IN_NIX_SHELL" ]]; then
+  RPROMPT="%F{blue}${IN_NIX_SHELL} ${NIX_SHELL_PACKAGES}%f"
+else
+  RPROMPT=""
+fi

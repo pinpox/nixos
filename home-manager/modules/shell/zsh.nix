@@ -101,7 +101,9 @@ ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
         '';
       in
       lib.mkMerge [
-        (lib.mkOrder 550 (builtins.readFile ./zshrc))
+        (lib.mkOrder 550 ((builtins.readFile ./zshrc) + ''
+          unsetopt nomatch
+        ''))
         abbrevs
         (builtins.readFile ./zshrc-extra)
         (builtins.readFile ./zshrc-coffee)
@@ -243,11 +245,6 @@ ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
         name = "zsh-async";
         file = "async.zsh";
         src = "${pkgs.zsh-async}/share/zsh-async";
-      }
-      {
-        name = "jj-zsh-prompt";
-        file = "jj-zsh-prompt.plugin.zsh";
-        src = "${flake-inputs.jj-zsh-prompt.packages.${pkgs.stdenv.hostPlatform.system}.default}/share/jj-zsh-prompt";
       }
     ];
   };
