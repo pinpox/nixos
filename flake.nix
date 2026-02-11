@@ -213,6 +213,7 @@
               fritzbox_exporter
               mqtt2prometheus
               smartmon-script
+              machine-report
               # woodpecker-pipeline
               manual
               ;
