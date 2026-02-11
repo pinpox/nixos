@@ -42,13 +42,14 @@ with lib;
     home = {
       # Install these packages for my user
       packages = with pkgs; [
-        nixfmt
+        delta
         eza
         htop
+        machine-report
+        nixfmt
         pkg-config
         tealdeer
         unzip
-        delta
       ];
 
       sessionVariables = {

@@ -19,7 +19,9 @@
   # passCommand must remain at machine-level (not flake-level)
   clan.core.vars.password-store.passCommand = "passage";
 
-  environment.systemPackages = [ pkgs.passage ];
+  environment.systemPackages = [
+    pkgs.passage
+  ];
 
   clan.core.vars.generators."mkpasswd-generator" = {
     files.test-password = { };
