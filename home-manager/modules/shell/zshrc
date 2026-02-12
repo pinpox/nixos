@@ -148,6 +148,11 @@ _prompt_precmd() {
   # Last exit code (red bold)
   (( exit_code != 0 )) && \
     _prompt_segments+=" %F{red}%B×${exit_code}%b%f"
+
+  # Background jobs (yellow)
+  local njobs=${(Mw)#jobstates}
+  (( njobs > 0 )) && \
+    _prompt_segments+=" %F{yellow}[${njobs}]%f"
 }
 
 precmd_functions+=(_prompt_precmd)
