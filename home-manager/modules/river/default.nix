@@ -20,12 +20,6 @@ let
         ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png
       '';
 
-  screenshot-region-satty =
-    pkgs.writeShellScriptBin "screenshot-region-satty" # sh
-      ''
-        ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.satty}/bin/satty --filename - --early-exit --initial-tool brush --font-family ${config.pinpox.font.normal.family}
-      '';
-
   screenshot-region-file =
     pkgs.writeShellScriptBin "screenshot-region-file" # sh
       ''
