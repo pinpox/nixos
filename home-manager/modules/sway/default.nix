@@ -26,7 +26,6 @@ in
     };
   };
 
-  imports = [ ./swaync/default.nix ];
 
   config = mkIf cfg.enable (
     let
@@ -148,8 +147,6 @@ in
             # Screen lock
             "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
 
-            # SwayNotificationCenter
-            "${modifier}+n" = "exec swaync-client -t -sw";
 
             # Scratchpad
             "${modifier}+u" =
@@ -186,10 +183,7 @@ in
           floating.modifier = "Mod4";
 
           startup = [
-            {
-              command = "swaync";
-              always = true;
-            }
+
             {
               command = "rio --app-id=dropdown";
               always = true;
