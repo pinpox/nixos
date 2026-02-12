@@ -7,12 +7,14 @@
   border-radius: 0;
   min-height: 0;
   font-family: "Berkeley Mono", "Font Awesome 6 Free";
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 window#waybar {
-  background-color: @BrightBlack;
+  background-color: transparent;
   color: @White;
+  padding: 4px 0px;
 }
 
 #mode {
@@ -37,22 +39,21 @@ window#waybar {
 #mpd,
 #language,
 #idle_inhibitor {
-  padding: 3px 7px;
-  margin: 3px 3px;
+  padding: 2px 8px;
+  margin: 4px 3px;
   color: @White;
-  border-radius: 3px;
+  border-radius: 0px;
   background-color: @Black;
 }
 
 #custom-mic,
 #mpris {
-  padding: 3px 7px;
+  padding: 2px 8px;
   margin: 3px 3px;
   color: @White;
   background-color: transparent;
 }
 
-#pulseaudio.source-muted,
 #custom-mic {
   color: @Red;
 }
@@ -66,11 +67,17 @@ window#waybar {
  *  WORKSPACES/TAGS  *
  *********************/
 
+#workspaces,
+#tags {
+  margin-left: 7px;
+}
+
 #workspaces button,
 #tags button {
   background: @Black;
   color: @White;
   padding: 0px 0px;
+  margin: 4px 0px;
 }
 
 #workspaces button.focused,
@@ -106,8 +113,8 @@ window#waybar {
  *********************/
 
 #clock {
-  min-width: 45px;
-  margin-right: 11px;
+  min-width: 50px;
+  margin-right: 7px;
 }
 
 /*********************
@@ -115,7 +122,9 @@ window#waybar {
  *********************/
 
 #battery {
-  min-width: 55px;
+}
+
+#pulseaudio {
 }
 
 @keyframes blink {
@@ -144,7 +153,7 @@ window#waybar {
  *********************/
 
 #backlight {
-  min-width: 55px;
+  min-width: 60px;
 }
 
 /* #network { */

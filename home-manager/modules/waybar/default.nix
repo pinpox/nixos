@@ -60,7 +60,7 @@ let
         # Remove duplicates and format
         if [ -n "$clients" ]; then
             unique_clients=$(echo "$clients" | sort | uniq | paste -sd, -)
-            echo " $unique_clients"
+            echo " $unique_clients"
         fi
       '';
 in
@@ -147,8 +147,8 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = " ";
-            deactivated = " ";
+            activated = " ";
+            deactivated = " ";
           };
         };
 
@@ -157,15 +157,15 @@ in
           spacing = 10;
         };
         clock = {
+          format = "{:%Y-%m-%d %H:%M}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          format-alt = "{:%Y-%m-%d}";
         };
         #    "cpu": {
-        #        "format": "{usage}% ",
+        #        "format": "{usage}% ",
         #        "tooltip": false
         #    },
         #    "memory": {
-        #        "format": "{}% "
+        #        "format": "{}% "
         #    },
         #    "temperature": {
         #        // "thermal-zone": 2,
@@ -173,12 +173,12 @@ in
         #        "critical-threshold": 80,
         #        // "format-critical": "{temperatureC}°C {icon}",
         #        "format": "{temperatureC}°C {icon}",
-        #        "format-icons": ["", "", ""]
+        #        "format-icons": ["", "", ""]
         #    },
         #    "backlight": {
         #        // "device": "acpi_video1",
         #        "format": "{percent}% {icon}",
-        #        "format-icons": [""]
+        #        "format-icons": [""]
         #    },
         battery = {
           states = {
@@ -186,49 +186,34 @@ in
             warning = 30;
             critical = 15;
           };
-          format = "{capacity}% {icon}";
-          format-charging = "{capacity}% ";
-          format-plugged = "{capacity}% ";
-          format-alt = "{time} {icon}";
-          format-good = "{capacity}% {icon}";
-          format-full = "{capacity}% {icon}";
-          format-icons = [
-            " "
-            " "
-            " "
-            " "
-            " "
-          ];
+          format = "{capacity}% ▼";
+          format-charging = "{capacity}% ▲";
+          format-plugged = "{capacity}% ▲";
+          format-alt = "{time}";
+          format-full = "{capacity}% ▲";
         };
         network = {
-          format-wifi = "{essid} ({signalStrength}%)  ";
-          format-ethernet = "{ipaddr}/{cidr} ";
-          tooltip-format = "{ifname} via {gwaddr} ";
-          format-linked = "{ifname} (No IP) ";
-          format-disconnected = "Disconnected ⚠";
+          format-wifi = "{essid} ({signalStrength}%)";
+          format-ethernet = "{ipaddr}/{cidr}";
+          tooltip-format = "{ifname} via {gwaddr}";
+          format-linked = "{ifname} (No IP)";
+          format-disconnected = "Disconnected ✕";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
 
 
         pulseaudio = {
+          "markup" = true;
           scroll-step = 1; # %, can be a float
-          format = "{volume}% {icon} {format_source}";
-          format-bluetooth = "{volume}% {icon} {format_source}";
-          format-bluetooth-muted = "ﱝ {icon} {format_source}";
-          format-muted = "ﱝ {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = "";
-          format-icons = {
-            headphone = "";
-            default = [
-              ""
-              ""
-              ""
-            ];
-          };
+          format = "{volume}% <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";
+          format-bluetooth = "{volume}% <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";
+          format-bluetooth-muted = "✕ <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";
+          format-muted = "<span color='#${config.pinpox.colors.Red}'>{volume}%</span> <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";
+          format-source = "{volume}% <span color='#${config.pinpox.colors.Red}' rise='2000'>•</span>";
+          format-source-muted = "<span color='#${config.pinpox.colors.Red}'>{volume}%</span> <span color='#${config.pinpox.colors.Red}' rise='2000'>•</span>";
 
-          "on-click" = "${mic-toggle}/bin/mic-toggle";
-          # on-click = "pavucontrol";
+          "on-click" = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "on-click-right" = "${mic-toggle}/bin/mic-toggle";
         };
 
         "custom/mic" = {
