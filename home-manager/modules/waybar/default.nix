@@ -134,6 +134,7 @@ in
             "strawberry" = "🍓";
           };
           format = "{player_icon} {artist} - {title}";
+          max-length = 40;
           ignored-players = [
             "firefox"
             "chromium"
