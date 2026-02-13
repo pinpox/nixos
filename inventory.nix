@@ -38,6 +38,12 @@
       roles.default.machines.kfbox = { };
     };
 
+    openclaw = {
+      module.input = "self";
+      module.name = "@pinpox/openclaw";
+      roles.default.machines.kiwi = { };
+    };
+
     # Collects all "endpoint" exports from all services and generates a file
     # with CNAME entries.
     # The dm-dns services has an export of type "dataMesher" which signals "I

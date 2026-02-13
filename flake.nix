@@ -133,6 +133,11 @@
     llm-agents.inputs.nixpkgs.follows = "nixpkgs";
     llm-agents.inputs.treefmt-nix.follows = "treefmt-nix";
 
+    nix-openclaw.url = "github:openclaw/nix-openclaw";
+    nix-openclaw.inputs.nixpkgs.follows = "nixpkgs";
+    nix-openclaw.inputs.flake-utils.follows = "age-plugin-picohsm/flake-utils";
+    nix-openclaw.inputs.home-manager.follows = "home-manager";
+
   };
   outputs =
     { self, ... }@inputs:
@@ -187,6 +192,7 @@
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
         modules."@pinpox/dm-deploy" = ./clan-service-modules/dm-deploy.nix;
+        modules."@pinpox/openclaw" = ./clan-service-modules/openclaw.nix;
         inventory = import ./inventory.nix { inherit self; };
       };
     in
