@@ -138,6 +138,9 @@
     nix-openclaw.inputs.flake-utils.follows = "age-plugin-picohsm/flake-utils";
     nix-openclaw.inputs.home-manager.follows = "home-manager";
 
+    # TODO: replace with github URL once pushed
+    opencrow.url = "path:/home/pinpox/code/github.com/pinpox/opencrow";
+    opencrow.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
     { self, ... }@inputs:
@@ -193,6 +196,7 @@
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
         modules."@pinpox/dm-deploy" = ./clan-service-modules/dm-deploy.nix;
         modules."@pinpox/openclaw" = ./clan-service-modules/openclaw.nix;
+        modules."@pinpox/opencrow" = ./clan-service-modules/opencrow.nix;
         inventory = import ./inventory.nix { inherit self; };
       };
     in

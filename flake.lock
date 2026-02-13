@@ -728,6 +728,23 @@
         "type": "github"
       }
     },
+    "opencrow": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771163937,
+        "narHash": "sha256-RAAORFg0KIBV092cQpW3OiKy3f/EvsH9AVe4mTcTnUs=",
+        "path": "/home/pinpox/code/github.com/pinpox/opencrow",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/pinpox/code/github.com/pinpox/opencrow",
+        "type": "path"
+      }
+    },
     "pinpox-keys": {
       "flake": false,
       "locked": {
@@ -920,6 +937,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
+        "opencrow": "opencrow",
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
         "promterm": "promterm",
