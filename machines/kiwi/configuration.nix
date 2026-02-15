@@ -1,10 +1,13 @@
 {
   nixos-hardware,
+  opencrow,
+  config,
   lib,
+  pkgs,
+  pinpox-utils,
   ...
 }:
 {
-
 
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
   services.hardware.bolt.enable = true;
@@ -21,6 +24,7 @@
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
+    opencrow.nixosModules.default
   ];
   hardware.rtl-sdr.enable = true;
 
@@ -49,4 +53,20 @@
       KEYBOARD_KEY_3a=esc      # Caps Lock -> Esc
       KEYBOARD_KEY_01=capslock # Esc -> Caps Lock
   '';
+
+  # OpenCrow Matrix bot
+  clan.core.vars.generators."opencrow" = pinpox-utils.mkEnvGenerator [
+    "OPENCROW_MATRIX_ACCESS_TOKEN"
+    "OPENCROW_MATRIX_USER_ID"
+  ];
+
+  services.opencrow = {
+    enable = true;
+    environmentFile = config.clan.core.vars.generators."opencrow".files."envfile".path;
+    extraPackages = [ pkgs.pi ];
+    environment = {
+      OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
+      OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
+    };
+  };
 }
