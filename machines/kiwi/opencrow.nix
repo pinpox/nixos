@@ -29,6 +29,28 @@ let
     message.send.backend.auth.type = "password"
     message.send.backend.auth.command = "printenv EMAIL_PASSWORD"
   '';
+
+  # Script invoked by goimapnotify on new mail; writes to the trigger pipe
+  # so the trigger pipe manager picks it up immediately.
+  onNewMailScript = pkgs.writeShellScript "opencrow-on-new-mail" ''
+    PIPE="/var/lib/opencrow/sessions/trigger.pipe"
+    [ -p "$PIPE" ] || exit 0
+    echo "New email arrived. Process it according to the incoming mail rules in the email skill." \
+      > "$PIPE"
+  '';
+
+  # goimapnotify config — credentials come from env vars loaded via EnvironmentFile
+  goimapnotifyConfig = pkgs.writeText "goimapnotify.yaml" ''
+    configurations:
+      - host: ${env.EMAIL_IMAP_HOST}
+        port: ${env.EMAIL_IMAP_PORT}
+        tls: true
+        usernameCMD: "printenv EMAIL_LOGIN"
+        passwordCMD: "printenv EMAIL_PASSWORD"
+        onNewMail: "${onNewMailScript}"
+        boxes:
+          - mailbox: INBOX
+  '';
 in
 {
   imports = [
@@ -69,8 +91,29 @@ in
       backend.login = "$(cat $prompts/EMAIL_LOGIN)"
       message.send.backend.login = "$(cat $prompts/EMAIL_LOGIN)"
       TOML
-      echo "EMAIL_PASSWORD='$(cat $prompts/EMAIL_PASSWORD)'" > $out/envfile
+      cat > $out/envfile << ENV
+      EMAIL_LOGIN='$(cat $prompts/EMAIL_LOGIN)'
+      EMAIL_PASSWORD='$(cat $prompts/EMAIL_PASSWORD)'
+      ENV
     '';
+  };
+
+  # IMAP IDLE notifier — watches mailbox and creates trigger files for opencrow
+  systemd.services.opencrow-goimapnotify = {
+    description = "IMAP IDLE notifier for OpenCrow";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    path = [
+      pkgs.bash
+      pkgs.coreutils
+    ];
+    serviceConfig = {
+      EnvironmentFile = config.clan.core.vars.generators."opencrow-himalaya".files."envfile".path;
+      ExecStart = "${pkgs.goimapnotify}/bin/goimapnotify -conf ${goimapnotifyConfig}";
+      Restart = "always";
+      RestartSec = 30;
+    };
   };
 
   services.opencrow = {
