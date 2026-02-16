@@ -46,6 +46,12 @@ in
     "NEXTCLOUD_PASSWORD"
   ];
 
+  # Eversports
+  clan.core.vars.generators."opencrow-eversports" = pinpox-utils.mkEnvGenerator [
+    "EVERSPORTS_EMAIL"
+    "EVERSPORTS_PASSWORD"
+  ];
+
   # Himalaya email secrets (TOML config + env file for EMAIL_PASSWORD)
   # TODO no longer needed when this lands: https://github.com/pimalaya/himalaya/issues/632
   clan.core.vars.generators."opencrow-himalaya" = {
@@ -73,6 +79,7 @@ in
       config.clan.core.vars.generators."opencrow".files."envfile".path
       config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
       config.clan.core.vars.generators."opencrow-himalaya".files."envfile".path
+      config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
     ];
     extraPackages = with pkgs; [
       pi
