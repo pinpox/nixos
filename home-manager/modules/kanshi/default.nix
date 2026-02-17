@@ -32,9 +32,8 @@ in
           ];
         }
         {
-          profile.name = "triple-home";
+          profile.name = "laptop-external-right";
           profile.outputs = [
-            # generate with wlay
             {
               criteria = "eDP-1";
               mode = "1920x1080@60Hz";
@@ -42,14 +41,8 @@ in
               status = "enable";
             }
             {
-              criteria = "DP-1";
-              mode = "2560x1440@60Hz";
-              position = "4480,0";
-              status = "enable";
-            }
-            {
               criteria = "DP-2";
-              mode = "2560x1440@60Hz";
+              mode = "2560x1440@165Hz";
               position = "1920,0";
               status = "enable";
             }

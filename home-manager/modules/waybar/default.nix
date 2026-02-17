@@ -219,6 +219,7 @@ in
 
         "custom/mic" = {
           "format" = "{}";
+          "max-length" = 40;
           "tooltip" = false;
           "interval" = 1;
           "exec" = "${mic-status-apps}/bin/mic-status-apps";
