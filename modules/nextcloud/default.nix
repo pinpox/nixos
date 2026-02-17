@@ -51,6 +51,19 @@ in
       '';
     };
 
+    clan.core.vars.generators."nextcloud-smtp" = {
+      files.smtp-secret.owner = "nextcloud";
+      prompts.smtp-password.persist = true;
+
+      runtimeInputs = with pkgs; [ jq ];
+
+      script = ''
+        mkdir -p $out
+        jq -n --arg pw "$(cat "$prompts/smtp-password")" \
+          '{"mail_smtppassword": $pw}' > $out/smtp-secret
+      '';
+    };
+
     services.phpfpm.pools.nextcloud.settings = {
       "listen.owner" = config.services.caddy.user;
       "listen.group" = config.services.caddy.group;
@@ -66,7 +79,19 @@ in
       # opcache.interned_strings_buffer=64
       # opcache.max_accelerated_files=100000
 
+      secretFile = config.clan.core.vars.generators."nextcloud-smtp".files."smtp-secret".path;
+
       settings = {
+        mail_smtpmode = "smtp";
+        mail_smtphost = "r19.hallo.cloud";
+        mail_smtpport = 587;
+        mail_smtpsecure = "";
+        mail_smtpauth = true;
+        mail_smtpauthtype = "LOGIN";
+        mail_smtpname = "mail@0cx.de";
+        mail_from_address = "files";
+        mail_domain = "pablo.tools";
+
         maintenance_window_start = "4";
 
         trusted_proxies = [
