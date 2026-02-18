@@ -25,6 +25,8 @@
   ];
   hardware.rtl-sdr.enable = true;
 
+  environment.systemPackages = [ pkgs.android-tools ];
+
   # TODO: remove when 6.15.1 hits unstable
   # boot.kernelPackages = pkgs.linuxPackages_latest;
 
