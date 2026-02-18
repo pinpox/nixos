@@ -21,13 +21,13 @@ in
 
       settings = {
         anchor = "top-right";
-        backgroundColor = "#285577FF";
-        borderColor = "#4C7899FF";
+        background-color = "#285577FF";
+        border-color = "#4C7899FF";
         # progressColor = "over #5588AAFF";
-        textColor = "#FFFFFFFF";
-        borderRadius = "5";
-        borderSize = "5";
-        defaultTimeout = "10000"; # In milliseconds
+        text-color = "#FFFFFFFF";
+        border-radius = "5";
+        border-size = "5";
+        default-timeout = "10000"; # In milliseconds
         # extraConfig = '''';
         font = "Berkeley Mono 12";
         # %a   Application name
