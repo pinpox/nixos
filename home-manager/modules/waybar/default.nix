@@ -204,7 +204,6 @@ in
 
 
         pulseaudio = {
-          "markup" = true;
           scroll-step = 1; # %, can be a float
           format = "{volume}% <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";
           format-bluetooth = "{volume}% <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";
