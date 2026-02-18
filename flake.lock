@@ -674,8 +674,8 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1771272667,
-        "narHash": "sha256-9va7cIlJTQftRPBmt6ZwzwNXd7GLhm1hvCFa/zc+R2E=",
+        "lastModified": 1771446063,
+        "narHash": "sha256-b18lpNegS5HCVvN288bvbZvopDbiYx+0BmB5nb6UK/A=",
         "path": "/home/pinpox/code/github.com/pinpox/opencrow",
         "type": "path"
       },
