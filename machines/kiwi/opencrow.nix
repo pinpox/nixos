@@ -53,9 +53,7 @@ let
   '';
 in
 {
-  imports = [
-    opencrow.nixosModules.default
-  ];
+  imports = [ opencrow.nixosModules.default ];
 
   # OpenCrow Matrix bot
   clan.core.vars.generators."opencrow" = pinpox-utils.mkEnvGenerator [
@@ -63,9 +61,14 @@ in
     "OPENCROW_MATRIX_USER_ID"
   ];
 
-  # Nextcloud
+  # Nextcloud (personal)
   clan.core.vars.generators."opencrow-nextcloud" = pinpox-utils.mkEnvGenerator [
     "NEXTCLOUD_PASSWORD"
+  ];
+
+  # Nextcloud (work)
+  clan.core.vars.generators."opencrow-nextcloud-work" = pinpox-utils.mkEnvGenerator [
+    "WORK_NEXTCLOUD_PASSWORD"
   ];
 
   # Eversports
@@ -121,6 +124,7 @@ in
     environmentFiles = [
       config.clan.core.vars.generators."opencrow".files."envfile".path
       config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
+      config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
       config.clan.core.vars.generators."opencrow-himalaya".files."envfile".path
       config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
     ];
@@ -144,6 +148,10 @@ in
       NEXTCLOUD_URL = "https://files.pablo.tools";
       NEXTCLOUD_USER = "pinpox";
       NEXTCLOUD_CALENDAR = "personal";
+
+      WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
+      WORK_NEXTCLOUD_USER = "pinpox";
+      WORK_NEXTCLOUD_CALENDAR = "personal";
 
       EMAIL_DISPLAY_NAME = "pinpox";
       EMAIL_IMAP_HOST = "imap.mailbox.org";
