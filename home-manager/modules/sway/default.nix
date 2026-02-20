@@ -88,10 +88,15 @@ in
           padding-top = "35%";
           result-spacing = "25";
           num-results = "5";
-          font = "Berkeley Mono";
-          background-color = "#000A";
+          font = config.pinpox.font.normal.family;
+          background-color = "#${c.Black}A0";
+          text-color = "#${c.White}";
+          selection-color = "#${c.BrightBlue}";
+          selection-match-color = "#${c.Magenta}";
+          input-color = "#${c.BrightWhite}";
           prompt-text = "\"\"";
           placeholder-text = "yes?";
+          placeholder-color = "#${c.Yellow}";
         };
       };
 
@@ -120,7 +125,7 @@ in
 
             # Laucher
             "${modifier}+p" = ''
-              exec ${pkgs.tofi}/bin/tofi-run --output=$(swaymsg --type get_outputs | jq '.[] | select(.focused).name') | xargs swaymsg exec --
+              exec ${pkgs.tofi}/bin/tofi-run --output=$(swaymsg --type get_outputs | jq -r '.[] | select(.focused).name') | xargs swaymsg exec --
             '';
 
             # Url
