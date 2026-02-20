@@ -10,29 +10,71 @@ with lib;
 let
   cfg = config.pinpox.services.opencrow;
 
-  env = config.services.opencrow.environment;
+  himalayaVars = config.clan.core.vars.generators."opencrow-himalaya";
 
-  # TODO no longer needed when this lands: https://github.com/pimalaya/himalaya/issues/632
-  himalayaPublicConfig = pkgs.writeText "himalaya-config.toml" ''
+  # Himalaya config for the mail fetcher (IMAP only, no SMTP)
+  himalayaFetcherConfig = pkgs.writeText "himalaya-fetcher-config.toml" ''
     [accounts."mailbox.org"]
     default = true
-    display-name = "${env.EMAIL_DISPLAY_NAME}"
-    downloads-dir = "/var/lib/opencrow/downloads"
+    display-name = "opencrow-fetcher"
+    downloads-dir = "/tmp"
 
     backend.type = "imap"
-    backend.host = "${env.EMAIL_IMAP_HOST}"
-    backend.port = ${env.EMAIL_IMAP_PORT}
+    backend.host = "imap.mailbox.org"
+    backend.port = 993
     backend.encryption.type = "tls"
     backend.auth.type = "password"
     backend.auth.command = "printenv EMAIL_PASSWORD"
 
-    message.send.backend.type = "smtp"
-    message.send.backend.host = "smtp.mailbox.org"
-    message.send.backend.port = 465
-    message.send.backend.encryption.type = "tls"
-    message.send.backend.auth.type = "password"
-    message.send.backend.auth.command = "printenv EMAIL_PASSWORD"
+    message.send.backend.type = "none"
   '';
+
+  # Script that fetches starred/flagged emails to a directory
+  onChangedMailScript = pkgs.writeShellScript "opencrow-fetch-starred" ''
+    set -euo pipefail
+
+    HIMALAYA="${lib.getExe pkgs.himalaya} -c ${himalayaFetcherConfig} -c ${himalayaVars.files."config".path}"
+
+    MAIL_DIR="/var/lib/opencrow/mail-inbox"
+    PIPE="/var/lib/opencrow/sessions/trigger.pipe"
+    mkdir -p "$MAIL_DIR"
+
+    # List flagged messages, get their IDs
+    ids=$($HIMALAYA envelope list --folder INBOX --output json flag flagged | ${lib.getExe pkgs.jq} -r '.[].id')
+    [ -z "$ids" ] && exit 0
+
+    for id in $ids; do
+      $HIMALAYA message read "$id" > "$MAIL_DIR/$(date +%s)-''${id}.txt"
+      $HIMALAYA flag remove "$id" flagged
+      $HIMALAYA flag add "$id" crow-processed
+      $HIMALAYA message move Archive "$id"
+    done
+
+    # Notify the bot
+    [ -p "$PIPE" ] && echo "New starred emails arrived. Read them from $MAIL_DIR" > "$PIPE"
+  '';
+
+  # goimapnotify configuration
+  goimapnotifyConfig = pkgs.writeText "goimapnotify-config.yaml" (builtins.toJSON {
+    configurations = [
+      {
+        host = "imap.mailbox.org";
+        port = 993;
+        tls = true;
+        tlsOptions = {
+          rejectUnauthorized = true;
+        };
+        usernameCMD = "${lib.getExe' pkgs.coreutils "printenv"} EMAIL_LOGIN";
+        passwordCMD = "${lib.getExe' pkgs.coreutils "printenv"} EMAIL_PASSWORD";
+        boxes = [
+          {
+            mailbox = "INBOX";
+            onChangedMail = toString onChangedMailScript;
+          }
+        ];
+      }
+    ];
+  });
 in
 {
 
@@ -65,7 +107,7 @@ in
     ];
 
     # Himalaya email secrets (TOML config + env file for EMAIL_PASSWORD)
-    # TODO no longer needed when this lands: https://github.com/pimalaya/himalaya/issues/632
+    # Used by the goimapnotify fetcher service for IMAP credentials
     clan.core.vars.generators."opencrow-himalaya" = {
       files.config = { };
       files.envfile = { };
@@ -79,7 +121,6 @@ in
         [accounts."mailbox.org"]
         email = "$(cat $prompts/EMAIL_ADDRESS)"
         backend.login = "$(cat $prompts/EMAIL_LOGIN)"
-        message.send.backend.login = "$(cat $prompts/EMAIL_LOGIN)"
         TOML
         cat > $out/envfile << ENV
         EMAIL_LOGIN='$(cat $prompts/EMAIL_LOGIN)'
@@ -88,32 +129,40 @@ in
       '';
     };
 
+    # Mail inbox directory for fetched emails
+    systemd.tmpfiles.rules = [
+      "d /var/lib/opencrow/mail-inbox 0750 root root -"
+    ];
+
+    # goimapnotify service: watches for starred emails and fetches them
+    systemd.services.opencrow-goimapnotify = {
+      description = "Watch IMAP for starred emails and fetch them for opencrow";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+      path = with pkgs; [ coreutils bash himalaya jq ];
+      serviceConfig = {
+        ExecStart = "${lib.getExe pkgs.goimapnotify} -conf ${goimapnotifyConfig}";
+        EnvironmentFile = himalayaVars.files."envfile".path;
+        Restart = "on-failure";
+        RestartSec = "10s";
+      };
+    };
+
     services.opencrow = {
       enable = true;
       environmentFiles = [
         config.clan.core.vars.generators."opencrow".files."envfile".path
         config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
         config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
-        config.clan.core.vars.generators."opencrow-himalaya".files."envfile".path
         config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
       ];
       extraPackages = with pkgs; [
         pi
         curl
         jq
-        himalaya
       ];
-      extraBindMounts."/etc/himalaya/config.toml" = {
-        hostPath = toString himalayaPublicConfig;
-        isReadOnly = true;
-      };
-      extraBindMounts."/etc/himalaya/secrets.toml" = {
-        hostPath = config.clan.core.vars.generators."opencrow-himalaya".files."config".path;
-        isReadOnly = true;
-      };
       environment = {
-        HIMALAYA_CONFIG = "/etc/himalaya/config.toml /etc/himalaya/secrets.toml";
-
         NEXTCLOUD_URL = "https://files.pablo.tools";
         NEXTCLOUD_USER = "pinpox";
         NEXTCLOUD_CALENDAR = "personal";
@@ -121,10 +170,6 @@ in
         WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
         WORK_NEXTCLOUD_USER = "pinpox";
         WORK_NEXTCLOUD_CALENDAR = "personal";
-
-        EMAIL_DISPLAY_NAME = "pinpox";
-        EMAIL_IMAP_HOST = "imap.mailbox.org";
-        EMAIL_IMAP_PORT = "993";
 
         OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
