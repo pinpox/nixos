@@ -21,7 +21,6 @@
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
-    ./opencrow.nix
   ];
   hardware.rtl-sdr.enable = true;
 

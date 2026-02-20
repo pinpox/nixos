@@ -134,7 +134,8 @@
     llm-agents.inputs.treefmt-nix.follows = "treefmt-nix";
 
     # TODO: replace with github URL once pushed
-    opencrow.url = "path:/home/pinpox/code/github.com/pinpox/opencrow";
+    # opencrow.url = "path:/home/pinpox/code/github.com/pinpox/opencrow";
+    opencrow.url = "github:pinpox/opencrow";
     opencrow.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =

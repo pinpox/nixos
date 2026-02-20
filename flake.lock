@@ -674,14 +674,17 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1771446063,
-        "narHash": "sha256-b18lpNegS5HCVvN288bvbZvopDbiYx+0BmB5nb6UK/A=",
-        "path": "/home/pinpox/code/github.com/pinpox/opencrow",
-        "type": "path"
+        "lastModified": 1771622489,
+        "narHash": "sha256-CGAS5ISs+h6GNQwaOLycfbcFRkN0legi/hdDov4Obfk=",
+        "owner": "pinpox",
+        "repo": "opencrow",
+        "rev": "9ec2d17e6c9d45b22b9cca3174b6b1a75758d8f6",
+        "type": "github"
       },
       "original": {
-        "path": "/home/pinpox/code/github.com/pinpox/opencrow",
-        "type": "path"
+        "owner": "pinpox",
+        "repo": "opencrow",
+        "type": "github"
       }
     },
     "pinpox-keys": {

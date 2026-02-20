@@ -122,6 +122,7 @@
   pinpox = {
 
     services = {
+      opencrow.enable = true;
       authelia = {
         enable = true;
         declarativeUsers = {
