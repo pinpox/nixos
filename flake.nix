@@ -135,6 +135,9 @@
 
     # TODO: replace with github URL once pushed
     # opencrow.url = "path:/home/pinpox/code/github.com/pinpox/opencrow";
+    mics-skills.url = "github:Mic92/mics-skills";
+    mics-skills.inputs.nixpkgs.follows = "nixpkgs";
+
     opencrow.url = "github:pinpox/opencrow";
     opencrow.inputs.nixpkgs.follows = "nixpkgs";
   };

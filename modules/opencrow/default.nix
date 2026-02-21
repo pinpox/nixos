@@ -1,5 +1,6 @@
 {
   opencrow,
+  mics-skills,
   config,
   lib,
   pkgs,
@@ -157,10 +158,11 @@ in
         config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
         config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
       ];
-      extraPackages = with pkgs; [
-        pi
-        curl
-        jq
+      extraPackages = [
+        pkgs.pi
+        pkgs.curl
+        pkgs.jq
+        mics-skills.packages.${pkgs.system}.db-cli
       ];
       environment = {
         NEXTCLOUD_URL = "https://files.pablo.tools";
