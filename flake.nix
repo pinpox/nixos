@@ -288,18 +288,7 @@
       # Each subdirectory in ./machines/<machine-name> is a host config. Clan
       # auto-imports all machines from ./machines
       inherit (clan.config) clanInternals;
-      nixosConfigurations = clan.config.nixosConfigurations // {
-        # Cross-compilation target for uconsole (build on x86_64)
-        uconsole-cross = clan.config.nixosConfigurations.uconsole.extendModules {
-          modules = [
-            {
-              nixpkgs.hostPlatform = nixpkgs.lib.mkForce "aarch64-linux";
-              nixpkgs.buildPlatform = "x86_64-linux";
-              boot.binfmt.emulatedSystems = nixpkgs.lib.mkForce [ ];
-            }
-          ];
-        };
-      };
+      nixosConfigurations = clan.config.nixosConfigurations;
       clan = clan.config;
 
       # Each subdirectory in ./home-manager/profiles/<profile-name> is a
