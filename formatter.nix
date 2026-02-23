@@ -9,6 +9,7 @@ forAllSystems (
     projectRootFile = "flake.nix";
     programs = {
       nixfmt.enable = true;
+      flake-edit.enable = true;
       nixfmt.package = nixpkgsFor.${system}.nixfmt;
       prettier.enable = true;
       shellcheck.enable = true;
