@@ -15,6 +15,7 @@
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
     # clan-core.url = "git+file:///home/pinpox/code/git.clan.lol/clan/clan-core?ref=pinpox-clan-input";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
+    clan-core.inputs.disko.follows = "disko";
 
     # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
     # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
@@ -137,9 +138,11 @@
     # opencrow.url = "path:/home/pinpox/code/github.com/pinpox/opencrow";
     mics-skills.url = "github:Mic92/mics-skills";
     mics-skills.inputs.nixpkgs.follows = "nixpkgs";
+    mics-skills.inputs.treefmt-nix.follows = "treefmt-nix";
 
     opencrow.url = "github:pinpox/opencrow";
     opencrow.inputs.nixpkgs.follows = "nixpkgs";
+    opencrow.inputs.treefmt-nix.follows = "treefmt-nix";
   };
   outputs =
     { self, ... }@inputs:
