@@ -84,6 +84,10 @@ in
       owncast.enable = false;
       vikunja.enable = false;
       wastebin.enable = true;
+      nostr-relay-rs = {
+        enable = true;
+        domain = "nostr.0cx.de";
+      };
     };
   };
 

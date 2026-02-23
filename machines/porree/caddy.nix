@@ -81,8 +81,27 @@ in
     # config is adapted in a different environment from which it is being run.
     virtualHosts = {
 
+      # NIP-05 identity
+      "pinpox.com".extraConfig = ''
+        handle /.well-known/nostr.json {
+          header Content-Type application/json
+          header Access-Control-Allow-Origin *
+          root * ${./nostr}
+          rewrite * /nostr.json
+          file_server
+        }
+        respond "nothing here" 404
+      '';
+
       # Homepage
       "pablo.tools".extraConfig = ''
+        handle /.well-known/nostr.json {
+          header Content-Type application/json
+          header Access-Control-Allow-Origin *
+          root * ${./nostr}
+          rewrite * /nostr.json
+          file_server
+        }
         root * /var/www/pablo-tools
         file_server
         encode zstd gzip
