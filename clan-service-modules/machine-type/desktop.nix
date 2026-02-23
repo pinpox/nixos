@@ -87,6 +87,7 @@
       };
       fonts.enable = true;
       locale.enable = true;
+      locale.automatic-timezone = true;
       networking.enable = true;
       nix.enable = true;
       sound.enable = true;

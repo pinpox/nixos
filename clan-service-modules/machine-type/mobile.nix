@@ -71,6 +71,7 @@
       environment.enable = true;
       fonts.enable = false; # Disabled - noto-fonts-color-emoji can't cross-compile
       locale.enable = true;
+      locale.automatic-timezone = true;
       networking.enable = true;
       nix.enable = true;
       sound.enable = false;
