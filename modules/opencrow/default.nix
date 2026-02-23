@@ -152,6 +152,7 @@ in
 
     services.opencrow = {
       enable = true;
+      piPackage = pkgs.pi;
       environmentFiles = [
         config.clan.core.vars.generators."opencrow".files."envfile".path
         config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
@@ -159,7 +160,6 @@ in
         config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
       ];
       extraPackages = [
-        pkgs.pi
         pkgs.curl
         pkgs.jq
         mics-skills.packages.${pkgs.system}.db-cli
