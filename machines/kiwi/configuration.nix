@@ -6,6 +6,12 @@
 }:
 {
 
+  imports = [
+    ./disko-config-btrfs.nix
+    # ./framework.nix
+    nixos-hardware.nixosModules.framework-amd-ai-300-series
+  ];
+
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
   services.hardware.bolt.enable = true;
 
@@ -15,28 +21,20 @@
   #   ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
   # '';
 
-  hardware.fw-fanctrl.enable = true;
-
-  imports = [
-    ./disko-config-btrfs.nix
-    # ./framework.nix
-    nixos-hardware.nixosModules.framework-amd-ai-300-series
-  ];
-  hardware.rtl-sdr.enable = true;
+  hardware = {
+    fw-fanctrl.enable = true;
+    rtl-sdr.enable = true;
+    amdgpu.opencl.enable = true;
+    xone.enable = true;
+  };
 
   environment.systemPackages = [ pkgs.android-tools ];
-
-  # TODO: remove when 6.15.1 hits unstable
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  hardware.amdgpu.opencl.enable = true;
 
   networking.hostName = "kiwi";
 
   # Games
   programs.steam.enable = true;
   programs.gamemode.enable = true;
-  hardware.xone.enable = true;
 
   # For dual-boot
   boot.loader.efi.canTouchEfiVariables = true;
