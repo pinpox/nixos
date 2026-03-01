@@ -57,6 +57,16 @@ in
     Restart = "on-abnormal";
   };
 
+  # NIP-29 groups relay private key (32-byte hex)
+  clan.core.vars.generators."nostr-groups-relay" = {
+    files.privkey = { };
+    runtimeInputs = with pkgs; [ coreutils openssl ];
+    script = ''
+      mkdir -p $out
+      openssl rand -hex 32 > $out/privkey
+    '';
+  };
+
   # Discord AoE2 taunt bot
   clan.core.vars.generators."aoe-taunt-discord-bot" = {
     prompts.discord_token.persist = true;
@@ -84,9 +94,18 @@ in
       owncast.enable = false;
       vikunja.enable = false;
       wastebin.enable = true;
-      nostr-relay-rs = {
+      nostr-relay = {
         enable = true;
-        domain = "nostr.0cx.de";
+
+        general.domain = "nostr.0cx.de";
+
+        groups = {
+          enable = true;
+          domain = "groups.0cx.de";
+          relayName = "0cx.de NIP-29 Groups";
+          relayDescription = "NIP-29 group chat relay for 0cx.de";
+          privateKeyFile = config.clan.core.vars.generators."nostr-groups-relay".files."privkey".path;
+        };
       };
     };
   };
