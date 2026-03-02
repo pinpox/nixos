@@ -17,6 +17,10 @@
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
 
+    clan-community.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-community";
+    clan-community.inputs.clan-core.follows = "clan-core";
+    clan-community.inputs.nixpkgs.follows = "nixpkgs";
+
     # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
     # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -196,7 +200,6 @@
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/desktop" = ./clan-service-modules/desktop;
-        modules."@pinpox/dm-deploy" = ./clan-service-modules/dm-deploy.nix;
         inventory = import ./inventory.nix { inherit self; };
       };
     in

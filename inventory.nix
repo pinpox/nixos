@@ -69,9 +69,9 @@
 
     # Pull-based NixOS deployment via data-mesher. Push machines send a flake
     # ref, all machines rebuild themselves from it.
-    dm-deploy = {
-      module.input = "self";
-      module.name = "@pinpox/dm-deploy";
+    dm-pull-deploy = {
+      module.input = "clan-community";
+      module.name = "dm-pull-deploy";
       roles.push.machines.kiwi.settings.gitUrl = "https://github.com/pinpox/nixos.git";
       roles.default.tags = [ "all" ];
     };
