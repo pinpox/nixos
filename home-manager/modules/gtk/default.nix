@@ -85,7 +85,7 @@ in
             rendersvg
             meson
             ninja
-            nodePackages.sass
+            dart-sass
             gtk4.dev
             optipng
           ];

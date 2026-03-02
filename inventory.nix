@@ -140,8 +140,8 @@
     };
 
     desktop = {
-      module.input = "self";
-      module.name = "@pinpox/desktop";
+      module.input = "clan-community";
+      module.name = "desktop";
       roles.sway.tags.desktop = { };
       roles.kde.machines.fichte = { };
     };
@@ -176,8 +176,8 @@
     };
 
     localsend = {
-      module.input = "self";
-      module.name = "@pinpox/localsend";
+      module.input = "clan-community";
+      module.name = "localsend";
       roles.default.tags = [ "desktop" ];
     };
 
@@ -198,8 +198,8 @@
 
     wg-clan = {
 
-      module.input = "self";
-      module.name = "@pinpox/wireguard";
+      module.input = "clan-community";
+      module.name = "wireguard-star";
 
       roles.controller.machines.porree.settings = {
         endpoint = "vpn.pablo.tools:51820";
