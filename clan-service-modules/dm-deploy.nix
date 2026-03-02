@@ -1,6 +1,7 @@
 {
   clanLib,
   directory,
+  lib,
   ...
 }:
 {
@@ -14,12 +15,31 @@
   # Push role — machines that can trigger deployments
   roles.push = {
     description = "Can push deployment targets to the clan via data-mesher";
-    interface = { };
+    interface =
+      { lib, ... }:
+      {
+        options.gitUrl = lib.mkOption {
+          type = lib.types.str;
+          example = "https://github.com/pinpox/nixos.git";
+          description = ''
+            Git remote URL. Used to resolve the latest commit via ls-remote
+            and to construct the flake reference (git+<url>?rev=<rev>).
+          '';
+        };
+        options.branch = lib.mkOption {
+          type = lib.types.str;
+          default = "main";
+          description = ''
+            Git branch to resolve when no explicit flake ref is given.
+          '';
+        };
+      };
 
     perInstance =
       {
         mkExports,
         machine,
+        settings,
         ...
       }:
       {
@@ -60,11 +80,15 @@
             environment.systemPackages = [
               (pkgs.writeShellApplication {
                 name = "dm-send-deploy";
-                runtimeInputs = [ config.services.data-mesher.package ];
+                runtimeInputs = [
+                  config.services.data-mesher.package
+                  pkgs.git
+                ];
                 text = ''
-                  if [ $# -ne 1 ]; then
-                    echo "Usage: dm-send-deploy <flake-ref>"
-                    echo "Example: dm-send-deploy github:pinpox/nixos/abc123..."
+                  if [ $# -gt 1 ]; then
+                    echo "Usage: dm-send-deploy [<flake-ref>]"
+                    echo "Without arguments, sends the latest commit on '${settings.branch}' from ${settings.gitUrl}"
+                    echo "Example: dm-send-deploy git+https://example.com/repo.git?rev=abc123..."
                     exit 1
                   fi
 
@@ -74,14 +98,26 @@
                     exit 1
                   fi
 
-                  FLAKE_REF="$1"
+                  if [ $# -eq 1 ]; then
+                    FLAKE_REF="$1"
+                  else
+                    REV=$(git ls-remote "${settings.gitUrl}" "refs/heads/${settings.branch}" | cut -f1)
+                    if [ -z "$REV" ]; then
+                      echo "Error: could not determine latest commit on ${settings.branch} from ${settings.gitUrl}"
+                      exit 1
+                    fi
+                    FLAKE_REF="git+${settings.gitUrl}?rev=$REV"
+                  fi
                   TMPFILE=$(mktemp)
                   trap 'rm -f "$TMPFILE"' EXIT
 
                   printf '%s' "$FLAKE_REF" > "$TMPFILE"
 
+                  NETWORK_ID="${config.clan.core.vars.generators.data-mesher-network.files."network.pub".path}"
+
                   data-mesher file update "$TMPFILE" \
                     --url http://localhost:7331 \
+                    --network-id "$NETWORK_ID" \
                     --key "$KEY" \
                     --name "dm_deploy/target"
 
@@ -132,7 +168,7 @@
           let
             hostname = machine.name;
             revision = flake-self.rev or "unknown";
-            dmFilesDir = "/var/lib/data-mesher/files/dm_deploy";
+            dmFilesDir = "/var/lib/data-mesher/files/default/dm_deploy";
             targetFile = "${dmFilesDir}/target";
           in
           {
@@ -214,6 +250,7 @@
 
                 data-mesher file update "$TMPFILE" \
                   --url http://localhost:7331 \
+                  --network-id "${config.clan.core.vars.generators.data-mesher-network.files."network.pub".path}" \
                   --key "${config.clan.core.vars.generators.dm-deploy-status-key.files."signing.key".path}" \
                   --name "dm_deploy/status_${hostname}"
 

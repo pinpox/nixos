@@ -72,7 +72,7 @@
     dm-deploy = {
       module.input = "self";
       module.name = "@pinpox/dm-deploy";
-      roles.push.machines.kiwi = { };
+      roles.push.machines.kiwi.settings.gitUrl = "https://github.com/pinpox/nixos.git";
       roles.default.tags = [ "all" ];
     };
 
