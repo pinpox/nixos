@@ -432,7 +432,11 @@ in
 
         http = {
           use_x_forwarded_for = true;
-          trusted_proxies = [ "192.168.8.1" ];
+          trusted_proxies = [
+            (builtins.readFile (
+              config.clan.core.settings.directory + "/vars/per-machine/porree/wireguard-wg-clan-ip/ipv4/value"
+            ))
+          ];
         };
 
         frontend = { };

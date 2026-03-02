@@ -95,7 +95,9 @@ in
         maintenance_window_start = "4";
 
         trusted_proxies = [
-          "192.168.8.1"
+          (builtins.readFile (
+            config.clan.core.settings.directory + "/vars/per-machine/porree/wireguard-wg-clan-ip/ipv4/value"
+          ))
           "94.16.108.229"
         ];
 

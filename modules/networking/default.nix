@@ -21,13 +21,13 @@ in
       extraHosts =
 
         let
-          mkWgEntry =
+          wgIp =
             host:
-            "${
-              builtins.readFile (
-                config.clan.core.settings.directory + "/vars/per-machine/${host}/wireguard-wg-clan-ip/ipv4/value"
-              )
-            } ${host}.wireguard";
+            builtins.readFile (
+              config.clan.core.settings.directory + "/vars/per-machine/${host}/wireguard-wg-clan-ip/ipv4/value"
+            );
+          mkWgEntry = host: "${wgIp host} ${host}.wireguard";
+          porreeWgIp = wgIp "porree";
         in
         ''
           # Wireguard
@@ -43,13 +43,13 @@ in
           93.177.66.52 kfbox-old
           5.181.48.121 mega.public
 
-          # VPN protected services
-          192.168.8.1 vpn.motion.pablo.tools
-          192.168.8.1 vpn.alerts.pablo.tools
-          192.168.8.1 vpn.prometheus.pablo.tools
-          192.168.8.1 vpn.notify.pablo.tools
-          192.168.8.1 vpn.s3.pablo.tools
-          192.168.8.1 vpn.minio.pablo.tools
+          # VPN protected services (porree via wireguard)
+          ${porreeWgIp} vpn.motion.pablo.tools
+          ${porreeWgIp} vpn.alerts.pablo.tools
+          ${porreeWgIp} vpn.prometheus.pablo.tools
+          ${porreeWgIp} vpn.notify.pablo.tools
+          ${porreeWgIp} vpn.s3.pablo.tools
+          ${porreeWgIp} vpn.minio.pablo.tools
         '';
     };
   };

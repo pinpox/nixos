@@ -207,7 +207,7 @@
 
       roles.peer.machines = {
         kartoffel = { };
-        birne.settings.extraIPs = [ "192.168.101.0/24" ];
+        birne.settings.allowedIPs = [ "10.100.0.0/24" "192.168.101.0/24" ];
         kfbox = { };
         uconsole = { };
         kiwi = { };
