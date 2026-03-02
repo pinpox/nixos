@@ -79,6 +79,8 @@ in
               # https://docs.pipewire.org/group__pw__keys.html#gafcd3d133168b9353c89c1c5f2de6954e
               "node.passive" = true;
               "node.name" = "capture.rnnoise_source";
+              # Explicitly capture from Scarlett Input 1 (left XLR)
+              "node.target" = "alsa_input.usb-Focusrite_Scarlett_2i2_USB_Y87MV6G157830B-00.HiFi__Mic1__source";
             };
             playback = {
               "node.name" = "rnnoise_source";
@@ -114,6 +116,11 @@ in
         ];
 
     };
+
+    # Set Scarlett 2i2 Input 1 to Inst mode when the device appears
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="sound", ATTR{id}=="USB", RUN+="${pkgs.alsa-utils}/bin/amixer -c USB cset name='Line In 1 Level Capture Enum' 'Inst'"
+    '';
 
     # Use noisetorch (RNnoise) to create a virtual source with noise removal
     programs.noisetorch.enable = true;
