@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -29,6 +30,15 @@ in
     # SMTP password file
     clan.core.vars.generators."grafana".prompts.smtp-password.persist = true;
 
+    # Grafana secret key for signing
+    clan.core.vars.generators."grafana-secret-key" = {
+      files."secret-key".owner = "grafana";
+      runtimeInputs = [ pkgs.openssl ];
+      script = ''
+        openssl rand -hex 32 > "$out/secret-key"
+      '';
+    };
+
     # Backup Graphana dir, contains stateful config
     pinpox.services.restic-client.backup-paths-offsite = [ "/var/lib/grafana" ];
 
@@ -44,6 +54,8 @@ in
           http_port = 9005;
           http_addr = "127.0.0.1";
         };
+
+        security.secret_key = "$__file{${config.clan.core.vars.generators."grafana-secret-key".files."secret-key".path}}";
 
         # Mail notifications
         smtp = {
