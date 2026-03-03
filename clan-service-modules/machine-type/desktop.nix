@@ -142,6 +142,7 @@
 
     firefox
     pi
+    openspec
 
     gcc
     comma
