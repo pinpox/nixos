@@ -154,8 +154,7 @@ in
 
 
             # Scratchpad
-            "${modifier}+u" =
-              ''[app_id="dropdown"] scratchpad show; [app_id="dropdown"] move position 0 0; [app_id="dropdown"] resize set width 100 ppt height 100 ppt'';
+            "${modifier}+u" = "exec swaymsg '[app_id=\"dropdown\"] scratchpad show; [app_id=\"dropdown\"] resize set width 100 ppt height 100 ppt; [app_id=\"dropdown\"] move absolute position 0 0'";
 
             # Screen brightness
             "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
@@ -190,7 +189,23 @@ in
           startup = [
 
             {
-              command = "rio --app-id=dropdown";
+              command = 
+                let
+                  init-dropdown = pkgs.writeShellScript "init-dropdown" ''
+                    # Start the terminal
+                    ${pkgs.rio}/bin/rio --app-id=dropdown &
+                    
+                    # Wait for it to be moved to scratchpad by window rules
+                    sleep 0.5
+                    
+                    # Fix position while it's in scratchpad (this ensures correct position on first show)
+                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] scratchpad show'
+                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] resize set width 100 ppt height 100 ppt' 
+                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move absolute position 0 0'
+                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move scratchpad'
+                  '';
+                in
+                "${init-dropdown}";
               always = true;
             }
             { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
@@ -207,19 +222,7 @@ in
               criteria.title = "Firefox — Sharing Indicator";
             }
             {
-              command = "floating enable";
-              criteria.app_id = "dropdown";
-            }
-            {
-              command = "move position 0 0, resize set width 100 ppt height 100 ppt";
-              criteria.app_id = "dropdown";
-            }
-            {
-              command = "move scratchpad";
-              criteria.app_id = "dropdown";
-            }
-            {
-              command = "border pixel 0";
+              command = "floating enable, border pixel 0, move scratchpad";
               criteria.app_id = "dropdown";
             }
           ];
