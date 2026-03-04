@@ -2,7 +2,7 @@
   aoe-taunt-discord-bot,
   config,
   go-karma-bot,
-  mc3000,
+
   pkgs,
   lib,
   ...
@@ -172,12 +172,6 @@ in
     enable = true;
 
     virtualHosts = {
-
-      "megaclan3000.de".extraConfig = ''
-        root * ${mc3000.packages.x86_64-linux.mc3000}
-        file_server
-        encode zstd gzip
-      '';
 
       # "track.0cx.de".extraConfig = "reverse_proxy 127.0.0.1:8082";
 
