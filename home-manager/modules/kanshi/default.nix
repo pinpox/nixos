@@ -27,7 +27,8 @@ in
           profile.outputs = [
             {
               criteria = "eDP-1";
-              mode = "1920x1080@60Hz";
+              mode = "2880x1920@120Hz";
+              scale = 2.0;
             }
           ];
         }
@@ -36,14 +37,15 @@ in
           profile.outputs = [
             {
               criteria = "eDP-1";
-              mode = "1920x1080@60Hz";
+              mode = "2880x1920@120Hz";
               position = "0,0";
+              scale = 2.0;
               status = "enable";
             }
             {
               criteria = "DP-2";
               mode = "2560x1440@165Hz";
-              position = "1920,0";
+              position = "1440,0";
               status = "enable";
             }
           ];
