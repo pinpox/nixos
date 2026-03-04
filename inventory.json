@@ -2,6 +2,9 @@
   "machines": {
     "fichte": {
       "installedAt": 1760275487
+    },
+    "clementine": {
+      "installedAt": 1772618310
     }
   }
 }
