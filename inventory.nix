@@ -11,6 +11,7 @@
     birne.tags = [ "server" ];
     kfbox.tags = [ "server" ];
     porree.tags = [ "server" ];
+    clementine.tags = [ "server" ];
   };
 
   meta.name = "pinpox-clan";
@@ -74,6 +75,8 @@
       module.name = "dm-pull-deploy";
       roles.push.machines.kiwi.settings.gitUrl = "https://github.com/pinpox/nixos.git";
       roles.default.tags = [ "all" ];
+
+      roles.default.machines.tanne.settings.action = "build";
     };
 
     # The actual data-mesher. It collects all exports of type "dataMesher" from
@@ -207,9 +210,13 @@
 
       roles.peer.machines = {
         kartoffel = { };
-        birne.settings.allowedIPs = [ "10.100.0.0/24" "192.168.101.0/24" ];
+        birne.settings.allowedIPs = [
+          "10.100.0.0/24"
+          "192.168.101.0/24"
+        ];
         kfbox = { };
         uconsole = { };
+        clementine = { };
         kiwi = { };
         limette = { };
       };

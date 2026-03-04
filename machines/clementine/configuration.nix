@@ -1,0 +1,96 @@
+{
+  config,
+  lib,
+  mc3000,
+  ...
+}:
+{
+  imports = [ ];
+
+  clan.core.networking.targetHost = "152.53.139.179";
+  networking.hostName = "clementine";
+
+  networking.interfaces.ens3 = {
+    ipv6.addresses = [
+      {
+        address = "2a0a:4cc0:c0:f339::";
+        prefixLength = 64;
+      }
+    ];
+  };
+
+  services.qemuGuest.enable = true;
+
+  networking.firewall = {
+    enable = true;
+    allowPing = true;
+    allowedTCPPorts = [
+      80
+      443
+      22
+    ];
+  };
+
+  # Kimai time tracking
+  services.kimai = {
+    webserver = "nginx";
+    sites."kimai.megaclan3000.de" = {
+      database.createLocally = true;
+    };
+  };
+
+  # Disable nginx — Caddy handles everything
+  services.nginx.enable = lib.mkForce false;
+
+  # Override PHP-FPM socket ownership and service group to caddy (instead of nginx)
+  services.phpfpm.pools."kimai-kimai.megaclan3000.de" = {
+    user = lib.mkForce "kimai";
+    group = lib.mkForce "caddy";
+    settings = {
+      "listen.owner" = lib.mkForce "caddy";
+      "listen.group" = lib.mkForce "caddy";
+    };
+  };
+  users.users.kimai.group = lib.mkForce "caddy";
+  systemd.services."kimai-init-kimai.megaclan3000.de".serviceConfig.Group = lib.mkForce "caddy";
+  systemd.tmpfiles.rules = lib.mkForce [
+    "d '/var/lib/kimai/kimai.megaclan3000.de' 0770 kimai caddy - -"
+  ];
+
+  # Backup kimai state (database + files) via Clan
+  clan.core.state."kimai" = {
+    folders = [
+      "/var/lib/kimai"
+    ];
+    preBackupScript = ''
+      export PATH=${lib.makeBinPath [ config.systemd.package ]}
+      systemctl stop kimai-init-kimai.megaclan3000.de.service
+    '';
+    postBackupScript = ''
+      export PATH=${lib.makeBinPath [ config.systemd.package ]}
+      systemctl start kimai-init-kimai.megaclan3000.de.service
+    '';
+  };
+
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "megaclan3000.de".extraConfig = ''
+        root * ${mc3000.packages.x86_64-linux.mc3000}
+        file_server
+        encode zstd gzip
+      '';
+
+      "kimai.megaclan3000.de".extraConfig = ''
+        root * ${config.services.nginx.virtualHosts."kimai.megaclan3000.de".root}
+
+        php_fastcgi unix/${config.services.phpfpm.pools."kimai-kimai.megaclan3000.de".socket} {
+          env front_controller_active true
+        }
+
+        encode zstd gzip
+        file_server
+      '';
+    };
+  };
+}
