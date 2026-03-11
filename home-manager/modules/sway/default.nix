@@ -314,8 +314,8 @@ in
 
           # swaymsg 'output DP-2 mode 2560x1440@165Hz'
 
-          # Lenovo (Left USB-C port)
-          output.DP-2.mode = "2560x1440@165Hz";
+          # Lenovo (Left USB-C port) - Now handled by kanshi
+          # output.DP-2.mode = "2560x1440@165Hz";
 
           # Phillips (Right USB-C port)
           # output.DP-1.mode = "2560x1440@60";
