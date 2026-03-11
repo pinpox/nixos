@@ -153,8 +153,8 @@ in
             "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
 
 
-            # Scratchpad
-            "${modifier}+u" = "exec swaymsg '[app_id=\"dropdown\"] scratchpad show; [app_id=\"dropdown\"] resize set width 100 ppt height 100 ppt; [app_id=\"dropdown\"] move absolute position 0 0'";
+            # Scratchpad  
+            "${modifier}+u" = "exec swaymsg '[app_id=\"dropdown\"] scratchpad show; [app_id=\"dropdown\"] resize set width 100 ppt height 100 ppt; [app_id=\"dropdown\"] move container to position 0 px 0 px'";
 
             # Screen brightness
             "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
@@ -201,7 +201,7 @@ in
                     # Fix position while it's in scratchpad (this ensures correct position on first show)
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] scratchpad show'
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] resize set width 100 ppt height 100 ppt' 
-                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move absolute position 0 0'
+                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move container to position 0 px 0 px'
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move scratchpad'
                   '';
                 in
