@@ -830,6 +830,26 @@
         "type": "github"
       }
     },
+    "punchcard": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773154028,
+        "narHash": "sha256-lnlNyA7bnkcXT2eijDjEfMthpCT9l1ObiI00gK5MCLM=",
+        "owner": "pinpox",
+        "repo": "punchcard",
+        "rev": "f94c05d32d16c2564096edcf58c0c52dbf51f9fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "punchcard",
+        "type": "github"
+      }
+    },
     "pyproject-nix": {
       "inputs": {
         "nixpkgs": [
@@ -971,6 +991,7 @@
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
         "promterm": "promterm",
+        "punchcard": "punchcard",
         "radio": "radio",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
