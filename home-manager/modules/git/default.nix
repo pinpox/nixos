@@ -135,15 +135,7 @@ in
         };
         ui = {
 
-          pager = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "less-less";
-              text = ''
-                export LESS_LINES=-2
-                exec less -FRX "$@"
-              '';
-            }
-          );
+          pager = "less -FRX";
 
           default-command = "log";
           merge-editor = [

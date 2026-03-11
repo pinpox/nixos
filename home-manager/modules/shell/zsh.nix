@@ -20,6 +20,9 @@
     sessionVariables = {
       RPS1 = ""; # Disable the right side prompt that "walters" theme introduces
       ZDOTDIR = "/home/pinpox/.config/zsh";
+      # Override prezto's default LESS which includes -z-4 (negative scroll
+      # window size), rejected by less >= 691
+      LESS = "-g -i -M -R -S -w -X -z4";
     };
 
     initContent =
