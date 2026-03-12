@@ -131,7 +131,7 @@
             pinpox = {
               displayname = "pinpox";
               email = "mail@pablo.tools";
-              groups = [ "admins" "users" "miniflux-users" "opencloud-users" ];
+              groups = [ "admins" "users" "miniflux-users" "opencloud-users" "paperless-users" ];
               passwordFile = config.clan.core.vars.generators."authelia-user-pinpox".files.password-hash.path;
             };
             lislon = {
@@ -148,6 +148,13 @@
             };
           };
         };
+        extraAccessControlRules = [
+          {
+            domain = "paper.pablo.tools";
+            policy = "one_factor";
+            subject = "group:paperless-users";
+          }
+        ];
         oidcAuthorizationPolicies = {
           opencloud-policy = {
             default_policy = "deny";
@@ -206,6 +213,9 @@
         envFile = "${config.clan.core.vars.generators."matrix-hook".files."envfile".path}";
         msgTemplatePath = "${matrix-hook.packages."x86_64-linux".matrix-hook}/bin/message.html.tmpl";
       };
+
+      # Enable paperless-ngx document management
+      paperless.enable = true;
 
       # Enable nextcloud configuration
       nextcloud.enable = true;

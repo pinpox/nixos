@@ -47,6 +47,24 @@ in
       };
     };
 
+    extraAccessControlRules = lib.mkOption {
+      type = lib.types.listOf lib.types.attrs;
+      default = [ ];
+      description = ''
+        Extra access control rules prepended before the default wildcard rule.
+        First matching rule wins, so these take priority.
+      '';
+      example = lib.literalExpression ''
+        [
+          {
+            domain = "paper.pablo.tools";
+            policy = "one_factor";
+            subject = "group:paperless-users";
+          }
+        ]
+      '';
+    };
+
     oidcClients = lib.mkOption {
       type = lib.types.listOf lib.types.attrs;
       default = [ ];
@@ -175,7 +193,7 @@ in
 
           access_control = {
             default_policy = "deny";
-            rules = [
+            rules = cfg.extraAccessControlRules ++ [
               {
                 # Settings page requires 2FA to enable passkey registration
                 domain = "${cfg.host}";
