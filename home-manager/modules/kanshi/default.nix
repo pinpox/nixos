@@ -38,14 +38,14 @@ in
             {
               criteria = "eDP-1";
               mode = "2880x1920@120Hz";
-              position = "2560,0";
+              position = "0,0";
               scale = 2.0;
               status = "enable";
             }
             {
               criteria = "DP-1";
               mode = "2560x1440";
-              position = "0,0";
+              position = "1440,0";
               status = "enable";
             }
           ];
