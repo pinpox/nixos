@@ -12,6 +12,8 @@
     nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
 
+  services.tailscale.enable = true;
+
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
   services.hardware.bolt.enable = true;
 
