@@ -129,6 +129,22 @@ in
       };
     };
 
+    # Force Scarlett 2i2 to use the "Direct" profile
+    services.pipewire.wireplumber.extraConfig."50-scarlett-profile" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            { "device.name" = "alsa_card.usb-Focusrite_Scarlett_2i2_USB_Y87MV6G157830B-00"; }
+          ];
+          actions = {
+            update-props = {
+              "device.profile" = "Direct";
+            };
+          };
+        }
+      ];
+    };
+
     # Use noisetorch (RNnoise) to create a virtual source with noise removal
     programs.noisetorch.enable = true;
 
