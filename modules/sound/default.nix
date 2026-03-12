@@ -122,6 +122,13 @@ in
       ACTION=="add", SUBSYSTEM=="sound", ATTR{id}=="USB", RUN+="${pkgs.alsa-utils}/bin/amixer -c USB cset name='Line In 1 Level Capture Enum' 'Inst'"
     '';
 
+    # Hide "Monitor of ..." sources from applications like pavucontrol
+    services.pipewire.wireplumber.extraConfig."50-hide-monitors" = {
+      "wireplumber.settings" = {
+        "node.features.audio.monitor-ports" = false;
+      };
+    };
+
     # Use noisetorch (RNnoise) to create a virtual source with noise removal
     programs.noisetorch.enable = true;
 
