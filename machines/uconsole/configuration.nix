@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    nixos-hardware.nixosModules.clockworkpi-uconsole-cm4
+    # nixos-hardware.nixosModules.clockworkpi-uconsole-cm4
     ./disko-config.nix
   ];
 
