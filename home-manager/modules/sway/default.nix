@@ -27,7 +27,6 @@ in
     };
   };
 
-
   config = mkIf cfg.enable (
     let
       c = config.pinpox.colors;
@@ -60,6 +59,41 @@ in
       '';
     in
     {
+      # Animated harmonograph wallpaper service
+      systemd.user.services.wl-harmonograph =
+        let
+          wl-harmonograph-pkg = wl-harmonograph.packages.x86_64-linux.default;
+          fg = builtins.concatStringsSep "," [
+            c.Red
+            c.Green
+            c.Blue
+            c.Yellow
+            c.Cyan
+            c.Magenta
+            c.BrightBlue
+          ];
+        in
+        {
+          Unit = {
+            Description = "Animated harmonograph wallpaper";
+            PartOf = [ "sway-session.target" ];
+            After = [ "sway-session.target" "kanshi.service" ];
+            Wants = [ "kanshi.service" ];
+          };
+          Service = {
+            ExecStart = "${wl-harmonograph-pkg}/bin/wl-harmonograph";
+            Environment = [
+              "HARMONOGRAPH_FG=${fg}"
+              "HARMONOGRAPH_BG=${c.Black},${c.BrightBlack}"
+            ];
+            Restart = "on-failure";
+            RestartSec = 2;
+          };
+          Install = {
+            WantedBy = [ "sway-session.target" ];
+          };
+        };
+
       # Enable theme switcher and register Sway's theme script
       pinpox.services.theme-switcher = {
         scripts = [ "${swayThemeSwitcher}" ];
@@ -153,9 +187,9 @@ in
             # Screen lock
             "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
 
-
-            # Scratchpad  
-            "${modifier}+u" = "exec swaymsg '[app_id=\"dropdown\"] scratchpad show; [app_id=\"dropdown\"] resize set width 100 ppt height 100 ppt; [app_id=\"dropdown\"] move container to position 0 px 0 px'";
+            # Scratchpad
+            "${modifier}+u" =
+              "exec swaymsg '[app_id=\"dropdown\"] scratchpad show; [app_id=\"dropdown\"] resize set width 100 ppt height 100 ppt; [app_id=\"dropdown\"] move container to position 0 px 0 px'";
 
             # Screen brightness
             "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
@@ -192,24 +226,13 @@ in
             {
               command =
                 let
-                  wl-harmonograph-pkg = wl-harmonograph.packages.x86_64-linux.default;
-                  fg = builtins.concatStringsSep "," [
-                    c.Red c.Green c.Blue c.Yellow c.Cyan c.Magenta c.BrightBlue
-                  ];
-                in
-                "HARMONOGRAPH_FG=${fg} HARMONOGRAPH_BG=${c.Black} ${wl-harmonograph-pkg}/bin/wl-harmonograph";
-            }
-
-            {
-              command = 
-                let
                   init-dropdown = pkgs.writeShellScript "init-dropdown" ''
                     # Start the terminal
                     ${pkgs.rio}/bin/rio --app-id=dropdown &
-                    
+
                     # Wait for it to be moved to scratchpad by window rules
                     sleep 0.5
-                    
+
                     # Fix position while it's in scratchpad (this ensures correct position on first show)
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] scratchpad show'
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] resize set width 100 ppt height 100 ppt' 
@@ -242,7 +265,8 @@ in
           input = {
             "*" = {
               xkb_layout = "us";
-            } // lib.optionalAttrs (cfg.keyboardVariant != "") {
+            }
+            // lib.optionalAttrs (cfg.keyboardVariant != "") {
               xkb_variant = cfg.keyboardVariant;
             };
           };
@@ -315,21 +339,6 @@ in
             right = 3;
             outer = 3;
           };
-
-          # swaymsg 'output eDP-1 pos 0 0'
-          # swaymsg 'output DP-1 pos 1920 0'
-          # swaymsg 'output DP-2 pos 4480 0'
-
-          # Animated harmonograph wallpaper
-          # output."*".bg = "${./nixos-wallpaper.png} fill #000000";
-
-          # swaymsg 'output DP-2 mode 2560x1440@165Hz'
-
-          # Lenovo (Left USB-C port) - Now handled by kanshi
-          # output.DP-2.mode = "2560x1440@165Hz";
-
-          # Phillips (Right USB-C port)
-          # output.DP-1.mode = "2560x1440@60";
         };
       };
     }

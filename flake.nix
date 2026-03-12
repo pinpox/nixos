@@ -86,7 +86,7 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.inputs.flake-parts.follows = "clan-core/flake-parts";
 
-    wl-harmonograph.url = "github:pinpox/wl-harmonograph";
+    wl-harmonograph.url = "path:/home/pinpox/code/github.com/pinpox/harmonograph";
     wl-harmonograph.inputs.nixpkgs.follows = "nixpkgs";
 
     restic-exporter.url = "github:pinpox/restic-exporter";
