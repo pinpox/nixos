@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  wl-harmonograph,
   ...
 }:
 with lib;
@@ -189,6 +190,17 @@ in
           startup = [
 
             {
+              command =
+                let
+                  wl-harmonograph-pkg = wl-harmonograph.packages.x86_64-linux.default;
+                  fg = builtins.concatStringsSep "," [
+                    c.Red c.Green c.Blue c.Yellow c.Cyan c.Magenta c.BrightBlue
+                  ];
+                in
+                "HARMONOGRAPH_FG=${fg} HARMONOGRAPH_BG=${c.Black} ${wl-harmonograph-pkg}/bin/wl-harmonograph";
+            }
+
+            {
               command = 
                 let
                   init-dropdown = pkgs.writeShellScript "init-dropdown" ''
@@ -308,9 +320,8 @@ in
           # swaymsg 'output DP-1 pos 1920 0'
           # swaymsg 'output DP-2 pos 4480 0'
 
-          # Set wallpaper for all screens
-          # TODO: generated based on coloscheme
-          output."*".bg = "${./nixos-wallpaper.png} fill #000000";
+          # Animated harmonograph wallpaper
+          # output."*".bg = "${./nixos-wallpaper.png} fill #000000";
 
           # swaymsg 'output DP-2 mode 2560x1440@165Hz'
 

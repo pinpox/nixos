@@ -4,7 +4,7 @@
   lib,
   nur,
   flake-self,
-  wallpaper-generator,
+
   promterm,
   home-manager,
   ...
@@ -41,7 +41,6 @@
   # there.
   home-manager.extraSpecialArgs = {
     inherit
-      wallpaper-generator
       flake-self
       nur
       promterm

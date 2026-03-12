@@ -86,8 +86,8 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.inputs.flake-parts.follows = "clan-core/flake-parts";
 
-    wallpaper-generator.url = "github:pinpox/wallpaper-generator";
-    wallpaper-generator.flake = false;
+    wl-harmonograph.url = "github:pinpox/wl-harmonograph";
+    wl-harmonograph.inputs.nixpkgs.follows = "nixpkgs";
 
     restic-exporter.url = "github:pinpox/restic-exporter";
     restic-exporter.inputs.nixpkgs.follows = "nixpkgs";

@@ -4,7 +4,7 @@
   lib,
   nur,
   flake-self,
-  wallpaper-generator,
+  wl-harmonograph,
   promterm,
   home-manager,
   ...
@@ -52,7 +52,7 @@
   # home-manager.extraSpecialArgs = flake-self.inputs;
   home-manager.extraSpecialArgs = {
     inherit
-      wallpaper-generator
+      wl-harmonograph
       flake-self
       nur
       promterm
