@@ -98,6 +98,7 @@
       PORT = "8099";
       DATABASE_URL = "/var/lib/punchcard/punchcard.db";
       OIDC_REDIRECT_URL = "https://punchcard.megaclan3000.de/callback";
+      SNOWFLAKES = "true";
     };
   };
 
