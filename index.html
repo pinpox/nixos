@@ -129,6 +129,42 @@ the value from a file at runtime, keeping secrets out of the Nix store.
               </p>
             </div>
           </div>
+          <div class="nixoption block" id="options.pinpox.services.authelia.extraAccessControlRules">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.authelia.extraAccessControlRules"># </a> options.pinpox.services.authelia.extraAccessControlRules
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">list of (attribute set)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Extra access control rules prepended before the default wildcard rule.
+First matching rule wins, so these take priority.
+</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>[]</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>map[_type:literalExpression text:[
+  {
+    domain = &#34;paper.pablo.tools&#34;;
+    policy = &#34;one_factor&#34;;
+    subject = &#34;group:paperless-users&#34;;
+  }
+]
+]</code>
+              </p>
+            </div>
+          </div>
           <div class="nixoption block" id="options.pinpox.services.authelia.host">
             <div class="level">
               <div class="level-left">
@@ -1661,6 +1697,60 @@ Each policy can define rules based on groups or networks.
               </p>
               <p class="block">
                 <strong>Example:</strong> <code>stream.0cx.de</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.paperless.enable">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.paperless.enable"># </a> options.pinpox.services.paperless.enable
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">boolean</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Whether to enable paperless-ngx document management.</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>false</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>true</code>
+              </p>
+            </div>
+          </div>
+          <div class="nixoption block" id="options.pinpox.services.paperless.host">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h3 class="title is-3">
+                    <a href="#options.pinpox.services.paperless.host"># </a> options.pinpox.services.paperless.host
+                  </h3>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <span class="tag is-medium is-info">string</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="subtitle">Host serving paperless-ngx</p>
+
+            <div class="block">
+              <p class="block">
+                <strong>Default:</strong> <code>paper.pablo.tools</code>
+              </p>
+              <p class="block">
+                <strong>Example:</strong> <code>paper.pablo.tools</code>
               </p>
             </div>
           </div>
