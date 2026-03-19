@@ -121,8 +121,6 @@
       # Pulseaudio
       pasystray.enable = true;
 
-      # Battery Warning
-      cbatticon.enable = true;
     };
   };
 }

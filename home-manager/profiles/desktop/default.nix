@@ -90,7 +90,6 @@ in
       claude-code
       chafa
       asciinema
-      cbatticon
       duf
       evince
       eza
@@ -179,8 +178,6 @@ in
       # Pulseaudio
       pasystray.enable = true;
 
-      # Battery Warning
-      cbatticon.enable = true;
     };
   };
 }
