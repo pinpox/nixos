@@ -29,6 +29,24 @@ self: super: {
   #   '';
   # });
 
+  # ARMv9 + KleidiAI optimized llama.cpp for Radxa Orion O6 (CIX P1 / Cortex-A720)
+  # CMAKE_SYSTEM_PROCESSOR=aarch64: cross-compile needs this so ARM code paths activate
+  # BUILD_SHARED_LIBS=OFF: KleidiAI symbols don't export correctly in shared libs
+  llama-cpp = super.llama-cpp.overrideAttrs (old: {
+    cmakeFlags = builtins.filter (f: !super.lib.hasPrefix "-DBUILD_SHARED_LIBS" f) (old.cmakeFlags or [ ]) ++ [
+      "-DCMAKE_SYSTEM_PROCESSOR=aarch64"
+      "-DGGML_CPU_ARM_ARCH=armv9-a+dotprod+i8mm+sve"
+      "-DGGML_CPU_KLEIDIAI=ON"
+      "-DBUILD_SHARED_LIBS=OFF"
+      "-DFETCHCONTENT_SOURCE_DIR_KLEIDIAI_DOWNLOAD=${super.fetchFromGitHub {
+        owner = "ARM-software";
+        repo = "kleidiai";
+        tag = "v1.22.0";
+        hash = "sha256-0dmjMdEWMKCBra25t2Fom48a2XOrgE++2bJp6pgfiyc=";
+      }}"
+    ];
+  });
+
   # TODO remove when fixed upsteam
   zynaddsubfx = super.zynaddsubfx.overrideAttrs (old: {
     CXXFLAGS = [
