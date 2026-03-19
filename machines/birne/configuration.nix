@@ -7,7 +7,7 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  clan.core.networking.targetHost = "192.168.101.221";
+  # clan.core.networking.targetHost = "192.168.101.221";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -30,7 +30,7 @@
     services = {
       unifi-controller.enable = true;
       minio.enable = true;
-      home-assistant.enable = true;
+      home-assistant.enable = false;
     };
 
     defaults = {
