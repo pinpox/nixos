@@ -9,9 +9,10 @@
     uconsole.tags = [ "mobile" ];
 
     birne.tags = [ "server" ];
+    clementine.tags = [ "server" ];
     kfbox.tags = [ "server" ];
     porree.tags = [ "server" ];
-    clementine.tags = [ "server" ];
+    traube.tags = [ "server" ];
   };
 
   meta.name = "pinpox-clan";
