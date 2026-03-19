@@ -1,0 +1,117 @@
+{ config, lib, pkgs, ... }:
+with lib;
+let
+  cfg = config.pinpox.services.forgejo;
+  oidcSecretPath = config.clan.core.vars.generators."forgejo-oidc".files.client_secret.path;
+in
+{
+
+  options.pinpox.services.forgejo = {
+    enable = mkEnableOption "forgejo config";
+    host = mkOption {
+      type = types.str;
+      default = "git.pinpox.com";
+      description = "Host serving forgejo";
+      example = "git.pinpox.com";
+    };
+    autheliaHost = mkOption {
+      type = types.str;
+      default = "auth.pablo.tools";
+      description = "Authelia host for OIDC discovery";
+    };
+  };
+
+  config = mkIf cfg.enable {
+
+    # Reverse proxy
+    services.caddy.virtualHosts."${cfg.host}".extraConfig =
+      with config.services.forgejo.settings.server;
+      "reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}";
+
+    # Backups
+    pinpox.services.restic-client.backup-paths-offsite = [
+      config.services.forgejo.dump.backupDir
+      # config.services.forgejo.stateDir
+      config.services.forgejo.lfs.contentDir
+    ];
+
+    # Shared OIDC secret (generated on the authelia host, shared via clan vars)
+    clan.core.vars.generators."forgejo-oidc" = {
+      share = true;
+      files.client_secret = { };
+      script = ''
+        echo "Run the forgejo-oidc generator on the authelia host"
+        exit 1
+      '';
+    };
+
+    # Register Authelia as OAuth2 source after forgejo starts
+    systemd.services.forgejo.postStart =
+      let
+        exe = lib.getExe config.services.forgejo.package;
+        providerName = "authelia";
+        customConf = "--work-path ${config.services.forgejo.stateDir} --config ${config.services.forgejo.customDir}/conf/app.ini";
+      in
+      ''
+        # Only add if not already registered
+        if ! ${exe} admin auth list ${customConf} 2>/dev/null | grep -q "${providerName}"; then
+          ${exe} admin auth add-oauth ${customConf} \
+            --name "${providerName}" \
+            --provider openidConnect \
+            --key "forgejo" \
+            --secret "$(cat ${oidcSecretPath})" \
+            --auto-discover-url "https://${cfg.autheliaHost}/.well-known/openid-configuration" \
+            --scopes "openid email profile groups"
+        fi
+      '';
+
+    services.forgejo = {
+      enable = true;
+
+      database.type = "sqlite3";
+      dump.enable = true;
+      lfs.enable = true;
+
+      settings = {
+
+        server = {
+          HTTP_PORT = 3333;
+          HTTP_ADDR = "127.0.0.1";
+          DOMAIN = cfg.host;
+          PROTOCOL = "https";
+        };
+
+        openid = {
+          ENABLE_OPENID_SIGNIN = false;
+          ENABLE_OPENID_SIGNUP = true;
+          WHITELISTED_URIS = cfg.autheliaHost;
+        };
+
+        oauth2_client = {
+          ENABLE_AUTO_REGISTRATION = true;
+        };
+
+        service = {
+          DISABLE_REGISTRATION = false;
+          ALLOW_ONLY_EXTERNAL_REGISTRATION = true;
+          SHOW_REGISTRATION_BUTTON = false;
+          ENABLE_INTERNAL_SIGNIN = false;
+          ENABLE_BASIC_AUTHENTICATION = false;
+          REQUIRE_SIGNIN_VIEW = true;
+        };
+
+        mailer = {
+          ENABLED = true;
+          FROM = "git@0cx.de";
+          PROTOCOL = "smtp";
+          IS_TLS_ENABLED = false;
+          USER = "mail@0cx.de";
+          SMTP_ADDR = "r19.hallo.cloud:587";
+        };
+
+        other.SHOW_FOOTER_VERSION = false;
+        session.COOKIE_SECURE = true;
+      };
+    };
+  };
+}

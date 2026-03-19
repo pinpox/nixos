@@ -78,6 +78,17 @@
     '';
   };
 
+  # OIDC client secret for forgejo (generated here, shared to forgejo host)
+  clan.core.vars.generators."forgejo-oidc" = {
+    share = true;
+    files.client_secret.owner = "authelia-main";
+    runtimeInputs = with pkgs; [ coreutils openssl ];
+    script = ''
+      mkdir -p $out
+      openssl rand -hex 32 > $out/client_secret
+    '';
+  };
+
   services.qemuGuest.enable = true;
 
   fileSystems."/" = {
@@ -177,6 +188,21 @@
             redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
             scopes = [ "openid" "profile" "email" ];
             authorization_policy = "miniflux-policy";
+            token_endpoint_auth_method = "client_secret_basic";
+          }
+          {
+            client_id = "forgejo";
+            client_name = "Forgejo";
+            client_secret_file = config.clan.core.vars.generators."forgejo-oidc".files.client_secret.path;
+            authorization_policy = "two_factor";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [ "https://git.pinpox.com/user/oauth2/authelia/callback" ];
+            scopes = [ "openid" "email" "profile" "groups" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "client_secret_basic";
           }
           {
