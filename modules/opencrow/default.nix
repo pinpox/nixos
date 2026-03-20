@@ -11,6 +11,8 @@ with lib;
 let
   cfg = config.pinpox.services.opencrow;
 
+  stateDir = "/var/lib/opencrow-claude";
+
   himalayaVars = config.clan.core.vars.generators."opencrow-himalaya";
 
   # Himalaya config for the mail fetcher (IMAP only, no SMTP)
@@ -42,8 +44,8 @@ let
 
     HIMALAYA="${lib.getExe pkgs.himalaya} -c ${himalayaFetcherConfig} -c ${himalayaVars.files."config".path}"
 
-    MAIL_DIR="/var/lib/opencrow/mail-inbox"
-    PIPE="/var/lib/opencrow/sessions/trigger.pipe"
+    MAIL_DIR="${stateDir}/mail-inbox"
+    PIPE="${stateDir}/sessions/trigger.pipe"
     mkdir -p "$MAIL_DIR"
 
     # List flagged messages, get their IDs
@@ -137,8 +139,10 @@ in
     };
 
     # Mail inbox directory for fetched emails
+    # Deutschebahn skill symlinked from mics-skills flake
     systemd.tmpfiles.rules = [
-      "d /var/lib/opencrow/mail-inbox 0777 root root -"
+      "d ${stateDir}/mail-inbox 0777 root root -"
+      "L+ ${stateDir}/skills/deutschebahn - - - - ${mics-skills}/skills/db-cli"
     ];
 
     # goimapnotify service: watches for starred emails and fetches them
@@ -156,7 +160,7 @@ in
       };
     };
 
-    services.opencrow = {
+    services.opencrow.instances.claude = {
       enable = true;
       piPackage = pkgs.pi;
       environmentFiles = [
@@ -183,7 +187,7 @@ in
         OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
         OPENCROW_HEARTBEAT_INTERVAL = "30m";
-        OPENCROW_PI_SKILLS_DIR = "/var/lib/opencrow/skills";
+        OPENCROW_PI_SKILLS_DIR = "${stateDir}/skills";
       };
     };
   };
