@@ -43,7 +43,7 @@ in
               status = "enable";
             }
             {
-              criteria = "DP-1";
+              criteria = "Lenovo Group Limited Y27h-30 U3V040YW";
               mode = "2560x1440";
               position = "1440,0";
               status = "enable";
