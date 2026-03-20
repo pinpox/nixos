@@ -31,8 +31,14 @@ let
   '';
 
   # Script that fetches starred/flagged emails to a directory
+  # NOTE: goimapnotify does not pass its environment to child scripts,
+  # so we source the envfile explicitly to get EMAIL_PASSWORD/EMAIL_LOGIN.
   onChangedMailScript = pkgs.writeShellScript "opencrow-fetch-starred" ''
     set -euo pipefail
+
+    set -a
+    source ${himalayaVars.files."envfile".path}
+    set +a
 
     HIMALAYA="${lib.getExe pkgs.himalaya} -c ${himalayaFetcherConfig} -c ${himalayaVars.files."config".path}"
 
@@ -132,7 +138,7 @@ in
 
     # Mail inbox directory for fetched emails
     systemd.tmpfiles.rules = [
-      "d /var/lib/opencrow/mail-inbox 0750 root root -"
+      "d /var/lib/opencrow/mail-inbox 0777 root root -"
     ];
 
     # goimapnotify service: watches for starred emails and fetches them
@@ -160,6 +166,7 @@ in
         config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
       ];
       extraPackages = [
+        pkgs.pi
         pkgs.curl
         pkgs.jq
         mics-skills.packages.${pkgs.system}.db-cli
