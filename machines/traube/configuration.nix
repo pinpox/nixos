@@ -2,6 +2,7 @@
   pkgs,
   lib,
   opencrow,
+  mics-skills,
   pinpox-utils,
   config,
   ...
@@ -16,12 +17,12 @@ let
         apiKey = "dummy";
         models = [
           {
-            id = "qwen";
-            name = "Qwen 2.5 7B (Local)";
+            id = "hermes";
+            name = "Hermes 3 Llama 3.1 8B (Local)";
             reasoning = false;
             input = [ "text" ];
-            contextWindow = 131072;
-            maxTokens = 16384;
+            contextWindow = 16384;
+            maxTokens = 4096;
           }
         ];
       };
@@ -47,19 +48,11 @@ in
     port = 8080;
     extraFlags = [
       "--ctx-size"
-      "131072"
+      "16384"
       "--parallel"
-      "2" # 2 slots to leave headroom on 32GB
-      "--threads"
-      "4" # generation: 4 big A720 cores only
-      "--threads-batch"
-      "8" # prompt processing: all 8 A720 cores
-      "--cpu-range"
-      "0-3,8-11" # pin to A720 cores (big+mid), skip A520 little cores (4-7)
-      "--cpu-strict"
-      "1" # strict core pinning
-      "--flash-attn"
-      "on" # faster prompt processing
+      "1" # single slot, only used by opencrow
+      "--batch-size"
+      "2048"
       "--mlock" # prevent model eviction from RAM
       "--cache-type-k"
       "q8_0" # quantize KV cache (saves ~50% KV memory)
@@ -69,54 +62,52 @@ in
       "2" # higher process priority
     ];
     modelsPreset = {
-      "qwen2.5-7b" = {
-        hf-repo = "bartowski/Qwen2.5-7B-Instruct-GGUF";
-        hf-file = "Qwen2.5-7B-Instruct-Q4_K_M.gguf";
-        alias = "qwen";
+      "hermes-3-8b" = {
+        hf-repo = "NousResearch/Hermes-3-Llama-3.1-8B-GGUF";
+        hf-file = "Hermes-3-Llama-3.1-8B.Q4_K_M.gguf";
+        alias = "hermes";
         jinja = "on";
       };
     };
   };
 
-  # OpenCrow bot using local llama-cpp (Nostr backend)
-  clan.core.vars.generators."opencrow-traube" = {
-    files.envfile = { };
-    runtimeInputs = [ pkgs.coreutils pkgs.openssl ];
-    script = ''
-      mkdir -p $out
-      KEY=$(openssl rand -hex 32)
-      cat > $out/envfile <<EOT
-      OPENCROW_NOSTR_PRIVATE_KEY='$KEY'
-      EOT
-    '';
-  };
+  # Allow llama-cpp to mlock the full model into RAM
+  systemd.services.llama-cpp.serviceConfig.LimitMEMLOCK = "infinity";
+
+  # OpenCrow bot using local llama-cpp (Matrix backend)
+  clan.core.vars.generators."opencrow-traube" = pinpox-utils.mkEnvGenerator [
+    "OPENCROW_MATRIX_ACCESS_TOKEN"
+  ];
 
   services.opencrow = {
     enable = true;
     piPackage = pkgs.pi;
     extraPackages = [
+      pkgs.pi
       pkgs.curl
       pkgs.jq
+      mics-skills.packages.${pkgs.system}.db-cli
     ];
     environmentFiles = [
       config.clan.core.vars.generators."opencrow-traube".files."envfile".path
     ];
     environment = {
-      OPENCROW_BACKEND = "nostr";
-      OPENCROW_NOSTR_RELAYS = "wss://nostr.0cx.de,wss://relay.damus.io,wss://relay.nostr.band,wss://nos.lol";
-      OPENCROW_NOSTR_ALLOWED_USERS = "npub1evf9p0304tplxqdja8m2hjr9r77hmetz87nuexuc6fs07fnvapuqg5ak9j";
+      OPENCROW_BACKEND = "matrix";
+      OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
+      OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
+      OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
       OPENCROW_PI_PROVIDER = "llama-cpp";
-      OPENCROW_PI_MODEL = "qwen";
+      OPENCROW_PI_MODEL = "hermes";
       OPENCROW_HEARTBEAT_INTERVAL = "30m";
       OPENCROW_LOG_LEVEL = "debug";
-      OPENCROW_PI_SKILLS_DIR = "/var/lib/opencrow/skills";
-      OPENCROW_NOSTR_NAME = "opencrow";
-      OPENCROW_NOSTR_DISPLAY_NAME = "OpenCrow";
-      OPENCROW_NOSTR_ABOUT = "AI assistant powered by Qwen 2.5 7B";
+    };
+    skills = {
+      db-cli = "${mics-skills}/skills/db-cli";
     };
   };
 
   # Place models.json in PI_CODING_AGENT_DIR so pi finds the local provider
+  # Symlink skill directories into OPENCROW_PI_SKILLS_DIR
   systemd.tmpfiles.rules = [
     "L+ /var/lib/opencrow/pi-agent/models.json - - - - ${piModelsJson}"
   ];
