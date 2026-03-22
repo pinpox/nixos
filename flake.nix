@@ -86,7 +86,7 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.inputs.flake-parts.follows = "clan-core/flake-parts";
 
-    wl-harmonograph.url = "path:/home/pinpox/code/github.com/pinpox/harmonograph";
+    wl-harmonograph.url = "github:pinpox/wl-harmonograph";
     wl-harmonograph.inputs.nixpkgs.follows = "nixpkgs";
 
     restic-exporter.url = "github:pinpox/restic-exporter";
@@ -138,18 +138,16 @@
     llm-agents.inputs.nixpkgs.follows = "nixpkgs";
     llm-agents.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    # TODO: replace with github URL once pushed
-    # opencrow.url = "path:/home/pinpox/code/github.com/pinpox/opencrow";
+    opencrow.url = "github:pinpox/opencrow";
+    opencrow.inputs.nixpkgs.follows = "nixpkgs";
+    opencrow.inputs.treefmt-nix.follows = "treefmt-nix";
+
     mics-skills.url = "github:Mic92/mics-skills";
     mics-skills.inputs.nixpkgs.follows = "nixpkgs";
     mics-skills.inputs.treefmt-nix.follows = "treefmt-nix";
 
     punchcard.url = "github:pinpox/punchcard";
     punchcard.inputs.nixpkgs.follows = "nixpkgs";
-
-    opencrow.url = "github:pinpox/opencrow";
-    opencrow.inputs.nixpkgs.follows = "nixpkgs";
-    opencrow.inputs.treefmt-nix.follows = "treefmt-nix";
   };
   outputs =
     { self, ... }@inputs:
@@ -228,7 +226,7 @@
               mqtt2prometheus
               smartmon-script
               machine-report
-              # woodpecker-pipeline
+              woodpecker-pipeline
               manual
               ;
           }
