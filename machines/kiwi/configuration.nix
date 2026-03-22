@@ -1,18 +1,17 @@
 {
   nixos-hardware,
   lib,
-  pkgs,
   ...
 }:
 {
 
   imports = [
+    ./ollama-local.nix
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
 
-  services.tailscale.enable = true;
 
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
   services.hardware.bolt.enable = true;
@@ -29,8 +28,6 @@
     amdgpu.opencl.enable = true;
     xone.enable = true;
   };
-
-  environment.systemPackages = [ pkgs.android-tools ];
 
   networking.hostName = "kiwi";
 
