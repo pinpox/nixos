@@ -90,6 +90,7 @@
   };
 
   services.qemuGuest.enable = true;
+  services.tailscale.enable = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";

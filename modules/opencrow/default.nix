@@ -12,6 +12,28 @@ let
   cfg = config.pinpox.services.opencrow;
 
   stateDir = "/var/lib/opencrow-claude";
+  localStateDir = "/var/lib/opencrow-local";
+
+  # models.json for the local instance to discover vllm on spark1
+  localPiModelsJson = pkgs.writeText "opencrow-local-models.json" (
+    builtins.toJSON {
+      providers.vllm = {
+        baseUrl = "http://100.96.100.100:8000/v1";
+        api = "openai-completions";
+        apiKey = "dummy";
+        compat = {
+          supportsDeveloperRole = false;
+          supportsReasoningEffort = false;
+        };
+        models = [
+          {
+            id = "openai/gpt-oss-120b";
+            reasoning = true;
+          }
+        ];
+      };
+    }
+  );
 
   himalayaVars = config.clan.core.vars.generators."opencrow-himalaya";
 
@@ -138,11 +160,17 @@ in
       '';
     };
 
+    # Local instance matrix credentials (migrated from traube)
+    clan.core.vars.generators."opencrow-local" = pinpox-utils.mkEnvGenerator [
+      "OPENCROW_MATRIX_ACCESS_TOKEN"
+    ];
+
     # Mail inbox directory for fetched emails
     # Deutschebahn skill symlinked from mics-skills flake
     systemd.tmpfiles.rules = [
       "d ${stateDir}/mail-inbox 0777 root root -"
       "L+ ${stateDir}/skills/deutschebahn - - - - ${mics-skills}/skills/db-cli"
+      "L+ ${localStateDir}/pi-agent/models.json - - - - ${localPiModelsJson}"
     ];
 
     # goimapnotify service: watches for starred emails and fetches them
@@ -188,6 +216,34 @@ in
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
         OPENCROW_HEARTBEAT_INTERVAL = "30m";
         OPENCROW_PI_SKILLS_DIR = "${stateDir}/skills";
+      };
+    };
+
+    # Local instance using ollama on kiwi (migrated from traube)
+    services.opencrow.instances.local = {
+      enable = true;
+      piPackage = pkgs.pi;
+      environmentFiles = [
+        config.clan.core.vars.generators."opencrow-local".files."envfile".path
+      ];
+      extraPackages = [
+        pkgs.pi
+        pkgs.curl
+        pkgs.jq
+        mics-skills.packages.${pkgs.system}.db-cli
+      ];
+      skills = {
+        deutschebahn = "${mics-skills}/skills/db-cli";
+      };
+      environment = {
+        OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
+        OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
+        OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
+        OPENCROW_PI_PROVIDER = "vllm";
+        OPENCROW_PI_MODEL = "openai/gpt-oss-120b";
+        OPENCROW_HEARTBEAT_INTERVAL = "30m";
+        OPENCROW_PI_IDLE_TIMEOUT = "12h";
+        OPENCROW_LOG_LEVEL = "debug";
       };
     };
   };
