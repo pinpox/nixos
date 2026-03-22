@@ -1,0 +1,195 @@
+{
+  "labels": {
+    "backend": "local",
+    "platform": "linux/amd64"
+  },
+  "steps": [
+    {
+      "commands": [
+        "nix flake show"
+      ],
+      "image": "bash",
+      "name": "Nix flake show"
+    },
+    {
+      "commands": [
+        "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
+      ],
+      "environment": {
+        "ATTIC_KEY": {
+          "from_secret": "attic_key"
+        }
+      },
+      "image": "bash",
+      "name": "Setup Attic"
+    },
+    {
+      "commands": [
+        "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake \".#checks.$(nix eval --raw --impure --file builtins.currentSystem)\""
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build all outputs for this architecture"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.birne.config.system.build.toplevel' -o 'result-birne'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build birne"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-birne')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show birne info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.clementine.config.system.build.toplevel' -o 'result-clementine'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build clementine"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-clementine')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show clementine info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.fichte.config.system.build.toplevel' -o 'result-fichte'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build fichte"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-fichte')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show fichte info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.kartoffel.config.system.build.toplevel' -o 'result-kartoffel'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build kartoffel"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-kartoffel')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show kartoffel info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.kfbox.config.system.build.toplevel' -o 'result-kfbox'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build kfbox"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-kfbox')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show kfbox info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.kiwi.config.system.build.toplevel' -o 'result-kiwi'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build kiwi"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-kiwi')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show kiwi info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.limette.config.system.build.toplevel' -o 'result-limette'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build limette"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-limette')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show limette info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.porree.config.system.build.toplevel' -o 'result-porree'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build porree"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-porree')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show porree info"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.tanne.config.system.build.toplevel' -o 'result-tanne'"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Build tanne"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-tanne')"
+      ],
+      "failure": "ignore",
+      "image": "bash",
+      "name": "Show tanne info"
+    },
+    {
+      "commands": [
+        "nix-fast-build --no-nom --skip-cached --flake \".#checks.$(nix eval --raw --impure --file builtins.currentSystem)\""
+      ],
+      "image": "bash",
+      "name": "Verify all builds succeeded"
+    }
+  ],
+  "when": [
+    {
+      "event": "manual"
+    },
+    {
+      "branch": "main",
+      "event": "push"
+    }
+  ]
+}

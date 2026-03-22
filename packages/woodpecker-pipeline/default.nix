@@ -1,117 +1,135 @@
-# To get a valid pipeline as .yml run:
-# cat result | jq '.configs[].data' -r | jq
+# nix run .\#woodpecker-pipeline
 {
   pkgs,
+  lib,
   flake-self,
+  ...
 }:
 with pkgs;
-writeText "pipeline" (
-  builtins.toJSON {
-    configs =
-      let
-        # Map platform names between woodpecker and nix
-        # woodpecker-platforms = {
-        #   "aarch64-linux" = "linux/arm64";
-        #   "x86_64-linux" = "linux/amd64";
-        # };
-        atticSetupStep = {
-          name = "Setup Attic";
-          image = "bash";
-          commands = [ "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default" ];
-          secrets = [ "attic_key" ];
-        };
-        mkAtticPushStep = output: {
-          name = "Push ${output} to Attic";
-          image = "bash";
-          commands = [ "attic push lounge-rocks:nix-cache '${output}'" ];
-          secrets = [ "attic_key" ];
-        };
-      in
-      [
-        # TODO Show flake info
-      ]
-      ++
-
-        # Hosts
-        pkgs.lib.lists.flatten [
-          (map
-            (arch: {
-              name = "Hosts with arch: ${arch}";
-              data = (
-                builtins.toJSON {
-
-                  labels.backend = "local";
-                  # platform = woodpecker-platforms."${flake-self.nixosConfigurations.${host}.config.nixpkgs.system}";
-                  steps = pkgs.lib.lists.flatten (
-                    [ atticSetupStep ]
-                    ++ (map (
-                      host:
-                      if
-                        # Skip hosts with this option set
-                        flake-self.nixosConfigurations.${host}.config.pinpox.defaults.CISkip
-                      then
-                        [ ]
-                      else
-                        [
-                          {
-                            name = "Build configuration for ${host}";
-                            image = "bash";
-                            commands = [
-                              "nix build '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
-                            ];
-                          }
-                          (mkAtticPushStep "result-${host}")
-                        ]
-                    ) (builtins.attrNames flake-self.nixosConfigurations))
-                  );
-                }
-              );
-            })
-            [
-              # "aarch64-linux"
-              "x86_64-linux"
-            ]
-          )
-        ]
-      ++
-
-        # Packages
-        # Map over architectures. Could optionally be done with woodpecker's
-        # matrix build, but we are using nix anyway
-        pkgs.lib.lists.flatten (
-          map
-            (
-              arch:
-              let
-                packages = (builtins.attrNames flake-self.packages."${arch}");
-              in
-
-              # Map over all packages of the current architecture.
-              (map (package: {
-                name = "Package: ${package} on ${arch}";
+let
+  supportedSystems = [
+    # "aarch64-linux"
+    "x86_64-linux"
+  ];
+  forAllSystems = lib.genAttrs supportedSystems;
+  pipelineFor = forAllSystems (
+    system:
+    writeText "pipeline" (
+      builtins.toJSON {
+        configs =
+          let
+            # Map platform names between woodpecker and nix
+            woodpecker-platforms = {
+              "aarch64-linux" = "linux/arm64";
+              "x86_64-linux" = "linux/amd64";
+            };
+            nixFlakeShowStep = {
+              name = "Nix flake show";
+              image = "bash";
+              commands = [ "nix flake show" ];
+            };
+            atticSetupStep = {
+              name = "Setup Attic";
+              image = "bash";
+              commands = [
+                "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
+              ];
+              environment = {
+                ATTIC_KEY.from_secret = "attic_key";
+              };
+            };
+            nixFastBuildStep = {
+              name = "Build all outputs for this architecture";
+              image = "bash";
+              failure = "ignore";
+              commands = [
+                ''nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake ".#checks.$(nix eval --raw --impure --file builtins.currentSystem)"''
+              ];
+            };
+            verifyBuildsStep = {
+              name = "Verify all builds succeeded";
+              image = "bash";
+              commands = [
+                ''nix-fast-build --no-nom --skip-cached --flake ".#checks.$(nix eval --raw --impure --file builtins.currentSystem)"''
+              ];
+            };
+          in
+          pkgs.lib.lists.flatten [
+            (map
+              (arch: {
+                name = "Hosts with arch: ${arch}";
                 data = (
                   builtins.toJSON {
-                    labels.backend = "local";
-                    # platform = woodpecker-platforms."${arch}";
-                    steps = [
-                      atticSetupStep
+                    labels = {
+                      backend = "local";
+                      platform = woodpecker-platforms."${arch}";
+                    };
+                    when = [
+                      { event = "manual"; }
                       {
-                        name = "Build package ${package}";
-                        image = "bash";
-                        group = "packages";
-                        commands = [ "nix build '.#${package}' -o 'result-${package}'" ];
+                        event = "push";
+                        branch = "main";
                       }
-                      (mkAtticPushStep "result-${package}")
                     ];
+                    steps = pkgs.lib.lists.flatten (
+                      [ nixFlakeShowStep ]
+                      ++ [ atticSetupStep ]
+                      ++ [ nixFastBuildStep ]
+                      ++ (map (
+                        host:
+                        # Skip hosts with CISkip set or wrong architecture
+                        if
+                          flake-self.nixosConfigurations.${host}.config.pinpox.defaults.CISkip
+                          || (flake-self.nixosConfigurations.${host}.pkgs.stdenv.hostPlatform.system != arch)
+                        then
+                          [ ]
+                        else
+                          [
+                            {
+                              name = "Build ${host}";
+                              image = "bash";
+                              failure = "ignore";
+                              commands = [
+                                "nix build --print-out-paths '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
+                              ];
+                            }
+                            {
+                              name = "Show ${host} info";
+                              image = "bash";
+                              failure = "ignore";
+                              commands = [
+                                "nix path-info --closure-size -h $(readlink -f 'result-${host}')"
+                              ];
+                            }
+                          ]
+                      ) (builtins.attrNames flake-self.nixosConfigurations))
+                      ++ [ verifyBuildsStep ]
+                    );
                   }
                 );
-              }) packages)
+              })
+              [
+                "${system}"
+              ]
             )
-            # TODO Re-Enable all architectures when we have runners for them
-            [ "x86_64-linux" ] # (builtins.attrNames flake-self.packages)
-        )
-      ++ [
-        # TODO Send notification
-      ];
-  }
-)
+          ];
+      }
+    )
+  );
+in
+pkgs.writeShellScriptBin "woodpecker-pipeline" ''
+  # make sure .woodpecker folder exists
+  mkdir -p .woodpecker
+
+  # empty content of .woodpecker folder
+  rm -rf .woodpecker/*
+
+  # copy pipelines to .woodpecker folder
+  ${lib.concatMapStringsSep "\n" (system:
+    let
+      name = builtins.replaceStrings [ "_" ] [ "-" ] (builtins.head (lib.splitString "-" system));
+      arch = builtins.elemAt (lib.splitString "-" system) 1;
+    in
+    "cat ${pipelineFor.${system}} | ${pkgs.jq}/bin/jq '.configs[].data' -r | ${pkgs.jq}/bin/jq > .woodpecker/${name}-${arch}.yaml"
+  ) supportedSystems}
+''
