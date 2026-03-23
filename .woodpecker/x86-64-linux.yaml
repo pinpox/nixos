@@ -25,15 +25,14 @@
     },
     {
       "commands": [
-        "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake \".#checks.$(nix eval --raw --impure --file builtins.currentSystem)\""
+        "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake \".#ciBuilds.x86_64-linux\""
       ],
-      "failure": "ignore",
       "image": "bash",
-      "name": "Build all outputs for this architecture"
+      "name": "Build all machines and push to cache"
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.birne.config.system.build.toplevel' -o 'result-birne'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.birne' -o 'result-birne'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -49,7 +48,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.clementine.config.system.build.toplevel' -o 'result-clementine'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.clementine' -o 'result-clementine'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -65,7 +64,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.fichte.config.system.build.toplevel' -o 'result-fichte'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.fichte' -o 'result-fichte'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -81,7 +80,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.kartoffel.config.system.build.toplevel' -o 'result-kartoffel'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.kartoffel' -o 'result-kartoffel'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -97,7 +96,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.kfbox.config.system.build.toplevel' -o 'result-kfbox'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.kfbox' -o 'result-kfbox'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -113,7 +112,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.kiwi.config.system.build.toplevel' -o 'result-kiwi'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.kiwi' -o 'result-kiwi'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -129,7 +128,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.limette.config.system.build.toplevel' -o 'result-limette'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.limette' -o 'result-limette'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -145,7 +144,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.porree.config.system.build.toplevel' -o 'result-porree'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.porree' -o 'result-porree'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -161,7 +160,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.tanne.config.system.build.toplevel' -o 'result-tanne'"
+        "nix build --print-out-paths '.#ciBuilds.x86_64-linux.tanne' -o 'result-tanne'"
       ],
       "failure": "ignore",
       "image": "bash",
@@ -174,13 +173,6 @@
       "failure": "ignore",
       "image": "bash",
       "name": "Show tanne info"
-    },
-    {
-      "commands": [
-        "nix-fast-build --no-nom --skip-cached --flake \".#checks.$(nix eval --raw --impure --file builtins.currentSystem)\""
-      ],
-      "image": "bash",
-      "name": "Verify all builds succeeded"
     }
   ],
   "when": [

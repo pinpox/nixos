@@ -140,14 +140,17 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1773144218,
-        "narHash": "sha256-j8zla/HDMZQmizyUsEFr22O7Sfy7yyyxzAKwV0AYXzI=",
-        "path": "/home/pinpox/code/git.clan.lol/clan/clan-community",
-        "type": "path"
+        "lastModified": 1773048959,
+        "narHash": "sha256-9ciCfim7DQ7EGAR22xDBjMP/GRxH7MNyRjjXFrjjCbY=",
+        "ref": "refs/heads/main",
+        "rev": "2ed1db891f14f752405e88b205afa4b47d5b5e37",
+        "revCount": 15,
+        "type": "git",
+        "url": "https://git.clan.lol/clan/clan-community"
       },
       "original": {
-        "path": "/home/pinpox/code/git.clan.lol/clan/clan-community",
-        "type": "path"
+        "type": "git",
+        "url": "https://git.clan.lol/clan/clan-community"
       }
     },
     "clan-core": {

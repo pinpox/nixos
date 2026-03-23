@@ -17,7 +17,7 @@
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
 
-    clan-community.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-community";
+    clan-community.url = "git+https://git.clan.lol/clan/clan-community";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -266,6 +266,15 @@
       checks = forAllSystems (system: {
         formatting = treefmtEval.${system}.config.build.check self;
       });
+
+      # Machine toplevels for CI builds and cache pushing
+      ciBuilds = forAllSystems (
+        system:
+        nixpkgs.lib.mapAttrs' (
+          name: config:
+          nixpkgs.lib.nameValuePair name config.config.system.build.toplevel
+        ) (nixpkgs.lib.filterAttrs (_: config: config.pkgs.stdenv.hostPlatform.system == system) self.nixosConfigurations)
+      );
 
       # Each subdirectory in ./templates/<template-name> is a
       # template, which can be used for new proects with:

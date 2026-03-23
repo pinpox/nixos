@@ -38,19 +38,11 @@ let
                 ATTIC_KEY.from_secret = "attic_key";
               };
             };
-            nixFastBuildStep = {
-              name = "Build all outputs for this architecture";
-              image = "bash";
-              failure = "ignore";
-              commands = [
-                ''nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake ".#checks.$(nix eval --raw --impure --file builtins.currentSystem)"''
-              ];
-            };
-            verifyBuildsStep = {
-              name = "Verify all builds succeeded";
+            buildAndCacheStep = {
+              name = "Build all machines and push to cache";
               image = "bash";
               commands = [
-                ''nix-fast-build --no-nom --skip-cached --flake ".#checks.$(nix eval --raw --impure --file builtins.currentSystem)"''
+                ''nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake ".#ciBuilds.${system}"''
               ];
             };
           in
@@ -74,7 +66,7 @@ let
                     steps = pkgs.lib.lists.flatten (
                       [ nixFlakeShowStep ]
                       ++ [ atticSetupStep ]
-                      ++ [ nixFastBuildStep ]
+                      ++ [ buildAndCacheStep ]
                       ++ (map (
                         host:
                         # Skip hosts with CISkip set or wrong architecture
@@ -90,7 +82,7 @@ let
                               image = "bash";
                               failure = "ignore";
                               commands = [
-                                "nix build --print-out-paths '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
+                                "nix build --print-out-paths '.#ciBuilds.${system}.${host}' -o 'result-${host}'"
                               ];
                             }
                             {
@@ -103,7 +95,6 @@ let
                             }
                           ]
                       ) (builtins.attrNames flake-self.nixosConfigurations))
-                      ++ [ verifyBuildsStep ]
                     );
                   }
                 );
