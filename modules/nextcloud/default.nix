@@ -10,7 +10,7 @@ let
 
   # Pin Nextcloud major version.
   # Refer to upstream docs for updating major versions
-  package = pkgs.nextcloud32;
+  package = pkgs.nextcloud33;
 
 in
 {
@@ -137,7 +137,10 @@ in
           mail
           calendar
           contacts
-          memories
+
+          # TODO https://github.com/pulsejet/memories/issues/1625
+          # memories
+
           previewgenerator
           # maps
           twofactor_webauthn
