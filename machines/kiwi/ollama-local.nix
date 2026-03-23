@@ -44,9 +44,9 @@ let
         vllm_1 = vllmProvider "100.96.100.100" "openai/gpt-oss-120b";
         vllm_2 = vllmProvider "100.96.100.101" "openai/gpt-oss-120b";
         vllm_3 = vllmProvider "100.96.100.102" "Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8";
-        # Pull models with: OLLAMA_HOST="100.124.48.3:11434" ollama pull <model>
+        # Pull models with: OLLAMA_HOST="100.96.100.103:11434" ollama pull <model>
         ollama = {
-          baseUrl = "http://100.124.48.3:11434/v1";
+          baseUrl = "http://100.96.100.103:11434/v1";
           api = "openai-completions";
           apiKey = "dummy";
           compat = {
