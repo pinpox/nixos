@@ -10,15 +10,12 @@
   roles.default = {
     description = "Sets up navidrome music server with caddy reverse proxy";
     interface =
-      { lib, ... }:
+      { lib, meta, ... }:
       {
         options = {
-
-          # TODO When https://git.clan.lol/clan/clan-core/pulls/6727 gets
-          # merged, we can just default to music.<meta.domain>
           host = lib.mkOption {
             type = lib.types.str;
-            default = "music.0cx.de";
+            default = "music.${meta.domain}";
             description = "Host serving the navidrome instance";
             example = "party.0cx.de";
           };

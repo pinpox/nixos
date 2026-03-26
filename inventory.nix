@@ -30,7 +30,8 @@
       module.input = "self";
       module.name = "@pinpox/navidrome";
       roles.default.machines.kfbox = {
-        settings.host = "music.pin";
+        settings.host = "music.0cx.de";
+        # settings.host = "music.pin";
       };
     };
 
