@@ -28,6 +28,12 @@ in
         default = 7777;
         description = "Port for strfry to listen on";
       };
+
+      maxConnectionsPerIP = mkOption {
+        type = types.int;
+        default = 50;
+        description = "Maximum concurrent connections per IP address to the HTTPS port (caddy)";
+      };
     };
 
     # ── NIP-29 groups relay (khatru29) ──────────────────────────────────────
@@ -91,7 +97,7 @@ in
               contact = ""
             }
 
-            nofiles = 0
+            nofiles = 65536
             maxWebsocketPayloadSize = 131072
             autoPingSeconds = 55
             enableTCPKeepalive = false
@@ -114,6 +120,7 @@ in
           Restart = "on-failure";
           RestartSec = 5;
 
+          LimitNOFILE = 65536;
           DynamicUser = true;
           StateDirectory = "strfry";
 
@@ -127,6 +134,19 @@ in
           ReadWritePaths = [ "/var/lib/strfry" ];
         };
       };
+
+      # Limit concurrent connections per IP to prevent a single client from
+      # exhausting strfry's file descriptors (as happened with 1000+ conns).
+      networking.firewall.extraCommands = ''
+        iptables -I nixos-fw 1 -p tcp --dport 443 -m connlimit \
+          --connlimit-above ${toString cfg.general.maxConnectionsPerIP} \
+          --connlimit-mask 32 -j DROP
+      '';
+      networking.firewall.extraStopCommands = ''
+        iptables -D nixos-fw -p tcp --dport 443 -m connlimit \
+          --connlimit-above ${toString cfg.general.maxConnectionsPerIP} \
+          --connlimit-mask 32 -j DROP || true
+      '';
 
       services.caddy.virtualHosts."${cfg.general.domain}".extraConfig = ''
         reverse_proxy 127.0.0.1:${toString cfg.general.port}
