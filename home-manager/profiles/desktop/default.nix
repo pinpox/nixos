@@ -48,6 +48,7 @@ in
       };
 
       programs = {
+        pi.enable = true;
         games.enable = true;
         obs-studio.enable = false;
         pandoc.enable = true;
