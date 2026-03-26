@@ -1,3 +1,2 @@
 local-zone: "pin." transparent
-local-data: "music.pin. CNAME kfbox.pin."
 local-data: "irc.pin. CNAME kfbox.pin."
