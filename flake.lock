@@ -1079,6 +1079,7 @@
           "clan-core",
           "treefmt-nix"
         ],
+        "twitch-first": "twitch-first",
         "wl-harmonograph": "wl-harmonograph",
         "wrappers": "wrappers",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
@@ -1259,6 +1260,26 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "twitch-first": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774466413,
+        "narHash": "sha256-Sm7pIJ70dFlULjfBo9w7rkFwoAAbROivbyufCjEYMU8=",
+        "owner": "pinpox",
+        "repo": "twitch-first",
+        "rev": "fd7924d50f8ff63322b6da78f86e31b7c8495806",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "twitch-first",
         "type": "github"
       }
     },

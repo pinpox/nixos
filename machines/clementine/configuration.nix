@@ -21,6 +21,8 @@
     ];
   };
 
+  pinpox.services.twitch-first.enable = true;
+
   services.qemuGuest.enable = true;
 
   networking.firewall = {

@@ -148,6 +148,9 @@
 
     punchcard.url = "github:pinpox/punchcard";
     punchcard.inputs.nixpkgs.follows = "nixpkgs";
+
+    twitch-first.url = "github:pinpox/twitch-first";
+    twitch-first.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
     { self, ... }@inputs:
