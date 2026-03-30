@@ -35,6 +35,19 @@
       };
     };
 
+    nostr = {
+      module.input = "clan-community";
+      module.name = "nostr";
+      roles.relay.machines.kfbox = {
+        settings.host = "nostr.0cx.de";
+      };
+      roles.groups-relay.machines.kfbox = {
+        settings.host = "groups.0cx.de";
+        settings.relayName = "0cx.de NIP-29 Groups";
+        settings.relayDescription = "NIP-29 group chat relay for 0cx.de";
+      };
+    };
+
     thelounge = {
       module.input = "self";
       module.name = "@pinpox/thelounge";
