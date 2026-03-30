@@ -214,6 +214,12 @@
       roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
     };
 
+    zerotier = {
+      roles.controller.machines.clementine = { };
+      roles.peer.machines.kiwi = { };
+      # roles.peer.tags.all = { };
+    };
+
     wg-clan = {
 
       module.input = "clan-community";

@@ -14,27 +14,21 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # Default to depolying to the hostname
-  clan.core.networking.targetHost = lib.mkDefault "${config.networking.hostName}.pin";
+  clan.core.networking.targetHost = lib.mkOverride 999 "${config.networking.hostName}.pin";
 
   # passCommand must remain at machine-level (not flake-level)
   clan.core.vars.password-store.passCommand = "passage";
 
-  environment.systemPackages = [
-    pkgs.passage
-  ];
+  environment.systemPackages = [ pkgs.passage ];
 
   clan.core.vars.generators."mkpasswd-generator" = {
     files.test-password = { };
-
-    # files.test-password = {
-    #   owner = "pinpox";
-    #   group = "users";
-    # };
 
     runtimeInputs = with pkgs; [
       coreutils
       xkcdpass
     ];
+
     script = ''
       mkdir -p $out
       echo ${(self.clan.exports."clan-core/internet:internet::".networking.module)}
