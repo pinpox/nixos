@@ -1,10 +1,4 @@
-{
-  nixos-hardware,
-  lib,
-  pkgs,
-  ...
-}:
-
+{ ... }:
 let
 
   vllmProvider = host: model: {

@@ -53,39 +53,37 @@ in
 
         settings = {
 
-          extraConfig = {
-            init.defaultBranch = "main";
+          init.defaultBranch = "main";
 
-            pull = {
-              rebase = true;
-              autostash = true;
-              twohead = "ort";
-            };
-
-            push = {
-              default = "simple";
-              autoSetupRemote = true;
-            };
-
-            # rerere = {
-            #   autoUpdate = true
-            #   enabled = true
-            # };
-
-            branch = {
-              autoSetupRebase = "always";
-              autoSetupMerge = "always";
-            };
-
-            rebase = {
-              stat = true;
-              autoStash = true;
-              autoSquash = true;
-              updateRefs = true;
-            };
-
-            help.autocorrect = 10;
+          pull = {
+            rebase = true;
+            autostash = true;
+            twohead = "ort";
           };
+
+          push = {
+            default = "simple";
+            autoSetupRemote = true;
+          };
+
+          # rerere = {
+          #   autoUpdate = true
+          #   enabled = true
+          # };
+
+          branch = {
+            autoSetupRebase = "always";
+            autoSetupMerge = "always";
+          };
+
+          rebase = {
+            stat = true;
+            autoStash = true;
+            autoSquash = true;
+            updateRefs = true;
+          };
+
+          help.autocorrect = 10;
 
           signing = {
             format = "ssh";
@@ -93,7 +91,7 @@ in
             signByDefault = true;
           };
 
-          aliases = {
+          alias = {
             s = "status";
             d = "diff";
             a = "add";
