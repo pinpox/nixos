@@ -18,6 +18,7 @@
 
   services.fwupd.enable = true;
   services.acpid.enable = true;
+  services.upower.enable = true;
 
   # To build raspi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

@@ -16,6 +16,7 @@
   ];
 
   services.acpid.enable = true;
+  services.upower.enable = true;
 
   # US QWERTY for TTY (mobile devices don't have colemak keyboards)
   console.keyMap = lib.mkForce "us";
