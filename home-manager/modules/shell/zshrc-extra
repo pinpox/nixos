@@ -77,6 +77,42 @@ function delta_sidebyside {
 }
 trap delta_sidebyside WINCH
 
+# Checkout a Gitea PR by number, setting up SSH remote and upstream tracking
+tea-pr() {
+  local pr="$1"
+  [[ -z "$pr" ]] && { echo "Usage: tea-pr <PR_NUMBER>"; return 1; }
+
+  local head
+  head=$(tea pr view "$pr" --output json --fields index,head \
+    | jq -r ".[] | select(.index==\"${pr}\") | .head")
+
+  if [[ -z "$head" ]]; then
+    echo "Error: PR #${pr} not found"
+    return 1
+  fi
+
+  local owner branch
+  if [[ "$head" == *:* ]]; then
+    owner="${head%%:*}"
+    branch="${head#*:}"
+  else
+    owner=""
+    branch="$head"
+  fi
+
+  if [[ -z "$owner" ]]; then
+    git fetch origin "$branch"
+    git checkout -b "pr-${pr}" "origin/${branch}"
+  else
+    local remote="pulls/${owner}"
+    git remote add "$remote" "gitea@git.clan.lol:${owner}/clan-core.git" 2>/dev/null
+    git fetch "$remote" "$branch"
+    git checkout -b "pr-${pr}" "${remote}/${branch}"
+    git branch --set-upstream-to="${remote}/${branch}"
+  fi
+  echo "PR #${pr}: on branch pr-${pr}"
+}
+
 autoload -z edit-command-line
 zle -N edit-command-line
 
