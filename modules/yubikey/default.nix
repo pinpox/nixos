@@ -43,7 +43,13 @@ in
     age-plugin-picohsm.packages.${pkgs.system}.default
     pkgs.age
     pkgs.opensc
+    pkgs.keyutils
   ];
+
+  environment.sessionVariables = {
+    PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.system}.default}/bin/picohsm-askpass";
+    PICOHSM_ASKPASS_BACKEND = "$HOME/.config/noctalia/plugins/noctalia-askpass/noctalia-askpass";
+  };
 
 
     security.tpm2.enable = true;
