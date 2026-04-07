@@ -7,22 +7,18 @@
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
-    # nixpkgs-master.url = "github:nixos/nixpkgs/master?shallow=1";
-
-    # nixpkgs-local.url = "path:/home/pinpox/code/github.com/NixOS/nixpkgs";
-    # nixpkgs-local.flake = false;
 
     clan-core.url = "git+https://git.clan.lol/clan/clan-core";
-    # clan-core.url = "git+file:///home/pinpox/code/git.clan.lol/clan/clan-core?ref=pinpox-clan-input";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
+    clan-core.inputs.data-mesher.follows = "data-mesher";
+
+    data-mesher.url = "git+https://git.clan.lol/clan/data-mesher";
+    data-mesher.inputs.nixpkgs.follows = "nixpkgs";
 
     clan-community.url = "git+https://git.clan.lol/clan/clan-community";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
-
-    # caddy-patched.url = "github:pinpox/nixos-caddy-patched";
-    # caddy-patched.inputs.nixpkgs.follows = "nixpkgs";
 
     rio.url = "github:pinpox/rio";
     rio.inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +40,6 @@
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    # nixos-hardware.url = "github:pinpox/nixos-hardware/clockworkpi-uconsole";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
