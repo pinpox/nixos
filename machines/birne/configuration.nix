@@ -38,6 +38,7 @@
       environment.enable = true;
       locale.enable = true;
       nix.enable = true;
+      storagebox.enable = true;
     };
   };
 
