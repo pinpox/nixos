@@ -69,7 +69,6 @@ in
         swaylock.enable = true;
         # river.enable = true; # TODO: broken in nixpkgs (Zig build failure)
         waybar.enable = true;
-        mako.enable = true;
         kanshi.enable = true;
       };
     };
@@ -164,21 +163,6 @@ in
           '';
         };
       };
-    };
-
-    services = {
-
-      # Applets, shown in tray
-
-      # Networking
-      network-manager-applet.enable = true;
-
-      # Bluetooth
-      blueman-applet.enable = true;
-
-      # Pulseaudio
-      pasystray.enable = true;
-
     };
   };
 }

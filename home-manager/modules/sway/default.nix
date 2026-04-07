@@ -16,6 +16,31 @@ let
         # dbus-launch --sh-syntax --exit-with-session ${pkgs.sway}/bin/sway
         ${pkgs.sway}/bin/sway --unsupported-gpu
       '';
+
+  # Wrapper that ensures only one noctalia-shell instance is running, so we can
+  # use exec_always and pick up new versions on update
+  start-noctalia = pkgs.writeShellApplication {
+    name = "start-noctalia";
+    runtimeInputs = [
+      pkgs.procps
+      pkgs.noctalia-shell
+      pkgs.himalaya
+    ];
+    text = ''
+      # Kill any running instance (matches the quickshell process loading
+      # noctalia-shell's shell.qml). Ignore failure if none is running.
+      pkill -f 'quickshell.*noctalia-shell' || true
+
+      # Wait for the old process(es) to actually exit so the new instance
+      # can claim the IPC socket cleanly.
+      for _ in $(seq 1 50); do
+        pgrep -f 'quickshell.*noctalia-shell' >/dev/null || break
+        sleep 0.1
+      done
+
+      exec noctalia-shell
+    '';
+  };
 in
 {
   options.pinpox.programs.sway = {
@@ -160,7 +185,7 @@ in
 
             # Laucher
             "${modifier}+p" = ''
-              exec ${pkgs.tofi}/bin/tofi-run --output=$(swaymsg --type get_outputs | jq -r '.[] | select(.focused).name') | xargs swaymsg exec --
+              exec ${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle
             '';
 
             # Url
@@ -243,7 +268,10 @@ in
                 "${init-dropdown}";
               always = true;
             }
-            { command = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"; }
+            {
+              command = lib.getExe start-noctalia;
+              always = true;
+            }
           ];
 
           # Application/window specific rules
@@ -313,8 +341,6 @@ in
             };
 
           bars = [
-            # { command = "${pkgs.waybar}/bin/waybar"; }
-            { command = "waybar"; }
           ];
 
           fonts = {
