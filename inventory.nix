@@ -229,6 +229,20 @@
       # roles.peer.tags.all = { };
     };
 
+    wg-star = {
+
+      module.input = "clan-community";
+      module.name = "dm-wireguard-star";
+
+      roles.controller.machines.porree.settings = {
+        endpoint = "vpn.pablo.tools";
+        listenPort = 51821;
+      };
+
+      roles.peer.machines.kiwi = { };
+      roles.peer.machines.kfbox= { };
+    };
+
     wg-clan = {
 
       module.input = "clan-community";
