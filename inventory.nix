@@ -35,18 +35,27 @@
       };
     };
 
-    nostr = {
-      module.input = "clan-community";
-      module.name = "nostr";
-      roles.relay.machines.kfbox = {
-        settings.host = "nostr.0cx.de";
-      };
-      roles.groups-relay.machines.kfbox = {
-        settings.host = "groups.0cx.de";
-        settings.relayName = "0cx.de NIP-29 Groups";
-        settings.relayDescription = "NIP-29 group chat relay for 0cx.de";
-      };
-    };
+
+    # nostr = {
+    #   module.input = "clan-community";
+    #   module.name = "opencrow";
+    #   roles.default.machines.kiwi = { };
+    #   roles.llm.machines.kiwi = { };
+    #   roles.nostr-relay.machines.kiwi = { };
+    # };
+
+    # nostr = {
+    #   module.input = "clan-community";
+    #   module.name = "nostr";
+    #   roles.relay.machines.kfbox = {
+    #     settings.host = "nostr.0cx.de";
+    #   };
+    #   roles.groups-relay.machines.kfbox = {
+    #     settings.host = "groups.0cx.de";
+    #     settings.relayName = "0cx.de NIP-29 Groups";
+    #     settings.relayDescription = "NIP-29 group chat relay for 0cx.de";
+    #   };
+    # };
 
     thelounge = {
       module.input = "self";
@@ -211,7 +220,7 @@
       module.name = "importer";
       roles.default.tags.all = { };
       # Import all modules from ./modules/<module-name> on all machines
-      roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.attrNames self.nixosModules));
+      roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.filter (m: m != "opencrow") (builtins.attrNames self.nixosModules)));
     };
 
     zerotier = {

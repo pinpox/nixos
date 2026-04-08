@@ -14,6 +14,7 @@
     alertmanager-ntfy.nixosModules.default
     ./caddy.nix
     # ./retiolum.nix
+    ../../modules/opencrow
   ];
 
   clan.core.networking.targetHost = "94.16.108.229";
