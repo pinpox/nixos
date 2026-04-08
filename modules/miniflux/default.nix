@@ -34,9 +34,18 @@ in
     clan.core.vars.generators."miniflux-oidc" = {
       share = true;
       files.client_secret = { };
+      files.client_secret_hash = { };
+      runtimeInputs = with pkgs; [
+        coreutils
+        openssl
+        authelia
+        gnused
+      ];
       script = ''
-        echo "Run the miniflux-oidc generator on the authelia host"
-        exit 1
+        mkdir -p $out
+        openssl rand -hex 32 > $out/client_secret
+        authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
+          | sed 's/^Digest: //' > $out/client_secret_hash
       '';
     };
 
