@@ -1,4 +1,5 @@
 local-zone: "pin." transparent
+local-data: "auth.pin. CNAME porree.pin."
 local-data: "status.pin. CNAME porree.pin."
 local-data: "prometheus.pin. CNAME porree.pin."
 local-data: "irc.pin. CNAME kfbox.pin."
