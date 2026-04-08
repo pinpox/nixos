@@ -70,6 +70,7 @@ self: super: {
   # Custom packages. Will be made available on all machines and used where
   # needed.
   smartmon-script = super.callPackage ../packages/smartmon-script { };
+  noctalia-askpass = super.callPackage ../packages/noctalia-askpass { };
   machine-report = super.callPackage ../packages/machine-report { };
 
   # Use custom neovim in standalone flake

@@ -171,7 +171,7 @@ ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
 
       zzz = "systemctl suspend";
 
-      picohsm-add-to-agent = "ssh-add -e ${pkgs.opensc}/lib/opensc-pkcs11.so 2>/dev/null; SSH_ASKPASS=\"$HOME/.config/noctalia/plugins/noctalia-askpass/noctalia-askpass\" SSH_ASKPASS_REQUIRE=prefer ssh-add -s ${pkgs.opensc}/lib/opensc-pkcs11.so";
+      picohsm-add-to-agent = "ssh-add -e ${pkgs.opensc}/lib/opensc-pkcs11.so 2>/dev/null; SSH_ASKPASS=${lib.getExe pkgs.noctalia-askpass} SSH_ASKPASS_REQUIRE=prefer ssh-add -s ${pkgs.opensc}/lib/opensc-pkcs11.so";
 
       serve = "${pkgs.miniserve}/bin/miniserve";
 

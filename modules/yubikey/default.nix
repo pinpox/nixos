@@ -48,7 +48,7 @@ in
 
   environment.sessionVariables = {
     PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.system}.default}/bin/picohsm-askpass";
-    PICOHSM_ASKPASS_BACKEND = "$HOME/.config/noctalia/plugins/noctalia-askpass/noctalia-askpass";
+    PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
   };
 
 
