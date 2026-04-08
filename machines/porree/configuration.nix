@@ -68,25 +68,45 @@
     '';
   };
 
-  # OIDC client secret for miniflux (generated here, shared to kfbox)
+  # OIDC client secret for miniflux (generated here, shared to kfbox).
+  # client_secret      → raw value for the miniflux OIDC client side
+  # client_secret_hash → argon2 hash for the Authelia client_secret_file
   clan.core.vars.generators."miniflux-oidc" = {
     share = true;
     files.client_secret.owner = "authelia-main";
-    runtimeInputs = with pkgs; [ coreutils openssl ];
+    files.client_secret_hash.owner = "authelia-main";
+    runtimeInputs = with pkgs; [
+      coreutils
+      openssl
+      authelia
+      gnused
+    ];
     script = ''
       mkdir -p $out
       openssl rand -hex 32 > $out/client_secret
+      authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
+        | sed 's/^Digest: //' > $out/client_secret_hash
     '';
   };
 
-  # OIDC client secret for forgejo (generated here, shared to forgejo host)
+  # OIDC client secret for forgejo (generated here, shared to forgejo host).
+  # client_secret      → raw value for the forgejo OIDC client side
+  # client_secret_hash → argon2 hash for the Authelia client_secret_file
   clan.core.vars.generators."forgejo-oidc" = {
     share = true;
     files.client_secret.owner = "authelia-main";
-    runtimeInputs = with pkgs; [ coreutils openssl ];
+    files.client_secret_hash.owner = "authelia-main";
+    runtimeInputs = with pkgs; [
+      coreutils
+      openssl
+      authelia
+      gnused
+    ];
     script = ''
       mkdir -p $out
       openssl rand -hex 32 > $out/client_secret
+      authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
+        | sed 's/^Digest: //' > $out/client_secret_hash
     '';
   };
 
@@ -181,12 +201,24 @@
               { policy = "one_factor"; subject = "group:miniflux-users"; }
             ];
           };
+          grafana-policy = {
+            default_policy = "deny";
+            rules = [
+              { policy = "one_factor"; subject = "user:pinpox"; }
+            ];
+          };
+          prometheus-policy = {
+            default_policy = "deny";
+            rules = [
+              { policy = "one_factor"; subject = "user:pinpox"; }
+            ];
+          };
         };
         oidcClients = [
           {
             client_id = "miniflux";
-            # Secret is shared via clan vars (share = true)
-            client_secret_file = config.clan.core.vars.generators."miniflux-oidc".files.client_secret.path;
+            # Hashed secret (raw value still in client_secret for the miniflux side)
+            client_secret_file = config.clan.core.vars.generators."miniflux-oidc".files.client_secret_hash.path;
             redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
             scopes = [ "openid" "profile" "email" ];
             authorization_policy = "miniflux-policy";
@@ -195,7 +227,7 @@
           {
             client_id = "forgejo";
             client_name = "Forgejo";
-            client_secret_file = config.clan.core.vars.generators."forgejo-oidc".files.client_secret.path;
+            client_secret_file = config.clan.core.vars.generators."forgejo-oidc".files.client_secret_hash.path;
             authorization_policy = "two_factor";
             require_pkce = true;
             pkce_challenge_method = "S256";
@@ -206,6 +238,43 @@
             access_token_signed_response_alg = "none";
             userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "client_secret_basic";
+          }
+          {
+            client_id = "grafana";
+            client_name = "Grafana";
+            client_secret_file = config.clan.core.vars.generators."grafana-oidc".files.client_secret_hash.path;
+            authorization_policy = "grafana-policy";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [
+              "${config.services.grafana.settings.server.root_url}login/generic_oauth"
+            ];
+            scopes = [ "openid" "profile" "email" "groups" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_basic";
+          }
+          {
+            client_id = "prometheus";
+            client_name = "Prometheus";
+            client_secret_file = config.clan.core.vars.generators."prometheus-oauth2".files.client_secret_hash.path;
+            authorization_policy = "prometheus-policy";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [
+              "${config.services.oauth2-proxy.redirectURL}"
+            ];
+            scopes = [ "openid" "profile" "email" "groups" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            # oauth2-proxy sends the client secret via POST body and doesn't
+            # expose a knob to switch to client_secret_basic, so the Authelia
+            # client must accept client_secret_post.
+            token_endpoint_auth_method = "client_secret_post";
           }
           {
             # OpenCloud uses public client with PKCE (no secret needed)
@@ -251,34 +320,6 @@
       # Enable OpenCloud (uses Authelia OIDC)
       opencloud.enable = true;
 
-      monitoring-server = {
-
-        enable = true;
-        dashboard.enable = true;
-        loki.enable = true;
-        alertmanager-irc-relay.enable = true;
-
-        blackboxTargets = [
-          "https://pablo.tools"
-          "https://megaclan3000.de"
-          "https://build.lounge.rocks"
-          # "https://lounge.rocks"
-          # "https://vpn.pablo.tools"
-          "https://${config.pinpox.services.vaultwarden.host}" # Vaultwarden
-          "https://pinpox.github.io/nixos/"
-          "https://cache.lounge.rocks/nix-cache/nix-cache-info"
-          # "https://pads.0cx.de"
-          "https://news.0cx.de"
-          # Gitea (on kfbox with host set to default vaulue)
-          "https://${config.pinpox.services.gitea.host}"
-          "https://irc.0cx.de"
-        ];
-      };
-    };
-
-    metrics = {
-      blackbox.enable = true;
-      json.enable = true;
     };
   };
 }

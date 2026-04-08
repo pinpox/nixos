@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, meta }:
 
 let
   # docker's filesystems disappear quickly, leading to false positives
@@ -102,7 +102,7 @@ lib.mapAttrsToList
     };
 
     host_down = {
-      condition = ''up{job="node-stats", instance!~"limette.wireguard:9100|kartoffel.wireguard:9100"} == 0'';
+      condition = ''up{job="node-stats", instance!~"limette.${meta.domain}:9100|kartoffel.${meta.domain}:9100"} == 0'';
       description = "{{$labels.instance}} is down!";
     };
 

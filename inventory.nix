@@ -35,7 +35,6 @@
       };
     };
 
-
     # nostr = {
     #   module.input = "clan-community";
     #   module.name = "opencrow";
@@ -117,6 +116,7 @@
       roles.default.machines = {
         kfbox.settings.host = "46.38.242.17";
         porree.settings.host = "94.16.108.229";
+        clementine.settings.host = "152.53.139.179";
       };
     };
 
@@ -216,11 +216,50 @@
       roles.mobile.tags.mobile = { };
     };
 
+    monitoring = {
+      module.input = "self";
+      module.name = "@pinpox/monitoring";
+
+      # node-exporter on every host
+      # roles.node-exporter.tags.all = { };
+      #
+      # # Centralized monitoring server lives on porree
+      roles.prometheus.machines.porree.settings = {
+        blackboxTargets = [
+          "https://pablo.tools"
+          # "https://megaclan3000.de"
+          # "https://build.lounge.rocks"
+          # "https://pass.pablo.tools" # Vaultwarden
+          # "https://pinpox.github.io/nixos/"
+          # "https://cache.lounge.rocks/nix-cache/nix-cache-info"
+          # "https://news.0cx.de"
+          # "https://git.0cx.de" # Gitea
+          # "https://irc.0cx.de"
+        ];
+      };
+      # roles.loki.machines.porree = { };
+
+      roles.grafana.machines.porree.settings = {
+        oidc = {
+          enable = true;
+          issuer = "https://auth.pablo.tools";
+          clientId = "grafana";
+        };
+      };
+
+      # roles.blackbox.machines.porree = { };
+      # roles.alertmanager-irc-relay.machines.porree = { };
+    };
+
     importer = {
       module.name = "importer";
       roles.default.tags.all = { };
       # Import all modules from ./modules/<module-name> on all machines
-      roles.default.extraModules = (map (m: ./modules + "/${m}") (builtins.filter (m: m != "opencrow") (builtins.attrNames self.nixosModules)));
+      roles.default.extraModules = (
+        map (m: ./modules + "/${m}") (
+          builtins.filter (m: m != "opencrow") (builtins.attrNames self.nixosModules)
+        )
+      );
     };
 
     zerotier = {
@@ -240,7 +279,7 @@
       };
 
       roles.peer.machines.kiwi = { };
-      roles.peer.machines.kfbox= { };
+      roles.peer.machines.kfbox = { };
     };
 
     wg-clan = {

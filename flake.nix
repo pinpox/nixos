@@ -197,6 +197,7 @@
         modules."@pinpox/navidrome" = ./clan-service-modules/navidrome.nix;
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
+        modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
         inventory = import ./inventory.nix { inherit self; };
       };
     in

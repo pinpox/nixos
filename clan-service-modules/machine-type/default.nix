@@ -18,7 +18,6 @@
       security.acme.defaults.email = lib.mkDefault "letsencrypt@pablo.tools";
       clan.core.settings.state-version.enable = true;
       hardware.enableRedistributableFirmware = true;
-      pinpox.metrics.node.enable = true;
       hardware.enableAllHardware = true;
     };
 }

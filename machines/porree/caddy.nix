@@ -135,9 +135,6 @@ in
         }
       '';
 
-      # Grafana
-      "status.pablo.tools".extraConfig = "reverse_proxy 127.0.0.1:9005";
-
       # Home-assistant
       "home.pablo.tools".extraConfig = "reverse_proxy birne.wireguard:8123";
 
