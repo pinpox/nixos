@@ -126,10 +126,17 @@ in
             clients = cfg.oidcClients;
             # CORS configuration for public OIDC clients
             cors = {
-              endpoints = [ "authorization" "token" "revocation" "introspection" "userinfo" ];
+              endpoints = [
+                "authorization"
+                "token"
+                "revocation"
+                "introspection"
+                "userinfo"
+              ];
               allowed_origins_from_client_redirect_uris = true;
             };
-          } // lib.optionalAttrs (cfg.oidcAuthorizationPolicies != {}) {
+          }
+          // lib.optionalAttrs (cfg.oidcAuthorizationPolicies != { }) {
             authorization_policies = cfg.oidcAuthorizationPolicies;
           };
         }
@@ -141,7 +148,7 @@ in
         # mkBefore so files exist before authelia's preStart validates config
         preStart = lib.mkBefore ''
           ${pkgs.python3}/bin/python3 ${nix-to-config} ${usersConfigJson} /run/authelia-main/users.json
-          ${lib.optionalString (cfg.oidcClients != []) ''
+          ${lib.optionalString (cfg.oidcClients != [ ]) ''
             ${pkgs.python3}/bin/python3 ${nix-to-config} ${oidcConfigJson} /run/authelia-main/oidc.json
           ''}
         '';
@@ -151,17 +158,20 @@ in
       services.authelia.instances.main = {
         enable = true;
 
-        secrets = with config.clan.core.vars.generators.authelia.files; {
-          jwtSecretFile = jwt-secret.path;
-          sessionSecretFile = session-secret.path;
-          storageEncryptionKeyFile = storage-encryption-key.path;
-        } // lib.optionalAttrs (cfg.oidcClients != []) {
-          oidcHmacSecretFile = oidc-hmac-secret.path;
-          oidcIssuerPrivateKeyFile = oidc-jwks-key.path;
-        };
+        secrets =
+          with config.clan.core.vars.generators.authelia.files;
+          {
+            jwtSecretFile = jwt-secret.path;
+            sessionSecretFile = session-secret.path;
+            storageEncryptionKeyFile = storage-encryption-key.path;
+          }
+          // lib.optionalAttrs (cfg.oidcClients != [ ]) {
+            oidcHmacSecretFile = oidc-hmac-secret.path;
+            oidcIssuerPrivateKeyFile = oidc-jwks-key.path;
+          };
 
         # Include generated OIDC config at runtime
-        settingsFiles = lib.mkIf (cfg.oidcClients != []) [
+        settingsFiles = lib.mkIf (cfg.oidcClients != [ ]) [
           "/run/authelia-main/oidc.json"
         ];
 
@@ -196,7 +206,7 @@ in
             rules = cfg.extraAccessControlRules ++ [
               {
                 # Settings page requires 2FA to enable passkey registration
-                domain = "${cfg.host}";
+                domain = cfg.host;
                 resources = [ "^/settings.*$" ];
                 policy = "two_factor";
               }
