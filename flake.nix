@@ -8,7 +8,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core";
+    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=push-zxokrkuluznq";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
     clan-core.inputs.data-mesher.follows = "data-mesher";
@@ -16,7 +16,7 @@
     data-mesher.url = "git+https://git.clan.lol/clan/data-mesher";
     data-mesher.inputs.nixpkgs.follows = "nixpkgs";
 
-    clan-community.url = "git+https://git.clan.lol/clan/clan-community";
+	clan-community.url = "git+https://git.clan.lol/clan/clan-community?ref=push-wzlstsmzurls";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
 
