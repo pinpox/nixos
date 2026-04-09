@@ -17,7 +17,8 @@
     data-mesher.url = "git+https://git.clan.lol/clan/data-mesher";
     data-mesher.inputs.nixpkgs.follows = "nixpkgs";
 
-	clan-community.url = "git+https://git.clan.lol/clan/clan-community?ref=push-wzlstsmzurls";
+	# TODO: revert to upstream after upstreaming authelia service
+	clan-community.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-community";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -199,7 +200,6 @@
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
-        modules."@pinpox/authelia" = ./clan-service-modules/authelia;
         inventory = import ./inventory.nix { inherit self; };
       };
     in

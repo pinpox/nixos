@@ -236,8 +236,8 @@
     };
 
     main = {
-      module.input = "self";
-      module.name = "@pinpox/authelia";
+      module.input = "clan-community";
+      module.name = "authelia";
       roles.default.machines.porree.settings = {
         publicHost = "auth.pablo.tools";
         domain = "pablo.tools";
