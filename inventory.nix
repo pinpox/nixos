@@ -179,6 +179,7 @@
       roles.default.settings = {
         user = "root";
         share = true;
+        # no identity = no IdP account
       };
       roles.default.extraModules = [ ./users/root.nix ];
     };
@@ -189,8 +190,25 @@
       roles.default.settings = {
         user = "pinpox";
         share = true;
+        identity.main = {
+          email = "mail@pablo.tools";
+          groups = [ "admins" "users" "miniflux-users" "opencloud-users" "paperless-users" ];
+        };
       };
       roles.default.extraModules = [ ./users/pinpox.nix ];
+    };
+
+    # Identity-only user: IdP account but no Unix account
+    user-berber = {
+      module.name = "users";
+      roles.default.tags.all = { };
+      roles.default.settings = {
+        user = "berber";
+        systemUser = false;
+        identity.main = {
+          groups = [ "users" "opencloud-users" "miniflux-users" ];
+        };
+      };
     };
 
     user-lislon = {
@@ -199,6 +217,7 @@
       roles.default.settings = {
         user = "lislon";
         share = true;
+        identity.main = { };
       };
     };
 
@@ -214,6 +233,68 @@
       roles.desktop.tags.desktop = { };
       roles.server.tags.server = { };
       roles.mobile.tags.mobile = { };
+    };
+
+    main = {
+      module.input = "self";
+      module.name = "@pinpox/authelia";
+      roles.default.machines.porree.settings = {
+        publicHost = "auth.pablo.tools";
+        domain = "pablo.tools";
+
+        # Additional ACL rules (prepended before the auto-generated wildcard)
+        accessControlRules = [
+          {
+            domain = "paper.pablo.tools";
+            policy = "one_factor";
+            subject = "group:paperless-users";
+          }
+        ];
+
+        # Restrict these clients to pinpox only.
+        # Unlisted clients use the default: any authenticated user.
+        clientAccess = {
+          grafana = [ "user:pinpox" ];
+          prometheus = [ "user:pinpox" ];
+        };
+
+        # OIDC clients for non-clan-service consumers (miniflux, forgejo,
+        # opencloud are still NixOS modules, not clan services, so they
+        # can't export auth.client themselves yet).
+        extraClients = {
+          miniflux = {
+            redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
+            scopes = [ "openid" "profile" "email" ];
+            token_endpoint_auth_method = "client_secret_basic";
+          };
+          forgejo = {
+            client_name = "Forgejo";
+            authorization_policy = "two_factor";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [ "https://git.pinpox.com/user/oauth2/authelia/callback" ];
+            scopes = [ "openid" "email" "profile" "groups" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            token_endpoint_auth_method = "client_secret_basic";
+          };
+          opencloud = {
+            client_name = "OpenCloud";
+            public = true;
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            scopes = [ "openid" "offline_access" "groups" "profile" "email" ];
+            redirect_uris = [
+              "https://cloud.pablo.tools/"
+              "https://cloud.pablo.tools/oidc-callback.html"
+              "https://cloud.pablo.tools/oidc-silent-redirect.html"
+            ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" "refresh_token" ];
+            token_endpoint_auth_method = "none";
+          };
+        };
+      };
     };
 
     monitoring = {

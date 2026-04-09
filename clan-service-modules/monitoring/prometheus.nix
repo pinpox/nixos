@@ -1,4 +1,4 @@
-{ settings, roles, meta }:
+{ settings, roles, meta, prometheusOidcGenerator }:
 {
   lib,
   pkgs,
@@ -18,43 +18,17 @@ in
     "RESTIC_REPOSITORY"
   ];
 
-  # OIDC client secret + Authelia-side hash + oauth2-proxy cookie secret.
-  # One generator produces three files:
-  #   client_secret      → raw value, kept around in case other consumers
-  #                        need it; readable by oauth2_proxy.
-  #   client_secret_hash → argon2 hash, read by Authelia via client_secret_file.
-  #   envfile            → systemd EnvironmentFile loaded by oauth2-proxy,
-  #                        containing the raw client secret (oauth2-proxy
-  #                        uses the raw value) and the cookie secret used
-  #                        for oauth2-proxy's own session encryption.
-  clan.core.vars.generators."prometheus-oauth2" = {
-    share = true;
-    files.client_secret = {
-      owner = "oauth2_proxy";
-      group = "authelia-main";
-      mode = "0440";
-    };
-    files.client_secret_hash.owner = "authelia-main";
-    files.envfile = {
-      owner = "oauth2_proxy";
-      mode = "0400";
-    };
+  # OIDC client secret generator — declared here so the producing host has the
+  # files. The same definition is exported via auth.varsGenerator so the
+  # authelia host also declares it (share=true). runtimeInputs added here
+  # because pkgs isn't available at inventory-eval time.
+  clan.core.vars.generators."authelia-oidc-prometheus" = prometheusOidcGenerator // {
     runtimeInputs = with pkgs; [
       coreutils
       openssl
       authelia
       gnused
     ];
-    script = ''
-      mkdir -p $out
-      CLIENT_SECRET=$(openssl rand -hex 32)
-      COOKIE_SECRET=$(openssl rand -base64 32 | tr -d '\n')
-      printf '%s' "$CLIENT_SECRET" > $out/client_secret
-      authelia crypto hash generate argon2 --password "$CLIENT_SECRET" \
-        | sed 's/^Digest: //' > $out/client_secret_hash
-      printf 'OAUTH2_PROXY_CLIENT_SECRET=%s\nOAUTH2_PROXY_COOKIE_SECRET=%s\n' \
-        "$CLIENT_SECRET" "$COOKIE_SECRET" > $out/envfile
-    '';
   };
 
   # oauth2-proxy sits between Caddy and Prometheus and handles the OIDC
@@ -65,7 +39,7 @@ in
     enable = true;
     provider = "oidc";
     clientID = "prometheus";
-    keyFile = config.clan.core.vars.generators."prometheus-oauth2".files.envfile.path;
+    keyFile = config.clan.core.vars.generators."authelia-oidc-prometheus".files.envfile.path;
     oidcIssuerUrl = "https://auth.pablo.tools";
     redirectURL = "https://${settings.domain}/oauth2/callback";
     upstream = [ "http://127.0.0.1:9090" ];

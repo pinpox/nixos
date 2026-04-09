@@ -8,7 +8,8 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-    clan-core.url = "git+https://git.clan.lol/clan/clan-core?ref=push-zxokrkuluznq";
+    # TODO: revert to upstream after upstreaming auth export + identity settings
+    clan-core.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-core";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
     clan-core.inputs.data-mesher.follows = "data-mesher";
@@ -198,6 +199,7 @@
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
+        modules."@pinpox/authelia" = ./clan-service-modules/authelia;
         inventory = import ./inventory.nix { inherit self; };
       };
     in

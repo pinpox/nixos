@@ -1,4 +1,4 @@
-{ settings, roles, meta }:
+{ settings, roles, meta, oidcGenerator }:
 { config, lib, pkgs, ... }:
 let
   prometheusHosts = builtins.attrNames (roles.prometheus.machines or { });
@@ -10,30 +10,22 @@ in
   # SMTP password file
   clan.core.vars.generators."grafana".prompts.smtp-password.persist = true;
 
-  # OIDC client secret + Authelia-side hash.
-  #   client_secret      → raw value, read by grafana via $__file{}
-  #   client_secret_hash → argon2 hash, read by Authelia via client_secret_file
-  clan.core.vars.generators."grafana-oidc" = lib.mkIf oidc.enable {
-    share = true;
-    files.client_secret = {
-      owner = "grafana";
-      group = "authelia-main";
-      mode = "0440";
-    };
-    files.client_secret_hash.owner = "authelia-main";
-    runtimeInputs = with pkgs; [
-      coreutils
-      openssl
-      authelia
-      gnused
-    ];
-    script = ''
-      mkdir -p $out
-      openssl rand -hex 32 > $out/client_secret
-      authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
-        | sed 's/^Digest: //' > $out/client_secret_hash
-    '';
-  };
+  # OIDC client secret — declared here so the producing host (where grafana
+  # runs) has the files. The same generator definition is also exported via
+  # auth.varsGenerator so the authelia host declares it too (share=true).
+  # runtimeInputs is added here (not in the export) because pkgs is only
+  # available inside nixosModule, not at inventory-eval time.
+  clan.core.vars.generators."authelia-oidc-${oidc.clientId}" = lib.mkIf oidc.enable (
+    oidcGenerator
+    // {
+      runtimeInputs = with pkgs; [
+        coreutils
+        openssl
+        authelia
+        gnused
+      ];
+    }
+  );
 
   # Grafana secret key for signing
   clan.core.vars.generators."grafana-secret-key" = {
@@ -110,7 +102,7 @@ in
         icon = "signin";
         auto_login = true;
         client_id = oidc.clientId;
-        client_secret = "$__file{${config.clan.core.vars.generators."grafana-oidc".files.client_secret.path}}";
+        client_secret = "$__file{${config.clan.core.vars.generators."authelia-oidc-${oidc.clientId}".files.client_secret.path}}";
         scopes = "openid profile email groups";
         empty_scopes = false;
         auth_url = "${oidc.issuer}/api/oidc/authorization";
