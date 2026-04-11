@@ -14,11 +14,11 @@ let
   stateDir = "/var/lib/opencrow-claude";
   localStateDir = "/var/lib/opencrow-local";
 
-  # models.json for the local instance to discover vllm on spark1
+  # models.json for the local instance to discover ollama on spark1
   localPiModelsJson = pkgs.writeText "opencrow-local-models.json" (
     builtins.toJSON {
-      providers.vllm = {
-        baseUrl = "http://100.96.100.100:8000/v1";
+      providers.ollama = {
+        baseUrl = "http://100.96.100.103:11434/v1";
         api = "openai-completions";
         apiKey = "dummy";
         compat = {
@@ -27,7 +27,7 @@ let
         };
         models = [
           {
-            id = "openai/gpt-oss-120b";
+            id = "gemma4:31b-cloud";
             reasoning = true;
           }
         ];
@@ -170,6 +170,7 @@ in
     systemd.tmpfiles.rules = [
       "d ${stateDir}/mail-inbox 0777 root root -"
       "L+ ${stateDir}/skills/deutschebahn - - - - ${mics-skills}/skills/db-cli"
+      "L+ ${localStateDir}/skills/deutschebahn - - - - ${mics-skills}/skills/db-cli"
       "L+ ${localStateDir}/pi-agent/models.json - - - - ${localPiModelsJson}"
     ];
 
@@ -232,15 +233,14 @@ in
         pkgs.jq
         mics-skills.packages.${pkgs.system}.db-cli
       ];
-      skills = {
-        deutschebahn = "${mics-skills}/skills/db-cli";
-      };
+
       environment = {
         OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
         OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
-        OPENCROW_PI_PROVIDER = "vllm";
-        OPENCROW_PI_MODEL = "openai/gpt-oss-120b";
+        OPENCROW_PI_PROVIDER = "ollama";
+        OPENCROW_PI_MODEL = "gemma4:31b-cloud";
+        OPENCROW_PI_SKILLS_DIR = "${localStateDir}/skills";
         OPENCROW_HEARTBEAT_INTERVAL = "30m";
         OPENCROW_PI_IDLE_TIMEOUT = "12h";
         OPENCROW_LOG_LEVEL = "debug";
