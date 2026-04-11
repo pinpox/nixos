@@ -88,6 +88,8 @@ in
       swaynotificationcenter
       tea
       claude-code
+      but
+      gitbutler
       chafa
       asciinema
       duf

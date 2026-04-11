@@ -55,6 +55,7 @@ self: super: {
   pi = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.pi;
   openspec = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.openspec;
   claude-code = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.claude-code;
+  but = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.but;
 
   rio = inputs.rio.packages.${super.stdenv.hostPlatform.system}.default;
 
