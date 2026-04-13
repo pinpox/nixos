@@ -31,18 +31,6 @@
     ];
   };
 
-  # Punchcard OIDC secrets (services managed via clan inventory)
-  clan.core.vars.generators."punchcard" = pinpox-utils.mkEnvGenerator [
-    "OIDC_ISSUER_URL"
-    "OIDC_CLIENT_ID"
-    "OIDC_CLIENT_SECRET"
-  ];
-  clan.core.vars.generators."punchcard2" = pinpox-utils.mkEnvGenerator [
-    "OIDC_ISSUER_URL"
-    "OIDC_CLIENT_ID"
-    "OIDC_CLIENT_SECRET"
-  ];
-
   services.caddy = {
     enable = true;
     virtualHosts = {
