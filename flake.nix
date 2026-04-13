@@ -17,8 +17,7 @@
     data-mesher.url = "git+https://git.clan.lol/clan/data-mesher";
     data-mesher.inputs.nixpkgs.follows = "nixpkgs";
 
-	# TODO: revert to upstream after upstreaming authelia service
-	clan-community.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-community";
+	clan-community.url = "https://git.clan.lol/clan/clan-community/archive/main.tar.gz";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
 

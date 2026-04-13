@@ -297,6 +297,16 @@
       };
     };
 
+    punchcard1 = {
+      module.input = "clan-community";
+      module.name = "punchcard";
+      roles.default.machines.clementine.settings = {
+        publicHost = "punchcard.megaclan3000.de";
+        # OIDC config from existing vars generator (external provider)
+        environmentFile = "/run/secrets/punchcard/envfile";
+      };
+    };
+
     punchcard2 = {
       module.input = "clan-community";
       module.name = "punchcard";
