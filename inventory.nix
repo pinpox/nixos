@@ -297,6 +297,17 @@
       };
     };
 
+    punchcard2 = {
+      module.input = "clan-community";
+      module.name = "punchcard";
+      roles.default.machines.clementine.settings = {
+        publicHost = "punchcard2.megaclan3000.de";
+        port = 8100;
+        # OIDC config from existing vars generator (external provider)
+        environmentFile = "/run/secrets/punchcard2/envfile";
+      };
+    };
+
     monitoring = {
       module.input = "self";
       module.name = "@pinpox/monitoring";

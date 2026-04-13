@@ -111,40 +111,12 @@
     ];
   };
 
-  # Punchcard time tracking (second instance)
+  # Punchcard2 OIDC secrets (service managed via clan inventory)
   clan.core.vars.generators."punchcard2" = pinpox-utils.mkEnvGenerator [
     "OIDC_ISSUER_URL"
     "OIDC_CLIENT_ID"
     "OIDC_CLIENT_SECRET"
   ];
-
-  systemd.services.punchcard2 = {
-    description = "Punchcard time tracking (second instance)";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    serviceConfig = {
-      ExecStart = "${punchcard.packages.x86_64-linux.punchcard}/bin/punchcard";
-      DynamicUser = true;
-      StateDirectory = "punchcard2";
-      WorkingDirectory = "/var/lib/punchcard2";
-      Restart = "always";
-      RestartSec = 5;
-      EnvironmentFile = [ config.clan.core.vars.generators."punchcard2".files."envfile".path ];
-    };
-    environment = {
-      PORT = "8100";
-      DATABASE_URL = "/var/lib/punchcard2/punchcard.db";
-      OIDC_REDIRECT_URL = "https://punchcard2.megaclan3000.de/callback";
-      SNOWFLAKES = "true";
-    };
-  };
-
-  # Backup punchcard2 state via Clan
-  clan.core.state."punchcard2" = {
-    folders = [
-      "/var/lib/punchcard2"
-    ];
-  };
 
   services.caddy = {
     enable = true;
@@ -157,10 +129,6 @@
 
       "punchcard.megaclan3000.de".extraConfig = ''
         reverse_proxy localhost:8099
-      '';
-
-      "punchcard2.megaclan3000.de".extraConfig = ''
-        reverse_proxy localhost:8100
       '';
 
       "kimai.megaclan3000.de".extraConfig = ''
