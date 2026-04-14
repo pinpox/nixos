@@ -140,11 +140,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1776085787,
-        "narHash": "sha256-G+UyKe2MHHQvVE7IuasJ0Oree7kfShdHBi0dH/VgpKw=",
-        "rev": "a8b4de40bc3320b36fb37a8640cd7248193bc1e8",
+        "lastModified": 1776150890,
+        "narHash": "sha256-T9wALoyiP0EgaivJ95SfWTfzeRPfwf2REcdZs1GRBdQ=",
+        "rev": "5f308dc22060e35d91875e535c3e490940c7961b",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-community/archive/a8b4de40bc3320b36fb37a8640cd7248193bc1e8.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/clan-community/archive/5f308dc22060e35d91875e535c3e490940c7961b.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -939,26 +939,6 @@
         "type": "github"
       }
     },
-    "punchcard": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1773264770,
-        "narHash": "sha256-l+ICAcxlt5TiFVw6qVkpD1/jfRD1MUCWUylqmrNQKIo=",
-        "owner": "pinpox",
-        "repo": "punchcard",
-        "rev": "e31dc43afbe7672c2397fa960a2caf5d7fbdd713",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "punchcard",
-        "type": "github"
-      }
-    },
     "pyproject-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1101,7 +1081,6 @@
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
         "promterm": "promterm",
-        "punchcard": "punchcard",
         "radio": "radio",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
