@@ -8,8 +8,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-    # TODO: revert to upstream after upstreaming auth export + identity settings
-    clan-core.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-core";
+	clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
     clan-core.inputs.data-mesher.follows = "data-mesher";
