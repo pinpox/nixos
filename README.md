@@ -22,16 +22,19 @@ a modern fork of [pass](https://www.passwordstore.org/) that uses age for encryp
 
 # Current Hosts
 
-| Configuration                     | Type    | Location  | VPN IP        | Description            |
-| --------------------------------- | ------- | --------- | ------------- | ---------------------- |
-| [kartoffel](./machines/kartoffel) | Desktop | local     | `192.168.8.3` | Desktop                |
-| [limette](./machines/limette)     | Desktop | local     | `192.168.8.8` | Notebook               |
-| [kiwi](./machines/kiwi)           | Desktop | local     | -             | Framework Laptop       |
-| [fichte](./machines/fichte)       | Desktop | local     | ` `           | Notebook               |
-| [tanne](./machines/fichte)        | Desktop | local     | ` `           | Notebook               |
-| [birne](./machines/birne)         | Server  | local     | `192.168.8.4` | Local NAS              |
-| [porree](./machines/porree)       | Server  | netcup.de | `192.168.8.1` | Server for pablo.tools |
-| [kfbox](./machines/kfbox)         | Server  | netcup.de | `192.168.8.5` | Server for 0cx.de      |
+| Configuration                     | Type    | Location  | Description                          |
+| --------------------------------- | ------- | --------- | ------------------------------------ |
+| [kartoffel](./machines/kartoffel) | Desktop | local     | Main desktop workstation             |
+| [kiwi](./machines/kiwi)           | Laptop  | local     | Framework 13 (AMD AI 300 series)     |
+| [limette](./machines/limette)     | Laptop  | local     | Notebook                             |
+| [fichte](./machines/fichte)       | Laptop  | local     | ThinkPad T490                        |
+| [tanne](./machines/tanne)         | Laptop  | local     | ThinkPad T480s                       |
+| [uconsole](./machines/uconsole)   | Handheld| local     | Clockwork uConsole (RPi CM4)         |
+| [birne](./machines/birne)         | Server  | local     | Local NAS                            |
+| [porree](./machines/porree)       | Server  | netcup.de | Server for pablo.tools               |
+| [kfbox](./machines/kfbox)         | Server  | netcup.de | Server for 0cx.de                    |
+| [clementine](./machines/clementine) | Server | netcup.de | Server for megaclan3000.de           |
+| [traube](./machines/traube)       | Server  | local     | aarch64 server                       |
 
 # Deployment
 
