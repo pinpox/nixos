@@ -139,7 +139,7 @@ in
           contacts
 
           # TODO https://github.com/pulsejet/memories/issues/1625
-          # memories
+          memories
 
           previewgenerator
           # maps
