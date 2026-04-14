@@ -9,18 +9,16 @@ use parts of it as you please, but keep it mind it is intended mostly for
 personal use. I've written posts about certain aspects of this setup on my
 [personal blog](https://pablo.tools/posts).
 
-# Initial Setup
+# Overview
 
-The structure of this repository is meant to allow easy manual deployment while being
-[clan](https://clan.lol) compatible.
-Individual hosts are defined in `/machines/<hostname>` and will import re-usable
-parts of the configuration as needed.
+The structure of this repository is meant to allow easy manual deployment while
+being [clan](https://clan.lol) compatible. Individual hosts are defined in
+`/machines/<hostname>` and import re-usable parts of the configuration as
+needed. Deployment and management is done with [clan](https://clan.lol), and
+secrets are stored in [passage](https://github.com/FiloSottile/passage), which
+uses age for encryption.
 
-Deployment and management is done with [clan](https://clan.lol).
-Secrets are stored in [passage](https://github.com/FiloSottile/passage),
-a modern fork of [pass](https://www.passwordstore.org/) that uses age for encryption.
-
-# Current Hosts
+The current hosts are:
 
 | Configuration                     | Type    | Location  | VPN IP        | Description            |
 | --------------------------------- | ------- | --------- | ------------- | ---------------------- |
