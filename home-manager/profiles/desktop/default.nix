@@ -57,6 +57,7 @@ in
         helix.enable = false;
         easyeffects.enable = false;
         zellij.enable = true;
+        claude-code.enable = true;
         chromium.enable = true;
         firefox.enable = true;
         tmux.enable = true;
@@ -87,7 +88,6 @@ in
       imagemagick
       swaynotificationcenter
       tea
-      claude-code
       but
       gitbutler
       chafa

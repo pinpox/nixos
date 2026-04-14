@@ -41,7 +41,9 @@ in
             ''flake_input_last_modified{input="${i}",${
               concatStringsSep "," (
                 mapAttrsToList (n: v: ''${n}="${v}"'') (
-                  filterAttrs (n: v: (builtins.typeOf v) == "string") flake-self.inputs."${i}"
+                  filterAttrs (
+                    n: v: (builtins.tryEval (builtins.typeOf v == "string")).value or false
+                  ) flake-self.inputs."${i}"
                 )
               )
             }} ${toString flake-self.inputs."${i}".lastModified or 0}''
