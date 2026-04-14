@@ -354,24 +354,6 @@
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
-        "lastModified": 1772408722,
-        "narHash": "sha256-rHuJtdcOjK7rAHpHphUb1iCvgkU3GpfvicLMwwnfMT0=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "f20dc5d9b8027381c474144ecabc9034d6a839a3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_6": {
-      "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib_2"
-      },
-      "locked": {
         "lastModified": 1762440070,
         "narHash": "sha256-xxdepIcb39UJ94+YydGP221rjnpkDZUlykKuF54PsqI=",
         "owner": "hercules-ci",
@@ -616,7 +598,6 @@
     },
     "mics-skills": {
       "inputs": {
-        "flake-parts": "flake-parts_5",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -625,11 +606,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776018334,
-        "narHash": "sha256-Yo//PyF9OAuqRawMVcC95A9g1E25Ufdtc2cfFPEvLyM=",
+        "lastModified": 1776939011,
+        "narHash": "sha256-0tDX+gTuw1WSIbhv4wIaWFECunusG+HRPjTEISuuyB4=",
         "owner": "Mic92",
         "repo": "mics-skills",
-        "rev": "1dae36256c3a6ca231cf812b6cff9c469fbb8d9a",
+        "rev": "d3494572bbc11a5dfa371be14e1766d0a3bfb71c",
         "type": "github"
       },
       "original": {
@@ -795,21 +776,6 @@
       }
     },
     "nixpkgs-lib": {
-      "locked": {
-        "lastModified": 1772328832,
-        "narHash": "sha256-e+/T/pmEkLP6BHhYjx6GmwP5ivonQQn0bJdH9YrRB+Q=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "c185c7a5e5dd8f9add5b2f8ebeff00888b070742",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
-      }
-    },
-    "nixpkgs-lib_2": {
       "locked": {
         "lastModified": 1761765539,
         "narHash": "sha256-b0yj6kfvO8ApcSE+QmA6mUfu8IYG6/uU28OFn4PaC8M=",
@@ -1052,7 +1018,7 @@
     },
     "rio": {
       "inputs": {
-        "flake-parts": "flake-parts_6",
+        "flake-parts": "flake-parts_5",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -1350,11 +1316,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776729781,
-        "narHash": "sha256-C70B7XGgjPMTpwaWcWkQfAWJJXtvgfyfqan+yHcEgoU=",
+        "lastModified": 1777057916,
+        "narHash": "sha256-U/gQ7AbMQmQNVmOz6IGdCCn++oWxLIRawUMAnYNdntg=",
         "owner": "pinpox",
         "repo": "trippy-track",
-        "rev": "dc39988f211e56d6edf78afdca1ae30025211ae5",
+        "rev": "7e380f1f7ba9a9c932b7cac258a3dcf43a35b1c0",
         "type": "github"
       },
       "original": {
