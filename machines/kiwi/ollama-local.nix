@@ -39,7 +39,7 @@ in
       ];
     };
     vllm_1 = vllmProvider "100.96.100.100" "openai/gpt-oss-120b";
-    vllm_2 = vllmProvider "100.96.100.101" "openai/gpt-oss-120b";
+    vllm_2 = vllmProvider "100.96.100.101" "Qwen/Qwen3.6-35B-A3B";
     vllm_3 = vllmProvider "100.96.100.102" "Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8";
     # Pull models with: OLLAMA_HOST="100.96.100.103:11434" ollama pull <model>
     ollama = {
@@ -424,6 +424,62 @@ in
         {
           id = "sinhang/QWen35-27b-q4_K_M-Claude";
           reasoning = true;
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "frob/qwen3.5:397b-a17b-q4_K_XL";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "gemma4:31b";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "gemma4:31b-cloud";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "kwangsuklee/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:latest";
+          reasoning = true;
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3:235b-a22b-instruct-2507-q8_0";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3.5:0.8b";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3.5:35b";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3.6:latest";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3-coder-next:q4_K_M";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3-vl:235b";
+          contextWindow = 128000;
+          maxTokens = 32000;
+        }
+        {
+          id = "qwen3-vl:32b";
           contextWindow = 128000;
           maxTokens = 32000;
         }

@@ -27,7 +27,7 @@ let
         };
         models = [
           {
-            id = "gemma4:31b-cloud";
+            id = "gemma4:26b";
             reasoning = true;
           }
         ];
@@ -227,6 +227,7 @@ in
         config.clan.core.vars.generators."opencrow-local".files."envfile".path
         config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
         config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
+        config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
       ];
       extraPackages = [
         pkgs.pi
@@ -248,7 +249,7 @@ in
         OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
         OPENCROW_PI_PROVIDER = "ollama";
-        OPENCROW_PI_MODEL = "gemma4:31b-cloud";
+        OPENCROW_PI_MODEL = "gemma4:26b";
         OPENCROW_PI_SKILLS_DIR = "${localStateDir}/skills";
         OPENCROW_HEARTBEAT_INTERVAL = "30m";
         OPENCROW_PI_IDLE_TIMEOUT = "12h";

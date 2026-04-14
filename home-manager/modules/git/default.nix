@@ -45,7 +45,7 @@ in
       jjui
     ];
 
-programs = {
+    programs = {
 
       lazygit = {
         enable = true;
