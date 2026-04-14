@@ -208,7 +208,7 @@ in
           Permissions-Policy interest-cohort=()
           X-Content-Type-Options nosniff
           X-Frame-Options SAMEORIGIN
-          Referrer-Policy no-referrer
+          Referrer-Policy strict-origin-when-cross-origin
           X-XSS-Protection "1; mode=block"
           X-Permitted-Cross-Domain-Policies none
           X-Robots-Tag "noindex, nofollow"
