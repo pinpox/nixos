@@ -115,15 +115,19 @@ _prompt_precmd() {
     _prompt_cmd_start=0
   fi
 
-  # JJ branches
+  # JJ branches (skip on gitbutler/* git branches)
   local jj_branches=""
-  local jj_out
-  jj_out=$(PAGER=cat command jj log -r 'trunk()..@ & bookmarks()' -T 'bookmarks.join("\n") ++ "\n"' --no-graph --ignore-working-copy 2>/dev/null)
-  if [[ $? -eq 0 && -n "$jj_out" ]]; then
-    jj_out="${jj_out//$'\n'/ }"
-    jj_out="${jj_out%% }"
-    jj_out="${jj_out## }"
-    [[ -n "$jj_out" ]] && jj_branches="$jj_out"
+  local git_branch
+  git_branch=$(command git symbolic-ref --short HEAD 2>/dev/null)
+  if [[ "$git_branch" != gitbutler/* ]]; then
+    local jj_out
+    jj_out=$(PAGER=cat command jj log -r 'trunk()..@ & bookmarks()' -T 'bookmarks.join("\n") ++ "\n"' --no-graph --ignore-working-copy 2>/dev/null)
+    if [[ $? -eq 0 && -n "$jj_out" ]]; then
+      jj_out="${jj_out//$'\n'/ }"
+      jj_out="${jj_out%% }"
+      jj_out="${jj_out## }"
+      [[ -n "$jj_out" ]] && jj_branches="$jj_out"
+    fi
   fi
 
   # Build segments
