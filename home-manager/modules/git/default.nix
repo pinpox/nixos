@@ -7,6 +7,33 @@
 with lib;
 let
   cfg = config.pinpox.defaults.git;
+
+  prePushHook = pkgs.writeShellApplication {
+    name = "pre-push";
+    runtimeInputs = [ pkgs.jq ];
+    text = ''
+      [ -f flake.lock ] || exit 0
+      matches=$(jq -r '
+        .nodes | to_entries[]
+        | select(
+            .value.locked.type == "path"
+            or ((.value.locked.url // "") | startswith("file://"))
+          )
+        | "\(.key): \(.value.locked.path // .value.locked.url)"
+      ' flake.lock)
+      if [ -n "$matches" ]; then
+        echo "warning: local-path inputs in flake.lock:" >&2
+        echo "$matches" >&2
+        if [ -e /dev/tty ]; then
+          read -r -p "Push anyway? [y/N] " reply < /dev/tty
+          [[ "$reply" =~ ^[Yy]$ ]] || { echo "aborted." >&2; exit 1; }
+        else
+          echo "error: no tty for confirmation — refusing push" >&2
+          exit 1
+        fi
+      fi
+    '';
+  };
 in
 {
   options.pinpox.defaults.git.enable = mkEnableOption "git defaults";
@@ -18,7 +45,7 @@ in
       jjui
     ];
 
-    programs = {
+programs = {
 
       lazygit = {
         enable = true;
@@ -54,6 +81,8 @@ in
         settings = {
 
           init.defaultBranch = "main";
+
+          core.hooksPath = "${prePushHook}/bin";
 
           pull = {
             rebase = true;
