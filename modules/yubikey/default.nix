@@ -3,6 +3,7 @@
   pkgs,
   lib,
   age-plugin-picohsm,
+  passage-secret-service,
   ...
 }:
 with lib;
@@ -64,5 +65,18 @@ in
 
     # services.yubikey-agent.enable = false;
     services.udev.packages = [ pkgs.yubikey-personalization ];
+
+    systemd.user.services.passage-secret-service = {
+      description = "passage-backed D-Bus Secret Service";
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = lib.getExe passage-secret-service.packages.${pkgs.system}.passage-secret-service;
+        Restart = "on-failure";
+        RestartSec = 3;
+      };
+    };
   };
 }
