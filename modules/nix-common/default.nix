@@ -71,6 +71,10 @@ in
     clan.core.vars.generators."nix" = {
       prompts.nix-access-tokens.persist = true;
       share = true;
+      files."nix-access-tokens" = {
+        group = "wheel";
+        mode = "0440";
+      };
     };
 
     # Enable flakes
