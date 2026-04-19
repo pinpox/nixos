@@ -192,7 +192,13 @@
         share = true;
         identity.main = {
           email = "mail@pablo.tools";
-          groups = [ "admins" "users" "miniflux-users" "opencloud-users" "paperless-users" ];
+          groups = [
+            "admins"
+            "users"
+            "miniflux-users"
+            "opencloud-users"
+            "paperless-users"
+          ];
         };
       };
       roles.default.extraModules = [ ./users/pinpox.nix ];
@@ -206,7 +212,11 @@
         user = "berber";
         systemUser = false;
         identity.main = {
-          groups = [ "users" "opencloud-users" "miniflux-users" ];
+          groups = [
+            "users"
+            "opencloud-users"
+            "miniflux-users"
+          ];
         };
       };
     };
@@ -264,7 +274,11 @@
         extraClients = {
           miniflux = {
             redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
-            scopes = [ "openid" "profile" "email" ];
+            scopes = [
+              "openid"
+              "profile"
+              "email"
+            ];
             token_endpoint_auth_method = "client_secret_basic";
           };
           forgejo = {
@@ -273,7 +287,12 @@
             require_pkce = true;
             pkce_challenge_method = "S256";
             redirect_uris = [ "https://git.pinpox.com/user/oauth2/authelia/callback" ];
-            scopes = [ "openid" "email" "profile" "groups" ];
+            scopes = [
+              "openid"
+              "email"
+              "profile"
+              "groups"
+            ];
             response_types = [ "code" ];
             grant_types = [ "authorization_code" ];
             token_endpoint_auth_method = "client_secret_basic";
@@ -283,14 +302,23 @@
             public = true;
             require_pkce = true;
             pkce_challenge_method = "S256";
-            scopes = [ "openid" "offline_access" "groups" "profile" "email" ];
+            scopes = [
+              "openid"
+              "offline_access"
+              "groups"
+              "profile"
+              "email"
+            ];
             redirect_uris = [
               "https://cloud.pablo.tools/"
               "https://cloud.pablo.tools/oidc-callback.html"
               "https://cloud.pablo.tools/oidc-silent-redirect.html"
             ];
             response_types = [ "code" ];
-            grant_types = [ "authorization_code" "refresh_token" ];
+            grant_types = [
+              "authorization_code"
+              "refresh_token"
+            ];
             token_endpoint_auth_method = "none";
           };
         };
@@ -305,13 +333,16 @@
         environmentFile = "/run/secrets/punchcard/envfile";
       };
       roles.default.extraModules = [
-        ({ pinpox-utils, ... }: {
-          clan.core.vars.generators."punchcard" = pinpox-utils.mkEnvGenerator [
-            "OIDC_ISSUER_URL"
-            "OIDC_CLIENT_ID"
-            "OIDC_CLIENT_SECRET"
-          ];
-        })
+        (
+          { pinpox-utils, ... }:
+          {
+            clan.core.vars.generators."punchcard" = pinpox-utils.mkEnvGenerator [
+              "OIDC_ISSUER_URL"
+              "OIDC_CLIENT_ID"
+              "OIDC_CLIENT_SECRET"
+            ];
+          }
+        )
       ];
     };
 
@@ -324,13 +355,16 @@
         environmentFile = "/run/secrets/punchcard2/envfile";
       };
       roles.default.extraModules = [
-        ({ pinpox-utils, ... }: {
-          clan.core.vars.generators."punchcard2" = pinpox-utils.mkEnvGenerator [
-            "OIDC_ISSUER_URL"
-            "OIDC_CLIENT_ID"
-            "OIDC_CLIENT_SECRET"
-          ];
-        })
+        (
+          { pinpox-utils, ... }:
+          {
+            clan.core.vars.generators."punchcard2" = pinpox-utils.mkEnvGenerator [
+              "OIDC_ISSUER_URL"
+              "OIDC_CLIENT_ID"
+              "OIDC_CLIENT_SECRET"
+            ];
+          }
+        )
       ];
     };
 
