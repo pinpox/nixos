@@ -171,11 +171,13 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1776197629,
-        "narHash": "sha256-OtKvGBIE4XfJJuWf6IRRfm0kEIjw41j6tICZbSpbK+k=",
-        "rev": "36ffd59fef4633a2ac95671d6aed302e6011acbf",
-        "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-core/archive/36ffd59fef4633a2ac95671d6aed302e6011acbf.tar.gz"
+        "lastModified": 1776680084,
+        "narHash": "sha256-PdSy4IgbeCbJR/SKN70aSHDYd3RdTit93bF42Ed3mOQ=",
+        "ref": "remove-coredns",
+        "rev": "8a646643d83dd8a6e5bcbdea39a07789241a9d11",
+        "revCount": 14161,
+        "type": "git",
+        "url": "https://git.clan.lol/clan/clan-core"
       },
       "original": {
         "type": "tarball",
@@ -1113,6 +1115,7 @@
           "clan-core",
           "treefmt-nix"
         ],
+        "trippy-track": "trippy-track",
         "twitch-first": "twitch-first",
         "wl-harmonograph": "wl-harmonograph",
         "wrappers": "wrappers",
@@ -1337,6 +1340,26 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "trippy-track": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776729781,
+        "narHash": "sha256-C70B7XGgjPMTpwaWcWkQfAWJJXtvgfyfqan+yHcEgoU=",
+        "owner": "pinpox",
+        "repo": "trippy-track",
+        "rev": "dc39988f211e56d6edf78afdca1ae30025211ae5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "trippy-track",
         "type": "github"
       }
     },

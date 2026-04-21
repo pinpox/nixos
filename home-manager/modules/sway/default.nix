@@ -25,7 +25,7 @@ let
       pkgs.procps
       pkgs.noctalia-shell
       pkgs.himalaya
-      pkgs.sqlite
+      pkgs.python3
     ];
     text = ''
       # Kill any running instance (matches the quickshell process loading

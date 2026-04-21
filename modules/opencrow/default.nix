@@ -220,12 +220,13 @@ in
       };
     };
 
-    # Local instance using ollama on kiwi (migrated from traube)
     services.opencrow.instances.local = {
       enable = true;
       piPackage = pkgs.pi;
       environmentFiles = [
         config.clan.core.vars.generators."opencrow-local".files."envfile".path
+        config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
+        config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
       ];
       extraPackages = [
         pkgs.pi
@@ -235,6 +236,14 @@ in
       ];
 
       environment = {
+        NEXTCLOUD_URL = "https://files.pablo.tools";
+        NEXTCLOUD_USER = "pinpox";
+        NEXTCLOUD_CALENDAR = "personal";
+
+        WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
+        WORK_NEXTCLOUD_USER = "pinpox";
+        WORK_NEXTCLOUD_CALENDAR = "personal";
+
         OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
         OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
