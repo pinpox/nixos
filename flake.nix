@@ -146,6 +146,9 @@
 
     twitch-first.url = "github:pinpox/twitch-first";
     twitch-first.inputs.nixpkgs.follows = "nixpkgs";
+
+    trippy-track.url = "github:pinpox/trippy-track";
+    trippy-track.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
     { self, ... }@inputs:
