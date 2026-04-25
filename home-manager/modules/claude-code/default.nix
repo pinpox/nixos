@@ -84,6 +84,16 @@ in
       skills = [ "browser-cli" ];
     };
 
+    # Declarative settings via settings.local.json (merged with mutable settings.json)
+    home.file.".claude/settings.local.json".text = builtins.toJSON {
+      permissions.allow = [
+        "Bash(browser-cli:*)"
+        "Bash(browser-cli-firefox:*)"
+        "Bash(browser-cli-server:*)"
+        "Read(/tmp/**)"
+      ];
+    };
+
     # Supplement the browser-cli skill with browser launch instructions
     home.file.".claude/skills/browser-cli-setup/SKILL.md".text = ''
       ---
