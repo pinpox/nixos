@@ -1309,18 +1309,40 @@
         "type": "github"
       }
     },
-    "trippy-track": {
+    "treefmt-nix_5": {
       "inputs": {
         "nixpkgs": [
+          "trippy-track",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1777057916,
-        "narHash": "sha256-U/gQ7AbMQmQNVmOz6IGdCCn++oWxLIRawUMAnYNdntg=",
+        "lastModified": 1775636079,
+        "narHash": "sha256-pc20NRoMdiar8oPQceQT47UUZMBTiMdUuWrYu2obUP0=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "790751ff7fd3801feeaf96d7dc416a8d581265ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "trippy-track": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix_5"
+      },
+      "locked": {
+        "lastModified": 1777232186,
+        "narHash": "sha256-K6cDxgEZqWvRBAaOZXo5fAAaC3K9kcWzh8TSwyCnIpc=",
         "owner": "pinpox",
         "repo": "trippy-track",
-        "rev": "7e380f1f7ba9a9c932b7cac258a3dcf43a35b1c0",
+        "rev": "cabd4d198b8abf6d12710a94051df940e0c8b9af",
         "type": "github"
       },
       "original": {
