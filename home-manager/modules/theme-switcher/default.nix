@@ -59,7 +59,7 @@ in
       name = "Toggle Theme";
       comment = "Switch between light and dark color scheme";
       exec = "${toggle-theme}/bin/toggle-theme";
-      icon = "preferences-desktop-theme";
+      icon = "preferences-desktop-color";
       terminal = false;
       categories = [ "Settings" ];
     };
