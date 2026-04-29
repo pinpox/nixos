@@ -184,9 +184,14 @@ in
             # Terminal
             "${modifier}+Return" = "exec rio";
 
-            # Laucher
+            # Launcher
             "${modifier}+p" = ''
               exec ${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle
+            '';
+
+            # OpenCrow chat panel
+            "${modifier}+a" = ''
+              exec ${lib.getExe pkgs.noctalia-shell} ipc call plugin:opencrow-chat toggle
             '';
 
             # Url

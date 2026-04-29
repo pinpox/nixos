@@ -7,11 +7,11 @@
 
   imports = [
     ./ollama-local.nix
+    ./opencrow-geninf.nix
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
-
 
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)
   services.hardware.bolt.enable = true;
