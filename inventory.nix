@@ -100,6 +100,7 @@
       roles.default.tags = [ "all" ];
 
       roles.default.machines.tanne.settings.action = "build";
+      roles.default.machines.kiwi.settings.action = "switch";
     };
 
     # The actual data-mesher. It collects all exports of type "dataMesher" from
