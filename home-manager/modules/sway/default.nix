@@ -216,7 +216,9 @@ in
             "${modifier}+Tab" = "focus next";
 
             # Screen lock
-            "${modifier}+Shift+l" = "exec ${pkgs.swaylock}/bin/swaylock";
+            "${modifier}+Shift+l" = ''
+              exec ${lib.getExe pkgs.noctalia-shell} ipc call lockScreen lock
+            '';
 
             # Scratchpad
             "${modifier}+u" =
