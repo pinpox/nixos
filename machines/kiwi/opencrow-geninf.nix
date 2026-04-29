@@ -1,34 +1,30 @@
 {
   distro,
-  opencrow,
+  mics-skills,
   pkgs,
   ...
 }:
 {
   imports = [
-    opencrow.nixosModules.default
-    distro.nixosModules.opencrow
-    distro.nixosModules.llama-swap
+    distro.nixosModules.noctalia-plugin
   ];
-
-
-  # Local LLM server
-  services.llama-swap.enable = true;
-
 
   services.opencrow-local = {
     enable = true;
     instanceName = "geninf";
     piPackage = pkgs.pi;
     llmUrl = "http://127.0.0.1:8012";
-    model = "qwen2.5:0.5b";
+    model = "gemma4:e2b";
     socketName = "GenInf Crow";
     noctaliaPlugin = true;
-    noctaliaPluginUsers = [ "pinpox" ];
+    skills = {
+      deutschebahn = "${mics-skills.packages.${pkgs.system}.db-cli}/share/skills/db-cli";
+    };
     extraPackages = [
       pkgs.pi
       pkgs.curl
       pkgs.jq
+      mics-skills.packages.${pkgs.system}.db-cli
     ];
   };
 }
