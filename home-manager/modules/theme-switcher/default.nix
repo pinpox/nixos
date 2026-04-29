@@ -55,6 +55,15 @@ in
 
     home.packages = [ toggle-theme ];
 
+    xdg.desktopEntries.toggle-theme = {
+      name = "Toggle Theme";
+      comment = "Switch between light and dark color scheme";
+      exec = "${toggle-theme}/bin/toggle-theme";
+      icon = "preferences-desktop-theme";
+      terminal = false;
+      categories = [ "Settings" ];
+    };
+
     systemd.user.services.theme-watcher = {
       Unit = {
         Description = "Theme watcher - updates applications on dbus theme change";
