@@ -17,6 +17,7 @@ with lib;
       # Allow "unfree" licenced packages
       config = {
         allowUnfree = true;
+        allowUnfreePredicate = _: true;
       };
 
       overlays = [

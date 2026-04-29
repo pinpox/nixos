@@ -69,6 +69,7 @@ in
 
     # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfreePredicate = _: true;
 
     clan.core.vars.generators."nix" = {
       prompts.nix-access-tokens.persist = true;
