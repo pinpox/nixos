@@ -78,6 +78,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     distro.url = "path:/home/pinpox/code/github.com/generational-infrastructure/distro";
+    # distro.url = "github:generational-infrastructure/distro";
     distro.inputs.nixpkgs.follows = "nixpkgs";
     distro.inputs.opencrow.follows = "opencrow";
     distro.inputs.treefmt-nix.follows = "treefmt-nix";
