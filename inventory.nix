@@ -415,11 +415,11 @@
       );
     };
 
-    zerotier = {
-      roles.controller.machines.clementine = { };
-      roles.peer.machines.kiwi = { };
-      # roles.peer.tags.all = { };
-    };
+    # zerotier = {
+    #   roles.controller.machines.clementine = { };
+    #   roles.peer.machines.kiwi = { };
+    #   # roles.peer.tags.all = { };
+    # };
 
     wg-star = {
 
