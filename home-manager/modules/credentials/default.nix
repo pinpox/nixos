@@ -33,12 +33,16 @@ in
     programs.zsh.sessionVariables.PASSAGE_RECIPIENTS_FILE = "${./age-recipients}";
 
     # The file ~/.config/age/identities still needs to be generated.
-    # Run `age-plugin-picohsm -list` and put the age-key identity
-    # (AGE-PLUGIN-PICOHSM-XXXXX) into the file. For sops, the recipients should
-    # be added as a comment in the line before. Full format example:
+    # It can hold multiple identities, one per line. For sops, recipients
+    # should be added as a comment in the line before. Full format example:
     #
     # # recipient: age1picohsm1qjpqxxxxxxxxxxxxxxxxxxxxxxxxx
     # AGE-PLUGIN-PICOHSM-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    # # recipient: age1yubikey1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # AGE-PLUGIN-YUBIKEY-XXXXXXXXXXXXXXXXXXXXXXXXXX
+    #
+    # PicoHSM:  age-plugin-picohsm --list
+    # YubiKey:  age-plugin-yubikey --identity
     home.sessionVariables.PASSAGE_IDENTITIES_FILE = "$HOME/.config/age/identities";
     programs.zsh.sessionVariables.PASSAGE_IDENTITIES_FILE = "$HOME/.config/age/identities";
 

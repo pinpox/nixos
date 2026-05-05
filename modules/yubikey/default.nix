@@ -43,13 +43,16 @@ in
   environment.systemPackages = [
     age-plugin-picohsm.packages.${pkgs.system}.default
     pkgs.age
+    pkgs.age-plugin-yubikey
     pkgs.opensc
     pkgs.keyutils
+    pkgs.yubikey-manager
   ];
 
   environment.sessionVariables = {
     PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.system}.default}/bin/picohsm-askpass";
     PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
+    AGE_ASKPASS = lib.getExe pkgs.noctalia-askpass;
   };
 
 

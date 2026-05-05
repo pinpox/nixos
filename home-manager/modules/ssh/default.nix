@@ -21,6 +21,7 @@ in
       matchBlocks = {
 
         "*" = {
+          certificateFile = [ "${./yubikey-ssh-cert.pub}" ];
           extraOptions = {
             ForwardAgent = "no";
             ServerAliveInterval = "0";
@@ -33,8 +34,6 @@ in
             ControlPath = "~/.ssh/master-%r@%n:%p";
             ControlPersist = "no";
             PKCS11Provider = "/run/current-system/sw/lib/opensc-pkcs11.so";
-            # CertificateFile = "~/.ssh/cert.pub";
-            CertificateFile = "${./ssh-key-cert.pub}";
           };
         };
 

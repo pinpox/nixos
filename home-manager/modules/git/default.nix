@@ -116,7 +116,7 @@ in
 
           signing = {
             format = "ssh";
-            key = "~/.ssh/key.pub";
+            key = "${../ssh/yubikey-ssh.pub}";
             signByDefault = true;
           };
 
@@ -157,7 +157,7 @@ in
         signing = {
           behavior = "own";
           backend = "ssh";
-          key = "~/.ssh/key.pub";
+          key = "${../ssh/yubikey-ssh.pub}";
           allowed-signers = "~/.ssh/allowed_signers";
         };
         ui = {
