@@ -26,6 +26,10 @@
     "OIDC_CLIENT_ID"
     "OIDC_CLIENT_SECRET"
     "OIDC_REDIRECT_URL"
+
+    "VAPID_PRIVATE_KEY"
+    "VAPID_PUBLIC_KEY"
+    "VAPID_CONTACT"
   ];
 
   services.trippy-track = {
