@@ -256,6 +256,16 @@ in
 
           startup = [
 
+            # Lock screen on idle
+            {
+              command = ''
+                ${pkgs.swayidle}/bin/swayidle -w \
+                  timeout 300 '${lib.getExe pkgs.noctalia-shell} ipc call lockScreen lock' \
+                  before-sleep '${lib.getExe pkgs.noctalia-shell} ipc call lockScreen lock' \
+                  lock '${lib.getExe pkgs.noctalia-shell} ipc call lockScreen lock'
+              '';
+            }
+
             {
               command =
                 let
