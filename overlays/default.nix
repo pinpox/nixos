@@ -37,6 +37,17 @@ self: super: {
     ];
   });
 
+  # TODO: remove when AGE_ASKPASS support lands upstream (str4d/rage#617)
+  rage = super.rage.overrideAttrs (old: {
+    src = inputs.rage;
+    cargoDeps = super.rustPlatform.fetchCargoVendor {
+      pname = old.pname;
+      version = old.version;
+      src = inputs.rage;
+      hash = "sha256-yshoG/U43e9RgYt+PlnaWpYzJFIneX/WYh64mSLSdvA=";
+    };
+  });
+
   # To override packages from master input do:
   # pamixer = inputs.nixpkgs-master.legacyPackages."${super.system}".pamixer;
 

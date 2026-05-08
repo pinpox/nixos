@@ -43,6 +43,7 @@ in
   environment.systemPackages = [
     age-plugin-picohsm.packages.${pkgs.system}.default
     pkgs.age
+    pkgs.rage
     pkgs.age-plugin-yubikey
     pkgs.opensc
     pkgs.keyutils
@@ -53,6 +54,9 @@ in
     PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.system}.default}/bin/picohsm-askpass";
     PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
     AGE_ASKPASS = lib.getExe pkgs.noctalia-askpass;
+    # passage delegates to the binary named here; rage honors AGE_ASKPASS
+    # (via str4d/rage#617), the Go age does not.
+    PASSAGE_AGE = "rage";
   };
 
 

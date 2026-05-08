@@ -1163,6 +1163,23 @@
         "type": "github"
       }
     },
+    "rage": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778091878,
+        "narHash": "sha256-y28dViBv8B4PTZFaboNHltT6RwDX5i6BdOvtiGx2p4c=",
+        "owner": "pinpox",
+        "repo": "rage",
+        "rev": "762116588f720346c58a8c6cbfd0b51356604a30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "ref": "age-askpass-support",
+        "repo": "rage",
+        "type": "github"
+      }
+    },
     "restic-exporter": {
       "inputs": {
         "flake-utils": [
@@ -1267,6 +1284,7 @@
         "pinpox-neovim": "pinpox-neovim",
         "promterm": "promterm",
         "radio": "radio",
+        "rage": "rage",
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
         "rio": "rio",

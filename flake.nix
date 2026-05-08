@@ -135,6 +135,11 @@
     age-plugin-picohsm.url = "github:pinpox/age-plugin-picohsm";
     age-plugin-picohsm.inputs.nixpkgs.follows = "nixpkgs";
 
+    # TODO: remove when AGE_ASKPASS support lands upstream:
+    # https://github.com/str4d/rage/pull/617
+    rage.url = "github:pinpox/rage/age-askpass-support";
+    rage.flake = false;
+
     passage-secret-service.url = "github:pinpox/passage-secret-service";
     passage-secret-service.inputs.nixpkgs.follows = "nixpkgs";
 
