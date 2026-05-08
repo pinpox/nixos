@@ -323,11 +323,12 @@
         ],
         "treefmt-nix": [
           "treefmt-nix"
-        ]
+        ],
+        "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1777960266,
-        "narHash": "sha256-1feoabO61O27d1C1Gqtfvnro0qO+UNk17pTg4Pw2MFA=",
+        "lastModified": 1778331248,
+        "narHash": "sha256-BFGGlBZAg9xl4y7msYCvkGsnl0dtNbF/j+qn4NYnr7k=",
         "path": "/home/pinpox/code/github.com/generational-infrastructure/distro",
         "type": "path"
       },
@@ -516,6 +517,24 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_7"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "gif-searcher": {
       "inputs": {
         "nixpkgs": [
@@ -675,7 +694,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_7",
+        "systems": "systems_8",
         "treefmt-nix": [
           "treefmt-nix"
         ]
@@ -906,11 +925,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1777578337,
-        "narHash": "sha256-Ad49moKWeXtKBJNy2ebiTQUEgdLyvGmTeykAQ9xM+Z4=",
+        "lastModified": 1777954456,
+        "narHash": "sha256-hGdgeU2Nk87RAuZyYjyDjFL6LK7dAZN5RE9+hrDTkDU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "15f4ee454b1dce334612fa6843b3e05cf546efab",
+        "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
         "type": "github"
       },
       "original": {
@@ -1481,6 +1500,21 @@
         "type": "github"
       }
     },
+    "systems_9": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1617,12 +1651,10 @@
         "treefmt-nix": "treefmt-nix_6"
       },
       "locked": {
-        "lastModified": 1777904533,
-        "narHash": "sha256-XQHd18kiPBTX+WA8fXW/m2dVLyHvy2gY97hEkcafLzg=",
-        "owner": "pinpox",
-        "repo": "trippy-track",
-        "rev": "aee15f91066531542193f9dd8b2f97dd24749efa",
-        "type": "github"
+        "lastModified": 1778187800,
+        "narHash": "sha256-eZ0pkQZ6kiv8kYF5+kCrnnjsAk0sggjjGrS9E2BcLYM=",
+        "path": "/home/pinpox/code/github.com/pinpox/trippy-track",
+        "type": "path"
       },
       "original": {
         "owner": "pinpox",
@@ -1652,7 +1684,7 @@
     },
     "utils": {
       "inputs": {
-        "systems": "systems_8"
+        "systems": "systems_9"
       },
       "locked": {
         "lastModified": 1705309234,
@@ -1665,6 +1697,28 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "voxtype": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "distro",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776651662,
+        "narHash": "sha256-HMiN4cmXRr6avHiH6asF28w9/N+qjeYSvX9zAATVXss=",
+        "owner": "peteonrails",
+        "repo": "voxtype",
+        "rev": "adf0ea62c2310b90c55febdc6515cca9f264e25a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "peteonrails",
+        "repo": "voxtype",
         "type": "github"
       }
     },
