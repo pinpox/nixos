@@ -13,8 +13,7 @@ let
     pkgs.writeShellScriptBin "start-sway" # sh
       ''
         export WLR_DRM_NO_MODIFIERS=1
-        # dbus-launch --sh-syntax --exit-with-session ${pkgs.sway}/bin/sway
-        ${pkgs.sway}/bin/sway --unsupported-gpu
+        ${pkgs.sway}/bin/sway
       '';
 
   # Wrapper that ensures only one noctalia-shell instance is running, so we can
