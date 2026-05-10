@@ -30,9 +30,9 @@ in
             AddKeysToAgent = "yes";
             HashKnownHosts = "no";
             UserKnownHostsFile = "~/.ssh/known_hosts";
-            ControlMaster = "no";
+            ControlMaster = "auto";
             ControlPath = "~/.ssh/master-%r@%n:%p";
-            ControlPersist = "no";
+            ControlPersist = "1h";
             PKCS11Provider = "/run/current-system/sw/lib/opensc-pkcs11.so";
           };
         };
