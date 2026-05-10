@@ -6,6 +6,7 @@
     fichte.tags = [ "desktop" ];
     kartoffel.tags = [ "desktop" ];
     limette.tags = [ "desktop" ];
+    linse.tags = [ "desktop" ];
     uconsole.tags = [ "mobile" ];
 
     birne.tags = [ "server" ];
