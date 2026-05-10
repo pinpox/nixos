@@ -49,7 +49,6 @@ in
 
       programs = {
         pi.enable = true;
-        games.enable = true;
         obs-studio.enable = false;
         pandoc.enable = true;
         k9s.enable = false;
@@ -81,7 +80,6 @@ in
       spotify
       mpv
       sysz
-      thunderbird-bin
       deluge
       (audacious.override { withPlugins = true; })
       file-roller
