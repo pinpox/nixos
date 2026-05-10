@@ -34,6 +34,7 @@
   # Games
   programs.steam.enable = true;
   programs.gamemode.enable = true;
+  home-manager.users.pinpox.pinpox.programs.games.enable = true;
 
   # For dual-boot
   boot.loader.efi.canTouchEfiVariables = true;
