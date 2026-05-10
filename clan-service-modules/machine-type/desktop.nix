@@ -20,9 +20,6 @@
   services.acpid.enable = true;
   services.upower.enable = true;
 
-  # To build raspi images
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   # Enable networkmanager
   networking.networkmanager.enable = true;
 
@@ -99,11 +96,6 @@
       # home-manager.configuration = flake-self.homeConfigurations.desktop;
     };
 
-    virtualisation = {
-      docker.enable =false;
-      virt-manager.enable = true;
-      virtualbox.enable = false;
-    };
 
     services = {
 
