@@ -290,6 +290,14 @@ in
               command = lib.getExe start-noctalia;
               always = true;
             }
+            {
+              # GPD Win 2 internal keyboard: force plain QWERTY despite global
+              # colemak. Done via swaymsg because sway's config-file parser
+              # rejects `xkb_variant ""` but its runtime command parser accepts
+              # it — no-op on machines where this device isn't present.
+              command = ''swaymsg 'input "9610:27289:HK-ZYYK-US-A1-02-00_USB_KEYBOARD" xkb_variant altgr-intl' '';
+              always = true;
+            }
           ];
 
           # Application/window specific rules
@@ -315,6 +323,9 @@ in
             // lib.optionalAttrs (cfg.keyboardVariant != "") {
               xkb_variant = cfg.keyboardVariant;
             };
+            # GPD Win 2 internal keyboard: plain QWERTY, ignore the global
+            # colemak variant. External/BT keyboards still inherit "*".
+            "9610:27289:HK-ZYYK-US-A1-02-00_USB_KEYBOARD".xkb_layout = "us";
           };
 
           focus.wrapping = "workspace";
