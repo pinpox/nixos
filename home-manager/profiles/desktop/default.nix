@@ -88,6 +88,7 @@ in
       tea
       but
       gitbutler
+      omp
       chafa
       asciinema
       duf

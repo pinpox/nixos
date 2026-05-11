@@ -69,6 +69,7 @@ self: super: {
     claude-code
     but
     gitbutler
+    omp
     ;
 
   rio = inputs.rio.packages.${super.stdenv.hostPlatform.system}.default;
