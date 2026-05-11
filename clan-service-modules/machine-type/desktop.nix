@@ -20,6 +20,8 @@
   services.acpid.enable = true;
   services.upower.enable = true;
 
+  programs.mosh.enable = true;
+
   # Enable networkmanager
   networking.networkmanager.enable = true;
 
@@ -95,7 +97,6 @@
       # home-manager.enable = true;
       # home-manager.configuration = flake-self.homeConfigurations.desktop;
     };
-
 
     services = {
 
