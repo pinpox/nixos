@@ -155,11 +155,12 @@ in
           "--auto-merge"
         ];
         signing = {
-          behavior = "own";
+          behavior = "drop";
           backend = "ssh";
           key = "${../ssh/yubikey-ssh.pub}";
           allowed-signers = "~/.ssh/allowed_signers";
         };
+        git.sign-on-push = true;
         ui = {
 
           pager = "less -FRX";
