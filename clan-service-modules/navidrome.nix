@@ -61,7 +61,7 @@
               };
 
               # Ensure storagebox is mounted before navidrome starts
-              systemd.services.navidrome.unitConfig.RequiresMountsFor = [ config.pinpox.defaults.storagebox ];
+              systemd.services.navidrome.unitConfig.RequiresMountsFor = [ config.pinpox.defaults.storagebox.mountPoint ];
             };
           };
       };
