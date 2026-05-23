@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   _class = "clan.service";
   manifest.name = "navidrome";
@@ -61,10 +61,7 @@
               };
 
               # Ensure storagebox is mounted before navidrome starts
-              systemd.services.navidrome = {
-                requires = [ "mnt-storagebox.mount" ];
-                after = [ "mnt-storagebox.mount" ];
-              };
+              systemd.services.navidrome.unitConfig.RequiresMountsFor = [ config.pinpox.defaults.storagebox ];
             };
           };
       };
