@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 {
   _class = "clan.service";
   manifest.name = "navidrome";
