@@ -23,6 +23,7 @@ in
       "TWITCH_CLIENT_SECRET"
       "TWITCH_CHANNEL"
       "TWITCH_REWARD_ID"
+      "DISCORD_WEBHOOK_URL"
     ];
 
     systemd.services.twitch-first = {
