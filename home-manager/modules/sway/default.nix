@@ -188,9 +188,8 @@ in
               exec ${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle
             '';
 
-            # OpenCrow chat panel
             "${modifier}+a" = ''
-              exec ${lib.getExe pkgs.noctalia-shell} ipc call plugin:opencrow-chat toggle
+              exec pi-chat-toggle
             '';
 
             # Url

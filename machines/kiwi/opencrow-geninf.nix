@@ -1,40 +1,31 @@
 {
-  config,
   distro,
   mics-skills,
-  pinpox-utils,
   pkgs,
   ...
 }:
 {
   imports = [
-    distro.nixosModules.noctalia-plugin
+    distro.nixosModules.pi-chat
   ];
 
-  clan.core.vars.generators."opencrow-17track" = pinpox-utils.mkEnvGenerator [
-    "TRACK17_API_KEY"
-  ];
-
-  services.opencrow-local = {
+  services.pi-chat = {
     enable = true;
-    instanceName = "geninf";
     piPackage = pkgs.pi;
     llmUrl = "http://127.0.0.1:8012";
-    socketName = "GenInf Crow";
-    noctaliaPlugin = true;
     skills = {
       deutschebahn = "${mics-skills.packages.${pkgs.system}.db-cli}/share/skills/db-cli";
-      deliveries = ../../skills/deliveries;
     };
-    environmentFiles = [
-      config.clan.core.vars.generators."opencrow-17track".files."envfile".path
-    ];
-    extraPackages = [
-      pkgs.pi
-      pkgs.curl
-      pkgs.jq
-      mics-skills.packages.${pkgs.system}.db-cli
-      (pkgs.callPackage ../../packages/delivery-cli { })
-    ];
   };
+
+  # opencrow-local's extraPackages installed binaries inside its scope.
+  # pi-chat's sandbox inherits the user's PATH, so adding them as system
+  # packages makes them reachable to the agent (and to you in a normal
+  # terminal). Verified by the upstream `pi-chat-skill-clis-on-path` check.
+  environment.systemPackages = [
+    pkgs.pi
+    pkgs.curl
+    pkgs.jq
+    mics-skills.packages.${pkgs.system}.db-cli
+  ];
 }
