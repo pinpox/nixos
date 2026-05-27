@@ -81,7 +81,8 @@ in
     # config is adapted in a different environment from which it is being run.
     virtualHosts = {
 
-      # NIP-05 identity
+      # NIP-05 identity for pinpox.com (the static homepage itself is served
+      # by the pinpox-web module; both extraConfig blocks are concatenated).
       "pinpox.com".extraConfig = ''
         handle /.well-known/nostr.json {
           header Content-Type application/json
@@ -90,7 +91,6 @@ in
           rewrite * /nostr.json
           file_server
         }
-        respond "nothing here" 404
       '';
 
       # Homepage

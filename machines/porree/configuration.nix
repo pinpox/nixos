@@ -125,6 +125,9 @@
   pinpox = {
 
     services = {
+
+      pinpox-web.enable = true;
+
       opencrow.enable = true;
       # Authelia is now a clan service (clan-service-modules/authelia).
       # Configuration is in inventory.nix.

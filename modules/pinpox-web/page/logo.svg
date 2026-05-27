@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 200 200"
+   width="200"
+   height="200"
+   version="1.1"
+   id="svg21"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs21" />
+  <sodipodi:namedview
+     id="namedview21"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="11.52"
+     inkscape:cx="106.16319"
+     inkscape:cy="100.13021"
+     inkscape:window-width="2560"
+     inkscape:window-height="1383"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg21" />
+  <!-- Solid white background so favicon stays readable on dark browser themes -->
+  <rect x="-50" y="-50" width="300" height="300" fill="#ffffff" id="favicon-bg" />
+  <rect
+     x="76"
+     y="76"
+     width="52"
+     height="52"
+     fill="#333"
+     rx="2"
+     id="rect2"
+     style="fill:#000000" />
+  <rect
+     x="92"
+     y="122"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect11" />
+  <rect
+     x="72"
+     y="72"
+     width="52"
+     height="52"
+     fill="#fff"
+     stroke="#000"
+     stroke-width="4"
+     rx="2"
+     id="rect3" />
+  <rect
+     x="82"
+     y="122"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect10" />
+  <rect
+     x="58"
+     y="102"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect16" />
+  <rect
+     x="58"
+     y="112"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect17" />
+  <!-- Outer circle -->
+  <path
+     transform="rotate(30)"
+     fill="none"
+     stroke="#000000"
+     stroke-width="2.5"
+     id="ellipse1-6"
+     sodipodi:type="arc"
+     sodipodi:cx="136.53723"
+     sodipodi:cy="36.539116"
+     sodipodi:rx="88"
+     sodipodi:ry="35.385601"
+     sodipodi:start="5.0912635"
+     sodipodi:end="4.0553564"
+     sodipodi:arc-type="arc"
+     d="M 169.08624,3.6630082 A 88,35.385601 0 0 1 223.90547,40.771612 88,35.385601 0 0 1 148.73677,71.583037 88,35.385601 0 0 1 55.417392,50.255526 88,35.385601 0 0 1 82.789479,8.5205095"
+     style="fill:none;stroke:#ffffff;stroke-width:4.9;stroke-linecap:round;stroke-dasharray:none"
+     sodipodi:open="true" />
+  <!-- Orbit ellipse (full) -->
+  <path
+     transform="rotate(30,100,100)"
+     fill="none"
+     stroke="#000000"
+     stroke-width="2.5"
+     id="ellipse1"
+     sodipodi:type="arc"
+     sodipodi:cx="100"
+     sodipodi:cy="100"
+     sodipodi:rx="88"
+     sodipodi:ry="35.385601"
+     sodipodi:start="5.0939193"
+     sodipodi:end="4.2454823"
+     sodipodi:arc-type="arc"
+     d="M 132.76602,67.158768 A 88,35.385601 0 0 1 186.74006,105.96643 88,35.385601 0 0 1 103.75542,135.35336 88,35.385601 0 0 1 14.841135,108.91892 88,35.385601 0 0 1 60.388893,68.401899"
+     style="fill:none;stroke:#000000;stroke-linecap:round"
+     sodipodi:open="true" />
+  <!-- White circle to erase orbit line behind hex -->
+  <!-- Chip: 3D-ish look with beveled edge -->
+  <!-- Shadow/depth layer -->
+  <!-- Main chip body -->
+  <!-- Inner die -->
+  <!-- Die detail - small square highlight -->
+  <!-- Die bonding dot -->
+  <!-- Chip pins - top (with slight rounded ends) -->
+  <rect
+     x="82"
+     y="58"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect6" />
+  <path
+     fill="none"
+     stroke="#000000"
+     stroke-width="5"
+     id="circle1"
+     sodipodi:type="arc"
+     sodipodi:cx="100"
+     sodipodi:cy="100"
+     sodipodi:rx="92"
+     sodipodi:ry="92"
+     sodipodi:start="5.7945526"
+     sodipodi:end="5.1213415"
+     sodipodi:open="true"
+     sodipodi:arc-type="arc"
+     d="M 181.23375,56.813448 A 92,92 0 0 1 156.18376,172.8518 92,92 0 0 1 37.588862,167.59327 92,92 0 0 1 22.907343,49.793205 92,92 0 0 1 136.58366,15.586517"
+     style="stroke-linecap:round" />
+  <rect
+     x="92"
+     y="58"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect7" />
+  <rect
+     x="102"
+     y="58"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect8" />
+  <rect
+     x="112"
+     y="58"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect9" />
+  <!-- Chip pins - bottom -->
+  <rect
+     x="102"
+     y="122"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect12" />
+  <rect
+     x="112"
+     y="122"
+     width="4"
+     height="16"
+     fill="#000"
+     rx="0.5"
+     id="rect13" />
+  <!-- Chip pins - left -->
+  <rect
+     x="58"
+     y="82"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect14" />
+  <rect
+     x="58"
+     y="92"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect15" />
+  <!-- Chip pins - right -->
+  <rect
+     x="122"
+     y="82"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect18" />
+  <rect
+     x="122"
+     y="92"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect19" />
+  <rect
+     x="122"
+     y="102"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect20" />
+  <rect
+     x="122"
+     y="112"
+     width="16"
+     height="4"
+     fill="#000"
+     rx="0.5"
+     id="rect21" />
+  <!-- Hexagonal bolt head on orbit - outline, interrupting orbit -->
+  <path
+     sodipodi:type="star"
+     style="fill:none;fill-opacity:0.999972;stroke:#000000;stroke-width:6.81939083;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+     id="path21"
+     inkscape:flatsided="true"
+     sodipodi:sides="6"
+     sodipodi:cx="154.51389"
+     sodipodi:cy="23.090279"
+     sodipodi:r1="27.499693"
+     sodipodi:r2="23.815434"
+     sodipodi:arg1="0.7943265"
+     sodipodi:arg2="1.3179253"
+     inkscape:rounded="0"
+     inkscape:randomized="0"
+     d="M 173.78472,42.708334 147.15957,49.588337 127.88873,29.970282 135.24305,3.4722232 161.8682,-3.4077802 181.13904,16.210275 Z"
+     transform="matrix(0.61397067,-0.40078314,0.40078314,0.61397067,55.192979,83.733039)" />
+  <ellipse
+     style="fill:none;fill-opacity:0.999972;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+     id="path22"
+     ry="5.8333282"
+     rx="6.0398183"
+     cy="35.680252"
+     cx="159.4915" />
+  <path
+     style="fill:#000000;fill-opacity:0.999972;stroke:#000000;stroke-width:4.73055;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+     id="path24"
+     sodipodi:type="arc"
+     sodipodi:cx="81.084023"
+     sodipodi:cy="81.254196"
+     sodipodi:rx="1.4964893"
+     sodipodi:ry="1.4964893"
+     sodipodi:start="1.6000115"
+     sodipodi:end="1.5941926"
+     sodipodi:arc-type="slice"
+     d="m 81.040309,82.750047 a 1.4964893,1.4964893 0 0 1 -1.452199,-1.537389 1.4964893,1.4964893 0 0 1 1.535274,-1.454433 1.4964893,1.4964893 0 0 1 1.456666,1.533157 1.4964893,1.4964893 0 0 1 -1.531037,1.458894 l 0.03501,-1.49608 z" />
+</svg>
