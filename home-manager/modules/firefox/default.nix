@@ -89,6 +89,7 @@ in
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
+            kagi-search
             web-search-navigator
             ublock-origin
             simple-tab-groups
