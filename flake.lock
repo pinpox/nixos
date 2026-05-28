@@ -299,8 +299,8 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1779910340,
-        "narHash": "sha256-870qSGXNDiPAP99/Ub2cklkfDlQka9zmQM+4m+1er9Y=",
+        "lastModified": 1780004357,
+        "narHash": "sha256-HnFmuC1FoGGBVcJwrflFFtxLPASvUUzDjw2wB6+bI58=",
         "path": "/home/pinpox/code/github.com/generational-infrastructure/distro",
         "type": "path"
       },
