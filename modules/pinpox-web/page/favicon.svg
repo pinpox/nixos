@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 46.988541 46.032982"
+   width="46.988541"
+   height="46.032982"
+   version="1.1"
+   id="svg21"
+   xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .ink { stroke: #000000; }
+    @media (prefers-color-scheme: dark) {
+      .ink { stroke: #ffffff; }
+    }
+  </style>
+  <path
+     class="ink"
+     style="fill:none;fill-opacity:0.999972;stroke-width:6.81939;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+     id="path21"
+     d="M 173.78472,42.708334 147.15957,49.588337 127.88873,29.970282 135.24305,3.4722232 161.8682,-3.4077802 181.13904,16.210275 Z"
+     transform="matrix(0.61397067,-0.40078314,0.40078314,0.61397067,-80.626917,70.766297)" />
+  <ellipse
+     class="ink"
+     style="fill:none;fill-opacity:0.999972;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+     id="path22"
+     ry="5.8333282"
+     rx="6.0398183"
+     cy="23.016487"
+     cx="23.49427" />
+</svg>
