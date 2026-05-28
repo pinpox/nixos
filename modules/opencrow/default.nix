@@ -202,7 +202,7 @@ in
         pkgs.pi
         pkgs.curl
         pkgs.jq
-        mics-skills.packages.${pkgs.system}.db-cli
+        mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
       ];
       environment = {
         NEXTCLOUD_URL = "https://files.pablo.tools";
@@ -233,7 +233,7 @@ in
         pkgs.pi
         pkgs.curl
         pkgs.jq
-        mics-skills.packages.${pkgs.system}.db-cli
+        mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
       ];
 
       environment = {

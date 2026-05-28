@@ -14,7 +14,7 @@
     piPackage = pkgs.pi;
     llmUrl = "http://127.0.0.1:8012";
     skills = {
-      deutschebahn = "${mics-skills.packages.${pkgs.system}.db-cli}/share/skills/db-cli";
+      deutschebahn = "${mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli}/share/skills/db-cli";
     };
   };
 
@@ -26,6 +26,6 @@
     pkgs.pi
     pkgs.curl
     pkgs.jq
-    mics-skills.packages.${pkgs.system}.db-cli
+    mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
   ];
 }
