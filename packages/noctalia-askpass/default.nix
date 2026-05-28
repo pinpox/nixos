@@ -47,8 +47,15 @@ writeShellApplication {
     mkfifo -m 600 "$FIFO"
     trap 'rm -f "$FIFO"' EXIT
 
-    # Ask noctalia to show the password dialog
-    noctalia-shell ipc call plugin:noctalia-askpass prompt "$PROMPT" "$CALLER" "$FIFO" &
+    # Ask noctalia to show the password dialog. Run synchronously: ipc call
+    # returns immediately after the plugin dispatch, so a non-zero exit here
+    # means there is no running noctalia-shell instance (or its store path
+    # diverged from this derivation's). Without this check, `cat $FIFO` below
+    # would block forever waiting for a writer that will never appear.
+    if ! noctalia-shell ipc call plugin:noctalia-askpass prompt "$PROMPT" "$CALLER" "$FIFO"; then
+      echo "noctalia-askpass: noctalia-shell IPC failed; is noctalia-shell running and matching this derivation?" >&2
+      exit 1
+    fi
 
     # Block until the plugin writes the password (or empty on cancel)
     PASSWORD=$(cat "$FIFO")
