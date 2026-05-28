@@ -16,7 +16,7 @@
     data-mesher.url = "git+https://git.clan.lol/clan/data-mesher";
     data-mesher.inputs.nixpkgs.follows = "nixpkgs";
 
-	clan-community.url = "path:/home/pinpox/code/git.clan.lol/clan/clan-community";
+	clan-community.url = "https://git.clan.lol/clan/clan-community/archive/main.tar.gz";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -77,8 +77,8 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    distro.url = "path:/home/pinpox/code/github.com/generational-infrastructure/distro";
-    # distro.url = "github:generational-infrastructure/distro";
+    # distro.url = "path:/home/pinpox/code/github.com/generational-infrastructure/distro";
+    distro.url = "github:generational-infrastructure/distro";
     distro.inputs.nixpkgs.follows = "nixpkgs";
     distro.inputs.treefmt-nix.follows = "treefmt-nix";
 
