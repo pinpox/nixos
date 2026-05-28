@@ -41,7 +41,7 @@ in
   '';
 
   environment.systemPackages = [
-    age-plugin-picohsm.packages.${pkgs.system}.default
+    age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs.age
     pkgs.rage
     pkgs.age-plugin-yubikey
@@ -51,7 +51,7 @@ in
   ];
 
   environment.sessionVariables = {
-    PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.system}.default}/bin/picohsm-askpass";
+    PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/picohsm-askpass";
     PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
     AGE_ASKPASS = lib.getExe pkgs.noctalia-askpass;
     # passage delegates to the binary named here; rage honors AGE_ASKPASS
@@ -80,7 +80,7 @@ in
       wantedBy = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = lib.getExe passage-secret-service.packages.${pkgs.system}.passage-secret-service;
+        ExecStart = lib.getExe passage-secret-service.packages.${pkgs.stdenv.hostPlatform.system}.passage-secret-service;
         Restart = "on-failure";
         RestartSec = 3;
       };
