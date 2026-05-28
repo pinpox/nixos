@@ -137,17 +137,12 @@ in
           mail
           calendar
           contacts
-
-          # TODO https://github.com/pulsejet/memories/issues/1625
           memories
 
           previewgenerator
           # maps
           twofactor_webauthn
-
-          # TODO re-enable after https://github.com/NixOS/nixpkgs/pull/400158
-          # recognize
-
+          # recognize  # works but pulls in ~100MiB libtensorflow
           music
           # phonetrack
           ;

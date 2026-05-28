@@ -1,4 +1,5 @@
 {
+  config,
   distro,
   mics-skills,
   pkgs,
@@ -9,10 +10,17 @@
     distro.nixosModules.pi-chat
   ];
 
+  clan.core.vars.generators."pi-chat-openrouter".prompts."api-key".persist = true;
+
   services.pi-chat = {
     enable = true;
     piPackage = pkgs.pi;
     llmUrl = "http://127.0.0.1:8012";
+    openrouter = {
+      enable = true;
+      apiKeyFile =
+        config.clan.core.vars.generators."pi-chat-openrouter".files."api-key".path;
+    };
     skills = {
       deutschebahn = "${mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli}/share/skills/db-cli";
     };
