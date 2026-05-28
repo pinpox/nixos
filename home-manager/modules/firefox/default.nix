@@ -24,6 +24,10 @@ in
       enable = true;
       package = pkgs.firefox;
 
+      # Keep legacy ~/.mozilla/firefox path; home.stateVersion < 26.05.
+      # Set explicitly to silence the deprecation warning.
+      configPath = ".mozilla/firefox";
+
       profiles = {
         pinpox = {
 

@@ -18,7 +18,7 @@ in
 
       enableDefaultConfig = false;
 
-      matchBlocks = {
+      settings = {
 
         "*" = {
           certificateFile = [ "${./yubikey-ssh-cert.pub}" ];
