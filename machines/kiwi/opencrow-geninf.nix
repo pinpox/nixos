@@ -1,13 +1,13 @@
 {
   config,
-  distro,
+  spaces,
   mics-skills,
   pkgs,
   ...
 }:
 {
   imports = [
-    distro.nixosModules.pi-chat
+    spaces.nixosModules.pi-chat
   ];
 
   clan.core.vars.generators."pi-chat-openrouter".prompts."api-key".persist = true;

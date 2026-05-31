@@ -77,10 +77,10 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # distro.url = "path:/home/pinpox/code/github.com/generational-infrastructure/distro";
-    distro.url = "github:generational-infrastructure/distro";
-    distro.inputs.nixpkgs.follows = "nixpkgs";
-    distro.inputs.treefmt-nix.follows = "treefmt-nix";
+    # spaces.url = "path:/home/pinpox/code/github.com/generational-infrastructure/spaces-os";
+    spaces.url = "github:generational-infrastructure/spaces-os";
+    spaces.inputs.nixpkgs.follows = "nixpkgs";
+    spaces.inputs.treefmt-nix.follows = "treefmt-nix";
 
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
