@@ -16,6 +16,11 @@ in
 
   config = mkIf cfg.enable {
 
+    # minio is abandoned upstream; pin the known-insecure package explicitly.
+    nixpkgs.config.permittedInsecurePackages = [
+      "minio-2025-10-15T17-29-55Z"
+    ];
+
     clan.core.vars.generators."minio" = rec {
       files.root-credentials = { };
       validation.script = script;
