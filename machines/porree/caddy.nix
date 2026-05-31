@@ -93,6 +93,11 @@ in
         }
       '';
 
+      # Redirect www -> apex (Caddy auto-provisions the cert for www)
+      "www.pinpox.com".extraConfig = ''
+        redir https://pinpox.com{uri} permanent
+      '';
+
       # Homepage
       "pablo.tools".extraConfig = ''
         handle /.well-known/nostr.json {
@@ -105,6 +110,11 @@ in
         root * /var/www/pablo-tools
         file_server
         encode zstd gzip
+      '';
+
+      # Redirect www -> apex (Caddy auto-provisions the cert for www)
+      "www.pablo.tools".extraConfig = ''
+        redir https://pablo.tools{uri} permanent
       '';
 
       # Homepage (dev) - protected by Authelia
