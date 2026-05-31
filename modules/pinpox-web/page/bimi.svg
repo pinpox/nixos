@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.2" baseProfile="tiny-ps" viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <title>Bits &amp; Bolts</title>
+  <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+  <rect x="76" y="76" width="52" height="52" rx="2" fill="#000000"/>
+  <rect x="92" y="122" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="72" y="72" width="52" height="52" rx="2" fill="#ffffff" stroke="#000000" stroke-width="4"/>
+  <rect x="82" y="122" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="58" y="102" width="16" height="4" rx="0.5" fill="#000000"/>
+  <rect x="58" y="112" width="16" height="4" rx="0.5" fill="#000000"/>
+  <path transform="rotate(30)" fill="none" stroke="#ffffff" stroke-width="4.9" stroke-linecap="round" d="M 169.08624,3.6630082 A 88,35.385601 0 0 1 223.90547,40.771612 88,35.385601 0 0 1 148.73677,71.583037 88,35.385601 0 0 1 55.417392,50.255526 88,35.385601 0 0 1 82.789479,8.5205095"/>
+  <path transform="rotate(30,100,100)" fill="none" stroke="#000000" stroke-linecap="round" d="M 132.76602,67.158768 A 88,35.385601 0 0 1 186.74006,105.96643 88,35.385601 0 0 1 103.75542,135.35336 88,35.385601 0 0 1 14.841135,108.91892 88,35.385601 0 0 1 60.388893,68.401899"/>
+  <rect x="82" y="58" width="4" height="16" rx="0.5" fill="#000000"/>
+  <path fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" d="M 181.23375,56.813448 A 92,92 0 0 1 156.18376,172.8518 92,92 0 0 1 37.588862,167.59327 92,92 0 0 1 22.907343,49.793205 92,92 0 0 1 136.58366,15.586517"/>
+  <rect x="92" y="58" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="102" y="58" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="112" y="58" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="102" y="122" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="112" y="122" width="4" height="16" rx="0.5" fill="#000000"/>
+  <rect x="58" y="82" width="16" height="4" rx="0.5" fill="#000000"/>
+  <rect x="58" y="92" width="16" height="4" rx="0.5" fill="#000000"/>
+  <rect x="122" y="82" width="16" height="4" rx="0.5" fill="#000000"/>
+  <rect x="122" y="92" width="16" height="4" rx="0.5" fill="#000000"/>
+  <rect x="122" y="102" width="16" height="4" rx="0.5" fill="#000000"/>
+  <rect x="122" y="112" width="16" height="4" rx="0.5" fill="#000000"/>
+  <path fill="none" stroke="#000000" stroke-width="6.81939083" stroke-linecap="round" stroke-linejoin="round" d="M 173.78472,42.708334 147.15957,49.588337 127.88873,29.970282 135.24305,3.4722232 161.8682,-3.4077802 181.13904,16.210275 Z" transform="matrix(0.61397067,-0.40078314,0.40078314,0.61397067,55.192979,83.733039)"/>
+  <ellipse fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" rx="6.0398183" ry="5.8333282" cx="159.4915" cy="35.680252"/>
+  <path fill="#000000" stroke="#000000" stroke-width="4.73055" stroke-linecap="round" stroke-linejoin="round" d="m 81.040309,82.750047 a 1.4964893,1.4964893 0 0 1 -1.452199,-1.537389 1.4964893,1.4964893 0 0 1 1.535274,-1.454433 1.4964893,1.4964893 0 0 1 1.456666,1.533157 1.4964893,1.4964893 0 0 1 -1.531037,1.458894 l 0.03501,-1.49608 z"/>
+</svg>
