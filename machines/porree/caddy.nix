@@ -154,7 +154,7 @@ in
       # Alertmanager
       "vpn.alerts.pablo.tools".extraConfig = ''
         @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16
+          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
         }
         reverse_proxy @vpnonly 127.0.0.1:9093
       '';
@@ -162,7 +162,7 @@ in
       # Prometheus
       "vpn.prometheus.pablo.tools".extraConfig = ''
         @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16
+          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
         }
         reverse_proxy @vpnonly 127.0.0.1:9090
       '';
@@ -170,7 +170,7 @@ in
       # ntfy
       "vpn.notify.pablo.tools".extraConfig = ''
         @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16
+          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
         }
         reverse_proxy @vpnonly 127.0.0.1:11000
       '';
@@ -178,7 +178,7 @@ in
       # Minio admin console
       "vpn.minio.pablo.tools".extraConfig = ''
         @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16
+          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
         }
         reverse_proxy @vpnonly birne.wireguard:9001
       '';
@@ -186,7 +186,7 @@ in
       # Minio s3 backend
       "vpn.s3.pablo.tools".extraConfig = ''
         @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16
+          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
         }
         reverse_proxy @vpnonly birne.wireguard:9000
       '';
