@@ -56,6 +56,7 @@ in
         helix.enable = false;
         easyeffects.enable = false;
         zellij.enable = true;
+        sbox.enable = true;
         claude-code.enable = true;
         chromium.enable = true;
         firefox.enable = true;

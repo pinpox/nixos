@@ -159,6 +159,10 @@
 
     trippy-track.url = "github:pinpox/trippy-track";
     trippy-track.inputs.nixpkgs.follows = "nixpkgs";
+
+    # sbox manages its own inputs via nixtamal/nilla, so it exposes no flake
+    # inputs to point at our nixpkgs with `follows`.
+    sbox.url = "github:DavHau/sbox";
   };
   outputs =
     { self, ... }@inputs:

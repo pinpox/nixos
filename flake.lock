@@ -1232,6 +1232,7 @@
         "restic-exporter": "restic-exporter",
         "retiolum": "retiolum",
         "rio": "rio",
+        "sbox": "sbox",
         "spaces": "spaces",
         "treefmt-nix": [
           "clan-core",
@@ -1281,6 +1282,21 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sbox": {
+      "locked": {
+        "lastModified": 1780323502,
+        "narHash": "sha256-5gPHX6kmTfpn/C/sfHLlmGNCWoGYPFqfKObuhrdF1RU=",
+        "owner": "DavHau",
+        "repo": "sbox",
+        "rev": "1071beb193c1448b252e3996e0722bb89350bd04",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DavHau",
+        "repo": "sbox",
         "type": "github"
       }
     },
