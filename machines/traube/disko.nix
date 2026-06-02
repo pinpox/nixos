@@ -1,7 +1,7 @@
 # ---
 # schema = "btrfs-single-disk-subvolumes"
 # [placeholders]
-# mainDisk = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_1TB_S467NX0MB03860Y" 
+# mainDisk = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_1TB_S467NX0MB03860Y"
 # ---
 # This file was automatically generated!
 # CHANGING this configuration requires wiping and reinstalling the machine

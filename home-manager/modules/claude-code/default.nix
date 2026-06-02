@@ -32,7 +32,11 @@ let
           "unified-extensions-button"
         ];
         toolbar-menubar = [ "menubar-items" ];
-        TabsToolbar = [ "tabbrowser-tabs" "new-tab-button" "alltabs-button" ];
+        TabsToolbar = [
+          "tabbrowser-tabs"
+          "new-tab-button"
+          "alltabs-button"
+        ];
         PersonalToolbar = [ "personal-bookmarks" ];
       };
       seen = [ "browser-cli-controller_thalheim_io-browser-action" ];
@@ -42,9 +46,11 @@ let
     };
   };
 
-  userJs = pkgs.writeText "browser-cli-user.js" (concatStringsSep "\n" (
-    mapAttrsToList (k: v: "user_pref(${builtins.toJSON k}, ${builtins.toJSON v});") firefoxPrefs
-  ));
+  userJs = pkgs.writeText "browser-cli-user.js" (
+    concatStringsSep "\n" (
+      mapAttrsToList (k: v: "user_pref(${builtins.toJSON k}, ${builtins.toJSON v});") firefoxPrefs
+    )
+  );
 
   browser-cli-firefox = pkgs.writeShellScriptBin "browser-cli-firefox" ''
     set -euo pipefail

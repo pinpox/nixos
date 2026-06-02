@@ -1,7 +1,7 @@
 # ---
 # schema = "single-disk"
 # [placeholders]
-# mainDisk = "/dev/disk/by-path/pci-0000:00:10.0" 
+# mainDisk = "/dev/disk/by-path/pci-0000:00:10.0"
 # ---
 # This file was automatically generated!
 # CHANGING this configuration requires wiping and reinstalling the machine

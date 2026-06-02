@@ -8,17 +8,19 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
-	clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
     clan-core.inputs.data-mesher.follows = "data-mesher";
 
     data-mesher.url = "git+https://git.clan.lol/clan/data-mesher";
     data-mesher.inputs.nixpkgs.follows = "nixpkgs";
+    data-mesher.inputs.treefmt-nix.follows = "treefmt-nix";
 
-	clan-community.url = "https://git.clan.lol/clan/clan-community/archive/main.tar.gz";
+    clan-community.url = "https://git.clan.lol/clan/clan-community/archive/main.tar.gz";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
+    clan-community.inputs.treefmt-nix.follows = "treefmt-nix";
 
     rio.url = "github:pinpox/rio";
     rio.inputs.nixpkgs.follows = "nixpkgs";
@@ -40,6 +42,7 @@
     jitsi-matrix-presence.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
     aoe-taunt-discord-bot.url = "github:pinpox/aoe-taunt-discord-bot";
     aoe-taunt-discord-bot.inputs.nixpkgs.follows = "nixpkgs";
@@ -81,6 +84,7 @@
     spaces.url = "github:generational-infrastructure/spaces-os";
     spaces.inputs.nixpkgs.follows = "nixpkgs";
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
+    spaces.inputs.llm-agents.follows = "llm-agents";
 
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
@@ -141,6 +145,7 @@
 
     passage-secret-service.url = "github:pinpox/passage-secret-service";
     passage-secret-service.inputs.nixpkgs.follows = "nixpkgs";
+    passage-secret-service.inputs.treefmt-nix.follows = "treefmt-nix";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
     llm-agents.inputs.nixpkgs.follows = "nixpkgs";
@@ -159,6 +164,7 @@
 
     trippy-track.url = "github:pinpox/trippy-track";
     trippy-track.inputs.nixpkgs.follows = "nixpkgs";
+    trippy-track.inputs.treefmt-nix.follows = "treefmt-nix";
 
     # sbox manages its own inputs via nixtamal/nilla, so it exposes no flake
     # inputs to point at our nixpkgs with `follows`.
@@ -285,10 +291,13 @@
       # Machine toplevels for CI builds and cache pushing
       ciBuilds = forAllSystems (
         system:
-        nixpkgs.lib.mapAttrs' (
-          name: config:
-          nixpkgs.lib.nameValuePair name config.config.system.build.toplevel
-        ) (nixpkgs.lib.filterAttrs (_: config: config.pkgs.stdenv.hostPlatform.system == system) self.nixosConfigurations)
+        nixpkgs.lib.mapAttrs'
+          (name: config: nixpkgs.lib.nameValuePair name config.config.system.build.toplevel)
+          (
+            nixpkgs.lib.filterAttrs (
+              _: config: config.pkgs.stdenv.hostPlatform.system == system
+            ) self.nixosConfigurations
+          )
       );
 
       # Each subdirectory in ./templates/<template-name> is a

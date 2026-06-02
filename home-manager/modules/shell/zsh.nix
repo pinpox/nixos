@@ -40,73 +40,76 @@
         );
 
         functions = ''
-          function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
+                    function "="() { printf "%s\n" "$@" | ${pkgs.bc}/bin/bc }
 
-          function ai() {
-            echo "$@" | $##{pkgs.shell-gpt}/bin/sgpt
-          }
+                    function ai() {
+                      echo "$@" | $##{pkgs.shell-gpt}/bin/sgpt
+                    }
 
-          function aip() {
-            wl-paste | $##{pkgs.shell-gpt}/bin/sgpt
-          }
+                    function aip() {
+                      wl-paste | $##{pkgs.shell-gpt}/bin/sgpt
+                    }
 
-          # Create a temporary, detached worktree of the current git repo.
-          # Great for quick hot-fixes.
-          twork () {
-              local wtpath="$(mktemp -d)"
-              git worktree add --detach $wtpath
-              cd $wtpath
-          }
+                    # Create a temporary, detached worktree of the current git repo.
+                    # Great for quick hot-fixes.
+                    twork () {
+                        local wtpath="$(mktemp -d)"
+                        git worktree add --detach $wtpath
+                        cd $wtpath
+                    }
 
-          # Jump to a code project with FZF using Ctrl+j
-          fzf_cd_widget() {
-            local base="/home/pinpox/code"
-            local rel full
+                    # Jump to a code project with FZF using Ctrl+j
+                    fzf_cd_widget() {
+                      local base="/home/pinpox/code"
+                      local rel full
 
-            rel=$(
-              find "$base" -maxdepth 3 -type d \
-                | grep -E '(/.*){6}' \
-                | sed "s|^$base/||" \
-                | fzf --preview "BASE=$base sh -c '${pkgs.eza}/bin/eza \
-                  --group-directories-first --tree --level=2 --icons \"\$BASE/\$0\"' {}"
-            ) || return
+                      rel=$(
+                        find "$base" -maxdepth 3 -type d \
+                          | grep -E '(/.*){6}' \
+                          | sed "s|^$base/||" \
+                          | fzf --preview "BASE=$base sh -c '${pkgs.eza}/bin/eza \
+                            --group-directories-first --tree --level=2 --icons \"\$BASE/\$0\"' {}"
+                      ) || return
 
-            full="$base/$rel"
-            cd "$full" || return
+                      full="$base/$rel"
+                      cd "$full" || return
 
-            if [[ -n "$ZLE_NAME" ]]; then
-              zle reset-prompt
+                      if [[ -n "$ZLE_NAME" ]]; then
+                        zle reset-prompt
+                      fi
+                    }
+
+                    zle -N fzf_cd_widget
+                    bindkey '^J' fzf_cd_widget
+
+          ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
+            # Power profile function using ryzenadj (x86_64 only)
+            power-profile() {
+            if [ $# -ne 4 ]; then
+              echo "Usage: power-profile <name> <stapm> <fast> <slow>"
+              echo "Example: power-profile PERFORMANCE 30000 35000 35000"
+              return 1
             fi
-          }
 
-          zle -N fzf_cd_widget
-          bindkey '^J' fzf_cd_widget
+            local name=$1
+            local stapm=$2 # Sustained power limit
+            local fast=$3 # Short burst power limit (instant peak response)
+            local slow=$4 # Slow burst power limit (~5-10s)
 
-${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
-          # Power profile function using ryzenadj (x86_64 only)
-          power-profile() {
-          if [ $# -ne 4 ]; then
-            echo "Usage: power-profile <name> <stapm> <fast> <slow>"
-            echo "Example: power-profile PERFORMANCE 30000 35000 35000"
-            return 1
-          fi
-
-          local name=$1
-          local stapm=$2 # Sustained power limit
-          local fast=$3 # Short burst power limit (instant peak response)
-          local slow=$4 # Slow burst power limit (~5-10s)
-
-          sudo ${lib.getExe pkgs.ryzenadj} --stapm-limit=$stapm --fast-limit=$fast --slow-limit=$slow && \
-            echo "Power profile set to: $name (''${stapm}mW/''${fast}mW/''${slow}mW)"
-          }
-        ''}
+            sudo ${lib.getExe pkgs.ryzenadj} --stapm-limit=$stapm --fast-limit=$fast --slow-limit=$slow && \
+              echo "Power profile set to: $name (''${stapm}mW/''${fast}mW/''${slow}mW)"
+            }
+          ''}
 
         '';
       in
       lib.mkMerge [
-        (lib.mkOrder 550 ((builtins.readFile ./zshrc) + ''
-          unsetopt nomatch
-        ''))
+        (lib.mkOrder 550 (
+          (builtins.readFile ./zshrc)
+          + ''
+            unsetopt nomatch
+          ''
+        ))
         abbrevs
         (builtins.readFile ./zshrc-extra)
         (builtins.readFile ./zshrc-coffee)
@@ -162,7 +165,7 @@ ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
       top = "${pkgs.htop}/bin/htop";
       weather = "${pkgs.curl}/bin/curl -4 http://wttr.in/Koeln";
       # radio = "${
-        #pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
+      #pkgs.mpv}/bin/mpv http://lassul.us:8000/radio.ogg";
 
       # ${pkgs.yubikey-manager}/bin/ykman oath accounts code | \
       yotp = ''
@@ -178,7 +181,8 @@ ${lib.optionalString (pkgs.stdenv.hostPlatform.system == "x86_64-linux") ''
       za = "${./zellij-chooser}";
 
       upterm = "${pkgs.upterm}/bin/upterm host --server ssh://upterm.thalheim.io:2323 --force-command 'zellij attach pair-programming' -- zellij attach --create pair-programming";
-    } // lib.optionalAttrs (pkgs.stdenv.hostPlatform.system == "x86_64-linux") {
+    }
+    // lib.optionalAttrs (pkgs.stdenv.hostPlatform.system == "x86_64-linux") {
       # x86_64-only aliases
       gif = "${flake-inputs.gif-searcher.packages.x86_64-linux.default}/bin/show-gif";
       gifi = "${flake-inputs.gif-searcher.packages.x86_64-linux.gif-infinite}/bin/show-gif";

@@ -1,153 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Bits &amp; Bolts - Pinpox Technical Services</title>
-	<link rel="icon" type="image/svg+xml" href="favicon.svg">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap">
-	<style>
-		:root {
-			--dark: #1a1a1a;
-			--mid: #666666;
-			--black: #000000;
-		}
-		html, body {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			background: #fff;
-			color: var(--dark);
-			font-family: "Hanken Grotesk", system-ui, sans-serif;
-		}
-		body {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			padding: 4vh clamp(2rem, 8vw, 6rem);
-			box-sizing: border-box;
-		}
-		.brand {
-			display: flex;
-			flex-direction: column;
-			align-items: stretch;
-			gap: 1.5rem;
-			width: max-content;
-			max-width: 100%;
-			margin: auto 0;
-		}
-		.footer {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 0.4rem;
-			width: 100%;
-		}
-		.row {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: clamp(1.5rem, 4vw, 3.5rem);
-		}
-		.logo {
-			flex: 0 0 auto;
-			width: clamp(160px, 23vw, 320px);
-			height: auto;
-		}
-		.text {
-			display: flex;
-			flex-direction: column;
-			gap: 0.4rem;
-			min-width: 0;
-		}
-		.title {
-			font-weight: 700;
-			font-size: clamp(3.25rem, 9vw, 7rem);
-			line-height: 1;
-			color: var(--black);
-			letter-spacing: -0.01em;
-		}
-		.subtitle {
-			font-weight: 400;
-			text-transform: uppercase;
-			letter-spacing: 0.25em;
-			color: var(--mid);
-			font-size: clamp(0.9rem, 1.6vw, 1.2rem);
-			/* Optical alignment: nudge first glyph (P) right to sit under the B stem.
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bits &amp; Bolts - Pinpox Technical Services</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap"
+    />
+    <style>
+      :root {
+        --dark: #1a1a1a;
+        --mid: #666666;
+        --black: #000000;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #fff;
+        color: var(--dark);
+        font-family: "Hanken Grotesk", system-ui, sans-serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4vh clamp(2rem, 8vw, 6rem);
+        box-sizing: border-box;
+      }
+      .brand {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+        width: max-content;
+        max-width: 100%;
+        margin: auto 0;
+      }
+      .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        width: 100%;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(1.5rem, 4vw, 3.5rem);
+      }
+      .logo {
+        flex: 0 0 auto;
+        width: clamp(160px, 23vw, 320px);
+        height: auto;
+      }
+      .text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        min-width: 0;
+      }
+      .title {
+        font-weight: 700;
+        font-size: clamp(3.25rem, 9vw, 7rem);
+        line-height: 1;
+        color: var(--black);
+        letter-spacing: -0.01em;
+      }
+      .subtitle {
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: var(--mid);
+        font-size: clamp(0.9rem, 1.6vw, 1.2rem);
+        /* Optical alignment: nudge first glyph (P) right to sit under the B stem.
 			   B's left side bearing at title size > P's left side bearing at subtitle size. */
-			margin-left: 0.3em;
-		}
-		.tagline {
-			font-weight: 700;
-			font-size: clamp(1rem, 1.6vw, 1.25rem);
-			line-height: 1.3;
-			color: var(--dark);
-			text-align: center;
-		}
-		.contact {
-			font-weight: 400;
-			font-size: clamp(1rem, 1.6vw, 1.25rem);
-			line-height: 1.3;
-			color: var(--mid);
-			text-align: center;
-			width: 100%;
-			max-width: 100%;
-		}
-		.tagline .lead {
-			font-weight: 400;
-			color: var(--mid);
-		}
-		.contact a {
-			color: var(--dark);
-			font-weight: 700;
-			text-decoration: none;
-			transition: color 0.15s ease;
-		}
-		.contact a:hover {
-			color: var(--black);
-		}
-		@media (max-width: 700px) {
-			.row {
-				flex-direction: column;
-				text-align: center;
-				gap: 1.25rem;
-			}
-			.text {
-				align-items: center;
-			}
-			.logo {
-				width: min(60vw, 280px);
-			}
-			.title {
-				font-size: clamp(2rem, 11vw, 4rem);
-			}
-			.subtitle {
-				margin-left: 0;
-				font-size: clamp(0.7rem, 2.5vw, 1rem);
-				letter-spacing: 0.15em;
-			}
-		}
-	</style>
-</head>
-<body>
-	<div class="brand">
-		<div class="row">
-			<img class="logo" src="logo.svg" alt="Bits & Bolts logo">
-			<div class="text">
-				<div class="title">Bits &amp; Bolts</div>
-				<div class="subtitle">Pinpox Technical Services</div>
-			</div>
-		</div>
-	</div>
-	<div class="footer">
-		<div class="tagline">
-			<span class="lead">Is your shit broken?</span> <span>I will fix it.</span>
-		</div>
-		<div class="contact">
-			Contact me at <a href="mailto:mail@pablo.tools">mail@pablo.tools</a> or <a href="https://github.com/pinpox">github.com/pinpox</a>
-		</div>
-	</div>
-</body>
+        margin-left: 0.3em;
+      }
+      .tagline {
+        font-weight: 700;
+        font-size: clamp(1rem, 1.6vw, 1.25rem);
+        line-height: 1.3;
+        color: var(--dark);
+        text-align: center;
+      }
+      .contact {
+        font-weight: 400;
+        font-size: clamp(1rem, 1.6vw, 1.25rem);
+        line-height: 1.3;
+        color: var(--mid);
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+      }
+      .tagline .lead {
+        font-weight: 400;
+        color: var(--mid);
+      }
+      .contact a {
+        color: var(--dark);
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.15s ease;
+      }
+      .contact a:hover {
+        color: var(--black);
+      }
+      @media (max-width: 700px) {
+        .row {
+          flex-direction: column;
+          text-align: center;
+          gap: 1.25rem;
+        }
+        .text {
+          align-items: center;
+        }
+        .logo {
+          width: min(60vw, 280px);
+        }
+        .title {
+          font-size: clamp(2rem, 11vw, 4rem);
+        }
+        .subtitle {
+          margin-left: 0;
+          font-size: clamp(0.7rem, 2.5vw, 1rem);
+          letter-spacing: 0.15em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="brand">
+      <div class="row">
+        <img class="logo" src="logo.svg" alt="Bits & Bolts logo" />
+        <div class="text">
+          <div class="title">Bits &amp; Bolts</div>
+          <div class="subtitle">Pinpox Technical Services</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="tagline">
+        <span class="lead">Is your shit broken?</span>
+        <span>I will fix it.</span>
+      </div>
+      <div class="contact">
+        Contact me at <a href="mailto:mail@pablo.tools">mail@pablo.tools</a> or
+        <a href="https://github.com/pinpox">github.com/pinpox</a>
+      </div>
+    </div>
+  </body>
 </html>

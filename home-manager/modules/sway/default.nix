@@ -102,7 +102,10 @@ in
           Unit = {
             Description = "Animated harmonograph wallpaper";
             PartOf = [ "sway-session.target" ];
-            After = [ "sway-session.target" "kanshi.service" ];
+            After = [
+              "sway-session.target"
+              "kanshi.service"
+            ];
             Wants = [ "kanshi.service" ];
           };
           Service = {
@@ -276,7 +279,7 @@ in
 
                     # Fix position while it's in scratchpad (this ensures correct position on first show)
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] scratchpad show'
-                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] resize set width 100 ppt height 100 ppt' 
+                    ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] resize set width 100 ppt height 100 ppt'
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move container to position 0 px 0 px'
                     ${pkgs.sway}/bin/swaymsg '[app_id="dropdown"] move scratchpad'
                   '';
@@ -367,8 +370,7 @@ in
               };
             };
 
-          bars = [
-          ];
+          bars = [ ];
 
           fonts = {
             names = [ "Berkeley Mono" ];

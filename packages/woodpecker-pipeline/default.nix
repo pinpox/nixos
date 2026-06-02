@@ -116,7 +116,8 @@ pkgs.writeShellScriptBin "woodpecker-pipeline" ''
   rm -rf .woodpecker/*
 
   # copy pipelines to .woodpecker folder
-  ${lib.concatMapStringsSep "\n" (system:
+  ${lib.concatMapStringsSep "\n" (
+    system:
     let
       name = builtins.replaceStrings [ "_" ] [ "-" ] (builtins.head (lib.splitString "-" system));
       arch = builtins.elemAt (lib.splitString "-" system) 1;

@@ -432,6 +432,7 @@
 
     wg-clan = {
 
+      # "10.100.0.0/24"
       module.input = "clan-community";
       module.name = "wireguard-star";
 

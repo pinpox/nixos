@@ -18,11 +18,12 @@
     llmUrl = "http://127.0.0.1:8012";
     openrouter = {
       enable = true;
-      apiKeyFile =
-        config.clan.core.vars.generators."pi-chat-openrouter".files."api-key".path;
+      apiKeyFile = config.clan.core.vars.generators."pi-chat-openrouter".files."api-key".path;
     };
     skills = {
-      deutschebahn = "${mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli}/share/skills/db-cli";
+      deutschebahn = "${
+        mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
+      }/share/skills/db-cli";
     };
   };
 

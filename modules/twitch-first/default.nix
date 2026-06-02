@@ -33,7 +33,9 @@ in
       wants = [ "network-online.target" ];
 
       serviceConfig = {
-        ExecStart = "${twitch-first.packages.${pkgs.stdenv.hostPlatform.system}.twitch-first}/bin/twitch-first";
+        ExecStart = "${
+          twitch-first.packages.${pkgs.stdenv.hostPlatform.system}.twitch-first
+        }/bin/twitch-first";
         EnvironmentFile = config.clan.core.vars.generators."twitch-first".files."envfile".path;
         DynamicUser = true;
         StateDirectory = "twitch-first";

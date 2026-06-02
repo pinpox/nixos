@@ -27,38 +27,38 @@ in
     #   }
     # '';
 
-  services.pcscd.enable = true;
+    services.pcscd.enable = true;
 
+    # Allow pcscd access for SSH sessions (not just graphical)
+    security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+        if (action.id == "org.debian.pcsc-lite.access_pcsc" ||
+            action.id == "org.debian.pcsc-lite.access_card") {
+          return polkit.Result.YES;
+        }
+      });
+    '';
 
-  # Allow pcscd access for SSH sessions (not just graphical)
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (action.id == "org.debian.pcsc-lite.access_pcsc" ||
-          action.id == "org.debian.pcsc-lite.access_card") {
-        return polkit.Result.YES;
-      }
-    });
-  '';
+    environment.systemPackages = [
+      age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default
+      pkgs.age
+      pkgs.rage
+      pkgs.age-plugin-yubikey
+      pkgs.opensc
+      pkgs.keyutils
+      pkgs.yubikey-manager
+    ];
 
-  environment.systemPackages = [
-    age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default
-    pkgs.age
-    pkgs.rage
-    pkgs.age-plugin-yubikey
-    pkgs.opensc
-    pkgs.keyutils
-    pkgs.yubikey-manager
-  ];
-
-  environment.sessionVariables = {
-    PICOHSM_ASKPASS = "${age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/picohsm-askpass";
-    PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
-    AGE_ASKPASS = lib.getExe pkgs.noctalia-askpass;
-    # passage delegates to the binary named here; rage honors AGE_ASKPASS
-    # (via str4d/rage#617), the Go age does not.
-    PASSAGE_AGE = "rage";
-  };
-
+    environment.sessionVariables = {
+      PICOHSM_ASKPASS = "${
+        age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default
+      }/bin/picohsm-askpass";
+      PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
+      AGE_ASKPASS = lib.getExe pkgs.noctalia-askpass;
+      # passage delegates to the binary named here; rage honors AGE_ASKPASS
+      # (via str4d/rage#617), the Go age does not.
+      PASSAGE_AGE = "rage";
+    };
 
     security.tpm2.enable = true;
     security.tpm2.pkcs11.enable = true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
@@ -80,7 +80,9 @@ in
       wantedBy = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = lib.getExe passage-secret-service.packages.${pkgs.stdenv.hostPlatform.system}.passage-secret-service;
+        ExecStart =
+          lib.getExe
+            passage-secret-service.packages.${pkgs.stdenv.hostPlatform.system}.passage-secret-service;
         Restart = "on-failure";
         RestartSec = 3;
       };

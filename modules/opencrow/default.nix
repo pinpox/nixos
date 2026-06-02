@@ -64,7 +64,9 @@ let
     source ${himalayaVars.files."envfile".path}
     set +a
 
-    HIMALAYA="${lib.getExe pkgs.himalaya} -c ${himalayaFetcherConfig} -c ${himalayaVars.files."config".path}"
+    HIMALAYA="${lib.getExe pkgs.himalaya} -c ${himalayaFetcherConfig} -c ${
+      himalayaVars.files."config".path
+    }"
 
     MAIL_DIR="${stateDir}/mail-inbox"
     PIPE="${stateDir}/sessions/trigger.pipe"
@@ -86,26 +88,28 @@ let
   '';
 
   # goimapnotify configuration
-  goimapnotifyConfig = pkgs.writeText "goimapnotify-config.yaml" (builtins.toJSON {
-    configurations = [
-      {
-        host = "imap.mailbox.org";
-        port = 993;
-        tls = true;
-        tlsOptions = {
-          rejectUnauthorized = true;
-        };
-        usernameCMD = "${lib.getExe' pkgs.coreutils "printenv"} EMAIL_LOGIN";
-        passwordCMD = "${lib.getExe' pkgs.coreutils "printenv"} EMAIL_PASSWORD";
-        boxes = [
-          {
-            mailbox = "INBOX";
-            onChangedMail = toString onChangedMailScript;
-          }
-        ];
-      }
-    ];
-  });
+  goimapnotifyConfig = pkgs.writeText "goimapnotify-config.yaml" (
+    builtins.toJSON {
+      configurations = [
+        {
+          host = "imap.mailbox.org";
+          port = 993;
+          tls = true;
+          tlsOptions = {
+            rejectUnauthorized = true;
+          };
+          usernameCMD = "${lib.getExe' pkgs.coreutils "printenv"} EMAIL_LOGIN";
+          passwordCMD = "${lib.getExe' pkgs.coreutils "printenv"} EMAIL_PASSWORD";
+          boxes = [
+            {
+              mailbox = "INBOX";
+              onChangedMail = toString onChangedMailScript;
+            }
+          ];
+        }
+      ];
+    }
+  );
 in
 {
 
@@ -180,7 +184,12 @@ in
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
-      path = with pkgs; [ coreutils bash himalaya jq ];
+      path = with pkgs; [
+        coreutils
+        bash
+        himalaya
+        jq
+      ];
       serviceConfig = {
         ExecStart = "${lib.getExe pkgs.goimapnotify} -conf ${goimapnotifyConfig}";
         EnvironmentFile = himalayaVars.files."envfile".path;

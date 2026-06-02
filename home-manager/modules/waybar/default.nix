@@ -202,7 +202,6 @@ in
           format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
 
-
         pulseaudio = {
           scroll-step = 1; # %, can be a float
           format = "{volume}% <span color='#${config.pinpox.colors.Green}' rise='2000'>•</span> {format_source}";

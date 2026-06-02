@@ -1,5 +1,15 @@
-{ settings, roles, meta, oidcGenerator }:
-{ config, lib, pkgs, ... }:
+{
+  settings,
+  roles,
+  meta,
+  oidcGenerator,
+}:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   prometheusHosts = builtins.attrNames (roles.prometheus.machines or { });
   lokiHosts = builtins.attrNames (roles.loki.machines or { });
@@ -59,7 +69,9 @@ in
         http_addr = "127.0.0.1";
       };
 
-      security.secret_key = "$__file{${config.clan.core.vars.generators."grafana-secret-key".files."secret-key".path}}";
+      security.secret_key = "$__file{${
+        config.clan.core.vars.generators."grafana-secret-key".files."secret-key".path
+      }}";
 
       # Mail notifications
       smtp = {
@@ -102,7 +114,9 @@ in
         icon = "signin";
         auto_login = true;
         client_id = oidc.clientId;
-        client_secret = "$__file{${config.clan.core.vars.generators."authelia-oidc-${oidc.clientId}".files.client_secret.path}}";
+        client_secret = "$__file{${
+          config.clan.core.vars.generators."authelia-oidc-${oidc.clientId}".files.client_secret.path
+        }}";
         scopes = "openid profile email groups";
         empty_scopes = false;
         auth_url = "${oidc.issuer}/api/oidc/authorization";

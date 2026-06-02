@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   # Raspberry Pi firmware files needed for boot
   rpiFirmware = pkgs.raspberrypifw;
@@ -157,7 +162,6 @@ in
     ${pkgs.coreutils}/bin/echo "=== Firmware population complete ==="
   '';
 
-
   # Auto-resize root partition on first boot to fill the SD card
   boot.growPartition = true;
   boot.supportedFilesystems.btrfs = true;
@@ -181,7 +185,7 @@ in
             # Firmware files are populated by extraPostVM after VM creates the image
             firmware = {
               size = "512M";
-              type = "EF00";  # EFI System Partition type for GPT
+              type = "EF00"; # EFI System Partition type for GPT
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -203,9 +207,12 @@ in
                 # Use xchacha20,aes-adiantum because BCM2711 lacks AES hardware acceleration
                 # This provides good performance on ARM without AES-NI
                 extraFormatArgs = [
-                  "--type" "luks2"
-                  "--cipher" "xchacha20,aes-adiantum-plain64"
-                  "--key-size" "256"
+                  "--type"
+                  "luks2"
+                  "--cipher"
+                  "xchacha20,aes-adiantum-plain64"
+                  "--key-size"
+                  "256"
                 ];
                 settings = {
                   allowDiscards = true;

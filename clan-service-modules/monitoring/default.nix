@@ -8,7 +8,10 @@
     	  grafana, blackbox, node-exporter, alertmanager-irc-relay)
     	  '';
   manifest.categories = [ "Monitoring" ];
-  manifest.exports.out = [ "endpoints" "auth" ];
+  manifest.exports.out = [
+    "endpoints"
+    "auth"
+  ];
 
   roles.node-exporter = {
     description = "Prometheus node-exporter for host metrics (assign to every host you want scraped)";
@@ -67,10 +70,8 @@
       }:
       let
 
-
-		  # TODO The generator shoudl be independeat of authelia or kanidm. Use a dependant one for authelia to create the hash
-		  # TODO maybe we do not need a generato cofig at all, have a default?
-
+        # TODO The generator shoudl be independeat of authelia or kanidm. Use a dependant one for authelia to create the hash
+        # TODO maybe we do not need a generato cofig at all, have a default?
 
         # Generator definition without runtimeInputs (pkgs isn't available
         # at inventory-eval time). Each nixosModule that declares this
@@ -93,7 +94,9 @@
       in
       {
         exports = mkExports (
-          { endpoints.hosts = [ settings.domain ]; }
+          {
+            endpoints.hosts = [ settings.domain ];
+          }
           // lib.optionalAttrs settings.oidc.enable {
             auth.client = {
               clientId = settings.oidc.clientId;
@@ -111,7 +114,12 @@
           }
         );
         nixosModule = import ./grafana.nix {
-          inherit settings roles meta oidcGenerator;
+          inherit
+            settings
+            roles
+            meta
+            oidcGenerator
+            ;
         };
       };
   };
@@ -201,7 +209,9 @@
       in
       {
         exports = mkExports (
-          { endpoints.hosts = [ settings.domain ]; }
+          {
+            endpoints.hosts = [ settings.domain ];
+          }
           // {
             auth.client = {
               clientId = "prometheus";
@@ -219,7 +229,12 @@
           }
         );
         nixosModule = import ./prometheus.nix {
-          inherit settings roles meta prometheusOidcGenerator;
+          inherit
+            settings
+            roles
+            meta
+            prometheusOidcGenerator
+            ;
         };
       };
   };

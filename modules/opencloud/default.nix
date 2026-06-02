@@ -160,9 +160,19 @@ in
 
         # CSP - allow connecting to external OIDC provider
         csp.directives = {
-          "connect-src" = ["https://${cfg.host}/" cfg.oidcIssuer];
-          "frame-src" = ["https://${cfg.host}/" cfg.oidcIssuer];
-          "script-src" = ["'self'" "'unsafe-inline'" "'unsafe-eval'"];
+          "connect-src" = [
+            "https://${cfg.host}/"
+            cfg.oidcIssuer
+          ];
+          "frame-src" = [
+            "https://${cfg.host}/"
+            cfg.oidcIssuer
+          ];
+          "script-src" = [
+            "'self'"
+            "'unsafe-inline'"
+            "'unsafe-eval'"
+          ];
         };
 
         # Web UI OIDC configuration

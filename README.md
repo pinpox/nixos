@@ -20,19 +20,19 @@ uses age for encryption.
 
 The current hosts are:
 
-| Configuration                     | Type    | Location  | Description                          |
-| --------------------------------- | ------- | --------- | ------------------------------------ |
-| [kartoffel](./machines/kartoffel) | Desktop | local     | Main desktop workstation             |
-| [kiwi](./machines/kiwi)           | Laptop  | local     | Framework 13 (AMD AI 300 series)     |
-| [limette](./machines/limette)     | Laptop  | local     | Notebook                             |
-| [fichte](./machines/fichte)       | Laptop  | local     | ThinkPad T490                        |
-| [tanne](./machines/tanne)         | Laptop  | local     | ThinkPad T480s                       |
-| [uconsole](./machines/uconsole)   | Handheld| local     | Clockwork uConsole (RPi CM4)         |
-| [birne](./machines/birne)         | Server  | local     | Local NAS                            |
-| [porree](./machines/porree)       | Server  | netcup.de | Server for pablo.tools               |
-| [kfbox](./machines/kfbox)         | Server  | netcup.de | Server for 0cx.de                    |
-| [clementine](./machines/clementine) | Server | netcup.de | Server for megaclan3000.de           |
-| [traube](./machines/traube)       | Server  | local     | aarch64 server                       |
+| Configuration                       | Type     | Location  | Description                      |
+| ----------------------------------- | -------- | --------- | -------------------------------- |
+| [kartoffel](./machines/kartoffel)   | Desktop  | local     | Main desktop workstation         |
+| [kiwi](./machines/kiwi)             | Laptop   | local     | Framework 13 (AMD AI 300 series) |
+| [limette](./machines/limette)       | Laptop   | local     | Notebook                         |
+| [fichte](./machines/fichte)         | Laptop   | local     | ThinkPad T490                    |
+| [tanne](./machines/tanne)           | Laptop   | local     | ThinkPad T480s                   |
+| [uconsole](./machines/uconsole)     | Handheld | local     | Clockwork uConsole (RPi CM4)     |
+| [birne](./machines/birne)           | Server   | local     | Local NAS                        |
+| [porree](./machines/porree)         | Server   | netcup.de | Server for pablo.tools           |
+| [kfbox](./machines/kfbox)           | Server   | netcup.de | Server for 0cx.de                |
+| [clementine](./machines/clementine) | Server   | netcup.de | Server for megaclan3000.de       |
+| [traube](./machines/traube)         | Server   | local     | aarch64 server                   |
 
 # Deployment
 

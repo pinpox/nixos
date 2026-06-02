@@ -9,9 +9,7 @@ let
   cfg = config.pinpox.programs.pi;
 
   # Generate models.json from the declarative provider config
-  modelsJson = pkgs.writeText "models.json" (
-    builtins.toJSON { providers = cfg.providers; }
-  );
+  modelsJson = pkgs.writeText "models.json" (builtins.toJSON { providers = cfg.providers; });
 in
 {
   options.pinpox.programs.pi = {

@@ -1,4 +1,9 @@
-{ settings, roles, meta, prometheusOidcGenerator }:
+{
+  settings,
+  roles,
+  meta,
+  prometheusOidcGenerator,
+}:
 {
   lib,
   pkgs,
@@ -134,9 +139,7 @@ in
           {
             targets = (
               builtins.attrNames (
-                lib.filterAttrs (
-                  n: v: v.config.pinpox.services.restic-client.enable
-                ) flake-self.nixosConfigurations
+                lib.filterAttrs (n: v: v.config.pinpox.services.restic-client.enable) flake-self.nixosConfigurations
               )
             );
           }

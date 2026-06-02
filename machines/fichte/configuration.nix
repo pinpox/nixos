@@ -16,7 +16,7 @@
 
   ];
 
-programs.vscode.enable = true;
+  programs.vscode.enable = true;
 
   networking.hostName = "fichte";
 
