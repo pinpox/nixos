@@ -1,0 +1,39 @@
+# Garbage collection for the hestia Nix binary cache.
+#
+# Hestia stores build results in the GitHub Actions cache. PR-scoped caches
+# disappear with their branch, but the default-branch scope grows forever
+# unless something prunes it, so GC has to run on the default branch.
+# See action/README.md in https://github.com/Mic92/hestia.
+name: Cache GC
+on:
+  schedule:
+    # Daily, off-peak (UTC).
+    - cron: "23 3 * * *"
+  # Manual runs for debugging and one-off cleanups.
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Plan only; do not repack, touch, or delete anything.
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  gc:
+    runs-on: ubuntu-latest
+    permissions:
+      # REST cache deletes and GHA cache access both need actions:write.
+      actions: write
+      contents: read
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v20
+      - name: Setup hestia
+        uses: Mic92/hestia/action@v0.1.0-alpha.8
+        with:
+          version: v0.1.0-alpha.8
+      - name: Run garbage collection
+        run: |
+          "$HESTIA_BIN" gc ${{ inputs.dry-run && '--dry-run' || '' }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
