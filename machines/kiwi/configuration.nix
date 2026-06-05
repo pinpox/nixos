@@ -1,16 +1,27 @@
 {
   nixos-hardware,
   lib,
+  pkgs,
+  mics-skills,
   ...
 }:
 {
 
   imports = [
     ./ollama-local.nix
-    ./opencrow-geninf.nix
     ./disko-config-btrfs.nix
     # ./framework.nix
     nixos-hardware.nixosModules.framework-amd-ai-300-series
+  ];
+
+  # Skill CLIs on the system PATH so the executor's sandboxed agent can
+  # shell out to them (the executor doesn't register skill-config, so
+  # they're reachable as plain binaries, not structured skills).
+  environment.systemPackages = [
+    pkgs.pi
+    pkgs.curl
+    pkgs.jq
+    mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
   ];
 
   # `boltctl`, to authorize Thunderbolt docs (e.g. lenovo dock)

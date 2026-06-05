@@ -416,6 +416,28 @@
       );
     };
 
+    pi = {
+      module.input = "spaces";
+      module.name = "pi";
+
+      # Kiwi is both a client (the chat panel) and an executor (its own
+      # local pi-sessiond on loopback).
+      roles.client.machines.kiwi = { };
+      roles.executor.machines.kiwi.settings.openrouter.enable = true;
+
+	  # Tanne is only a client (no executor)
+      roles.client.machines.tanne =  { };
+
+      # Traube is executor-only (tiny model, only for testing). Also hosts
+      # the pi-web PWA at https://agent-traube.pin/ — the auto-derived
+      # `agent-<machineName>.<meta.domain>` host, exported via the role's
+      # endpoints output so pki/dm-dns auto-issue the cert + CNAME.
+      roles.executor.machines.traube.settings = {
+        defaultModel = "qwen2.5:0.5b";
+        webUi.enable = true;
+      };
+    };
+
     wg-star = {
 
       module.input = "clan-community";

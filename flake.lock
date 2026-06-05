@@ -151,6 +151,43 @@
         "type": "github"
       }
     },
+    "bun2nix_2": {
+      "inputs": {
+        "flake-parts": [
+          "spaces",
+          "llm-agents",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "spaces",
+          "llm-agents",
+          "nixpkgs"
+        ],
+        "systems": [
+          "spaces",
+          "llm-agents",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "spaces",
+          "llm-agents",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778446047,
+        "narHash": "sha256-oQvcadh2BCkrog+SGrG6YffKJrveYpjj3TdQJWaKhaM=",
+        "owner": "nix-community",
+        "repo": "bun2nix",
+        "rev": "f2bc12af1a6369648aac41041ceeaa0b866599c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "bun2nix",
+        "type": "github"
+      }
+    },
     "clan-community": {
       "inputs": {
         "clan-core": [
@@ -391,6 +428,28 @@
         "type": "github"
       }
     },
+    "flake-parts_6": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "spaces",
+          "llm-agents",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778716662,
+        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -473,6 +532,27 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780099287,
+        "narHash": "sha256-efIPwVGtIWIjWcznhaop6XN6HxnOL8800hF6CBNvlqQ=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "7d8127d308c3fb9664f7e643eec944be74ebb37d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "spaces",
           "nixpkgs"
         ]
       },
@@ -576,6 +656,42 @@
       "original": {
         "owner": "numtide",
         "repo": "llm-agents.nix",
+        "type": "github"
+      }
+    },
+    "llm-agents_2": {
+      "inputs": {
+        "blueprint": [
+          "spaces",
+          "blueprint"
+        ],
+        "bun2nix": "bun2nix_2",
+        "flake-parts": "flake-parts_6",
+        "nixpkgs": [
+          "spaces",
+          "nixpkgs"
+        ],
+        "systems": [
+          "spaces",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "spaces",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780206800,
+        "narHash": "sha256-MeaRZmdyd9FaM1BY+GIp/OkhYdqqYd03kIAmoNWlz0E=",
+        "owner": "numtide",
+        "repo": "llm-agents.nix",
+        "rev": "2296793afdc076c2fd495ac21b914c26a9f2bf0e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "llm-agents.nix",
+        "rev": "2296793afdc076c2fd495ac21b914c26a9f2bf0e",
         "type": "github"
       }
     },
@@ -1224,9 +1340,8 @@
     "spaces": {
       "inputs": {
         "blueprint": "blueprint_2",
-        "llm-agents": [
-          "llm-agents"
-        ],
+        "home-manager": "home-manager_2",
+        "llm-agents": "llm-agents_2",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -1237,17 +1352,14 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1780229160,
-        "narHash": "sha256-RXKM5N/Ge2xVWotiDOXg3v8QykwVQjrb5rZSxMUpje4=",
-        "owner": "generational-infrastructure",
-        "repo": "spaces-os",
-        "rev": "0c553d96836ac4fcc508dfadcfe6256c2387563d",
-        "type": "github"
+        "lastModified": 1780704323,
+        "narHash": "sha256-WQVgh9I/JZQx2BsKJGV85Axs7/G40iQGRvfxxybPqhg=",
+        "path": "/home/pinpox/code/github.com/generational-infrastructure/spaces-os",
+        "type": "path"
       },
       "original": {
-        "owner": "generational-infrastructure",
-        "repo": "spaces-os",
-        "type": "github"
+        "path": "/home/pinpox/code/github.com/generational-infrastructure/spaces-os",
+        "type": "path"
       }
     },
     "systems": {

@@ -80,11 +80,15 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # spaces.url = "path:/home/pinpox/code/github.com/generational-infrastructure/spaces-os";
-    spaces.url = "github:generational-infrastructure/spaces-os";
+    spaces.url = "path:/home/pinpox/code/github.com/generational-infrastructure/spaces-os";
+    # spaces.url = "github:generational-infrastructure/spaces-os";
     spaces.inputs.nixpkgs.follows = "nixpkgs";
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
-    spaces.inputs.llm-agents.follows = "llm-agents";
+    # NB: do NOT make spaces follow our llm-agents. spaces' pi-sessiond embeds
+    # pi's SDK and is pinned/tested against spaces' own pi (0.70.x, @mariozechner
+    # scope); our llm-agents is 0.78.x (@earendil-works), which the daemon's
+    # import can't resolve. Re-enable once spaces-os forward-ports to 0.78.x.
+    # spaces.inputs.llm-agents.follows = "llm-agents";
 
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
