@@ -229,6 +229,7 @@
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
         modules."@pinpox/tangled" = ./clan-service-modules/tangled;
+        modules."@pinpox/n2n" = ./clan-service-modules/n2n;
         inventory = import ./inventory.nix { inherit self; };
       };
     in
