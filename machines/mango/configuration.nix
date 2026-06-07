@@ -24,9 +24,8 @@
 
   hardware = {
     # fw-fanctrl.enable = true;
-    # rtl-sdr.enable = true;
     # amdgpu.opencl.enable = true;
-    # xone.enable = true;
+    xone.enable = true;
   };
 
   networking.hostName = "mango";
@@ -86,9 +85,27 @@
   services.llama-swap.modelExtraArgs."gemma4:12b-q8_0" = "-ngl 999 -fa on --no-mmap -c 65536 -np 1";
 
   # Games
-  # programs.steam.enable = true;
-  # programs.gamemode.enable = true;
-  # home-manager.users.pinpox.pinpox.programs.games.enable = true;
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
+  };
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
+  programs.gamemode = {
+    enable = true;
+    settings.custom = {
+      # Hold a Wayland idle-inhibit lock while a game is running so swayidle
+      # doesn't lock the screen during controller-only sessions. Run under a
+      # transient user unit so the end-hook can stop it cleanly without PID
+      # bookkeeping.
+      start = "${pkgs.systemd}/bin/systemd-run --user --unit=gaming-wlinhibit --collect ${pkgs.wlinhibit}/bin/wlinhibit";
+      end = "${pkgs.systemd}/bin/systemctl --user stop gaming-wlinhibit";
+    };
+  };
+  home-manager.users.pinpox.pinpox.programs.games.enable = true;
 
   # For dual-boot
   # boot.loader.efi.canTouchEfiVariables = true;
