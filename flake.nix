@@ -171,6 +171,8 @@
     trippy-track.inputs.treefmt-nix.follows = "treefmt-nix";
 
     tangled.url = "git+https://tangled.org/@tangled.org/core";
+    tangled.inputs.flake-compat.follows = "flake-compat";
+    tangled.inputs.nixpkgs.follows = "nixpkgs";
 
     # sbox manages its own inputs via nixtamal/nilla, so it exposes no flake
     # inputs to point at our nixpkgs with `follows`.
