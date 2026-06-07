@@ -81,15 +81,26 @@ in
     # config is adapted in a different environment from which it is being run.
     virtualHosts = {
 
-      # NIP-05 identity for pinpox.com (the static homepage itself is served
-      # by the pinpox-web module; both extraConfig blocks are concatenated).
+      # /.well-known handlers for pinpox.com (the static homepage itself is
+      # served by the pinpox-web module; both extraConfig blocks are
+      # concatenated).
       "pinpox.com".extraConfig = ''
+        # NIP-05 identity for nostr
         handle /.well-known/nostr.json {
           header Content-Type application/json
           header Access-Control-Allow-Origin *
           root * ${./nostr}
           rewrite * /nostr.json
           file_server
+        }
+
+        # AT Protocol handle binding — points `pinpox.com` at the DID
+        # `did:plc:y6qbagc23y773kp5emhsaoo3` (pinpox.bsky.social). Used by
+        # Bluesky/Tangled to verify ownership of the domain. Body must be
+        # exactly the DID with no trailing newline.
+        handle /.well-known/atproto-did {
+          header Content-Type text/plain
+          respond "did:plc:y6qbagc23y773kp5emhsaoo3"
         }
       '';
 
