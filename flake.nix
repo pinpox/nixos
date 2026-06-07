@@ -89,6 +89,7 @@
     # scope); our llm-agents is 0.78.x (@earendil-works), which the daemon's
     # import can't resolve. Re-enable once spaces-os forward-ports to 0.78.x.
     spaces.inputs.llm-agents.follows = "llm-agents";
+    spaces.inputs.home-manager.follows = "home-manager";
 
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";

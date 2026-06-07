@@ -412,7 +412,15 @@
       # Kiwi is both a client (the chat panel) and an executor (its own
       # local pi-sessiond on loopback).
       roles.client.machines.kiwi = { };
-      roles.executor.machines.kiwi.settings.openrouter.enable = true;
+      roles.executor.machines.kiwi.settings = {
+        openrouter.enable = true;
+        # PWA at https://agent-kiwi.pin/ (auto-derived clan host, exported
+        # via the role's endpoints output → pki + dm-dns auto-issue cert +
+        # CNAME, so it's reachable from any clan client without /etc/hosts
+        # surgery).
+        webUi.enable = true;
+        llamaSwap.webUi.enable = true;
+      };
 
       # Tanne is only a client (no executor)
       roles.client.machines.tanne = { };

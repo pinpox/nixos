@@ -449,10 +449,7 @@
     },
     "flake-utils_2": {
       "inputs": {
-        "systems": [
-          "spaces",
-          "systems"
-        ]
+        "systems": "systems_6"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -470,7 +467,7 @@
     },
     "flake-utils_3": {
       "inputs": {
-        "systems": "systems_6"
+        "systems": "systems_7"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -1427,18 +1424,14 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1781011543,
-        "narHash": "sha256-L8Hwd/5Lq9v3BquE0WyVVbcRQL1/a94LbJA4YBN+NEY=",
-        "owner": "generational-infrastructure",
-        "repo": "spaces-os",
-        "rev": "bca0e113d52cf462a8a301b5ed4173c4ec8cd406",
-        "type": "github"
+        "lastModified": 1781270297,
+        "narHash": "sha256-TE5YC9YzEbHXTc13EiGIqWiLmP0YECasx7PLKw83eqg=",
+        "path": "/home/pinpox/code/github.com/generational-infrastructure/spaces-os",
+        "type": "path"
       },
       "original": {
-        "owner": "generational-infrastructure",
-        "ref": "gemma4-12b-quants",
-        "repo": "spaces-os",
-        "type": "github"
+        "path": "/home/pinpox/code/github.com/generational-infrastructure/spaces-os",
+        "type": "path"
       }
     },
     "sqlite-lib-src": {
@@ -1531,6 +1524,21 @@
       }
     },
     "systems_6": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_7": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -1670,11 +1678,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776651662,
-        "narHash": "sha256-HMiN4cmXRr6avHiH6asF28w9/N+qjeYSvX9zAATVXss=",
+        "lastModified": 1780607114,
+        "narHash": "sha256-2AVR9CTNLuCE5tl1EU3Mgb1AdGlxYFiYOeATKfpgkz4=",
         "owner": "peteonrails",
         "repo": "voxtype",
-        "rev": "adf0ea62c2310b90c55febdc6515cca9f264e25a",
+        "rev": "978c4ed2a26a1f5fdff409767a697e4c28fbc4bc",
         "type": "github"
       },
       "original": {

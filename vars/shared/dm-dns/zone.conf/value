@@ -1,6 +1,8 @@
 local-zone: "pin." transparent
 local-data: "status.pin. CNAME porree.pin."
 local-data: "prometheus.pin. CNAME porree.pin."
+local-data: "agent-kiwi.pin. CNAME kiwi.pin."
+local-data: "llama-swap.kiwi.pin. CNAME kiwi.pin."
 local-data: "agent-mango.pin. CNAME mango.pin."
 local-data: "llama-swap.mango.pin. CNAME mango.pin."
 local-data: "agent-traube.pin. CNAME traube.pin."
