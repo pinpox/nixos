@@ -15,6 +15,8 @@ in
 
     accounts.email.maildirBasePath = "Mail";
 
+    programs.himalaya.enable = true;
+
     programs.aerc = {
       extraConfig.general.unsafe-accounts-conf = true;
       enable = true;
@@ -56,10 +58,15 @@ in
           inbox = "INBOX";
         };
         aerc.enable = true;
+        himalaya = {
+          enable = true;
+          settings.downloads-dir = "/home/pinpox/Downloads";
+        };
         address = "mail@pablo.tools";
 
         aliases = [
           "git@pablo.tools"
+          "mail@pinpox.com"
           "github@pablo.tools"
           "pablo1@mailbox.org"
         ];
@@ -83,6 +90,7 @@ in
         passwordCommand = "passage show mailbox.org/himalaya";
         imap = {
           host = "imap.mailbox.org";
+          port = 993;
           tls.enable = true;
         };
         smtp = {
@@ -91,6 +99,5 @@ in
         };
       };
     };
-
   };
 }
