@@ -1,6 +1,7 @@
 { self }:
 {
   machines = {
+    mango.tags = [ "desktop" ];
     kiwi.tags = [ "desktop" ];
     tanne.tags = [ "desktop" ];
     fichte.tags = [ "desktop" ];
