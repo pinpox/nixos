@@ -141,6 +141,90 @@ in
             '';
             example = lib.literalExpression ''{ pinpox = { }; }'';
           };
+          federation = lib.mkOption {
+            type = lib.types.nullOr (lib.types.submodule {
+              options = {
+                teamUrl = lib.mkOption {
+                  type = lib.types.str;
+                  description = ''
+                    URL of the team-nats hub. Recommended:
+                    `tls://host:7422` (native leaf protocol + TLS — the
+                    NATS-blessed pattern). `wss://host/` also works if the
+                    hub is behind a websocket-terminating proxy.
+                  '';
+                  example = "tls://nats.example.com:7422";
+                };
+                tls.caFile = lib.mkOption {
+                  type = lib.types.nullOr lib.types.path;
+                  default = null;
+                  description = ''
+                    CA/cert (PEM) used to verify the hub's TLS certificate.
+                    `null` (default) trusts the system CA store — correct
+                    for publicly-trusted certs (Let's Encrypt). For a
+                    self-signed hub cert, set this to the hub's `cert.pem`
+                    (obtained out-of-band, same channel as the bridge
+                    pubkey exchange).
+                  '';
+                };
+                exportSubjects = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                  default = [ ];
+                  description = ''
+                    Local subject patterns forwarded UP to the team bus.
+                    Empty list (default) means nothing crosses — useful
+                    for receive-only federation. Be explicit; this is
+                    half of the defense-in-depth (the other half is the
+                    team-server's per-teammate `allowPublish`).
+                  '';
+                  example = [ "team.pinpox.>" ];
+                };
+                # Inbound behavior is fixed (not user-configurable) because
+                # it's the load-bearing cycle-breaker: peers' `team.*.>`
+                # are renamed to `team.peers.<other>.>` and `shared.>`
+                # passes through. See the federation description below.
+              };
+            });
+            default = null;
+            description = ''
+              Cross-clan federation to a team-nats hub. When set, the
+              server gains a leaf-bound `BRIDGE` account and one outbound
+              leaf connection to `teamUrl`. The bridge NKEY is generated
+              automatically (`nats-<instance>-team-bridge` vars generator);
+              paste the matching pubkey into the team-nats's
+              `teammates.<name>.nkey`.
+
+              Account topology (single leaf connection, deterministic — no
+              import/export cycle):
+                - LOCAL holds your firehose (users + JetStream). It exports
+                  ONLY `exportSubjects` to BRIDGE and imports back
+                  `team.peers.*.>` and `shared.>` — disjoint patterns, so
+                  the cycle detector can never false-positive.
+                - BRIDGE is bound to the leaf. Outbound subjects arrive
+                  prefixed `out.` and a per-subject mapping strips the
+                  prefix before they go up. Inbound `team.*.>` from the hub
+                  is mapped to `team.peers.<other>.>` before reaching LOCAL.
+
+              Net effect, no peer list anywhere, fully dynamic:
+                - `nats sub 'team.<self>.>'`   your own events
+                - `nats sub 'team.peers.>'`    every teammate's events
+                - `nats sub 'shared.>'`        the shared bus
+
+              `exportSubjects` is the leaf-side allowlist: nothing leaves
+              this machine unless listed (default `[ ]` = receive-only).
+              That's the user-controlled, deny-by-default share list.
+
+              Enabling federation switches the account model: users move
+              from the implicit global ($G) account into `LOCAL`, so any
+              pre-existing JetStream streams need recreating.
+            '';
+            example = lib.literalExpression ''
+              {
+                teamUrl = "tls://nats.example.com:7422";
+                exportSubjects = [ "team.pinpox.>" ];
+                tls.caFile = ./hub-ca.pem;
+              }
+            '';
+          };
           extraSettings = lib.mkOption {
             type = lib.types.attrs;
             default = { };

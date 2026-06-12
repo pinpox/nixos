@@ -63,6 +63,13 @@
       # this user has a shell on. Default ACL: publish personal.>,
       # team.pinpox.>, project.>, home.>; subscribe >.
       roles.server.settings.users.pinpox = { };
+      roles.server.machines.kiwi.settings.federation = {
+        teamUrl = "tls://nats.0cx.de:7422";
+        exportSubjects = [ "team.pinpox.>" ];
+        # Trust the hub's self-signed cert (committed, shared out-of-band).
+        # For an external teammate this would be a cert file in their repo.
+        tls.caFile = self + "/vars/per-machine/kfbox/team-nats-cert/cert/value";
+      };
     };
 
     # Collects all "endpoint" exports from all services and generates a file
