@@ -52,6 +52,19 @@
       # roles.spindle.machines.clementine.settings.host = "spindle.pablo.tools";
     };
 
+    # Personal event-firehose archive. Single server on kiwi for now; once
+    # this proves itself, other machines can be added as `roles.leaf.machines`
+    # to publish via a local leaf instead of crossing the network.
+    nats = {
+      module.input = "self";
+      module.name = "@pinpox/nats";
+      roles.server.machines.kiwi.settings.host = "nats.pin";
+      # Human user — share=true seed; same identity from any machine
+      # this user has a shell on. Default ACL: publish personal.>,
+      # team.pinpox.>, project.>, home.>; subscribe >.
+      roles.server.settings.users.pinpox = { };
+    };
+
     # Collects all "endpoint" exports from all services and generates a file
     # with CNAME entries.
     # The dm-dns services has an export of type "dataMesher" which signals "I

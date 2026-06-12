@@ -1424,14 +1424,17 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1781270297,
-        "narHash": "sha256-TE5YC9YzEbHXTc13EiGIqWiLmP0YECasx7PLKw83eqg=",
-        "path": "/home/pinpox/code/github.com/generational-infrastructure/spaces-os",
-        "type": "path"
+        "lastModified": 1781299461,
+        "narHash": "sha256-4LzVpG8sGB2A9yoDCebLjJM1DVZN92XGhgONeSGbEgU=",
+        "owner": "generational-infrastructure",
+        "repo": "spaces-os",
+        "rev": "277496a21dad3d4d5211c8c28af8572e5fac7722",
+        "type": "github"
       },
       "original": {
-        "path": "/home/pinpox/code/github.com/generational-infrastructure/spaces-os",
-        "type": "path"
+        "owner": "generational-infrastructure",
+        "repo": "spaces-os",
+        "type": "github"
       }
     },
     "sqlite-lib-src": {
