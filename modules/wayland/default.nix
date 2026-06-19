@@ -21,7 +21,6 @@ in
 
     # Turn on wayland support for some electron apps
     environment.sessionVariables = {
-      LIBVA_DRIVER_NAME = "iHD";
       NIXOS_OZONE_WL = "1";
     };
 
