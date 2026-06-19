@@ -440,6 +440,7 @@
         # surgery).
         webUi.enable = true;
         llamaSwap.webUi.enable = true;
+        llamaSwap.openFirewall = true;
       };
 
       # Tanne is only a client (no executor)
@@ -458,11 +459,13 @@
         # exported via the role's endpoints output so pki/dm-dns
         # auto-issue the cert + CNAME.
         llamaSwap.webUi.enable = true;
+        llamaSwap.openFirewall = true;
       };
 
       roles.executor.machines.traube.settings = {
         defaultModel = "qwen2.5:0.5b";
         webUi.enable = true;
+        llamaSwap.openFirewall = true;
       };
     };
 
