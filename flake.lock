@@ -1424,11 +1424,11 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1781595645,
-        "narHash": "sha256-KqutQ6VEfFZ2+laKk8mrz0B5E02Wef7Ocnv/F5nVL0k=",
+        "lastModified": 1781980712,
+        "narHash": "sha256-m0+Ry4d3m52nBtbayDLokJpCBAMwcfCj8FYDZnmmOSo=",
         "owner": "generational-infrastructure",
         "repo": "spaces-os",
-        "rev": "d506515259c84e81e5852d00b6c69171c5706cbb",
+        "rev": "be6e56b09c075896751e4be4f1d9bd190c05f7e7",
         "type": "github"
       },
       "original": {
