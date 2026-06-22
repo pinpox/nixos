@@ -195,6 +195,11 @@ in
               exec pi-chat-toggle
             '';
 
+            "${modifier}+s" = "exec voxtype record toggle";
+
+            # Quick-launch agent bar (spaces pi quick-launch)
+            "${modifier}+slash" = "exec pi-chat-toggle quickLaunch";
+
             # Url
             "${modifier}+Shift+p" = ''
               exec ${pkgs.firefox}/bin/firefox --new-window $(cat ~/.local/share/tofi-bookmarks | ${pkgs.tofi}/bin/tofi)
