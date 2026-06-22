@@ -29,8 +29,6 @@ in
   services.logind.settings.Login.RuntimeDirectorySize = "20G";
 
   imports = [
-	  ./team-nats.nix
-
     ./retiolum.nix
     ./hardware-configuration.nix
     go-karma-bot.nixosModules.go-karma-bot

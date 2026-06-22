@@ -87,8 +87,6 @@ self: super: {
   smartmon-script = super.callPackage ../packages/smartmon-script { };
   noctalia-askpass = super.callPackage ../packages/noctalia-askpass { };
   machine-report = super.callPackage ../packages/machine-report { };
-  nats-auth-callout = super.callPackage ../packages/nats-auth-callout { };
-  clan-nats-token = super.callPackage ../packages/clan-nats-token { };
 
   # Use custom neovim in standalone flake
   neovim = inputs.pinpox-neovim.packages.${super.stdenv.hostPlatform.system}.pinpox-neovim;

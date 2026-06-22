@@ -52,24 +52,23 @@
       # roles.spindle.machines.clementine.settings.host = "spindle.pablo.tools";
     };
 
-    # Personal event-firehose archive. Single server on kiwi for now; once
-    # this proves itself, other machines can be added as `roles.leaf.machines`
-    # to publish via a local leaf instead of crossing the network.
+    # Personal event-firehose archive. nats-server on kfbox; every
+    # desktop-tagged machine is a client connecting to nats.pin:4222 with
+    # its own user NKEY.
     nats = {
       module.input = "self";
       module.name = "@pinpox/nats";
-      roles.server.machines.kiwi.settings.host = "nats.pin";
+
+	  # kfbox is the server
+      roles.server.machines.kfbox.settings.host = "nats.pin";
       # Human user — share=true seed; same identity from any machine
       # this user has a shell on. Default ACL: publish personal.>,
       # team.pinpox.>, project.>, home.>; subscribe >.
       roles.server.settings.users.pinpox = { };
-      roles.server.machines.kiwi.settings.federation = {
-        teamUrl = "tls://nats.0cx.de:7422";
-        exportSubjects = [ "team.pinpox.>" ];
-        # Trust the hub's self-signed cert (committed, shared out-of-band).
-        # For an external teammate this would be a cert file in their repo.
-        tls.caFile = self + "/vars/per-machine/kfbox/team-nats-cert/cert/value";
-      };
+
+      # Every desktop is a client: nats CLI + the user seeds + NATS_URL
+      # pointing at the server. No local nats-server.
+      roles.client.tags.desktop = { };
     };
 
     # Collects all "endpoint" exports from all services and generates a file

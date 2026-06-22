@@ -1,15 +1,13 @@
 { lib, clanLib }:
-# Shared helpers for the @pinpox/nats hybrid NKEY auth model.
+# Shared helpers for the @pinpox/nats per-user NKEY auth model.
 #
-# Two principals coexist on the same NATS server:
-#   - machine principal: per-host NKEY, share=false, narrow ACL
-#       (publishes only its own `personal.<host>.>` + `nats.<host>.>`)
-#   - user principal: per-user NKEY, share=true, broad ACL
-#       (publishes anywhere a human is authorized on this clan)
+# Each principal is one per-user NKEY (share=true — the same seed on
+# every machine that user logs into), with a broad-by-default ACL. A
+# "user" is a human or a dedicated application identity; create a key
+# per user when integrating something that needs to talk to NATS.
 #
-# Both are just `{ nkey = "..."; permissions = ...; }` rows in
-# `services.nats.settings.authorization.users`. NATS doesn't distinguish;
-# the split is purely how the seed is generated and where it lives.
+# Each is just a `{ nkey = "..."; permissions = ...; }` row in
+# `services.nats.settings.authorization.users`.
 let
   permissionsBlock = lib.types.submodule {
     options = {
@@ -34,14 +32,6 @@ let
         description = "Subject patterns explicitly denied (takes precedence over allow).";
       };
     };
-  };
-
-  defaultMachinePermissions = name: {
-    publish.allow = [
-      "personal.${name}.>"
-      "nats.${name}.>"
-    ];
-    subscribe.allow = [ ">" ];
   };
 
   defaultUserPermissions = userName: {
@@ -70,49 +60,29 @@ let
       }
     );
 
-  # Build the full `authorization.users` list given the instance state.
-  # `machines` is the union of `roles.server.machines` and
-  # `roles.leaf.machines` (same shape both sides). `users` is the
-  # instance-wide attrset of human principals.
+  # Build the `authorization.users` list from the instance's user
+  # principals (humans and dedicated app identities); one NKEY row each.
   mkAuthorizationUsers =
     {
       flake,
       instanceName,
-      machines,
       users,
     }:
-    let
-      machineEntries = lib.mapAttrsToList (name: m: {
-        nkey = readPub {
-          inherit flake;
-          machine = name;
-          generator = "nats-${instanceName}-machine";
-        };
-        permissions =
-          if (m.settings.permissions or null) != null then
-            m.settings.permissions
-          else
-            defaultMachinePermissions name;
-      }) machines;
-
-      userEntries = lib.mapAttrsToList (userName: userCfg: {
-        nkey = readPub {
-          inherit flake;
-          generator = "nats-${instanceName}-user-${userName}";
-        };
-        permissions =
-          if (userCfg.permissions or null) != null then
-            userCfg.permissions
-          else
-            defaultUserPermissions userName;
-      }) users;
-    in
-    machineEntries ++ userEntries;
+    lib.mapAttrsToList (userName: userCfg: {
+      nkey = readPub {
+        inherit flake;
+        generator = "nats-${instanceName}-user-${userName}";
+      };
+      permissions =
+        if (userCfg.permissions or null) != null then
+          userCfg.permissions
+        else
+          defaultUserPermissions userName;
+    }) users;
 in
 {
   inherit
     permissionsBlock
-    defaultMachinePermissions
     defaultUserPermissions
     mkAuthorizationUsers
     ;
