@@ -102,15 +102,15 @@
 
     # Pull-based NixOS deployment via data-mesher. Push machines send a flake
     # ref, all machines rebuild themselves from it.
-    dm-pull-deploy = {
-      module.input = "clan-community";
-      module.name = "dm-pull-deploy";
-      roles.push.machines.kiwi.settings.gitUrl = "https://github.com/pinpox/nixos.git";
-      roles.default.tags = [ "all" ];
-
-      roles.default.machines.tanne.settings.action = "build";
-      roles.default.machines.kiwi.settings.action = "switch";
-    };
+    # dm-pull-deploy = {
+    #   module.input = "clan-community";
+    #   module.name = "dm-pull-deploy";
+    #   roles.push.machines.kiwi.settings.gitUrl = "https://github.com/pinpox/nixos.git";
+    #   roles.default.tags = [ "all" ];
+    #
+    #   roles.default.machines.tanne.settings.action = "build";
+    #   roles.default.machines.kiwi.settings.action = "switch";
+    # };
 
     # The actual data-mesher. It collects all exports of type "dataMesher" from
     # all services and configures itself to distribute the files accordingly.
