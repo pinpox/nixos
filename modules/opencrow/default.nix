@@ -1,39 +1,22 @@
 {
-  opencrow,
-  mics-skills,
   config,
   lib,
   pkgs,
-  pinpox-utils,
   ...
 }:
 with lib;
+# Porree-side OpenCrow mail glue: the starred-mail watcher (goimapnotify +
+# himalaya) that feeds the "claude" bot via its trigger pipe. The bot instances
+# and their secrets live in the @pinpox/opencrow clan service; this module is
+# the remaining mail integration, to be refactored/folded in later.
 let
   cfg = config.pinpox.services.opencrow;
 
+  # State dir of the "claude" opencrow instance (clan service instance name
+  # "claude" → /var/lib/opencrow-claude). The mail watcher writes fetched mail
+  # and trigger lines into this instance's state, which the clan service
+  # bind-mounts into that bot's container.
   stateDir = "/var/lib/opencrow-claude";
-  localStateDir = "/var/lib/opencrow-local";
-
-  # models.json for the local instance to discover ollama on spark1
-  localPiModelsJson = pkgs.writeText "opencrow-local-models.json" (
-    builtins.toJSON {
-      providers.ollama = {
-        baseUrl = "http://100.96.100.103:11434/v1";
-        api = "openai-completions";
-        apiKey = "dummy";
-        compat = {
-          supportsDeveloperRole = false;
-          supportsReasoningEffort = false;
-        };
-        models = [
-          {
-            id = "gemma4:26b";
-            reasoning = true;
-          }
-        ];
-      };
-    }
-  );
 
   himalayaVars = config.clan.core.vars.generators."opencrow-himalaya";
 
@@ -113,33 +96,10 @@ let
 in
 {
 
-  imports = [ opencrow.nixosModules.default ];
-
-  options.pinpox.services.opencrow.enable = mkEnableOption "opencrow Matrix bot";
+  options.pinpox.services.opencrow.enable =
+    mkEnableOption "opencrow starred-mail watcher (bot instances + their secrets are the @pinpox/opencrow clan service)";
 
   config = mkIf cfg.enable {
-
-    # OpenCrow Matrix bot
-    clan.core.vars.generators."opencrow" = pinpox-utils.mkEnvGenerator [
-      "OPENCROW_MATRIX_ACCESS_TOKEN"
-      "OPENCROW_MATRIX_USER_ID"
-    ];
-
-    # Nextcloud (personal)
-    clan.core.vars.generators."opencrow-nextcloud" = pinpox-utils.mkEnvGenerator [
-      "NEXTCLOUD_PASSWORD"
-    ];
-
-    # Nextcloud (work)
-    clan.core.vars.generators."opencrow-nextcloud-work" = pinpox-utils.mkEnvGenerator [
-      "WORK_NEXTCLOUD_PASSWORD"
-    ];
-
-    # Eversports
-    clan.core.vars.generators."opencrow-eversports" = pinpox-utils.mkEnvGenerator [
-      "EVERSPORTS_EMAIL"
-      "EVERSPORTS_PASSWORD"
-    ];
 
     # Himalaya email secrets (TOML config + env file for EMAIL_PASSWORD)
     # Used by the goimapnotify fetcher service for IMAP credentials
@@ -164,18 +124,11 @@ in
       '';
     };
 
-    # Local instance matrix credentials (migrated from traube)
-    clan.core.vars.generators."opencrow-local" = pinpox-utils.mkEnvGenerator [
-      "OPENCROW_MATRIX_ACCESS_TOKEN"
-    ];
-
-    # Mail inbox directory for fetched emails
-    # Deutschebahn skill symlinked from mics-skills flake
+    # Mail inbox directory the watcher writes into. Lives inside the "claude"
+    # instance's state dir (created world-writable so the host watcher writes
+    # and the container's opencrow user reads).
     systemd.tmpfiles.rules = [
       "d ${stateDir}/mail-inbox 0777 root root -"
-      "L+ ${stateDir}/skills/deutschebahn - - - - ${mics-skills}/skills/db-cli"
-      "L+ ${localStateDir}/skills/deutschebahn - - - - ${mics-skills}/skills/db-cli"
-      "L+ ${localStateDir}/pi-agent/models.json - - - - ${localPiModelsJson}"
     ];
 
     # goimapnotify service: watches for starred emails and fetches them
@@ -195,74 +148,6 @@ in
         EnvironmentFile = himalayaVars.files."envfile".path;
         Restart = "on-failure";
         RestartSec = "10s";
-      };
-    };
-
-    services.opencrow.instances.claude = {
-      enable = true;
-      piPackage = pkgs.pi;
-      environmentFiles = [
-        config.clan.core.vars.generators."opencrow".files."envfile".path
-        config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
-        config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
-        config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
-      ];
-      extraPackages = [
-        pkgs.pi
-        pkgs.curl
-        pkgs.jq
-        mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
-      ];
-      environment = {
-        NEXTCLOUD_URL = "https://files.pablo.tools";
-        NEXTCLOUD_USER = "pinpox";
-        NEXTCLOUD_CALENDAR = "personal";
-
-        WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
-        WORK_NEXTCLOUD_USER = "pinpox";
-        WORK_NEXTCLOUD_CALENDAR = "personal";
-
-        OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
-        OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
-        OPENCROW_HEARTBEAT_INTERVAL = "30m";
-        OPENCROW_PI_SKILLS_DIR = "${stateDir}/skills";
-      };
-    };
-
-    services.opencrow.instances.local = {
-      enable = true;
-      piPackage = pkgs.pi;
-      environmentFiles = [
-        config.clan.core.vars.generators."opencrow-local".files."envfile".path
-        config.clan.core.vars.generators."opencrow-nextcloud".files."envfile".path
-        config.clan.core.vars.generators."opencrow-nextcloud-work".files."envfile".path
-        config.clan.core.vars.generators."opencrow-eversports".files."envfile".path
-      ];
-      extraPackages = [
-        pkgs.pi
-        pkgs.curl
-        pkgs.jq
-        mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
-      ];
-
-      environment = {
-        NEXTCLOUD_URL = "https://files.pablo.tools";
-        NEXTCLOUD_USER = "pinpox";
-        NEXTCLOUD_CALENDAR = "personal";
-
-        WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
-        WORK_NEXTCLOUD_USER = "pinpox";
-        WORK_NEXTCLOUD_CALENDAR = "personal";
-
-        OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
-        OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
-        OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
-        OPENCROW_PI_PROVIDER = "ollama";
-        OPENCROW_PI_MODEL = "gemma4:26b";
-        OPENCROW_PI_SKILLS_DIR = "${localStateDir}/skills";
-        OPENCROW_HEARTBEAT_INTERVAL = "30m";
-        OPENCROW_PI_IDLE_TIMEOUT = "12h";
-        OPENCROW_LOG_LEVEL = "debug";
       };
     };
   };

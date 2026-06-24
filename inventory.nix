@@ -147,7 +147,7 @@
     # (/var/lib/opencrow-<name>); keep "claude"/"local" so existing session
     # state and the mail-watcher path (modules/opencrow) stay valid. Per-
     # instance + shared secrets live in modules/opencrow, referenced by name.
-    claude = {
+    opencrow-claude = {
       module.input = "self";
       module.name = "@pinpox/opencrow";
       roles.default.machines.porree.settings = {
@@ -171,7 +171,7 @@
       };
     };
 
-    local = {
+    opencrow-local = {
       module.input = "self";
       module.name = "@pinpox/opencrow";
       roles.default.machines.porree.settings = {
@@ -185,8 +185,8 @@
           OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
           OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
           OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
-          OPENCROW_PI_PROVIDER = "ollama";
-          OPENCROW_PI_MODEL = "gemma4:26b";
+          OPENCROW_PI_PROVIDER = "mango";
+          OPENCROW_PI_MODEL = "gemma4:e4b";
           OPENCROW_PI_IDLE_TIMEOUT = "12h";
           OPENCROW_HEARTBEAT_INTERVAL = "30m";
           OPENCROW_LOG_LEVEL = "debug";
@@ -196,19 +196,28 @@
           "opencrow-nextcloud"
           "opencrow-nextcloud-work"
           "opencrow-eversports"
+          {
+            generator = "pi-llama-swap-key";
+            file = "env";
+          }
         ];
         piModels = {
-          providers.ollama = {
-            baseUrl = "http://100.96.100.103:11434/v1";
+          # mango runs a spaces-os executor; use its llama-swap OpenAI API.
+          # Raw ygg IPv6 because the nspawn container has no .pin resolution;
+          # the shared key comes from the env (omp reads `apiKey` as an env-var
+          # NAME, so "LLAMA_SWAP_API_KEY" resolves from the shared
+          # pi-llama-swap-key generator's env file rather than a literal token).
+          providers.mango = {
+            baseUrl = "http://[200:8953:e471:8a0e:a457:476d:ad91:fa99]:8012/v1";
             api = "openai-completions";
-            apiKey = "dummy";
+            apiKey = "LLAMA_SWAP_API_KEY";
             compat = {
               supportsDeveloperRole = false;
               supportsReasoningEffort = false;
             };
             models = [
               {
-                id = "gemma4:26b";
+                id = "gemma4:e4b";
                 reasoning = true;
               }
             ];
