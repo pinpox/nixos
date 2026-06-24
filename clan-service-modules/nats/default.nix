@@ -1,72 +1,106 @@
 { clanLib, lib, ... }:
-# v3: per-user NKEY auth, two roles. Each declared user (human or
-# dedicated app identity) gets one Ed25519 NKEY (share=true) listed in
-# the server's `authorization.users`. The `server` role runs nats-server;
-# `client` machines just get the CLI + those seeds + a remote NATS_URL.
-# No per-machine keys.
+# NATS broker + authorization. The server is a pure authorizer: it takes a set
+# of `authorizations` (each = a public-key generator reference + an ACL) and
+# nothing else about identity. It holds no seeds.
 #
-# Out of scope, planned as follow-ups when needed:
-#   - JetStream encryption-at-rest with a per-machine key
-#   - declarative JetStream streams via a convergence oneshot
-#   - companion modules for ingestion: nats-vector-journald,
-#     nats-forgejo-bridge, nats-caddy-shipper, nats-desktop
+# Key material lives with whoever uses it: the `client` role deploys human
+# login keys (so the CLI works in your shell on every machine), and each
+# @pinpox/nats-integrations role declares its own workload key. Both import
+# ./nkey.nix, so a key's secret seed exists only on the machines that run its
+# role, while the public key is committed and authorized here.
 let
   auth = import ./auth.nix { inherit lib clanLib; };
 
-  # Submodule type for a human user entry under `settings.users`.
-  userType = lib.types.submodule {
-    options.permissions = lib.mkOption {
-      type = lib.types.nullOr auth.permissionsBlock;
-      default = null;
-      defaultText = lib.literalExpression ''
-        # publish.allow = [ "personal.>" "team.<user>.>" "project.>" "home.>" ]
-        # subscribe.allow = [ ">" ]
-      '';
-      description = ''
-        NATS subject ACL for this user's principal. `null` (default) uses
-        the broad-user defaults: publish anywhere except other users'
-        `team.>` namespaces, subscribe everything.
-      '';
+  # One server authorization: a public-key generator + the subjects it may use.
+  # `keyGenerator` defaults to `nats-key-<name>` (the attribute name), matching
+  # the convention used by client login users and integration roles, so an
+  # authorization usually needs only its `permissions`.
+  authorizationType = lib.types.submodule (
+    { name, ... }:
+    {
+      options = {
+        keyGenerator = lib.mkOption {
+          type = lib.types.str;
+          default = "nats-key-${name}";
+          description = ''
+            Name of the clan vars generator whose `pub` file holds this
+            identity's NKEY public key (share=true). Defaults to
+            `nats-key-<name>` (the attribute name). The generator is declared
+            by the role that uses the seed (client role for humans, an
+            nats-integrations role for a workload).
+          '';
+        };
+        permissions = lib.mkOption {
+          type = auth.permissionsBlock;
+          default = { };
+          description = "Allowed/denied publish & subscribe subjects for this key.";
+        };
+      };
+    }
+  );
+
+  # A declarative JetStream stream. Subjects MUST be disjoint from every other
+  # stream in the instance: JetStream rejects overlapping streams, and a
+  # literal `>` catch-all needs no-ack and would block every override.
+  streamType = lib.types.submodule {
+    options = {
+      subjects = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        description = "Subjects this stream captures (must not overlap any other stream).";
+        example = lib.literalExpression ''[ "home.rooms.study.>" ]'';
+      };
+      maxAge = lib.mkOption {
+        type = lib.types.ints.unsigned;
+        default = 604800;
+        description = "Retention by age, in seconds (0 = unlimited). Default 604800 = 7 days.";
+      };
+      maxBytes = lib.mkOption {
+        type = lib.types.int;
+        default = -1;
+        description = "Max on-disk size in bytes (-1 = unlimited).";
+      };
     };
   };
 in
 {
   _class = "clan.service";
   manifest.name = "nats";
-  manifest.description = "NATS messaging system with per-user NKEY auth.";
+  manifest.description = "NATS broker that authorizes a set of public keys.";
   manifest.readme = ''
-    Two roles, per-user NKEY identity:
+    Two roles:
 
-      - server: a full nats-server with JetStream. The client port (4222)
-        is reachable on the clan network when `openFirewall` is set;
-        monitoring (8222) is bound to loopback only.
-      - client: no local nats-server — just the `nats` CLI, the declared
-        users' NKEY seeds, and `NATS_URL` pointing at the server.
+      - server: runs nats-server with JetStream. A pure authorizer — it takes
+        `authorizations` (each names a public-key generator + an ACL), reads
+        each committed `pub`, and builds the nats `authorization.users` list.
+        It generates/holds no identity seeds. Client port (4222) is reachable
+        on the clan network when `openFirewall`; monitoring (8222) is loopback.
+      - client: installs the `nats` CLI, points `NATS_URL` at the server, and
+        deploys the human login identities in `loginUsers` (NKEY seed owned by
+        the matching Unix login, share=true, so the CLI works in your shell).
 
-    Identity is per-user NKEY only. Every human or application declared in
-    `roles.server.settings.users` gets its own Ed25519 NKEY (share=true —
-    the same seed on every machine the user logs into), listed in the
-    server's `authorization.users`. Clients deploy the same seeds, so a
-    user's `nats pub`/`nats sub` work identically on the server or any
-    client. Add a dedicated user when integrating an application.
+    Identities. Every identity is one Ed25519 NKEY (see ./nkey.nix). Its
+    secret seed is deployed only to the machines that DECLARE the generator —
+    a login machine (client role) or the single machine an integration role
+    runs on. Its public key is committed under vars/shared/ and authorized on
+    the server. So an app key never lands on a host that doesn't run its
+    workload; the server never holds any seed.
 
-    Default user ACL:
-      publish personal.>, team.<user>.>, project.>, home.>;  subscribe >
-    Override per user via `roles.server.settings.users.<u>.permissions`.
+    To add a publisher: declare its key generator in the owning role (a
+    @pinpox/nats-integrations role, via ./nkey.nix) and add a matching
+    `authorizations.<name> = { keyGenerator; permissions; }` entry here.
 
-    Per-user shell init exports `NATS_URL` (loopback on the server, the
-    server's host on clients) and points `NATS_NKEY` at the logged-in
-    user's seed, so the `nats` CLI works directly.
+    Retention is opt-in via `roles.server.settings.streams` (see streamType);
+    the first declared stream also provisions the jsadmin identity + a
+    convergence oneshot.
 
-    Bootstrap: run `clan vars generate` once per declared user pubkey
-    before the first `clan machines update`. Pubkeys are committed under
-    `vars/shared/`.
+    Bootstrap: `clan vars generate` once (creates seeds + pubs) before the
+    first `clan machines update`. Pubkeys are committed under vars/shared/.
   '';
   manifest.categories = [ "Network" ];
   manifest.exports.out = [ "endpoints" ];
 
   roles.server = {
-    description = "NATS hub: nats-server with JetStream.";
+    description = "NATS hub: nats-server with JetStream; authorizes public keys.";
     interface =
       { lib, ... }:
       {
@@ -106,20 +140,35 @@ in
               description = "JetStream / nats-server data directory.";
             };
           };
-          users = lib.mkOption {
-            type = lib.types.attrsOf userType;
+          authorizations = lib.mkOption {
+            type = lib.types.attrsOf authorizationType;
             default = { };
             description = ''
-              Human users whose NKEY seeds get deployed to every machine
-              they log into (share=true). Each user gets the broad-user
-              default ACL unless overridden.
+              Public keys the server authorizes, each with its ACL. The seed
+              for each lives wherever its owning role runs; here you only
+              reference the key (by generator) and grant topics.
             '';
-            example = lib.literalExpression "{ pinpox = { }; }";
+            example = lib.literalExpression ''
+              { host-reporter = { keyGenerator = "nats-key-host-reporter"; permissions.publish.allow = [ "host.>" ]; }; }
+            '';
           };
           extraSettings = lib.mkOption {
             type = lib.types.attrs;
             default = { };
             description = "Free-form passthrough merged into `services.nats.settings`.";
+          };
+          streams = lib.mkOption {
+            type = lib.types.attrsOf streamType;
+            default = { };
+            description = ''
+              Declarative JetStream streams to converge. Empty (default) →
+              nothing is retained. Subjects must be disjoint across streams.
+              Declaring any stream provisions the jsadmin identity + the
+              convergence oneshot.
+            '';
+            example = lib.literalExpression ''
+              { sensors-archive = { subjects = [ "sensors.>" ]; maxAge = 31536000; }; }
+            '';
           };
         };
       };
@@ -149,18 +198,34 @@ in
 
   roles.client = {
     description = ''
-      NATS client: installs the `nats` CLI plus the declared users' NKEY
-      seeds and points NATS_URL at the server. No local nats-server.
+      NATS client: installs the `nats` CLI, points NATS_URL at the server, and
+      deploys the human login identities in `loginUsers`. No local nats-server.
     '';
+    interface =
+      { lib, ... }:
+      {
+        options.loginUsers = lib.mkOption {
+          type = lib.types.attrsOf (lib.types.submodule { options = { }; });
+          default = { };
+          description = ''
+            Human login identities to deploy on every client: each gets an
+            NKEY whose seed is owned by the matching Unix login (generator
+            `nats-key-<name>`, share=true) plus shell env pointing the `nats`
+            CLI at it. Authorize them in the server's `authorizations`.
+          '';
+          example = lib.literalExpression "{ pinpox = { }; }";
+        };
+      };
     perInstance =
       {
         instanceName,
+        settings,
         roles,
         ...
       }:
       {
         nixosModule = import ./client.nix {
-          inherit instanceName roles;
+          inherit instanceName settings roles;
         };
       };
   };

@@ -64,6 +64,14 @@ in
 
     # Let 'nixos-version --json' know the Git revision of this flake.
     system.configurationRevision = nixpkgs.lib.mkIf (flake-self ? rev) flake-self.rev;
+
+    # Expose the flake's source NAR hash inside the system closure. Unlike the
+    # git rev (only present on a committed tree), this is ALWAYS available —
+    # even on a dirty tree — so the NATS nixos-reporter can always emit a flake
+    # identifier. Read at runtime from /run/current-system/flake-narhash.
+    system.extraSystemBuilderCmds = ''
+      echo -n ${nixpkgs.lib.escapeShellArg (flake-self.narHash or "")} > $out/flake-narhash
+    '';
     nix.registry.nixpkgs.flake = nixpkgs;
     nix.registry.pinpox.flake = flake-self;
 

@@ -1,13 +1,10 @@
 { lib, clanLib }:
-# Shared helpers for the @pinpox/nats per-user NKEY auth model.
-#
-# Each principal is one per-user NKEY (share=true — the same seed on
-# every machine that user logs into), with a broad-by-default ACL. A
-# "user" is a human or a dedicated application identity; create a key
-# per user when integrating something that needs to talk to NATS.
-#
-# Each is just a `{ nkey = "..."; permissions = ...; }` row in
-# `services.nats.settings.authorization.users`.
+# Helpers for the @pinpox/nats authorization model. The server is a pure
+# authorizer: it is handed a set of `authorizations` (each = a public-key
+# generator reference + an ACL) and turns them into the nats
+# `authorization.users` list by reading each generator's committed `pub`. It
+# never holds seeds — those live wherever the owning role (client / an
+# integration) runs.
 let
   permissionsBlock = lib.types.submodule {
     options = {
@@ -34,19 +31,9 @@ let
     };
   };
 
-  defaultUserPermissions = userName: {
-    publish.allow = [
-      "personal.>"
-      "team.${userName}.>"
-      "project.>"
-      "home.>"
-    ];
-    subscribe.allow = [ ">" ];
-  };
-
   # Strip the trailing newline that `builtins.readFile` leaves on
-  # clan-vars-generated public files. NATS tolerates whitespace in nkeys
-  # but rendered JSON is cleaner without it.
+  # clan-vars-generated public files. NATS tolerates whitespace in nkeys but
+  # rendered JSON is cleaner without it.
   readPub =
     {
       flake,
@@ -60,30 +47,26 @@ let
       }
     );
 
-  # Build the `authorization.users` list from the instance's user
-  # principals (humans and dedicated app identities); one NKEY row each.
+  # Build the nats `authorization.users` list from a set of authorizations:
+  # each entry names the clan vars generator holding its public key plus its
+  # ACL. One NKEY row per entry; no seed material involved.
   mkAuthorizationUsers =
     {
       flake,
-      instanceName,
-      users,
+      authorizations,
     }:
-    lib.mapAttrsToList (userName: userCfg: {
+    lib.mapAttrsToList (_name: a: {
       nkey = readPub {
         inherit flake;
-        generator = "nats-${instanceName}-user-${userName}";
+        generator = a.keyGenerator;
       };
-      permissions =
-        if (userCfg.permissions or null) != null then
-          userCfg.permissions
-        else
-          defaultUserPermissions userName;
-    }) users;
+      inherit (a) permissions;
+    }) authorizations;
 in
 {
   inherit
     permissionsBlock
-    defaultUserPermissions
+    readPub
     mkAuthorizationUsers
     ;
 }

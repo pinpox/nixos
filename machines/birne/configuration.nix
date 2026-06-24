@@ -1,7 +1,5 @@
 # Configuration for birne
 {
-  config,
-  lib,
   ...
 }:
 {

@@ -52,23 +52,164 @@
       # roles.spindle.machines.clementine.settings.host = "spindle.pablo.tools";
     };
 
-    # Personal event-firehose archive. nats-server on kfbox; every
-    # desktop-tagged machine is a client connecting to nats.pin:4222 with
-    # its own user NKEY.
+    # Personal event firehose. kfbox runs the broker; it authorizes a set of
+    # public keys (seeds live with whoever runs each identity). Every machine
+    # is a client (CLI + the human `pinpox` login key).
     nats = {
       module.input = "self";
       module.name = "@pinpox/nats";
 
-	  # kfbox is the server
       roles.server.machines.kfbox.settings.host = "nats.pin";
-      # Human user — share=true seed; same identity from any machine
-      # this user has a shell on. Default ACL: publish personal.>,
-      # team.pinpox.>, project.>, home.>; subscribe >.
-      roles.server.settings.users.pinpox = { };
 
-      # Every desktop is a client: nats CLI + the user seeds + NATS_URL
-      # pointing at the server. No local nats-server.
-      roles.client.tags.desktop = { };
+      # Pure authorizer: each entry = a pubkey (by generator) + allowed
+      # topics. No seeds on the broker.
+      roles.server.settings.authorizations = {
+        pinpox = {
+          permissions = {
+            publish.allow = [
+              "personal.>"
+              "team.pinpox.>"
+              "project.>"
+              "home.>"
+            ];
+            subscribe.allow = [ ">" ];
+          };
+        };
+        host-reporter = {
+          permissions.publish.allow = [ "host.*.status" ];
+        };
+        ssh-logger = {
+          permissions.publish.allow = [ "host.*.ssh.>" ];
+        };
+        nixos-reporter = {
+          permissions.publish.allow = [ "host.*.nixos.>" ];
+        };
+        home-sensors = {
+          permissions.publish.allow = [ "home.>" ];
+        };
+        zulip-bridge = {
+          permissions.publish.allow = [ "chat.io.geninf.zulip.>" ];
+        };
+      };
+
+      # Every machine is a client: nats CLI + NATS_URL + the human pinpox
+      # login seed (owned by the pinpox login). Harmless on the server itself.
+      roles.client.tags.all = { };
+      roles.client.settings.loginUsers.pinpox = { };
+    };
+
+    # NATS ingestion workloads — one role per integration. Each role owns its
+    # NKEY (declares the generator; seed only on its machine) and is authorized
+    # by the matching `authorizations` entry above.
+    nats-integrations = {
+      module.input = "self";
+      module.name = "@pinpox/nats-integrations";
+
+      # Boot/clean-shutdown state from every machine → host.<hostname>.status (state in payload).
+      roles.host-reporter.tags.all = { };
+
+      # SSH auth events from every machine → host.<hostname>.ssh.<event>.
+      roles.ssh-logger.tags.all = { };
+
+      # NixOS generation activations (rebuilds) → host.<hostname>.nixos.activated.
+      roles.nixos-reporter.tags.all = { };
+
+      # Study ESPHome sensor → home.rooms.study.*  (traube only).
+      roles.sensor-poller.machines.traube.settings = {
+        sensorUrl = "http://192.168.101.103";
+        interval = "5min";
+        metrics = {
+          "temp-02" = {
+            subject = "home.rooms.study.temperature";
+            unit = "°C";
+          };
+          "ccs811_eco2_value" = {
+            subject = "home.rooms.study.co2";
+            unit = "ppm";
+          };
+        };
+      };
+
+      # Zulip feed → chat.io.geninf.zulip.*  (kfbox only).
+      roles.zulip-bridge.machines.kfbox.settings = {
+        subjectRoot = "chat.io.geninf.zulip";
+        includeDms = true;
+      };
+    };
+
+    # OpenCrow bot instances — one omp agent each, sandboxed container on
+    # porree. The instance NAME is the container/state dir
+    # (/var/lib/opencrow-<name>); keep "claude"/"local" so existing session
+    # state and the mail-watcher path (modules/opencrow) stay valid. Per-
+    # instance + shared secrets live in modules/opencrow, referenced by name.
+    claude = {
+      module.input = "self";
+      module.name = "@pinpox/opencrow";
+      roles.default.machines.porree.settings = {
+        environment = {
+          NEXTCLOUD_URL = "https://files.pablo.tools";
+          NEXTCLOUD_USER = "pinpox";
+          NEXTCLOUD_CALENDAR = "personal";
+          WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
+          WORK_NEXTCLOUD_USER = "pinpox";
+          WORK_NEXTCLOUD_CALENDAR = "personal";
+          OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
+          OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
+          OPENCROW_HEARTBEAT_INTERVAL = "30m";
+        };
+        environmentFileGenerators = [
+          "opencrow"
+          "opencrow-nextcloud"
+          "opencrow-nextcloud-work"
+          "opencrow-eversports"
+        ];
+      };
+    };
+
+    local = {
+      module.input = "self";
+      module.name = "@pinpox/opencrow";
+      roles.default.machines.porree.settings = {
+        environment = {
+          NEXTCLOUD_URL = "https://files.pablo.tools";
+          NEXTCLOUD_USER = "pinpox";
+          NEXTCLOUD_CALENDAR = "personal";
+          WORK_NEXTCLOUD_URL = "https://nextcloud.clan.lol";
+          WORK_NEXTCLOUD_USER = "pinpox";
+          WORK_NEXTCLOUD_CALENDAR = "personal";
+          OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
+          OPENCROW_MATRIX_USER_ID = "@c.h.i.m.p.:matrix.org";
+          OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
+          OPENCROW_PI_PROVIDER = "ollama";
+          OPENCROW_PI_MODEL = "gemma4:26b";
+          OPENCROW_PI_IDLE_TIMEOUT = "12h";
+          OPENCROW_HEARTBEAT_INTERVAL = "30m";
+          OPENCROW_LOG_LEVEL = "debug";
+        };
+        environmentFileGenerators = [
+          "opencrow-local"
+          "opencrow-nextcloud"
+          "opencrow-nextcloud-work"
+          "opencrow-eversports"
+        ];
+        piModels = {
+          providers.ollama = {
+            baseUrl = "http://100.96.100.103:11434/v1";
+            api = "openai-completions";
+            apiKey = "dummy";
+            compat = {
+              supportsDeveloperRole = false;
+              supportsReasoningEffort = false;
+            };
+            models = [
+              {
+                id = "gemma4:26b";
+                reasoning = true;
+              }
+            ];
+          };
+        };
+      };
     };
 
     # Collects all "endpoint" exports from all services and generates a file

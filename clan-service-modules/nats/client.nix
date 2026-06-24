@@ -1,5 +1,6 @@
 {
   instanceName,
+  settings,
   roles,
 }:
 {
@@ -8,30 +9,32 @@
   lib,
   ...
 }:
+# Client role: installs the `nats` CLI, points `NATS_URL` at the server, and
+# deploys the HUMAN login identities (`settings.loginUsers`) — each an NKEY
+# whose seed is owned by the matching Unix login, so the CLI works in that
+# user's shell. App/machine identities are NOT handled here; they live in the
+# nats-integrations roles that use them.
 let
-  userGen = userName: "nats-${instanceName}-user-${userName}";
+  keyGen = name: "nats-key-${name}";
+  loginUsers = settings.loginUsers;
 
   serverMachines = roles.server.machines or { };
-  # One upstream server is expected. Read its endpoint + user list from the
-  # supported per-machine finalSettings path (role-level `.settings` access
-  # is deprecated in clan-core).
   server = if serverMachines == { } then null else lib.head (lib.attrValues serverMachines);
   serverUrl =
     if server == null then
       ""
     else
       "nats://${server.settings.host}:${toString server.settings.clientPort}";
-  users = if server == null then { } else server.settings.users;
 
   natsShellEnv =
     let
       arms = lib.concatStringsSep "\n" (
         lib.mapAttrsToList (
-          userName: _:
-          "    ${userName}) export NATS_NKEY=${
-                config.clan.core.vars.generators.${userGen userName}.files.seed.path
-              } ;;"
-        ) users
+          name: _:
+          "    ${name}) export NATS_NKEY=${
+            config.clan.core.vars.generators.${keyGen name}.files.seed.path
+          } ;;"
+        ) loginUsers
       );
     in
     ''
@@ -44,9 +47,8 @@ in
 {
   environment.systemPackages = [ pkgs.natscli ];
 
-  # Per-user env so the `nats` CLI reaches the server with the right
-  # identity: NATS_URL points upstream, NATS_NKEY at the logged-in user's
-  # seed. Set for login shells (/etc/profile) and interactive shells.
+  # Per-user env so `nats pub`/`nats sub` work directly with the right
+  # identity. Set for login shells (/etc/profile) and interactive shells.
   environment.shellInit = natsShellEnv;
   environment.interactiveShellInit = natsShellEnv;
 
@@ -60,29 +62,15 @@ in
     }
   ];
 
-  # Per-user NKEY seeds (share=true → the SAME seed as on the server, so a
-  # user's identity is identical everywhere they log in). No nats-server
-  # runs here; this machine is a pure client.
+  # Human login keys: NKEY seed owned by the matching login, deployed on every
+  # client (share=true ⇒ same identity wherever the user logs in). Authorize
+  # them in `roles.server.settings.authorizations` (keyGenerator nats-key-<name>).
   clan.core.vars.generators = lib.mkMerge (
-    map (userName: {
-      ${userGen userName} = {
-        share = true;
-        files.seed = {
-          secret = true;
-          mode = "0400";
-          owner = userName;
-        };
-        files.pub.secret = false;
-        runtimeInputs = with pkgs; [
-          nkeys
-          coreutils
-        ];
-        script = ''
-          nk -gen user -pubout > pair
-          head -n1 pair > $out/seed
-          tail -n1 pair > $out/pub
-        '';
+    lib.mapAttrsToList (name: _: {
+      ${keyGen name} = import ./nkey.nix {
+        inherit pkgs;
+        owner = name;
       };
-    }) (lib.attrNames users)
+    }) loginUsers
   );
 }

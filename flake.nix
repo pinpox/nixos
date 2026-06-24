@@ -232,6 +232,8 @@
         modules."@pinpox/tangled" = ./clan-service-modules/tangled;
         modules."@pinpox/n2n" = ./clan-service-modules/n2n;
         modules."@pinpox/nats" = ./clan-service-modules/nats;
+        modules."@pinpox/nats-integrations" = ./clan-service-modules/nats-integrations;
+        modules."@pinpox/opencrow" = ./clan-service-modules/opencrow;
         inventory = import ./inventory.nix { inherit self; };
       };
     in
