@@ -71,6 +71,7 @@
               "team.pinpox.>"
               "project.>"
               "home.>"
+              "user.pinpox.>"
             ];
             subscribe.allow = [ ">" ];
           };
@@ -135,6 +136,10 @@
         subjectRoot = "chat.io.geninf.zulip";
         includeDms = true;
       };
+
+	  # Userspaces integrations
+      # MPRIS playback (play/pause/track) → user.pinpox.music
+      roles.user-music-status.tags.desktop = { };
     };
 
     # OpenCrow bot instances — one omp agent each, sandboxed container on

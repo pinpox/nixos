@@ -57,9 +57,16 @@ in
     its own subject root. Authorize each in the `@pinpox/nats` server's
     `authorizations` with the matching `keyGenerator`.
 
+    Exception: user-space roles (prefixed `user-`, e.g. user-music-status) run
+    as a systemd *user* service and reuse the human NKEY the @pinpox/nats
+    client role already deploys, so they declare no generator. They publish
+    under the per-user namespace `user.<user>.…`; authorize `user.<user>.>` for
+    that login's key on the broker.
+
     Roles: host-reporter (boot/shutdown), ssh-logger (sshd auth events),
     nixos-reporter (generation activations), sensor-poller (ESPHome metrics),
-    zulip-bridge (Zulip message feed).
+    zulip-bridge (Zulip message feed), user-music-status (MPRIS playback,
+    user-space).
   '';
   manifest.categories = [ "Utility" ];
 
@@ -159,6 +166,34 @@ in
       { instanceName, settings, ... }:
       {
         nixosModule = import ./zulip-bridge.nix { inherit instanceName settings; };
+      };
+  };
+
+  roles.user-music-status = {
+    description = "Publishes MPRIS music playback (play/pause/track) to NATS, user-space.";
+    interface =
+      { lib, ... }:
+      {
+        # `pinpox` ⇒ default keyGenerator nats-key-pinpox (deployed by the
+        # @pinpox/nats client role); this role declares no generator of its own.
+        # Subjects are fixed to `user.<user>.music` (per-user scope; host in payload).
+        options = commonOptions "pinpox" // {
+          user = lib.mkOption {
+            type = lib.types.str;
+            default = "pinpox";
+            description = ''
+              Login whose systemd user manager runs the feed and whose NKEY
+              seed it publishes with. Must have the @pinpox/nats client role's
+              login key (nats-key-<user>) on this machine, authorized to publish
+              `user.<user>.>` on the broker.
+            '';
+          };
+        };
+      };
+    perInstance =
+      { instanceName, settings, ... }:
+      {
+        nixosModule = import ./user-music-status.nix { inherit instanceName settings; };
       };
   };
 }
