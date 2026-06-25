@@ -25,6 +25,27 @@ let
     };
   };
 
+  # A subscription for the opencrow-trigger role: a subject to subscribe and the
+  # trigger line to write per message (`{{payload}}` = message body).
+  triggerSubType = lib.types.submodule {
+    options = {
+      subject = lib.mkOption {
+        type = lib.types.str;
+        description = "NATS subject to subscribe; each message wakes the agent.";
+        example = "opencrow.local.task";
+      };
+      prompt = lib.mkOption {
+        type = lib.types.str;
+        description = ''
+          Trigger line written to the pipe per message. `{{payload}}` is replaced
+          with the message body. Make it a self-contained instruction (what the
+          event is + what to do), not a raw payload dump.
+        '';
+        example = "Incoming task: {{payload}}. Carry it out and reply.";
+      };
+    };
+  };
+
   # Options every role shares. `keyName` is the role's NKEY identity; its
   # generator defaults to `nats-key-<keyName>` (override only to publish as a
   # different identity), matching the server `authorizations.<keyName>` entry.
@@ -66,7 +87,8 @@ in
     Roles: host-reporter (boot/shutdown), ssh-logger (sshd auth events),
     nixos-reporter (generation activations), sensor-poller (ESPHome metrics),
     zulip-bridge (Zulip message feed), user-music-status (MPRIS playback,
-    user-space).
+    user-space), opencrow-trigger (subscribe → write an opencrow persona's
+    trigger pipe; reuses the persona's key, declares no generator).
   '';
   manifest.categories = [ "Utility" ];
 
@@ -194,6 +216,45 @@ in
       { instanceName, settings, ... }:
       {
         nixosModule = import ./user-music-status.nix { inherit instanceName settings; };
+      };
+  };
+
+  roles.opencrow-trigger = {
+    description = "Subscribes to NATS subjects and writes each message into an opencrow persona's trigger pipe (wakes the agent).";
+    interface =
+      { lib, ... }:
+      {
+        # Reuses the persona's NKEY (nats-key-opencrow-<instance>), so it
+        # declares no generator. Subscribed subjects must be in that key's
+        # subscribe.allow.
+        options = {
+          instance = lib.mkOption {
+            type = lib.types.str;
+            description = ''
+              opencrow instance name (e.g. "local") whose trigger pipe
+              (/var/lib/opencrow-<instance>/sessions/trigger.pipe) receives the
+              messages; also selects the persona's NKEY.
+            '';
+            example = "local";
+          };
+          natsUrl = lib.mkOption {
+            type = lib.types.str;
+            default = "nats://nats.pin:4222";
+            description = "NATS server URL (this host resolves .pin).";
+          };
+          subscriptions = lib.mkOption {
+            type = lib.types.attrsOf triggerSubType;
+            description = "Map of name → { subject; prompt; }. Each subscribed message becomes one trigger line.";
+            example = lib.literalExpression ''
+              { task = { subject = "opencrow.local.task"; prompt = "Task: $payload"; }; }
+            '';
+          };
+        };
+      };
+    perInstance =
+      { instanceName, settings, ... }:
+      {
+        nixosModule = import ./opencrow-trigger.nix { inherit instanceName settings; };
       };
   };
 }

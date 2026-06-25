@@ -1,4 +1,34 @@
 { self }:
+let
+  # nixpkgs lib, for rendering values inside plain `settings` (which get no
+  # module args). Used to join the NATS subject lists into env strings.
+  lib = self.inputs.nixpkgs.lib;
+
+  # opencrow-local's NATS identity. These subject lists are the single source
+  # of truth for both the broker ACL (the `opencrow-local` authorization in the
+  # `nats` instance) and the agent-facing skill doc, so the persona's
+  # documented capability can never drift from what the broker permits.
+  opencrowLocalNats = {
+    # Subjects the local persona may subscribe to (read).
+    read = [
+      "user.pinpox.music"
+      "opencrow.local.>"
+    ];
+    # Subjects the local persona may publish to (write).
+    write = [
+      "opencrow.local.>"
+    ];
+    # Subjects pushed into this persona's trigger pipe (by the opencrow-trigger
+    # role). They MUST be denied in publish below — if the agent publishes one,
+    # the bridge re-delivers it and the agent re-triggers itself (feedback loop).
+    triggers = [
+      "opencrow.local.task"
+    ];
+    # The container resolves this `.pin` name via the static /etc/hosts entries
+    # injected below (networking.extraHosts), so dial the broker by name.
+    url = "nats://kfbox.pin:4222";
+  };
+in
 {
   machines = {
     mango.tags = [ "desktop" ];
@@ -72,6 +102,9 @@
               "project.>"
               "home.>"
               "user.pinpox.>"
+              # Let pinpox assign tasks to any persona's trigger pipe
+              # (opencrow-trigger subscribes opencrow.<persona>.task).
+              "opencrow.*.task"
             ];
             subscribe.allow = [ ">" ];
           };
@@ -90,6 +123,17 @@
         };
         zulip-bridge = {
           permissions.publish.allow = [ "chat.io.geninf.zulip.>" ];
+        };
+        # The local opencrow persona's own identity (read/write scoped to the
+        # shared `opencrowLocalNats` lists). Default keyGenerator is
+        # `nats-key-opencrow-local`, declared in the opencrow-local instance.
+        opencrow-local = {
+          permissions = {
+            publish.allow = opencrowLocalNats.write;
+            # Can't publish its own trigger subjects → no self-trigger loop.
+            publish.deny = opencrowLocalNats.triggers;
+            subscribe.allow = opencrowLocalNats.read;
+          };
         };
       };
 
@@ -137,16 +181,30 @@
         includeDms = true;
       };
 
-	  # Userspaces integrations
+      # Userspaces integrations
       # MPRIS playback (play/pause/track) → user.pinpox.music
       roles.user-music-status.tags.desktop = { };
+
+      # opencrow-local reacts to tasks: `nats pub opencrow.local.task "<task>"`
+      # lands in its trigger pipe and wakes the agent. Reuses the persona's own
+      # nats key; the subject is within its opencrow.local.> read ACL.
+      roles.opencrow-trigger.machines.mango.settings = {
+        instance = "local";
+        subscriptions.task = {
+          subject = "opencrow.local.task";
+          prompt = "Incoming task: {{payload}}. Carry it out and reply in this chat with the result. Do NOT publish anything to NATS unless the task explicitly tells you to.";
+        };
+      };
     };
 
-    # OpenCrow bot instances — one omp agent each, sandboxed container on
-    # porree. The instance NAME is the container/state dir
-    # (/var/lib/opencrow-<name>); keep "claude"/"local" so existing session
-    # state and the mail-watcher path (modules/opencrow) stay valid. Per-
-    # instance + shared secrets live in modules/opencrow, referenced by name.
+    # OpenCrow bot instances — one omp agent each in a sandboxed container.
+    # The instance NAME is the container/state dir (/var/lib/opencrow-<name>);
+    # keep "claude"/"local" so existing session state and the mail-watcher path
+    # (modules/opencrow) stay valid. The @pinpox/opencrow service declares only
+    # each bot's own `opencrow-<name>` Matrix-token generator; every integration
+    # (nextcloud, eversports, the pi/llama-swap key) is a property of the
+    # instance, declared in `extraModules`, which also appends each one's env
+    # file to `services.opencrow.instances.<name>.environmentFiles`.
     opencrow-claude = {
       module.input = "self";
       module.name = "@pinpox/opencrow";
@@ -159,22 +217,46 @@
           WORK_NEXTCLOUD_USER = "pinpox";
           WORK_NEXTCLOUD_CALENDAR = "personal";
           OPENCROW_MATRIX_HOMESERVER = "https://matrix.org";
+          OPENCROW_MATRIX_USER_ID = "@p.i.m.p.:matrix.org";
           OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
           OPENCROW_HEARTBEAT_INTERVAL = "30m";
         };
-        environmentFileGenerators = [
-          "opencrow"
-          "opencrow-nextcloud"
-          "opencrow-nextcloud-work"
-          "opencrow-eversports"
-        ];
       };
+      roles.default.extraModules = [
+        (
+          { config, pinpox-utils, ... }:
+          {
+            # Integration secrets, a property of this instance.
+            clan.core.vars.generators."opencrow-nextcloud" = pinpox-utils.mkEnvGenerator [
+              "NEXTCLOUD_PASSWORD"
+            ];
+            clan.core.vars.generators."opencrow-nextcloud-work" = pinpox-utils.mkEnvGenerator [
+              "WORK_NEXTCLOUD_PASSWORD"
+            ];
+            clan.core.vars.generators."opencrow-eversports" = pinpox-utils.mkEnvGenerator [
+              "EVERSPORTS_EMAIL"
+              "EVERSPORTS_PASSWORD"
+            ];
+            # Each integration's env file, appended to the bot's own token file
+            # the service wires (environmentFiles is listOf path → lists merge).
+            services.opencrow.instances.claude.environmentFiles = [
+              config.clan.core.vars.generators."opencrow-nextcloud".files.envfile.path
+              config.clan.core.vars.generators."opencrow-nextcloud-work".files.envfile.path
+              config.clan.core.vars.generators."opencrow-eversports".files.envfile.path
+            ];
+          }
+        )
+      ];
     };
 
     opencrow-local = {
       module.input = "self";
       module.name = "@pinpox/opencrow";
-      roles.default.machines.porree.settings = {
+      roles.default.machines.mango.settings = {
+        # All instance env in one place. NATS_* + OPENCROW_PI_SKILLS pair with
+        # the identity/packages/credential wired in extraModules below and the
+        # broker ACL in the `nats` instance; subjects come from the shared
+        # opencrowLocalNats binding (single source of truth with the ACL).
         environment = {
           NEXTCLOUD_URL = "https://files.pablo.tools";
           NEXTCLOUD_USER = "pinpox";
@@ -190,25 +272,27 @@
           OPENCROW_PI_IDLE_TIMEOUT = "12h";
           OPENCROW_HEARTBEAT_INTERVAL = "30m";
           OPENCROW_LOG_LEVEL = "debug";
+
+          # NATS bus access. Broker dialed by `.pin` name; NATS_NKEY points at
+          # the `nats-seed` credential wired in extraModules. Subjects mirror
+          # the broker ACL via the shared opencrowLocalNats binding.
+          NATS_URL = opencrowLocalNats.url;
+          NATS_NKEY = "%d/nats-seed";
+          NATS_READ_SUBJECTS = lib.concatStringsSep " " opencrowLocalNats.read;
+          NATS_WRITE_SUBJECTS = lib.concatStringsSep " " opencrowLocalNats.write;
+          # Reusable NATS skill, additive with the default `web`. Reference it
+          # as a subdir (./skills imported, then /nats) so opencrow's skill id
+          # is the clean basename `nats`, not the `<hash>-nats` store-root name.
+          OPENCROW_PI_SKILLS = "${./skills}/nats";
         };
-        environmentFileGenerators = [
-          "opencrow-local"
-          "opencrow-nextcloud"
-          "opencrow-nextcloud-work"
-          "opencrow-eversports"
-          {
-            generator = "pi-llama-swap-key";
-            file = "env";
-          }
-        ];
         piModels = {
-          # mango runs a spaces-os executor; use its llama-swap OpenAI API.
-          # Raw ygg IPv6 because the nspawn container has no .pin resolution;
-          # the shared key comes from the env (omp reads `apiKey` as an env-var
-          # NAME, so "LLAMA_SWAP_API_KEY" resolves from the shared
-          # pi-llama-swap-key generator's env file rather than a literal token).
+          # mango runs a spaces-os executor; use its llama-swap OpenAI API via
+          # its `.pin` name (resolved by the container's static extraHosts). The
+          # shared key comes from the env (omp reads `apiKey` as an env-var NAME,
+          # so "LLAMA_SWAP_API_KEY" resolves from the shared pi-llama-swap-key
+          # generator's env file rather than a literal token).
           providers.mango = {
-            baseUrl = "http://[200:8953:e471:8a0e:a457:476d:ad91:fa99]:8012/v1";
+            baseUrl = "http://mango.pin:8012/v1";
             api = "openai-completions";
             apiKey = "LLAMA_SWAP_API_KEY";
             compat = {
@@ -224,6 +308,65 @@
           };
         };
       };
+      # One module for everything that can't be a plain setting: per-instance
+      # secret generators, the in-container `nats` CLI + seed credential, and the
+      # container's `.pin` host entries.
+      roles.default.extraModules = [
+        (
+          {
+            config,
+            pkgs,
+            pinpox-utils,
+            ...
+          }:
+          {
+            # Integration secrets (properties of this instance).
+            clan.core.vars.generators."opencrow-nextcloud" = pinpox-utils.mkEnvGenerator [
+              "NEXTCLOUD_PASSWORD"
+            ];
+            clan.core.vars.generators."opencrow-nextcloud-work" = pinpox-utils.mkEnvGenerator [
+              "WORK_NEXTCLOUD_PASSWORD"
+            ];
+            # Shared twin of the spaces `pi` service's pi-llama-swap-key
+            # (share = true): receives the same auto-generated key so this box
+            # holds it. Merges with the spaces-pi definition when co-located.
+            clan.core.vars.generators."pi-llama-swap-key" = {
+              share = true;
+              files."key" = { };
+              files."env" = { };
+              runtimeInputs = [ pkgs.openssl ];
+              script = ''
+                key="sk-$(openssl rand -hex 32)"
+                printf '%s' "$key" > "$out/key"
+                printf 'LLAMA_SWAP_API_KEY=%s\n' "$key" > "$out/env"
+              '';
+            };
+            # The persona's own NATS identity: seed deployed only here, pub
+            # committed so the broker's `opencrow-local` authorization can read it.
+            clan.core.vars.generators."nats-key-opencrow-local" = import ./clan-service-modules/nats/nkey.nix {
+              inherit pkgs;
+              owner = "root";
+            };
+
+            services.opencrow.instances.local = {
+              # `nats` CLI in the container (merges with the baseline omp/curl/jq).
+              extraPackages = [ pkgs.natscli ];
+              # NKEY seed → systemd credential, read at %d/nats-seed (see NATS_NKEY).
+              credentialFiles.nats-seed =
+                config.clan.core.vars.generators."nats-key-opencrow-local".files.seed.path;
+
+              environmentFiles = [
+                config.clan.core.vars.generators."opencrow-nextcloud".files.envfile.path
+                config.clan.core.vars.generators."opencrow-nextcloud-work".files.envfile.path
+                config.clan.core.vars.generators."pi-llama-swap-key".files.env.path
+              ];
+            };
+
+            # Resolve .pin hosts in the container
+            containers."opencrow-local".config.networking.extraHosts = config.networking.extraHosts;
+          }
+        )
+      ];
     };
 
     # Collects all "endpoint" exports from all services and generates a file

@@ -1,5 +1,5 @@
 ---
-name: NATS messaging
+name: nats
 description: Read and publish clan events on the NATS bus with the `nats` CLI
 ---
 

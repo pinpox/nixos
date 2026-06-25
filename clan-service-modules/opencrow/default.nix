@@ -5,10 +5,11 @@
 # own sandboxed systemd-nspawn container (state in /var/lib/opencrow-<name>).
 #
 # Declare instances from the inventory; `settings` carry only plain values:
-# the per-instance environment, which clan-vars generators hold its secrets,
-# extension toggles and omp config. Everything that needs `pkgs`/flake inputs
-# (the opencrow + omp packages, the web + deutschebahn skills, db-cli) is wired
-# here, so the inventory stays free of package references.
+# the per-instance environment, extension toggles and omp config. Package and
+# flake-input wiring (the opencrow + omp packages, the default `web` skill and
+# the bundled `memory` extension) lives here, so the inventory stays free of
+# package references. Per-instance secrets are clan-vars generators declared in
+# the instance's `extraModules`, which also wires them into `environmentFiles`.
 {
   _class = "clan.service";
   manifest.name = "opencrow";
@@ -19,72 +20,33 @@
     `@pinpox/opencrow` at a machine and set `roles.default...settings`:
 
     - `environment`: OPENCROW_*/provider env vars (strings).
-    - `environmentFileGenerators`: names of clan-vars generators whose
-      `envfile` holds this instance's secrets (Matrix token, API keys, …);
-      resolved to file paths on the target machine.
     - `extensions` / `piSettings` / `piModels`: forwarded to omp.
 
+    The bot's own Matrix-token generator (`opencrow-<name>`) is declared here
+    and its env file wired automatically. Shared secrets (nextcloud, eversports,
+    …) are clan-vars generators declared in the instance's `extraModules`, which
+    also appends them to `services.opencrow.instances.<name>.environmentFiles`
+    (the list-typed option merges with the token file wired here).
+
     Each instance runs in its own nspawn container. The host opencrow package,
-    omp, the web + deutschebahn skills and db-cli are wired in automatically.
+    omp, the default `web` skill and the bundled `memory` extension are wired
+    in automatically; integration-specific skills are not the service's job.
   '';
 
-  # Import the upstream opencrow NixOS module once per machine (doing it in
-  # perInstance would re-declare the `services.opencrow` option and error), and
-  # declare the instance secrets here — they belong with the service, not a
-  # separate module. Matrix tokens are per-bot (`opencrow` = claude/P.I.M.P.,
-  # `opencrow-local` = local/CHIMP); nextcloud/eversports are shared across
-  # bots. `pi-llama-swap-key` is the shared twin of the spaces `pi` service's
-  # generator (auto-generated, share = true) so this box holds the same key.
-  # Inventory wires them in by name via `environmentFileGenerators`.
+  # Import the upstream opencrow NixOS module once per machine — doing it in
+  # perInstance would re-declare the `services.opencrow` option and error.
+  # Per-instance secrets are declared in `roles.default.perInstance`, so a
+  # machine only gets the clan-vars generators of the bots it actually runs.
   perMachine = {
     nixosModule =
-      {
-        pkgs,
-        opencrow,
-        pinpox-utils,
-        ...
-      }:
+      { opencrow, ... }:
       {
         imports = [ opencrow.nixosModules.default ];
-
-        clan.core.vars.generators = {
-          "opencrow" = pinpox-utils.mkEnvGenerator [
-            "OPENCROW_MATRIX_ACCESS_TOKEN"
-            "OPENCROW_MATRIX_USER_ID"
-          ];
-          "opencrow-local" = pinpox-utils.mkEnvGenerator [
-            "OPENCROW_MATRIX_ACCESS_TOKEN"
-          ];
-          "opencrow-nextcloud" = pinpox-utils.mkEnvGenerator [
-            "NEXTCLOUD_PASSWORD"
-          ];
-          "opencrow-nextcloud-work" = pinpox-utils.mkEnvGenerator [
-            "WORK_NEXTCLOUD_PASSWORD"
-          ];
-          "opencrow-eversports" = pinpox-utils.mkEnvGenerator [
-            "EVERSPORTS_EMAIL"
-            "EVERSPORTS_PASSWORD"
-          ];
-          # Identical twin of the spaces `pi` service's pi-llama-swap-key
-          # (share = true): declares no new secret, just receives the same
-          # auto-generated shared key. Keep in lockstep with that definition.
-          "pi-llama-swap-key" = {
-            share = true;
-            files."key" = { };
-            files."env" = { };
-            runtimeInputs = [ pkgs.openssl ];
-            script = ''
-              key="sk-$(openssl rand -hex 32)"
-              printf '%s' "$key" > "$out/key"
-              printf 'LLAMA_SWAP_API_KEY=%s\n' "$key" > "$out/env"
-            '';
-          };
-        };
       };
   };
 
   roles.default = {
-    description = "One OpenCrow bot instance (an omp agent on a messaging backend).";
+    description = "Sets up a OpenCrow bot instance";
 
     interface =
       { lib, ... }:
@@ -106,35 +68,6 @@
                 OPENCROW_HEARTBEAT_INTERVAL = "30m";
               }
             '';
-          };
-
-          environmentFileGenerators = lib.mkOption {
-            type = lib.types.listOf (
-              lib.types.either lib.types.str (
-                lib.types.submodule {
-                  options = {
-                    generator = lib.mkOption {
-                      type = lib.types.str;
-                      description = "Clan vars generator name.";
-                    };
-                    file = lib.mkOption {
-                      type = lib.types.str;
-                      default = "envfile";
-                      description = "Which generator file to load as the env file.";
-                    };
-                  };
-                }
-              )
-            );
-            default = [ ];
-            description = ''
-              Clan vars generators whose secret env file is loaded for this
-              instance (resolved to the file path on the target machine). A bare
-              string uses the generator's `envfile` (the mkEnvGenerator
-              convention); use `{ generator; file; }` when the env file has a
-              different name (e.g. the shared `pi-llama-swap-key` exposes `env`).
-            '';
-            example = lib.literalExpression ''[ "opencrow" { generator = "pi-llama-swap-key"; file = "env"; } ]'';
           };
 
           extensions = lib.mkOption {
@@ -168,19 +101,12 @@
             config,
             pkgs,
             lib,
-            opencrow,
-            mics-skills,
+            pinpox-utils,
             ...
           }:
           let
-            # The upstream module names the container/state dir as
-            # "opencrow-<name>"; strip a leading "opencrow-" from the clan
-            # instance name so an inventory key like "opencrow-claude" maps to
-            # container "opencrow-claude" (state /var/lib/opencrow-claude), not
-            # a doubled "opencrow-opencrow-claude".
             instName = lib.removePrefix "opencrow-" instanceName;
-            system = pkgs.stdenv.hostPlatform.system;
-            opencrowPkg = opencrow.packages.${system}.opencrow;
+            tokenGenerator = "opencrow-${instName}";
           in
           {
             services.opencrow.instances.${instName} = {
@@ -190,24 +116,27 @@
                 pkgs.omp
                 pkgs.curl
                 pkgs.jq
-                mics-skills.packages.${system}.db-cli
               ];
-              skills = {
-                web = "${opencrowPkg}/share/opencrow/skills/web";
-                deutschebahn = "${mics-skills}/skills/db-cli";
-              };
               environment = settings.environment;
-              environmentFiles = map (
-                g:
-                if builtins.isString g then
-                  config.clan.core.vars.generators.${g}.files.envfile.path
-                else
-                  config.clan.core.vars.generators.${g.generator}.files.${g.file}.path
-              ) settings.environmentFileGenerators;
-              extensions = settings.extensions;
+              # The bot's own Matrix-token env file. Shared-secret env files are
+              # appended by the instance's extraModules (environmentFiles merges).
+              environmentFiles = [
+                config.clan.core.vars.generators.${tokenGenerator}.files.envfile.path
+              ];
+
+              extensions = {
+                # `web` skill is enabled by the upstream default
+                memory = true;
+              }
+              // settings.extensions;
               piSettings = settings.piSettings;
               piModels = settings.piModels;
             };
+
+            # Matrix secret token
+            clan.core.vars.generators.${tokenGenerator} = pinpox-utils.mkEnvGenerator [
+              "OPENCROW_MATRIX_ACCESS_TOKEN"
+            ];
           };
       };
   };
