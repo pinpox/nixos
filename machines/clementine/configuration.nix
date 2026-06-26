@@ -20,6 +20,7 @@
   };
 
   pinpox.services.twitch-first.enable = true;
+  pinpox.services.matrix-synapse.enable = true;
 
   clan.core.vars.generators."trippy-track" = pinpox-utils.mkEnvGenerator [
     "OIDC_ISSUER_URL"

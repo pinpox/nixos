@@ -102,6 +102,20 @@ in
           header Content-Type text/plain
           respond "did:plc:y6qbagc23y773kp5emhsaoo3"
         }
+
+        # Matrix federation + client discovery delegation. server_name is the
+        # pinpox.com apex (served here), but Synapse runs on clementine at
+        # matrix.pinpox.com — these point remote servers and clients there.
+        handle /.well-known/matrix/server {
+          header Content-Type application/json
+          header Access-Control-Allow-Origin *
+          respond `{"m.server": "matrix.pinpox.com:443"}`
+        }
+        handle /.well-known/matrix/client {
+          header Content-Type application/json
+          header Access-Control-Allow-Origin *
+          respond `{"m.homeserver": {"base_url": "https://matrix.pinpox.com"}}`
+        }
       '';
 
       # Redirect www -> apex (Caddy auto-provisions the cert for www)
