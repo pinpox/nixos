@@ -19,6 +19,19 @@
     '';
   };
 
+  # Shared per-account Matrix password (clan share = true): the matrix reconciler
+  # creates the account with it, opencrow logs in with it — same value on both
+  # the homeserver host and the bot host.
+  mkMatrixPassword = {
+    share = true;
+    files."password" = { };
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.openssl
+    ];
+    script = ''printf '%s' "$(openssl rand -hex 32)" > "$out/password"'';
+  };
+
   renderMustache =
     name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON

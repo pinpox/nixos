@@ -90,6 +90,16 @@
             default = { };
             description = "Contents of omp's models.yml (custom providers / model overrides).";
           };
+
+          matrixPasswordGenerator = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = ''
+              Clan-vars generator (with a `password` file) to log in with for the
+              Matrix token (OPENCROW_MATRIX_PASSWORD_FILE), instead of the prompted
+              `opencrow-<name>` OPENCROW_MATRIX_ACCESS_TOKEN generator.
+            '';
+          };
         };
       };
 
@@ -107,6 +117,8 @@
           let
             instName = lib.removePrefix "opencrow-" instanceName;
             tokenGenerator = "opencrow-${instName}";
+            # Password login (file) instead of a prompted access-token generator.
+            usePassword = settings.matrixPasswordGenerator != null;
           in
           {
             services.opencrow.instances.${instName} = {
@@ -117,12 +129,21 @@
                 pkgs.curl
                 pkgs.jq
               ];
-              environment = settings.environment;
-              # The bot's own Matrix-token env file. Shared-secret env files are
-              # appended by the instance's extraModules (environmentFiles merges).
-              environmentFiles = [
+              environment =
+                settings.environment
+                // lib.optionalAttrs usePassword {
+                  OPENCROW_MATRIX_PASSWORD_FILE = "%d/matrix-password";
+                };
+              # Token path: the bot's own Matrix-token env file (shared-secret env
+              # files are appended by the instance's extraModules). Password path:
+              # the account password as a credential; opencrow mints the token.
+              environmentFiles = lib.optional (!usePassword) (
                 config.clan.core.vars.generators.${tokenGenerator}.files.envfile.path
-              ];
+              );
+              credentialFiles = lib.optionalAttrs usePassword {
+                matrix-password =
+                  config.clan.core.vars.generators.${settings.matrixPasswordGenerator}.files.password.path;
+              };
 
               extensions = {
                 # `web` skill is enabled by the upstream default
@@ -133,10 +154,10 @@
               piModels = settings.piModels;
             };
 
-            # Matrix secret token
-            clan.core.vars.generators.${tokenGenerator} = pinpox-utils.mkEnvGenerator [
-              "OPENCROW_MATRIX_ACCESS_TOKEN"
-            ];
+            # Prompted Matrix-token generator — only when not using password login.
+            clan.core.vars.generators = lib.optionalAttrs (!usePassword) {
+              ${tokenGenerator} = pinpox-utils.mkEnvGenerator [ "OPENCROW_MATRIX_ACCESS_TOKEN" ];
+            };
           };
       };
   };

@@ -60,7 +60,17 @@ let
         inherit flake;
         generator = a.keyGenerator;
       };
-      inherit (a) permissions;
+      # Plus universal self-introspection ($SYS.REQ.USER.INFO) and a reply inbox
+      # (_INBOX.>), so any principal can discover its own grant at runtime and do
+      # request/reply — defined once here, never per-principal.
+      permissions = a.permissions // {
+        publish = a.permissions.publish // {
+          allow = a.permissions.publish.allow ++ [ "$SYS.REQ.USER.INFO" ];
+        };
+        subscribe = a.permissions.subscribe // {
+          allow = a.permissions.subscribe.allow ++ [ "_INBOX.>" ];
+        };
+      };
     }) authorizations;
 in
 {

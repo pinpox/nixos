@@ -10,18 +10,19 @@ environment, so commands need no connection flags.
 ## What you're allowed to touch
 
 The broker enforces a per-persona ACL: subscribing or publishing to any subject
-outside your grant is rejected. Your allowed subjects are in your environment:
+outside your grant is rejected. Ask the broker what your grant is:
 
 ```bash
-echo "read:  $NATS_READ_SUBJECTS"
-echo "write: $NATS_WRITE_SUBJECTS"
+nats req '$SYS.REQ.USER.INFO' '' --raw
 ```
 
-Subjects may contain wildcards (`*` matches one token, `>` matches the rest).
+The JSON reply's `data.permissions` lists your subjects: `publish.allow` /
+`subscribe.allow` are what you may use; `publish.deny` / `subscribe.deny`
+override them. Subjects may contain wildcards (`*` = one token, `>` = the rest).
 
 ## Reading events
 
-Core NATS keeps no history — you only receive messages published *after* you
+Core NATS keeps no history — you only receive messages published _after_ you
 subscribe, so always bound the read with `--count` and/or `--wait`:
 
 ```bash
