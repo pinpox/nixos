@@ -43,6 +43,16 @@
       };
     };
 
+    # Retain the telemetry firehose so agents (e.g. the guard persona) can
+    # replay past events to debug the cluster. Without a stream nothing is
+    # kept — core NATS is live-only. Subjects must stay disjoint across streams.
+    roles.server.settings.streams.telemetry = {
+      subjects = [
+        "host.>"
+        "home.>"
+      ];
+    };
+
     # Every machine is a client: nats CLI + NATS_URL + the human pinpox login seed.
     roles.client.tags.all = { };
     roles.client.settings.loginUsers.pinpox = { };
