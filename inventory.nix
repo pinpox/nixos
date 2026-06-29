@@ -84,6 +84,15 @@ in
       # roles.spindle.machines.clementine.settings.host = "spindle.pablo.tools";
     };
 
+    # Collaborative web terminal: ttyd + dtach behind oauth2-proxy/Authelia.
+    # Visit https://term.pinpox.com/?arg=<id> to open/share a persistent
+    # session; bare URL spawns a fresh random one.
+    terminal = {
+      module.input = "self";
+      module.name = "@pinpox/terminal";
+      roles.default.machines.clementine.settings.domain = "term.pinpox.com";
+    };
+
     # Collects all "endpoint" exports from all services and generates a file
     # with CNAME entries.
     # The dm-dns services has an export of type "dataMesher" which signals "I

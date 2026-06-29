@@ -54,6 +54,13 @@ in
     email.domains = [ "*" ];
     setXauthrequest = true;
     reverseProxy = true;
+    # oauth2-proxy binds to 127.0.0.1 only; the sole client that can reach it
+    # is Caddy on loopback. Trust just loopback for X-Forwarded-* headers (also
+    # silences the unset-trustedProxyIP eval warning).
+    trustedProxyIP = [
+      "127.0.0.1/32"
+      "::1/128"
+    ];
     extraConfig = {
       skip-provider-button = true;
       # Authelia's prometheus client is registered with require_pkce = true,
@@ -63,6 +70,16 @@ in
       # Authelia's authorization_policies already restrict who can reach this
       # client; oauth2-proxy doesn't need to enforce its own allowlist.
     };
+  };
+
+  # oauth2-proxy does OIDC discovery against Authelia at startup and exits if it
+  # can't reach the issuer. Authelia restarts (e.g. when an OIDC client is
+  # added) take ~10s; without this, oauth2-proxy burns through systemd's default
+  # start limit (5 tries) and gives up before Authelia is back up. Slow the
+  # retries and disable the start limit so it keeps retrying until it succeeds.
+  systemd.services.oauth2-proxy = {
+    serviceConfig.RestartSec = "5s";
+    unitConfig.StartLimitIntervalSec = 0;
   };
 
   # Reverse proxy for the prometheus web UI. The pki clan service auto-issues
