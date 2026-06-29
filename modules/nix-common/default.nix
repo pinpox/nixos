@@ -69,7 +69,7 @@ in
     # git rev (only present on a committed tree), this is ALWAYS available —
     # even on a dirty tree — so the NATS nixos-reporter can always emit a flake
     # identifier. Read at runtime from /run/current-system/flake-narhash.
-    system.extraSystemBuilderCmds = ''
+    system.systemBuilderCommands = ''
       echo -n ${nixpkgs.lib.escapeShellArg (flake-self.narHash or "")} > $out/flake-narhash
     '';
     nix.registry.nixpkgs.flake = nixpkgs;
