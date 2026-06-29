@@ -19,6 +19,13 @@ let
   # Sanitize `:` (legal in Linux paths, awkward in LM Studio's UI) into `-`.
   sanitize = lib.replaceStrings [ ":" ] [ "-" ];
 
+  # Only store-pinned models (cmd carries `-m <store-path>`) can be shared with
+  # LM Studio. Lazily-downloaded `-hf` models have no store path at eval time —
+  # their GGUF only lands in llama.cpp's cache on first use — so skip them here.
+  storeModels = lib.filterAttrs (
+    _: m: builtins.match ".* -m ([^ ]+).*" m.cmd != null
+  ) config.services.llama-swap.settings.models;
+
   modelLinks = lib.mapAttrs' (id: m: {
     # Layout: ~/.lmstudio/models/llama-swap/<model-id>/<file>.gguf
     # The author/repo level is arbitrary as far as LM Studio is concerned —
@@ -26,7 +33,7 @@ let
     # the source obvious in LM Studio's model list.
     name = ".lmstudio/models/llama-swap/${sanitize id}/${stripHash (baseNameOf (ggufOf m.cmd))}";
     value.source = ggufOf m.cmd;
-  }) config.services.llama-swap.settings.models;
+  }) storeModels;
 in
 {
   # LM Studio scans ~/.lmstudio/models recursively. Only the leaf is a

@@ -2,9 +2,16 @@
   nixos-hardware,
   lib,
   pkgs,
+  config,
   mics-skills,
   ...
 }:
+let
+  llamaServer = lib.getExe' config.services.llama-swap.llama-server-package "llama-server";
+
+  # Strix Halo (gfx1151) flags shared by the lazy models below.
+  strixArgs = "-ngl 999 -fa on --no-mmap -c 65536 -np 1";
+in
 {
 
   imports = [
@@ -30,59 +37,30 @@
 
   networking.hostName = "mango";
 
-  # Strix Halo (Ryzen AI MAX+ 395) kernel tuning. The Radeon 8060S has no
-  # VRAM of its own; every GPU memory access is a DMA into system RAM. These
-  # three knobs are the community consensus for unified-memory tuning on
-  # gfx1151 — measured 5-12% throughput improvement on llama.cpp workloads
-  # (Lars Urban benchmarks, kyuz0/amd-strix-halo-toolboxes#66) plus capacity
-  # headroom to load models >50 GB.
+  # Strix Halo unified-memory tuning: IOMMU off + 124 GiB GTT/TTM ceiling.
   boot.kernelParams = [
-    # Disable the AMD IOMMU. On a unified-memory APU every GPU weight read
-    # is a DMA through the IOMMU page tables; bypassing translation saves
-    # 5-12% throughput. Cost: physical PCIe/Thunderbolt devices can DMA
-    # into arbitrary system RAM. Acceptable here (home desktop, controlled
-    # physical access; remote attacks are unaffected — IOMMU mediates only
-    # device-side DMA, not network traffic).
     "amd_iommu=off"
 
-    # Raise the amdgpu GTT pool (the chunk of system RAM exposed to the GPU
-    # as "VRAM") from the kernel default of ~62 GiB to 124 GiB. 126976 is
-    # MiB → 124 GiB, leaving 4 GiB for the OS. Required to load any model
-    # whose weights + KV cache exceed ~50 GiB (70B dense, 120B MoE, etc.).
     "amdgpu.gttsize=126976"
 
-    # Raise the TTM (kernel GPU memory manager) page pin limit to match the
-    # GTT ceiling above. Counted in 4 KiB pages: 32505856 × 4 KiB = 124 GiB.
-    # Without this, the GTT advertises 124 GiB but allocations start
-    # failing mid-load past ~half that — the two must move together.
     "ttm.pages_limit=32505856"
   ];
 
-  # Strix Halo (Radeon 8060S / gfx1151) tuning for the default served model.
-  # The spaces-os module bakes a Vulkan + BLAS llama-cpp (rocm explicitly off);
-  # RADV is the right backend for gfx1151 on dense models at this size, but
-  # the bare `llama-server -m … --port …` template leaves a few APU-specific
-  # knobs on the table:
-  #
-  #   -ngl 999     pin every layer to the GPU instead of relying on the
-  #                runtime's --fit auto-sizer; auto-fit is conservative when
-  #                multi-slot KV is reserved (see -np below).
-  #   -fa on       enable Flash Attention; on Vulkan/RDNA3.5 this is the
-  #                Wave32 FA path landed in llama.cpp b8460 — pure upside on
-  #                Strix Halo, and required to avoid a few long-input
-  #                Vulkan crashes the community has hit.
-  #   --no-mmap    bypass mmap'ing the GGUF. On a unified-memory APU mmap
-  #                defeats the GTT mapping and paging-through-CPU-pages tanks
-  #                throughput; explicit allocation lands the weights straight
-  #                into the GPU-accessible GTT pool.
-  #   -c 65536     65k single-stream context. spaces-os' default is 256k × 4
-  #                slots, which reserves a KV cache budget large enough to
-  #                make the auto-fitter hold back layers; 65k is more than
-  #                enough headroom for the chat/PWA workload here.
-  #   -np 1        one parallel slot. The PWA never fans out concurrent
-  #                streams to a single executor, and shrinking slots multiplies
-  #                the effective per-stream KV window we actually get.
-  services.llama-swap.modelExtraArgs."gemma4:12b-q8_0" = "-ngl 999 -fa on --no-mmap -c 65536 -np 1";
+  # Lazy HF models (downloaded on first use), added to the bundled small ones.
+  services.llama-swap.settings.models = {
+    # default model (inventory.nix)
+    "gemma4:12b-q8_0".cmd =
+      "${llamaServer} -hf unsloth/gemma-4-12b-it-GGUF --hf-file gemma-4-12b-it-Q8_0.gguf --port \${PORT} ${strixArgs}";
+
+    "gemma4:26b-a4b".cmd =
+      "${llamaServer} -hf unsloth/gemma-4-26B-A4B-it-GGUF --hf-file gemma-4-26B-A4B-it-UD-Q4_K_XL.gguf --port \${PORT} ${strixArgs}";
+
+    "ornith-1.0:35b-q4_k_m".cmd =
+      "${llamaServer} -hf deepreinforce-ai/Ornith-1.0-35B-GGUF --hf-file ornith-1.0-35b-Q4_K_M.gguf --port \${PORT} ${strixArgs}";
+
+    "supergemma4:26b-uncensored".cmd =
+      "${llamaServer} -hf Jiunsong/supergemma4-26b-uncensored-gguf-v2 --hf-file supergemma4-26b-uncensored-fast-v2-Q4_K_M.gguf --port \${PORT} ${strixArgs}";
+  };
 
   # Games
   programs.steam = {
@@ -97,10 +75,7 @@
   programs.gamemode = {
     enable = true;
     settings.custom = {
-      # Hold a Wayland idle-inhibit lock while a game is running so swayidle
-      # doesn't lock the screen during controller-only sessions. Run under a
-      # transient user unit so the end-hook can stop it cleanly without PID
-      # bookkeeping.
+      # Keep the screen awake while gaming.
       start = "${pkgs.systemd}/bin/systemd-run --user --unit=gaming-wlinhibit --collect ${pkgs.wlinhibit}/bin/wlinhibit";
       end = "${pkgs.systemd}/bin/systemctl --user stop gaming-wlinhibit";
     };
