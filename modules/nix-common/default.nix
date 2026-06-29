@@ -120,6 +120,7 @@ in
         trusted-public-keys = [
           "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
         ];
 
         # nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
@@ -128,6 +129,7 @@ in
           "https://cache.nixos.org"
           "https://nix-community.cachix.org"
           "https://cache.lounge.rocks/nix-cache"
+          "https://cache.numtide.com"
         ];
 
         trusted-substituters = [
