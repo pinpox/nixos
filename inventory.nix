@@ -253,6 +253,20 @@ in
       };
     };
 
+    # Identity-only user: IdP account, no Unix account on any machine
+    # (systemUser = false). No IdP groups, so no group-gated service admits
+    # them; the only thing davhau can reach is the collab terminal, granted
+    # explicitly via clientAccess.terminal below.
+    user-davhau = {
+      module.name = "users";
+      roles.default.tags.all = { };
+      roles.default.settings = {
+        user = "davhau";
+        systemUser = false;
+        identity.main = { };
+      };
+    };
+
     user-lislon = {
       module.name = "users";
       roles.default.machines.fichte = { };
@@ -298,6 +312,12 @@ in
         clientAccess = {
           grafana = [ "user:pinpox" ];
           prometheus = [ "user:pinpox" ];
+          # davhau is an identity-only user (no system account) granted the
+          # terminal and nothing else. Add more collaborators as "user:<name>".
+          terminal = [
+            "user:pinpox"
+            "user:davhau"
+          ];
         };
 
         # OIDC clients for non-clan-service consumers (miniflux, forgejo,
