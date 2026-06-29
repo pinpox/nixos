@@ -5,7 +5,7 @@ let
 in
 {
 
-  options.pinpox.services.pinpox-web.enable = mkEnableOption "Pipnox homepage";
+  options.pinpox.services.pinpox-web.enable = mkEnableOption "Pinpox homepage";
 
   config = mkIf cfg.enable {
     services.caddy = {
