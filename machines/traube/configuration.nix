@@ -32,8 +32,30 @@ in
   # Lock CPU governor to performance mode (avoid frequency scaling latency)
   powerManagement.cpuFreqGovernor = "performance";
 
+  # traube (Radxa Orion O6, CIX Sky1/CD8180) hard-freezes every ~2-3 days:
+  # unreachable over the network, no shutdown sequence, requires a physical
+  # power-cycle. Ruled out: OOM, thermal, disk I/O, and the known O6 SMMU
+  # evtq interrupt storm (its firmware precondition is present but the storm
+  # never fires here — IRQ 13 stays at 0, no C_BAD_STREAMID events). The
+  # remaining armed power-state hazard is cpuidle deep idle: DVFS is pinned
+  # (performance governor) and PCIe ASPM is off, but LPI-1/LPI-2 (deep
+  # power-down, heavily used) stay enabled — the classic ARM-SBC silent-freeze
+  # cause and immature on CIX PSCI firmware. Disable cpuidle so cores fall
+  # back to plain WFI; this is both the mitigation and the live test for the
+  # deep-idle hypothesis.
+  boot.kernelParams = [ "cpuidle.off=1" ];
+
   boot.kernel.sysctl = {
     "vm.swappiness" = 0;
+
+    # Make the next freeze self-record. The buddy hard-lockup detector is
+    # built in (CONFIG_HARDLOCKUP_DETECTOR_BUDDY) and active, but pseudo-NMI
+    # is not compiled in and nothing currently panics, so a wedged CPU leaves
+    # no trace. Panic on hard lockup so the backtrace is dumped to efi_pstore
+    # (survives the power-cycle, readable from /sys/fs/pstore afterwards).
+    # kernel.panic = 0 keeps the panic a HALT, not an auto-reboot.
+    "kernel.hardlockup_panic" = 1;
+    "kernel.panic" = 0;
   };
 
   # LLM endpoint the inventory's `pi` executor (services.pi-sessiond) talks
