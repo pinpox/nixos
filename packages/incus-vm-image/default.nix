@@ -4,6 +4,7 @@
   nixos,
   path,
   pinpox-keys,
+  nixos-facter,
 }:
 
 # Build a NixOS Incus VM image as a single package bundling the two artifacts
@@ -36,6 +37,9 @@ let
     networking.hostName = lib.mkForce "";
     services.cloud-init.enable = true;
     services.cloud-init.network.enable = false;
+
+    # nixos-facter CLI for hardware detection inside instances.
+    environment.systemPackages = [ nixos-facter ];
   };
   meta = "${sys.config.system.build.metadata}/${sys.config.image.filePath}";
   disk = "${sys.config.system.build.qemuImage}/nixos.qcow2";
