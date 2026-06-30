@@ -84,10 +84,6 @@
     spaces.url = "github:generational-infrastructure/spaces-os";
     spaces.inputs.nixpkgs.follows = "nixpkgs";
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
-    # NB: do NOT make spaces follow our llm-agents. spaces' pi-sessiond embeds
-    # pi's SDK and is pinned/tested against spaces' own pi (0.70.x, @mariozechner
-    # scope); our llm-agents is 0.78.x (@earendil-works), which the daemon's
-    # import can't resolve. Re-enable once spaces-os forward-ports to 0.78.x.
     spaces.inputs.llm-agents.follows = "llm-agents";
     spaces.inputs.home-manager.follows = "home-manager";
 
@@ -266,6 +262,7 @@
               mqtt2prometheus
               smartmon-script
               machine-report
+              config-hash
               woodpecker-pipeline
               manual
               ;
@@ -323,6 +320,31 @@
             ) self.nixosConfigurations
           )
       );
+
+      # Per-machine pure config hash: the store-hash of `system.build.toplevel`
+      # The writer is disabled here (pinpox.configHash.enable = false) so this
+      # computation never reads itself.
+      configHashes = nixpkgs.lib.mapAttrs (
+        _: cfg:
+        let
+          pure = cfg.extendModules {
+            modules = [
+              (
+                { lib, ... }:
+                {
+                  pinpox.configHash.enable = lib.mkForce false;
+                  system.configurationRevision = lib.mkForce null;
+                  system.systemBuilderCommands = lib.mkForce "";
+                  nix.registry = lib.mkForce { };
+                }
+              )
+            ];
+          };
+        in
+        builtins.substring 0 32 (
+          builtins.unsafeDiscardStringContext (baseNameOf pure.config.system.build.toplevel)
+        )
+      ) self.nixosConfigurations;
 
       # Each subdirectory in ./templates/<template-name> is a
       # template, which can be used for new proects with:

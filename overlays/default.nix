@@ -87,6 +87,7 @@ self: super: {
   smartmon-script = super.callPackage ../packages/smartmon-script { };
   noctalia-askpass = super.callPackage ../packages/noctalia-askpass { };
   machine-report = super.callPackage ../packages/machine-report { };
+  config-hash = super.callPackage ../packages/config-hash { };
 
   # Builder for NixOS Incus VM images as a single package (metadata + qcow2),
   # with sshd + pinpox keys baked in. Passed by value to the @pinpox/incus
