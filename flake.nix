@@ -235,7 +235,6 @@
         modules."@pinpox/nats-integrations" = ./clan-service-modules/nats-integrations;
         modules."@pinpox/opencrow" = ./clan-service-modules/opencrow;
         modules."@pinpox/matrix" = ./clan-service-modules/matrix;
-        modules."@pinpox/terminal" = ./clan-service-modules/terminal;
         inventory = import ./inventory.nix {
           inherit self;
           lib = nixpkgs.lib;

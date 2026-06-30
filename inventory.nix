@@ -84,15 +84,6 @@ in
       # roles.spindle.machines.clementine.settings.host = "spindle.pablo.tools";
     };
 
-    # Collaborative web terminal: ttyd + dtach behind oauth2-proxy/Authelia.
-    # Visit https://term.pinpox.com/?arg=<id> to open/share a persistent
-    # session; bare URL spawns a fresh random one.
-    terminal = {
-      module.input = "self";
-      module.name = "@pinpox/terminal";
-      roles.default.machines.clementine.settings.domain = "term.pinpox.com";
-    };
-
     # Collects all "endpoint" exports from all services and generates a file
     # with CNAME entries.
     # The dm-dns services has an export of type "dataMesher" which signals "I
@@ -253,20 +244,6 @@ in
       };
     };
 
-    # Identity-only user: IdP account, no Unix account on any machine
-    # (systemUser = false). No IdP groups, so no group-gated service admits
-    # them; the only thing davhau can reach is the collab terminal, granted
-    # explicitly via clientAccess.terminal below.
-    user-davhau = {
-      module.name = "users";
-      roles.default.tags.all = { };
-      roles.default.settings = {
-        user = "davhau";
-        systemUser = false;
-        identity.main = { };
-      };
-    };
-
     user-lislon = {
       module.name = "users";
       roles.default.machines.fichte = { };
@@ -312,12 +289,6 @@ in
         clientAccess = {
           grafana = [ "user:pinpox" ];
           prometheus = [ "user:pinpox" ];
-          # davhau is an identity-only user (no system account) granted the
-          # terminal and nothing else. Add more collaborators as "user:<name>".
-          terminal = [
-            "user:pinpox"
-            "user:davhau"
-          ];
         };
 
         # OIDC clients for non-clan-service consumers (miniflux, forgejo,
