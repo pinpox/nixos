@@ -5,6 +5,7 @@
 {
   pkgs,
   config,
+  flake-self,
   ...
 }:
 let
@@ -71,6 +72,25 @@ in
       {
         system.stateVersion = "26.05";
 
+        # Packages available in every session, built on the host at deploy time
+        # and consumed from the shared read-only store. The container carries no
+        # overlays of its own, so pull in the flake's default overlay to expose
+        # custom packages like omp (oh-my-pi).
+        nixpkgs.overlays = [ flake-self.overlays.default ];
+        environment.systemPackages = with pkgs; [
+          omp
+        ];
+
+        # Make `nix` + flakes usable in sessions. /nix/store here is a read-only
+        # bind mount, so the container can't build itself — it delegates to THIS
+        # host's nix-daemon over the bind-mounted socket (the host's allowed-users
+        # lets vu-term-* connect). Caches/substituters are the host daemon's, so
+        # nothing cache-related belongs here.
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+
         networking.useHostResolvConf = false;
         networking.nameservers = [
           "1.1.1.1"
@@ -122,6 +142,17 @@ in
         };
       };
   };
+
+  # The term container shares this host's /nix/store read-only and delegates all
+  # nix operations to this host's daemon over the bind-mounted socket. Its users
+  # appear here as nss-systemd virtual users (vu-term-<container-uid>); allow them
+  # so flakes/builds/substitution work inside sessions (collab=1000 ->
+  # vu-term-1000, root -> vu-term-0). They stay UNtrusted (trusted-users is
+  # unchanged), so they only ever use this host's configured substituters.
+  nix.settings.allowed-users = [
+    "vu-term-0"
+    "vu-term-1000"
+  ];
 
   # Masquerade the container's private subnet so the collab shell has egress.
   networking.nat = {
