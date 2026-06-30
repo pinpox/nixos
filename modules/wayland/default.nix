@@ -31,7 +31,17 @@ in
         "wlr"
         "gtk"
       ];
-      wlr.enable = true;
+      wlr = {
+        enable = true;
+        # xdph 0.8 negotiates WINDOW+MONITOR capture, which makes the built-in
+        # "default" chooser skip slurp (chooser.c: type_mask != MONITOR) and
+        # fall through to wofi/rofi/bemenu/... none of which are installed ->
+        # "no output found". Forcing the simple chooser runs slurp unconditionally.
+        settings.screencast = {
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
+        };
+      };
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
