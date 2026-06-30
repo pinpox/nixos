@@ -235,6 +235,7 @@
         modules."@pinpox/nats-integrations" = ./clan-service-modules/nats-integrations;
         modules."@pinpox/opencrow" = ./clan-service-modules/opencrow;
         modules."@pinpox/matrix" = ./clan-service-modules/matrix;
+        modules."@pinpox/incus" = ./clan-service-modules/incus.nix;
         inventory = import ./inventory.nix {
           inherit self;
           lib = nixpkgs.lib;
@@ -268,6 +269,11 @@
               woodpecker-pipeline
               manual
               ;
+            # NixOS Incus VM base image: NixOS unstable + sshd + pinpox keys +
+            # cloud-init (sets the guest hostname from the instance name).
+            # Referenced by the @pinpox/incus `localImages` setting. Build
+            # custom images with `pkgs.mkIncusVmImage { modules = [ ... ]; }`.
+            incus-nixos-unstable-cloud-init = mkIncusVmImage { };
           }
         )
         // {

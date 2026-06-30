@@ -21,6 +21,7 @@
     pkgs.pi
     pkgs.curl
     pkgs.jq
+    pkgs.incus.client
     mics-skills.packages.${pkgs.stdenv.hostPlatform.system}.db-cli
   ];
 

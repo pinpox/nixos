@@ -96,6 +96,7 @@ in
         "Bash(browser-cli:*)"
         "Bash(browser-cli-firefox:*)"
         "Bash(browser-cli-server:*)"
+        "Bash(incus:*)"
         "Read(/tmp/**)"
       ];
     };
@@ -124,5 +125,9 @@ in
       After the browser is running, use `browser-cli` commands as documented
       in the browser-cli skill.
     '';
+
+    # NixOS-module testing on the mango Incus host (repo is the source of truth).
+    home.file.".claude/skills/incus-testing/SKILL.md".source =
+      "${flake-self}/skills/incus-testing/SKILL.md";
   };
 }

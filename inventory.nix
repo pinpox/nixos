@@ -57,6 +57,27 @@ in
       roles.server.machines.clementine = { };
     };
 
+    incus = {
+      module.input = "self";
+      module.name = "@pinpox/incus";
+      roles.peer.machines.mango.settings = {
+        # Attach instances to the home LAN
+        lanInterface = "enp191s0";
+        # NixOS VM images imported as local:<name>. Value = a package from
+        # pkgs.mkIncusVmImage (sshd + keys baked in); `incus launch
+        # local:nixos-unstable-cloud-init foo --vm` is SSH-reachable out of the
+        # box. `default` is a second alias for the same image so `incus launch
+        # default foo --vm` works and it reads as the default in the web UI.
+        # Build custom ones with `pkgs.mkIncusVmImage { modules = [...]; }`.
+        localImages.nixos-unstable-cloud-init = self.packages.x86_64-linux.incus-nixos-unstable-cloud-init;
+        localImages.default = self.packages.x86_64-linux.incus-nixos-unstable-cloud-init;
+        webui = {
+          enable = true;
+          host = "boxes.pin";
+        };
+      };
+    };
+
     # A service, which exports a endpoint: "music"
     # The goal is to be able to access https://music.pin from everywhere in the
     # clan and reach the navidrome server
@@ -289,6 +310,7 @@ in
         clientAccess = {
           grafana = [ "user:pinpox" ];
           prometheus = [ "user:pinpox" ];
+          incus = [ "group:admins" ];
         };
 
         # OIDC clients for non-clan-service consumers (miniflux, forgejo,
@@ -344,6 +366,47 @@ in
             ];
             token_endpoint_auth_method = "none";
           };
+          # Incus web UI (boxes.pin). Public client; Incus uses PKCE
+          # for the UI and the device-code flow for the CLI. Needs a JWT
+          # access token (access_token_signed_response_alg) so incusd can
+          # verify it offline, and the audience must match incus' oidc.audience.
+          #
+          # `lifespan = "incus"` → long-lived access token (see extraSettings
+          # below). Prevents the access token expiring mid-session, which made
+          # incusd fire concurrent refreshes on a one-time-use refresh token;
+          # the losers retried in a storm and tripped Authelia's rate limiter
+          # ("temporarily_unavailable" at the token endpoint).
+          incus = {
+            client_name = "Incus";
+            public = true;
+            require_pkce = false;
+            pkce_challenge_method = "";
+            consent_mode = "implicit";
+            lifespan = "incus";
+            redirect_uris = [ "https://boxes.pin/oidc/callback" ];
+            audience = [ "https://boxes.pin" ];
+            scopes = [
+              "openid"
+              "offline_access"
+            ];
+            response_types = [ "code" ];
+            grant_types = [
+              "authorization_code"
+              "refresh_token"
+            ];
+            access_token_signed_response_alg = "RS256";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
+          };
+        };
+
+        # Long access-token lifespan for the incus client so it doesn't expire
+        # mid-session and trigger the concurrent refresh-token race/storm.
+        # Merged (deep, different subkey) alongside the generated oidc.clients.
+        extraSettings.identity_providers.oidc.lifespans.custom.incus = {
+          access_token = "12h";
+          refresh_token = "24h";
+          id_token = "12h";
         };
       };
     };

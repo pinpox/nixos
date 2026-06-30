@@ -88,6 +88,13 @@ self: super: {
   noctalia-askpass = super.callPackage ../packages/noctalia-askpass { };
   machine-report = super.callPackage ../packages/machine-report { };
 
+  # Builder for NixOS Incus VM images as a single package (metadata + qcow2),
+  # with sshd + pinpox keys baked in. Passed by value to the @pinpox/incus
+  # `localImages` setting. `pkgs.mkIncusVmImage { modules = [ ... ]; }`.
+  mkIncusVmImage = super.callPackage ../packages/incus-vm-image {
+    inherit (inputs) pinpox-keys;
+  };
+
   # Use custom neovim in standalone flake
   neovim = inputs.pinpox-neovim.packages.${super.stdenv.hostPlatform.system}.pinpox-neovim;
 
