@@ -1,10 +1,10 @@
 ---
-title: { { title } }
-created: { { format-date now } }
+title: {{title}}
+created: {{format-date now}}
 visibility: private
 language: de
 tags:
-  - { { slug title } }
+  - {{slug title}}
   - journal
 ---
 

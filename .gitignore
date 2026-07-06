@@ -25,3 +25,6 @@ tags.lock
 tags.temp
 .direnv
 .env
+
+# Claude harness local settings
+.claude

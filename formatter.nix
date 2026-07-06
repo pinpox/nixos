@@ -23,6 +23,11 @@ forAllSystems (
         "*.json"
         "*.toml"
       ];
+      # zk note templates use Handlebars ({{ }}) tags that prettier mangles.
+      prettier.excludes = [
+        "home-manager/modules/zk/default.md"
+        "home-manager/modules/zk/journal.md"
+      ];
       shellcheck.includes = [ "*.sh" ];
       shfmt.includes = [ "*.sh" ];
     };
