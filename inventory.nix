@@ -96,6 +96,12 @@ in
       roles.default.machines.kfbox = { };
     };
 
+    vikunja = {
+      module.input = "self";
+      module.name = "@pinpox/vikunja";
+      roles.default.machines.porree = { };
+    };
+
     tangled = {
       module.input = "self";
       module.name = "@pinpox/tangled";
@@ -242,6 +248,7 @@ in
             "miniflux-users"
             "opencloud-users"
             "paperless-users"
+            "vikunja-users"
           ];
         };
       };
@@ -311,8 +318,13 @@ in
           grafana = [ "user:pinpox" ];
           prometheus = [ "user:pinpox" ];
           incus = [ "group:admins" ];
+          vikunja = [
+            "user:pinpox"
+            "group:vikunja-users"
+          ];
         };
 
+        pkceExemptClients = [ "vikunja" ];
         # OIDC clients for non-clan-service consumers (miniflux, forgejo,
         # opencloud are still NixOS modules, not clan services, so they
         # can't export auth.client themselves yet).

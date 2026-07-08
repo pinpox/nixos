@@ -82,7 +82,6 @@ in
       calibre-web.enable = false;
       gitea.enable = true;
       owncast.enable = false;
-      vikunja.enable = false;
       wastebin.enable = true;
 
     };

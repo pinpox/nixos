@@ -222,6 +222,7 @@
         # Register custom clan service modules
         # desktop, localsend, wireguard-star moved to clan-community
         modules."@pinpox/navidrome" = ./clan-service-modules/navidrome.nix;
+        modules."@pinpox/vikunja" = ./clan-service-modules/vikunja;
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
