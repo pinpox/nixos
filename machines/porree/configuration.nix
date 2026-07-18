@@ -35,9 +35,6 @@
     "NTFY_PASS"
   ];
 
-  # Per-user authelia password generators are now auto-created by the
-  # authelia clan service based on auth.user exports from user instances.
-
   services.qemuGuest.enable = true;
   services.tailscale.enable = true;
 
@@ -87,8 +84,6 @@
       pinpox-web.enable = true;
 
       opencrow.enable = true;
-      # Authelia is now a clan service (clan-service-modules/authelia).
-      # Configuration is in inventory.nix.
       vaultwarden.enable = true;
       ntfy-sh.enable = true;
 

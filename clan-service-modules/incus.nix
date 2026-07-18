@@ -116,8 +116,8 @@
           oidc = {
             issuer = lib.mkOption {
               type = lib.types.str;
-              default = "https://auth.pablo.tools";
-              description = "OIDC issuer (Authelia).";
+              default = "https://id.pablo.tools";
+              description = "OIDC issuer (Pocket ID).";
             };
             clientId = lib.mkOption {
               type = lib.types.str;
@@ -129,8 +129,8 @@
               default = "";
               defaultText = lib.literalExpression ''"https://''${webui.host}"'';
               description = ''
-                Expected token audience; must match the Authelia client's
-                `audience`. Defaults to the web UI URL when empty.
+                Expected token audience; must match the Pocket ID client's
+                audience (set in the Pocket ID UI). Defaults to the web UI URL when empty.
               '';
             };
           };

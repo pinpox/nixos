@@ -2,7 +2,6 @@
   settings,
   roles,
   meta,
-  oidcGenerator,
 }:
 {
   config,
@@ -20,23 +19,6 @@ in
   # SMTP password file
   clan.core.vars.generators."grafana".prompts.smtp-password.persist = true;
 
-  # OIDC client secret — declared here so the producing host (where grafana
-  # runs) has the files. The same generator definition is also exported via
-  # auth.varsGenerator so the authelia host declares it too (share=true).
-  # runtimeInputs is added here (not in the export) because pkgs is only
-  # available inside nixosModule, not at inventory-eval time.
-  clan.core.vars.generators."authelia-oidc-${oidc.clientId}" = lib.mkIf oidc.enable (
-    oidcGenerator
-    // {
-      runtimeInputs = with pkgs; [
-        coreutils
-        openssl
-        authelia
-        gnused
-      ];
-    }
-  );
-
   # Grafana secret key for signing
   clan.core.vars.generators."grafana-secret-key" = {
     files."secret-key".owner = "grafana";
@@ -53,6 +35,17 @@ in
   services.caddy = {
     enable = true;
     virtualHosts."${settings.domain}".extraConfig = "reverse_proxy 127.0.0.1:9005";
+  };
+
+  # Grafana's OIDC client secret is published by the Pocket ID reconciler at
+  # /run/pocket-id-clients/<id>/secret (root:pocket-id-clients 0640). Load it
+  # as a systemd credential and wait until the reconciler has written it.
+  systemd.services.grafana = lib.mkIf oidc.enable {
+    after = [ "pocket-id-clients.service" ];
+    requires = [ "pocket-id-clients.service" ];
+    serviceConfig.LoadCredential = [
+      "oidc-secret:/run/pocket-id-clients/${oidc.clientId}/secret"
+    ];
   };
 
   # Graphana fronend
@@ -92,7 +85,7 @@ in
       # local users via signup, redirect straight to the OIDC provider.
       auth = {
         disable_login_form = true;
-        signout_redirect_url = "${oidc.issuer}/logout";
+        signout_redirect_url = "${oidc.issuer}/api/oidc/end-session";
         # Self-healing OIDC user linking: if user_auth has no row for the
         # OIDC subject (e.g. fresh DB restore, or Authelia rebuilt and the
         # sub UUID changed), Grafana falls back to matching by email and
@@ -114,12 +107,10 @@ in
         icon = "signin";
         auto_login = true;
         client_id = oidc.clientId;
-        client_secret = "$__file{${
-          config.clan.core.vars.generators."authelia-oidc-${oidc.clientId}".files.client_secret.path
-        }}";
+        client_secret = "$__file{/run/credentials/grafana.service/oidc-secret}";
         scopes = "openid profile email groups";
         empty_scopes = false;
-        auth_url = "${oidc.issuer}/api/oidc/authorization";
+        auth_url = "${oidc.issuer}/authorize";
         token_url = "${oidc.issuer}/api/oidc/token";
         api_url = "${oidc.issuer}/api/oidc/userinfo";
         login_attribute_path = "preferred_username";

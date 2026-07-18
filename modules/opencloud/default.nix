@@ -27,8 +27,8 @@ in
 
     oidcIssuer = mkOption {
       type = types.str;
-      default = "https://auth.pablo.tools";
-      description = "OIDC issuer URL (Authelia)";
+      default = "https://id.pablo.tools";
+      description = "OIDC issuer URL (Pocket ID)";
     };
 
     oidcClientId = mkOption {

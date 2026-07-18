@@ -2,7 +2,6 @@
   settings,
   roles,
   meta,
-  prometheusOidcGenerator,
 }:
 {
   lib,
@@ -23,17 +22,19 @@ in
     "RESTIC_REPOSITORY"
   ];
 
-  # OIDC client secret generator — declared here so the producing host has the
-  # files. The same definition is exported via auth.varsGenerator so the
-  # authelia host also declares it (share=true). runtimeInputs added here
-  # because pkgs isn't available at inventory-eval time.
-  clan.core.vars.generators."authelia-oidc-prometheus" = prometheusOidcGenerator // {
+  # oauth2-proxy cookie secret. Pocket ID only issues the OIDC *client* secret
+  # (fetched from /run/pocket-id-clients/prometheus/secret); the cookie secret
+  # is unrelated and generated locally here.
+  clan.core.vars.generators."prometheus-oauth2-cookie" = {
+    files.cookie-secret = { };
     runtimeInputs = with pkgs; [
       coreutils
       openssl
-      authelia
-      gnused
     ];
+    script = ''
+      mkdir -p $out
+      openssl rand -hex 16 | tr -d '\n' > $out/cookie-secret
+    '';
   };
 
   # oauth2-proxy sits between Caddy and Prometheus and handles the OIDC
@@ -44,8 +45,10 @@ in
     enable = true;
     provider = "oidc";
     clientID = "prometheus";
-    keyFile = config.clan.core.vars.generators."authelia-oidc-prometheus".files.envfile.path;
-    oidcIssuerUrl = "https://auth.pablo.tools";
+    clientSecretFile = "/run/pocket-id-clients/prometheus/secret";
+    cookie.secretFile =
+      config.clan.core.vars.generators."prometheus-oauth2-cookie".files.cookie-secret.path;
+    oidcIssuerUrl = "https://id.pablo.tools";
     redirectURL = "https://${settings.domain}/oauth2/callback";
     upstream = [ "http://127.0.0.1:9090" ];
     httpAddress = "http://127.0.0.1:4180";
@@ -80,6 +83,10 @@ in
   systemd.services.oauth2-proxy = {
     serviceConfig.RestartSec = "5s";
     unitConfig.StartLimitIntervalSec = 0;
+    # The OIDC client secret is materialised by the Pocket ID reconciler;
+    # LoadCredential fails if the file is missing, so wait for it.
+    after = [ "pocket-id-clients.service" ];
+    requires = [ "pocket-id-clients.service" ];
   };
 
   # Reverse proxy for the prometheus web UI. The pki clan service auto-issues

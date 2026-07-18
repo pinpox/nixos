@@ -52,22 +52,6 @@
         mkExports,
         ...
       }:
-      let
-        # Shared OIDC secret generator for Authelia (pkgs-free; runtimeInputs added per host).
-        oidcGenerator = {
-          share = true;
-          files.client_secret_hash = { };
-          files.envfile.mode = "0400";
-          script = ''
-            mkdir -p $out
-            SECRET="$(openssl rand -hex 32)"
-            authelia crypto hash generate argon2 --password "$SECRET" \
-              | sed 's/^Digest: //' > $out/client_secret_hash
-            printf 'VIKUNJA_AUTH_OPENID_PROVIDERS_AUTHELIA_CLIENTSECRET=%s\n' "$SECRET" \
-              > $out/envfile
-          '';
-        };
-      in
       {
         exports = mkExports {
           endpoints.hosts = [ settings.host ];
@@ -83,8 +67,6 @@
             ];
             public = false;
           };
-          # Authelia declares this too (share = true); secrets read as root, no owner needed.
-          auth.varsGenerator = oidcGenerator;
         };
 
         nixosModule =
@@ -94,16 +76,6 @@
             ...
           }:
           {
-            # Declared here too so the vikunja host generates the files (needs pkgs).
-            clan.core.vars.generators."authelia-oidc-${settings.oidc.clientId}" = oidcGenerator // {
-              runtimeInputs = with pkgs; [
-                coreutils
-                openssl
-                authelia
-                gnused
-              ];
-            };
-
             # Reverse proxy; pki injects TLS for the .pin endpoint.
             services.caddy = {
               enable = true;

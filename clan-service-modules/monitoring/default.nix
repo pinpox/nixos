@@ -68,30 +68,6 @@
         mkExports,
         ...
       }:
-      let
-
-        # TODO The generator shoudl be independeat of authelia or kanidm. Use a dependant one for authelia to create the hash
-        # TODO maybe we do not need a generato cofig at all, have a default?
-
-        # Generator definition without runtimeInputs (pkgs isn't available
-        # at inventory-eval time). Each nixosModule that declares this
-        # generator adds runtimeInputs locally where pkgs IS available.
-        oidcGenerator = lib.optionalAttrs settings.oidc.enable {
-          share = true;
-          files.client_secret = {
-            owner = "grafana";
-            group = "authelia-main";
-            mode = "0440";
-          };
-          files.client_secret_hash.owner = "authelia-main";
-          script = ''
-            mkdir -p $out
-            openssl rand -hex 32 > $out/client_secret
-            authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
-              | sed 's/^Digest: //' > $out/client_secret_hash
-          '';
-        };
-      in
       {
         exports = mkExports (
           {
@@ -110,7 +86,6 @@
               ];
               public = false;
             };
-            auth.varsGenerator = oidcGenerator;
           }
         );
         nixosModule = import ./grafana.nix {
@@ -118,7 +93,6 @@
             settings
             roles
             meta
-            oidcGenerator
             ;
         };
       };
@@ -178,35 +152,6 @@
         mkExports,
         ...
       }:
-      let
-        # oauth2-proxy OIDC generator definition (without runtimeInputs —
-        # added by each nixosModule where pkgs is available).
-        # Produces: client_secret (raw), client_secret_hash (argon2 for
-        # authelia), envfile (oauth2-proxy env with client+cookie secrets).
-        prometheusOidcGenerator = {
-          share = true;
-          files.client_secret = {
-            owner = "oauth2_proxy";
-            group = "authelia-main";
-            mode = "0440";
-          };
-          files.client_secret_hash.owner = "authelia-main";
-          files.envfile = {
-            owner = "oauth2_proxy";
-            mode = "0400";
-          };
-          script = ''
-            mkdir -p $out
-            CLIENT_SECRET=$(openssl rand -hex 32)
-            COOKIE_SECRET=$(openssl rand -hex 16)
-            printf '%s' "$CLIENT_SECRET" > $out/client_secret
-            authelia crypto hash generate argon2 --password "$CLIENT_SECRET" \
-              | sed 's/^Digest: //' > $out/client_secret_hash
-            printf 'OAUTH2_PROXY_CLIENT_SECRET=%s\nOAUTH2_PROXY_COOKIE_SECRET=%s\n' \
-              "$CLIENT_SECRET" "$COOKIE_SECRET" > $out/envfile
-          '';
-        };
-      in
       {
         exports = mkExports (
           {
@@ -225,7 +170,6 @@
               ];
               public = false;
             };
-            auth.varsGenerator = prometheusOidcGenerator;
           }
         );
         nixosModule = import ./prometheus.nix {
@@ -233,7 +177,6 @@
             settings
             roles
             meta
-            prometheusOidcGenerator
             ;
         };
       };

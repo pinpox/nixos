@@ -240,15 +240,6 @@ in
       roles.default.settings = {
         user = "pinpox";
         share = true;
-        identity.main = {
-          email = "mail@pablo.tools";
-          groups = [
-            "admins"
-            "users"
-            "miniflux-users"
-            "vikunja-users"
-          ];
-        };
       };
       roles.default.extraModules = [ ./users/pinpox.nix ];
     };
@@ -259,7 +250,6 @@ in
       roles.default.settings = {
         user = "lislon";
         share = true;
-        identity.main = { };
       };
     };
 
@@ -277,76 +267,32 @@ in
       roles.mobile.tags.mobile = { };
     };
 
-    main = {
+    pocket-id = {
       module.input = "clan-community";
-      module.name = "authelia";
+      module.name = "pocket-id";
       roles.default.machines.porree.settings = {
-        publicHost = "auth.pablo.tools";
-        domain = "pablo.tools";
-
-        # Restrict these clients to pinpox only.
-        # Unlisted clients use the default: any authenticated user.
-        clientAccess = {
-          grafana = [ "user:pinpox" ];
-          prometheus = [ "user:pinpox" ];
-          incus = [ "group:admins" ];
-          vikunja = [
-            "user:pinpox"
-            "group:vikunja-users"
-          ];
-        };
-
-        pkceExemptClients = [ "vikunja" ];
+        publicHost = "id.pablo.tools";
 
         extraClients = {
-          forgejo = {
-            client_name = "Forgejo";
-            authorization_policy = "two_factor";
-            require_pkce = true;
-            pkce_challenge_method = "S256";
-            redirect_uris = [ "https://git.pinpox.com/user/oauth2/authelia/callback" ];
-            scopes = [
-              "openid"
-              "email"
-              "profile"
-              "groups"
-            ];
-            response_types = [ "code" ];
-            grant_types = [ "authorization_code" ];
-            token_endpoint_auth_method = "client_secret_basic";
+          # miniflux (kfbox, off-host): public + PKCE client, so there is no
+          # client secret to distribute cross-host. Miniflux always sends PKCE
+          # (S256) and runs fine with an empty secret.
+          miniflux = {
+            name = "Miniflux";
+            isPublic = true;
+            callbackURLs = [ "https://news.0cx.de/oauth2/oidc/callback" ];
           };
 
+          # incus (mango, off-host): public client. incusd validates the access
+          # token audience, which the reconciler can't set — after first deploy
+          # set this client's Audience to https://boxes.pin in the Pocket ID UI.
+          # PKCE disabled to match incus' flow.
           incus = {
-            client_name = "Incus";
-            public = true;
-            require_pkce = false;
-            pkce_challenge_method = "";
-            consent_mode = "implicit";
-            lifespan = "incus";
-            redirect_uris = [ "https://boxes.pin/oidc/callback" ];
-            audience = [ "https://boxes.pin" ];
-            scopes = [
-              "openid"
-              "offline_access"
-            ];
-            response_types = [ "code" ];
-            grant_types = [
-              "authorization_code"
-              "refresh_token"
-            ];
-            access_token_signed_response_alg = "RS256";
-            userinfo_signed_response_alg = "none";
-            token_endpoint_auth_method = "none";
+            name = "Incus";
+            isPublic = true;
+            pkceEnabled = false;
+            callbackURLs = [ "https://boxes.pin/oidc/callback" ];
           };
-        };
-
-        # Long access-token lifespan for the incus client so it doesn't expire
-        # mid-session and trigger the concurrent refresh-token race/storm.
-        # Merged (deep, different subkey) alongside the generated oidc.clients.
-        extraSettings.identity_providers.oidc.lifespans.custom.incus = {
-          access_token = "12h";
-          refresh_token = "24h";
-          id_token = "12h";
         };
       };
     };
@@ -377,8 +323,9 @@ in
       roles.grafana.machines.porree.settings = {
         oidc = {
           enable = true;
-          issuer = "https://auth.pablo.tools";
+          issuer = "https://id.pablo.tools";
           clientId = "grafana";
+          providerName = "Pocket ID";
         };
       };
 
