@@ -142,15 +142,6 @@ in
         redir https://pablo.tools{uri} permanent
       '';
 
-      # Camera (read-only) stream - protected by Authelia
-      "3dprint.pablo.tools".extraConfig = ''
-        forward_auth http://127.0.0.1:9091 {
-          uri /api/authz/forward-auth
-          copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-        }
-        reverse_proxy 192.168.2.121:8081
-      '';
-
       # Notifications API
       "notify.pablo.tools".extraConfig = ''
         reverse_proxy 127.0.0.1:11000
