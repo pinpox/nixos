@@ -142,17 +142,6 @@ in
         redir https://pablo.tools{uri} permanent
       '';
 
-      # Homepage (dev) - protected by Authelia
-      "beta.pablo.tools".extraConfig = ''
-        forward_auth http://127.0.0.1:9091 {
-          uri /api/authz/forward-auth
-          copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-        }
-        root * /var/www/pablo-tools-beta
-        file_server
-        encode zstd gzip
-      '';
-
       # Camera (read-only) stream - protected by Authelia
       "3dprint.pablo.tools".extraConfig = ''
         forward_auth http://127.0.0.1:9091 {
