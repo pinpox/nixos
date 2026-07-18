@@ -254,23 +254,6 @@ in
       roles.default.extraModules = [ ./users/pinpox.nix ];
     };
 
-    # Identity-only user: IdP account but no Unix account
-    user-berber = {
-      module.name = "users";
-      roles.default.tags.all = { };
-      roles.default.settings = {
-        user = "berber";
-        systemUser = false;
-        identity.main = {
-          groups = [
-            "users"
-            "opencloud-users"
-            "miniflux-users"
-          ];
-        };
-      };
-    };
-
     user-lislon = {
       module.name = "users";
       roles.default.machines.fichte = { };
