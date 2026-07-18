@@ -47,12 +47,22 @@ writeShellApplication {
     mkfifo -m 600 "$FIFO"
     trap 'rm -f "$FIFO"' EXIT
 
-    # Ask noctalia to show the password dialog. Run synchronously: ipc call
-    # returns immediately after the plugin dispatch, so a non-zero exit here
-    # means there is no running noctalia-shell instance (or its store path
-    # diverged from this derivation's). Without this check, `cat $FIFO` below
-    # would block forever waiting for a writer that will never appear.
-    if ! noctalia-shell ipc call plugin:noctalia-askpass prompt "$PROMPT" "$CALLER" "$FIFO"; then
+    # Ask noctalia to show the password dialog. quickshell keys IPC on the
+    # config (store) path, so after a rebuild this freshly-installed askpass
+    # (new store path) can no longer reach a still-running old instance via the
+    # default path-based lookup. Discover the live process and target it by PID
+    # instead, which works across store-path drift.
+    NOCTALIA_PID=$(pgrep -f 'quickshell.*noctalia-shell' | head -n1 || true)
+    if [ -z "$NOCTALIA_PID" ]; then
+      echo "noctalia-askpass: no running noctalia-shell instance found" >&2
+      exit 1
+    fi
+
+    # Run synchronously: ipc call returns immediately after the plugin
+    # dispatch, so a non-zero exit here means the instance vanished. Without
+    # this check, `cat $FIFO` below would block forever waiting for a writer
+    # that will never appear.
+    if ! noctalia-shell ipc --pid "$NOCTALIA_PID" call plugin:noctalia-askpass prompt "$PROMPT" "$CALLER" "$FIFO"; then
       echo "noctalia-askpass: noctalia-shell IPC failed; is noctalia-shell running and matching this derivation?" >&2
       exit 1
     fi
