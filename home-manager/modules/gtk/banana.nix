@@ -6,6 +6,7 @@
 {
   config = {
     home.pointerCursor = {
+      enable = true;
       name = "Banana";
       size = 32;
       package = pkgs.banana-cursor;
