@@ -10,7 +10,7 @@ let
 
   # Pin Nextcloud major version.
   # Refer to upstream docs for updating major versions
-  package = pkgs.nextcloud33;
+  package = pkgs.nextcloud34;
 
 in
 {
