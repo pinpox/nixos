@@ -6,6 +6,7 @@
   ...
 }:
 {
+hardware.xpadneo.enable = true;
 
   imports = [
     ./ollama-local.nix
