@@ -7,7 +7,6 @@
 with lib;
 let
   cfg = config.pinpox.services.miniflux;
-  oidcSecretPath = config.clan.core.vars.generators."miniflux-oidc".files.client_secret.path;
 in
 {
 
@@ -31,33 +30,11 @@ in
       '';
     };
 
-    clan.core.vars.generators."miniflux-oidc" = {
-      share = true;
-      files.client_secret = { };
-      files.client_secret_hash = { };
-      runtimeInputs = with pkgs; [
-        coreutils
-        openssl
-        authelia
-        gnused
-      ];
-      script = ''
-        mkdir -p $out
-        openssl rand -hex 32 > $out/client_secret
-        authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
-          | sed 's/^Digest: //' > $out/client_secret_hash
-      '';
-    };
-
     services.caddy = {
       enable = true;
       virtualHosts."news.0cx.de".extraConfig =
         "reverse_proxy ${config.services.miniflux.config.LISTEN_ADDR}";
     };
-
-    systemd.services.miniflux.serviceConfig.LoadCredential = [
-      "oauth2_client_secret_file:${oidcSecretPath}"
-    ];
 
     services.miniflux = {
       enable = true;
@@ -68,9 +45,8 @@ in
         LISTEN_ADDR = "127.0.0.1:8787";
         OAUTH2_PROVIDER = "oidc";
         OAUTH2_CLIENT_ID = "miniflux";
-        OAUTH2_CLIENT_SECRET_FILE = "/run/credentials/miniflux.service/oauth2_client_secret_file";
         OAUTH2_REDIRECT_URL = "https://news.0cx.de/oauth2/oidc/callback";
-        OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://auth.pablo.tools";
+        OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://id.pablo.tools";
         OAUTH2_OIDC_PROVIDER_NAME = "pablo.tools";
       };
       adminCredentialsFile = config.clan.core.vars.generators."miniflux".files."credentials".path;

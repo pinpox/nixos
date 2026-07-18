@@ -38,27 +38,6 @@
   # Per-user authelia password generators are now auto-created by the
   # authelia clan service based on auth.user exports from user instances.
 
-  # OIDC client secret for miniflux (generated here, shared to kfbox).
-  # client_secret      → raw value for the miniflux OIDC client side
-  # client_secret_hash → argon2 hash for the Authelia client_secret_file
-  clan.core.vars.generators."miniflux-oidc" = {
-    share = true;
-    files.client_secret.owner = "authelia-main";
-    files.client_secret_hash.owner = "authelia-main";
-    runtimeInputs = with pkgs; [
-      coreutils
-      openssl
-      authelia
-      gnused
-    ];
-    script = ''
-      mkdir -p $out
-      openssl rand -hex 32 > $out/client_secret
-      authelia crypto hash generate argon2 --password "$(cat $out/client_secret)" \
-        | sed 's/^Digest: //' > $out/client_secret_hash
-    '';
-  };
-
   # OIDC client secret for forgejo (generated here, shared to forgejo host).
   # client_secret      → raw value for the forgejo OIDC client side
   # client_secret_hash → argon2 hash for the Authelia client_secret_file

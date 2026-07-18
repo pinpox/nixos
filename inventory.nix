@@ -298,19 +298,10 @@ in
         };
 
         pkceExemptClients = [ "vikunja" ];
-        # OIDC clients for non-clan-service consumers (miniflux, forgejo,
-        # opencloud are still NixOS modules, not clan services, so they
-        # can't export auth.client themselves yet).
+        # OIDC clients for non-clan-service consumers (forgejo, opencloud are
+        # still NixOS modules, not clan services, so they can't export
+        # auth.client themselves yet).
         extraClients = {
-          miniflux = {
-            redirect_uris = [ "https://news.0cx.de/oauth2/oidc/callback" ];
-            scopes = [
-              "openid"
-              "profile"
-              "email"
-            ];
-            token_endpoint_auth_method = "client_secret_basic";
-          };
           forgejo = {
             client_name = "Forgejo";
             authorization_policy = "two_factor";
