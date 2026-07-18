@@ -26,7 +26,7 @@
           oidc = {
             issuer = lib.mkOption {
               type = lib.types.str;
-              default = "https://auth.pablo.tools";
+              default = "https://id.pablo.tools";
               example = "https://auth.example.com";
               description = "Base URL (issuer) of the OIDC provider (Authelia)";
             };
@@ -39,7 +39,7 @@
 
             providerName = lib.mkOption {
               type = lib.types.str;
-              default = "Authelia";
+              default = "Pocket ID";
               description = "Display name shown on the Vikunja login button";
             };
           };
@@ -53,12 +53,7 @@
         ...
       }:
       let
-        # Base OIDC secret generator. Kept pkgs-free so it can be exported and
-        # consumed at inventory-eval time. runtimeInputs (which need pkgs) are
-        # added by each host that declares it — see the nixosModule below and
-        # Authelia's own declaration driven by the auth.varsGenerator export.
-        #   client_secret_hash → argon2 hash for Authelia's client_secret_file
-        #   envfile            → VIKUNJA_AUTH_OPENID_..._CLIENTSECRET for vikunja
+        # Shared OIDC secret generator for Authelia (pkgs-free; runtimeInputs added per host).
         oidcGenerator = {
           share = true;
           files.client_secret_hash = { };
@@ -88,10 +83,7 @@
             ];
             public = false;
           };
-          # Authelia declares this generator on its own host (share = true), so
-          # vikunja need not be co-located with Authelia. Both sides read the
-          # secret as root (Authelia via LoadCredential, vikunja via systemd
-          # EnvironmentFile), so no file owner is required.
+          # Authelia declares this too (share = true); secrets read as root, no owner needed.
           auth.varsGenerator = oidcGenerator;
         };
 
@@ -101,14 +93,8 @@
             pkgs,
             ...
           }:
-          let
-            gen = config.clan.core.vars.generators."authelia-oidc-${settings.oidc.clientId}";
-          in
           {
-            # Declared on the vikunja host too (share = true), so this host
-            # receives the envfile regardless of where Authelia runs.
-            # runtimeInputs are added here because pkgs is only in scope inside
-            # the nixosModule.
+            # Declared here too so the vikunja host generates the files (needs pkgs).
             clan.core.vars.generators."authelia-oidc-${settings.oidc.clientId}" = oidcGenerator // {
               runtimeInputs = with pkgs; [
                 coreutils
@@ -118,12 +104,21 @@
               ];
             };
 
-            # Reverse proxy. TLS for the .pin endpoint is injected by the pki
-            # clan service automatically.
+            # Reverse proxy; pki injects TLS for the .pin endpoint.
             services.caddy = {
               enable = true;
               virtualHosts."${settings.host}".extraConfig =
                 "reverse_proxy 127.0.0.1:${toString config.services.vikunja.port}";
+            };
+
+            # OIDC client secret from the Pocket ID reconciler, via LoadCredential + *_FILE.
+            systemd.services.vikunja = {
+              after = [ "pocket-id-clients.service" ];
+              requires = [ "pocket-id-clients.service" ];
+              serviceConfig.LoadCredential = [
+                "oidc-secret:/run/pocket-id-clients/${settings.oidc.clientId}/secret"
+              ];
+              environment.VIKUNJA_AUTH_OPENID_PROVIDERS_AUTHELIA_CLIENTSECRET_FILE = "/run/credentials/vikunja.service/oidc-secret";
             };
 
             services.vikunja = {
@@ -131,7 +126,6 @@
               port = 3456;
               frontendScheme = "https";
               frontendHostname = settings.host;
-              environmentFiles = [ gen.files.envfile.path ];
 
               settings = {
                 service.timezone = "Europe/Berlin";
