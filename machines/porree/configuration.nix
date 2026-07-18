@@ -126,9 +126,6 @@
       # Enable nextcloud configuration
       nextcloud.enable = true;
 
-      # Enable OpenCloud (uses Authelia OIDC)
-      opencloud.enable = true;
-
     };
   };
 }

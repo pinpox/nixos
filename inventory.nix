@@ -246,7 +246,6 @@ in
             "admins"
             "users"
             "miniflux-users"
-            "opencloud-users"
             "vikunja-users"
           ];
         };
@@ -298,9 +297,7 @@ in
         };
 
         pkceExemptClients = [ "vikunja" ];
-        # OIDC clients for non-clan-service consumers (forgejo, opencloud are
-        # still NixOS modules, not clan services, so they can't export
-        # auth.client themselves yet).
+
         extraClients = {
           forgejo = {
             client_name = "Forgejo";
@@ -318,40 +315,7 @@ in
             grant_types = [ "authorization_code" ];
             token_endpoint_auth_method = "client_secret_basic";
           };
-          opencloud = {
-            client_name = "OpenCloud";
-            public = true;
-            require_pkce = true;
-            pkce_challenge_method = "S256";
-            scopes = [
-              "openid"
-              "offline_access"
-              "groups"
-              "profile"
-              "email"
-            ];
-            redirect_uris = [
-              "https://cloud.pablo.tools/"
-              "https://cloud.pablo.tools/oidc-callback.html"
-              "https://cloud.pablo.tools/oidc-silent-redirect.html"
-            ];
-            response_types = [ "code" ];
-            grant_types = [
-              "authorization_code"
-              "refresh_token"
-            ];
-            token_endpoint_auth_method = "none";
-          };
-          # Incus web UI (boxes.pin). Public client; Incus uses PKCE
-          # for the UI and the device-code flow for the CLI. Needs a JWT
-          # access token (access_token_signed_response_alg) so incusd can
-          # verify it offline, and the audience must match incus' oidc.audience.
-          #
-          # `lifespan = "incus"` → long-lived access token (see extraSettings
-          # below). Prevents the access token expiring mid-session, which made
-          # incusd fire concurrent refreshes on a one-time-use refresh token;
-          # the losers retried in a storm and tripped Authelia's rate limiter
-          # ("temporarily_unavailable" at the token endpoint).
+
           incus = {
             client_name = "Incus";
             public = true;
