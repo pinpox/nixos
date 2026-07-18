@@ -247,7 +247,6 @@ in
             "users"
             "miniflux-users"
             "opencloud-users"
-            "paperless-users"
             "vikunja-users"
           ];
         };
@@ -302,15 +301,6 @@ in
       roles.default.machines.porree.settings = {
         publicHost = "auth.pablo.tools";
         domain = "pablo.tools";
-
-        # Additional ACL rules (prepended before the auto-generated wildcard)
-        accessControlRules = [
-          {
-            domain = "paper.pablo.tools";
-            policy = "one_factor";
-            subject = "group:paperless-users";
-          }
-        ];
 
         # Restrict these clients to pinpox only.
         # Unlisted clients use the default: any authenticated user.

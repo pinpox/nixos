@@ -144,9 +144,6 @@
         msgTemplatePath = "${matrix-hook.packages."x86_64-linux".matrix-hook}/bin/message.html.tmpl";
       };
 
-      # Enable paperless-ngx document management
-      paperless.enable = true;
-
       # Enable nextcloud configuration
       nextcloud.enable = true;
 
