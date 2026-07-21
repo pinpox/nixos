@@ -13,7 +13,7 @@
   networking.interfaces.ens3 = {
     ipv6.addresses = [
       {
-        address = "2a0a:4cc0:c0:f339::";
+        address = "2a0a:4cc0:c0:f339::1";
         prefixLength = 64;
       }
     ];
