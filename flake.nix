@@ -8,6 +8,18 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
+    # TODO: remove when NixOS/nixpkgs#504200 lands
+    nixpkgs-bulwark.url = "github:Cameo007/nixpkgs/d6b148827da1bd0179140c9b0d3f95a7e0add206";
+
+    # Stalwart pinned to 0.16.13 (+ matching stalwart-cli 1.0.10). nixpkgs'
+    # 0.16.14 packaging links jemalloc (stalwart's main.rs sets an unconditional
+    # tikv-jemallocator #[global_allocator]) while librocksdb.so allocates and
+    # measures through glibc -> glibc's malloc_usable_size dereferences a chunk
+    # header it never wrote -> SEGV in rocksdb's Arena on startup. Verified on
+    # clementine: 0.16.14 core-dumps on a fresh DB outside the sandbox, 0.16.13
+    # runs clean. Remove this pin once the allocator split is fixed upstream.
+    nixpkgs-stalwart.url = "github:nixos/nixpkgs/61b7c44c4073f0b827768aff0049561b5110ea5a";
+
     clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.disko.follows = "disko";
@@ -81,7 +93,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # spaces.url = "path:/home/pinpox/code/github.com/generational-infrastructure/spaces-os";
-    spaces.url = "github:generational-infrastructure/spaces-os";
+    spaces.url = "git+https://git.geninf.io/spaces/spaces-os";
     spaces.inputs.nixpkgs.follows = "nixpkgs";
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
     spaces.inputs.llm-agents.follows = "llm-agents";

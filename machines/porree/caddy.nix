@@ -116,6 +116,23 @@ in
           header Access-Control-Allow-Origin *
           respond `{"m.homeserver": {"base_url": "https://matrix.pinpox.com"}}`
         }
+
+        # CalDAV/CardDAV service discovery (RFC 6764). Mail runs on clementine
+        # (mail.pinpox.com), but a client given pinpox@pinpox.com probes the
+        # apex, so redirect to the DAV context paths Stalwart serves. Mirrors
+        # what mail.pinpox.com/.well-known/{caldav,carddav} already answer.
+        handle /.well-known/caldav {
+          redir https://mail.pinpox.com/dav/cal 301
+        }
+        handle /.well-known/carddav {
+          redir https://mail.pinpox.com/dav/card 301
+        }
+
+        # Mozilla autoconfig: Thunderbird/K-9 probe the apex as well as
+        # autoconfig.<domain>, so hand those requests to the mail host.
+        handle /.well-known/autoconfig/* {
+          redir https://autoconfig.pinpox.com{uri} 301
+        }
       '';
 
       # Redirect www -> apex (Caddy auto-provisions the cert for www)

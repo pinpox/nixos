@@ -83,6 +83,7 @@ in
       gitea.enable = true;
       owncast.enable = false;
       wastebin.enable = true;
+      mail.enable = false; # migrated to clementine
 
     };
   };

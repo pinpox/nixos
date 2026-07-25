@@ -273,25 +273,53 @@ in
       roles.default.machines.porree.settings = {
         publicHost = "id.pablo.tools";
 
+        # Vikunja's OIDC client can't do PKCE yet (go-vikunja/vikunja#1501),
+        # so exempt it from the reconciler's default PKCE requirement.
+        pkceExemptClients = [ "vikunja" ];
+
         extraClients = {
-          # miniflux (kfbox, off-host): public + PKCE client, so there is no
-          # client secret to distribute cross-host. Miniflux always sends PKCE
-          # (S256) and runs fine with an empty secret.
+
           miniflux = {
             name = "Miniflux";
             isPublic = true;
             callbackURLs = [ "https://news.0cx.de/oauth2/oidc/callback" ];
           };
 
-          # incus (mango, off-host): public client. incusd validates the access
-          # token audience, which the reconciler can't set — after first deploy
-          # set this client's Audience to https://boxes.pin in the Pocket ID UI.
-          # PKCE disabled to match incus' flow.
           incus = {
             name = "Incus";
             isPublic = true;
             pkceEnabled = false;
             callbackURLs = [ "https://boxes.pin/oidc/callback" ];
+          };
+
+          # Manual in PocketID: Create a "mail" group, add the users who should
+          # have mailboxes, then set this client's "Allowed User Groups" to "mail"
+          bulwark = {
+            name = "Bulwark Webmail";
+            isPublic = true;
+            callbackURLs = [
+              "https://webmail.pinpox.com/auth/callback"
+              "https://webmail.pinpox.com/en/auth/callback"
+            ];
+          };
+
+          # Stalwart's own web UI (self-service portal at
+          # https://mail.pinpox.com/account/, admin dashboard at /admin/). The
+          # client id is HARDCODED in Stalwart's WebUI bundle as
+          # "stalwart-webui", so this attribute name must match exactly.
+          # Without it an OIDC-backed account entering its address on the
+          # Stalwart login page gets "The requested OAuth 2.0 Client does not
+          # exist" from Pocket ID - which is what stops users from managing
+          # their own app passwords. Separate from the `bulwark` client above
+          # (that one works); public client + PKCE (S256), same shape.
+          stalwart-webui = {
+            name = "Stalwart Web UI";
+            isPublic = true;
+            callbackURLs = [
+              "https://mail.pinpox.com/account/oauth/callback"
+              "https://mail.pinpox.com/admin/oauth/callback"
+              "https://mail.pinpox.com/oauth/callback"
+            ];
           };
         };
       };
