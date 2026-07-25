@@ -18,7 +18,7 @@ in
   networking.interfaces.ens3 = {
     ipv6.addresses = [
       {
-        address = "2a03:4000:7:4e0::";
+        address = "2a03:4000:7:4e0::1";
         prefixLength = 64;
       }
     ];
