@@ -97,7 +97,7 @@ self: super: {
   };
 
   # Use custom neovim in standalone flake
-  neovim = inputs.pinpox-neovim.packages.${super.stdenv.hostPlatform.system}.pinpox-neovim;
+  pinpox-neovim = inputs.pinpox-neovim.packages.${super.stdenv.hostPlatform.system}.pinpox-neovim;
 
   # ZSH plugins
   zsh-abbrev-alias = super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };

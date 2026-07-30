@@ -94,7 +94,7 @@
     git
     gnumake
     killall
-    neovim
+    pinpox-neovim
     ripgrep
     time
     usbutils

@@ -147,7 +147,7 @@
     gnumake
     killall
     lm_sensors
-    neovim
+    pinpox-neovim
     nixpkgs-review
     nix-init
     nix-update
