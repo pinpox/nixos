@@ -90,6 +90,10 @@
       za = "${./zellij-chooser}";
 
       upterm = "${pkgs.upterm}/bin/upterm host --server ssh://upterm.thalheim.io:2323 --force-command 'zellij attach pair-programming' -- zellij attach --create pair-programming";
+
+      # Vikunja (vja)
+      vl = "${pkgs.vja}/bin/vja ls --custom-format=simple";
+      va = "${pkgs.vja}/bin/vja add";
     };
   };
 }
