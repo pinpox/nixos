@@ -101,7 +101,9 @@ in
     vikunja = {
       module.input = "self";
       module.name = "@pinpox/vikunja";
-      roles.default.machines.porree = { };
+      # Public host so it's reachable from mobile; access is still gated by
+      # Pocket ID OIDC (Vikunja's local login is disabled in the module).
+      roles.default.machines.porree.settings.host = "todo.pablo.tools";
     };
 
     tangled = {
