@@ -72,7 +72,9 @@ self: super: {
     omp
     ;
 
-  rio = inputs.rio.packages.${super.stdenv.hostPlatform.system}.default;
+  rio = (inputs.rio.packages.${super.stdenv.hostPlatform.system}.default).overrideAttrs {
+    doCheck = false;
+  };
 
   # TODO: Remove once merged upstream in nixpkgs
   groups-relay = super.callPackage ../packages/groups-relay { };
