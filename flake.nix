@@ -179,10 +179,6 @@
     trippy-track.inputs.nixpkgs.follows = "nixpkgs";
     trippy-track.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    tangled.url = "git+https://tangled.org/@tangled.org/core";
-    tangled.inputs.flake-compat.follows = "flake-compat";
-    tangled.inputs.nixpkgs.follows = "nixpkgs";
-
     # sbox manages its own inputs via nixtamal/nilla, so it exposes no flake
     # inputs to point at our nixpkgs with `follows`.
     sbox.url = "github:DavHau/sbox";
@@ -238,7 +234,6 @@
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
-        modules."@pinpox/tangled" = ./clan-service-modules/tangled;
         modules."@pinpox/n2n" = ./clan-service-modules/n2n;
         modules."@pinpox/nats" = ./clan-service-modules/nats;
         modules."@pinpox/nats-integrations" = ./clan-service-modules/nats-integrations;

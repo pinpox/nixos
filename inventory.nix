@@ -106,15 +106,6 @@ in
       roles.default.machines.porree.settings.host = "todo.pablo.tools";
     };
 
-    tangled = {
-      module.input = "self";
-      module.name = "@pinpox/tangled";
-      # Each must be verified once via the appview UI
-      # (/settings/knots, /settings/spindles).
-      roles.knot.machines.clementine.settings.host = "knot.pablo.tools";
-      # roles.spindle.machines.clementine.settings.host = "spindle.pablo.tools";
-    };
-
     # Collects all "endpoint" exports from all services and generates a file
     # with CNAME entries.
     # The dm-dns services has an export of type "dataMesher" which signals "I
