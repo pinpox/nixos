@@ -1469,14 +1469,17 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1785828585,
-        "narHash": "sha256-leAA/KGyOEkCPmpYvf/AprDMUcwXC6vh9dpHV76Nq9k=",
-        "path": "/home/pinpox/code/git.geninf.io/spaces/spaces-os",
-        "type": "path"
+        "lastModified": 1785830963,
+        "narHash": "sha256-P3hSGdgvVkm+u5I/du87mua9mFjakW9KFEqgFcT570Q=",
+        "ref": "refs/heads/main",
+        "rev": "18753e25c0bbedc9da2678219105c35a7e95f264",
+        "revCount": 595,
+        "type": "git",
+        "url": "https://git.geninf.io/spaces/spaces-os"
       },
       "original": {
-        "path": "/home/pinpox/code/git.geninf.io/spaces/spaces-os",
-        "type": "path"
+        "type": "git",
+        "url": "https://git.geninf.io/spaces/spaces-os"
       }
     },
     "spectrum": {

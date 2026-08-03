@@ -191,14 +191,13 @@ in
               exec ${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle
             '';
 
+            # Agent GUI (spaces hermes; only bound on hosts that run a VM or
+            # the SSH-forwarded client).
             "${modifier}+a" = ''
-              exec pi-chat-toggle
+              exec hermes-desktop
             '';
 
             "${modifier}+s" = "exec voxtype record toggle";
-
-            # Quick-launch agent bar (spaces pi quick-launch)
-            "${modifier}+slash" = "exec pi-chat-toggle quickLaunch";
 
             # Url
             "${modifier}+Shift+p" = ''

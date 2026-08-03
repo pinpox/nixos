@@ -32,6 +32,23 @@
     script = ''printf '%s' "$(openssl rand -hex 32)" > "$out/password"'';
   };
 
+  # Shared llama-swap API key (clan share = true): `key` is the raw token for
+  # clients hitting the endpoint, `env` is a systemd EnvironmentFile
+  # (LLAMA_SWAP_API_KEY=…) for llama-swap itself. Every definition of the
+  # `pi-llama-swap-key` generator must be this one — clan only merges shared
+  # generators whose definitions are identical.
+  mkLlamaSwapKey = {
+    share = true;
+    files."key" = { };
+    files."env" = { };
+    runtimeInputs = [ pkgs.openssl ];
+    script = ''
+      key="sk-$(openssl rand -hex 32)"
+      printf '%s' "$key" > "$out/key"
+      printf 'LLAMA_SWAP_API_KEY=%s\n' "$key" > "$out/env"
+    '';
+  };
+
   renderMustache =
     name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON

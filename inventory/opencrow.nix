@@ -20,20 +20,6 @@ let
     ];
   };
 
-  # Shared llama-swap key (share = true; identical defs merge on mango with the
-  # spaces `pi` service and the other personas).
-  mkLlamaSwapKey = pkgs: {
-    share = true;
-    files."key" = { };
-    files."env" = { };
-    runtimeInputs = [ pkgs.openssl ];
-    script = ''
-      key="sk-$(openssl rand -hex 32)"
-      printf '%s' "$key" > "$out/key"
-      printf 'LLAMA_SWAP_API_KEY=%s\n' "$key" > "$out/env"
-    '';
-  };
-
   # Shared per-instance wiring (identity seed, LLM key, Matrix login, the NATS
   # CLI, container hosts) — identical for every bot regardless of persona.
   # Declared once; both the generic and persona builders consume it.
@@ -53,7 +39,7 @@ let
               inherit pkgs;
               owner = "root";
             };
-        clan.core.vars.generators."pi-llama-swap-key" = mkLlamaSwapKey pkgs;
+        clan.core.vars.generators."pi-llama-swap-key" = pinpox-utils.mkLlamaSwapKey;
         # Shared account password: created on the homeserver by the matrix
         # reconciler, used here to log in (OPENCROW_MATRIX_PASSWORD_FILE).
         clan.core.vars.generators."matrix-user-opencrow_${name}" = pinpox-utils.mkMatrixPassword;

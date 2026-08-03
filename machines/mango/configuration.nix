@@ -3,6 +3,8 @@
   lib,
   pkgs,
   config,
+  spaces,
+  pinpox-utils,
   mics-skills,
   ...
 }:
@@ -17,6 +19,10 @@ in
   imports = [
     ./disko-config-btrfs.nix
     ./lmstudio-models.nix
+    # The LLM endpoint the opencrow bots use (http://mango.pin:8012/v1).
+    # Imported directly: spaces-os deleted the `pi` clan service that used to
+    # pull this in, and nothing else in the clan hosts llama-swap.
+    spaces.nixosModules.llama-swap
     # nixos-hardware.nixosModules.framework-amd-ai-300-series
   ];
 
@@ -46,9 +52,22 @@ in
     "ttm.pages_limit=32505856"
   ];
 
+  # Shared API key, required on every request — the endpoint is reachable from
+  # the whole clan. Same generator the opencrow bots consume.
+  clan.core.vars.generators."pi-llama-swap-key" = pinpox-utils.mkLlamaSwapKey;
+
+  services.llama-swap.enable = true;
+  services.llama-swap.apiKeyEnvFile =
+    config.clan.core.vars.generators."pi-llama-swap-key".files."env".path;
+  # `[::]`, not `::`: the upstream module builds the flag by raw concatenation
+  # (`--listen=${listenAddress}:${port}`), so the IPv6 wildcard must be
+  # bracketed or llama-swap crash-loops on ":::8012".
+  services.llama-swap.listenAddress = lib.mkForce "[::]";
+  networking.firewall.allowedTCPPorts = [ config.services.llama-swap.port ];
+
   # Lazy HF models (downloaded on first use), added to the bundled small ones.
   services.llama-swap.settings.models = {
-    # default model (inventory.nix)
+    # default model
     "gemma4:12b-q8_0".cmd =
       "${llamaServer} -hf unsloth/gemma-4-12b-it-GGUF --hf-file gemma-4-12b-it-Q8_0.gguf --port \${PORT} ${strixArgs}";
 

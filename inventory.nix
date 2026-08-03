@@ -367,48 +367,20 @@ in
       );
     };
 
-    pi = {
+    # Per-user Hermes agent MicroVMs. Replaces the old `pi` instance: spaces-os
+    # deleted the whole pi tree (chat panel, pi-sessiond, pi-web) in favour of
+    # hermes. The agents talk to the p0 inference endpoint, wired per machine.
+    hermes = {
       module.input = "spaces";
-      module.name = "pi";
+      module.name = "hermes";
 
-      # Kiwi is both a client (the chat panel) and an executor (its own
-      # local pi-sessiond on loopback).
-      roles.client.machines.kiwi = { };
-      roles.executor.machines.kiwi.settings = {
-        openrouter.enable = true;
-        # PWA at https://agent-kiwi.pin/ (auto-derived clan host, exported
-        # via the role's endpoints output → pki + dm-dns auto-issue cert +
-        # CNAME, so it's reachable from any clan client without /etc/hosts
-        # surgery).
-        webUi.enable = true;
-        llamaSwap.webUi.enable = true;
-        llamaSwap.openFirewall = true;
-      };
+      # Kiwi runs the VMs; every normal user on it gets one.
+      roles.server.machines.kiwi = { };
 
-      # Tanne is only a client (no executor)
+      # Tanne runs none of its own — the launcher forwards kiwi's loopback
+      # dashboard port over SSH (kiwi is the instance's only server, so the
+      # role resolves it without naming it).
       roles.client.machines.tanne = { };
-
-      # Traube is executor-only (tiny model, only for testing). Also hosts
-      # the pi-web PWA at https://agent-traube.pin/ — the auto-derived
-      # `agent-<machineName>.<meta.domain>` host, exported via the role's
-      # endpoints output so pki/dm-dns auto-issue the cert + CNAME.
-
-      roles.executor.machines.mango.settings = {
-        defaultModel = "gemma4:12b-q8_0";
-        webUi.enable = true;
-        # Reachable at https://llama-swap.mango.pin/ (UI at /ui/), the
-        # auto-derived `llama-swap.<machineName>.<meta.domain>` host —
-        # exported via the role's endpoints output so pki/dm-dns
-        # auto-issue the cert + CNAME.
-        llamaSwap.webUi.enable = true;
-        llamaSwap.openFirewall = true;
-      };
-
-      roles.executor.machines.traube.settings = {
-        defaultModel = "qwen2.5:0.5b";
-        webUi.enable = true;
-        llamaSwap.openFirewall = true;
-      };
     };
 
     wg-star = {
