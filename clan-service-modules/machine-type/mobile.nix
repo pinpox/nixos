@@ -4,7 +4,7 @@
   lib,
   nur,
   flake-self,
-
+  wl-harmonograph,
   promterm,
   home-manager,
   ...
@@ -42,6 +42,7 @@
   # there.
   home-manager.extraSpecialArgs = {
     inherit
+      wl-harmonograph
       flake-self
       nur
       promterm
