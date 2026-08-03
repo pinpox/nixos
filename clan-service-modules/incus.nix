@@ -28,6 +28,9 @@
         Configures OIDC on incusd; peers without a UI use TLS client certs.
       - openFirewall: open the API port. Disable on hosts that are only
         reached through the Caddy web UI proxy (the API stays on loopback).
+      - localImages: Incus alias -> name of a `packages.<system>` image built by
+        `pkgs.mkIncusVmImage`. Named rather than passed by value so evaluating
+        the inventory never instantiates the image derivation.
 
     Caddy reverse-proxies to the local incusd over loopback (incusd serves its
     own self-signed cert, hence tls_insecure_skip_verify). The OIDC redirect
@@ -84,22 +87,25 @@
           };
 
           localImages = lib.mkOption {
-            type = lib.types.attrsOf lib.types.path;
+            type = lib.types.attrsOf lib.types.str;
             default = { };
             example = lib.literalExpression ''
               {
-                nixos-unstable-cloud-init = self.packages.x86_64-linux.incus-nixos-unstable-cloud-init;
-                dev = self.packages.x86_64-linux.incus-dev-image;
+                nixos-unstable-cloud-init = "incus-nixos-unstable-cloud-init";
+                dev = "incus-dev-image";
               }
             '';
             description = ''
               Named NixOS VM images imported into Incus as `local:<name>`. Attr
-              name = Incus alias; value = a package built by `pkgs.mkIncusVmImage`
-              (a dir with `metadata.tar.xz` + `disk.qcow2`), typically referenced
-              from the flake as `self.packages.<system>.<name>`. Launch with
-              `incus launch local:<name> foo --vm`; the instance is SSH-reachable
-              (pinpox keys baked in) out of the box. Rebuild + relaunch to pick up
-              changes (existing instances are copies and do not auto-update).
+              name = Incus alias; value = the attribute name of a package in this
+              flake's `packages.<system>` built by `pkgs.mkIncusVmImage` (a dir
+              with `metadata.tar.xz` + `disk.qcow2`). Images are named, not passed
+              by value, so evaluating the inventory never instantiates the image
+              derivation — only building the host that imports them does. Launch
+              with `incus launch local:<name> foo --vm`; the instance is
+              SSH-reachable (pinpox keys baked in) out of the box. Rebuild +
+              relaunch to pick up changes (existing instances are copies and do
+              not auto-update).
             '';
           };
 
@@ -151,6 +157,7 @@
             config,
             lib,
             pkgs,
+            flake-self,
             ...
           }:
           let
@@ -160,12 +167,21 @@
               if settings.oidc.audience != "" then settings.oidc.audience else "https://${settings.webui.host}";
             lanEnabled = settings.lanInterface != "";
             defaultNetwork = if lanEnabled then "lan" else "incusbr0";
+            flakePackages = flake-self.packages.${pkgs.stdenv.hostPlatform.system};
+            # Resolved lazily: nothing outside this machine's build ever forces
+            # the image derivations.
+            localImages = lib.mapAttrs (_alias: name: flakePackages.${name}) settings.localImages;
+            unknownImages = lib.filter (name: !(flakePackages ? ${name})) (lib.attrValues settings.localImages);
           in
           {
             assertions = [
               {
                 assertion = !webuiEnabled || settings.webui.host != "";
                 message = "incus: webui.host must be set when webui.enable is true";
+              }
+              {
+                assertion = unknownImages == [ ];
+                message = "incus: localImages references unknown flake packages: ${lib.concatStringsSep ", " unknownImages}";
               }
             ];
 
@@ -230,7 +246,7 @@
                   ) 9>/run/incus-image-import.lock
                 '';
               }
-            ) settings.localImages;
+            ) localImages;
 
             virtualisation.incus = {
               enable = true;

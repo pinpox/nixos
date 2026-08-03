@@ -63,14 +63,16 @@ in
       roles.peer.machines.mango.settings = {
         # Attach instances to the home LAN
         lanInterface = "enp191s0";
-        # NixOS VM images imported as local:<name>. Value = a package from
-        # pkgs.mkIncusVmImage (sshd + keys baked in); `incus launch
-        # local:nixos-unstable-cloud-init foo --vm` is SSH-reachable out of the
-        # box. `default` is a second alias for the same image so `incus launch
-        # default foo --vm` works and it reads as the default in the web UI.
-        # Build custom ones with `pkgs.mkIncusVmImage { modules = [...]; }`.
-        localImages.nixos-unstable-cloud-init = self.packages.x86_64-linux.incus-nixos-unstable-cloud-init;
-        localImages.default = self.packages.x86_64-linux.incus-nixos-unstable-cloud-init;
+        # NixOS VM images imported as local:<name>. Value = the attribute name
+        # of a `packages.<system>` entry built by pkgs.mkIncusVmImage (sshd +
+        # keys baked in); `incus launch local:nixos-unstable-cloud-init foo --vm`
+        # is SSH-reachable out of the box. `default` is a second alias for the
+        # same image so `incus launch default foo --vm` works and it reads as
+        # the default in the web UI. Referenced by name, not by value, so no
+        # clan evaluation ever instantiates the image derivation. Add custom
+        # ones to flake.nix `packages` via `pkgs.mkIncusVmImage { modules = [...]; }`.
+        localImages.nixos-unstable-cloud-init = "incus-nixos-unstable-cloud-init";
+        localImages.default = "incus-nixos-unstable-cloud-init";
         webui = {
           enable = true;
           host = "boxes.pin";

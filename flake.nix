@@ -281,8 +281,8 @@
               ;
             # NixOS Incus VM base image: NixOS unstable + sshd + pinpox keys +
             # cloud-init (sets the guest hostname from the instance name).
-            # Referenced by the @pinpox/incus `localImages` setting. Build
-            # custom images with `pkgs.mkIncusVmImage { modules = [ ... ]; }`.
+            # Referenced by name from the @pinpox/incus `localImages` setting.
+            # Build custom images with `pkgs.mkIncusVmImage { modules = [ ... ]; }`.
             incus-nixos-unstable-cloud-init = mkIncusVmImage { };
           }
         )
