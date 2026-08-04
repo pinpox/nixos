@@ -76,4 +76,24 @@
         cp rendered_file $out
       '';
     };
+
+  # home.file entries linking each Agent Skill package into one harness's skill
+  # root, e.g. `mkSkillLinks ".omp/agent/skills" [ pkgs.agentSkills.todos ]`.
+  # Each package ships its skill at `$out/share/skills/<name>/`; the name comes
+  # from `passthru.skillName` (or `pname` for third-party skill packages) so no
+  # store path has to be read at eval time.
+  mkSkillLinks =
+    dir: skills:
+    builtins.listToAttrs (
+      map (
+        skill:
+        let
+          name = skill.skillName or skill.pname;
+        in
+        {
+          name = "${dir}/${name}";
+          value.source = "${skill}/share/skills/${name}";
+        }
+      ) skills
+    );
 }

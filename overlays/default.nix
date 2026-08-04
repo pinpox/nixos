@@ -91,6 +91,19 @@ self: super: {
   machine-report = super.callPackage ../packages/machine-report { };
   config-hash = super.callPackage ../packages/config-hash { };
 
+  # Builder for Agent Skills in the standard `$out/share/skills/<name>/`
+  # layout, plus one package per `./skills/<name>/` directory. Harness modules
+  # (omp, claude-code) consume these packages, so a skill is packaged once and
+  # linked into as many agent skill roots as needed.
+  mkAgentSkill = super.callPackage ../packages/agent-skill { };
+  agentSkills = super.lib.mapAttrs (
+    name: _:
+    self.mkAgentSkill {
+      inherit name;
+      src = ../skills + "/${name}";
+    }
+  ) (super.lib.filterAttrs (_: type: type == "directory") (builtins.readDir ../skills));
+
   # Builder for NixOS Incus VM images as a single package (metadata + qcow2),
   # with sshd + pinpox keys baked in. Passed by value to the @pinpox/incus
   # `localImages` setting. `pkgs.mkIncusVmImage { modules = [ ... ]; }`.

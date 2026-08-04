@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  flake-self,
   ...
 }:
 with lib;
@@ -32,7 +31,7 @@ in
       '';
     };
 
-    # Agent skill documenting this CLI (repo is the source of truth).
-    home.file.".claude/skills/todos/SKILL.md".source = "${flake-self}/skills/todos/SKILL.md";
+    # Agent skill documenting this CLI, offered to every enabled harness.
+    pinpox.agentSkills = [ pkgs.agentSkills.todos ];
   };
 }

@@ -72,7 +72,9 @@ in
         # river.enable = true; # TODO: broken in nixpkgs (Zig build failure)
         waybar.enable = true;
         kanshi.enable = true;
+        omp.enable = true;
       };
+
     };
 
     # Install these packages for my user
@@ -90,7 +92,6 @@ in
       tea
       but
       gitbutler
-      omp
       chafa
       asciinema
       duf

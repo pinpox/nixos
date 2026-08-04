@@ -203,10 +203,11 @@ let
 
   # The single instance builder. `c` is the compiled profile. A bot on mango:
   # Matrix @opencrow_<name>:pinpox.com, NATS (own nkey seed) and mango's
-  # llama-swap LLM. The soul file and capability skill are wired only when the
-  # profile provides them; otherwise the bot keeps the default soul and just the
-  # nats skill. The generated capability skill is appended via OPENCROW_PI_SKILLS
-  # so the upstream `web` skill in OPENCROW_PI_SKILLS_DIR is left untouched.
+  # llama-swap LLM. The soul file is wired only when the profile provides one.
+  # OPENCROW_PI_SKILLS is assembled in one extra module (it needs `pkgs` for the
+  # skill packages): the nats skill, plus the generated capability skill when the
+  # persona has one. The upstream `web` skill in OPENCROW_PI_SKILLS_DIR is left
+  # untouched.
   mkInstance = name: c: {
     module.input = "self";
     module.name = "@pinpox/opencrow";
@@ -219,38 +220,35 @@ let
         OPENCROW_PI_MODEL = "gemma4:e4b";
         NATS_URL = "nats://kfbox.pin:4222";
         NATS_NKEY = "%d/nats-seed";
-      }
-      # No capability skill ⇒ the nats skill is the whole list (set here). With
-      # one, the list is assembled in the extra module below (nats + skill).
-      // lib.optionalAttrs (c.capabilitySkill == null) {
-        OPENCROW_PI_SKILLS = "${self}/skills/nats";
       };
       piModels = mangoPiModels;
       matrixPasswordGenerator = "matrix-user-opencrow_${name}";
     };
-    roles.default.extraModules =
-      [ (mkBaseExtra name) ]
-      ++ lib.optional (c.soul != null || c.capabilitySkill != null) (
+    roles.default.extraModules = [
+      (mkBaseExtra name)
+      (
         { pkgs, ... }:
+        let
+          capSkill = lib.optional (c.capabilitySkill != null) (
+            let
+              capPkg = pkgs.writeTextDir "${name}-capabilities/SKILL.md" c.capabilitySkill;
+            in
+            "${capPkg}/${name}-capabilities"
+          );
+        in
         lib.mkMerge [
+          {
+            services.opencrow.instances.${name}.environment.OPENCROW_PI_SKILLS = lib.concatStringsSep "," (
+              [ "${pkgs.agentSkills.nats}/share/skills/nats" ] ++ capSkill
+            );
+          }
           (lib.optionalAttrs (c.soul != null) {
             services.opencrow.instances.${name}.environment.OPENCROW_SOUL_FILE =
               "${pkgs.writeText "soul-${name}.md" c.soul}";
           })
-          (lib.optionalAttrs (c.capabilitySkill != null) (
-            let
-              capPkg = pkgs.writeTextDir "${name}-capabilities/SKILL.md" c.capabilitySkill;
-            in
-            {
-              services.opencrow.instances.${name}.environment.OPENCROW_PI_SKILLS =
-                lib.concatStringsSep "," [
-                  "${self}/skills/nats"
-                  "${capPkg}/${name}-capabilities"
-                ];
-            }
-          ))
         ]
-      );
+      )
+    ];
   };
 
   # Every mango bot, keyed by short name → profile (`{ }` = generic chat bot).
