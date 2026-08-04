@@ -32,20 +32,20 @@
     script = ''printf '%s' "$(openssl rand -hex 32)" > "$out/password"'';
   };
 
-  # Shared llama-swap API key (clan share = true): `key` is the raw token for
-  # clients hitting the endpoint, `env` is a systemd EnvironmentFile
-  # (LLAMA_SWAP_API_KEY=…) for llama-swap itself. Every definition of the
-  # `pi-llama-swap-key` generator must be this one — clan only merges shared
-  # generators whose definitions are identical.
-  mkLlamaSwapKey = {
-    share = true;
-    files."key" = { };
+  # p0 inference API key, prompted once per machine and persisted. The prompt
+  # itself becomes the `api-key` file (raw token); `env` is a systemd
+  # EnvironmentFile (P0_API_KEY=…) for consumers taking `environmentFiles`.
+  # traube declares its own prompt-only `p0-inference-key` (hermes reads the
+  # raw file as a credential, no env file) — per-machine, so shapes may differ.
+  mkP0Key = {
     files."env" = { };
-    runtimeInputs = [ pkgs.openssl ];
+    prompts."api-key" = {
+      type = "hidden";
+      persist = true;
+      description = "p0 inference API key (https://inference.p0.contact)";
+    };
     script = ''
-      key="sk-$(openssl rand -hex 32)"
-      printf '%s' "$key" > "$out/key"
-      printf 'LLAMA_SWAP_API_KEY=%s\n' "$key" > "$out/env"
+      printf 'P0_API_KEY=%s\n' "$(cat "$prompts"/api-key)" > "$out/env"
     '';
   };
 

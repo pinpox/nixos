@@ -2,19 +2,20 @@
 # `instances`; the `matrix` and `nats` instances live there (keys merged in here).
 { self, lib, ... }:
 let
-  # mango's llama-swap OpenAI API via its .pin name; apiKey is the env-var NAME
-  # omp reads (from the shared pi-llama-swap-key env file).
-  mangoPiModels.providers.mango = {
-    baseUrl = "http://mango.pin:8012/v1";
+  # The p0 inference endpoint (same provider the hermes VMs on traube use);
+  # apiKey is the env-var NAME omp reads, filled from the p0-inference-key env
+  # file. mango no longer hosts llama-swap.
+  p0Models.providers.p0 = {
+    baseUrl = "https://inference.p0.contact/v1";
     api = "openai-completions";
-    apiKey = "LLAMA_SWAP_API_KEY";
+    apiKey = "P0_API_KEY";
     compat = {
       supportsDeveloperRole = false;
       supportsReasoningEffort = false;
     };
     models = [
       {
-        id = "gemma4:e4b";
+        id = "Qwen3.6-27B-FP8";
         reasoning = true;
       }
     ];
@@ -39,7 +40,7 @@ let
               inherit pkgs;
               owner = "root";
             };
-        clan.core.vars.generators."pi-llama-swap-key" = pinpox-utils.mkLlamaSwapKey;
+        clan.core.vars.generators."p0-inference-key" = pinpox-utils.mkP0Key;
         # Shared account password: created on the homeserver by the matrix
         # reconciler, used here to log in (OPENCROW_MATRIX_PASSWORD_FILE).
         clan.core.vars.generators."matrix-user-opencrow_${name}" = pinpox-utils.mkMatrixPassword;
@@ -49,7 +50,7 @@ let
           credentialFiles.nats-seed =
             config.clan.core.vars.generators."nats-key-opencrow-${name}".files.seed.path;
           environmentFiles = [
-            config.clan.core.vars.generators."pi-llama-swap-key".files.env.path
+            config.clan.core.vars.generators."p0-inference-key".files.env.path
           ];
         };
         containers."opencrow-${name}".config.networking.extraHosts = config.networking.extraHosts;
@@ -202,8 +203,8 @@ let
     };
 
   # The single instance builder. `c` is the compiled profile. A bot on mango:
-  # Matrix @opencrow_<name>:pinpox.com, NATS (own nkey seed) and mango's
-  # llama-swap LLM. The soul file is wired only when the profile provides one.
+  # Matrix @opencrow_<name>:pinpox.com, NATS (own nkey seed) and the p0
+  # inference endpoint. The soul file is wired only when the profile provides one.
   # OPENCROW_PI_SKILLS is assembled in one extra module (it needs `pkgs` for the
   # skill packages): the nats skill, plus the generated capability skill when the
   # persona has one. The upstream `web` skill in OPENCROW_PI_SKILLS_DIR is left
@@ -216,12 +217,12 @@ let
         OPENCROW_MATRIX_HOMESERVER = "https://matrix.pinpox.com";
         OPENCROW_MATRIX_USER_ID = "@opencrow_${name}:pinpox.com";
         OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
-        OPENCROW_PI_PROVIDER = "mango";
-        OPENCROW_PI_MODEL = "gemma4:e4b";
+        OPENCROW_PI_PROVIDER = "p0";
+        OPENCROW_PI_MODEL = "Qwen3.6-27B-FP8";
         NATS_URL = "nats://kfbox.pin:4222";
         NATS_NKEY = "%d/nats-seed";
       };
-      piModels = mangoPiModels;
+      piModels = p0Models;
       matrixPasswordGenerator = "matrix-user-opencrow_${name}";
     };
     roles.default.extraModules = [
