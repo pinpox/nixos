@@ -55,6 +55,11 @@ in
       }/bin/picohsm-askpass";
       PICOHSM_ASKPASS_BACKEND = lib.getExe pkgs.noctalia-askpass;
       AGE_ASKPASS = lib.getExe pkgs.noctalia-askpass;
+      # Several YubiKeys hold the same age identity, so ~/.config/age/identities
+      # lists one stub per key. Skip the ones that are not plugged in instead of
+      # prompting for them; the prompt loop hangs forever under clan/passage,
+      # which capture the plugin's stdio. Needs the overlay patch.
+      AGE_PLUGIN_YUBIKEY_SKIP_NOT_FOUND = "1";
       # passage delegates to the binary named here; rage honors AGE_ASKPASS
       # (via str4d/rage#617), the Go age does not.
       PASSAGE_AGE = "rage";

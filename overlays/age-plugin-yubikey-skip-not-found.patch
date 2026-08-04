@@ -1,0 +1,37 @@
+Skip identities for YubiKeys that are not plugged in.
+
+Several YubiKeys holding the same PIV key are listed as one identity stub
+per key, all sharing a recipient tag. In `unwrap_file_keys` each stanza is
+assigned to the *first* stub whose tag matches (src/plugin.rs, `find_map`),
+and stubs left with no stanzas are dropped, so only the first-listed key is
+ever connected. If that key is the one not plugged in, the other never gets
+a turn: `Stub::connect` asks the client to confirm "Please insert YubiKey
+with serial N" instead. Under rage with no TTY and no pinentry on PATH that
+confirm never resolves (`console::Term::read_line` returns Ok("") forever
+inside rage's retry loop in age/src/cli_common.rs), so the caller hangs with
+no visible output -- e.g. `clan machines update`, which captures the plugin's
+stdio.
+
+With AGE_PLUGIN_YUBIKEY_SKIP_NOT_FOUND set, an absent YubiKey is treated
+exactly like the user answering "skip", so decryption falls through to
+whichever key is actually connected, in any listed order.
+
+Upstream: https://github.com/str4d/age-plugin-yubikey/pull/229 (open),
+refs https://github.com/str4d/age-plugin-yubikey/issues/178
+
+diff --git a/src/key.rs b/src/key.rs
+--- a/src/key.rs
++++ b/src/key.rs
+@@ -523,6 +523,12 @@
+         let mut yubikey = match open_by_serial(self.serial) {
+             Ok(yk) => yk,
+             Err(yubikey::Error::NotFound) => {
++                // Treat an absent YubiKey as "user chose to skip", so that other
++                // identities still get a chance and non-interactive clients that
++                // cannot answer the insert prompt do not hang.
++                if std::env::var_os("AGE_PLUGIN_YUBIKEY_SKIP_NOT_FOUND").is_some() {
++                    return Ok(Ok(None));
++                }
+                 let mut message = fl!("plugin-insert-yk", yubikey_serial = self.serial.to_string());
+ 
+                 // If the `confirm` command is available, we loop until either the YubiKey

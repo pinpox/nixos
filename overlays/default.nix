@@ -48,6 +48,14 @@ self: super: {
     };
   });
 
+  # Lets several YubiKeys share one identity: absent serials are skipped
+  # instead of prompting (and hanging non-interactive callers like clan).
+  # TODO: remove once str4d/age-plugin-yubikey#229 is merged and released.
+  # Set (not appended) so a doubly-applied overlay does not patch twice.
+  age-plugin-yubikey = super.age-plugin-yubikey.overrideAttrs {
+    patches = [ ./age-plugin-yubikey-skip-not-found.patch ];
+  };
+
   # To override packages from master input do:
   # pamixer = inputs.nixpkgs-master.legacyPackages."${super.system}".pamixer;
 
