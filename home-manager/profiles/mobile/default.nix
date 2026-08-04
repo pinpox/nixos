@@ -58,7 +58,6 @@
       fd
       gcc
       adwaita-icon-theme
-      gtk_engines
       htop
       iputils
       libnotify

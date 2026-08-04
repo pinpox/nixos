@@ -101,13 +101,11 @@ in
       gcc
       # gimp
       adwaita-icon-theme
-      gtk_engines
       h # https://github.com/zimbatm/h
       htop
       iputils
       libnotify
       manix
-      matcha-gtk-theme
       meld
       ncdu
       networkmanagerapplet
