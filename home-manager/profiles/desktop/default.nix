@@ -75,6 +75,12 @@ in
         omp.enable = true;
       };
 
+      # Repo-wide agent knowledge with no owning module; skills tied to a tool
+      # are contributed by that tool's module instead.
+      agentSkills = with pkgs.agentSkills; [
+        incus-testing
+        nats
+      ];
     };
 
     # Install these packages for my user
