@@ -131,3 +131,35 @@ vja clone 3 "Copy of task"           # clone needs a new title
 - Priority is an integer, higher = more urgent; Vikunja scale is 1–5 (0 = unset).
 - Add `-q` to mutating commands to suppress the confirmation dump, `-v` to print
   the resulting task.
+- Titles with umlauts (`Gummibär`, `Sperrmüll`, `prüfen`) MUST reach `vja` as a
+  single argv element from a direct exec — e.g. the bash tool. Do **not** route
+  them through a JS `Bun.$` template shell: it miscounts UTF-8 byte vs character
+  offsets, so the child receives a mangled argument (`Gummibär` arrives as
+  `GummibGummibär`) and the corruption is stored silently. `Bun.spawn` with an
+  argv array is safe. Read the value back after any non-ASCII write.
+- `vja` cannot delete labels, nor rename/colour/delete projects. Use the REST API
+  with the token from `~/.config/vja/token.json`:
+  - create: `PUT /labels`, `PUT /projects`
+  - update: `POST /labels/{id}`, `POST /projects/{id}` (`PUT` returns 405)
+  - delete: `DELETE /labels/{id}` — also detaches the label from every task
+  - `hex_color` is a bare hex string with no leading `#`
+  - `POST /user/settings/general` rejects this token (401); change the capture
+    project in the web UI instead.
+
+## Conventions in this instance
+
+Agreed with the user. Do not "improve" on these unprompted:
+
+- **Projects are areas, exactly one home per task**: `Haus` (green `4caf50`),
+  `Infra` (yellow `fbc02d`), `Garage` (blue `2196f3`), `Papierkram` (purple
+  `9c27b0`). `Inbox` means captured-but-unclassified and is drained to zero onAdd lis
+  review — that emptiness is what stops things being forgotten.
+- **Labels are motorcycle names only**: `Gummibär`, `Silverstar`, `Pony`,
+  `Tornado`. Every `Garage` task carries the bike it belongs to.
+- **Priorities are unused.** Leave priority at 0 unless asked.
+- **Due dates only for externally imposed deadlines**, never for mere intent, so
+  the overdue list stays trustworthy.
+- Titles read `Subject: action` (`Stalwart: Lislon hinzufügen`). German for
+  personal tasks, English for technical ones — match how the user wrote it.
+- Capture is a bare `vja add "..."`, which lands in `Inbox` via the server-side
+  `default_project_id = 2`.
