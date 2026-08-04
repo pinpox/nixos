@@ -62,6 +62,7 @@ in
         firefox.enable = true;
         tmux.enable = true;
         zk.enable = true;
+        vja.enable = true;
         taskwarrior.enable = true;
         go.enable = true;
         foot.enable = true;
