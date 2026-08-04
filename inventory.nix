@@ -374,13 +374,30 @@ in
       module.input = "spaces";
       module.name = "hermes";
 
-      # Kiwi runs the VMs; every normal user on it gets one.
-      roles.server.machines.kiwi = { };
+      # Hermes Micro VM
+      roles.server.machines.traube = { };
 
-      # Tanne runs none of its own — the launcher forwards kiwi's loopback
-      # dashboard port over SSH (kiwi is the instance's only server, so the
-      # role resolves it without naming it).
-      roles.client.machines.tanne = { };
+      # Clients. Named machines, not tags.desktop: the client role covers
+      # every isNormalUser on the machine it lands on, and traube serves
+      # pinpox alone. fichte carries lislon, who would get a forwarded
+      # port and an SSH key with no VM behind either.
+      roles.client.machines.kiwi = { };
+
+      # No extraSshOptions. The client role generates a hermes-only
+      # keypair per user and pins ssh to it, so the forward never touches
+      # the PIV token or the session agent. It could not use them anyway:
+      # `ssh -o BatchMode=yes` from a systemd user unit cannot enter a
+      # PIN.
+      #
+      # traube's sshd host key, pinned so kiwi's `ssh -o BatchMode=yes`
+      # never needs trust-on-first-use — it cannot answer the prompt, so
+      # an unknown key ends the launch. The role reads this from the
+      # server's committed `openssh` var by default, but that var only
+      # exists when clan-core's `sshd` or `admin` service runs on the
+      # server, and neither does here.
+      roles.client.settings.hostKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZmee1xtTuxlKNWYScLs8tq5ju73QKwI+jC3kx01HRi"
+      ];
     };
 
     wg-star = {

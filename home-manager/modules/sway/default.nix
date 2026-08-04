@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   pkgs,
   lib,
   wl-harmonograph,
@@ -8,6 +9,15 @@
 with lib;
 let
   cfg = config.pinpox.programs.sway;
+
+  # Server role installs hermes-desktop, client role hermes-desktop-remote and
+  # no hermes-desktop at all. spaces-os picks the same way in
+  # modules/nixos/spaces-commands.nix.
+  hermesLauncher =
+    if osConfig.services.hermes-remote.enable or false then
+      "hermes-desktop-remote"
+    else
+      "hermes-desktop";
 
   start-sway =
     pkgs.writeShellScriptBin "start-sway" # sh
@@ -191,11 +201,10 @@ in
               exec ${lib.getExe pkgs.noctalia-shell} ipc call launcher toggle
             '';
 
-            # Agent GUI (spaces hermes; only bound on hosts that run a VM or
-            # the SSH-forwarded client).
-            "${modifier}+a" = ''
-              exec hermes-desktop
-            '';
+            # Agent GUI (spaces hermes). The remote launcher uses a
+            # hermes-only SSH key that the clan client role generates, so it
+            # needs no PIV token and no loaded agent.
+            "${modifier}+a" = "exec ${hermesLauncher}";
 
             "${modifier}+s" = "exec voxtype record toggle";
 

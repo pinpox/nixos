@@ -1469,11 +1469,11 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1785925198,
-        "narHash": "sha256-FQPoZ2AI9fbsIJ7rFVPPdmV7Zpmt2jRYa1qmFDIyeV8=",
+        "lastModified": 1786020464,
+        "narHash": "sha256-Q5MGl5fUUntarQwkKHMo/cN813Zau1YZqLeR4EsxTWA=",
         "ref": "refs/heads/main",
-        "rev": "385cd01490fbb4b7634dab01c8b8236ce5eef9b1",
-        "revCount": 612,
+        "rev": "7156cfee253995fba737120147c48addb143fd43",
+        "revCount": 627,
         "type": "git",
         "url": "https://git.geninf.io/spaces/spaces-os"
       },
