@@ -20,14 +20,18 @@ in
     # Reverse proxy
     services.caddy.virtualHosts."${cfg.host}".extraConfig =
       with config.services.gitea.settings.server;
-      "reverse_proxy ${HTTP_ADDR}:${builtins.toString HTTP_PORT}";
+      "reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}";
 
     # Backups
     pinpox.services.restic-client.backup-paths-offsite = [ "/var/lib/gitea" ];
 
     clan.core.vars.generators."gitea" = {
       files.mailer-pw.owner = "gitea";
-      prompts.mailer-pw.persist = true;
+      prompts.mailer-pw = {
+        type = "hidden";
+        persist = true;
+        description = "Mail password for gitea@pinpox.com";
+      };
     };
 
     services.gitea = {
@@ -49,11 +53,11 @@ in
 
         mailer = {
           ENABLED = true;
-          FROM = "git@0cx.de";
-          PROTOCOL = "smtp";
-          IS_TLS_ENABLED = false;
-          USER = "mail@0cx.de";
-          SMTP_ADDR = "r19.hallo.cloud:587";
+          PROTOCOL = "smtps";
+          SMTP_ADDR = "mail.pinpox.com";
+          SMTP_PORT = 465;
+          USER = "gitea@pinpox.com";
+          FROM = "Gitea <gitea@pinpox.com>";
         };
         markdown.ENABLE_MATH = true;
       };
