@@ -52,6 +52,7 @@
           let
             regSecretFile =
               config.clan.core.vars.generators."matrix-registration-secret".files."registration_shared_secret.yaml".path;
+            emailConfigFile = config.clan.core.vars.generators."matrix-smtp".files."email.yaml".path;
           in
           {
             # Postgres needs C collation/ctype; create the role + DB explicitly on
@@ -84,6 +85,40 @@
                     > "$out/registration_shared_secret.yaml"
                 '';
               };
+
+              "matrix-smtp" = {
+                files."email.yaml" = {
+                  secret = true;
+                  owner = "matrix-synapse";
+                  mode = "0400";
+                };
+                prompts.address = {
+                  type = "line";
+                  persist = true;
+                  description = "Mail address Synapse authenticates and sends as (e.g. matrix@pinpox.com)";
+                };
+                prompts.app-password = {
+                  type = "hidden";
+                  persist = true;
+                  description = "Stalwart app password for that address (mint with: stalwart-app-account <name>)";
+                };
+                runtimeInputs = with pkgs; [ coreutils ];
+                script = ''
+                  addr="$(cat "$prompts/address")"
+                  pass="$(cat "$prompts/app-password")"
+                  cat > "$out/email.yaml" <<EOF
+                  email:
+                    smtp_host: mail.pinpox.com
+                    smtp_port: 465
+                    force_tls: true
+                    smtp_user: "$addr"
+                    smtp_pass: "$pass"
+                    notif_from: "%(app)s <$addr>"
+                    app_name: Matrix
+                    enable_notifs: true
+                  EOF
+                '';
+              };
             }
             // lib.listToAttrs (
               map (name: lib.nameValuePair "matrix-user-${name}" pinpox-utils.mkMatrixPassword) settings.users
@@ -96,7 +131,10 @@
 
             services.matrix-synapse = {
               enable = true;
-              extraConfigFiles = [ regSecretFile ];
+              extraConfigFiles = [
+                regSecretFile
+                emailConfigFile
+              ];
               settings = {
                 server_name = settings.serverName;
                 public_baseurl = "https://${settings.host}/";
