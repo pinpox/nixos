@@ -51,16 +51,38 @@ in
       '';
     };
 
+    # SMTP against our Stalwart instance. Both the address and the app password
+    # live here: secretFile is array_replace_recursive'd over config.php LAST
+    # (nixpkgs nextcloud.nix:312), so any config key supplied here wins and
+    # never enters the Nix store. Only mail_smtppassword may not ALSO appear in
+    # `settings` - that combination trips an assertion.
     clan.core.vars.generators."nextcloud-smtp" = {
       files.smtp-secret.owner = "nextcloud";
-      prompts.smtp-password.persist = true;
+      prompts.address = {
+        type = "line";
+        persist = true;
+        description = "Mail address Nextcloud authenticates and sends as (e.g. nextcloud@pinpox.com)";
+      };
+      prompts.smtp-password = {
+        type = "hidden";
+        persist = true;
+        description = "Stalwart app password for that address (mint with: stalwart-app-account <name>)";
+      };
 
-      runtimeInputs = with pkgs; [ jq ];
+      runtimeInputs = with pkgs; [
+        coreutils
+        jq
+      ];
 
       script = ''
         mkdir -p $out
+        addr="$(cat "$prompts/address")"
         jq -n --arg pw "$(cat "$prompts/smtp-password")" \
-          '{"mail_smtppassword": $pw}' > $out/smtp-secret
+              --arg addr "$addr" \
+              --arg local "''${addr%@*}" \
+              --arg domain "''${addr#*@}" \
+          '{mail_smtppassword: $pw, mail_smtpname: $addr, mail_from_address: $local, mail_domain: $domain}' \
+          > $out/smtp-secret
       '';
     };
 
@@ -82,15 +104,17 @@ in
       secretFile = config.clan.core.vars.generators."nextcloud-smtp".files."smtp-secret".path;
 
       settings = {
+        # Implicit TLS on 465. "ssl" is the ONLY value that means that: the
+        # option is enum [ "" "ssl" ] and "" connects in cleartext, which just
+        # hangs against a TLS-only listener. mail_smtpauthtype is gone - it is
+        # dead since the Swiftmailer -> Symfony Mailer move; the mechanism is
+        # negotiated from the server's AUTH line. mail_smtpname/from_address/
+        # domain come from the secret file above.
         mail_smtpmode = "smtp";
-        mail_smtphost = "r19.hallo.cloud";
-        mail_smtpport = 587;
-        mail_smtpsecure = "";
+        mail_smtphost = "mail.pinpox.com";
+        mail_smtpport = 465;
+        mail_smtpsecure = "ssl";
         mail_smtpauth = true;
-        mail_smtpauthtype = "LOGIN";
-        mail_smtpname = "mail@0cx.de";
-        mail_from_address = "files";
-        mail_domain = "pablo.tools";
 
         maintenance_window_start = "4";
 
