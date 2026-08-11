@@ -93,15 +93,49 @@
               environment.VIKUNJA_AUTH_OPENID_PROVIDERS_AUTHELIA_CLIENTSECRET_FILE = "/run/credentials/vikunja.service/oidc-secret";
             };
 
+            clan.core.vars.generators."vikunja-smtp" = {
+              files."env" = { };
+              prompts.address = {
+                type = "line";
+                persist = true;
+                description = "Mail address Vikunja authenticates and sends as (e.g. vikunja@pinpox.com)";
+              };
+              prompts.app-password = {
+                type = "hidden";
+                persist = true;
+                description = "Stalwart app password for that address (mint with: stalwart-app-account <name>)";
+              };
+              runtimeInputs = with pkgs; [ coreutils ];
+              script = ''
+                addr="$(cat "$prompts/address")"
+                {
+                  printf 'VIKUNJA_MAILER_USERNAME=%s\n' "$addr"
+                  printf 'VIKUNJA_MAILER_FROMEMAIL=%s\n' "$addr"
+                  printf 'VIKUNJA_MAILER_PASSWORD=%s\n' "$(cat "$prompts/app-password")"
+                } > "$out/env"
+              '';
+            };
+
             services.vikunja = {
               enable = true;
               port = 3456;
               frontendScheme = "https";
               frontendHostname = settings.host;
+              environmentFiles = [
+                config.clan.core.vars.generators."vikunja-smtp".files."env".path
+              ];
 
               settings = {
                 service.timezone = "Europe/Berlin";
                 files.basepath = "/var/lib/vikunja/files";
+
+                mailer = {
+                  enabled = true;
+                  host = "mail.pinpox.com";
+                  port = 465;
+                  forcessl = true;
+                  authtype = "plain";
+                };
 
                 defaultsettings = {
                   discoverable_by_name = true;
