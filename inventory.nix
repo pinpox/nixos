@@ -265,12 +265,41 @@ in
     pocket-id = {
       module.input = "clan-community";
       module.name = "pocket-id";
+
+      roles.default.extraModules = [
+        (
+          { config, ... }:
+          {
+            clan.core.vars.generators."pocket-id-smtp" = {
+              files."smtp-password" = { };
+              prompts."smtp-password" = {
+                type = "hidden";
+                persist = true;
+                description = "Mail password for pocket ID";
+              };
+            };
+            services.pocket-id.credentials.SMTP_PASSWORD =
+              config.clan.core.vars.generators."pocket-id-smtp".files."smtp-password".path;
+          }
+        )
+      ];
       roles.default.machines.porree.settings = {
         publicHost = "id.pablo.tools";
 
         # Vikunja's OIDC client can't do PKCE yet (go-vikunja/vikunja#1501),
         # so exempt it from the reconciler's default PKCE requirement.
         pkceExemptClients = [ "vikunja" ];
+
+        extraSettings = {
+          UI_CONFIG_DISABLED = "true"; # Required for mail
+          SMTP_HOST = "mail.pinpox.com";
+          SMTP_PORT = "465";
+          SMTP_TLS = "tls";
+          SMTP_USER = "pocket-id@pinpox.com";
+          SMTP_FROM = "pocket-id@pinpox.com";
+          EMAIL_LOGIN_NOTIFICATION_ENABLED = "false";
+          EMAIL_API_KEY_EXPIRATION_ENABLED = "true";
+        };
 
         extraClients = {
 

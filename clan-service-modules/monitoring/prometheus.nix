@@ -20,7 +20,7 @@ in
     prompts."smtp-password" = {
       type = "hidden";
       persist = true;
-      description = "Stalwart app password for alertmanager@pinpox.com (mint with: stalwart-app-account alertmanager)";
+      description = "Mail password for Alertmanager";
     };
   };
 

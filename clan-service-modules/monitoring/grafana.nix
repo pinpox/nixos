@@ -27,7 +27,7 @@ in
     prompts.smtp-password = {
       type = "hidden";
       persist = true;
-      description = "Stalwart app password for that address (mint with: stalwart-app-account <name>)";
+      description = "Mail app password for grafana";
     };
   };
 

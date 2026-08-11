@@ -103,7 +103,7 @@
               prompts.app-password = {
                 type = "hidden";
                 persist = true;
-                description = "Stalwart app password for that address (mint with: stalwart-app-account <name>)";
+                description = "Mail password for vikunja";
               };
               runtimeInputs = with pkgs; [ coreutils ];
               script = ''
