@@ -15,6 +15,15 @@ let
   nodeExporterHosts = builtins.attrNames (roles."node-exporter".machines or { });
 in
 {
+  clan.core.vars.generators."alertmanager-smtp" = {
+    files."smtp-password" = { };
+    prompts."smtp-password" = {
+      type = "hidden";
+      persist = true;
+      description = "Stalwart app password for alertmanager@pinpox.com (mint with: stalwart-app-account alertmanager)";
+    };
+  };
+
   clan.core.vars.generators."restic-exporter" = pinpox-utils.mkEnvGenerator [
     "RESTIC_PASSWORD"
     "AWS_ACCESS_KEY_ID"
@@ -179,7 +188,7 @@ in
           }
           {
             target_label = "__address__";
-            replacement = "127.0.0.1:${builtins.toString config.services.restic-exporter.port}";
+            replacement = "127.0.0.1:${toString config.services.restic-exporter.port}";
           }
         ];
       }
@@ -239,6 +248,18 @@ in
             webhook_configs = [
               { url = "http://127.0.0.1:11000/alert"; } # matrix-hook
               { url = with config.services.alertmanager-ntfy; "http://${httpAddress}:${httpPort}"; } # alertmanger-ntfy
+            ];
+            email_configs = [
+              {
+                to = "pinpox@pinpox.com";
+                from = "alertmanager@pinpox.com";
+                smarthost = "mail.pinpox.com:465";
+                auth_username = "alertmanager@pinpox.com";
+                auth_password_file =
+                  config.clan.core.vars.generators."alertmanager-smtp".files."smtp-password".path;
+                hello = "pinpox.com";
+                send_resolved = true;
+              }
             ];
           }
         ];

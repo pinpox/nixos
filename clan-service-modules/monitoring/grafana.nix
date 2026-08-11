@@ -16,8 +16,20 @@ let
   oidc = settings.oidc;
 in
 {
-  # SMTP password file
-  clan.core.vars.generators."grafana".prompts.smtp-password.persist = true;
+  clan.core.vars.generators."grafana" = {
+    files.smtp-user.owner = "grafana";
+    files.smtp-password.owner = "grafana";
+    prompts.smtp-user = {
+      type = "line";
+      persist = true;
+      description = "Mail address Grafana authenticates and sends as (e.g. grafana@pinpox.com)";
+    };
+    prompts.smtp-password = {
+      type = "hidden";
+      persist = true;
+      description = "Stalwart app password for that address (mint with: stalwart-app-account <name>)";
+    };
+  };
 
   # Grafana secret key for signing
   clan.core.vars.generators."grafana-secret-key" = {
@@ -66,14 +78,18 @@ in
         config.clan.core.vars.generators."grafana-secret-key".files."secret-key".path
       }}";
 
-      # Mail notifications
-      smtp = {
-        enabled = true;
-        host = "smtp.sendgrid.net:587";
-        user = "apikey";
-        passwordFile = "${config.clan.core.vars.generators."grafana".files."smtp-password".path}";
-        fromAddress = "status@pablo.tools";
-      };
+      smtp =
+        let
+          smtpFiles = config.clan.core.vars.generators."grafana".files;
+        in
+        {
+          enabled = true;
+          host = "mail.pinpox.com:465";
+          user = "$__file{${smtpFiles."smtp-user".path}}";
+          password = "$__file{${smtpFiles."smtp-password".path}}";
+          from_address = "$__file{${smtpFiles."smtp-user".path}}";
+          from_name = "Grafana";
+        };
     }
     // lib.optionalAttrs oidc.enable {
       # SCIM is enabled by default in recent Grafana versions and intercepts
