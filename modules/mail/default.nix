@@ -129,30 +129,6 @@ let
       };
     };
 
-  # Login-less send-only service account (<name>@<domain>) for an application
-  # (SMTP submission on 465). Same idempotent shape as accountOp: upsert matched
-  # on the deterministic emailAddress so re-apply is a no-op. No OIDC identity
-  # and no interactive credential - the SMTP credential is an app-password
-  # minted per app in the webadmin (its secret is server-generated and shown
-  # once, so it cannot be provisioned declaratively).
-  senderOp =
-    name:
-    let
-      s = cfg.senders.${name};
-    in
-    {
-      "@type" = "upsert";
-      object = "Account";
-      matchOn = [ "emailAddress" ];
-      value.${acctId name} = {
-        "@type" = "User";
-        emailAddress = "${name}@${s.domain}";
-        inherit name;
-        domainId = "#${domId s.domain}";
-        roles."@type" = "User";
-      };
-    };
-
   # Declarative registry config, applied with `stalwart-cli apply` (NDJSON, one
   # op per line). Idempotent: singletons use `update`, others `upsert` matched
   # on a stable scalar; `#localId` strings are cross-op references the server
@@ -191,9 +167,6 @@ let
   # Pre-created principals with cross-domain aliases (send-as), after the Domains
   # they reference. Only accounts that declare aliasDomains.
   ++ map accountOp (attrNames (filterAttrs (_: a: a.aliasDomains != [ ]) cfg.accounts))
-  # Login-less send-only service accounts for applications (SMTP submission),
-  # after the Domains they reference.
-  ++ map senderOp (attrNames cfg.senders)
   ++ [
     # Delegate authentication to the OIDC directory.
     {
@@ -218,6 +191,144 @@ let
   planFile = pkgs.writeText "stalwart-plan.ndjson" (
     concatMapStringsSep "\n" (l: builtins.toJSON l) planLines + "\n"
   );
+
+  # Service-account helper. Accounts and credentials are deliberately NOT in the
+  # plan above (secrets must never live in the store), but the web UI cannot mint
+  # an app password for someone else: App Passwords is a self-service page, and a
+  # service account has no login of its own because Pocket ID is the auth
+  # directory. The registry API has no such limit - the recovery admin's token
+  # carries `impersonate`, so `assert_is_member` accepts any `accountId` and
+  # `x:AppPassword/set` mints the credential on the target account directly.
+  # Registry methods are the plain JMAP endpoint with an `x:` prefix.
+  appAccount = pkgs.writeShellApplication {
+    name = "stalwart-app-account";
+    runtimeInputs = with pkgs; [
+      curl
+      jq
+    ];
+    text = ''
+      usage() {
+        cat >&2 <<'EOF'
+      usage: stalwart-app-account <name>[@domain] [--ip ADDR|CIDR]...
+             stalwart-app-account <name>[@domain] --list
+             stalwart-app-account <name>[@domain] --revoke <id>
+
+      Creates the account if missing, then prints a fresh app password. Repeat
+      --ip to restrict the credential to those clients. Must run as root on the
+      mail host (reads the admin password from clan vars).
+      EOF
+        exit 2
+      }
+
+      target="" mode=mint revoke=""
+      ips=()
+      while [ $# -gt 0 ]; do
+        case "$1" in
+          --ip) ips+=("''${2:?--ip needs a value}"); shift 2 ;;
+          --list) mode=list; shift ;;
+          --revoke) mode=revoke; revoke="''${2:?--revoke needs an id from --list}"; shift 2 ;;
+          -h|--help) usage ;;
+          -*) echo "unknown flag: $1" >&2; usage ;;
+          *) target="$1"; shift ;;
+        esac
+      done
+      [ -n "$target" ] || usage
+      case "$target" in
+        *@*) name="''${target%@*}"; domain="''${target#*@}" ;;
+        *) name="$target"; domain="${cfg.primaryDomain}" ;;
+      esac
+      email="$name@$domain"
+
+      pw="$(cat ${config.clan.core.vars.generators."stalwart-admin".files."password".path})"
+
+      die() {
+        echo "stalwart-app-account: $*" >&2
+        exit 1
+      }
+
+      # One JMAP method call in, its result out. JMAP reports failures inside a
+      # 200 response, so the method name has to be checked, not the HTTP status.
+      api() {
+        local out
+        out="$(curl -sS --fail-with-body -u "admin:$pw" -H 'Content-Type: application/json' \
+          -X POST http://127.0.0.1:8080/jmap/ \
+          -d "$(jq -cn --arg m "$1" --argjson a "$2" \
+                '{using:["urn:ietf:params:jmap:core","urn:stalwart:jmap"],methodCalls:[[$m,$a,"c0"]]}')")" \
+          || die "request failed: $out"
+        [ "$(jq -r '.methodResponses[0][0]' <<<"$out")" != error ] \
+          || die "$(jq -r '.methodResponses[0][1] | "\(.type): \(.description // "")"' <<<"$out")"
+        jq -c '.methodResponses[0][1]' <<<"$out"
+      }
+
+      # Destroy app passwords by id; a no-op when called with none.
+      revoke_ids() {
+        [ $# -gt 0 ] || return 0
+        local ids out
+        ids="$(printf '%s\n' "$@" | jq -Rsc 'split("\n") | map(select(length > 0))')"
+        out="$(api x:AppPassword/set \
+          "$(jq -cn --arg a "$account_id" --argjson d "$ids" '{accountId:$a,destroy:$d}')")"
+        jq -e --argjson d "$ids" '((.destroyed // []) | length) == ($d | length)' <<<"$out" >/dev/null \
+          || die "not revoked: $(jq -r --argjson d "$ids" '($d - (.destroyed // [])) | join(", ")' <<<"$out")"
+      }
+
+      account_id="$(api x:Account/get '{"properties":["id","emailAddress"]}' \
+        | jq -r --arg e "$email" 'first(.list[] | select(.emailAddress == $e) | .id) // ""')"
+
+      if [ -z "$account_id" ]; then
+        [ "$mode" = mint ] || die "no such account: $email"
+        domain_id="$(api x:Domain/get '{"properties":["id","name"]}' \
+          | jq -r --arg d "$domain" 'first(.list[] | select(.name == $d) | .id) // ""')"
+        [ -n "$domain_id" ] || die "domain not hosted here: $domain"
+        # emailAddress is server-set (derived from name + domainId); sending it is rejected.
+        created="$(api x:Account/set "$(jq -cn --arg n "$name" --arg d "$domain_id" \
+          '{create:{n0:{"@type":"User",name:$n,domainId:$d,roles:{"@type":"User"}}}}')")"
+        account_id="$(jq -r '.created.n0.id // ""' <<<"$created")"
+        [ -n "$account_id" ] \
+          || die "$(jq -r '.notCreated.n0.description // "account creation failed"' <<<"$created")"
+        echo "created account $email" >&2
+      fi
+
+      case "$mode" in
+        list)
+          api x:AppPassword/get "$(jq -cn --arg a "$account_id" '{accountId:$a}')" \
+            | jq -r '.list[] | [.id, .createdAt, (.allowedIps | keys | join(","))] | @tsv'
+          ;;
+        revoke)
+          revoke_ids "$revoke"
+          echo "revoked $revoke ($email)" >&2
+          ;;
+        mint)
+          allowed="$(printf '%s\n' ''${ips[@]+"''${ips[@]}"} \
+            | jq -Rsc 'split("\n") | map(select(length > 0) | {key:., value:true}) | from_entries')"
+          mapfile -t old < <(api x:AppPassword/get \
+            "$(jq -cn --arg a "$account_id" '{accountId:$a}')" | jq -r '.list[].id')
+
+          # Mint BEFORE revoking, so a failure here leaves the account's current
+          # credential working. The one case that cannot be ordered that way is a
+          # full quota - and those are exactly the credentials being replaced, so
+          # drop them and retry once.
+          revoked=''${#old[@]}
+          secret=""
+          for attempt in 1 2; do
+            # description is a required field; the account name is all it can say.
+            minted="$(api x:AppPassword/set \
+              "$(jq -cn --arg a "$account_id" --arg l "$name" --argjson i "$allowed" \
+                 '{accountId:$a,create:{n0:{description:$l,allowedIps:$i}}}')")"
+            secret="$(jq -r '.created.n0.secret // ""' <<<"$minted")"
+            [ -z "$secret" ] || break
+            [ "$attempt" = 1 ] && [ ''${#old[@]} -gt 0 ] \
+              || die "$(jq -r '.notCreated.n0.description // "could not create app password"' <<<"$minted")"
+            revoke_ids "''${old[@]}"
+            old=()
+          done
+
+          revoke_ids ''${old[@]+"''${old[@]}"}
+          [ "$revoked" -eq 0 ] || echo "replaced $revoked previous app password(s)" >&2
+          echo "$secret"
+          ;;
+      esac
+    '';
+  };
 in
 {
 
@@ -311,35 +422,6 @@ in
         }
       );
     };
-
-    senders = mkOption {
-      default = { };
-      description = ''
-        Login-less send-only service accounts for applications (SMTP submission
-        on 465). Each becomes a local principal <name>@<domain> with no OIDC
-        identity and no interactive login. The SMTP credential is an app-password
-        minted per app in the webadmin (admin -> the account -> app passwords):
-        its secret is server-generated and shown only once, so it cannot be
-        provisioned declaratively - copy it into the consuming app's own secret.
-      '';
-      example = literalExpression ''
-        {
-          notifications = { }; # notifications@<primaryDomain>
-          ci.domain = "megaclan3000.de";
-        }
-      '';
-      type = types.attrsOf (
-        types.submodule {
-          options = {
-            domain = mkOption {
-              type = types.str;
-              default = cfg.primaryDomain;
-              description = "Domain of the sender address (<name>@<domain>); must be a hosted domain.";
-            };
-          };
-        }
-      );
-    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -348,10 +430,6 @@ in
         {
           assertion = hasAttr cfg.primaryDomain cfg.domains;
           message = "pinpox.services.mail.primaryDomain (\"${cfg.primaryDomain}\") must be one of the configured domains: ${concatStringsSep ", " (attrNames cfg.domains)}.";
-        }
-        {
-          assertion = all (s: hasAttr s.domain cfg.domains) (attrValues cfg.senders);
-          message = "Every pinpox.services.mail.senders.<name>.domain must be one of the configured domains: ${concatStringsSep ", " (attrNames cfg.domains)}.";
         }
       ];
 
@@ -444,6 +522,20 @@ in
         ];
         wants = [ "acme-${fqdn}.service" ];
 
+        # The web UI bundle is unpacked once at startup into a TempDir and every
+        # request then READS those files off disk (WebApplications::unpack_all /
+        # ::serve, crates/common/src/manager/application.rs). Under PrivateTmp
+        # that lands in /tmp, which systemd-tmpfiles-clean prunes daily at 10
+        # days age - so ~10 days after each restart the chunks nobody fetched
+        # recently (the admin panel above all) are deleted underneath the running
+        # server and 500 with ENOENT until the next restart. None of systemd's
+        # dedicated directory options redirect where a process puts its temp
+        # files, so the bundle is moved by pointing Rust's temp_dir() at the
+        # RuntimeDirectory below: /run is a tmpfs no cleaner ages out, and it is
+        # dropped on stop, which suits a 2 MB bundle re-unpacked from the DB on
+        # every start. This is the ONLY thing stalwart writes to the temp dir.
+        environment.TMPDIR = "/run/stalwart";
+
         serviceConfig = {
           Type = "simple";
           LimitNOFILE = 65536;
@@ -470,6 +562,8 @@ in
 
           StateDirectory = "stalwart";
           CacheDirectory = "stalwart";
+          # Backs TMPDIR above (the unpacked web UI bundle); tmpfs, wiped on stop.
+          RuntimeDirectory = "stalwart";
           # Stalwart's default tracer writes to /var/log/stalwart; ProtectSystem
           # =strict makes that read-only, so without this the log silently goes
           # nowhere. LogsDirectory creates a writable /var/log/stalwart.
@@ -602,10 +696,11 @@ in
         '';
       };
 
-      # Admin CLI + the reconcile tool available in the shell.
+      # Admin CLI + the service-account helper available in the shell.
       environment.systemPackages = [
         pkg
         cli
+        appAccount
       ];
     }
 
