@@ -12,6 +12,14 @@ let
   # Refer to upstream docs for updating major versions
   package = pkgs.nextcloud34;
 
+  # Nextcloud composes the From header as mail_from_address@mail_domain
+  # (server lib/public/Util.php, getDefaultEmailAddress), so the local part and
+  # the domain are configured separately. mail_smtpname is the AUTH username
+  # and takes the full address.
+  smtpLocalPart = "nextcloud";
+  smtpDomain = "pablo.tools";
+  smtpFrom = "${smtpLocalPart}@${smtpDomain}";
+
 in
 {
 
@@ -51,39 +59,13 @@ in
       '';
     };
 
-    # SMTP against our Stalwart instance. Both the address and the app password
-    # live here: secretFile is array_replace_recursive'd over config.php LAST
-    # (nixpkgs nextcloud.nix:312), so any config key supplied here wins and
-    # never enters the Nix store. Only mail_smtppassword may not ALSO appear in
-    # `settings` - that combination trips an assertion.
     clan.core.vars.generators."nextcloud-smtp" = {
-      files.smtp-secret.owner = "nextcloud";
-      prompts.address = {
-        type = "line";
-        persist = true;
-        description = "Mail address Nextcloud authenticates and sends as (e.g. nextcloud@pinpox.com)";
-      };
+      files.smtp-password.owner = "nextcloud";
       prompts.smtp-password = {
         type = "hidden";
         persist = true;
-        description = "Mail password for that address";
+        description = "Stalwart app password for ${smtpFrom}";
       };
-
-      runtimeInputs = with pkgs; [
-        coreutils
-        jq
-      ];
-
-      script = ''
-        mkdir -p $out
-        addr="$(cat "$prompts/address")"
-        jq -n --arg pw "$(cat "$prompts/smtp-password")" \
-              --arg addr "$addr" \
-              --arg local "''${addr%@*}" \
-              --arg domain "''${addr#*@}" \
-          '{mail_smtppassword: $pw, mail_smtpname: $addr, mail_from_address: $local, mail_domain: $domain}' \
-          > $out/smtp-secret
-      '';
     };
 
     services.phpfpm.pools.nextcloud.settings = {
@@ -101,20 +83,18 @@ in
       # opcache.interned_strings_buffer=64
       # opcache.max_accelerated_files=100000
 
-      secretFile = config.clan.core.vars.generators."nextcloud-smtp".files."smtp-secret".path;
+      secrets.mail_smtppassword =
+        config.clan.core.vars.generators."nextcloud-smtp".files."smtp-password".path;
 
       settings = {
-        # Implicit TLS on 465. "ssl" is the ONLY value that means that: the
-        # option is enum [ "" "ssl" ] and "" connects in cleartext, which just
-        # hangs against a TLS-only listener. mail_smtpauthtype is gone - it is
-        # dead since the Swiftmailer -> Symfony Mailer move; the mechanism is
-        # negotiated from the server's AUTH line. mail_smtpname/from_address/
-        # domain come from the secret file above.
         mail_smtpmode = "smtp";
         mail_smtphost = "mail.pinpox.com";
         mail_smtpport = 465;
         mail_smtpsecure = "ssl";
         mail_smtpauth = true;
+        mail_smtpname = smtpFrom;
+        mail_from_address = smtpLocalPart;
+        mail_domain = smtpDomain;
 
         maintenance_window_start = "4";
 

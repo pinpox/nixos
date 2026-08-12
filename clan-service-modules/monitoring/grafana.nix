@@ -12,22 +12,16 @@
 let
   prometheusHosts = builtins.attrNames (roles.prometheus.machines or { });
   lokiHosts = builtins.attrNames (roles.loki.machines or { });
-
   oidc = settings.oidc;
+  smtpFrom = "grafana@pinpox.com";
 in
 {
   clan.core.vars.generators."grafana" = {
-    files.smtp-user.owner = "grafana";
     files.smtp-password.owner = "grafana";
-    prompts.smtp-user = {
-      type = "line";
-      persist = true;
-      description = "Mail address Grafana authenticates and sends as (e.g. grafana@pinpox.com)";
-    };
     prompts.smtp-password = {
       type = "hidden";
       persist = true;
-      description = "Mail app password for grafana";
+      description = "Stalwart app password for ${smtpFrom}";
     };
   };
 
@@ -78,18 +72,14 @@ in
         config.clan.core.vars.generators."grafana-secret-key".files."secret-key".path
       }}";
 
-      smtp =
-        let
-          smtpFiles = config.clan.core.vars.generators."grafana".files;
-        in
-        {
-          enabled = true;
-          host = "mail.pinpox.com:465";
-          user = "$__file{${smtpFiles."smtp-user".path}}";
-          password = "$__file{${smtpFiles."smtp-password".path}}";
-          from_address = "$__file{${smtpFiles."smtp-user".path}}";
-          from_name = "Grafana";
-        };
+      smtp = {
+        enabled = true;
+        host = "mail.pinpox.com:465";
+        user = smtpFrom;
+        password = "$__file{${config.clan.core.vars.generators."grafana".files."smtp-password".path}}";
+        from_address = smtpFrom;
+        from_name = "Grafana";
+      };
     }
     // lib.optionalAttrs oidc.enable {
       # SCIM is enabled by default in recent Grafana versions and intercepts

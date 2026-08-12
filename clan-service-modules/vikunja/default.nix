@@ -75,6 +75,9 @@
             pkgs,
             ...
           }:
+          let
+            smtpFrom = "vikunja@pinpox.com";
+          in
           {
             # Reverse proxy; pki injects TLS for the .pin endpoint.
             services.caddy = {
@@ -93,26 +96,19 @@
               environment.VIKUNJA_AUTH_OPENID_PROVIDERS_AUTHELIA_CLIENTSECRET_FILE = "/run/credentials/vikunja.service/oidc-secret";
             };
 
+            # Only the app password is secret; username/fromemail are plain
+            # settings. VIKUNJA_MAILER_PASSWORD from the env file overrides the
+            # config file, so it must not also appear in `settings.mailer`.
             clan.core.vars.generators."vikunja-smtp" = {
               files."env" = { };
-              prompts.address = {
-                type = "line";
-                persist = true;
-                description = "Mail address Vikunja authenticates and sends as (e.g. vikunja@pinpox.com)";
-              };
               prompts.app-password = {
                 type = "hidden";
                 persist = true;
-                description = "Mail password for vikunja";
+                description = "Stalwart app password for ${smtpFrom}";
               };
               runtimeInputs = with pkgs; [ coreutils ];
               script = ''
-                addr="$(cat "$prompts/address")"
-                {
-                  printf 'VIKUNJA_MAILER_USERNAME=%s\n' "$addr"
-                  printf 'VIKUNJA_MAILER_FROMEMAIL=%s\n' "$addr"
-                  printf 'VIKUNJA_MAILER_PASSWORD=%s\n' "$(cat "$prompts/app-password")"
-                } > "$out/env"
+                printf 'VIKUNJA_MAILER_PASSWORD=%s\n' "$(cat "$prompts/app-password")" > "$out/env"
               '';
             };
 
@@ -135,6 +131,8 @@
                   port = 465;
                   forcessl = true;
                   authtype = "plain";
+                  username = smtpFrom;
+                  fromemail = smtpFrom;
                 };
 
                 defaultsettings = {

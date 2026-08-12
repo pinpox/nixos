@@ -275,7 +275,7 @@ in
               prompts."smtp-password" = {
                 type = "hidden";
                 persist = true;
-                description = "Mail password for pocket ID";
+                description = "Mail password for pocket-id@pinpox.com";
               };
             };
             services.pocket-id.credentials.SMTP_PASSWORD =

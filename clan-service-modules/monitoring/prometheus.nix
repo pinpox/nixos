@@ -20,7 +20,7 @@ in
     prompts."smtp-password" = {
       type = "hidden";
       persist = true;
-      description = "Mail password for Alertmanager";
+      description = "Mail password for alertmanager@pinpox.com";
     };
   };
 

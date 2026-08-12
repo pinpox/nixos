@@ -7,6 +7,7 @@
 with lib;
 let
   cfg = config.pinpox.services.vaultwarden;
+  smtpFrom = "vaultwarden@pinpox.com";
 in
 {
 
@@ -46,6 +47,8 @@ in
         SMTP_PORT = 465;
         SMTP_SECURITY = "force_tls";
         SMTP_FROM_NAME = "Vaultwarden";
+        SMTP_FROM = smtpFrom;
+        SMTP_USERNAME = smtpFrom;
       };
 
       environmentFile = [
@@ -60,27 +63,19 @@ in
       "ADMIN_TOKEN"
     ];
 
-	# Deliberately not folded into the generator above so they can be re-rolled
-	# separately.
+    # Deliberately not folded into the generator above so it can be re-rolled
+    # separately. Only the password is secret now; the plaintext SMTP_* keys
+    # live in `config`, which renders to a store env file listed first in
+    # EnvironmentFile= (later files win, so there is no collision).
     clan.core.vars.generators."vaultwarden-smtp" = {
       files."env" = { };
-      prompts."address" = {
-        type = "line";
-        persist = true;
-        description = "Mail address for vaultwarden";
-      };
       prompts."app-password" = {
         type = "hidden";
         persist = true;
-        description = "Mail password for vaultwarden";
+        description = "Stalwart app password for ${smtpFrom}";
       };
       script = ''
-        addr="$(cat "$prompts"/address)"
-        {
-          printf 'SMTP_USERNAME=%s\n' "$addr"
-          printf 'SMTP_FROM=%s\n' "$addr"
-          printf 'SMTP_PASSWORD=%s\n' "$(cat "$prompts"/app-password)"
-        } > "$out/env"
+        printf 'SMTP_PASSWORD=%s\n' "$(cat "$prompts"/app-password)" > "$out/env"
       '';
     };
 
