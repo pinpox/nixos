@@ -25,7 +25,7 @@ in
         Defaults to every skill in `pinpox.agentSkills`; set it explicitly to
         give Claude Code a different set than the other harnesses.
       '';
-      example = literalExpression "[ pkgs.agentSkills.nats ]";
+      example = literalExpression "[ inputs.skill-collection.packages.\${system}.hedgedoc ]";
     };
   };
 

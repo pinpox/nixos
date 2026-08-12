@@ -78,10 +78,10 @@
     };
 
   # home.file entries linking each Agent Skill package into one harness's skill
-  # root, e.g. `mkSkillLinks ".omp/agent/skills" [ pkgs.agentSkills.todos ]`.
+  # root, e.g. `mkSkillLinks ".omp/agent/skills" [ skill-collection.hedgedoc ]`.
   # Each package ships its skill at `$out/share/skills/<name>/`; the name comes
-  # from `passthru.skillName` (or `pname` for third-party skill packages) so no
-  # store path has to be read at eval time.
+  # from `passthru.skillName` (or `pname`) so no store path has to be read at
+  # eval time.
   mkSkillLinks =
     dir: skills:
     builtins.listToAttrs (

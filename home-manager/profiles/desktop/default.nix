@@ -41,7 +41,6 @@ in
 
       defaults = {
         xdg.enable = true;
-        calendar.enable = false;
         shell.enable = true;
         gtk.enable = true;
         fonts.enable = true;
@@ -84,12 +83,10 @@ in
         omp.enable = true;
       };
 
-      # Repo-wide agent knowledge with no owning module; skills tied to a tool
-      # are contributed by that tool's module instead. The ones bound above
-      # bring their own CLI, so they appear in home.packages too.
+      # Skills tied to a tool are contributed by that tool's module instead
+      # (see the vja module). These bring their own CLI, so they appear in
+      # home.packages too.
       agentSkills = [
-        pkgs.agentSkills.incus-testing
-        pkgs.agentSkills.nats
         hedgedoc
         kleinanzeigen
       ];

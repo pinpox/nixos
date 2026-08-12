@@ -17,7 +17,6 @@
 
       defaults = {
         xdg.enable = true;
-        calendar.enable = false;
         shell.enable = true;
         gtk.enable = true;
         fonts.enable = false; # Disabled - noto-fonts-color-emoji can't cross-compile
