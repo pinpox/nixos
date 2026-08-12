@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  flake-self,
   ...
 }:
 with lib;
@@ -32,6 +33,8 @@ in
     };
 
     # Agent skill documenting this CLI, offered to every enabled harness.
-    pinpox.agentSkills = [ pkgs.agentSkills.todos ];
+    pinpox.agentSkills = [
+      flake-self.inputs.skill-collection.packages.${pkgs.stdenv.hostPlatform.system}.todos
+    ];
   };
 }

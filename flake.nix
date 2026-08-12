@@ -171,6 +171,10 @@
     mics-skills.inputs.nixpkgs.follows = "nixpkgs";
     mics-skills.inputs.treefmt-nix.follows = "treefmt-nix";
 
+    skill-collection.url = "github:pinpox/skill-collection";
+    skill-collection.inputs.nixpkgs.follows = "nixpkgs";
+    skill-collection.inputs.treefmt-nix.follows = "treefmt-nix";
+
     twitch-first.url = "github:pinpox/twitch-first";
     twitch-first.inputs.nixpkgs.follows = "nixpkgs";
 

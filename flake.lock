@@ -1364,6 +1364,7 @@
         "retiolum": "retiolum",
         "rio": "rio",
         "sbox": "sbox",
+        "skill-collection": "skill-collection",
         "spaces": "spaces",
         "treefmt-nix": [
           "clan-core",
@@ -1428,6 +1429,29 @@
       "original": {
         "owner": "DavHau",
         "repo": "sbox",
+        "type": "github"
+      }
+    },
+    "skill-collection": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786575352,
+        "narHash": "sha256-OhscJmo8w41fQn8jOWdLuMDQiUZ2uG09ORYbikxU7t8=",
+        "owner": "pinpox",
+        "repo": "skill-collection",
+        "rev": "c4f2d9e3f7c58c5ed7d45bed569c8e391304449a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "skill-collection",
         "type": "github"
       }
     },

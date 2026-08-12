@@ -12,6 +12,6 @@
     type = lib.types.listOf lib.types.package;
     default = [ ];
     description = "Agent Skill packages offered to every enabled agent harness.";
-    example = lib.literalExpression "[ pkgs.agentSkills.todos ]";
+    example = lib.literalExpression "[ pkgs.agentSkills.nats ]";
   };
 }

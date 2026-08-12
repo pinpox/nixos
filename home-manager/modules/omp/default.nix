@@ -36,7 +36,7 @@ in
         Defaults to every skill in `pinpox.agentSkills`; set it explicitly to
         give omp a different set than the other harnesses.
       '';
-      example = literalExpression "[ pkgs.agentSkills.todos ]";
+      example = literalExpression "[ pkgs.agentSkills.nats ]";
     };
   };
 

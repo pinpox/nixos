@@ -1,8 +1,17 @@
 {
   pkgs,
+  flake-self,
   ...
 }:
 let
+
+  # Each of these ships its CLI and its agent skill in one derivation
+  # (bin/<tool> plus share/skills/<tool>), so they land in home.packages and in
+  # pinpox.agentSkills alike.
+  inherit (flake-self.inputs.skill-collection.packages.${pkgs.stdenv.hostPlatform.system})
+    hedgedoc
+    kleinanzeigen
+    ;
 
   screenshot-region =
     pkgs.writeShellScriptBin "screenshot-region" # sh
@@ -76,10 +85,13 @@ in
       };
 
       # Repo-wide agent knowledge with no owning module; skills tied to a tool
-      # are contributed by that tool's module instead.
-      agentSkills = with pkgs.agentSkills; [
-        incus-testing
-        nats
+      # are contributed by that tool's module instead. The ones bound above
+      # bring their own CLI, so they appear in home.packages too.
+      agentSkills = [
+        pkgs.agentSkills.incus-testing
+        pkgs.agentSkills.nats
+        hedgedoc
+        kleinanzeigen
       ];
     };
 
@@ -87,6 +99,8 @@ in
     home.packages = with pkgs; [
       screenshot-region
       screenshot-region-file
+      hedgedoc
+      kleinanzeigen
       spotify
       mpv
       sysz
