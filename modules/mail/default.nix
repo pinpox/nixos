@@ -187,6 +187,12 @@ let
         useXForwarded = true;
       };
     }
+    # Expire authentication-failure bans after an hour
+    {
+      "@type" = "update";
+      object = "Security";
+      value.authBanPeriod = 3600000;
+    }
   ];
   planFile = pkgs.writeText "stalwart-plan.ndjson" (
     concatMapStringsSep "\n" (l: builtins.toJSON l) planLines + "\n"

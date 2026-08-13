@@ -375,11 +375,14 @@ botInstances
 
           # plann's config: one section per calendar. Passwords are read from
           # the unit's environment (EnvironmentFile) instead of the store.
+          # plann runs the command through `sh -c`, so `printenv` is spelled
+          # out — PATH is whatever the caller happens to have.
+          printenv = "${pkgs.coreutils}/bin/printenv";
           calendarConf = (pkgs.formats.yaml { }).generate "calendar.conf" {
             default = {
               caldav_url = "https://mail.pinpox.com/dav/cal/";
               caldav_user = "pinpox@pinpox.com";
-              caldav_pass_command = "printenv STALWART_PASSWORD";
+              caldav_pass_command = "${printenv} STALWART_PASSWORD";
               calendar_url = "default";
             };
             weightlifting = {
@@ -389,7 +392,7 @@ botInstances
             work = {
               caldav_url = "https://nextcloud.clan.lol/remote.php/dav/";
               caldav_user = "pinpox";
-              caldav_pass_command = "printenv WORK_NEXTCLOUD_PASSWORD";
+              caldav_pass_command = "${printenv} WORK_NEXTCLOUD_PASSWORD";
               calendar_url = "personal";
             };
           };
@@ -420,12 +423,17 @@ botInstances
             plann = "${plann}/share/skills/plann";
           };
 
-          # plann reads ~/.config/calendar.conf; HOME is the bot's state dir,
-          # which is bind-mounted into its container.
-          systemd.tmpfiles.rules = [
-            "d ${stateDir}/.config 0755 root root -"
-            "L+ ${stateDir}/.config/calendar.conf - - - - ${calendarConf}"
-          ];
+          # plann reads ~/.config/calendar.conf, and HOME is the bot's state
+          # dir. The rule has to run INSIDE the container: the state dir is
+          # owned by the container's `opencrow` user, and host-side tmpfiles
+          # refuse to descend from it into a root-owned child ("unsafe path
+          # transition") and silently skip the symlink.
+          containers.opencrow-claude.config = {
+            systemd.tmpfiles.rules = [
+              "d ${stateDir}/.config 0750 opencrow opencrow -"
+              "L+ ${stateDir}/.config/calendar.conf - - - - ${calendarConf}"
+            ];
+          };
         }
       )
     ];

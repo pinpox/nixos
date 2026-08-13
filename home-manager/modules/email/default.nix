@@ -17,6 +17,40 @@ in
 
     programs.himalaya.enable = true;
 
+    # home-manager's himalaya module still emits the v1 schema, which himalaya
+    # 2.0 rejects ("No backend matching `auto` is configured"). Generate the v2
+    # layout instead, derived from the account below.
+    xdg.configFile."himalaya/config.toml".source =
+      let
+        acc = config.accounts.email.accounts.pablo_tools;
+        sasl.plain = {
+          username = acc.userName;
+          password.command = acc.passwordCommand;
+        };
+      in
+      mkForce (
+        (pkgs.formats.toml { }).generate "himalaya-config.toml" {
+          downloads-dir = "${config.home.homeDirectory}/Downloads";
+          mailbox.alias = {
+            inbox = "INBOX";
+            sent = "Sent";
+            drafts = "Drafts";
+            trash = "Trash";
+          };
+          accounts.pablo_tools = {
+            default = true;
+            imap = {
+              server = "imaps://${acc.imap.host}:${toString acc.imap.port}";
+              inherit sasl;
+            };
+            smtp = {
+              server = "smtps://${acc.smtp.host}:${toString acc.smtp.port}";
+              inherit sasl;
+            };
+          };
+        }
+      );
+
     programs.aerc = {
       extraConfig.general.unsafe-accounts-conf = true;
       enable = true;
@@ -58,10 +92,7 @@ in
           inbox = "INBOX";
         };
         aerc.enable = true;
-        himalaya = {
-          enable = true;
-          settings.downloads-dir = "/home/pinpox/Downloads";
-        };
+        himalaya.enable = true;
         address = "mail@pablo.tools";
 
         aliases = [

@@ -1382,11 +1382,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786613172,
-        "narHash": "sha256-A9mN598DHnKD9R791XM9FmfyNCxv0+x9L8i8l7nh13c=",
+        "lastModified": 1786742136,
+        "narHash": "sha256-AU34Ig/aR9l05O4o/d1d8zrKskwvrW9CMA85Sxd/vSk=",
         "owner": "pinpox",
         "repo": "skill-collection",
-        "rev": "b6837116597f9ee335a82ed948588d38f897bfe1",
+        "rev": "a84ec3f00ef68f8433f2a87ae4f61d0162df4772",
         "type": "github"
       },
       "original": {
