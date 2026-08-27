@@ -95,6 +95,11 @@
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
     spaces.inputs.home-manager.follows = "home-manager";
 
+    # llama.cpp at PR #27742 (Qwen3.8-Flash-Next / qwen4exp support).
+    # TODO: drop and use nixpkgs' llama-cpp once the PR is merged and released.
+    llama-cpp-qwen4exp.url = "github:ggml-org/llama.cpp/6c5afc86ae84448ae4d744e357017e2c490ad9c3";
+    llama-cpp-qwen4exp.flake = false;
+
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.inputs.flake-parts.follows = "clan-core/flake-parts";

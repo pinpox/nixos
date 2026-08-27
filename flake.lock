@@ -617,6 +617,23 @@
         "type": "github"
       }
     },
+    "llama-cpp-qwen4exp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787803092,
+        "narHash": "sha256-6qMeFRuSn/5CEU/AN6sArXJzQfC4rhSlPXuHGHmMGwU=",
+        "owner": "ggml-org",
+        "repo": "llama.cpp",
+        "rev": "6c5afc86ae84448ae4d744e357017e2c490ad9c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ggml-org",
+        "repo": "llama.cpp",
+        "rev": "6c5afc86ae84448ae4d744e357017e2c490ad9c3",
+        "type": "github"
+      }
+    },
     "llm-agents": {
       "inputs": {
         "bun2nix": "bun2nix",
@@ -1375,6 +1392,7 @@
         "home-manager": "home-manager",
         "jitsi-matrix-presence": "jitsi-matrix-presence",
         "jj-zsh-prompt": "jj-zsh-prompt",
+        "llama-cpp-qwen4exp": "llama-cpp-qwen4exp",
         "llm-agents": "llm-agents",
         "matrix-hook": "matrix-hook",
         "mc3000": "mc3000",

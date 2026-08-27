@@ -4,7 +4,8 @@
 let
   # The p0 inference endpoint (same provider the hermes VMs on traube use);
   # apiKey is the env-var NAME omp reads, filled from the p0-inference-key env
-  # file. mango no longer hosts llama-swap.
+  # file. The bots stay on p0; mango's llama-swap (back since the
+  # Qwen3.8-Flash-Next setup) is not wired in here.
   p0Models.providers.p0 = {
     baseUrl = "https://inference.p0.contact/v1";
     api = "openai-completions";
