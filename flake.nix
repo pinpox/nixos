@@ -9,7 +9,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
 
     # TODO: remove when NixOS/nixpkgs#504200 lands
-    nixpkgs-bulwark.url = "github:Cameo007/nixpkgs/d6b148827da1bd0179140c9b0d3f95a7e0add206";
+    nixpkgs-bulwark.url = "github:Cameo007/nixpkgs/a6ec8aafe9e6bdedcd574bb017217b9aa55445e4";
 
     # Stalwart pinned to 0.16.13 (+ matching stalwart-cli 1.0.10). nixpkgs'
     # 0.16.14 packaging links jemalloc (stalwart's main.rs sets an unconditional

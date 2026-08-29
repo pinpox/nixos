@@ -989,17 +989,17 @@
     },
     "nixpkgs-bulwark": {
       "locked": {
-        "lastModified": 1785100778,
-        "narHash": "sha256-5Ob1OtzZ3p8CmQy8jcoRFpJokxX+zqjdByW2IT2Jq6I=",
+        "lastModified": 1787844961,
+        "narHash": "sha256-ZCQMklbK8Ccqxdt+wYT3y9I+CmhU3jkJu2bZM9xnp9s=",
         "owner": "Cameo007",
         "repo": "nixpkgs",
-        "rev": "d6b148827da1bd0179140c9b0d3f95a7e0add206",
+        "rev": "a6ec8aafe9e6bdedcd574bb017217b9aa55445e4",
         "type": "github"
       },
       "original": {
         "owner": "Cameo007",
         "repo": "nixpkgs",
-        "rev": "d6b148827da1bd0179140c9b0d3f95a7e0add206",
+        "rev": "a6ec8aafe9e6bdedcd574bb017217b9aa55445e4",
         "type": "github"
       }
     },
