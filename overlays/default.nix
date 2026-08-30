@@ -80,6 +80,30 @@ self: super: {
     omp
     ;
 
+  # claude-desktop self-downloads generic-linux binaries at runtime (claude-code
+  # CLI, uv) and execs them; run the app inside an FHS user namespace so their
+  # hardcoded /lib64 interpreter path resolves without system-wide nix-ld.
+  # TODO https://github.com/numtide/llm-agents.nix/pull/8629
+  claude-desktop =
+    let
+      inner = inputs.llm-agents.packages.${super.stdenv.hostPlatform.system}.claude-desktop;
+    in
+    super.buildFHSEnv {
+      name = "claude-desktop";
+      targetPkgs = pkgs: [
+        inner
+        pkgs.stdenv.cc.cc.lib
+        pkgs.libglvnd
+        pkgs.mesa
+        pkgs.libgbm
+        pkgs.vulkan-loader
+      ];
+      runScript = "claude-desktop";
+      extraInstallCommands = ''
+        ln -s ${inner}/share $out/share
+      '';
+    };
+
   rio = (inputs.rio.packages.${super.stdenv.hostPlatform.system}.default).overrideAttrs {
     doCheck = false;
   };

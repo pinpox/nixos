@@ -13,7 +13,7 @@
 
   environment.systemPackages = with pkgs; [
     python3
-
+    claude-desktop
   ];
 
   programs.vscode.enable = true;
