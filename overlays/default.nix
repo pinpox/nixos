@@ -76,7 +76,7 @@ self: super: {
     openspec
     claude-code
     but
-    gitbutler
+    # gitbutler
     omp
     ;
 

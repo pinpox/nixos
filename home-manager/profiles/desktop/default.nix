@@ -110,7 +110,7 @@ in
       swaynotificationcenter
       tea
       but
-      gitbutler
+      # gitbutler
       chafa
       asciinema
       duf
