@@ -13,7 +13,7 @@ with lib;
   ];
 
   # Limit log size for journal
-  services.journald.extraConfig = "SystemMaxUse=1G";
+  services.journald.settings.Journal.SystemMaxUse = "1G";
 
   environment.systemPackages = with pkgs; [
     universal-ctags

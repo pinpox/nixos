@@ -1,4 +1,5 @@
 {
+  config,
   mc3000,
   trippy-track,
   pinpox-utils,
@@ -53,7 +54,7 @@
   services.trippy-track = {
     enable = true;
     port = 8090;
-    environmentFile = "/run/secrets/trippy-track/envfile";
+    environmentFile = config.clan.core.vars.generators."trippy-track".files."envfile".path;
   };
 
   services.qemuGuest.enable = true;

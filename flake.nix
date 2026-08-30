@@ -91,6 +91,8 @@
     spaces.inputs.nixpkgs.follows = "nixpkgs";
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
     spaces.inputs.home-manager.follows = "home-manager";
+    spaces.inputs.disko.follows = "disko";
+    spaces.inputs.llm-agents.follows = "llm-agents";
 
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
