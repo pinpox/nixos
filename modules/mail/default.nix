@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  nixpkgs-bulwark,
   nixpkgs-stalwart,
   ...
 }:
@@ -337,13 +336,6 @@ let
   };
 in
 {
-
-  # Bulwark's NixOS module isn't in our pinned nixpkgs yet; pull it from the
-  # pinned PR checkout (see flake input `nixpkgs-bulwark`). Imported on every
-  # machine but inert unless services.bulwark.enable is set (below).
-  imports = [
-    "${nixpkgs-bulwark}/nixos/modules/services/web-apps/bulwark.nix"
-  ];
 
   options.pinpox.services.mail = {
     enable = mkEnableOption "Stalwart 0.16 mail server (with Bulwark webmail)";
@@ -713,9 +705,7 @@ in
     (mkIf cfg.webmail {
       services.bulwark = {
         enable = true;
-        # Build the package from the PR checkout too (keeps the master-based build
-        # isolated from our pinned pkgs).
-        package = nixpkgs-bulwark.legacyPackages.${pkgs.stdenv.hostPlatform.system}.bulwark;
+        package = pkgs.bulwark;
 
         # Loopback only; Caddy terminates TLS and reverse-proxies.
         hostname = "127.0.0.1";
