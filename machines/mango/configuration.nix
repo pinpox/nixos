@@ -50,7 +50,9 @@ in
     # concatenation (`--listen=${listenAddress}:${port}`), so the IPv6
     # wildcard must be bracketed or llama-swap crash-loops on ":::8012".
     listenAddress = lib.mkForce "[::]";
-    # PR-pinned build: the qwen4exp arch is not in any llama.cpp release yet.
+    # Fork-pinned build: the qwen4exp arch is not in any llama.cpp release
+    # yet, and MTP speculative decoding for it is not merged upstream
+    # (ggml-org/llama.cpp#27836).
     llama-server-package = pkgs.llama-cpp-qwen4exp;
 
     # Qwen3.8-Flash-Next 125B-A6B MoE + 51B n-gram table. Flags from
@@ -60,19 +62,38 @@ in
     # keeps the sparsely-read n-gram table evictable instead of resident.
     # -np 1: multi-slot had an indexer-desync assert upstream; single slot
     # is the tested config.
+    #
+    # MTP speculative decoding (Zulip: #topic-ai > MTP for Qwen on FW
+    # desktop): the model drafts its own next tokens via its NextN head, one
+    # extra parallel pass verifies them. Measured on this box (greedy, 32K
+    # ctx): file rewrite 22->53 t/s, new code 27->47, prose +12%, 7K-prompt
+    # +39%; temp-1.0 sampling holds up. n-max 6 beat 3 and adding ngram-mod
+    # was a wash, so MTP runs alone. Unsloth GGUFs are converted --no-nextn,
+    # so the head comes from a detached sidecar (drluoto's Q8_0 export of the
+    # official checkpoint) with its 3 duplicate legacy-named mixer tensors
+    # (blk.48.nextn.hc_head_*) stripped -- this fork's loader rejects files
+    # with unconsumed tensors.
+    #
+    # MTP entries run at reduced context: at 262K the sidecar overcommits
+    # GTT -- RADV fails command submission and can leave llama-server wedged
+    # in unkillable D-state (amdgpu/TTM livelock, reboot required). MTP is
+    # therefore only on the default entry, at a context verified on this box;
+    # the :262k entry keeps the full native context without MTP.
     settings.models =
       let
         qwenFlags = "-ngl 999 -fa on -np 1 -b 2048 -ub 2048 -ctk q8_0 -ctv q8_0 --jinja --temp 1.0 --top-p 0.95 --top-k 20 --min-p 0.0";
         qwenDir = "${modelsDir}/Qwen3.8-Flash-Next-GGUF";
+        mtpFlags = "-md ${qwenDir}/mtp-Qwen3.8-Flash-Next-Q8_0-stripped.gguf --spec-type draft-mtp --spec-draft-n-max 6 --spec-draft-p-min 0.7 -ctkd q8_0 -ctvd q8_0";
       in
       {
-        # Default: 24.1 t/s tg / 427 t/s pp2048, 18.7/15.0 t/s at 8K/32K depth.
-        # Faster than Q4_K_XL and 16 GiB smaller, so it runs the full native
-        # 262K context in ~101 GiB with 24 GiB headroom.
+        # Default: 31-53 t/s tg with MTP (22-28 without) / 427 t/s pp2048.
         "qwen3.8-flash-next:iq4_xs" = {
-          cmd = "${llamaServer} -m ${qwenDir}/UD-IQ4_XS/Qwen3.8-Flash-Next-UD-IQ4_XS-00001-of-00003.gguf --port \${PORT} -c 262144 ${qwenFlags}";
+          cmd = "${llamaServer} -m ${qwenDir}/UD-IQ4_XS/Qwen3.8-Flash-Next-UD-IQ4_XS-00001-of-00003.gguf --port \${PORT} -c 131072 ${qwenFlags} ${mtpFlags}";
           aliases = [ "qwen3.8-flash-next" ];
         };
+        # Full native 262K context, no MTP: 24.1 t/s tg, ~101 GiB total.
+        "qwen3.8-flash-next:iq4_xs-262k".cmd =
+          "${llamaServer} -m ${qwenDir}/UD-IQ4_XS/Qwen3.8-Flash-Next-UD-IQ4_XS-00001-of-00003.gguf --port \${PORT} -c 262144 ${qwenFlags}";
         # Quality-max dynamic quant: 23 t/s tg / 421 t/s pp2048. 131K ctx —
         # 262K would leave <5 GiB free.
         "qwen3.8-flash-next:q4_k_xl".cmd =

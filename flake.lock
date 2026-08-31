@@ -620,17 +620,17 @@
     "llama-cpp-qwen4exp": {
       "flake": false,
       "locked": {
-        "lastModified": 1787803092,
-        "narHash": "sha256-6qMeFRuSn/5CEU/AN6sArXJzQfC4rhSlPXuHGHmMGwU=",
-        "owner": "ggml-org",
+        "lastModified": 1787927675,
+        "narHash": "sha256-vXtDt0RL5Eqg4F3xHBfeQ3Gz2/aetueXX4Plp4/C/jw=",
+        "owner": "Nathanw1014",
         "repo": "llama.cpp",
-        "rev": "6c5afc86ae84448ae4d744e357017e2c490ad9c3",
+        "rev": "ad914eb6587d3da8b2bf50f0056cc20b3d3e91f5",
         "type": "github"
       },
       "original": {
-        "owner": "ggml-org",
+        "owner": "Nathanw1014",
         "repo": "llama.cpp",
-        "rev": "6c5afc86ae84448ae4d744e357017e2c490ad9c3",
+        "rev": "ad914eb6587d3da8b2bf50f0056cc20b3d3e91f5",
         "type": "github"
       }
     },

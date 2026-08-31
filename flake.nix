@@ -95,9 +95,10 @@
     spaces.inputs.treefmt-nix.follows = "treefmt-nix";
     spaces.inputs.home-manager.follows = "home-manager";
 
-    # llama.cpp at PR #27742 (Qwen3.8-Flash-Next / qwen4exp support).
-    # TODO: drop and use nixpkgs' llama-cpp once the PR is merged and released.
-    llama-cpp-qwen4exp.url = "github:ggml-org/llama.cpp/6c5afc86ae84448ae4d744e357017e2c490ad9c3";
+    # llama.cpp fork with qwen4exp (Qwen3.8-Flash-Next) plus working MTP
+    # speculative decoding on Vulkan (upstream PR: ggml-org/llama.cpp#27836).
+    # TODO: drop and use nixpkgs' llama-cpp once MTP is merged and released.
+    llama-cpp-qwen4exp.url = "github:Nathanw1014/llama.cpp/ad914eb6587d3da8b2bf50f0056cc20b3d3e91f5";
     llama-cpp-qwen4exp.flake = false;
 
     nur.url = "github:pinpox/NUR";

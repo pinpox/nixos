@@ -56,20 +56,20 @@ self: super: {
     patches = [ ./age-plugin-yubikey-skip-not-found.patch ];
   };
 
-  # llama.cpp from PR #27742 (qwen4exp arch: Qwen3.8-Flash-Next), Vulkan for
-  # Strix Halo. Version = the PR head's build number; the COMMIT file feeds
-  # nixpkgs' preConfigure, which the flake-input src lacks.
-  # TODO: remove once ggml-org/llama.cpp#27742 is merged and released.
+  # llama.cpp with qwen4exp arch + MTP (Nathanw1014 strix-halo-vulkan fork),
+  # Vulkan for Strix Halo. Version = the branch tip's commit count; the COMMIT
+  # file feeds nixpkgs' preConfigure, which the flake-input src lacks.
+  # TODO: remove once ggml-org/llama.cpp#27836 (MTP) is merged and released.
   llama-cpp-qwen4exp =
     (super.llama-cpp.override {
       vulkanSupport = true;
       blasSupport = true;
     }).overrideAttrs
       (old: {
-        version = "10669";
+        version = "10639";
         src = inputs.llama-cpp-qwen4exp;
         postPatch = (old.postPatch or "") + ''
-          echo 6c5afc86a > COMMIT
+          echo ad914eb65 > COMMIT
         '';
         npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
       });
