@@ -173,22 +173,6 @@ in
       # Navidrome
       "music.pablo.tools".extraConfig = "reverse_proxy birne.wireguard:4533";
 
-      # Alertmanager
-      "vpn.alerts.pablo.tools".extraConfig = ''
-        @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
-        }
-        reverse_proxy @vpnonly 127.0.0.1:9093
-      '';
-
-      # Prometheus
-      "vpn.prometheus.pablo.tools".extraConfig = ''
-        @vpnonly {
-          remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
-        }
-        reverse_proxy @vpnonly 127.0.0.1:9090
-      '';
-
       # matrix-hook (VPN-only, no basic auth)
       "vpn.notify.pablo.tools".extraConfig = ''
         @vpnonly {

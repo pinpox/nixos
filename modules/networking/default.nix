@@ -45,8 +45,6 @@ in
 
           # VPN protected services (porree via wireguard)
           ${porreeWgIp} vpn.motion.pablo.tools
-          ${porreeWgIp} vpn.alerts.pablo.tools
-          ${porreeWgIp} vpn.prometheus.pablo.tools
           ${porreeWgIp} vpn.notify.pablo.tools
           ${porreeWgIp} vpn.s3.pablo.tools
           ${porreeWgIp} vpn.minio.pablo.tools

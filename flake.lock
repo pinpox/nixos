@@ -151,11 +151,13 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1789676837,
-        "narHash": "sha256-sezCFEbkagGaF6O0lts5Var6wI9PVB19IEQD+kxwiNo=",
-        "rev": "9ca071636ec133bfdfaad24bc54b4e8b8eba2a76",
-        "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-core/archive/9ca071636ec133bfdfaad24bc54b4e8b8eba2a76.tar.gz"
+        "lastModified": 1789839110,
+        "narHash": "sha256-GtWzBzU4UDcUbhJByhX6Z+ADdLVxX4+UMocMeY5u9j8=",
+        "ref": "monitoring-dashboard-uids",
+        "rev": "0407655c25296855b85527626bf58634db073ffe",
+        "revCount": 15297,
+        "type": "git",
+        "url": "file:///home/pinpox/code/git.clan.lol/clan/clan-core"
       },
       "original": {
         "type": "tarball",
@@ -1038,30 +1040,6 @@
         "type": "github"
       }
     },
-    "promterm": {
-      "inputs": {
-        "naersk": [
-          "naersk"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1707819805,
-        "narHash": "sha256-dHim4OLbkdWWqiaAytKnivxAHyFD9dp55vUXRhEIPxM=",
-        "owner": "pinpox",
-        "repo": "promterm",
-        "rev": "4b26c03a11b7996db1b4be34c3cc9f206e1b2ca0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "promterm",
-        "type": "github"
-      }
-    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -1253,7 +1231,6 @@
         "passage-secret-service": "passage-secret-service",
         "pinpox-keys": "pinpox-keys",
         "pinpox-neovim": "pinpox-neovim",
-        "promterm": "promterm",
         "radio": "radio",
         "rage": "rage",
         "restic-exporter": "restic-exporter",
@@ -1359,11 +1336,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789623319,
-        "narHash": "sha256-kmlp8rPrvrXn58YiaANHKSWUijtUc7pwgerIywosOIM=",
+        "lastModified": 1789815532,
+        "narHash": "sha256-/Ql9UE21iDwOU/JdPV20yZtaMpGf+iD2EhIA1aAi540=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "16954c1c360c3dc4d4b3b3e64df59f7e89452cb1",
+        "rev": "166fc0d3f4fcd0dfc9af102ba8e85fa5dd04e5f7",
         "type": "github"
       },
       "original": {
@@ -1388,7 +1365,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_5",
+        "systems": "systems_4",
         "treefmt-nix": [
           "treefmt-nix"
         ],
@@ -1485,21 +1462,6 @@
         "type": "github"
       }
     },
-    "systems_5": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1561,24 +1523,6 @@
       "original": {
         "owner": "pinpox",
         "repo": "twitch-first",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "inputs": {
-        "systems": "systems_4"
-      },
-      "locked": {
-        "lastModified": 1705309234,
-        "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "1ef2e671c3b0c19053962c07dbda38332dcebf26",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     },

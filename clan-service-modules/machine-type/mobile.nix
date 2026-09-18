@@ -5,7 +5,6 @@
   nur,
   flake-self,
   wl-harmonograph,
-  promterm,
   home-manager,
   ...
 }:
@@ -45,7 +44,6 @@
       wl-harmonograph
       flake-self
       nur
-      promterm
       ;
 
     # Pass system configuration (top-level "config") to home-manager modules,

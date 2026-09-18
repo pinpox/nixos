@@ -68,12 +68,6 @@
     naersk.url = "github:nix-community/naersk/master";
     naersk.inputs.nixpkgs.follows = "nixpkgs";
 
-    promterm.url = "github:pinpox/promterm";
-    promterm.inputs = {
-      nixpkgs.follows = "nixpkgs";
-      naersk.follows = "naersk";
-    };
-
     go-karma-bot.url = "github:pinpox/go-karma-bot";
     go-karma-bot.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -223,7 +217,7 @@
         modules."@pinpox/vikunja" = ./clan-service-modules/vikunja;
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
-        modules."@pinpox/monitoring" = ./clan-service-modules/monitoring;
+        modules."@pinpox/monitoring-glue" = ./clan-service-modules/monitoring-glue;
         modules."@pinpox/n2n" = ./clan-service-modules/n2n;
         modules."@pinpox/opencrow" = ./clan-service-modules/opencrow;
         modules."@pinpox/matrix" = ./clan-service-modules/matrix;

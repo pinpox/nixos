@@ -1,7 +1,6 @@
 {
   flake-inputs,
   pkgs,
-  promterm,
   lib,
   config,
   ...
@@ -190,7 +189,6 @@
       # x86_64-only aliases
       gif = "${flake-inputs.gif-searcher.packages.x86_64-linux.default}/bin/show-gif";
       gifi = "${flake-inputs.gif-searcher.packages.x86_64-linux.gif-infinite}/bin/show-gif";
-      pt = "${promterm.defaultPackage.x86_64-linux}/bin/promterm 'https://vpn.prometheus.pablo.tools/api/v1/alerts'";
 
       # Power profile aliases (requires ryzenadj)
       power-performance = "power-profile PERFORMANCE 30000 35000 35000";

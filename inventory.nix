@@ -349,40 +349,37 @@ in
       };
     };
 
+    # Metrics + logs: clan-core push-based stack. Every machine runs an alloy
+    # client shipping journal logs and node metrics to porree (mimir/loki);
+    # grafana serves dashboards and evaluates the declarative alert rules.
+    # The built-in nginx proxy is disabled; @pinpox/monitoring-glue provides
+    # the caddy vhost, Pocket ID OIDC and the alert rules instead.
     monitoring = {
+      module.input = "clan-core";
+      module.name = "monitoring";
+
+      roles.client = {
+        tags.all = { };
+        settings.useSSL = true;
+        # vmstat/boottime/textfile collectors for the OOM/reboot/uptime and
+        # flake-freshness alerts.
+        extraModules = [ ./clan-service-modules/monitoring-glue/client-collectors.nix ];
+      };
+
+      roles.server.machines.porree.settings = {
+        grafana.enable = true;
+        host = "status.pin";
+        proxy.enable = false;
+        proxy.useSSL = true;
+      };
+    };
+
+    # Caddy vhost (TLS via pki, DNS via dm-dns), Grafana OIDC client and
+    # declarative alerting on the monitoring server.
+    monitoring-glue = {
       module.input = "self";
-      module.name = "@pinpox/monitoring";
-
-      # node-exporter on every host
-      # roles.node-exporter.tags.all = { };
-      #
-      # # Centralized monitoring server lives on porree
-      roles.prometheus.machines.porree.settings = {
-        blackboxTargets = [
-          "https://pablo.tools"
-          # "https://megaclan3000.de"
-          # "https://build.lounge.rocks"
-          # "https://pass.pablo.tools" # Vaultwarden
-          # "https://pinpox.github.io/nixos/"
-          # "https://cache.lounge.rocks/nix-cache/nix-cache-info"
-          # "https://news.0cx.de"
-          # "https://git.0cx.de" # Gitea
-          # "https://irc.0cx.de"
-        ];
-      };
-      # roles.loki.machines.porree = { };
-
-      roles.grafana.machines.porree.settings = {
-        oidc = {
-          enable = true;
-          issuer = "https://id.pablo.tools";
-          clientId = "grafana";
-          providerName = "Pocket ID";
-        };
-      };
-
-      # roles.blackbox.machines.porree = { };
-      # roles.alertmanager-irc-relay.machines.porree = { };
+      module.name = "@pinpox/monitoring-glue";
+      roles.default.machines.porree = { };
     };
 
     importer = {
