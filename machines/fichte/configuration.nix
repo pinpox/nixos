@@ -16,8 +16,6 @@
     claude-desktop
   ];
 
-  programs.vscode.enable = true;
-
   networking.hostName = "fichte";
 
   # Set keymap to DE on this device
