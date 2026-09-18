@@ -1559,11 +1559,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778186035,
-        "narHash": "sha256-G91snRSsEFfXwNapxg6y+jEAH20iQJd045XeJgGXiMQ=",
+        "lastModified": 1789717101,
+        "narHash": "sha256-Qqsc2IEu89QqsAGseHt+aXiagqfxXvcc0NlG0zF6tbs=",
         "owner": "pinpox",
         "repo": "trippy-track",
-        "rev": "6f9437496197ee9592798a6fa506756149091437",
+        "rev": "86f5a0776a4f678ba8609f2e5a178f8e48be3742",
         "type": "github"
       },
       "original": {
