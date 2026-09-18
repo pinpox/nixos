@@ -2,7 +2,6 @@
   matrix-hook,
   config,
   pkgs,
-  alertmanager-ntfy,
   pinpox-utils,
   ...
 }:
@@ -11,7 +10,6 @@
   imports = [
     ./hardware-configuration.nix
     matrix-hook.nixosModule
-    alertmanager-ntfy.nixosModules.default
     ./caddy.nix
     # ./retiolum.nix
     ../../modules/opencrow
@@ -30,10 +28,6 @@
   };
 
   clan.core.vars.generators."matrix-hook" = pinpox-utils.mkEnvGenerator [ "MX_TOKEN" ];
-  clan.core.vars.generators."alertmanager-ntfy" = pinpox-utils.mkEnvGenerator [
-    "NTFY_USER"
-    "NTFY_PASS"
-  ];
 
   services.qemuGuest.enable = true;
   services.tailscale.enable = true;
@@ -68,15 +62,6 @@
 
   programs.ssh.startAgent = false;
 
-  services.alertmanager-ntfy = {
-    enable = true;
-    httpAddress = "localhost";
-    httpPort = "9099";
-    ntfyTopic = "https://push.pablo.tools/pinpox_alertmanager";
-    ntfyPriority = "default";
-    envFile = "${config.clan.core.vars.generators."alertmanager-ntfy".files."envfile".path}";
-  };
-
   pinpox = {
 
     services = {
@@ -85,7 +70,6 @@
 
       opencrow.enable = true;
       vaultwarden.enable = true;
-      ntfy-sh.enable = true;
 
       matrix-hook = {
         enable = true;

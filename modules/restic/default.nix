@@ -83,8 +83,6 @@ in
         (pinpox-utils.mkEnvGenerator [
           "AWS_ACCESS_KEY_ID"
           "AWS_SECRET_ACCESS_KEY"
-          "NTFY_USER"
-          "NTFY_PASS"
         ])
         // {
           share = true;
@@ -115,20 +113,6 @@ in
 
       services.restic.backups =
         let
-          script-post = host: site: ''
-            if [ $EXIT_STATUS -ne 0 ]; then
-              ${pkgs.curl}/bin/curl -u $NTFY_USER:$NTFY_PASS \
-              -H 'Title: Backup (${site}) on ${host} failed!' \
-              -H 'Tags: backup,restic,${host},${site}' \
-              -d "Restic (${site}) backup error on ${host}!" 'https://push.pablo.tools/pinpox_backups'
-            else
-              ${pkgs.curl}/bin/curl -u $NTFY_USER:$NTFY_PASS \
-              -H 'Title: Backup (${site}) on ${host} successful!' \
-              -H 'Tags: backup,restic,${host},${site}' \
-              -d "Restic (${site}) backup success on ${host}!" 'https://push.pablo.tools/pinpox_backups'
-            fi
-          '';
-
           restic-ignore-file = pkgs.writeTextFile {
             name = "restic-ignore-file";
             text = builtins.concatStringsSep "\n" cfg.backup-paths-exclude;
@@ -155,7 +139,6 @@ in
             environmentFile = "${config.clan.core.vars.generators."restic-credentials-backblaze".files."envfile".path
             }";
             passwordFile = "${config.clan.core.vars.generators."restic-offsite".files."repo-pw".path}";
-            backupCleanupCommand = script-post config.networking.hostName "backblaze";
             inherit pruneOpts extraBackupArgs;
           };
 
@@ -164,7 +147,6 @@ in
             repository = "s3:https://vpn.s3.pablo.tools/restic";
             environmentFile = "${config.clan.core.vars.generators."restic-credentials".files."envfile".path}";
             passwordFile = "${config.clan.core.vars.generators."restic".files."repo-pw".path}";
-            backupCleanupCommand = script-post config.networking.hostName "NAS";
             inherit pruneOpts extraBackupArgs;
           };
         };

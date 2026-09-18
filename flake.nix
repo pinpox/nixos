@@ -105,15 +105,6 @@
     restic-exporter.inputs.nixpkgs.follows = "nixpkgs";
     restic-exporter.inputs.flake-utils.follows = "age-plugin-picohsm/flake-utils";
 
-    alertmanager-ntfy = {
-      url = "github:pinpox/alertmanager-ntfy";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-        flake-utils.follows = "age-plugin-picohsm/flake-utils";
-      };
-    };
-
     matrix-hook.url = "github:pinpox/matrix-hook";
     matrix-hook.inputs = {
       nixpkgs.follows = "nixpkgs";

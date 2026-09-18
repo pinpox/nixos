@@ -21,33 +21,6 @@
         "type": "github"
       }
     },
-    "alertmanager-ntfy": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "age-plugin-picohsm",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1766148072,
-        "narHash": "sha256-VDDWwpoUuC/ANR2URjkYEpQL/8LMbFIH/0aTxWRn9q4=",
-        "owner": "pinpox",
-        "repo": "alertmanager-ntfy",
-        "rev": "c4d70793a2eeeabb3422bef8fe70d41bf048bdca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pinpox",
-        "repo": "alertmanager-ntfy",
-        "type": "github"
-      }
-    },
     "aoe-taunt-discord-bot": {
       "inputs": {
         "nixpkgs": [
@@ -1254,7 +1227,6 @@
     "root": {
       "inputs": {
         "age-plugin-picohsm": "age-plugin-picohsm",
-        "alertmanager-ntfy": "alertmanager-ntfy",
         "aoe-taunt-discord-bot": "aoe-taunt-discord-bot",
         "clan-community": "clan-community",
         "clan-core": "clan-core",

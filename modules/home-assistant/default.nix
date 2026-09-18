@@ -124,7 +124,6 @@ in
     services.home-assistant = {
       enable = true;
       customComponents = with pkgs.home-assistant-custom-components; [
-        ntfy
         awtrix
         moonraker
       ];
@@ -189,21 +188,6 @@ in
         };
 
         assist_pipeline = { };
-
-        notify = [
-          {
-            name = "ntfy";
-            platform = "rest";
-            method = "POST_JSON";
-            authentication = "basic";
-            username = "nfty";
-            password = "!nfty-pass";
-            data.topic = "homeassistant";
-            title_param_name = "title";
-            message_param_name = "message";
-            resource = "https://push.pablo.tools";
-          }
-        ];
 
         device_tracker =
           let

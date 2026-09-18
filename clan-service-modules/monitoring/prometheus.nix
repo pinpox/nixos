@@ -247,7 +247,6 @@ in
             name = "all";
             webhook_configs = [
               { url = "http://127.0.0.1:11000/alert"; } # matrix-hook
-              { url = with config.services.alertmanager-ntfy; "http://${httpAddress}:${httpPort}"; } # alertmanger-ntfy
             ];
             email_configs = [
               {

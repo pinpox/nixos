@@ -189,7 +189,7 @@ in
         reverse_proxy @vpnonly 127.0.0.1:9090
       '';
 
-      # ntfy
+      # matrix-hook (VPN-only, no basic auth)
       "vpn.notify.pablo.tools".extraConfig = ''
         @vpnonly {
           remote_ip 192.168.0.0/16 172.168.7.0/16 10.100.0.0/24
