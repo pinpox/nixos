@@ -7,6 +7,14 @@
   _class = "clan.service";
   manifest.name = "matrix";
   manifest.description = "Matrix Synapse homeserver with a declarative account reconciler";
+  manifest.readme = ''
+    Matrix Synapse homeserver with Postgres, served over Caddy + Let's Encrypt on
+    the `server` role machine. `serverName` is the permanent `server_name` (the
+    domain in every `@user:<serverName>`); delegation for it is served as
+    /.well-known/matrix/* on the apex host, not here. Federation rides 443, so no
+    8448 listener or SRV record is needed. Declared accounts in `users` are
+    reconciled on activation from per-user vars generators.
+  '';
   manifest.categories = [ "Social" ];
 
   roles.server = {
