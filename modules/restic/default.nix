@@ -87,6 +87,27 @@ in
         // {
           share = true;
         };
+
+      backupNames = [
+        "s3-offsite"
+        "s3-onsite"
+      ];
+
+      # Written by ExecStartPost, which systemd only runs after every
+      # ExecStart step (backup, unlock, forget --prune) exited 0. Read by the
+      # textfile collector in
+      # clan-service-modules/monitoring-glue/client-collectors.nix; one file
+      # per backup, replaced atomically so a half-written file is never
+      # scraped. Survives reboots, so an old stamp stays visible.
+      textfileDir = "/var/lib/prometheus-textfile";
+      successStamp = pkgs.writeShellScript "restic-backup-success-stamp" ''
+        set -eu
+        mkdir -p ${textfileDir}
+        tmp=$(mktemp ${textfileDir}/.restic-"$1".XXXXXX)
+        printf '# TYPE restic_backup_last_success_timestamp_seconds gauge\nrestic_backup_last_success_timestamp_seconds{backup="%s"} %s\n' \
+          "$1" "$(date +%s)" > "$tmp"
+        mv "$tmp" ${textfileDir}/restic-"$1".prom
+      '';
     in
 
     mkIf cfg.enable {
@@ -150,5 +171,9 @@ in
             inherit pruneOpts extraBackupArgs;
           };
         };
+
+      systemd.services = lib.genAttrs (map (n: "restic-backups-${n}") backupNames) (unit: {
+        serviceConfig.ExecStartPost = "${successStamp} ${lib.removePrefix "restic-backups-" unit}";
+      });
     };
 }

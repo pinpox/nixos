@@ -361,8 +361,19 @@ in
       roles.client = {
         tags.all = { };
         settings.useSSL = true;
+        # caddy.service is shipped by the GeoIP pipeline in client-collectors.nix
+        # instead; dropping it here avoids duplicate lines in loki.
+        settings.loki.journal.relabelRules.afterNormalization = [
+          ''
+            rule {
+              action = "drop"
+              source_labels = ["service_name"]
+              regex = "caddy.service"
+            }
+          ''
+        ];
         # vmstat/boottime/textfile collectors for the OOM/reboot/uptime and
-        # flake-freshness alerts.
+        # flake-freshness alerts, restic success stamps, caddy GeoIP logs.
         extraModules = [ ./clan-service-modules/monitoring-glue/client-collectors.nix ];
       };
 
@@ -374,12 +385,15 @@ in
       };
     };
 
-    # Caddy vhost (TLS via pki, DNS via dm-dns), Grafana OIDC client and
-    # declarative alerting on the monitoring server.
+    # Caddy vhost (TLS via pki, DNS via dm-dns), Grafana OIDC client,
+    # declarative alerting and HTTP probing on the monitoring server.
     monitoring-glue = {
       module.input = "self";
       module.name = "@pinpox/monitoring-glue";
-      roles.default.machines.porree = { };
+      roles.default.machines.porree.settings.probes = [
+        "https://pablo.tools"
+        "https://pinpox.com"
+      ];
     };
 
     importer = {

@@ -1,11 +1,10 @@
 # Grafana-provisioned alert rules, ported from the old prometheus
 # alert-rules.nix. Metrics come from the clan-core monitoring clients (alloy,
-# collectors cpu/filesystem/meminfo/systemd) plus ./client-collectors.nix
-# (vmstat/boottime/textfile).
+# collectors cpu/filesystem/meminfo/systemd), ./client-collectors.nix
+# (vmstat/boottime/textfile) and the blackbox probes in ./default.nix.
 #
-# Dropped rules whose data sources don't exist anymore (and were already dead
-# in the old stack): restic_backup_too_old (no restic-exporter), http_status
-# and cert_expiry (no blackbox-exporter).
+# restic_backup_too_old is now fed by the success stamp modules/restic writes
+# for the textfile collector instead of the (never enabled) restic-exporter.
 { lib }:
 let
   # Every expression filters (comparison operators drop non-matching series),
@@ -75,10 +74,10 @@ let
 in
 lib.mapAttrsToList mkRule {
 
-  filesystem_full_80percent = {
-    condition = ''100 - ((node_filesystem_avail_bytes{fstype!="rootfs",mountpoint="/"} * 100) / node_filesystem_size_bytes{fstype!="rootfs",mountpoint="/"}) > 80'';
+  filesystem_full_90percent = {
+    condition = ''100 - ((node_filesystem_avail_bytes{fstype!="rootfs",mountpoint="/"} * 100) / node_filesystem_size_bytes{fstype!="rootfs",mountpoint="/"}) > 90'';
     time = "10m";
-    description = "{{$labels.instance}} device {{$labels.device}} on {{$labels.mountpoint}} got less than 20% space left on its filesystem.";
+    description = "{{$labels.instance}} device {{$labels.device}} on {{$labels.mountpoint}} got less than 10% space left on its filesystem.";
   };
 
   swap_using_20percent = {
@@ -104,6 +103,22 @@ lib.mapAttrsToList mkRule {
   systemd_service_failed = {
     condition = ''nixos_systemd_unit_state{state="failed"} == 1'';
     description = "{{$labels.instance}} failed to (re)start service {{$labels.name}}.";
+  };
+
+  # restic units are not `services.<x>.enable` services, so they are missing
+  # from nixos_systemd_unit_state; the raw metric reaches mimir as well.
+  restic_backup_failed = {
+    condition = ''node_systemd_unit_state{name=~"restic-backups-.*\\.service", state="failed"} == 1'';
+    description = "{{$labels.instance}}: backup unit {{$labels.name}} failed.";
+  };
+
+  # Stamp written on successful completion (backup + prune); timers run
+  # daily. A host that never completed a backup has no series and stays
+  # silent here, which restic_backup_failed covers once a run fails.
+  restic_backup_too_old = {
+    condition = "(time() - restic_backup_last_success_timestamp_seconds) / (60*60) > 36";
+    time = "1h";
+    description = "{{$labels.instance}}: last successful {{$labels.backup}} backup is older than 36 hours.";
   };
 
   # Push model: there is no `up` metric. A host is down when it stopped
@@ -142,5 +157,20 @@ lib.mapAttrsToList mkRule {
   flake_nixpkgs_outdated = {
     condition = ''(time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 30'';
     description = "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 30 days";
+  };
+
+  # Blackbox probes (settings.probes); `target` is the probed URL. Both
+  # expressions are > 0 exactly when unhealthy (probe_http_status_code is 0
+  # on connection failure, so it can't be used as the firing value).
+  probe_failed = {
+    condition = "1 - probe_success";
+    time = "5m";
+    description = "Probe of {{$labels.target}} failed (non-200, TLS error or unreachable) for 5 minutes.";
+  };
+
+  cert_expiry = {
+    condition = "30 - (probe_ssl_earliest_cert_expiry - time()) / (60*60*24)";
+    time = "1h";
+    description = "TLS certificate of {{$labels.target}} expires in less than 30 days.";
   };
 }

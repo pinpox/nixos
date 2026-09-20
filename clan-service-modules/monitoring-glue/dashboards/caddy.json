@@ -250,9 +250,7 @@
         "namePlacement": "left",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
@@ -1016,9 +1014,7 @@
         "query": "pablo.tools,pinpox.com,0cx.de,megaclan3000.de",
         "current": {
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": ["$__all"]
         },
         "includeAll": true,
         "multi": true,

@@ -125,7 +125,7 @@
           "editorMode": "code",
           "expr": "probe_success",
           "instant": false,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "{{target}}",
           "range": true,
           "refId": "A"
         }
@@ -198,7 +198,7 @@
           "editorMode": "code",
           "expr": "probe_ssl_earliest_cert_expiry - time()",
           "instant": true,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "{{target}}",
           "range": false,
           "refId": "A"
         }
@@ -293,7 +293,7 @@
           "editorMode": "code",
           "expr": "probe_duration_seconds",
           "instant": false,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "{{target}}",
           "range": true,
           "refId": "A"
         }

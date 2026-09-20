@@ -19,6 +19,9 @@
     - Provisioned dashboards from ./dashboards ("Overview" per host,
       "Caddy" per toplevel domain from the access logs in loki), alongside
       the ones clan-core ships.
+    - HTTP(S) probing of `probes` URLs via Alloy's embedded blackbox
+      exporter (probe_* metrics in mimir), feeding the http_status and
+      cert_expiry alerts and the Endpoints section of the Overview.
 
     Assign to the same machine as the clan-core monitoring server role. The
     clients' extra collectors (vmstat/boottime/textfile) live in
@@ -60,6 +63,13 @@
               default = "Pocket ID";
               description = "Login button label";
             };
+          };
+
+          probes = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            example = [ "https://pablo.tools" ];
+            description = "URLs probed every 2 minutes from this machine: HTTP 200 expected, TLS verified, certificate expiry recorded.";
           };
         };
       };
@@ -124,6 +134,74 @@
               authFiles."mimir".path
               authFiles."loki".path
             ];
+
+            # Blackbox probing of settings.probes. Alloy loads every *.alloy in
+            # /etc/alloy next to the clan-core client config; component names
+            # carry a _blackbox suffix, the remote_write mirrors
+            # ./client-collectors.nix (same credentials the clan client loads).
+            # The exporter labels targets instance=<component id> and
+            # job=integrations/blackbox/<name>. Unlike the prometheus blackbox
+            # convention (instance=<url>), `instance` stays the probing machine
+            # here so the probes don't show up as hosts in dashboards that list
+            # label_values(instance); the URL goes into `target`.
+            environment.etc."alloy/blackbox.alloy" = lib.mkIf (settings.probes != [ ]) {
+              text = ''
+                prometheus.exporter.blackbox "blackbox" {
+                  config = ${
+                    builtins.toJSON (
+                      builtins.toJSON {
+                        modules.http_2xx = {
+                          prober = "http";
+                          timeout = "5s";
+                          http = {
+                            valid_status_codes = [ 200 ];
+                            fail_if_not_ssl = true;
+                            preferred_ip_protocol = "ip4";
+                          };
+                        };
+                      }
+                    )
+                  }
+                ${lib.concatMapStrings (
+                  url:
+                  "  target {\n    name    = ${builtins.toJSON url}\n    address = ${builtins.toJSON url}\n    module  = \"http_2xx\"\n  }\n"
+                ) settings.probes}
+                }
+
+                discovery.relabel "blackbox" {
+                  targets = prometheus.exporter.blackbox.blackbox.targets
+                  rule {
+                    source_labels = ["__param_target"]
+                    target_label  = "target"
+                  }
+                  rule {
+                    target_label = "instance"
+                    replacement  = ${builtins.toJSON config.networking.hostName}
+                  }
+                  rule {
+                    target_label = "job"
+                    replacement  = "integrations/blackbox"
+                  }
+                }
+
+                prometheus.scrape "blackbox" {
+                  targets = discovery.relabel.blackbox.output
+                  forward_to = [prometheus.remote_write.mimir_blackbox.receiver]
+                  scrape_interval = "2m"
+                }
+
+                prometheus.remote_write "mimir_blackbox" {
+                  endpoint {
+                    url = "https://${settings.host}/mimir/api/v1/push"
+                    basic_auth {
+                      username = "${config.clan.core.vars.generators.mimir-auth.files.username.value}"
+                      password_file = sys.env("CREDENTIALS_DIRECTORY") + "/mimir-auth-password"
+                    }
+                  }
+                }
+              '';
+            };
+
             # Reverse proxy; pki injects TLS for the .pin endpoint. mimir and
             # loki serve under their own path prefixes, so no prefix stripping
             # there; grafana serves at / and gets the /grafana prefix stripped
