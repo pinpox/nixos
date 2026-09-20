@@ -1,0 +1,10 @@
+{
+  "settings.account.label": "Account",
+  "settings.account.description": "himalaya account name; empty uses the default account.",
+  "settings.mailbox.label": "Mailbox",
+  "settings.mailbox.description": "Mailbox to watch; empty uses the account's inbox alias.",
+  "settings.poll_seconds.label": "Poll interval (seconds)",
+  "settings.poll_seconds.description": "How often unread envelopes are fetched.",
+  "settings.page_size.label": "Max envelopes",
+  "settings.page_size.description": "Maximum number of unread envelopes fetched per poll."
+}

@@ -1,13 +1,15 @@
 {
   writeShellApplication,
-  noctalia-shell,
+  noctalia,
+  jq,
   procps,
   coreutils,
 }:
 writeShellApplication {
   name = "noctalia-askpass";
   runtimeInputs = [
-    noctalia-shell
+    noctalia
+    jq
     procps
     coreutils
   ];
@@ -20,6 +22,9 @@ writeShellApplication {
     #   SSH_ASKPASS=/path/to/noctalia-askpass
     #   SUDO_ASKPASS=/path/to/noctalia-askpass
     #   PICOHSM_ASKPASS_BACKEND=/path/to/noctalia-askpass
+    #
+    # The dialog is the pinpox/askpass plugin panel (home-manager noctalia
+    # module); it writes the answer to the FIFO created here.
 
     PROMPT="''${1:-Enter password}"
 
@@ -47,28 +52,21 @@ writeShellApplication {
     mkfifo -m 600 "$FIFO"
     trap 'rm -f "$FIFO"' EXIT
 
-    # Ask noctalia to show the password dialog. quickshell keys IPC on the
-    # config (store) path, so after a rebuild this freshly-installed askpass
-    # (new store path) can no longer reach a still-running old instance via the
-    # default path-based lookup. Discover the live process and target it by PID
-    # instead, which works across store-path drift.
-    NOCTALIA_PID=$(pgrep -f 'quickshell.*noctalia-shell' | head -n1 || true)
-    if [ -z "$NOCTALIA_PID" ]; then
-      echo "noctalia-askpass: no running noctalia-shell instance found" >&2
+    CONTEXT=$(jq -cn --arg prompt "$PROMPT" --arg caller "$CALLER" --arg fifo "$FIFO" \
+      '{prompt: $prompt, caller: $caller, fifo: $fifo}')
+
+    # `noctalia msg` finds the running instance's socket itself and prints
+    # "ok" on success, which must not leak into our stdout (the password
+    # channel). A non-zero exit means no shell (or no such panel), in which
+    # case nobody would ever write the FIFO below.
+    if ! noctalia msg panel-open pinpox/askpass:prompt "$CONTEXT" >/dev/null; then
+      echo "noctalia-askpass: could not open the askpass panel; is noctalia running with the pinpox/askpass plugin enabled?" >&2
       exit 1
     fi
 
-    # Run synchronously: ipc call returns immediately after the plugin
-    # dispatch, so a non-zero exit here means the instance vanished. Without
-    # this check, `cat $FIFO` below would block forever waiting for a writer
-    # that will never appear.
-    if ! noctalia-shell ipc --pid "$NOCTALIA_PID" call plugin:noctalia-askpass prompt "$PROMPT" "$CALLER" "$FIFO"; then
-      echo "noctalia-askpass: noctalia-shell IPC failed; is noctalia-shell running and matching this derivation?" >&2
-      exit 1
-    fi
-
-    # Block until the plugin writes the password (or empty on cancel)
-    PASSWORD=$(cat "$FIFO")
+    # Block until the panel writes the password (or empty on cancel). The
+    # timeout only guards against a panel that never answers.
+    PASSWORD=$(timeout 600 cat "$FIFO" || true)
 
     if [ -z "$PASSWORD" ]; then
       exit 1

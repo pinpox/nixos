@@ -1,0 +1,21 @@
+# Launcher provider over the Firefox browsing history (`/ff <query>`).
+# firefox-history-helper reads places.sqlite read-only and prints JSON;
+# the Python interpreter path is substituted in by Nix.
+
+id = "pinpox/firefox-history"
+name = "Firefox History"
+version = "2.0.0"
+plugin_api = 24
+author = "pinpox"
+license = "MIT"
+icon = "brand-firefox"
+description = "Search and open pages from the Firefox browsing history."
+dependencies = ["python3", "firefox"]
+tags = ["launcher", "browser"]
+
+[[launcher_provider]]
+id = "history"
+entry = "history.luau"
+prefix = "ff"
+glyph = "brand-firefox"
+include_in_global_search = false

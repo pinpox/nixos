@@ -1,0 +1,23 @@
+# Password/PIN prompt driven by packages/noctalia-askpass:
+#   noctalia msg panel-open pinpox/askpass:prompt '{"prompt":…,"caller":…,"fifo":…}'
+# The panel writes the answer (empty on cancel) to the FIFO.
+
+id = "pinpox/askpass"
+name = "Askpass"
+version = "2.0.0"
+plugin_api = 24
+author = "pinpox"
+license = "MIT"
+icon = "lock"
+description = "Password/PIN entry dialog usable as SSH_ASKPASS, SUDO_ASKPASS, PICOHSM_ASKPASS_BACKEND, etc."
+tags = ["privacy", "utility"]
+
+[[panel]]
+id = "prompt"
+entry = "prompt.luau"
+width = 400
+height = 170
+placement = "floating"
+position = "center"
+keyboard_focus = "exclusive"
+dismiss_on_outside_click = false

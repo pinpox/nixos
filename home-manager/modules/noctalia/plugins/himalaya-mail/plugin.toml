@@ -1,0 +1,64 @@
+# Unread-mail widget and inbox panel backed by the himalaya CLI (2.x).
+# The service polls `himalaya --json envelope search 'not flag seen'` and
+# publishes the result on the plugin state channel; widget and panel render it.
+
+id = "pinpox/himalaya-mail"
+name = "Himalaya Mail"
+version = "2.0.0"
+plugin_api = 24
+author = "pinpox"
+license = "MIT"
+icon = "mail"
+description = "Unread mail count and inbox actions via the himalaya CLI."
+dependencies = ["himalaya"]
+tags = ["mail", "productivity"]
+
+[[setting]]
+key = "account"
+type = "string"
+label_key = "settings.account.label"
+description_key = "settings.account.description"
+default = ""
+
+[[setting]]
+key = "mailbox"
+type = "string"
+label_key = "settings.mailbox.label"
+description_key = "settings.mailbox.description"
+default = ""
+
+[[setting]]
+key = "poll_seconds"
+type = "int"
+label_key = "settings.poll_seconds.label"
+description_key = "settings.poll_seconds.description"
+default = 60
+min = 10
+max = 3600
+
+[[setting]]
+key = "page_size"
+type = "int"
+label_key = "settings.page_size.label"
+description_key = "settings.page_size.description"
+default = 200
+min = 1
+max = 1000
+
+[[service]]
+id = "poller"
+entry = "service.luau"
+
+[[widget]]
+id = "unread"
+entry = "widget.luau"
+
+[[panel]]
+id = "inbox"
+entry = "panel.luau"
+width = 520
+height = 420
+# Floating: attached panels inherit the (transparent) bar background.
+placement = "floating"
+position = "auto"
+open_near_click = true
