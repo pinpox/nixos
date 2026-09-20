@@ -1,0 +1,20 @@
+{
+  "id": "noctalia-askpass",
+  "name": "Askpass",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "pinpox",
+  "license": "MIT",
+  "repository": "",
+  "description": "Generic password/PIN entry dialog usable as SSH_ASKPASS, SUDO_ASKPASS, PICOHSM_ASKPASS_BACKEND, etc.",
+  "entryPoints": {
+    "main": "Main.qml",
+    "panel": "Panel.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

@@ -76,6 +76,7 @@ in
         foot.enable = true;
         rio.enable = true;
         sway.enable = true;
+        noctalia.enable = true;
         swaylock.enable = true;
         # river.enable = true; # TODO: broken in nixpkgs (Zig build failure)
         waybar.enable = true;

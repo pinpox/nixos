@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Query Firefox history with favicons and output JSON."""
+
+import glob
+import hashlib
+import json
+import os
+import sqlite3
+import sys
+from urllib.parse import urlparse
+
+def main():
+    # Find Firefox profile
+    firefox_dir = os.path.expanduser("~/.mozilla/firefox")
+    places_db = None
+    for f in glob.glob(os.path.join(firefox_dir, "*/places.sqlite")):
+        places_db = f
+        break
+
+    if not places_db:
+        print("[]")
+        return
+
+    profile_dir = os.path.dirname(places_db)
+    favicons_db = os.path.join(profile_dir, "favicons.sqlite")
+    cache_dir = os.path.expanduser("~/.cache/noctalia/firefox-favicons")
+    os.makedirs(cache_dir, exist_ok=True)
+
+    # Open databases
+    places = sqlite3.connect(f"file:{places_db}?mode=ro&immutable=1", uri=True)
+    favicons = None
+    if os.path.exists(favicons_db):
+        favicons = sqlite3.connect(
+            f"file:{favicons_db}?mode=ro&immutable=1", uri=True
+        )
+
+    # Get top 500 history entries by frecency
+    rows = places.execute(
+        """
+        SELECT url, COALESCE(title, url) AS title, frecency
+        FROM moz_places
+        WHERE title IS NOT NULL AND title != ''
+          AND url NOT LIKE 'about:%'
+          AND url NOT LIKE 'chrome:%'
+          AND url NOT LIKE 'resource:%'
+          AND url NOT LIKE 'moz-extension:%'
+        ORDER BY frecency DESC
+        LIMIT 500
+        """
+    ).fetchall()
+
+    # Build domain -> favicon cache path lookup
+    domain_icons = {}  # domain -> filepath on disk
+
+    if favicons:
+        # Collect all unique domains
+        domains = {}
+        for url, _, _ in rows:
+            domain = urlparse(url).netloc
+            if domain and domain not in domains:
+                domains[domain] = url  # keep one sample URL per domain
+
+        def find_favicon(domain):
+            """Find the best non-SVG favicon for a domain, falling back to SVG."""
+            # Queries ordered: root icons first, then page-level.
+            # Within each, prefer non-SVG (bitmap) over SVG for Qt compatibility.
+            queries = [
+                # Root (site-wide) bitmap icons
+                ("""
+                SELECT i.data, i.icon_url
+                FROM moz_icons i
+                WHERE i.root = 1 AND i.data IS NOT NULL
+                  AND i.icon_url LIKE ?
+                  AND i.icon_url NOT LIKE '%.svg%'
+                ORDER BY i.width DESC
+                LIMIT 1
+                """, (f"%{domain}%",)),
+                # Page-level bitmap icons
+                ("""
+                SELECT i.data, i.icon_url
+                FROM moz_pages_w_icons p
+                JOIN moz_icons_to_pages ip ON p.id = ip.page_id
+                JOIN moz_icons i ON i.id = ip.icon_id
+                WHERE p.page_url LIKE ? AND i.data IS NOT NULL
+                  AND i.icon_url NOT LIKE '%.svg%'
+                ORDER BY i.width DESC
+                LIMIT 1
+                """, (f"%{domain}%",)),
+                # Root SVG icons (fallback)
+                ("""
+                SELECT i.data, i.icon_url
+                FROM moz_icons i
+                WHERE i.root = 1 AND i.data IS NOT NULL
+                  AND i.icon_url LIKE ?
+                  AND i.icon_url LIKE '%.svg%'
+                ORDER BY i.width DESC
+                LIMIT 1
+                """, (f"%{domain}%",)),
+                # Page-level SVG icons (last resort)
+                ("""
+                SELECT i.data, i.icon_url
+                FROM moz_pages_w_icons p
+                JOIN moz_icons_to_pages ip ON p.id = ip.page_id
+                JOIN moz_icons i ON i.id = ip.icon_id
+                WHERE p.page_url LIKE ? AND i.data IS NOT NULL
+                  AND i.icon_url LIKE '%.svg%'
+                ORDER BY i.width DESC
+                LIMIT 1
+                """, (f"%{domain}%",)),
+            ]
+            for sql, params in queries:
+                row = favicons.execute(sql, params).fetchone()
+                if row:
+                    return row
+            return None
+
+        # For each domain, find the best favicon.
+        # Prefer bitmap (PNG/ICO) over SVG for Qt Image compatibility.
+        for domain, sample_url in domains.items():
+            file_hash = hashlib.md5(domain.encode()).hexdigest()
+
+            row = find_favicon(domain)
+            if row:
+                data, icon_url = row
+                # All bitmaps from Firefox are actually PNG, save as .png
+                ext = "svg" if ".svg" in icon_url else "png"
+                filepath = os.path.join(cache_dir, f"{file_hash}.{ext}")
+                with open(filepath, "wb") as f:
+                    f.write(data)
+                domain_icons[domain] = filepath
+
+    # Build output
+    results = []
+    for url, title, frecency in rows:
+        domain = urlparse(url).netloc
+        results.append(
+            {
+                "url": url,
+                "title": title,
+                "frecency": frecency,
+                "icon": domain_icons.get(domain, ""),
+            }
+        )
+
+    print(json.dumps(results))
+
+    places.close()
+    if favicons:
+        favicons.close()
+
+
+if __name__ == "__main__":
+    main()

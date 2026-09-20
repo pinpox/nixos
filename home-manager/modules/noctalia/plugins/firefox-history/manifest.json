@@ -1,0 +1,18 @@
+{
+  "id": "firefox-history",
+  "name": "Firefox History",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "3.9.0",
+  "author": "pinpox",
+  "license": "MIT",
+  "description": "Search and open pages from Firefox browsing history",
+  "entryPoints": {
+    "launcherProvider": "LauncherProvider.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "commandPrefix": "firefox"
+  }
+}
