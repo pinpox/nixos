@@ -16,6 +16,9 @@
       the reconciler at /run/pocket-id-clients/<clientId>/secret).
     - Declarative Grafana alerting: rules from ./alert-rules.nix, delivered
       to the Matrix room via the machine-local matrix-hook webhook.
+    - Provisioned dashboards from ./dashboards ("Overview" per host,
+      "Caddy" per toplevel domain from the access logs in loki), alongside
+      the ones clan-core ships.
 
     Assign to the same machine as the clan-core monitoring server role. The
     clients' extra collectors (vmstat/boottime/textfile) live in
@@ -121,7 +124,6 @@
               authFiles."mimir".path
               authFiles."loki".path
             ];
-
             # Reverse proxy; pki injects TLS for the .pin endpoint. mimir and
             # loki serve under their own path prefixes, so no prefix stripping
             # there; grafana serves at / and gets the /grafana prefix stripped
@@ -150,6 +152,11 @@
                 }
               '';
             };
+
+            # The Caddy dashboard runs topk() over per-path/per-IP aggregations;
+            # Loki counts the inner series against max_query_series (default
+            # 500), which scanner traffic alone exceeds. Single-user instance.
+            services.loki.configuration.limits_config.max_query_series = 5000;
 
             # Grafana's OIDC client secret is published by the Pocket ID
             # reconciler at /run/pocket-id-clients/<id>/secret (root:pocket-id-clients
@@ -217,6 +224,16 @@
                   use_pkce = true;
                 };
               };
+
+              # Dashboards next to clan-core's "clan" provider (providers is
+              # a list, definitions concatenate). Files are read from the
+              # store, so they are read-only in the UI.
+              provision.dashboards.settings.providers = [
+                {
+                  name = "pinpox";
+                  options.path = ./dashboards;
+                }
+              ];
 
               # Declarative alerting: rules evaluate in Grafana against the
               # mimir/loki datasources (uids pinned by the clan-core monitoring
