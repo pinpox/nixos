@@ -137,6 +137,10 @@ in
           # Clipboard history stays off (no cliphist-style persistence).
           clipboard_enabled = false;
           animation.enabled = false;
+          # Launcher/dock apps as transient user units (systemd-run) instead of
+          # children of noctalia.service: a shell restart (config change, IPC
+          # loss) must not take Firefox & co. down with it (KillMode=control-group).
+          launch_apps_as_systemd_services = true;
           # rnnoise's virtual source is not a real capture.
           privacy.mic_filter_regex = "rnnoise";
           # Attached panels inherit the bar's (transparent) background, so
@@ -338,5 +342,40 @@ in
     # The HM unit restarts on config/palette changes; plugin code changes
     # only show up in the unit through the plugins store path.
     systemd.user.services.noctalia.Unit.X-Restart-Triggers = [ "${plugins}" ];
+
+    # noctalia 5.1.0's sway backend never reconnects after sway drops its IPC
+    # client (sway disconnects clients with >4 MB unread output). The process
+    # stays alive with empty workspaces, so Restart= never fires; restart it
+    # when the disconnect is logged. Drop once upstream reconnects on sway.
+    systemd.user.services.noctalia-sway-watchdog = {
+      Unit = {
+        Description = "Restart noctalia when it loses the sway IPC connection";
+        After = [ "noctalia.service" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "noctalia-sway-watchdog";
+            runtimeInputs = [ pkgs.systemd ];
+            text = ''
+              journalctl --user --unit noctalia.service --follow --lines 0 --output cat \
+                | while read -r line; do
+                  case "$line" in
+                    # noctalia colors the tag: "[\e[34mworkspace_sway\e[0m] ...".
+                    *workspace_sway*"] sway IPC "* | *workspace_sway*"] failed to send sway IPC "*)
+                      echo "noctalia lost sway IPC, restarting: $line"
+                      systemctl --user --no-block restart noctalia.service
+                      ;;
+                  esac
+                done
+            '';
+          }
+        );
+        Restart = "always";
+        RestartSec = 5;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
