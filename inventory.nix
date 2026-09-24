@@ -304,6 +304,9 @@ in
           SMTP_FROM = "pocket-id@pinpox.com";
           EMAIL_LOGIN_NOTIFICATION_ENABLED = "false";
           EMAIL_API_KEY_EXPIRATION_ENABLED = "true";
+          # Lets an admin send a one-time login code by email (user onboarding).
+          # Admin-initiated only; the unauthenticated variant stays off.
+          EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED = "true";
         };
 
         extraClients = {
