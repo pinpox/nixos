@@ -22,6 +22,11 @@ in
         show_startup_tips = false;
         simplified_ui = true;
 
+        # 0.45.0+ enters Scroll mode on mouse scroll-up, so typing hits
+        # scroll-mode bindings (e.g. `s` = search). Restore the old behaviour:
+        # stay in Normal mode, typing snaps back to the bottom.
+        scroll_mode_sync = false;
+
         theme = "custom";
         themes.custom = {
           fg = "#${config.pinpox.colors.White}";
