@@ -5,7 +5,7 @@
 #
 # restic_backup_too_old is now fed by the success stamp modules/restic writes
 # for the textfile collector instead of the (never enabled) restic-exporter.
-{ lib }:
+{ lib, servers }:
 let
   # Every expression filters (comparison operators drop non-matching series),
   # so a firing series always carries a value > 0 and a single shared
@@ -123,10 +123,11 @@ lib.mapAttrsToList mkRule {
 
   # Push model: there is no `up` metric. A host is down when it stopped
   # pushing; the subquery keeps the last seen sample timestamp for 2h so the
-  # alert still fires after the series goes stale. limette and kartoffel are
-  # switched off routinely.
+  # alert still fires after the series goes stale. Restricted to the
+  # server-tagged machines (`servers`): desktops and mobiles are switched off
+  # routinely and must not page.
   host_down = {
-    condition = ''(time() - max by (instance) (max_over_time(timestamp(node_memory_MemTotal_bytes{instance!~"limette|kartoffel"})[2h:1m]))) > 900'';
+    condition = ''(time() - max by (instance) (max_over_time(timestamp(node_memory_MemTotal_bytes{instance=~"${lib.concatStringsSep "|" servers}"})[2h:1m]))) > 900'';
     time = "5m";
     description = "{{$labels.instance}} has not pushed metrics for more than 15 minutes.";
   };

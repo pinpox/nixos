@@ -71,6 +71,12 @@
             example = [ "https://pablo.tools" ];
             description = "URLs probed every 2 minutes from this machine: HTTP 200 expected, TLS verified, certificate expiry recorded.";
           };
+
+          servers = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            example = [ "porree" ];
+            description = "Machines the host_down alert watches, matched against the `instance` label (= machine name). Only always-on machines belong here; desktops and mobiles are powered off routinely and would page on every shutdown. Set from the `server`-tagged machines in inventory.nix.";
+          };
         };
       };
 
@@ -358,7 +364,10 @@
                       name = "clan";
                       folder = "Alerts";
                       interval = "1m";
-                      rules = import ./alert-rules.nix { inherit lib; };
+                      rules = import ./alert-rules.nix {
+                        inherit lib;
+                        inherit (settings) servers;
+                      };
                     }
                   ];
                 };

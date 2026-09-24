@@ -22,8 +22,7 @@ let
         )
     else
       { };
-in
-{
+
   machines = {
     mango.tags = [ "desktop" ];
     kiwi.tags = [ "desktop" ];
@@ -40,6 +39,12 @@ in
     porree.tags = [ "server" ];
     traube.tags = [ "server" ];
   };
+
+  # Always-on machines: the only ones whose absence is an incident.
+  serverMachines = lib.attrNames (lib.filterAttrs (_: m: builtins.elem "server" m.tags) machines);
+in
+{
+  inherit machines;
 
   meta.name = "pinpox-clan";
 
@@ -390,10 +395,15 @@ in
     monitoring-glue = {
       module.input = "self";
       module.name = "@pinpox/monitoring-glue";
-      roles.default.machines.porree.settings.probes = [
-        "https://pablo.tools"
-        "https://pinpox.com"
-      ];
+      roles.default.machines.porree.settings = {
+        probes = [
+          "https://pablo.tools"
+          "https://pinpox.com"
+        ];
+        # host_down only pages for the always-on machines; desktops/mobiles
+        # are powered off routinely.
+        servers = serverMachines;
+      };
     };
 
     importer = {
