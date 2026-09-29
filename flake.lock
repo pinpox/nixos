@@ -121,11 +121,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790107409,
-        "narHash": "sha256-Nhi/4sr/h87Kt4xkZIhvIac7OWxPUtMy05aT+IcUK08=",
-        "rev": "1c6451a84dd9e7c355c89e5fa01613c27f181e9d",
+        "lastModified": 1790553748,
+        "narHash": "sha256-uWjaBl09MtJhQjQX9jijNRYNBO6nFWKFVN6YxN6k8i4=",
+        "rev": "1eed8ce4b43e80202bd7875026f6bd13a68758e9",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-community/archive/1c6451a84dd9e7c355c89e5fa01613c27f181e9d.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/clan-community/archive/1eed8ce4b43e80202bd7875026f6bd13a68758e9.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -151,11 +151,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1790174689,
-        "narHash": "sha256-GsCo4oro8j22AGYKcfeJGEBQj5HqZ1oGX0LqK0ISgag=",
-        "rev": "c612dac4b2bfb5278b7c366f250044ddb5401bcb",
+        "lastModified": 1790677945,
+        "narHash": "sha256-mfqDOlrrAnYUsGLNoenOLHBdBqy3Nge9kavNtfZV7Ew=",
+        "rev": "b559fe2fe0a7039a8768c3c2b009763aa4c2f0e2",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-core/archive/c612dac4b2bfb5278b7c366f250044ddb5401bcb.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/clan-core/archive/b559fe2fe0a7039a8768c3c2b009763aa4c2f0e2.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -552,11 +552,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790398887,
-        "narHash": "sha256-vD/DZ9vxJWz4iorDqMYhYdx38ZbuhsFAWuhZoYBM7Uw=",
+        "lastModified": 1790658851,
+        "narHash": "sha256-eAXfN6HiUUMTY5Le1PvnxZlGpxMO4RgTDPkr7xzPo4A=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "bbb0f9a24c3a5ce918f3d8103397ce08b20300e1",
+        "rev": "a621acfa43a25731694a8ef64fcbd5a00241e085",
         "type": "github"
       },
       "original": {
@@ -798,11 +798,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789892076,
-        "narHash": "sha256-Dkg4VKPmDPqTwaiw2WH5br73tXoL1qrOO0xJnR4TlcA=",
+        "lastModified": 1790499302,
+        "narHash": "sha256-Gbf/U9ptJhQh0qnDnJ/+a8MAcq1HXunbArUTHR2wNYk=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "9ad722673ab3b3f91f02135e53775825b240b869",
+        "rev": "161d7c91accd93034bb3c295224d9d895a778573",
         "type": "github"
       },
       "original": {
@@ -873,11 +873,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1790323409,
-        "narHash": "sha256-VVTPf+Hyd5ebpjBMHmrLMSBIeW6ls48Bqtosj7CNKLA=",
+        "lastModified": 1790578696,
+        "narHash": "sha256-ZoxIApko70jCdbH3l20HWXOBaT2HZd87orzd2yJ9dVE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e94cb152ed51bd6e24eb4a41f1460252beb52cd2",
+        "rev": "7a0f122f5090cf4c2ade2a13a0e229d4e19ba71f",
         "type": "github"
       },
       "original": {
@@ -1338,11 +1338,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789890976,
-        "narHash": "sha256-GKwH3zpy7tartuJMG0Rv/xUsdetG1QLmTVv8UKgJLmA=",
+        "lastModified": 1790498116,
+        "narHash": "sha256-rs9meAYxW3zzrh43yaW7htrqCD+X9+pupDPHN86fumI=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "7214124c20c1542c90deb54af50e2f53ae02711f",
+        "rev": "5efb5a6f4f5ab192817d28557dd4d650fa14d866",
         "type": "github"
       },
       "original": {
@@ -1374,11 +1374,11 @@
         "voxtype": "voxtype"
       },
       "locked": {
-        "lastModified": 1790082750,
-        "narHash": "sha256-x03dQEGkuPzd+RHGGAddWb03LtQqCf7oDSYuslJTaWI=",
+        "lastModified": 1790511440,
+        "narHash": "sha256-rNS4IGNYTzvzqz6loAnQ4zzWRRSRSCtwe50l47mzwdw=",
         "ref": "refs/heads/main",
-        "rev": "4d2f6019bea9df4971d07fa0bc2c224a2597fed6",
-        "revCount": 885,
+        "rev": "6d744780ad0a850969a89cf045a11871d489ec19",
+        "revCount": 894,
         "type": "git",
         "url": "https://git.geninf.io/spaces/spaces-os"
       },
