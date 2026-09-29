@@ -902,22 +902,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-stalwart": {
-      "locked": {
-        "lastModified": 1784356753,
-        "narHash": "sha256-12KrbMiWLcf8m7pCvAtZh1ZrgF85ZXDXvfR/fWTKy84=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "61b7c44c4073f0b827768aff0049561b5110ea5a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "61b7c44c4073f0b827768aff0049561b5110ea5a",
-        "type": "github"
-      }
-    },
     "npm-lockfile-fix": {
       "inputs": {
         "nixpkgs": [
@@ -1227,7 +1211,6 @@
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-stalwart": "nixpkgs-stalwart",
         "nur": "nur",
         "opencrow": "opencrow",
         "passage-secret-service": "passage-secret-service",
@@ -1495,11 +1478,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789717101,
-        "narHash": "sha256-Qqsc2IEu89QqsAGseHt+aXiagqfxXvcc0NlG0zF6tbs=",
+        "lastModified": 1790798758,
+        "narHash": "sha256-JTd5+kX7i1JwAqObyQ+ARHHUyVybXvVylHuHO6VpXT4=",
         "owner": "pinpox",
         "repo": "trippy-track",
-        "rev": "86f5a0776a4f678ba8609f2e5a178f8e48be3742",
+        "rev": "cb63743f5d39845c11c41bb4d1e45b79cb6bc162",
         "type": "github"
       },
       "original": {
