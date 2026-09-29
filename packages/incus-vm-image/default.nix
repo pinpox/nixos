@@ -41,7 +41,7 @@ let
     # nixos-facter CLI for hardware detection inside instances.
     environment.systemPackages = [ nixos-facter ];
   };
-  meta = "${sys.config.system.build.metadata}/${sys.config.image.filePath}";
+  meta = "${sys.config.system.build.metadata}/tarball/${sys.config.image.baseName}.tar.xz";
   disk = "${sys.config.system.build.qemuImage}/nixos.qcow2";
 in
 runCommand "incus-vm-image" { } ''
