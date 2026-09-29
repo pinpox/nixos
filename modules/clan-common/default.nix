@@ -31,7 +31,6 @@
 
     script = ''
       mkdir -p $out
-      echo ${(self.clan.exports."clan-core/internet:internet::".networking.module)}
       xkcdpass > $out/test-password
     '';
   };
