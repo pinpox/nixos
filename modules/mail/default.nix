@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  nixpkgs-stalwart,
   ...
 }:
 with lib;
@@ -21,12 +20,8 @@ let
   certDir = "/var/lib/acme/${fqdn}";
   dataDir = "/var/lib/stalwart";
 
-  # Pinned to 0.16.13 via the `nixpkgs-stalwart` input, NOT our main nixpkgs:
-  # 0.16.14 links jemalloc alongside the glibc-allocating librocksdb and SEGVs
-  # in rocksdb's Arena on startup (see the input's comment in flake.nix). The
-  # CLI is pinned from the same tree so its registry schema matches the server.
-  pkg = nixpkgs-stalwart.legacyPackages.${pkgs.stdenv.hostPlatform.system}.stalwart_0_16;
-  cli = nixpkgs-stalwart.legacyPackages.${pkgs.stdenv.hostPlatform.system}.stalwart-cli;
+  pkg = pkgs.stalwart_0_16;
+  cli = pkgs.stalwart-cli;
 
   # Port 80 vhost: answer the ACME HTTP-01 challenge for the mail-port cert
   # (lego) and redirect everything else to HTTPS.
