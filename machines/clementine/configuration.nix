@@ -40,6 +40,19 @@
     };
   };
 
+  # Parley: federated chat over IRC. Identities are nick@pinpox.com, served
+  # from chat.pinpox.com (web + IRC over TLS on 6697). Login is OIDC only via
+  # Pocket ID; IRC clients use tokens from https://chat.pinpox.com/settings.
+  # Needs DNS:
+  #   chat.pinpox.com A/AAAA -> this host
+  #   _parley._tcp.pinpox.com SRV 0 0 443 chat.pinpox.com.
+  pinpox.services.parley = {
+    # enable = true;
+    enable = false;
+    domain = "pinpox.com";
+    host = "chat.pinpox.com";
+  };
+
   clan.core.vars.generators."trippy-track" = pinpox-utils.mkEnvGenerator [
     "OIDC_ISSUER_URL"
     "OIDC_CLIENT_ID"

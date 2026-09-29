@@ -116,6 +116,7 @@ self: super: {
   # river-luatile = super.callPackage ../packages/river-luatile { };
   fritzbox_exporter = super.callPackage ../packages/fritzbox_exporter { };
   mqtt2prometheus = super.callPackage ../packages/mqtt2prometheus { };
+  parley = super.callPackage ../packages/parley { };
   # Custom packages. Will be made available on all machines and used where
   # needed.
   smartmon-script = super.callPackage ../packages/smartmon-script { };

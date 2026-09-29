@@ -241,6 +241,7 @@
               hello-custom
               fritzbox_exporter
               mqtt2prometheus
+              parley
               smartmon-script
               machine-report
               config-hash

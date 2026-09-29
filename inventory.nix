@@ -317,6 +317,14 @@ in
             callbackURLs = [ "https://news.0cx.de/oauth2/oidc/callback" ];
           };
 
+          # Public + PKCE: parley runs on clementine, so it can't read the
+          # confidential secret the reconciler publishes on porree.
+          parley = {
+            name = "Parley";
+            isPublic = true;
+            callbackURLs = [ "https://chat.pinpox.com/auth/oidc/callback" ];
+          };
+
           incus = {
             name = "Incus";
             isPublic = true;
