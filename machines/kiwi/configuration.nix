@@ -43,6 +43,21 @@
 
   networking.hostName = "kiwi";
 
+  # Unattended LUKS unlock via the Tang server on the OpenWrt router, only when
+  # on USB-C ethernet (no WiFi in the initrd). Undocked boots fall back to the
+  # passphrase after the short network timeout.
+  pinpox.services.tang-unlock = {
+    enable = true;
+    interface = "en*";
+    kernelModules = [
+      "r8152" # Framework ethernet card, most Realtek USB-C adapters
+      "cdc_ether"
+      "cdc_ncm"
+      "ax88179_178a"
+    ];
+    waitOnlineTimeout = 20;
+  };
+
   # Games
   programs.steam.enable = true;
   programs.gamemode.enable = true;

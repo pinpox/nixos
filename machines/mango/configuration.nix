@@ -24,6 +24,16 @@
     "ttm.pages_limit=32505856"
   ];
 
+  # Unattended LUKS unlock via the Tang server on the OpenWrt router.
+  pinpox.services.tang-unlock = {
+    enable = true;
+    interface = "enp191s0";
+    kernelModules = [
+      "r8169"
+      "realtek"
+    ];
+  };
+
   home-manager.users.pinpox.pinpox.programs.games.enable = true;
 
   programs = {
