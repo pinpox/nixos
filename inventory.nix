@@ -158,6 +158,7 @@ in
       roles.bootstrap.tags = [ "server" ];
       roles.default.tags = [ "all" ];
       roles.default.settings.interfaces = [ "ygg" ];
+      roles.default.settings.certificateValidity = "17520h";
     };
 
     internet = {
