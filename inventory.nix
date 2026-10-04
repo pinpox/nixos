@@ -60,6 +60,7 @@ in
       module.input = "self";
       module.name = "@pinpox/matrix";
       roles.server.machines.clementine = { };
+      roles.server.settings.users = [ "hermes" ];
     };
 
     incus = {
