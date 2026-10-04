@@ -123,10 +123,12 @@ in
           host = "imap.mailbox.org";
           port = 993;
           tls.enable = true;
+          authentication = "plain";
         };
         smtp = {
           host = "smtp.mailbox.org";
           port = 465;
+          authentication = "plain";
         };
       };
     };
