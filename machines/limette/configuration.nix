@@ -7,6 +7,16 @@
 
   networking.hostName = "limette";
 
+  # Unattended LUKS unlock via the Tang server on the OpenWrt router, only when
+  # on wired ethernet (no WiFi in the initrd). Boots without the cable fall
+  # back to the passphrase after the short network timeout.
+  pinpox.services.tang-unlock = {
+    enable = true;
+    interface = "en*";
+    kernelModules = [ "e1000e" ]; # X230 onboard Intel 82579LM
+    waitOnlineTimeout = 20;
+  };
+
   pinpox.defaults.lvm-grub.enable = true;
   boot.growPartition = true;
 

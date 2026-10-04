@@ -1,3 +1,4 @@
+{ config, ... }:
 {
 
   boot.growPartition = true;
@@ -7,7 +8,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/ata-KINGSTON_SA400S37240G_50026B7682362662";
         content = {
           type = "gpt";
           partitions = {
@@ -32,7 +33,8 @@
                   allowDiscards = true;
                   # keyFile = "/tmp/secret.key";
                 };
-                # additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+                # Tang keyslot for clevis unlock (see modules/tang-unlock).
+                additionalKeyFiles = [ config.clan.core.vars.generators.luks-tang-key.files.key.path ];
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
