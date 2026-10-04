@@ -151,11 +151,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1791129013,
-        "narHash": "sha256-n5S6a6iAg1oOlCiqUtehi0xcMbNfaQos9aCTRV7nBgc=",
-        "rev": "d5e9ead7917c1154f6cb425c407e5f1b17c7aa8c",
+        "lastModified": 1791405536,
+        "narHash": "sha256-BWaIDjZiiKZoLsmaQbOsI00UE4vaTF2baIYJSfajmck=",
+        "rev": "8b9fd720b385de3b6b923bc5cac4ccf3f99cc597",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-core/archive/d5e9ead7917c1154f6cb425c407e5f1b17c7aa8c.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/clan-core/archive/8b9fd720b385de3b6b923bc5cac4ccf3f99cc597.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -1059,6 +1059,7 @@
         "twitch-first": "twitch-first",
         "wl-harmonograph": "wl-harmonograph",
         "wrappers": "wrappers",
+        "zellij-workspaces": "zellij-workspaces",
         "zsh-abbrev-alias": "zsh-abbrev-alias",
         "zsh-async": "zsh-async",
         "zsh-colored-man-pages": "zsh-colored-man-pages"
@@ -1094,6 +1095,27 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "rev": "fd2ebb9cc4323d0c5a1336138dab5c3c5a5d8bd9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
+          "zellij-workspaces",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791361643,
+        "narHash": "sha256-HMdfSb1ONHs1RbSkQtCXm+tWEsTikisWWtXDnv0aQ+I=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "8afee9fa8caa877a4feb65adc33e8d72f3747dc9",
         "type": "github"
       },
       "original": {
@@ -1148,11 +1170,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790498116,
-        "narHash": "sha256-rs9meAYxW3zzrh43yaW7htrqCD+X9+pupDPHN86fumI=",
+        "lastModified": 1791103873,
+        "narHash": "sha256-nFxM+pKoZ8LJAEnUXARyCaOAloWgaW9kZQOSjWzKcTE=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "5efb5a6f4f5ab192817d28557dd4d650fa14d866",
+        "rev": "dcd241ba97088c22569d1573286e1b9daad340c0",
         "type": "github"
       },
       "original": {
@@ -1178,11 +1200,11 @@
     },
     "systems_2": {
       "locked": {
-        "lastModified": 1774449309,
-        "narHash": "sha256-brhZ8DmuGtzkCYHJg4HEd602amKm89Y9ytsFZ5uWD1w=",
+        "lastModified": 1791244623,
+        "narHash": "sha256-uuanbkFk8a313Zfrxdcz8Us/yQtaxNnKJtX8v0ZPpd8=",
         "owner": "nix-systems",
         "repo": "default",
-        "rev": "c29398b59d2048c4ab79345812849c9bd15e9150",
+        "rev": "d36eeed142f88b5a636f2e3856a53c61654cf29b",
         "type": "github"
       },
       "original": {
@@ -1215,11 +1237,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786901030,
-        "narHash": "sha256-WSFCsDSE5ffgD2MqzkM2CYjeFiKhRF/dJUN8uedb6YE=",
+        "lastModified": 1791203292,
+        "narHash": "sha256-vuzVwvjeucSnwKwMBpyP8r5IzdrMKCHEdwTrRFwUN7I=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "27b3b12a8e6375f28ebe122f07d230ca5459bbfa",
+        "rev": "03d8ee1bcbc8f9638907bb79edb9673151d0e22b",
         "type": "github"
       },
       "original": {
@@ -1308,6 +1330,27 @@
       "original": {
         "owner": "lassulus",
         "repo": "wrappers",
+        "type": "github"
+      }
+    },
+    "zellij-workspaces": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "lastModified": 1791384110,
+        "narHash": "sha256-6s60zMTFc8oaPvagf9DBxitQdz016px4+bUpP2GUXeo=",
+        "owner": "pinpox",
+        "repo": "zellij-workspaces",
+        "rev": "643c262233a7a5040eca36c58e17aca7555eb659",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "repo": "zellij-workspaces",
         "type": "github"
       }
     },
