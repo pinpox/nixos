@@ -47,28 +47,5 @@ in
     pkgs.jq
   ];
 
-  # The hermes agent VMs run here, not on the laptops: the box is always on,
-  # so a session survives a closed lid. Every desktop with the clan hermes
-  # `client` role forwards this host's loopback dashboard port over SSH.
-  #
-  # The VMs talk to the p0 inference endpoint — no self-hosted llama-swap and
-  # no OpenRouter on this host. `key_env` names the variable hermes reads from
-  # the guest's .env; `secretEnv` rides the clan var in as a systemd
-  # credential under that name.
   clan.core.vars.generators."p0-inference-key".prompts."api-key".persist = true;
-  services.hermes-microvm = {
-    settings.providers.p0 = {
-      base_url = p0BaseUrl;
-      key_env = "P0_API_KEY";
-    };
-    # Seed-once: written to the guest config only if the user has not picked a
-    # model yet, so runtime /model switches survive reboots.
-    initialModel = {
-      provider = "p0";
-      base_url = p0BaseUrl;
-      default = "Qwen3.6-27B-FP8";
-    };
-    users.pinpox.secretEnv.P0_API_KEY =
-      config.clan.core.vars.generators."p0-inference-key".files."api-key".path;
-  };
 }

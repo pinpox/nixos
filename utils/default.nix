@@ -32,23 +32,6 @@
     script = ''printf '%s' "$(openssl rand -hex 32)" > "$out/password"'';
   };
 
-  # p0 inference API key, prompted once per machine and persisted. The prompt
-  # itself becomes the `api-key` file (raw token); `env` is a systemd
-  # EnvironmentFile (P0_API_KEY=…) for consumers taking `environmentFiles`.
-  # traube declares its own prompt-only `p0-inference-key` (hermes reads the
-  # raw file as a credential, no env file) — per-machine, so shapes may differ.
-  mkP0Key = {
-    files."env" = { };
-    prompts."api-key" = {
-      type = "hidden";
-      persist = true;
-      description = "p0 inference API key (https://inference.p0.contact)";
-    };
-    script = ''
-      printf 'P0_API_KEY=%s\n' "$(cat "$prompts"/api-key)" > "$out/env"
-    '';
-  };
-
   renderMustache =
     name: template: data:
     # Render handlebars `template` called `name` by converting `data` to JSON

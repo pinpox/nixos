@@ -71,14 +71,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # spaces.url = "path:/home/pinpox/code/git.geninf.io/spaces/spaces-os";
-    spaces.url = "git+https://git.geninf.io/spaces/spaces-os";
-    spaces.inputs.nixpkgs.follows = "nixpkgs";
-    spaces.inputs.treefmt-nix.follows = "treefmt-nix";
-    spaces.inputs.home-manager.follows = "home-manager";
-    spaces.inputs.disko.follows = "disko";
-    spaces.inputs.llm-agents.follows = "llm-agents";
-
     nur.url = "github:pinpox/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
     nur.inputs.flake-parts.follows = "clan-core/flake-parts";
