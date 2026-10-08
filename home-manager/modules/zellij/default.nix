@@ -1,7 +1,18 @@
-{ lib, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  flake-inputs,
+  ...
+}:
 with lib;
 let
   cfg = config.pinpox.programs.zellij;
+
+  # Sidebar grouping tabs by project; names tabs project:workspace and manages
+  # jj workspaces / git worktrees (Alt w / Alt W)
+  workspaces =
+    flake-inputs.zellij-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   options.pinpox.programs.zellij.enable = mkEnableOption "zellij terminal mutliplexer";
@@ -14,10 +25,28 @@ in
       # Don't auto-start zellij on new shells
       enableZshIntegration = false;
 
+      # New tabs copy this layout, so every tab gets the sidebar. The plugin is
+      # loaded from a stable path (symlink below): zellij keys granted
+      # permissions by that path, so they survive plugin updates.
+      layouts.workspaces = ''
+        layout {
+            pane split_direction="vertical" {
+                pane size=28 borderless=true {
+                    plugin location="file:~/.config/zellij/plugins/zellij-workspaces.wasm"
+                }
+                pane
+            }
+            pane size=1 borderless=true {
+                plugin location="zellij:status-bar"
+            }
+        }
+      '';
+
       settings = {
 
         keybinds.unbind = "Ctrl q";
 
+        default_layout = "workspaces";
         session_serialization = false;
         show_startup_tips = false;
         simplified_ui = true;
@@ -43,5 +72,8 @@ in
         };
       };
     };
+
+    xdg.configFile."zellij/plugins/zellij-workspaces.wasm".source =
+      "${workspaces}/share/zellij/plugins/zellij-workspaces.wasm";
   };
 }

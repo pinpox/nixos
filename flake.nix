@@ -146,6 +146,9 @@
     trippy-track.inputs.nixpkgs.follows = "nixpkgs";
     trippy-track.inputs.treefmt-nix.follows = "treefmt-nix";
 
+    zellij-workspaces.url = "github:pinpox/zellij-workspaces";
+    zellij-workspaces.inputs.nixpkgs.follows = "nixpkgs";
+
     # sbox manages its own inputs via nixtamal/nilla, so it exposes no flake
     # inputs to point at our nixpkgs with `follows`.
     sbox.url = "github:DavHau/sbox";
