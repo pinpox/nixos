@@ -19,6 +19,12 @@ in
     # Wayland/sway
     programs.sway.enable = true;
 
+    # greetd/tuigreet runs on a VT, and the kernel prints to the active VT.
+    # Messages above the console loglevel (e.g. netdev_crit "NETDEV WATCHDOG"
+    # from the WWAN modem, KERN_CRIT=2) get drawn over the TUI. Only let
+    # emerg/alert through; everything still ends up in the journal.
+    boot.consoleLogLevel = mkDefault 2;
+
     # Turn on wayland support for some electron apps
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
