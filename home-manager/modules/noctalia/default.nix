@@ -343,14 +343,17 @@ in
     # only show up in the unit through the plugins store path.
     systemd.user.services.noctalia.Unit.X-Restart-Triggers = [ "${plugins}" ];
 
-    # noctalia 5.1.0's sway backend never reconnects after sway drops its IPC
+    # noctalia 5.2.1's sway backend never reconnects after sway drops its IPC
     # client (sway disconnects clients with >4 MB unread output). The process
     # stays alive with empty workspaces, so Restart= never fires; restart it
     # when the disconnect is logged. Drop once upstream reconnects on sway.
+    # Ordered after the target, not noctalia.service: WantedBy makes the target
+    # order after us, and noctalia is After= the target, which forms a cycle
+    # that systemd breaks by dropping this unit's start job.
     systemd.user.services.noctalia-sway-watchdog = {
       Unit = {
         Description = "Restart noctalia when it loses the sway IPC connection";
-        After = [ "noctalia.service" ];
+        After = [ "graphical-session.target" ];
         PartOf = [ "graphical-session.target" ];
       };
       Service = {
