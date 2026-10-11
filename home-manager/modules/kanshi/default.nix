@@ -50,6 +50,25 @@ in
             }
           ];
         }
+        {
+          profile.name = "laptop-dell-right";
+          profile.outputs = [
+            {
+              criteria = "eDP-1";
+              mode = "2880x1920@120Hz";
+              position = "0,0";
+              scale = 2.0;
+              status = "enable";
+            }
+            {
+              criteria = "Dell Inc. DELL U2725QE H5L0NF4";
+              mode = "3840x2160@120Hz";
+              position = "1440,0";
+              scale = 1.5;
+              status = "enable";
+            }
+          ];
+        }
       ];
     };
   };
