@@ -121,6 +121,7 @@ in
       gcc
       # gimp
       adwaita-icon-theme
+      herdr
       h # https://github.com/zimbatm/h
       htop
       iputils
