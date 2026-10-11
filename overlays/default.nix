@@ -125,6 +125,12 @@ self: super: {
   machine-report = super.callPackage ../packages/machine-report { };
   config-hash = super.callPackage ../packages/config-hash { };
 
+  # fooyin bumped to 0.13.1 with dev headers, so out-of-tree plugins build
+  fooyin = super.callPackage ../packages/fooyin { inherit (super) fooyin; };
+  foonic = self.callPackage ../packages/foonic { };
+  fooyin-with-plugins = self.callPackage ../packages/fooyin/with-plugins.nix { };
+  fooyin-foonic = self.fooyin-with-plugins.override { plugins = [ self.foonic ]; };
+
   # Builder for NixOS Incus VM images as a single package (metadata + qcow2),
   # with sshd + pinpox keys baked in. Passed by value to the @pinpox/incus
   # `localImages` setting. `pkgs.mkIncusVmImage { modules = [ ... ]; }`.

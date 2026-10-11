@@ -136,6 +136,9 @@ in
 
     home.sessionVariables.GTK_THEME = "Generated";
     home.sessionVariables.QT_ICON_THEME = "Papirus-Dark";
+    # Qt has no native sway theme and falls back to a fixed light palette; the
+    # portal theme follows org.freedesktop.appearance color-scheme live.
+    home.sessionVariables.QT_QPA_PLATFORMTHEME = "xdgdesktopportal";
 
     # Set default dark theme via dconf (can be changed at runtime)
     dconf.settings = {

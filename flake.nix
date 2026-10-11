@@ -242,6 +242,7 @@
               config-hash
               woodpecker-pipeline
               manual
+              fooyin-foonic
               ;
             # NixOS Incus VM base image: NixOS unstable + sshd + pinpox keys +
             # cloud-init (sets the guest hostname from the instance name).

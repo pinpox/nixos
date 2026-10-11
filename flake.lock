@@ -1341,11 +1341,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1791384110,
-        "narHash": "sha256-6s60zMTFc8oaPvagf9DBxitQdz016px4+bUpP2GUXeo=",
+        "lastModified": 1791912256,
+        "narHash": "sha256-K/9FRoLBD0vrV0+XP599cW/y03zzs7ZPyD/VIYeQaVU=",
         "owner": "pinpox",
         "repo": "zellij-workspaces",
-        "rev": "643c262233a7a5040eca36c58e17aca7555eb659",
+        "rev": "cf2f57c26b3f9916998d883cfb3e0c398038557e",
         "type": "github"
       },
       "original": {
