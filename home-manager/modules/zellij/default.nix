@@ -10,7 +10,8 @@ let
   cfg = config.pinpox.programs.zellij;
 
   # Sidebar grouping tabs by project; names tabs project:workspace and manages
-  # jj workspaces / git worktrees (Alt w / Alt W)
+  # jj workspaces / git worktrees (Alt w / Alt W). The same package ships the
+  # `zellij-ws` CLI for scripts and agents, and the Agent Skill documenting it.
   workspaces =
     flake-inputs.zellij-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
@@ -25,11 +26,15 @@ in
       # Don't auto-start zellij on new shells
       enableZshIntegration = false;
 
-      # New tabs copy this layout, so every tab gets the sidebar. The plugin is
+      # New tabs copy this layout, so every tab gets the tab bar (the tabs of
+      # the current session, i.e. workspace) and the sidebar. The plugin is
       # loaded from a stable path (symlink below): zellij keys granted
       # permissions by that path, so they survive plugin updates.
       layouts.workspaces = ''
         layout {
+            pane size=1 borderless=true {
+                plugin location="zellij:tab-bar"
+            }
             pane split_direction="vertical" {
                 pane size=28 borderless=true {
                     plugin location="file:~/.config/zellij/plugins/zellij-workspaces.wasm"
@@ -75,5 +80,10 @@ in
 
     xdg.configFile."zellij/plugins/zellij-workspaces.wasm".source =
       "${workspaces}/share/zellij/plugins/zellij-workspaces.wasm";
+
+    home.packages = [ workspaces ];
+
+    # Agent skill for zellij-ws, offered to every enabled harness.
+    pinpox.agentSkills = [ workspaces ];
   };
 }
