@@ -309,6 +309,9 @@ in
           # Lets an admin send a one-time login code by email (user onboarding).
           # Admin-initiated only; the unauthenticated variant stays off.
           EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED = "true";
+          # Users may not edit their own username/email/name. Second layer for
+          # apps that map accounts by profile data.
+          ALLOW_OWN_ACCOUNT_EDIT = "false";
         };
 
         extraClients = {
