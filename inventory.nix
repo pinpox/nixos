@@ -312,6 +312,10 @@ in
           # Users may not edit their own username/email/name. Second layer for
           # apps that map accounts by profile data.
           ALLOW_OWN_ACCOUNT_EDIT = "false";
+          # Client ID Metadata Documents: apps listed here can log users in
+          # without being registered (lassulus' byoidc test). The client is
+          # created on first use, unrestricted; restrict it in the UI if needed.
+          CIMD_URL_ALLOWLIST = builtins.toJSON [ "https://byoidc.lassul.us/client-metadata.json" ];
         };
 
         # Clients listed here are restricted to these groups; the groups are
