@@ -10,7 +10,7 @@ let
 
   # Pin Nextcloud major version.
   # Refer to upstream docs for updating major versions
-  package = pkgs.nextcloud34;
+  package = pkgs.nextcloud35;
 
   # Nextcloud composes the From header as mail_from_address@mail_domain
   # (server lib/public/Util.php, getDefaultEmailAddress), so the local part and
@@ -149,11 +149,11 @@ in
       # declaratively via nix
       appstoreEnable = false;
       extraApps = {
+        memories = pkgs.callPackage ./memories.nix { };
         inherit (package.packages.apps)
           mail
           calendar
           contacts
-          memories
 
           previewgenerator
           # maps
