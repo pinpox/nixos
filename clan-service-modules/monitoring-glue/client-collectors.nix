@@ -5,6 +5,8 @@
 #   - flake_inputs.prom, symlinked from /etc/nix (written by modules/nix-common)
 #     for the flake-freshness alert
 #   - restic-<backup>.prom, stamped by modules/restic on backup success
+#   - reboot.prom, written by reboot-required.service below for the
+#     reboot_pending alert
 #
 # Wired via extraModules on the clan-core monitoring client role, so it
 # applies to every monitored machine. Alloy loads all *.alloy files from
@@ -22,6 +24,49 @@
     "d /var/lib/prometheus-textfile 0755 root root -"
     "L+ /var/lib/prometheus-textfile/flake_inputs.prom - - - - /etc/nix/flake_inputs.prom"
   ];
+
+  # Compares the kernel and modules the host booted with those of the active
+  # system. The restart triggers rerun it on every switch that changes either,
+  # so a deploy reports at once and a switch back to the booted kernel clears
+  # it. `since` survives reruns, so the alert can wait for a convenient reboot
+  # after a deploy.
+  systemd.services.reboot-required = {
+    description = "Record whether a reboot is pending for an installed kernel";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-tmpfiles-setup.service" ];
+    restartTriggers = [
+      config.boot.kernelPackages.kernel
+      config.system.modulesTree
+    ];
+    path = [
+      pkgs.coreutils
+      pkgs.gnused
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      out=/var/lib/prometheus-textfile/reboot.prom
+      same() { [ "$(readlink -f "/run/booted-system/$1")" = "$(readlink -f "/run/current-system/$1")" ]; }
+      booted=$(uname -r)
+      installed=$(ls /run/current-system/kernel-modules/lib/modules)
+      {
+        echo '# HELP reboot_required 1 if the active system has a different kernel or kernel modules than the host booted with.'
+        echo '# TYPE reboot_required gauge'
+        if same kernel && same kernel-modules; then
+          echo "reboot_required 0"
+        else
+          since=$(sed -n 's/^reboot_required_since_timestamp_seconds{[^}]*} //p' "$out" 2>/dev/null || true)
+          echo "reboot_required 1"
+          echo '# HELP reboot_required_since_timestamp_seconds When the pending reboot was first recorded.'
+          echo '# TYPE reboot_required_since_timestamp_seconds gauge'
+          echo "reboot_required_since_timestamp_seconds{booted=\"$booted\",installed=\"$installed\"} ''${since:-$(date +%s)}"
+        fi
+      } > "$out.tmp"
+      mv "$out.tmp" "$out"
+    '';
+  };
 
   environment.etc."alloy/extra-collectors.alloy".text = ''
     prometheus.exporter.unix "extra" {

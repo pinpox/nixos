@@ -155,6 +155,15 @@ lib.mapAttrsToList mkRule {
     description = "Uptime monster: {{$labels.instance}} has been up for more than 30 days.";
   };
 
+  # A deploy that changes the kernel installs it for the next boot only
+  # (reboot-required.service in ./client-collectors.nix). A week leaves room
+  # to reboot at a convenient time before paging.
+  reboot_pending = {
+    condition = "time() - max by (instance, booted, installed) (reboot_required_since_timestamp_seconds) > 604800 and on(instance) max by (instance) (reboot_required) == 1";
+    time = "0m";
+    description = "{{$labels.instance}} installed kernel {{$labels.installed}} but still runs {{$labels.booted}}: reboot it.";
+  };
+
   flake_nixpkgs_outdated = {
     condition = ''(time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 30'';
     description = "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 30 days";
