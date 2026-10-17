@@ -66,6 +66,8 @@ in
         "*/Downloads"
         "*/Seafile"
         "*/VirtualBox VMs"
+        # Raw footage and exports, hundreds of GB; too big for the backups.
+        "/home/*/Videos"
         "*/cache2"
         "*/code"
         "/var/lib/docker"
