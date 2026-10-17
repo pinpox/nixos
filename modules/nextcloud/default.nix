@@ -19,6 +19,7 @@ let
   smtpLocalPart = "nextcloud";
   smtpDomain = "pablo.tools";
   smtpFrom = "${smtpLocalPart}@${smtpDomain}";
+  oidcClientId = "nextcloud";
 
 in
 {
@@ -98,6 +99,17 @@ in
 
         maintenance_window_start = "4";
 
+        # Login via Pocket ID (user_oidc app, provider set up in nextcloud-setup
+        # below). Accounts are matched by the admin-set `nextcloud_username`
+        # claim (pre-existing accounts), otherwise by the immutable Pocket ID
+        # user ID (`sub`); unknown users get an account on first login.
+        user_oidc = {
+          login_label = "Log in with Pocket ID";
+          # Explicit: Nextcloud persists settings into the writable config.php,
+          # so an earlier `false` would otherwise stick around.
+          auto_provision = true;
+        };
+
         trusted_proxies = [
           (builtins.readFile (
             config.clan.core.settings.directory + "/vars/per-machine/porree/wireguard-wg-clan-ip/ipv4/value"
@@ -146,6 +158,7 @@ in
           previewgenerator
           # maps
           twofactor_webauthn
+          user_oidc
           # recognize  # works but pulls in ~100MiB libtensorflow
           music
           # phonetrack
@@ -246,19 +259,50 @@ in
       '';
     };
 
-    # Fix for memories
-    # https://memories.gallery/troubleshooting/#trigger-compatibility-mode
     systemd.services.nextcloud-cron = {
+      # Fix for memories
+      # https://memories.gallery/troubleshooting/#trigger-compatibility-mode
       path = [ pkgs.perl ];
     };
 
     # Database configuration
     services.postgresql.enable = true;
 
+    # Re-run the setup (which stores the secret in Nextcloud) when it rotates.
+    clan.core.vars.generators."pocket-id-client-${oidcClientId}".files.secret.restartUnits = [
+      "nextcloud-setup.service"
+    ];
+
     # Ensure that postgres is running *before* running the setup
     systemd.services."nextcloud-setup" = {
       requires = [ "postgresql.service" ];
       after = [ "postgresql.service" ];
+      # OIDC client secret from the pocket-id service's per-client vars
+      # generator (Pocket ID runs on this machine).
+      serviceConfig.LoadCredential = [
+        "oidc-secret:${
+          config.clan.core.vars.generators."pocket-id-client-${oidcClientId}".files.secret.path
+        }"
+      ];
+      # Runs after the module's own script has enabled the apps.
+      # user_oidc:provider is an upsert keyed by the identifier.
+      script = mkAfter ''
+        $OCC_BIN user_oidc:provider PocketID \
+          --clientid=${oidcClientId} \
+          --clientsecret-file="$CREDENTIALS_DIRECTORY/oidc-secret" \
+          --discoveryuri=https://id.pablo.tools/.well-known/openid-configuration \
+          --scope="openid email profile" \
+          --mapping-uid="nextcloud_username | sub" \
+          --resolve-nested-claims=1 \
+          --unique-uid=0 \
+          --check-bearer=0 \
+          --bearer-provisioning=0 \
+          --send-id-token-hint=0
+
+        # With a single provider, /login redirects straight to Pocket ID.
+        # Break-glass password login (+ TOTP): /login?direct=1
+        $OCC_BIN config:app:set user_oidc allow_multiple_user_backends --value=0
+      '';
     };
   };
 }

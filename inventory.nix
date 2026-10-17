@@ -318,6 +318,7 @@ in
         # created if missing. Membership is managed in the Pocket ID UI.
         groups = {
           mail = [ "bulwark" ];
+          nextcloud = [ "nextcloud" ];
         };
 
         extraClients = {
@@ -326,6 +327,20 @@ in
             name = "Miniflux";
             isPublic = true;
             callbackURLs = [ "https://news.0cx.de/oauth2/oidc/callback" ];
+          };
+
+          # Confidential client + PKCE for Nextcloud's user_oidc app; the secret
+          # comes from the pocket-id-client-nextcloud vars generator.
+          #
+          # Per user that should get Nextcloud access: add them to the
+          # "nextcloud" group in Pocket ID. Their account is created on first
+          # login, keyed by their Pocket ID user ID. To log into an existing
+          # Nextcloud account instead, set the custom claim
+          # `nextcloud_username` = <Nextcloud uid> on the user (never on a
+          # group: all members would share one account).
+          nextcloud = {
+            name = "Nextcloud";
+            callbackURLs = [ "https://files.pablo.tools/apps/user_oidc/code" ];
           };
 
           # Public + PKCE: parley runs on clementine, so it can't read a
