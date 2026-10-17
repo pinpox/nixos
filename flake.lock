@@ -121,15 +121,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1790953360,
-        "narHash": "sha256-t2gUkjEesIKunMvZa5L0Q6oO+HHgb0aTvH289eLUjP4=",
-        "rev": "6e90940af3629164aacd70dd10befaaad7a4d90f",
-        "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/clan-community/archive/6e90940af3629164aacd70dd10befaaad7a4d90f.tar.gz"
+        "lastModified": 1792251592,
+        "narHash": "sha256-skWVCfTCZPgqENcGn0xvCmR5KZJGvarsia/io4IpoPE=",
+        "ref": "pocket-id-declarative-secrets-groups",
+        "rev": "12207d4649166209fcf51fbdd3caa6300f63ca3f",
+        "revCount": 243,
+        "type": "git",
+        "url": "file:///home/pinpox/code/git.clan.lol/clan/clan-community"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://git.clan.lol/clan/clan-community/archive/main.tar.gz"
+        "ref": "pocket-id-declarative-secrets-groups",
+        "type": "git",
+        "url": "file:///home/pinpox/code/git.clan.lol/clan/clan-community"
       }
     },
     "clan-core": {

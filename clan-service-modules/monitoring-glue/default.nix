@@ -12,8 +12,8 @@
       converted to caddy's format), /grafana prefix-stripped to grafana. The
       host is exported as an endpoint, so pki issues the TLS cert and dm-dns
       publishes the name.
-    - Grafana login via Pocket ID (exported auth.client; secret published by
-      the reconciler at /run/pocket-id-clients/<clientId>/secret).
+    - Grafana login via Pocket ID (exported auth.client; secret from the
+      pocket-id-client-<clientId> vars generator on the Pocket ID host).
     - Declarative Grafana alerting: rules from ./alert-rules.nix, delivered
       to the Matrix room via the machine-local matrix-hook webhook.
     - Provisioned dashboards from ./dashboards ("Overview" per host,
@@ -242,17 +242,13 @@
             # 500), which scanner traffic alone exceeds. Single-user instance.
             services.loki.configuration.limits_config.max_query_series = 5000;
 
-            # Grafana's OIDC client secret is published by the Pocket ID
-            # reconciler at /run/pocket-id-clients/<id>/secret (root:pocket-id-clients
-            # 0640). Load it as a systemd credential and wait until the
-            # reconciler has written it.
-            systemd.services.grafana = {
-              after = [ "pocket-id-clients.service" ];
-              requires = [ "pocket-id-clients.service" ];
-              serviceConfig.LoadCredential = [
-                "oidc-secret:/run/pocket-id-clients/${oidc.clientId}/secret"
-              ];
-            };
+            # Grafana's OIDC client secret comes from the pocket-id service's
+            # per-client vars generator (Pocket ID runs on this machine).
+            systemd.services.grafana.serviceConfig.LoadCredential = [
+              "oidc-secret:${
+                config.clan.core.vars.generators."pocket-id-client-${oidc.clientId}".files.secret.path
+              }"
+            ];
 
             services.grafana = {
               settings = {

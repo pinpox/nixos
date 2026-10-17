@@ -314,6 +314,12 @@ in
           ALLOW_OWN_ACCOUNT_EDIT = "false";
         };
 
+        # Clients listed here are restricted to these groups; the groups are
+        # created if missing. Membership is managed in the Pocket ID UI.
+        groups = {
+          mail = [ "bulwark" ];
+        };
+
         extraClients = {
 
           miniflux = {
@@ -322,8 +328,8 @@ in
             callbackURLs = [ "https://news.0cx.de/oauth2/oidc/callback" ];
           };
 
-          # Public + PKCE: parley runs on clementine, so it can't read the
-          # confidential secret the reconciler publishes on porree.
+          # Public + PKCE: parley runs on clementine, so it can't read a
+          # confidential secret, which only exists on porree.
           parley = {
             name = "Parley";
             isPublic = true;
@@ -337,8 +343,8 @@ in
             callbackURLs = [ "https://boxes.pin/oidc/callback" ];
           };
 
-          # Manual in PocketID: Create a "mail" group, add the users who should
-          # have mailboxes, then set this client's "Allowed User Groups" to "mail"
+          # Manual in Pocket ID: add the users who should have mailboxes to the
+          # "mail" group.
           bulwark = {
             name = "Bulwark Webmail";
             isPublic = true;

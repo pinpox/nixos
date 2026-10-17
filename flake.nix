@@ -17,7 +17,8 @@
     data-mesher.inputs.nixpkgs.follows = "nixpkgs";
     data-mesher.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    clan-community.url = "https://git.clan.lol/clan/clan-community/archive/main.tar.gz";
+    # TODO: revert to upstream once pocket-id-declarative-secrets-groups is merged.
+    clan-community.url = "git+file:///home/pinpox/code/git.clan.lol/clan/clan-community?ref=pocket-id-declarative-secrets-groups";
     clan-community.inputs.clan-core.follows = "clan-core";
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
     clan-community.inputs.treefmt-nix.follows = "treefmt-nix";

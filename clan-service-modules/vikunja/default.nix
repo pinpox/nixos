@@ -86,12 +86,13 @@
                 "reverse_proxy 127.0.0.1:${toString config.services.vikunja.port}";
             };
 
-            # OIDC client secret from the Pocket ID reconciler, via LoadCredential + *_FILE.
+            # OIDC client secret from the pocket-id service's per-client vars
+            # generator (Pocket ID runs on this machine), via LoadCredential + *_FILE.
             systemd.services.vikunja = {
-              after = [ "pocket-id-clients.service" ];
-              requires = [ "pocket-id-clients.service" ];
               serviceConfig.LoadCredential = [
-                "oidc-secret:/run/pocket-id-clients/${settings.oidc.clientId}/secret"
+                "oidc-secret:${
+                  config.clan.core.vars.generators."pocket-id-client-${settings.oidc.clientId}".files.secret.path
+                }"
               ];
               environment.VIKUNJA_AUTH_OPENID_PROVIDERS_AUTHELIA_CLIENTSECRET_FILE = "/run/credentials/vikunja.service/oidc-secret";
             };
