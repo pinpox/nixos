@@ -32,6 +32,9 @@ in
       type = types.listOf types.str;
       default = [
         "*.pyc"
+        # LLM weights, re-downloadable and hundreds of GB, in any folder.
+        "*.gguf"
+        "*.safetensors"
         "*/.BurpSuite"
         "*/.arduino15/packages"
         "*/.cache"
@@ -45,6 +48,7 @@ in
         "*/.container-diff"
         "*/.go/pkg"
         "*/.gvfs/"
+        "*/.lmstudio/models"
         "*/.local/share/Steam"
         "*/.local/share/Trash"
         "*/.local/share/tor-browser"
