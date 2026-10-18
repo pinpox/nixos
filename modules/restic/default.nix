@@ -76,7 +76,10 @@ in
         "*/code"
         "/var/lib/docker"
         "discord/Cache"
-        "tags"
+        # ctags files in home directories. A bare "tags" also matched git's
+        # refs/tags (e.g. in the gitea repos on kfbox), so re-include those.
+        "/home/*/**/tags"
+        "!/home/*/**/refs/tags"
       ];
       example = [ "/home/pinpox/cache" ];
       description = "Paths to exclude from backup";
