@@ -255,12 +255,6 @@ in
       };
     };
 
-    localsend = {
-      module.input = "clan-community";
-      module.name = "localsend";
-      roles.default.tags = [ "desktop" ];
-    };
-
     machine-type = {
       module.input = "self";
       module.name = "@pinpox/machine-type";
