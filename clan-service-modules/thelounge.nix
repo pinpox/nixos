@@ -55,6 +55,14 @@
                     deletionPolicy = "everything";
                   };
                   theme = "morning";
+                  # The startup update check crashes thelounge (got retry bug)
+                  # while the history load blocks the event loop. Needs the
+                  # patched package from overlays/default.nix.
+                  disableUpdateCheck = true;
+                  # Messages per channel kept in memory and loaded from the
+                  # sqlite logs on startup (default 10000). Halved to cut
+                  # startup time and RAM; older history stays searchable.
+                  maxHistory = 5000;
                 };
               };
 

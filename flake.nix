@@ -119,6 +119,11 @@
     rage.url = "github:pinpox/rage/age-askpass-support";
     rage.flake = false;
 
+    # thelounge with the disableUpdateCheck option.
+    # TODO https://github.com/thelounge/thelounge/pull/5159 remove after merge
+    thelounge.url = "github:pinpox/thelounge/disable-update-check";
+    thelounge.flake = false;
+
     passage-secret-service.url = "github:pinpox/passage-secret-service";
     passage-secret-service.inputs.nixpkgs.follows = "nixpkgs";
     passage-secret-service.inputs.treefmt-nix.follows = "treefmt-nix";

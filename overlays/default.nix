@@ -56,6 +56,20 @@ self: super: {
     patches = [ ./age-plugin-yubikey-skip-not-found.patch ];
   };
 
+  # Adds the disableUpdateCheck option: the startup update check crashes
+  # thelounge when its history load blocks the event loop (got retry bug).
+  # TODO https://github.com/thelounge/thelounge/pull/5159 remove after merge
+  thelounge = super.thelounge.overrideAttrs (
+    finalAttrs: old: {
+      version = "4.6.0-pre.2-unstable-${builtins.substring 0 8 inputs.thelounge.lastModifiedDate}";
+      src = inputs.thelounge;
+      offlineCache = super.fetchYarnDeps {
+        yarnLock = "${finalAttrs.src}/yarn.lock";
+        hash = "sha256-esMecXPOqmm+REO3vmDEo9dyLEhrsNgNrCypcJJ+rjM=";
+      };
+    }
+  );
+
   # To override packages from master input do:
   # pamixer = inputs.nixpkgs-master.legacyPackages."${super.system}".pamixer;
 

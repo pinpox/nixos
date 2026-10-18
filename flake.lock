@@ -1051,6 +1051,7 @@
         "rio": "rio",
         "sbox": "sbox",
         "skill-collection": "skill-collection",
+        "thelounge": "thelounge",
         "treefmt-nix": [
           "clan-core",
           "treefmt-nix"
@@ -1226,6 +1227,23 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "thelounge": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792352213,
+        "narHash": "sha256-8HuiJfeo4MGGZoyCwMOX8Dj6d+nIZQLFqwKBgcE/+7I=",
+        "owner": "pinpox",
+        "repo": "thelounge",
+        "rev": "ecde16685f812a74fb026aa2397bf0521786b10f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pinpox",
+        "ref": "disable-update-check",
+        "repo": "thelounge",
         "type": "github"
       }
     },
