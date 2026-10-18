@@ -19,6 +19,9 @@
   services.acpid.enable = true;
   services.upower.enable = true;
 
+  # Compressed swap in RAM
+  zramSwap.enable = true;
+
   programs.mosh.enable = true;
 
   # Enable networkmanager
