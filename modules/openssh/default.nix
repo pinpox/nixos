@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   pinpox-keys,
   ...
@@ -26,6 +25,9 @@ in
         KbdInteractiveAuthentication = false;
       };
     };
+
+	# Breaks rebuild
+    systemd.services."sshd@".restartIfChanged = false;
 
     # Block anything that is not HTTP(s) or SSH.
     networking.firewall = {
