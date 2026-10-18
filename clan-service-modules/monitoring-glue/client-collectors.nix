@@ -3,7 +3,7 @@
 # on Linux, for the reboot/uptime alerts; "boottime" is BSD-only) and the
 # textfile collector reading /var/lib/prometheus-textfile:
 #   - flake_inputs.prom, symlinked from /etc/nix (written by modules/nix-common)
-#     for the flake-freshness alert
+#     for the flake_nixpkgs_outdated/flake_nixpkgs_age_missing alerts
 #   - restic-<backup>.prom, stamped by modules/restic on backup success
 #   - reboot.prom, written by reboot-required.service below for the
 #     reboot_pending alert

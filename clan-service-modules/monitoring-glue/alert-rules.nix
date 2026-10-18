@@ -164,9 +164,35 @@ lib.mapAttrsToList mkRule {
     description = "{{$labels.instance}} installed kernel {{$labels.installed}} but still runs {{$labels.booted}}: reboot it.";
   };
 
+  # flake_input_last_modified (modules/nix-common) is the commit time of the
+  # nixpkgs a host was built from, fixed at build time: it only moves when a
+  # flake.lock bump is deployed there, so this fires whether nobody bumped the
+  # lock or the bump never reached the host.
+  #
+  # Restricted to the server-tagged machines (`servers`): desktops and
+  # laptops are online only now and then, so an alert for them either
+  # resolves falsely whenever they go offline or keeps paging while they
+  # cannot be deployed to. Their age stays visible on the Overview dashboard.
+  # The rule reads each server's last value from the past hour: a deploy
+  # restarts Alloy, leaving up to one scrape without samples, and the old
+  # rev's series (rev/narHash labels) lingers in the window; max by instance
+  # lets the newest commit win.
   flake_nixpkgs_outdated = {
-    condition = ''(time() - flake_input_last_modified{input="nixpkgs"}) / (60*60*24) > 30'';
-    description = "Nixpkgs outdated: Nixpkgs on {{$labels.instance}} has not been updated in 30 days";
+    condition = ''time() - max by (instance) (last_over_time(flake_input_last_modified{input="nixpkgs",instance=~"${lib.concatStringsSep "|" servers}"}[1h])) > 14 * 86400'';
+    time = "0m";
+    description = "{{$labels.instance}} runs nixpkgs committed {{ humanizeDuration $values.expr.Value }} ago: bump flake.lock and redeploy.";
+  };
+
+  # Host pushes metrics but no nixpkgs age, so its age cannot be judged
+  # (textfile missing or the collector pipeline broken). Hosts that are off
+  # stop pushing node metrics too and stay silent. The 1h window spans the
+  # scrape gap of an Alloy restart on deploy; `for` spans the boot of a host
+  # that was off for longer, where node metrics can arrive up to one 60s
+  # textfile scrape before the nixpkgs series.
+  flake_nixpkgs_age_missing = {
+    condition = ''max by (instance) (last_over_time(node_memory_MemTotal_bytes[1h])) unless on(instance) last_over_time(flake_input_last_modified{input="nixpkgs"}[1h])'';
+    time = "10m";
+    description = "{{$labels.instance}} is up but has not reported flake_input_last_modified for nixpkgs in the past hour.";
   };
 
   # Blackbox probes (settings.probes); `target` is the probed URL. Both

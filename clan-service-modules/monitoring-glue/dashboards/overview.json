@@ -565,7 +565,7 @@
         "type": "prometheus",
         "uid": "mimir"
       },
-      "description": "Age of the nixpkgs pin deployed on this host (from /etc/nix/flake_inputs.prom), labelled with its short rev. The flake_nixpkgs_outdated alert fires at 30 days.",
+      "description": "Age of the nixpkgs pin deployed on this host (from /etc/nix/flake_inputs.prom), labelled with its short rev. Red from 14 days; the flake_nixpkgs_outdated alert only covers server-tagged machines.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -581,11 +581,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 1209600
+                "value": 604800
               },
               {
                 "color": "red",
-                "value": 2592000
+                "value": 1209600
               }
             ]
           },
