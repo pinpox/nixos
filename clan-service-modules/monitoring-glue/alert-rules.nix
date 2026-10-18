@@ -142,14 +142,6 @@ lib.mapAttrsToList mkRule {
     description = "{{$labels.instance}}: The node is under heavy memory pressure. High rate of major page faults: {{$value}}";
   };
 
-  # The old rule compared the raw boot timestamp against 300 and could never
-  # fire; compare the boot age instead.
-  reboot = {
-    condition = "time() - node_boot_time_seconds < 300";
-    time = "0m";
-    description = "{{$labels.instance}} just rebooted.";
-  };
-
   uptime = {
     condition = "(time() - node_boot_time_seconds) / (60*60*24) > 30";
     description = "Uptime monster: {{$labels.instance}} has been up for more than 30 days.";

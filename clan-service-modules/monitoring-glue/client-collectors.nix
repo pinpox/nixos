@@ -1,6 +1,6 @@
 # Extra Alloy pipeline for collectors the clan-core monitoring client doesn't
 # enable: vmstat (OOM kills, page-fault pressure), stat (node_boot_time_seconds
-# on Linux, for the reboot/uptime alerts; "boottime" is BSD-only) and the
+# on Linux, for the uptime alert; "boottime" is BSD-only) and the
 # textfile collector reading /var/lib/prometheus-textfile:
 #   - flake_inputs.prom, symlinked from /etc/nix (written by modules/nix-common)
 #     for the flake_nixpkgs_outdated/flake_nixpkgs_age_missing alerts

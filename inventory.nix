@@ -418,7 +418,7 @@ in
             }
           ''
         ];
-        # vmstat/boottime/textfile collectors for the OOM/reboot/uptime and
+        # vmstat/boottime/textfile collectors for the OOM/uptime and
         # flake-freshness alerts, restic success stamps, caddy GeoIP logs.
         extraModules = [ ./clan-service-modules/monitoring-glue/client-collectors.nix ];
       };
