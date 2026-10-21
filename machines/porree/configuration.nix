@@ -2,6 +2,7 @@
   matrix-hook,
   config,
   pkgs,
+  lib,
   pinpox-utils,
   ...
 }:
@@ -31,6 +32,11 @@
 
   services.qemuGuest.enable = true;
   services.tailscale.enable = true;
+
+  # Postgres is enabled by clan-core monitoring (grafana). Pin the major
+  # version matching the on-disk cluster (/var/lib/postgresql/17); otherwise
+  # it is derived from stateVersion 20.03 -> postgresql_11 (removed).
+  services.postgresql.package =  pkgs.postgresql_17;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -82,7 +88,7 @@
       };
 
       # Enable nextcloud configuration
-      nextcloud.enable = true;
+      nextcloud.enable = false;
 
     };
   };
