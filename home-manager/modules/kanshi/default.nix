@@ -76,7 +76,7 @@ in
               criteria = "Dell Inc. DELL U2725QE H5L0NF4";
               mode = "3840x2160@120Hz";
               position = "0,0";
-              scale = 1.0;
+              scale = 1.5;
               status = "enable";
             }
           ];
