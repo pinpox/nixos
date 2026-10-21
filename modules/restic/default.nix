@@ -115,6 +115,7 @@ in
         tmp=$(mktemp ${textfileDir}/.restic-"$1".XXXXXX)
         printf '# TYPE restic_backup_last_success_timestamp_seconds gauge\nrestic_backup_last_success_timestamp_seconds{backup="%s"} %s\n' \
           "$1" "$(date +%s)" > "$tmp"
+        chmod 0644 "$tmp"
         mv "$tmp" ${textfileDir}/restic-"$1".prom
       '';
     in
@@ -153,12 +154,14 @@ in
             "--keep-weekly 5"
             "--keep-monthly 12"
             "--keep-yearly 75"
+            "--retry-lock 5h"
           ];
 
           extraBackupArgs = [
             "--exclude-file=${restic-ignore-file}"
             "--one-file-system"
             "-vv"
+            "--retry-lock 5h"
           ];
 
         in

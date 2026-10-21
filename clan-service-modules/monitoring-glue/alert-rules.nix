@@ -113,12 +113,22 @@ lib.mapAttrsToList mkRule {
   };
 
   # Stamp written on successful completion (backup + prune); timers run
-  # daily. A host that never completed a backup has no series and stays
-  # silent here, which restic_backup_failed covers once a run fails.
+  # daily. Every restic unit a host reports (node_systemd_unit_state) must
+  # have a stamp, so a backup that never succeeded fires too: the failed unit
+  # state is reset by every deploy or reboot and can't be relied on alone.
+  # The 1h windows span the scrape gap of an Alloy restart on deploy; hosts
+  # that are off stop reporting both and stay silent.
   restic_backup_too_old = {
-    condition = "(time() - restic_backup_last_success_timestamp_seconds) / (60*60) > 36";
+    condition = ''
+      (time() - max by (instance, backup) (last_over_time(restic_backup_last_success_timestamp_seconds[1h]))) / (60*60) > 36
+      or
+      (
+        max by (instance, backup) (label_replace(last_over_time(node_systemd_unit_state{name=~"restic-backups-.+\\.service"}[1h]), "backup", "$1", "name", "restic-backups-(.+)\\.service"))
+        unless on(instance, backup) last_over_time(restic_backup_last_success_timestamp_seconds[1h])
+      )
+    '';
     time = "1h";
-    description = "{{$labels.instance}}: last successful {{$labels.backup}} backup is older than 36 hours.";
+    description = "{{$labels.instance}}: no successful {{$labels.backup}} backup in the last 36 hours (or none recorded at all).";
   };
 
   # Push model: there is no `up` metric. A host is down when it stopped
