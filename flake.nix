@@ -114,11 +114,6 @@
     age-plugin-picohsm.url = "github:pinpox/age-plugin-picohsm";
     age-plugin-picohsm.inputs.nixpkgs.follows = "nixpkgs";
 
-    # TODO: remove when AGE_ASKPASS support lands upstream:
-    # https://github.com/str4d/rage/pull/617
-    rage.url = "github:pinpox/rage/age-askpass-support";
-    rage.flake = false;
-
     # thelounge with the disableUpdateCheck option.
     # TODO https://github.com/thelounge/thelounge/pull/5159 remove after merge
     thelounge.url = "github:pinpox/thelounge/disable-update-check";

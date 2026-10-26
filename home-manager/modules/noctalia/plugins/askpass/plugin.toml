@@ -9,7 +9,7 @@ plugin_api = 24
 author = "pinpox"
 license = "MIT"
 icon = "lock"
-description = "Password/PIN entry dialog usable as SSH_ASKPASS, SUDO_ASKPASS, PICOHSM_ASKPASS_BACKEND, etc."
+description = "Password/PIN entry dialog usable as SSH_ASKPASS, SUDO_ASKPASS, PICOHSM_ASKPASS_BACKEND, PINENTRY_PROGRAM, etc."
 tags = ["privacy", "utility"]
 
 [[panel]]

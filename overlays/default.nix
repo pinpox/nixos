@@ -37,17 +37,6 @@ self: super: {
     ];
   });
 
-  # TODO: remove when AGE_ASKPASS support lands upstream (str4d/rage#617)
-  rage = super.rage.overrideAttrs (old: {
-    src = inputs.rage;
-    cargoDeps = super.rustPlatform.fetchCargoVendor {
-      pname = old.pname;
-      version = old.version;
-      src = inputs.rage;
-      hash = "sha256-yshoG/U43e9RgYt+PlnaWpYzJFIneX/WYh64mSLSdvA=";
-    };
-  });
-
   # Lets several YubiKeys share one identity: absent serials are skipped
   # instead of prompting (and hanging non-interactive callers like clan).
   # TODO: remove once str4d/age-plugin-yubikey#229 is merged and released.
