@@ -272,6 +272,14 @@ in
               command = "floating enable, border pixel 0, move scratchpad";
               criteria.app_id = "dropdown";
             }
+            {
+              # Worms W.M.D (Proton) never ends up fullscreen on its own: sway
+              # tiles its window on map, Wine adopts the tiled size and then
+              # drops any later fullscreen request because the window no
+              # longer covers the monitor. Fullscreen it right at map time.
+              command = "fullscreen enable";
+              criteria.class = "^steam_app_327030$";
+            }
           ];
 
           input = {
