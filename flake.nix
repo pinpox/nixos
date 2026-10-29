@@ -102,6 +102,9 @@
     zsh-async.url = "github:mafredri/zsh-async";
     zsh-async.flake = false;
 
+    freecad-ai.url = "github:ghbalf/freecad-ai";
+    freecad-ai.flake = false;
+
     nix-apple-fonts = {
       url = "github:pinpox/nix-apple-fonts";
       inputs.flake-compat.follows = "flake-compat";

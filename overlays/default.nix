@@ -142,6 +142,10 @@ self: super: {
     inherit (inputs) pinpox-keys;
   };
 
+  # FreeCAD workbench addon (chat panel + MCP server), loaded via the freecad
+  # home-manager module
+  freecad-ai = super.callPackage ../packages/freecad-ai { inherit inputs; };
+
   # Use custom neovim in standalone flake
   pinpox-neovim = inputs.pinpox-neovim.packages.${super.stdenv.hostPlatform.system}.pinpox-neovim;
 
