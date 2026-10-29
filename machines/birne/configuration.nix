@@ -27,7 +27,6 @@
 
     services = {
       unifi-controller.enable = true;
-      minio.enable = true;
       home-assistant.enable = false;
     };
 
