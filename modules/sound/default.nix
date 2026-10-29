@@ -119,6 +119,15 @@ in
 
     };
 
+    # Don't load libpipewire-module-x11-bell. It segfaults pipewire (1.6.9) in
+    # its X11 I/O error handler whenever Xwayland exits (-terminate after the
+    # last X client closes), which breaks audio clients like Chromium.
+    services.pipewire.extraConfig.pipewire."99-disable-x11-bell" = {
+      "context.properties" = {
+        "module.x11.bell" = false;
+      };
+    };
+
     # Set Scarlett 2i2 Input 1 to Inst mode when the device appears
     services.udev.extraRules = ''
       ACTION=="add", SUBSYSTEM=="sound", ATTR{id}=="USB", RUN+="${pkgs.alsa-utils}/bin/amixer -c USB cset name='Line In 1 Level Capture Enum' 'Inst'"
