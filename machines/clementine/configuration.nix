@@ -9,6 +9,9 @@
   imports = [ trippy-track.nixosModules.default ];
 
   clan.core.networking.targetHost = "152.53.139.179";
+  # Build on machine executing the clan; 4 GiB without swap OOMs on Rust builds
+  # (knot-server).
+  clan.core.networking.buildHost = "pinpox@localhost";
   networking.hostName = "clementine";
 
   networking.interfaces.ens3 = {

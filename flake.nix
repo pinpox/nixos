@@ -149,6 +149,10 @@
     trippy-track.inputs.nixpkgs.follows = "nixpkgs";
     trippy-track.inputs.treefmt-nix.follows = "treefmt-nix";
 
+    tangled.url = "git+https://tangled.org/@tangled.org/core";
+    tangled.inputs.flake-compat.follows = "flake-compat";
+    tangled.inputs.nixpkgs.follows = "nixpkgs";
+
     zellij-workspaces.url = "github:pinpox/zellij-workspaces";
     zellij-workspaces.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -207,6 +211,7 @@
         modules."@pinpox/thelounge" = ./clan-service-modules/thelounge.nix;
         modules."@pinpox/machine-type" = ./clan-service-modules/machine-type;
         modules."@pinpox/monitoring-glue" = ./clan-service-modules/monitoring-glue;
+        modules."@pinpox/tangled" = ./clan-service-modules/tangled;
         modules."@pinpox/n2n" = ./clan-service-modules/n2n;
         modules."@pinpox/opencrow" = ./clan-service-modules/opencrow;
         modules."@pinpox/matrix" = ./clan-service-modules/matrix;
