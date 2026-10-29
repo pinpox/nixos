@@ -84,6 +84,7 @@ in
         omp.enable = true;
         zulip.enable = true;
         tea.enable = true;
+        crit.enable = true;
       };
 
       # Skills tied to a tool are contributed by that tool's module instead

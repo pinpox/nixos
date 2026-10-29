@@ -82,6 +82,7 @@ self: super: {
     # gitbutler
     omp
     herdr
+    crit
     ;
 
   # claude-desktop self-downloads generic-linux binaries at runtime (claude-code
