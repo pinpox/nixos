@@ -8,6 +8,22 @@
 with lib;
 let
   cfg = config.pinpox.programs.omp;
+
+  # Appended (not prepended) to PATH, so tools from the calling shell or a
+  # project devshell still take precedence over these fallbacks.
+  wrapped =
+    if cfg.extraPackages == [ ] then
+      cfg.package
+    else
+      pkgs.symlinkJoin {
+        name = "${cfg.package.name}-wrapped";
+        paths = [ cfg.package ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/omp --suffix PATH : ${lib.makeBinPath cfg.extraPackages}
+        '';
+        inherit (cfg.package) meta;
+      };
 in
 {
   options.pinpox.programs.omp = {
@@ -19,6 +35,16 @@ in
       default = pkgs.omp;
       defaultText = literalExpression "pkgs.omp";
       description = "The omp package to install.";
+    };
+
+    extraPackages = mkOption {
+      type = types.listOf types.package;
+      default = [ ];
+      example = literalExpression "[ pkgs.python3 pkgs.gh ]";
+      description = ''
+        Packages whose `bin/` is appended to omp's PATH (and thus to every
+        command it runs) without installing them into the user profile.
+      '';
     };
 
     skills = mkOption {
@@ -42,7 +68,7 @@ in
 
   config = mkIf cfg.enable {
 
-    home.packages = [ cfg.package ];
+    home.packages = [ wrapped ];
 
     # `~/.omp/agent/{config,models}.yml` are deliberately left mutable: omp
     # writes to them itself (setupVersion, autoqa consent, model roles picked in

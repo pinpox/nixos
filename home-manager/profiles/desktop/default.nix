@@ -81,7 +81,13 @@ in
         # river.enable = true; # TODO: broken in nixpkgs (Zig build failure)
         waybar.enable = true;
         kanshi.enable = true;
-        omp.enable = true;
+        omp = {
+          enable = true;
+          extraPackages = with pkgs; [
+            python3
+            gh
+          ];
+        };
         zulip.enable = true;
         tea.enable = true;
         crit.enable = true;
