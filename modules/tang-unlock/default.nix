@@ -71,14 +71,6 @@ in
   };
 
   config = mkIf cfg.enable {
-
-    assertions = [
-      {
-        assertion = config.boot.initrd.systemd.enable;
-        message = "pinpox.services.tang-unlock requires boot.initrd.systemd.enable";
-      }
-    ];
-
     clan.core.vars.generators = {
       # LUKS key for the Tang keyslot. Uploaded only during
       # `clan machines install`, where disko can add it as a keyslot.
