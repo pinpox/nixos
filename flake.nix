@@ -22,10 +22,6 @@
     clan-community.inputs.nixpkgs.follows = "nixpkgs";
     clan-community.inputs.treefmt-nix.follows = "treefmt-nix";
 
-    rio.url = "github:raphamorim/rio";
-    rio.inputs.nixpkgs.follows = "nixpkgs";
-    rio.inputs.systems.follows = "clan-core/systems";
-
     gif-searcher.url = "github:pinpox/gif-searcher";
     gif-searcher.inputs.nixpkgs.follows = "nixpkgs";
 
