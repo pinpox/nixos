@@ -9,6 +9,52 @@
 with lib;
 let
   cfg = config.pinpox.defaults.yubikey;
+
+  pkcs11Provider = "${pkgs.opensc}/lib/opensc-pkcs11.so";
+
+  # Succeeds once the plugged-in token exposes the key certified in
+  # yubikey-ssh-cert.pub. Other smart cards (e.g. a YubiKey only used for
+  # age) must not trigger a PIN prompt. pcscd may need a moment to pick up a
+  # freshly plugged reader, hence the retries.
+  sshTokenPresent = pkgs.writeShellApplication {
+    name = "ssh-token-present";
+    runtimeInputs = [
+      pkgs.openssh
+      pkgs.coreutils
+      pkgs.gnugrep
+    ];
+    text = ''
+      want=$(ssh-keygen -lf ${../../home-manager/modules/ssh/yubikey-ssh-cert.pub} | cut -d' ' -f2)
+      for _ in 1 2 3 4 5; do
+        if ssh-keygen -D ${pkcs11Provider} 2>/dev/null | ssh-keygen -lf - 2>/dev/null | grep -qF " $want "; then
+          exit 0
+        fi
+        sleep 1
+      done
+      echo "no token with SSH key $want present" >&2
+      exit 1
+    '';
+  };
+
+  # The PIN prompt is noctalia's askpass panel. At login this unit starts
+  # together with noctalia, so wait for its IPC before ssh-add asks.
+  sshTokenAdd = pkgs.writeShellApplication {
+    name = "ssh-token-add";
+    runtimeInputs = [
+      pkgs.openssh
+      pkgs.noctalia
+      pkgs.coreutils
+    ];
+    text = ''
+      for _ in $(seq 30); do
+        if noctalia msg status >/dev/null 2>&1; then break; fi
+        sleep 1
+      done
+      # Drop a provider left over from a previous plug-in before re-adding.
+      ssh-add -e ${pkcs11Provider} 2>/dev/null || true
+      exec ssh-add -s ${pkcs11Provider}
+    '';
+  };
 in
 {
 
@@ -74,7 +120,46 @@ in
 
     programs.ssh.startAgent = true;
     # OpenSSH 10.2+ uses comma-separated list (not colon) for -P whitelist
-    programs.ssh.agentPKCS11Whitelist = "${config.security.tpm2.pkcs11.package}/lib/libtpm2_pkcs11.so,${pkgs.opensc}/lib/opensc-pkcs11.so";
+    programs.ssh.agentPKCS11Whitelist = "${config.security.tpm2.pkcs11.package}/lib/libtpm2_pkcs11.so,${pkcs11Provider}";
+
+    # ssh-agent logs in to the token once, at `ssh-add -s`, and keeps that
+    # PKCS#11 session forever. Once the token is unplugged the session is gone
+    # (C_Sign fails with CKR_TOKEN_NOT_PRESENT) and ssh-agent never reopens it
+    # or asks for the PIN again. So follow the token instead: smartcard.target
+    # is reached when a CCID reader appears and stopped when the last one is
+    # removed (StopWhenUnneeded), which loads the key with a PIN prompt on
+    # plug-in and drops it on removal. graphical-session.target covers a token
+    # that is already plugged in at login; Requisite keeps the smartcard.target
+    # trigger that fires before the graphical session exists from prompting.
+    systemd.user.services.ssh-agent-pkcs11 = {
+      description = "Load the hardware token's SSH key into ssh-agent";
+      wantedBy = [
+        "smartcard.target"
+        "graphical-session.target"
+      ];
+      partOf = [
+        "smartcard.target"
+        "graphical-session.target"
+      ];
+      requisite = [ "graphical-session.target" ];
+      after = [
+        "graphical-session.target"
+        "ssh-agent.service"
+      ];
+      requires = [ "ssh-agent.service" ];
+      environment = {
+        SSH_AUTH_SOCK = "%t/ssh-agent";
+        SSH_ASKPASS = lib.getExe pkgs.noctalia-askpass;
+        SSH_ASKPASS_REQUIRE = "force";
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecCondition = lib.getExe sshTokenPresent;
+        ExecStart = lib.getExe sshTokenAdd;
+        ExecStop = "-${pkgs.openssh}/bin/ssh-add -e ${pkcs11Provider}";
+      };
+    };
 
     # services.yubikey-agent.enable = false;
     services.udev.packages = [ pkgs.yubikey-personalization ];
