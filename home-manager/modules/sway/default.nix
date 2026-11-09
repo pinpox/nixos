@@ -190,9 +190,23 @@ in
             # Screen lock
             "${modifier}+Shift+l" = "exec ${lib.getExe pkgs.noctalia} msg session lock";
 
-            # Scratchpad
+            # Scratchpad: toggles the dropdown terminal and the Herdr desktop
+            # app together. If either is visible both get hidden, otherwise
+            # both are shown, so they never end up out of sync.
             "${modifier}+u" =
-              "exec swaymsg '[app_id=\"dropdown\"] scratchpad show; [app_id=\"dropdown\"] resize set width 100 ppt height 100 ppt; [app_id=\"dropdown\"] move container to position 0 px 0 px'";
+              let
+                criteria = ''[app_id="^(dropdown|herdr-app)$"]'';
+                dropdown-toggle = pkgs.writeShellScript "dropdown-toggle" ''
+                  visible=$(${pkgs.sway}/bin/swaymsg -t get_tree | ${lib.getExe pkgs.jq} \
+                    '[.. | objects | select(.app_id? | strings | test("^(dropdown|herdr-app)$")) | select(.visible)] | length')
+                  if [ "$visible" -gt 0 ]; then
+                    ${pkgs.sway}/bin/swaymsg '${criteria} move scratchpad'
+                  else
+                    ${pkgs.sway}/bin/swaymsg '${criteria} scratchpad show; ${criteria} resize set width 100 ppt height 100 ppt; ${criteria} move container to position 0 px 0 px'
+                  fi
+                '';
+              in
+              "exec ${dropdown-toggle}";
 
             # Screen brightness
             "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
@@ -271,6 +285,12 @@ in
             {
               command = "floating enable, border pixel 0, move scratchpad";
               criteria.app_id = "dropdown";
+            }
+            {
+              # Herdr desktop app: send to scratchpad for ${modifier}+u toggling,
+              # but show it right away since it's launched by hand.
+              command = "floating enable, border pixel 0, move scratchpad, scratchpad show, resize set width 100 ppt height 100 ppt, move position 0 px 0 px";
+              criteria.app_id = "^herdr-app$";
             }
             {
               # Worms W.M.D (Proton) never ends up fullscreen on its own: sway
