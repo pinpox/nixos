@@ -1,0 +1,99 @@
+# M5Stack Atom Echo in the kitchen: hold the button and speak, the
+# kitchen-dictation bridge on traube adds what it hears to the shopping list.
+#
+# Needs a secrets.yaml next to this file, kept out of git:
+#   wifi_ssid, wifi_password, ota_password
+#   api_key: clan vars get traube kitchen-dictation/api-key
+# Flash over USB with `esphome run kitchen-atom.yaml`.
+#
+# Pins from ESPHome's m5stack-atom-echo.yaml in wake-word-voice-assistants.
+
+esphome:
+  name: kitchen-atom
+  friendly_name: Kitchen dictation
+
+esp32:
+  board: m5stack-atom
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+
+logger:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+i2s_audio:
+  i2s_lrclk_pin: GPIO33
+  i2s_bclk_pin: GPIO19
+
+microphone:
+  - platform: i2s_audio
+    id: mic
+    i2s_din_pin: GPIO23
+    adc_type: external
+    pdm: true
+    sample_rate: 16000
+    correct_dc_offset: true
+
+# The LED says what happened: blue while listening, green when the text
+# reached opencrow, red on an error.
+light:
+  - platform: esp32_rmt_led_strip
+    id: led
+    pin: GPIO27
+    chipset: SK6812
+    num_leds: 1
+    rgb_order: grb
+    default_transition_length: 0s
+
+voice_assistant:
+  microphone:
+    microphone: mic
+    channels: 0
+    # The bridge applies no gain of its own, unlike Home Assistant.
+    gain_factor: 4
+  on_listening:
+    - light.turn_on:
+        id: led
+        red: 0%
+        green: 0%
+        blue: 100%
+  on_stt_end:
+    - light.turn_on:
+        id: led
+        red: 0%
+        green: 100%
+        blue: 0%
+    - delay: 1s
+    - light.turn_off: led
+  on_error:
+    - light.turn_on:
+        id: led
+        red: 100%
+        green: 0%
+        blue: 0%
+    - delay: 1s
+    - light.turn_off: led
+
+binary_sensor:
+  - platform: gpio
+    id: talk
+    internal: true
+    pin:
+      number: GPIO39
+      inverted: true
+    on_press:
+      - voice_assistant.start:
+          silence_detection: false
+    on_release:
+      - voice_assistant.stop:

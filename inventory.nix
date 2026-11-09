@@ -54,13 +54,16 @@ in
 
   instances = lib.recursiveUpdate {
 
-    # Matrix homeserver. Bot accounts are contributed next to the bots in
-    # inventory/opencrow.nix and deep-merged in.
+    # Matrix homeserver. `users` lists every bot account in one place:
+    # recursiveUpdate replaces lists, so a fragment would drop the others.
     matrix = {
       module.input = "self";
       module.name = "@pinpox/matrix";
       roles.server.machines.clementine = { };
-      roles.server.settings.users = [ "hermes" ];
+      roles.server.settings.users = [
+        "hermes"
+        "kitchen"
+      ];
     };
 
     incus = {

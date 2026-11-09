@@ -69,5 +69,11 @@ in
     pkgs.jq
   ];
 
+  # The kitchen Atom on the same LAN; see modules/kitchen-dictation.
+  pinpox.services.kitchen-dictation = {
+    enable = true;
+    device = "192.168.101.130";
+  };
+
   clan.core.vars.generators."p0-inference-key".prompts."api-key".persist = true;
 }

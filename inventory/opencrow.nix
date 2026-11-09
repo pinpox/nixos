@@ -97,4 +97,37 @@
       )
     ];
   };
+
+  # Shopping-list bot on traube, next to the kitchen Atom on the home LAN
+  # (modules/kitchen-dictation). Its Matrix account is "kitchen" in the
+  # matrix instance's users; it logs in with that account's shared password.
+  opencrow-kitchen = {
+    module.input = "self";
+    module.name = "@pinpox/opencrow";
+    roles.default.machines.traube.settings = {
+      matrixPasswordGenerator = "matrix-user-kitchen";
+      environment = {
+        OPENCROW_MATRIX_HOMESERVER = "https://matrix.pinpox.com";
+        OPENCROW_MATRIX_USER_ID = "@kitchen:pinpox.com";
+        OPENCROW_ALLOWED_USERS = "@pinpox:matrix.org";
+      };
+    };
+    roles.default.extraModules = [
+      (
+        { config, pinpox-utils, ... }:
+        {
+          # The matrix server declares the same shared generator and
+          # creates the account with this password.
+          clan.core.vars.generators."matrix-user-kitchen" = pinpox-utils.mkMatrixPassword;
+
+          # Defining any key of `skills` drops the option default, so `web`
+          # is restated here.
+          services.opencrow.instances.kitchen.skills = {
+            web = "${config.services.opencrow.instances.kitchen.package}/share/opencrow/skills/web";
+            shopping-list = ../modules/kitchen-dictation/shopping-list;
+          };
+        }
+      )
+    ];
+  };
 }
