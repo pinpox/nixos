@@ -137,6 +137,7 @@
 
     firefox
     openspec
+    herdr-app
 
     gcc
     comma

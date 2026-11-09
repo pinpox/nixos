@@ -75,6 +75,7 @@ in
         go.enable = true;
         foot.enable = true;
         rio.enable = true;
+        herdr-app.enable = true;
         sway.enable = true;
         noctalia.enable = true;
         swaylock.enable = true;

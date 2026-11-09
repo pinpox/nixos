@@ -82,6 +82,7 @@ self: super: {
     # gitbutler
     omp
     herdr
+    herdr-app
     crit
     ;
 
