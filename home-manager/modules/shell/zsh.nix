@@ -173,7 +173,8 @@
 
       zzz = "systemctl suspend";
 
-      picohsm-add-to-agent = "ssh-add -e ${pkgs.opensc}/lib/opensc-pkcs11.so 2>/dev/null; SSH_ASKPASS=${lib.getExe pkgs.noctalia-askpass} SSH_ASKPASS_REQUIRE=prefer ssh-add -s ${pkgs.opensc}/lib/opensc-pkcs11.so";
+      # Re-prompt for the token PIN (e.g. after cancelling the prompt on plug-in).
+      picohsm-add-to-agent = "systemctl --user restart ssh-agent-pkcs11";
 
       serve = "${pkgs.miniserve}/bin/miniserve";
 
