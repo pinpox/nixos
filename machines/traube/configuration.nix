@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -41,6 +42,11 @@ in
     "console=ttyAMA0"
     "console=tty0"
   ];
+
+  # /boot is a 500M ESP and every generation puts ~100M on it (71M
+  # uncompressed arm64 Image + ~29M initrd). With the default limit of 5 the
+  # switch runs out of space while copying the new kernel; 3 leaves room.
+  boot.loader.grub.configurationLimit = lib.mkForce 3;
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 0;
