@@ -169,6 +169,14 @@ in
       partOf = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
+      # The daemon execs `passage` from PATH; passage runs $PASSAGE_AGE (rage),
+      # which needs the age plugins for the hardware-token identities.
+      path = [
+        pkgs.passage
+        pkgs.rage
+        pkgs.age-plugin-yubikey
+        age-plugin-picohsm.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
       serviceConfig = {
         Type = "simple";
         ExecStart =
