@@ -17,7 +17,6 @@
     root = {
       # Get UUID from blkid /dev/sda2
       device = "/dev/disk/by-uuid/608e0e77-eea4-4dc4-b88d-76cc63e4488b";
-      preLVM = true;
       allowDiscards = true;
     };
   };
