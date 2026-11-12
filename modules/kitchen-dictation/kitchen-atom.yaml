@@ -1,10 +1,15 @@
 # M5Stack Atom Echo in the kitchen: hold the button and speak, the
 # kitchen-dictation bridge on traube adds what it hears to the shopping list.
+# The bridge calls the `ring` action when a kitchen timer runs out.
 #
-# Needs a secrets.yaml next to this file, kept out of git:
-#   wifi_ssid, wifi_password, ota_password
+# Secrets live outside the repo in ~/.local/share/kitchen-atom/secrets.yaml
+# (wifi_ssid, wifi_password, ota_password, api_key), next to a symlink to
+# this file. To recreate it: Wi-Fi from NetworkManager (virus.exe),
+#   ota_password: clan vars get traube kitchen-atom/ota-password
 #   api_key: clan vars get traube kitchen-dictation/api-key
-# Flash over USB with `esphome run kitchen-atom.yaml`.
+# Flash from that directory; the ESP-IDF toolchain needs an FHS env on NixOS:
+#   NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#steam-run -c \
+#     steam-run esphome run kitchen-atom.yaml --device 192.168.101.130
 #
 # Pins from ESPHome's m5stack-atom-echo.yaml in wake-word-voice-assistants.
 
@@ -27,6 +32,15 @@ wifi:
 api:
   encryption:
     key: !secret api_key
+  actions:
+    - action: ring
+      then:
+        - light.turn_on:
+            id: led
+            red: 100%
+            green: 60%
+            blue: 0%
+        - rtttl.play: "timer:d=16,o=6,b=160:a,p,a,p,a,p,a,4p,a,p,a,p,a,p,a,4p,a,p,a,p,a,p,a,4p,a,p,a,p,a,p,a"
 
 ota:
   - platform: esphome
@@ -45,8 +59,26 @@ microphone:
     sample_rate: 16000
     correct_dc_offset: true
 
+# NS4168 amplifier on the shared I2S bus. Mono playback sounds bad on the
+# Echo, hence stereo.
+speaker:
+  - platform: i2s_audio
+    id: spk
+    i2s_dout_pin: GPIO22
+    dac_type: external
+    bits_per_sample: 16bit
+    sample_rate: 16000
+    channel: stereo
+    buffer_duration: 60ms
+
+rtttl:
+  speaker: spk
+  gain: 100%
+  on_finished_playback:
+    - light.turn_off: led
+
 # The LED says what happened: blue while listening, green when the text
-# reached opencrow, red on an error.
+# reached opencrow, red on an error, yellow while a timer rings.
 light:
   - platform: esp32_rmt_led_strip
     id: led

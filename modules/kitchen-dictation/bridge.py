@@ -3,6 +3,11 @@
 The bridge takes Home Assistant's place on the device's native API. It
 collects the audio of one button press, transcribes it with faster-whisper
 and writes the text as one line into opencrow's trigger pipe.
+
+It also runs the bot's kitchen timers: a file in the timers directory is
+one timer, named by its label and holding the Unix time it runs out at.
+When one runs out, the bridge deletes it, rings the device and tells the
+bot through the trigger pipe.
 """
 
 import asyncio
@@ -10,6 +15,7 @@ import errno
 import logging
 import os
 import sys
+import time
 
 import numpy as np
 from aioesphomeapi import APIClient, ReconnectLogic, VoiceAssistantEventType
@@ -25,6 +31,9 @@ MIN_BYTES = 16000
 INITIAL_PROMPT = "Einkaufsliste: Milch, Eier, Butter, Haferflocken."
 LANGUAGE = "de"
 
+# A timer file the bot is still writing is empty for a moment.
+TIMER_WRITE_GRACE = 5
+
 
 class Bridge:
     def __init__(self, client, model, pipe):
@@ -33,6 +42,8 @@ class Bridge:
         self.pipe = pipe
         self.pcm = bytearray()
         self.listening = False
+        # The device's `ring` action, known while connected.
+        self.ring_action = None
 
     def send(self, event, data=None):
         self.client.send_voice_assistant_event(event, data or {})
@@ -79,7 +90,10 @@ class Bridge:
             return
         log.info("heard: %s", text)
         try:
-            self.write(text)
+            self.write(
+                "Voice message from the kitchen button (German speech-to-text,"
+                f" may contain recognition errors): {text}"
+            )
         except OSError as e:
             self.fail("pipe", str(e))
             return
@@ -97,7 +111,7 @@ class Bridge:
         )
         return " ".join(" ".join(s.text for s in segments).split())
 
-    def write(self, text):
+    def write(self, line):
         # O_NONBLOCK fails with ENXIO when opencrow does not hold the pipe
         # open, instead of blocking the bridge until it does.
         try:
@@ -106,18 +120,70 @@ class Bridge:
             if e.errno == errno.ENXIO:
                 raise OSError(e.errno, "opencrow is not reading") from e
             raise
-        line = (
-            "Voice message from the kitchen button (German speech-to-text, "
-            f"may contain recognition errors): {text}\n"
-        )
         with os.fdopen(fd, "w") as f:
-            f.write(line)
+            f.write(line + "\n")
+
+    def notify(self, line):
+        try:
+            self.write(line)
+        except OSError as e:
+            log.warning("cannot tell opencrow %r: %s", line, e)
+
+    async def ring(self):
+        if self.ring_action is None:
+            log.warning("cannot ring: device offline or without ring action")
+            return
+        try:
+            await self.client.execute_service(self.ring_action, {})
+        except Exception as e:
+            log.warning("cannot ring: %s", e)
+
+    async def run_timers(self, directory):
+        while True:
+            await asyncio.sleep(1)
+            try:
+                entries = [
+                    e
+                    for e in os.scandir(directory)
+                    if e.is_file() and not e.name.startswith(".")
+                ]
+            except FileNotFoundError:
+                continue
+            for entry in entries:
+                try:
+                    await self.check_timer(entry)
+                except FileNotFoundError:
+                    pass  # cancelled while being checked
+
+    async def check_timer(self, entry):
+        now = time.time()
+        with open(entry.path) as f:
+            content = f.read()
+        try:
+            end = float(content)
+        except ValueError:
+            if now - entry.stat().st_mtime < TIMER_WRITE_GRACE:
+                return
+            os.remove(entry.path)
+            log.warning("dropped timer %s: %r", entry.name, content)
+            self.notify(
+                f"Kitchen timer dropped: {entry.name} "
+                f"(its file held {content.strip()!r}, not a Unix time)"
+            )
+            return
+        if end > now:
+            return
+        os.remove(entry.path)
+        log.info("timer finished: %s", entry.name)
+        await self.ring()
+        self.notify(f"Kitchen timer finished: {entry.name}")
 
 
 async def main():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     device = os.environ["DEVICE"]
     pipe = os.environ["PIPE"]
+    timers = os.environ["TIMERS"]
     key_file = os.path.join(os.environ["CREDENTIALS_DIRECTORY"], "api-key")
     with open(key_file) as f:
         key = f.read().strip()
@@ -142,9 +208,14 @@ async def main():
             handle_stop=bridge.on_stop,
             handle_audio=bridge.on_audio,
         )
+        _, actions = await client.list_entities_services()
+        bridge.ring_action = next(
+            (a for a in actions if a.name == "ring"), None
+        )
 
     async def on_disconnect(expected):
         bridge.listening = False
+        bridge.ring_action = None
         log.warning("disconnected from %s", device)
 
     # mDNS is not used: the device is reached by its fixed address.
@@ -156,7 +227,7 @@ async def main():
         zeroconf_wake=False,
     )
     await reconnect.start()
-    await asyncio.Event().wait()
+    await bridge.run_timers(timers)
 
 
 if __name__ == "__main__":

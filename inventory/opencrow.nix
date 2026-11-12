@@ -125,7 +125,15 @@
           services.opencrow.instances.kitchen.skills = {
             web = "${config.services.opencrow.instances.kitchen.package}/share/opencrow/skills/web";
             shopping-list = ../modules/kitchen-dictation/shopping-list;
+            kitchen-timer = ../modules/kitchen-dictation/kitchen-timer;
           };
+
+          # The kitchen-dictation bridge on the host runs the timers the bot
+          # writes here. Created from inside the container, where the
+          # opencrow user exists (see opencrow-claude above).
+          containers.opencrow-kitchen.config.systemd.tmpfiles.rules = [
+            "d /var/lib/opencrow-kitchen/timers 0750 opencrow opencrow -"
+          ];
         }
       )
     ];

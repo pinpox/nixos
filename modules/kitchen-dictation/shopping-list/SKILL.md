@@ -22,6 +22,9 @@ When the message names things to buy:
 5. Reply with one line in German naming what you added, e.g.
    "Notiert: Milch, Eier."
 
+A request for a timer ("Timer 10 Minuten Nudeln") is not a shopping item:
+set the timer with the kitchen-timer skill.
+
 Any other message is a request like one in chat: answer it or do it, in
 German.
 
