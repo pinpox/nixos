@@ -6,7 +6,8 @@
     wrappers.url = "github:lassulus/wrappers";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable?shallow=1";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
@@ -354,7 +355,24 @@
       # Each subdirectory in ./machines/<machine-name> is a host config. Clan
       # auto-imports all machines from ./machines
       inherit (clan.config) clanInternals;
-      nixosConfigurations = clan.config.nixosConfigurations;
+      # Servers track nixos-unstable-small: same clan machine modules, but
+      # evaluated with nixpkgs-small's nixosSystem (modules + packages).
+      nixosConfigurations =
+        clan.config.nixosConfigurations
+        // nixpkgs.lib.genAttrs
+          (builtins.attrNames (
+            nixpkgs.lib.filterAttrs (_: m: builtins.elem "server" m.tags) clan.config.inventory.machines
+          ))
+          (
+            name:
+            nixpkgs-small.lib.nixosSystem {
+              modules = [ clan.config.nixosModules."clan-machine-${name}" ];
+              specialArgs = {
+                inherit clan-core;
+              }
+              // clan.config.specialArgs;
+            }
+          );
       clan = clan.config;
 
       # Each subdirectory in ./home-manager/profiles/<profile-name> is a
