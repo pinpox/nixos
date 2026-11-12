@@ -192,17 +192,23 @@ in
 
             # Scratchpad: toggles the dropdown terminal and the Herdr desktop
             # app together. If either is visible both get hidden, otherwise
-            # both are shown, so they never end up out of sync.
+            # both are shown, so they never end up out of sync. Herdr is
+            # started if it isn't running; its window rule shows it on map.
             "${modifier}+u" =
               let
                 criteria = ''[app_id="^(dropdown|herdr-app)$"]'';
                 dropdown-toggle = pkgs.writeShellScript "dropdown-toggle" ''
-                  visible=$(${pkgs.sway}/bin/swaymsg -t get_tree | ${lib.getExe pkgs.jq} \
-                    '[.. | objects | select(.app_id? | strings | test("^(dropdown|herdr-app)$")) | select(.visible)] | length')
+                  tree=$(${pkgs.sway}/bin/swaymsg -t get_tree)
+                  visible=$(${lib.getExe pkgs.jq} \
+                    '[.. | objects | select(.app_id? | strings | test("^(dropdown|herdr-app)$")) | select(.visible)] | length' <<<"$tree")
+                  herdr=$(${lib.getExe pkgs.jq} '[.. | objects | select(.app_id? == "herdr-app")] | length' <<<"$tree")
                   if [ "$visible" -gt 0 ]; then
                     ${pkgs.sway}/bin/swaymsg '${criteria} move scratchpad'
                   else
                     ${pkgs.sway}/bin/swaymsg '${criteria} scratchpad show; ${criteria} resize set width 100 ppt height 100 ppt; ${criteria} move container to position 0 px 0 px'
+                    if [ "$herdr" -eq 0 ]; then
+                      ${pkgs.sway}/bin/swaymsg 'exec ${lib.getExe pkgs.herdr-app}'
+                    fi
                   fi
                 '';
               in
@@ -288,7 +294,7 @@ in
             }
             {
               # Herdr desktop app: send to scratchpad for ${modifier}+u toggling,
-              # but show it right away since it's launched by hand.
+              # but show it right away (launched by ${modifier}+u or by hand).
               command = "floating enable, border pixel 0, move scratchpad, scratchpad show, resize set width 100 ppt height 100 ppt, move position 0 px 0 px";
               criteria.app_id = "^herdr-app$";
             }
